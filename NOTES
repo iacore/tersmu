@@ -1,0 +1,19 @@
+First goal: handle the "first order fragment" of lojban
+
+Handling quantifiers:
+    binding happens where a prenex is or could be, i.e. at 'statement' and at
+    'subsentence'.
+
+    This means that an unbound da gets exported to the innermost such prenex,
+    and binds just within the corresponding statement/subsentence.
+
+    Handling exportation may be a little complicated... for rather similar
+    reasons that handling 'ri' et al will be - the semantics of lojban is
+    partly a matter of the partial order of the parse tree, but partly of the
+    (cross-level) total order of occurance in the text.
+
+    This actually fits the State Monad approach quite well.
+
+    So when we hit a {da}, we look it up in the state - and if it isn't there,
+    add it along with quantifiers and relative clauses. State gets passed
+    along vertically and horizontally.

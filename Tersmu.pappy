@@ -1,0 +1,557 @@
+parser tersmu:
+
+{
+import Data.Maybe
+import FOL
+
+data Sumti = Conjunction TruthTable Sumti Sumti
+	| Constant Obj
+	deriving (Show, Eq)
+type TruthTable = [(Bool,Bool)]
+type Brivla = String
+
+expandBridi :: Brivla -> [Sumti] -> Prop
+expandBridi b ss = expandBridiAccum b [] ss
+expandBridiAccum :: Brivla -> [Obj] -> [Sumti] -> Prop
+expandBridiAccum b os [] = Rel b os
+expandBridiAccum b os ((Constant o):ss) = expandBridiAccum b (os++[o]) ss
+expandBridiAccum b os ((Conjunction tt s1 s2):ss) =
+    let sub1 = expandBridiAccum b os (s1:ss)
+	sub2 = expandBridiAccum b os (s2:ss) in
+	bigOr $ map (\(t1,t2) -> And (if t1 then sub1 else (Not sub1))
+				     (if t2 then sub2 else (Not sub2)))
+		    tt
+
+bigOr :: [Prop] -> Prop
+bigOr [] = Not Eet
+bigOr [p] = p
+bigOr (p:ps) = Or p (bigOr ps)
+}
+
+top asentence
+-- top term
+-- top CMENE
+-- top LojbanLetter
+
+asentence :: Prop
+    = s:sentence !Char -> s
+
+sentence :: Prop
+    = mt1:(t:terms (CU free* -> {()})? -> t)?
+	{ (bridi, t2) }:bridiTail
+	-> { expandBridi bridi ((fromMaybe [] mt1)++t2) }
+
+terms :: {[Sumti]} = term+
+
+term :: Sumti = sumti
+
+sumti :: Sumti = sumti1
+
+sumti1 :: Sumti = s1:sumti2
+    eks:( tt:ek KE free* s:sumti
+	(KEhE free* -> {()})? -> {(tt,s)} )?
+    -> { if (isNothing eks) then s1
+			    else (let Just (tt,s2) = eks in
+				      Conjunction tt s1 s2) }
+
+sumti2 :: Sumti = s:sumti3 ekss:(_eksumti)*
+    -> { foldl (\s1 -> \(tt,s2) -> Conjunction tt s1 s2) s ekss }
+-- _eksumti: helper for sumti2
+_eksumti :: {(TruthTable, Sumti)}
+    = tt:ek s:sumti3 -> {(tt,s)}
+
+sumti3 :: Sumti = s1:sumti4
+	eks:( tt:ek BO free* s:sumti3 -> {(tt,s)} )?
+    -> { if (isNothing eks) then s1
+			    else (let Just (tt,s2) = eks in
+				      Conjunction tt s1 s2) }
+
+sumti4 :: Sumti = sumti6
+	/ tt:gek s1:sumti gik s2:sumti4 -> { Conjunction tt s1 s2 }
+
+sumti6 :: Sumti = "la":LA s:CMENE -> {Constant s}
+    / "mi":KOhA -> {Constant "mi"}
+    / "do":KOhA -> {Constant "do"}
+    / "ti":KOhA -> {Constant "ti"}
+    / "ta":KOhA -> {Constant "ta"}
+    / "tu":KOhA -> {Constant "tu"}
+
+ek :: TruthTable = NA?
+	se:(SE)? tt:ekA NAI?
+    -> tt -- FIXME - handle negations and se
+
+gek :: TruthTable = se:(SE)? tt:gekGA NAI?
+    -> tt -- FIXME - handle negations and se
+
+gik :: {()} = GI-> {()}
+
+ekA :: TruthTable = tt:( ".a":A -> {[(True,False),(True,True),(False,True)]} 
+    / ".e":A -> {[(True,True)]} 
+    / ".o":A -> {[(True,True),(False,False)]} 
+    / ".u":A -> {[(True,False),(True,True)]} ) -> tt
+    -- / "ji":A
+
+gekGA :: TruthTable = tt:( "ga":GA -> {[(True,False),(True,True),(False,True)]} 
+    / "ge":GA -> {[(True,True)]} 
+    / "go":GA -> {[(True,True),(False,False)]} 
+    / "gu":GA -> {[(True,False),(True,True)]} ) -> tt
+    -- / "ji":GA 
+
+bridiTail :: {(Brivla, [Sumti])}
+    = b:BRIVLA ts:terms? -> {(b, fromMaybe [] ts)}
+
+free :: {()}
+    = TO sentence (TOI->{()})? -> {()}
+
+LojbanLetter :: Char = Consonant / Vowel / OtherLetter
+nonConsonant :: Char = Vowel / OtherLetter
+
+InitialPair :: String = "bl" /  "br" /  "cf" /  "ck" /  "cl" /  "cm" /  "cn" /  "cp" /  "cr" /  "ct" /  "dj" /  "dr" /  "dz" /  "fl" /  "fr" /  "gl" /  "gr" /  "jb" /  "jd" /  "jg" /  "jm" /  "jv" /  "kl" /  "kr" /  "ml" /  "mr" /  "pl" /  "pr" /  "sf" /  "sk" /  "sl" /  "sm" /  "sn" /  "sp" /  "sr" /  "st" /  "tc" /  "tr" /  "ts" /  "vl" /  "vr" /  "xl" /  "xr" /  "zb" /  "zd" /  "zg" /  "zm" /  "zv"
+Vowel :: Char = c:Char &{c `elem` "aeiouy"} -> c
+Consonant :: Char = c:Char &{c `elem` "bcdfgjklmnprstvxz"} -> c
+OtherLetter :: Char = c:Char &{c `elem` "',"} -> c
+VowelNotY :: Char = c:Char &{c `elem` "aeiou"} -> c
+YChar :: Char = 'y'
+TickChar :: Char = '\''
+
+Space :: {()}	= " " -> { () }
+		/ "\n" -> { () }
+
+Spacing :: {()} = Space*
+
+Valsi :: String = cs:LojbanLetter+ Spacing -> cs
+
+CMENE :: String = PAUSE? ss:CMENEchunk+ Spacing -> {foldl (++) [] ss}
+CMENEchunk :: String = ls:nonConsonant* c:Consonant -> {ls++[c]}
+
+PAUSE :: String = "."
+
+BRIVLA :: String = 
+	    a:InitialPair b:LojbanLetter c:LojbanLetter r:BRIVLATail -> {a++(b:c:r)}
+	  / a:Consonant !YChar b:Vowel c:Consonant d:(YChar?) 
+	      e:Consonant r:BRIVLATail 
+		  -> { case d of {Just d -> (a:b:c:d:e:r); Nothing -> (a:b:c:e:r)} }
+	  / a:Consonant !YChar b:Vowel c:(TickChar?) !YChar
+	      d:Vowel e:Consonant f:Consonant r:BRIVLATail
+		  -> { case c of {Just c -> (a:b:c:d:e:f:r); Nothing -> (a:b:d:e:f:r)} }
+
+BRIVLATail :: String = 
+	       a:VowelNotY !LojbanLetter Spacing -> { [a] }
+	     / a:LojbanLetter r:BRIVLATail -> { (a:r) }
+
+--         eks; basic afterthought logical connectives 
+A :: String = s:Amain Spacing -> s
+Amain :: String = ".a" / ".e" / "ji" / ".o" / ".u" 
+
+--         modal operators 
+BAI :: String = s:BAImain Spacing -> s
+BAImain :: String = "du'o" / "si'u" / "zau" / "ki'i" / "du'i" / "cu'u" / "tu'i" / "ti'u" / "di'o" / "ji'u" / "ri'a" / "ni'i" / "mu'i" / "ki'u" / "va'u" / "koi" / "ca'i" / "ta'i" / "pu'e" / "ja'i" / "kai" / "bai" / "fi'e" / "de'i" / "ci'o" / "mau" / "mu'u" / "ri'i" / "ra'i" / "ka'a" / "pa'u" / "pa'a" / "le'a" / "ku'u" / "tai" / "bau" / "ma'i" / "ci'e" / "fau" / "po'i" / "cau" / "ma'e" / "ci'u" / "ra'a" / "pu'a" / "li'e" / "la'u" / "ba'i" / "ka'i" / "sau" / "fa'e" / "be'i" / "ti'i" / "ja'e" / "ga'a" / "va'o" / "ji'o" / "me'a" / "do'e" / "ji'e" / "pi'o" / "gau" / "zu'e" / "me'e" / "rai" 
+--         next word intensifier 
+BAhE :: String = s:BAhEmain Spacing -> s
+BAhEmain :: String = "ba'e"
+	/ "za'e" 
+--         sumti link to attach sumti to a selbri 
+BE :: String = s:BEmain Spacing -> s
+BEmain :: String = "be" 
+--         multiple sumti separator between BE, BEI 
+BEI :: String = s:BEImain Spacing -> s
+BEImain :: String = "bei" 
+--         terminates BEBEI specified descriptors 
+BEhO :: String = s:BEhOmain Spacing -> s
+BEhOmain :: String = "be'o" 
+--         prefix for high-priority MEX operator 
+BIhE :: String = s:BIhEmain Spacing -> s
+BIhEmain :: String = "bi'e" 
+--         interval component of JOI 
+BIhI :: String = s:BIhImain Spacing -> s
+BIhImain :: String = "mi'i"
+	/ "bi'o"
+	/ "bi'i" 
+--         joins two units with shortest scope 
+BO :: String = s:BOmain Spacing -> s
+BOmain :: String = "bo"
+--         number or lerfu-string terminator 
+BOI :: String = s:BOImain Spacing -> s
+BOImain :: String = "boi" 
+--         turns any word into a BY lerfu word 
+BU :: String = s:BUmain Spacing -> s
+BUmain :: String = "bu" 
+--         individual lerfu words 
+BY :: String = s:BYmain Spacing -> s
+BYmain :: String = "jo'o" / "ru'o" / "ge'o" / "je'o" / "lo'a" / "na'a" / "se'e" / "to'a" / "ga'e" / ".y'y" / "by" / "cy" / "dy" / "fy" / "gy" / "jy" / "ky" / "ly" / "my" / "ny" / "py" / "ry" / "sy" / "ty" / "vy" / "xy" / "zy" 
+
+--         specifies actualitypotentiality of tense 
+CAhA :: String = s:CAhAmain Spacing -> s
+CAhAmain :: String = "ca'a" / "pu'i" / "nu'o" / "ka'e" 
+--         afterthought intensity marker 
+CAI :: String = s:CAImain Spacing -> s
+CAImain :: String = "pei" / "cai" / "cu'i" / "sai" / "ru'e" 
+--         pro-bridi assignment operator 
+CEI :: String = s:CEImain Spacing -> s
+CEImain :: String = "cei" 
+--         afterthought term list connective 
+CEhE :: String = s:CEhEmain Spacing -> s
+CEhEmain :: String = "ce'e" 
+--         names; require consonant end, then pause no
+--                                    LA or DOI selma'o embedded, pause before if
+--                                    vowel initial and preceded by a vowel 
+--         tanru inversion  
+CO :: String = s:COmain Spacing -> s
+COmain :: String = "co" 
+COI :: String = s:COImain Spacing -> s
+COImain :: String = "ju'i" / "coi" / "fi'i" / "ta'a" / "mu'o" / "fe'o" / "co'o" / "pe'u" / "ke'o" / "nu'e" / "re'i" / "be'e" / "je'e" / "mi'e" / "ki'e" / "vi'o"
+--         vocative marker permitted inside names; must
+--                                    always be followed by pause or DOI 
+--         separator between head sumti and selbri 
+CU :: String = s:CUmain Spacing -> s
+CUmain :: String = "cu" 
+--         tensemodal question 
+CUhE :: String = s:CUhEmain Spacing -> s
+CUhEmain :: String = "cu'e" / "nau" 
+
+--         cancel anaphoracataphora assignments 
+DAhO :: String = s:DAhOmain Spacing -> s
+DAhOmain :: String = "da'o" 
+--         vocative marker 
+DOI :: String = s:DOImain Spacing -> s
+DOImain :: String = "doi" 
+--         terminator for DOI-marked vocatives 
+DOhU :: String = s:DOhUmain Spacing -> s
+DOhUmain :: String = "do'u" 
+
+--         modifier head generic case tag 
+FA :: String = s:FAmain Spacing -> s
+FAmain :: String = "fa" / "fe" / "fi" / "fo" / "fu" / "fai" / "fi'a" 
+--         superdirections in space 
+FAhA :: String = s:FAhAmain Spacing -> s
+FAhAmain :: String = "du'a" / "be'a" / "ne'u" / "vu'a" / "ga'u" / "ti'a" / "ni'a" / "ca'u" / "zu'a" / "ri'u" / "ru'u" / "re'o" / "te'e" / "bu'u" / "ne'a" / "pa'o" / "ne'i" / "to'o" / "zo'i" / "ze'o" / "zo'a" / "fa'a" 
+FAhO :: String = s:FAhOmain Spacing -> s
+FAhOmain :: String = "fa'o"
+--         normally elided 'done pause' to indicate end
+--                                    of utterance string 
+--         space interval mod flag 
+FEhE :: String = s:FEhEmain Spacing -> s
+FEhEmain :: String = "fe'e" 
+--         ends bridi to modal conversion 
+FEhU :: String = s:FEhUmain Spacing -> s
+FEhUmain :: String = "fe'u" 
+--         marks bridi to modal conversion 
+FIhO :: String = s:FIhOmain Spacing -> s
+FIhOmain :: String = "fi'o" 
+--         end compound lerfu 
+FOI :: String = s:FOImain Spacing -> s
+FOImain :: String = "foi" 
+--         reverse Polish flag 
+FUhA :: String = s:FUhAmain Spacing -> s
+FUhAmain :: String = "fu'a" 
+--         open long scope for indicator 
+FUhE :: String = s:FUhEmain Spacing -> s
+FUhEmain :: String = "fu'e" 
+--         close long scope for indicator 
+FUhO :: String = s:FUhOmain Spacing -> s
+FUhOmain :: String = "fu'o" 
+
+--         geks; forethought logical connectives 
+GA :: String = s:GAmain Spacing -> s
+GAmain :: String = "ge" / "ge'i" / "go" / "ga" / "gu" 
+--         openclosed interval markers for BIhI 
+GAhO :: String = s:GAhOmain Spacing -> s
+GAhOmain :: String = "ke'i" / "ga'o" 
+--         marker ending GOI relative clauses 
+GEhU :: String = s:GEhUmain Spacing -> s
+GEhUmain :: String = "ge'u" 
+--         forethought medial marker 
+GI :: String = s:GImain Spacing -> s
+GImain :: String = "gi"   
+--         logical connectives for bridi-tails 
+GIhA :: String = s:GIhAmain Spacing -> s
+GIhAmain :: String = "gi'e" / "gi'i" / "gi'o" / "gi'a" / "gi'u" 
+--         attaches a sumti modifier to a sumti 
+GOI :: String = s:GOImain Spacing -> s
+GOImain :: String = "no'u" / "ne" / "po" / "goi" / "po'u" / "pe" / "po'e" 
+--         pro-bridi 
+GOhA :: String = s:GOhAmain Spacing -> s
+GOhAmain :: String = "mo" / "nei" / "go'u" / "go'o" / "go'i" / "no'a" / "go'e" / "go'a" / "du" / "bu'a" / "bu'e" / "bu'i" / "co'e" 
+--         GEK for tanru units, corresponds to JEKs 
+GUhA :: String = s:GUhAmain Spacing -> s
+GUhAmain :: String = "gu'e" / "gu'i" / "gu'o" / "gu'a" / "gu'u" 
+
+--         sentence link 
+I :: String = s:Imain Spacing -> s
+Imain :: String = ".i" 
+
+--         jeks; logical connectives within tanru 
+JA :: String = s:JAmain Spacing -> s
+JAmain :: String = "je" / "je'i" / "jo" / "ja" / "ju" 
+--         modal conversion flag 
+JAI :: String = s:JAImain Spacing -> s
+JAImain :: String = "jai" 
+--         flags an array operand 
+JOhI :: String = s:JOhImain Spacing -> s
+JOhImain :: String = "jo'i" 
+--         non-logical connectives 
+JOI :: String = s:JOImain Spacing -> s
+JOImain :: String = "fa'u" / "pi'u" / "joi" / "ce'o" / "ce" / "jo'u" / "ku'a" / "jo'e" / "ju'e" 
+
+--         left long scope marker 
+KE :: String = s:KEmain Spacing -> s
+KEmain :: String = "ke" 
+--         right terminator for KE groups 
+KEhE :: String = s:KEhEmain Spacing -> s
+KEhEmain :: String = "ke'e" 
+--         right terminator, NU abstractions 
+KEI :: String = s:KEImain Spacing -> s
+KEImain :: String = "kei" 
+--         multiple utterance scope for tenses 
+KI :: String = s:KImain Spacing -> s
+KImain :: String = "ki" 
+--         sumti anaphora 
+KOhA :: String = s:KOhAmain Spacing -> s
+KOhAmain :: String = "da" / "de" / "di" / "da'u" / "da'e" / "di'u" / "di'e" / "de'u" / "de'e" / "dei" / "do'i" / "ko" / "mi" / "mi'o" / "ma'a" / "mi'a" / "do" / "do'o" / "ko'a" / "fo'u" / "ko'e" / "ko'i" / "ko'o" / "ko'u" / "fo'a" / "fo'e" / "fo'i" / "fo'o" / "vo'a" / "vo'e" / "vo'i" / "vo'o" / "vo'u" / "ru" / "ri" / "ra" / "ta" / "tu" / "ti" / "zi'o" / "ke'a" / "ma" / "zu'i" / "zo'e" / "ce'u" 
+--         right terminator for descriptions, etc. 
+KU :: String = s:KUmain Spacing -> s
+KUmain :: String = "ku" 
+--         MEX forethought delimiter 
+KUhE :: String = s:KUhEmain Spacing -> s
+KUhEmain :: String = "ku'e" 
+--         right terminator, NOI relative clauses 
+KUhO :: String = s:KUhOmain Spacing -> s
+KUhOmain :: String = "ku'o" 
+
+--         name descriptors 
+LA :: String = s:LAmain Spacing -> s
+LAmain :: String = "la" / "lai" / "la'i" 
+--         lerfu prefixes 
+LAU :: String = s:LAUmain Spacing -> s
+LAUmain :: String = "ce'a" / "lau" / "zai" / "tau" 
+--         sumti qualifiers 
+LAhE :: String = s:LAhEmain Spacing -> s
+LAhEmain :: String = "tu'a" / "lu'a" / "lu'o" / "la'e" / "vu'i" / "lu'i" / "lu'e" 
+--         sumti descriptors 
+LE :: String = s:LEmain Spacing -> s
+LEmain :: String = "le" / "lei" / "loi" / "lo" / "le'i" / "lo'i" / "le'e" / "lo'e" 
+--         possibly ungrammatical text right quote 
+LEhU :: String = s:LEhUmain Spacing -> s
+LEhUmain :: String = "le'u" 
+--         convert number to sumti 
+LI :: String = s:LImain Spacing -> s
+LImain :: String = "me'o"
+	/ "li" 
+--         grammatical text right quote 
+LIhU :: String = s:LIhUmain Spacing -> s
+LIhUmain :: String = "li'u" 
+--         elidable terminator for LI 
+LOhO :: String = s:LOhOmain Spacing -> s
+LOhOmain :: String = "lo'o" 
+--         possibly ungrammatical text left quote 
+LOhU :: String = s:LOhUmain Spacing -> s
+LOhUmain :: String = "lo'u" 
+--         grammatical text left quote 
+LU :: String = s:LUmain Spacing -> s
+LUmain :: String = "lu" 
+--         LAhE close delimiter 
+LUhU :: String = s:LUhUmain Spacing -> s
+LUhUmain :: String = "lu'u" 
+
+--         change MEX expressions to MEX operators 
+MAhO :: String = s:MAhOmain Spacing -> s
+MAhOmain :: String = "ma'o" 
+--         change numbers to utterance ordinals 
+MAI :: String = s:MAImain Spacing -> s
+MAImain :: String = "mo'o"
+	/ "mai" 
+--         converts a sumti into a tanru_unit 
+ME :: String = s:MEmain Spacing -> s
+MEmain :: String = "me" 
+--         terminator for ME 
+MEhU :: String = s:MEhUmain Spacing -> s
+MEhUmain :: String = "me'u" 
+--         change sumti to operand, inverse of LI 
+MOhE :: String = s:MOhEmain Spacing -> s
+MOhEmain :: String = "mo'e" 
+--         motion tense marker 
+MOhI :: String = s:MOhImain Spacing -> s
+MOhImain :: String = "mo'i" 
+--         change number to selbri 
+MOI :: String = s:MOImain Spacing -> s
+MOImain :: String = "mei" / "moi" / "si'e" / "cu'o" / "va'e" 
+
+--         bridi negation  
+NA :: String = s:NAmain Spacing -> s
+NAmain :: String = "ja'a"
+	/ "na" 
+--         attached to words to negate them 
+NAI :: String = s:NAImain Spacing -> s
+NAImain :: String = "nai" 
+--         scalar negation  
+NAhE :: String = s:NAhEmain Spacing -> s
+NAhEmain :: String = "to'e" / "je'a" / "na'e" / "no'e" 
+--         change a selbri into an operator 
+NAhU :: String = s:NAhUmain Spacing -> s
+NAhUmain :: String = "na'u" 
+--         change selbri to operand; inverse of MOI 
+NIhE :: String = s:NIhEmain Spacing -> s
+NIhEmain :: String = "ni'e" 
+--         new paragraph; change of subject 
+NIhO :: String = s:NIhOmain Spacing -> s
+NIhOmain :: String = "ni'o" / "no'i" 
+--         attaches a subordinate clause to a sumti 
+NOI :: String = s:NOImain Spacing -> s
+NOImain :: String = "voi" / "noi" / "poi" 
+--         abstraction  
+NU :: String = s:NUmain Spacing -> s
+NUmain :: String = "ni" / "du'u" / "si'o" / "nu" / "li'i" / "ka" / "jei" / "su'u" / "zu'o" / "mu'e" / "pu'u" / "za'i" 
+--         change operator to selbri; inverse of MOhE 
+NUhA :: String = s:NUhAmain Spacing -> s
+NUhAmain :: String = "nu'a" 
+--         marks the start of a termset 
+NUhI :: String = s:NUhImain Spacing -> s
+NUhImain :: String = "nu'i" 
+--         marks the middle and end of a termset 
+NUhU :: String = s:NUhUmain Spacing -> s
+NUhUmain :: String = "nu'u" 
+
+--         numbers and numeric punctuation 
+PA :: String = s:PAmain Spacing -> s
+PAmain :: String = "no" / "pa" / "re" / "ci" / "vo" / "mu" / "xa" / "ze" / "bi" / "so" / "dau" / "fei" / "gai" / "jau" / "rei" / "vai" / "pi" / "pi'e" / "fi'u" / "za'u" / "me'i" / "ni'u" / "ki'o" / "ce'i" / "ma'u" / "ra'e" / "da'a" / "so'a" / "ji'i" / "su'o" / "su'e" / "ro" / "rau" / "so'u" / "so'i" / "so'e" / "so'o" / "mo'a" / "du'e" / "te'o" / "ka'o" / "ci'i" / "tu'o" / "xo" / "pai" / "no'o" 
+--         afterthought termset connective prefix 
+PEhE :: String = s:PEhEmain Spacing -> s
+PEhEmain :: String = "pe'e" 
+--         forethought (Polish) flag 
+PEhO :: String = s:PEhOmain Spacing -> s
+PEhOmain :: String = "pe'o" 
+--         directions in time 
+PU :: String = s:PUmain Spacing -> s
+PUmain :: String = "ba" / "pu" / "ca" 
+
+--         flag for modified interpretation of GOhI 
+RAhO :: String = s:RAhOmain Spacing -> s
+RAhOmain :: String = "ra'o" 
+--         converts number to extensional tense 
+ROI :: String = s:ROImain Spacing -> s
+ROImain :: String = "re'u"
+	/ "roi" 
+
+SA :: String = s:SAmain Spacing -> s
+SAmain :: String = "sa"
+--         metalinguistic eraser to the beginning of
+--                                    the current utterance 
+--         conversions 
+SE :: String = s:SEmain Spacing -> s
+SEmain :: String = "se" / "te" / "ve" / "xe" 
+--         metalinguistic bridi insert marker 
+SEI :: String = s:SEImain Spacing -> s
+SEImain :: String = "sei"
+	/ "ti'o" 
+--         metalinguistic bridi end marker 
+SEhU :: String = s:SEhUmain Spacing -> s
+SEhUmain :: String = "se'u" 
+--         metalinguistic single word eraser 
+SI :: String = s:SImain Spacing -> s
+SImain :: String = "si" 
+--         reciprocal sumti marker 
+SOI :: String = s:SOImain Spacing -> s
+SOImain :: String = "soi" 
+--         metalinguistic eraser of the entire text 
+SU :: String = s:SUmain Spacing -> s
+SUmain :: String = "su" 
+
+--         tense interval properties 
+TAhE :: String = s:TAhEmain Spacing -> s
+TAhEmain :: String = "ru'i" / "ta'e" / "di'i" / "na'o" 
+--         closing gap for MEX constructs 
+TEhU :: String = s:TEhUmain Spacing -> s
+TEhUmain :: String = "te'u" 
+--         start compound lerfu 
+TEI :: String = s:TEImain Spacing -> s
+TEImain :: String = "tei" 
+--         left discursive parenthesis 
+TO :: String = s:TOmain Spacing -> s
+TOmain :: String = "to'i" / "to" 
+--         right discursive parenthesis 
+TOI :: String = s:TOImain Spacing -> s
+TOImain :: String = "toi" 
+--         multiple utterance scope mark 
+TUhE :: String = s:TUhEmain Spacing -> s
+TUhEmain :: String = "tu'e" 
+--         multiple utterance end scope mark 
+TUhU :: String = s:TUhUmain Spacing -> s
+TUhUmain :: String = "tu'u" 
+
+--         attitudinals, observationals, discursives 
+UI :: String = s:UImain Spacing -> s
+UImain :: String = ".i'a" / ".ie" / ".a'e" / ".u'i" / ".i'o" / ".i'e" / ".a'a" / ".ia" / ".o'i" / ".o'e" / ".e'e" / ".oi" / ".uo" / ".e'i" / ".u'o" / ".au" / ".ua" / ".a'i" / ".i'u" / ".ii" / ".u'a" / ".ui" / ".a'o" / ".ai" / ".a'u" / ".iu" / ".ei" / ".o'o" / ".e'a" / ".uu" / ".o'a" / ".o'u" / ".u'u" / ".e'o" / ".io" / ".e'u" / ".ue" / ".i'i" / ".u'e" / "ba'a" / "ja'o" / "ca'e" / "su'a" / "ti'e" / "ka'u" / "se'o" / "za'a" / "pe'i" / "ru'a" / "ju'a" / "ta'o" / "ra'u" / "li'a" / "ba'u" / "mu'a" / "do'a" / "to'u" / "va'i" / "pa'e" / "zu'u" / "sa'e" / "la'a" / "ke'u" / "sa'u" / "da'i" / "je'u" / "sa'a" / "kau" / "ta'u" / "na'i" / "jo'a" / "bi'u" / "li'o" / "pau" / "mi'u" / "ku'i" / "ji'a" / "si'a" / "po'o" / "pe'a" / "ro'i" / "ro'e" / "ro'o" / "ro'u" / "ro'a" / "re'e" / "le'o" / "ju'o" / "fu'i" / "dai" / "ga'i" / "zo'o" / "be'u" / "ri'e" / "se'i" / "se'a" / "vu'e" / "ki'a" / "xu" / "ge'e" / "bu'o" 
+
+--         distance in space-time 
+VA :: String = s:VAmain Spacing -> s
+VAmain :: String = "vi" / "va" / "vu" 
+--         end simple bridi or bridi-tail 
+VAU :: String = s:VAUmain Spacing -> s
+VAUmain :: String = "vau" 
+--         left MEX bracket 
+VEI :: String = s:VEImain Spacing -> s
+VEImain :: String = "vei" 
+--         right MEX bracket 
+VEhO :: String = s:VEhOmain Spacing -> s
+VEhOmain :: String = "ve'o" 
+--         MEX operator 
+VUhU :: String = s:VUhUmain Spacing -> s
+VUhUmain :: String = "ge'a" / "fu'u" / "pi'i" / "fe'i" / "vu'u" / "su'i" / "ju'u" / "gei" / "pa'i" / "fa'i" / "te'a" / "cu'a" / "va'a" / "ne'o" / "de'o" / "fe'a" / "sa'o" / "re'a" / "ri'o" / "sa'i" / "pi'a" / "si'i" 
+--         space-time interval size 
+VEhA :: String = s:VEhAmain Spacing -> s
+VEhAmain :: String = "ve'u" / "ve'a" / "ve'i" / "ve'e" 
+--         space-time dimensionality marker 
+VIhA :: String = s:VIhAmain Spacing -> s
+VIhAmain :: String = "vi'i" / "vi'a" / "vi'u" / "vi'e" 
+VUhO :: String = s:VUhOmain Spacing -> s
+VUhOmain :: String = "vu'o"
+--         glue between logically connected sumti
+--                                     and relative clauses 
+
+--         subscripting operator 
+XI :: String = s:XImain Spacing -> s
+XImain :: String = "xi" 
+
+--         hesitation 
+Y :: String = s:Ymain Spacing -> s
+Ymain :: String = ".y" 
+
+--         event properties - inchoative, etc. 
+ZAhO :: String = s:ZAhOmain Spacing -> s
+ZAhOmain :: String = "co'i" / "pu'o" / "co'u" / "mo'u" / "ca'o" / "co'a" / "de'a" / "ba'o" / "di'a" / "za'o" 
+--         time interval size tense 
+ZEhA :: String = s:ZEhAmain Spacing -> s
+ZEhAmain :: String = "ze'u" / "ze'a" / "ze'i" / "ze'e" 
+--         lujvo glue 
+ZEI :: String = s:ZEImain Spacing -> s
+ZEImain :: String = "zei" 
+--         time distance tense 
+ZI :: String = s:ZImain Spacing -> s
+ZImain :: String = "zu" / "za" / "zi" 
+--         conjoins relative clauses 
+ZIhE :: String = s:ZIhEmain Spacing -> s
+ZIhEmain :: String = "zi'e" 
+--         single word metalinguistic quote marker 
+ZO :: String = s:ZOmain Spacing -> s
+ZOmain :: String = "zo" 
+--         delimited quote marker 
+ZOI :: String = s:ZOImain Spacing -> s
+ZOImain :: String = "zoi" / "la'o" 
+--         prenex terminator (not elidable) 
+ZOhU :: String = s:ZOhUmain Spacing -> s
+ZOhUmain :: String = "zo'u" 
+
+
+{
+
+eval :: String -> Prop
+eval str = case tersmuasentence (tersmuParse "asentence" str) of
+-- eval :: String -> Sumti
+-- eval str = case tersmuterm (tersmuParse "term" str) of
+-- eval :: String -> String
+-- eval str = case tersmuCMENE (tersmuParse "CMENE" str) of
+-- eval :: String -> Char
+-- eval str = case tersmuLojbanLetter (tersmuParse "LojbanLetter" str) of
+	Parsed p _ _ -> p
+	NoParse e -> error (show e)
+}
