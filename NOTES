@@ -12,8 +12,45 @@ Handling quantifiers:
     partly a matter of the partial order of the parse tree, but partly of the
     (cross-level) total order of occurance in the text.
 
-    This actually fits the State Monad approach quite well.
+    This actually fits the State Monad approach quite well...
 
-    So when we hit a {da}, we look it up in the state - and if it isn't there,
-    add it along with quantifiers and relative clauses. State gets passed
-    along vertically and horizontally.
+Naive algorithm:
+    (Using a monad,) build up a prenex as we parse a statement/subsentence.
+    Every time we hit a currently unbound da, or a naku, or a tense/modal, we
+    add it to the end of the prenex.
+
+    Problem with this: it doesn't correctly handle the interaction between
+    sumti connectives and negation - CLL explicitly states (16.12.10-11) that
+    {ge xy gi zy na ku} == {na ku ga xy gi zy}. Presumably tenses and unbound
+    da should be handled analogously.
+
+Idea:
+    Treat sumti connectives just like quantifiers.
+    x .e y broda == \forall z \in {x,y}. z broda == z=(x and y). z broda
+    sim
+    x .o y broda == z=(x iff y). z broda
+
+    Semantics the obvious ones.
+
+    We could even add such quantifiers to handle termsets.
+
+    So now all is clear.
+
+    We have:
+    Term :: 
+    data Terms = Arglist Arguments
+	      | Negation Terms
+	      | Quantifier Number (Obj -> Terms)
+	      | Connective TruthTable (Obj -> Obj -> Terms)
+	      | Tag Tag Ojbect Terms
+
+    type Quantified
+
+
+    Remaining complexities:
+	{su'o broda be da} -> {da de poi broda da}
+
+	Tenses and modals are of quantificatory nature (sometimes inherently
+	(ta'e, ro roi), and always if JA-connected), so should go in the
+	prenex.
+
