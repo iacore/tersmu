@@ -37,15 +37,21 @@ Idea:
     So now all is clear.
 
     We have:
-    Term :: 
-    data Terms = Arglist Arguments
-	      | Negation Terms
-	      | Quantifier Number (Obj -> Terms)
-	      | Connective TruthTable (Obj -> Obj -> Terms)
-	      | Tag Tag Ojbect Terms
+    data QT = Arglist [Obj]
+	      | Negation QT
+	      | Quantifier Number (Obj -> QT)
+	      | Connective TruthTable (Obj -> Obj -> QT)
+	      | Tag Tag Ojbect QT
+    type QuantifiedTerms = QT
+    data TermCxt = {QT::QT, lastFA::Nat}
+    Term :: TermCxt -> TermCxt
+    
+    Actually, this is useless: can't even handle {A .a B .e C .a bo D}.
 
-    type Quantified
-
+    Instead, how about we just: have a ComplexSumti type, and have 'term'
+    initially return that; then make exporting to the prenex a step which
+    comes later. So the initial parsing returns something closely tied to the
+    lojban, and the hard work converting that to logic is done separately.
 
     Remaining complexities:
 	{su'o broda be da} -> {da de poi broda da}
