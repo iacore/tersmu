@@ -1,101 +1,116 @@
+-- vim:ft=haskell
 parser tersmu:
 
 {
+import Lojban
+
 import Data.Maybe
-import FOL
+import Control.Monad.State
+import Data.Map (Map)
+import qualified Data.Map as Map
 
-data Sumti = Conjunction TruthTable Sumti Sumti
-	| Constant Obj
-	deriving (Show, Eq)
-type TruthTable = [(Bool,Bool)]
-type Brivla = String
-
-expandBridi :: Brivla -> [Sumti] -> Prop
-expandBridi b ss = expandBridiAccum b [] ss
-expandBridiAccum :: Brivla -> [Obj] -> [Sumti] -> Prop
-expandBridiAccum b os [] = Rel b os
-expandBridiAccum b os ((Constant o):ss) = expandBridiAccum b (os++[o]) ss
-expandBridiAccum b os ((Conjunction tt s1 s2):ss) =
-    let sub1 = expandBridiAccum b os (s1:ss)
-	sub2 = expandBridiAccum b os (s2:ss) in
-	bigOr $ map (\(t1,t2) -> And (if t1 then sub1 else (Not sub1))
-				     (if t2 then sub2 else (Not sub2)))
-		    tt
-
-bigOr :: [Prop] -> Prop
-bigOr [] = Not Eet
-bigOr [p] = p
-bigOr (p:ps) = Or p (bigOr ps)
 }
 
-top asentence
+top asubsentence
 -- top term
 -- top CMENE
 -- top LojbanLetter
 
-asentence :: Prop
-    = s:sentence !Char -> s
+asubsentence :: Subsentence
+    = subs:subsentence !Char -> subs
 
-sentence :: Prop
-    = mt1:(t:terms (CU free* -> {()})? -> t)?
-	{ (bridi, t2) }:bridiTail
-	-> { expandBridi bridi ((fromMaybe [] mt1)++t2) }
+subsentence :: Subsentence
+    = p:prenex? s:sentence -> {
+	let (bv,ts) = s
+	    ps = fromMaybe [] p
+	    in Subsentence ps ts bv }
 
-terms :: {[Sumti]} = term+
+prenex :: {[Term]} = ts:terms ZOhU -> ts
 
-term :: Sumti = sumti
+sentence :: {(Brivla, [Term])}
+    = mts1:(ts:terms CU? -> ts)?
+	{ (brivla, ts2) }:bridiTail
+	-> { (brivla, ((fromMaybe [] mts1)++ts2))}
+
+terms :: {[Term]} = term+
+
+term :: Term = s:sumti -> {Sumti s}
+	    / NA KU -> {Negation}
 
 sumti :: Sumti = sumti1
 
 sumti1 :: Sumti = s1:sumti2
-    eks:( tt:ek KE free* s:sumti
-	(KEhE free* -> {()})? -> {(tt,s)} )?
+    eks:( con:ek KE s:sumti
+	(KEhE -> {()})? -> {(con,s)} )?
     -> { if (isNothing eks) then s1
-			    else (let Just (tt,s2) = eks in
-				      Conjunction tt s1 s2) }
+			    else (let Just (con,s2) = eks in
+				      Connected con s1 s2) }
 
 sumti2 :: Sumti = s:sumti3 ekss:(_eksumti)*
-    -> { foldl (\s1 -> \(tt,s2) -> Conjunction tt s1 s2) s ekss }
+    -> { foldl (\s1 -> \(con,s2) -> Connected con s1 s2) s ekss }
 -- _eksumti: helper for sumti2
-_eksumti :: {(TruthTable, Sumti)}
-    = tt:ek s:sumti3 -> {(tt,s)}
+_eksumti :: {(Connective, Sumti)}
+    = con:ek s:sumti3 -> {(con,s)}
 
 sumti3 :: Sumti = s1:sumti4
-	eks:( tt:ek BO free* s:sumti3 -> {(tt,s)} )?
+	eks:( con:ek BO s:sumti3 -> {(con,s)} )?
     -> { if (isNothing eks) then s1
-			    else (let Just (tt,s2) = eks in
-				      Conjunction tt s1 s2) }
+			    else (let Just (con,s2) = eks in
+				      Connected con s1 s2) }
 
-sumti4 :: Sumti = sumti6
-	/ tt:gek s1:sumti gik s2:sumti4 -> { Conjunction tt s1 s2 }
+sumti4 :: Sumti = s:sumti5 -> {Sumti5 s}
+	/ pcon:gek s1:sumti b:gik s2:sumti4 -> { Connected (pcon b) s1 s2 }
 
-sumti6 :: Sumti = "la":LA s:CMENE -> {Constant s}
+sumti5 :: Sumti5 = s:sumti6 -> {SumtiAtom s}
+	/ q:quantifier? s:sumti6 rels:relativeClauses?
+	    -> {Complex q (fromMaybe [] rels) s}
+
+relativeClauses :: {[RelClause]}
+	= r:relativeClause rs:(ZIhE r:relativeClause -> r)*
+	    -> {(r:rs)}
+
+relativeClause :: RelClause
+	= "poi":NOI subs:subsentence KUhO? -> {Restrictive subs}
+	/ "noi":NOI subs:subsentence KUhO? -> {Incidental subs}
+
+sumti6 :: SumtiAtom = "la":LA s:CMENE -> {Constant s}
     / "mi":KOhA -> {Constant "mi"}
     / "do":KOhA -> {Constant "do"}
     / "ti":KOhA -> {Constant "ti"}
     / "ta":KOhA -> {Constant "ta"}
     / "tu":KOhA -> {Constant "tu"}
+    / "da":KOhA -> {Variable 1}
+    / "de":KOhA -> {Variable 2}
+    / "di":KOhA -> {Variable 3}
+    / "ke'a":KOhA -> {RelVar}
+    / "ce'u":KOhA -> {LambdaVar}
 
-ek :: TruthTable = NA?
-	se:(SE)? tt:ekA NAI?
-    -> tt -- FIXME - handle negations and se
+quantifier :: Quantifier = q:number BOI? -> q
 
-gek :: TruthTable = se:(SE)? tt:gekGA NAI?
-    -> tt -- FIXME - handle negations and se
+number :: Quantifier = ns:PA+ -> {concat ns}
 
-gik :: {()} = GI-> {()}
+ek :: Connective = ln:NA?
+	se:(SE)? conchar:ekA rn:NAI?
+    -> { Connective (isNothing ln) 
+		    (if (isJust se) && conchar=='u' then 'U' else conchar)
+		    (isNothing rn) }
 
-ekA :: TruthTable = tt:( ".a":A -> {[(True,False),(True,True),(False,True)]} 
-    / ".e":A -> {[(True,True)]} 
-    / ".o":A -> {[(True,True),(False,False)]} 
-    / ".u":A -> {[(True,False),(True,True)]} ) -> tt
+gek :: {Bool -> Connective} = se:(SE)? conchar:gekGA ln:NAI?
+    -> { Connective (isNothing ln) 
+		    (if (isJust se) && conchar=='u' then 'U' else conchar) }
+
+gik :: Bool = GI rn:NAI? -> { isNothing rn }
+
+ekA :: Char = ".a":A -> {'a'}
+    / ".e":A -> {'e'}
+    / ".o":A -> {'o'}
+    / ".u":A -> {'u'}
     -- / "ji":A
 
-gekGA :: TruthTable = tt:( "ga":GA -> {[(True,False),(True,True),(False,True)]} 
-    / "ge":GA -> {[(True,True)]} 
-    / "go":GA -> {[(True,True),(False,False)]} 
-    / "gu":GA -> {[(True,False),(True,True)]} ) -> tt
-    -- / "ji":GA 
+gekGA :: Char = "ga":GA -> {'a'}
+    / "ge":GA -> {'e'}
+    / "go":GA -> {'o'}
+    / "gu":GA -> {'u'}
 
 bridiTail :: {(Brivla, [Sumti])}
     = b:BRIVLA ts:terms? -> {(b, fromMaybe [] ts)}
@@ -544,8 +559,8 @@ ZOhUmain :: String = "zo'u"
 
 {
 
-eval :: String -> Prop
-eval str = case tersmuasentence (tersmuParse "asentence" str) of
+eval :: String -> Subsentence
+eval str = case tersmuasubsentence (tersmuParse "asubsentence" str) of
 -- eval :: String -> Sumti
 -- eval str = case tersmuterm (tersmuParse "term" str) of
 -- eval :: String -> String

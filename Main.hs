@@ -1,14 +1,21 @@
 module Main where
 
 import Tersmu
+import Lojban
 import FOL
+
+import Control.Monad.State
+import Data.Map (Map)
+import qualified Data.Map as Map
 
 repl :: IO ()
 repl = do 
     putStr "> "
     text <- getLine
-    let p = eval text in
-	putStr $ show p ++ "\n\n" ++ "PNF: " ++ show (pnf p) ++ "\n\n"
+    let s = eval text
+	p = evalState (sentToProp s) Map.empty
+	in
+	putStr $ show s ++ "\n\nProp:" ++ show p ++ "\n\nPNF: " ++ show (pnf p) ++ "\n\n"
     repl
 
 main :: IO()

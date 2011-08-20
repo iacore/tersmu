@@ -7,6 +7,7 @@ data Prop
     | And   Prop Prop
     | Or    Prop Prop
     | Impl  Prop Prop
+    | Equiv  Prop Prop
     | Rel   Rel [Obj]
     | Forall (Obj -> Prop)
     | Exists (Obj -> Prop)
@@ -43,6 +44,9 @@ _serialise (Or p1 p2) f d   = do {
 _serialise (Impl p1 p2) f d = do {
     s1 <- _serialise p1 f (d+1); s2 <- _serialise p2 f (d+1);
     return $ "( " ++ s1 ++ " --> " ++ (if f then "\n"++(replicate (d+1) '\t') else "") ++ s2 ++ " )" }
+_serialise (Equiv p1 p2) f d = do {
+    s1 <- _serialise p1 f (d+1); s2 <- _serialise p2 f (d+1);
+    return $ "( " ++ s1 ++ " <-> " ++ (if f then "\n"++(replicate (d+1) '\t') else "") ++ s2 ++ " )" }
 _serialise (Rel r os) f d   = return $ r ++ "(" ++ unwords os ++ ")"
 _serialise (Forall q) f d   = do
     n <- get
@@ -60,13 +64,15 @@ _serialise Eet f d	    = return "_|_"
 
 pnf :: Prop -> Prop
 pnf (Impl p1 p2) = Or (Not (pnf p1)) (pnf p2)
+pnf (Equiv p1 p2) = Or (And (Not (pnf p1)) (pnf p2))
+		       (And (pnf p1) (Not (pnf p2)))
 pnf (Not (And p1 p2)) = Or (Not (pnf p1)) (Not (pnf p2))
 pnf (Not (Or p1 p2)) = And (Not (pnf p1)) (Not (pnf p2))
 pnf (Not (Not p)) = pnf p
 pnf (And (Or p1 p2) p3) = pnf (Or (And p1 p3) (And p2 p3))
 pnf (And p1 (Or p2 p3)) = pnf (Or (And p1 p2) (And p1 p3))
-pnf (Not (Exists f)) = Forall (\x -> Not (f x))
-pnf (Not (Forall f)) = Exists (\x -> Not (f x))
+pnf (Not (Exists f)) = Forall (\x -> pnf (Not (f x)))
+pnf (Not (Forall f)) = Exists (\x -> pnf (Not (f x)))
 pnf (And (Exists f) p2) = Exists (\x -> pnf (And (f x) p2))
 pnf (Or (Exists f) p2) = Exists (\x -> pnf (Or (f x) p2))
 pnf (And (Forall f) p2) = Forall (\x -> pnf (And (f x) p2))
