@@ -54,16 +54,17 @@ _eksumti :: {(Connective, Sumti)}
 
 sumti3 :: Sumti = s1:sumti4
 	eks:( con:ek BO s:sumti3 -> {(con,s)} )?
-    -> { if (isNothing eks) then s1
-			    else (let Just (con,s2) = eks in
-				      Connected con s1 s2) }
+	    -> { if (isNothing eks) then s1
+				    else (let Just (con,s2) = eks in
+					      Connected con s1 s2) }
 
 sumti4 :: Sumti = s:sumti5 -> {Sumti5 s}
 	/ pcon:gek s1:sumti b:gik s2:sumti4 -> { Connected (pcon b) s1 s2 }
 
-sumti5 :: Sumti5 = s:sumti6 -> {SumtiAtom s}
-	/ q:quantifier? s:sumti6 rels:relativeClauses?
+sumti5 :: Sumti5 =
+	q:quantifier? s:sumti6 rels:relativeClauses?
 	    -> {Complex q (fromMaybe [] rels) s}
+	/ s:sumti6 -> {SumtiAtom s}
 
 relativeClauses :: {[RelClause]}
 	= r:relativeClause rs:(ZIhE r:relativeClause -> r)*

@@ -19,9 +19,11 @@ data Term = Sumti Sumti
 data Sumti = Connected Connective Sumti Sumti
 	   | Sumti5 Sumti5
 	   deriving (Eq, Show, Ord)
+
 data Sumti5 = Complex (Maybe Quantifier) [RelClause] SumtiAtom
 	    | SumtiAtom SumtiAtom
 	    deriving (Eq, Show, Ord)
+
 data RelClause = Restrictive Subsentence  -- poi
 	       | Incidental Subsentence  -- noi
 	       deriving (Eq, Show, Ord)
@@ -52,91 +54,74 @@ connToFOL (Connective b1 c False) p1 p2 =
 
 type Bindings = Map SumtiAtom Obj
 
-data PropCxt = PropCxt {bindings::Bindings, arglist::[Obj],
-	implicitVars::[SumtiAtom]} 
+data PropCxt = PropCxt {bindings::Bindings, implicitVars::[SumtiAtom]} 
 emptyPropCxt :: PropCxt
-emptyPropCxt = PropCxt {bindings=Map.empty, arglist=[], implicitVars=[]}
+emptyPropCxt = PropCxt Map.empty []
 
-sentToProp :: Subsentence -> State PropCxt Prop
-sentToProp subs = do PropCxt {bindings=b, implicitVars=vs} <- get
-		     return $ evalState (sentToPropArgs (prenex subs)
-					    (terms subs) (selbri subs))
-				  (PropCxt {bindings = b, arglist = [],
-				      implicitVars = vs})
-sentToPropArgs :: [Term] -> [Term] -> Selbri -> State PropCxt Prop
---sentToPropArgs a b c | trace ("sentToPropArgs: "
+sentToProp :: Subsentence -> PropCxt -> Prop
+sentToProp (Subsentence ps ts sb) pc = sentToProp' ps ts sb pc []
+
+sentToProp' :: [Term] -> [Term] -> Selbri -> PropCxt -> [Obj] -> Prop
+--sentToProp' a b c | trace ("sentToProp': "
 --    ++ show a ++ " " ++ show b ++ " " ++ show c) False = undefined
-sentToPropArgs [] [] sb =
-    do vs <- gets implicitVars
-       case vs of [] -> do os <- gets arglist
-			   return $ Rel sb os
-		  (v:vs) ->
-		      do s <- get
-			 put s{implicitVars=vs}
-			 sentToPropArgs [] [Sumti (Sumti5 (SumtiAtom v))] sb
+sentToProp' [] [] sb (PropCxt bs vs) as =
+       case vs of [] -> Rel sb as
+		  (v:vs') -> sentToProp' [] [Sumti (Sumti5 (SumtiAtom v))]
+			      sb (PropCxt bs vs') as
 
-sentToPropArgs [] (t:ts) sb =
-    do s <- get
-       case t of
-	    Negation -> sentToPropArgs [t] ts sb
-	    Sumti (Connected con s1 s2) ->
-		let p1 = evalState (sentToPropArgs [] ((Sumti s1):ts) sb) s
-		    p2 = evalState (sentToPropArgs [] ((Sumti s2):ts) sb) s
-		    in return $ connToFOL con p1 p2
-	    Sumti (Sumti5 sst) ->
-		case sst of
-		     Complex q rels (Variable v) ->
-			 case (Map.lookup (Variable v) (bindings s)) of
-			      Nothing -> sentToPropArgs [t]
-				  ((Sumti (Sumti5 (SumtiAtom
-					(Variable v)))):ts) sb
-			      Just o -> sentToPropArgs []
-				  ((Sumti (Sumti5 (SumtiAtom
-					(Constant o)))):ts) sb
-		     SumtiAtom (Constant o) ->
-			do put s{arglist = (arglist s)++[o]}
-			   sentToPropArgs [] ts sb
-		     SumtiAtom (Variable v) ->
-			 sentToPropArgs []
-			     ((Sumti (Sumti5 (Complex Nothing []
-				(Variable v)))):ts) sb
-		     SumtiAtom RelVar ->
-			 do put s{implicitVars = delete RelVar (implicitVars s)}
-			    let Just o = (Map.lookup RelVar (bindings s))
-			    sentToPropArgs [] 
-				(Sumti (Sumti5 (SumtiAtom (Constant o))):ts) sb
+sentToProp' [] (t:ts) sb pc@(PropCxt bs vs) as =
+    case t of
+	 Negation -> sentToProp' [t] ts sb pc as
+	 Sumti (Connected con s1 s2) ->
+		let p1 = sentToProp' [] ((Sumti s1):ts) sb pc as
+		    p2 = sentToProp' [] ((Sumti s2):ts) sb pc as
+		    in connToFOL con p1 p2
+	 Sumti (Sumti5 sst) ->
+	     case sst of
+		  Complex q rels (Variable v) ->
+		      case (Map.lookup (Variable v) bs) of
+			   Nothing ->
+			       sentToProp' [t] ((Sumti (Sumti5 (SumtiAtom
+					(Variable v)))):ts) sb pc as
+			   Just o ->
+			       sentToProp' [] ((Sumti (Sumti5 (SumtiAtom
+				      (Constant o)))):ts) sb pc as
+		  SumtiAtom (Constant o) ->
+		      sentToProp' [] ts sb pc (as ++ [o])
+		  SumtiAtom (Variable v) ->
+		      sentToProp' [] ((Sumti (Sumti5 (Complex Nothing []
+				(Variable v)))):ts) sb pc as
+		  SumtiAtom RelVar ->
+		      let vs' = delete RelVar vs
+			  Just o = (Map.lookup RelVar bs)
+			  in sentToProp' [] 
+			      (Sumti (Sumti5 (SumtiAtom (Constant o))):ts)
+			      sb (PropCxt bs vs') as
 
 
-sentToPropArgs (Negation:pts) ts sb =
-    liftM Not $ sentToPropArgs pts ts sb
-sentToPropArgs ((Sumti (Sumti5 (SumtiAtom (Variable v)))):pts) ts sb =
-    sentToPropArgs
-	((Sumti (Sumti5 (Complex Nothing [] (Variable v)))):pts) ts sb
-sentToPropArgs ((Sumti (Sumti5 (Complex q rels (Variable v)))):pts) ts sb =
-    do s <- get
-       return $ (case q of {(Just "ro") -> Forall;
-			    (Just "su'o") -> Exists;
-			    (Nothing) -> Exists }) (\x ->
-		let prependRels :: [RelClause] -> Prop -> Prop 
-		    prependRels [] p = p
-		    prependRels ((Restrictive subs):rels) p =
-			(case q of Just "ro" -> Impl
-			           Just "su'o" -> And
-			           Nothing -> And)
-			   ((evalState (evalRelClause subs) s) x)
-				      (prependRels rels p)
-		    in
-		prependRels rels $ let substate = s{bindings=(
-				  Map.insert (Variable v) x (bindings s))} in
-			evalState (sentToPropArgs pts ts sb) substate 
+sentToProp' (Negation:pts) ts sb pc as =
+    Not $ sentToProp' pts ts sb pc as
+sentToProp' ((Sumti (Sumti5 (SumtiAtom (Variable v)))):pts) ts sb pc as =
+    sentToProp'
+	((Sumti (Sumti5 (Complex Nothing [] (Variable v)))):pts) ts sb pc as
+sentToProp' ((Sumti (Sumti5 (Complex q rels (Variable v)))):pts) ts sb
+	pc@(PropCxt bs vs) as =
+    (case q of {(Just "ro") -> Forall;
+	  (Just "su'o") -> Exists;
+	  (Nothing) -> Exists }) (\x ->
+	      let prependRels :: [RelClause] -> Prop -> Prop 
+		  prependRels [] p = p
+		  prependRels ((Restrictive subs):rels) p =
+		      (case q of Just "ro" -> Impl
+				 Just "su'o" -> And
+				 Nothing -> And)
+			    (evalRelClause subs pc x)
+			    (prependRels rels p)
+	       in
+		prependRels rels $
+		    sentToProp' pts ts sb
+			(PropCxt (Map.insert (Variable v) x bs) vs) as
 	      )
-evalRelClause :: Subsentence -> State PropCxt (Obj -> Prop)
-evalRelClause subs = do pc@(PropCxt {bindings=b, implicitVars=vs}) <- get
-			return $ \x -> (
-			    let pc' = PropCxt {
-				    bindings = (Map.insert RelVar x b),
-				    implicitVars = (RelVar:vs),
-				    arglist = [] } in
-			    evalState (sentToProp subs) pc'
-			    )
-						 
+evalRelClause :: Subsentence -> PropCxt -> Obj -> Prop
+evalRelClause subs pc@(PropCxt bs vs) x =
+    sentToProp subs (PropCxt (Map.insert RelVar x bs) (RelVar:vs))
