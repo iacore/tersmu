@@ -13,7 +13,7 @@ repl = do
     putStr "> "
     text <- getLine
     let s = eval text
-	p = evalState (sentToProp s) Map.empty
+	p = evalState (sentToProp s) emptyPropCxt
 	in
 	putStr $ show s ++ "\n\nProp:" ++ show p ++ "\n\nPNF: " ++ show (pnf p) ++ "\n\n"
     repl

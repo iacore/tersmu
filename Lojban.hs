@@ -4,8 +4,11 @@ import FOL
 
 import Data.Maybe
 import Control.Monad.State
+import Data.List
 import Data.Map (Map)
 import qualified Data.Map as Map
+
+import Debug.Trace
 
 data Subsentence = Subsentence {prenex::[Term], terms::[Term], selbri::Selbri}
 		 deriving (Eq, Show, Ord)
@@ -51,6 +54,8 @@ type Bindings = Map SumtiAtom Obj
 
 data PropCxt = PropCxt {bindings::Bindings, arglist::[Obj],
 	implicitVars::[SumtiAtom]} 
+emptyPropCxt :: PropCxt
+emptyPropCxt = PropCxt {bindings=Map.empty, arglist=[], implicitVars=[]}
 
 sentToProp :: Subsentence -> State PropCxt Prop
 sentToProp subs = do PropCxt {bindings=b, implicitVars=vs} <- get
@@ -59,10 +64,16 @@ sentToProp subs = do PropCxt {bindings=b, implicitVars=vs} <- get
 				  (PropCxt {bindings = b, arglist = [],
 				      implicitVars = vs})
 sentToPropArgs :: [Term] -> [Term] -> Selbri -> State PropCxt Prop
-sentToPropArgs [] [] sb = do vs <- gets implicitVars
-			     case vs of [] -> do os <- gets arglist
-						 return $ Rel sb os
-					(v:vs) -> sentToPropArgs [] [v] sb
+--sentToPropArgs a b c | trace ("sentToPropArgs: "
+--    ++ show a ++ " " ++ show b ++ " " ++ show c) False = undefined
+sentToPropArgs [] [] sb =
+    do vs <- gets implicitVars
+       case vs of [] -> do os <- gets arglist
+			   return $ Rel sb os
+		  (v:vs) ->
+		      do s <- get
+			 put s{implicitVars=vs}
+			 sentToPropArgs [] [Sumti (Sumti5 (SumtiAtom v))] sb
 
 sentToPropArgs [] (t:ts) sb =
     do s <- get
@@ -89,6 +100,12 @@ sentToPropArgs [] (t:ts) sb =
 			 sentToPropArgs []
 			     ((Sumti (Sumti5 (Complex Nothing []
 				(Variable v)))):ts) sb
+		     SumtiAtom RelVar ->
+			 do put s{implicitVars = delete RelVar (implicitVars s)}
+			    let Just o = (Map.lookup RelVar (bindings s))
+			    sentToPropArgs [] 
+				(Sumti (Sumti5 (SumtiAtom (Constant o))):ts) sb
+
 
 sentToPropArgs (Negation:pts) ts sb =
     liftM Not $ sentToPropArgs pts ts sb
@@ -106,7 +123,7 @@ sentToPropArgs ((Sumti (Sumti5 (Complex q rels (Variable v)))):pts) ts sb =
 			(case q of Just "ro" -> Impl
 			           Just "su'o" -> And
 			           Nothing -> And)
-			   ((evalState (evalRelClause subs) (bindings s)) x)
+			   ((evalState (evalRelClause subs) s) x)
 				      (prependRels rels p)
 		    in
 		prependRels rels $ let substate = s{bindings=(
