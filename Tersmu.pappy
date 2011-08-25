@@ -27,14 +27,15 @@ subsentence :: Subsentence
 
 prenex :: {[Term]} = ts:terms ZOhU -> ts
 
-sentence :: {(Brivla, [Term])}
+sentence :: {(Selbri, [Term])}
     = mts1:(ts:terms CU? -> ts)?
-	{ (brivla, ts2) }:bridiTail
-	-> { (brivla, ((fromMaybe [] mts1)++ts2))}
+	{ (sb, ts2) }:bridiTail
+	-> { (sb, ((fromMaybe [] mts1)++[SelbriMarker]++ts2))}
 
 terms :: {[Term]} = term+
 
-term :: Term = s:sumti -> {Sumti s}
+term :: Term = s:sumti -> {Sumti Untagged s}
+	    / n:tagFA s:sumti -> {Sumti (FA n) s}
 	    / NA KU -> {Negation}
 
 sumti :: Sumti = sumti1
@@ -62,9 +63,9 @@ sumti4 :: Sumti = s:sumti5 -> {Sumti5 s}
 	/ pcon:gek s1:sumti b:gik s2:sumti4 -> { Connected (pcon b) s1 s2 }
 
 sumti5 :: Sumti5 =
-	q:quantifier? s:sumti6 rels:relativeClauses?
+	s:sumti6 !relativeClauses -> {SumtiAtom s}
+	/ q:quantifier? s:sumti6 rels:relativeClauses?
 	    -> {Complex q (fromMaybe [] rels) s}
-	/ s:sumti6 -> {SumtiAtom s}
 
 relativeClauses :: {[RelClause]}
 	= r:relativeClause rs:(ZIhE r:relativeClause -> r)*
@@ -83,8 +84,8 @@ sumti6 :: SumtiAtom = "la":LA s:CMENE -> {Constant s}
     / "da":KOhA -> {Variable 1}
     / "de":KOhA -> {Variable 2}
     / "di":KOhA -> {Variable 3}
-    / "ke'a":KOhA -> {RelVar}
-    / "ce'u":KOhA -> {LambdaVar}
+    / "ke'a":KOhA -> {RelVar 1}
+    / "ce'u":KOhA -> {LambdaVar 1}
 
 quantifier :: Quantifier = q:number BOI? -> q
 
@@ -113,8 +114,25 @@ gekGA :: Char = "ga":GA -> {'a'}
     / "go":GA -> {'o'}
     / "gu":GA -> {'u'}
 
-bridiTail :: {(Brivla, [Sumti])}
-    = b:BRIVLA ts:terms? -> {(b, fromMaybe [] ts)}
+bridiTail :: {(Selbri, [Sumti])}
+    = sb:selbri ts:terms? -> {(sb, fromMaybe [] ts)}
+
+selbri :: Selbri
+    = bv:BRIVLA -> {Brivla bv}
+    / n:convSE sb:selbri -> {Permuted n sb}
+
+convSE :: Integer
+    = "se":SE -> {2}
+    / "te":SE -> {3}
+    / "ve":SE -> {4}
+    / "xe":SE -> {5}
+
+tagFA :: Integer
+    = "fa":FA -> {1}
+    / "fe":FA -> {2}
+    / "fi":FA -> {3}
+    / "fo":FA -> {4}
+    / "fu":FA -> {5}
 
 free :: {()}
     = TO sentence (TOI->{()})? -> {()}
