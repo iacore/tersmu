@@ -21,16 +21,16 @@ asubsentence :: Subsentence
 
 subsentence :: Subsentence
     = p:prenex? s:sentence -> {
-	let (bv,ts) = s
+	let (ts, bt) = s
 	    ps = fromMaybe [] p
-	    in Subsentence ps ts bv }
+	    in Subsentence ps ts bt }
 
-prenex :: {[Term]} = ts:terms ZOhU -> ts
+prenex :: {[Term]} = ps:terms ZOhU -> ps
 
-sentence :: {(Selbri, [Term])}
+sentence :: {([Term], BridiTail)}
     = mts1:(ts:terms CU? -> ts)?
-	{ (sb, ts2) }:bridiTail
-	-> { (sb, ((fromMaybe [] mts1)++[SelbriMarker]++ts2))}
+	bt:bridiTail
+	-> { (fromMaybe [] mts1, bt) }
 
 terms :: {[Term]} = term+
 
@@ -45,10 +45,10 @@ sumti1 :: Sumti = s1:sumti2
 	(KEhE -> {()})? -> {(con,s)} )?
     -> { if (isNothing eks) then s1
 			    else (let Just (con,s2) = eks in
-				      Connected con s1 s2) }
+				      ConnectedSumti con s1 s2) }
 
 sumti2 :: Sumti = s:sumti3 ekss:(_eksumti)*
-    -> { foldl (\s1 -> \(con,s2) -> Connected con s1 s2) s ekss }
+    -> { foldl (\s1 -> \(con,s2) -> ConnectedSumti con s1 s2) s ekss }
 -- _eksumti: helper for sumti2
 _eksumti :: {(Connective, Sumti)}
     = con:ek s:sumti3 -> {(con,s)}
@@ -57,10 +57,10 @@ sumti3 :: Sumti = s1:sumti4
 	eks:( con:ek BO s:sumti3 -> {(con,s)} )?
 	    -> { if (isNothing eks) then s1
 				    else (let Just (con,s2) = eks in
-					      Connected con s1 s2) }
+					      ConnectedSumti con s1 s2) }
 
 sumti4 :: Sumti = s:sumti5 -> {Sumti5 s}
-	/ pcon:gek s1:sumti b:gik s2:sumti4 -> { Connected (pcon b) s1 s2 }
+	/ pcon:gek s1:sumti b:gik s2:sumti4 -> { ConnectedSumti (pcon b) s1 s2 }
 
 sumti5 :: Sumti5 =
 	s:sumti6 !relativeClauses -> {SumtiAtom s}
@@ -97,6 +97,12 @@ ek :: Connective = ln:NA?
 		    (if (isJust se) && conchar=='u' then 'U' else conchar)
 		    (isNothing rn) }
 
+gihek :: Connective = ln:NA?
+	se:(SE)? conchar:gihekGIhA rn:NAI?
+    -> { Connective (isNothing ln) 
+		    (if (isJust se) && conchar=='u' then 'U' else conchar)
+		    (isNothing rn) }
+
 gek :: {Bool -> Connective} = se:(SE)? conchar:gekGA ln:NAI?
     -> { Connective (isNothing ln) 
 		    (if (isJust se) && conchar=='u' then 'U' else conchar) }
@@ -109,17 +115,57 @@ ekA :: Char = ".a":A -> {'a'}
     / ".u":A -> {'u'}
     -- / "ji":A
 
+gihekGIhA :: Char = "gi'a":GIhA -> {'a'}
+    / "gi'e":GIhA -> {'e'}
+    / "gi'o":GIhA -> {'o'}
+    / "gi'u":GIhA -> {'u'}
+
 gekGA :: Char = "ga":GA -> {'a'}
     / "ge":GA -> {'e'}
     / "go":GA -> {'o'}
     / "gu":GA -> {'u'}
 
-bridiTail :: {(Selbri, [Sumti])}
-    = sb:selbri ts:terms? -> {(sb, fromMaybe [] ts)}
+bridiTail :: BridiTail
+    = bt1:bridiTail1 gihek:(con:gihek KE bt2:bridiTail KEhE? -> {(con, bt2)})?
+	tts:tailTerms
+	    -> {
+		case gihek of Nothing -> extendTail bt1 tts
+			      Just (con, bt2) ->
+				  ConnectedBT con (extendTail bt1 tts)
+						  (extendTail bt2 tts)}
+
+bridiTail1 :: BridiTail
+    = bt:bridiTail2 giheks:_gihekbt*
+    -> { foldl (\bt1 -> \(con,bt2,tts) ->
+	ConnectedBT con (extendTail bt1 tts)
+			(extendTail bt2 tts)
+	    ) bt giheks }
+-- _gihekbt: helper for bridiTail1
+_gihekbt :: {(Connective, BridiTail, [Term])}
+    = con:gihek bt:bridiTail2 tts:tailTerms -> {(con, bt, tts)}
+
+bridiTail2 :: BridiTail
+    = bt1:bridiTail3
+	gihek:(con:gihek BO bt2:bridiTail2 tts:tailTerms -> {(con,bt2,tts)})?
+	    -> {
+		case gihek of Nothing -> bt1
+			      Just (con, bt2, tts) ->
+				  ConnectedBT con (extendTail bt1 tts)
+						  (extendTail bt2 tts)}
+
+bridiTail3 :: BridiTail
+    = sb:selbri ts:tailTerms -> { BridiTail3 sb ts }
+
+tailTerms :: {[Term]}
+    = ts:term* VAU? -> ts
 
 selbri :: Selbri
+    = ("ja'a":NA -> {})? tu:tanruUnit -> {TanruUnit tu}
+    / "na":NA sb:selbri -> {Negated sb}
+
+tanruUnit :: TanruUnit
     = bv:BRIVLA -> {Brivla bv}
-    / n:convSE sb:selbri -> {Permuted n sb}
+    / n:convSE tu:tanruUnit -> {Permuted n tu}
 
 convSE :: Integer
     = "se":SE -> {2}
