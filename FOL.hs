@@ -62,32 +62,74 @@ _serialise (Exists q) f d   = do
            return $ "EX " ++ v ++ ". " ++ s
 _serialise Eet f d	    = return "_|_"
 
+
+-- XXX: broken
 pnf :: Prop -> Prop
-pnf (Impl p1 p2) = Or (Not (pnf p1)) (pnf p2)
-pnf (Equiv p1 p2) = Or (And (Not (pnf p1)) (pnf p2))
-		       (And (pnf p1) (Not (pnf p2)))
-pnf (Not (And p1 p2)) = Or (Not (pnf p1)) (Not (pnf p2))
-pnf (Not (Or p1 p2)) = And (Not (pnf p1)) (Not (pnf p2))
-pnf (Not (Not p)) = pnf p
-pnf (And (Or p1 p2) p3) = pnf (Or (And p1 p3) (And p2 p3))
-pnf (And p1 (Or p2 p3)) = pnf (Or (And p1 p2) (And p1 p3))
-pnf (Not (Exists f)) = Forall (\x -> pnf (Not (f x)))
-pnf (Not (Forall f)) = Exists (\x -> pnf (Not (f x)))
-pnf (And (Exists f) p2) = Exists (\x -> pnf (And (f x) p2))
-pnf (Or (Exists f) p2) = Exists (\x -> pnf (Or (f x) p2))
-pnf (And (Forall f) p2) = Forall (\x -> pnf (And (f x) p2))
-pnf (Or (Forall f) p2) = Forall (\x -> pnf (Or (f x) p2))
-pnf (And p1 (Exists f)) = Exists (\x -> pnf (And p1 (f x)))
-pnf (Or p1 (Exists f)) = Exists (\x -> pnf (Or p1 (f x)))
-pnf (And p1 (Forall f)) = Forall (\x -> pnf (And p1 (f x)))
-pnf (Or p1 (Forall f)) = Forall (\x -> pnf (Or p1 (f x)))
-pnf (Or p1 p2) = Or (pnf p1) (pnf p2)
-pnf (And p1 p2) = And (pnf p1) (pnf p2)
-pnf (Forall f) = Forall (\x -> pnf(f x))
-pnf (Exists f) = Exists (\x -> pnf(f x))
-pnf p@(Rel r os) = p
-pnf p@(Not (Rel r os)) = p
-pnf Eet = Eet
+pnf (Impl p1 p2) = pnf $ Or (Not p1) p2
+pnf (Equiv p1 p2) = pnf $ Or (And (Not p1) p2)
+			     (And p1 (Not p2))
+pnf (Or p1 p2) =
+    pnfOr (pnf p1) (pnf p2)
+	where pnfOr (Forall f) p2 = pnf $ Forall (\x -> Or (f x) p2)
+	      pnfOr (Exists f) p2 = pnf $ Exists (\x -> Or (f x) p2)
+	      pnfOr p1 (Forall f) = pnf $ Forall (\x -> Or p1 (f x))
+	      pnfOr p1 (Exists f) = pnf $ Exists (\x -> Or p1 (f x))
+	      pnfOr p1 p2 = (Or p1 p2)
+
+pnf (And p1 p2) =
+    pnfAnd (pnf p1) (pnf p2)
+	where pnfAnd (Forall f) p2 = pnf $ Forall (\x -> And (f x) p2)
+	      pnfAnd (Exists f) p2 = pnf $ Exists (\x -> And (f x) p2)
+	      pnfAnd p1 (Forall f) = pnf $ Forall (\x -> And p1 (f x))
+	      pnfAnd p1 (Exists f) = pnf $ Exists (\x -> And p1 (f x))
+	      pnfAnd (Or p3 p4) p2 = pnf $ Or (And p3 p2) (And p4 p2)
+	      pnfAnd p1 (Or p3 p4) = pnf $ Or (And p1 p3) (And p1 p4)
+	      pnfAnd p1 p2 = (And p1 p2)
+
+pnf (Not p) =
+    pnfNot (pnf p)
+	where pnfNot (Forall f) = pnf $ Exists (\x -> Not (f x))
+	      pnfNot (Exists f) = pnf $ Forall (\x -> Not (f x))
+	      pnfNot (And p1 p2) = pnf $ Or (Not p1) (Not p2)
+	      pnfNot (Or p1 p2) = pnf $ And (Not p1) (Not p2)
+	      pnfNot (Not p) = p
+	      pnfNot p = (Not p)
+
+pnf (Forall f) = Forall (\x -> pnf (f x))
+pnf (Exists f) = Exists (\x -> pnf (f x))
+pnf p = p
+
+
+
+propToForeJbo :: Prop -> String
+propToForeJbo p = unwords $ propToForeJbo' [] 1 p
+    where
+    propToForeJbo' ps n (Exists f) =
+	propToForeJbo' (ps++["su'o", da n]) (n+1) (f (da n))
+    propToForeJbo' ps n (Forall f) =
+	propToForeJbo' (ps++["ro", da n]) (n+1) (f (da n))
+    propToForeJbo' ps n p | ps /= [] =
+	ps ++ ["zo'u"] ++ (propToForeJbo' [] n p)
+    propToForeJbo' ps n (And p1 p2) =
+	["ge"] ++ (propToForeJbo' ps n p1) ++ ["gi"] ++ (propToForeJbo' ps n p2)
+    propToForeJbo' ps n (Or p1 p2) =
+	["ga"] ++ (propToForeJbo' ps n p1) ++ ["gi"] ++ (propToForeJbo' ps n p2)
+    propToForeJbo' ps n (Impl p1 p2) =
+	["ga", "nai"] ++ (propToForeJbo' ps n p1) ++ ["gi"]
+	    ++ (propToForeJbo' ps n p2)
+    propToForeJbo' ps n (Equiv p1 p2) =
+	["go"] ++ (propToForeJbo' ps n p1) ++ ["gi"] ++ (propToForeJbo' ps n p2)
+    propToForeJbo' ps n (Not p) =
+	["na","ku"] ++ (propToForeJbo' ps n p)
+    propToForeJbo' ps n (Rel r os) =
+	os++[r]
+    propToForeJbo' ps n Eet = ["jitfa"]
+    da 1 = "da"
+    da 2 = "de"
+    da 3 = "di"
+    da 4 = "da xi vo"
+    da 5 = "da xi mu"
+    da 6 = "da xi xa"
 
 main :: IO ()
 main = do 

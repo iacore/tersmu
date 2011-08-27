@@ -15,7 +15,12 @@ repl = do
     let s = eval text
 	p = sentToProp s emptyPropCxt
 	in
-	putStr $ show s ++ "\n\nProp:" ++ show p ++ "\n\nPNF: " ++ show (pnf p) ++ "\n\n"
+	putStr $ 
+	    --show s ++ "\n\n"
+	    "Prop:" ++ show p ++ "\n\n" ++
+	    "jbo: " ++ (propToForeJbo p) ++ "\n\n" ++
+	    --"PNF: " ++ show (pnf p) ++ "\n\n" ++
+	    ""
     repl
 
 main :: IO()
