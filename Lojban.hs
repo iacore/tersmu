@@ -42,7 +42,12 @@ data Connective = Connective Bool Char Bool
 
 data BridiTail = ConnectedBT Connective BridiTail BridiTail
 	       | BridiTail3 Selbri [Term]
+	       | GekSentence GekSentence
 	       deriving (Eq, Show, Ord)
+
+data GekSentence = ConnectedGS Connective Subsentence Subsentence [Term]
+		 | NegatedGS GekSentence
+		 deriving (Eq, Show, Ord)
 
 data Selbri = TanruUnit TanruUnit
 	    | Negated Selbri
@@ -77,6 +82,11 @@ extendTail (BridiTail3 sb tts) ts = BridiTail3 sb (tts++ts)
 extendTail (ConnectedBT con bt1 bt2) ts =
     ConnectedBT con (extendTail bt1 ts)
                     (extendTail bt2 ts)
+extendTail (GekSentence gs) ts =
+    GekSentence (extendTailGS gs ts)
+	where extendTailGS (ConnectedGS con s1 s2 tts) ts = 
+		ConnectedGS con s1 s2 (tts++ts)
+	      extendTailGS (NegatedGS gs) ts = NegatedGS (extendTailGS gs ts)
 
 type Bindings = Map SumtiAtom Obj
 
@@ -119,12 +129,22 @@ sentToProp' ps ts (ConnectedBT con bt1 bt2) pc as =
 sentToProp' ps ts (BridiTail3 (Negated sb) tts) pc as =
     Not $ sentToProp' ps ts (BridiTail3 sb tts) pc as
 
+sentToProp' [] [] bt (PropCxt bs (v:vs)) as =
+    sentToProp' [] [term Untagged v] bt (PropCxt bs vs) as
+
 sentToProp' [] [] (BridiTail3 sb tts) pc as | tts /= [] =
     let as' = if (args as) == [] then (Arglist [] 2) else as
 	in sentToProp' [] tts (BridiTail3 sb []) pc as'
 
-sentToProp' [] [] bt (PropCxt bs (v:vs)) as =
-    sentToProp' [] [term Untagged v] bt (PropCxt bs vs) as
+sentToProp' [] [] (GekSentence (ConnectedGS con s1 s2 tts)) pc as =
+    let p1 = sentToProp'
+		(prenex s1) (terms s1) (extendTail (bridiTail s1) tts) pc as
+	p2 = sentToProp'
+		(prenex s2) (terms s2) (extendTail (bridiTail s2) tts) pc as
+	in connToFOL con p1 p2
+
+sentToProp' [] [] (GekSentence (NegatedGS gs)) pc as =
+    Not $ sentToProp' [] [] (GekSentence gs) pc as
 
 sentToProp' [] [] (BridiTail3 sb []) pc as =
     case sb of TanruUnit (Brivla bv) -> Rel bv (args as)

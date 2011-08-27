@@ -155,6 +155,7 @@ bridiTail2 :: BridiTail
 
 bridiTail3 :: BridiTail
     = sb:selbri ts:tailTerms -> { BridiTail3 sb ts }
+    / gs:gekSentence -> { GekSentence gs }
 
 tailTerms :: {[Term]}
     = ts:term* VAU? -> ts
@@ -166,6 +167,12 @@ selbri :: Selbri
 tanruUnit :: TanruUnit
     = bv:BRIVLA -> {Brivla bv}
     / n:convSE tu:tanruUnit -> {Permuted n tu}
+
+gekSentence :: GekSentence
+    = pcon:gek s1:subsentence b:gik s2:subsentence tts:tailTerms
+	-> { ConnectedGS (pcon b) s1 s2 tts }
+	/ KE gs:gekSentence KEhE? -> gs
+	/ NA gs:gekSentence -> {NegatedGS gs}
 
 convSE :: Integer
     = "se":SE -> {2}
