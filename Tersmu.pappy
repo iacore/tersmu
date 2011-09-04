@@ -59,13 +59,13 @@ sumti3 :: Sumti = s1:sumti4
 				    else (let Just (con,s2) = eks in
 					      ConnectedSumti con s1 s2) }
 
-sumti4 :: Sumti = s:sumti5 -> {Sumti5 s}
+sumti4 :: Sumti = sumti5
 	/ pcon:gek s1:sumti b:gik s2:sumti4 -> { ConnectedSumti (pcon b) s1 s2 }
 
-sumti5 :: Sumti5 =
-	s:sumti6 !relativeClauses -> {SumtiAtom s}
+sumti5 :: Sumti =
+	s:sumti6 !relativeClauses -> {Sumti5 Nothing [] s}
 	/ q:quantifier? s:sumti6 rels:relativeClauses?
-	    -> {Complex q (fromMaybe [] rels) s}
+	    -> {Sumti5 q (fromMaybe [] rels) s}
 
 relativeClauses :: {[RelClause]}
 	= r:relativeClause rs:(ZIhE r:relativeClause -> r)*
@@ -86,6 +86,7 @@ sumti6 :: SumtiAtom = "la":LA s:CMENE -> {Constant s}
     / "di":KOhA -> {Variable 3}
     / "ke'a":KOhA -> {RelVar 1}
     / "ce'u":KOhA -> {LambdaVar 1}
+    / g:LE s:selbri -> {Description g s}
 
 quantifier :: Quantifier = q:number BOI? -> q
 
@@ -161,12 +162,21 @@ tailTerms :: {[Term]}
     = ts:term* VAU? -> ts
 
 selbri :: Selbri
-    = ("ja'a":NA -> {})? tu:tanruUnit -> {TanruUnit tu}
+    = ("ja'a":NA -> {})? tu:tanruUnit -> tu
     / "na":NA sb:selbri -> {Negated sb}
 
-tanruUnit :: TanruUnit
+tanruUnit :: Selbri
+    = tu:tanruUnit2 las:linkargs?-> {TanruUnit tu (fromMaybe [] las)}
+
+tanruUnit2 :: TanruUnit2
     = bv:BRIVLA -> {Brivla bv}
-    / n:convSE tu:tanruUnit -> {Permuted n tu}
+    / n:convSE tu:tanruUnit2 -> {Permuted n tu}
+
+linkargs :: {[Term]}
+    = BE t:term ts:links? BEhO? -> {(t : (fromMaybe [] ts))}
+
+links :: {[Term]}
+    = BEI t:term ts:links? -> {(t : (fromMaybe [] ts))}
 
 gekSentence :: GekSentence
     = pcon:gek s1:subsentence b:gik s2:subsentence tts:tailTerms

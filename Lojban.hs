@@ -21,12 +21,8 @@ data Tag = Untagged
 	 | FA Int
 	 deriving (Eq, Show, Ord)
 data Sumti = ConnectedSumti Connective Sumti Sumti
-	   | Sumti5 Sumti5
+	   | Sumti5 (Maybe Quantifier) [RelClause] SumtiAtom
 	   deriving (Eq, Show, Ord)
-
-data Sumti5 = Complex (Maybe Quantifier) [RelClause] SumtiAtom
-	    | SumtiAtom SumtiAtom
-	    deriving (Eq, Show, Ord)
 
 data RelClause = Restrictive Subsentence  -- poi
 	       | Incidental Subsentence  -- noi
@@ -35,7 +31,10 @@ data SumtiAtom = Constant Obj
 	       | Variable Int -- da
 	       | RelVar Int -- ke'a
 	       | LambdaVar Int -- ce'u
+	       | Description Gadri Selbri
 	       deriving (Eq, Show, Ord)
+
+type Gadri = String
 
 data Connective = Connective Bool Char Bool
 		deriving (Eq, Show, Ord)
@@ -49,20 +48,20 @@ data GekSentence = ConnectedGS Connective Subsentence Subsentence [Term]
 		 | NegatedGS GekSentence
 		 deriving (Eq, Show, Ord)
 
-data Selbri = TanruUnit TanruUnit
+data Selbri = TanruUnit TanruUnit2 [Term]
 	    | Negated Selbri
 	    deriving (Eq, Show, Ord)
-data TanruUnit = Brivla String
-	       | Permuted Int TanruUnit
-	       deriving (Eq, Show, Ord)
+
+data TanruUnit2 = Brivla String
+	        | Permuted Int TanruUnit2
+	        deriving (Eq, Show, Ord)
 
 type Quantifier = String
 
-class SumtiTermTypeype a where term :: Tag -> a -> Term
+class SumtiTermType a where term :: Tag -> a -> Term
 
-instance SumtiTermTypeype Sumti where term tag x = Sumti tag x
-instance SumtiTermTypeype Sumti5 where term tag x = term tag (Sumti5 x)
-instance SumtiTermTypeype SumtiAtom where term tag x = term tag (SumtiAtom x)
+instance SumtiTermType Sumti where term tag x = Sumti tag x
+instance SumtiTermType SumtiAtom where term tag x = term tag (Sumti5 Nothing [] x)
 
 connToFOL :: Connective -> Prop -> Prop -> Prop
 connToFOL (Connective True 'e' True) p1 p2 = And p1 p2
@@ -146,11 +145,11 @@ sentToProp' [] [] (GekSentence (ConnectedGS con s1 s2 tts)) pc as =
 sentToProp' [] [] (GekSentence (NegatedGS gs)) pc as =
     Not $ sentToProp' [] [] (GekSentence gs) pc as
 
-sentToProp' [] [] (BridiTail3 sb []) pc as =
-    case sb of TanruUnit (Brivla bv) -> Rel bv (args as)
-	       TanruUnit (Permuted s tu) ->
+sentToProp' [] [] (BridiTail3 (TanruUnit tu las) []) pc as =
+    case tu of Brivla bv -> Rel bv (args as)
+	       Permuted s tu ->
 		   let (Arglist os n) = as in
-		       sentToProp' [] [] (BridiTail3 (TanruUnit tu) []) pc
+		       sentToProp' [] [] (BridiTail3 (TanruUnit tu las) []) pc
 			(Arglist (swapArgs os 1 s) n)
 
 sentToProp' [] (t:ts) bt pc@(PropCxt bs vs) as =
@@ -160,54 +159,58 @@ sentToProp' [] (t:ts) bt pc@(PropCxt bs vs) as =
 		let p1 = sentToProp' [] ((Sumti tag s1):ts) bt pc as
 		    p2 = sentToProp' [] ((Sumti tag s2):ts) bt pc as
 		    in connToFOL con p1 p2
-	 Sumti tag (Sumti5 sst) ->
-	     case sst of
-		  Complex q rels (Variable v) ->
+	 Sumti tag s@(Sumti5 q rels sa) ->
+	     case sa of
+		  Variable v ->
 		      case (Map.lookup (Variable v) bs) of
 			   Nothing ->
-			       sentToProp' [term Untagged sst]
+			       sentToProp' [term Untagged s]
 				(term tag (Variable v):ts) bt pc as
 			   Just o ->
 			       sentToProp' []
 				(term tag (Constant o):ts) bt pc as
-		  SumtiAtom (Constant o) ->
+		  Constant o ->
 		      let as' = case tag of Untagged -> as
 					    FA n -> as{position=n}
 			  as'' = appendToArglist as' o
 		      in sentToProp' [] ts bt pc as''
-		  SumtiAtom v@(Variable _) ->
-		      sentToProp' []
-			(term tag (Complex Nothing [] v):ts) bt pc as
-		  SumtiAtom rv@(RelVar _) ->
+		  rv@(RelVar _) ->
 		      let vs' = delete rv vs
 			  Just o = (Map.lookup rv bs)
 			  in sentToProp' [] 
 			      (term tag (Constant o):ts) bt
 			      (PropCxt bs vs') as
+		  Description g sb ->
+		      quantified (fromMaybe "su'o" q)
+				 (Restrictive (Subsentence [] []
+				    (selbriToRelClauseBridiTail sb)):rels)
+				 pc
+				 (\x -> sentToProp' []
+					  (term tag (Constant x):ts) bt pc as)
+
 
 
 sentToProp' (Negation:pts) ts bt pc as =
     Not $ sentToProp' pts ts bt pc as
-sentToProp' (Sumti Untagged (Sumti5 (SumtiAtom (Variable v))):pts) ts bt pc as =
-    sentToProp'
-	(term Untagged (Complex Nothing [] (Variable v)):pts) ts bt pc as
-sentToProp' (Sumti Untagged (Sumti5 (Complex q rels (Variable v))):pts) ts bt
+sentToProp' (Sumti Untagged (Sumti5 q rels (Variable v)):pts) ts bt
 	pc@(PropCxt bs vs) as =
-    (case q of {(Just "ro") -> Forall;
-	  (Just "su'o") -> Exists;
-	  (Nothing) -> Exists }) (\x ->
+	    quantified (fromMaybe "su'o" q) rels pc ( \x ->
+		sentToProp' pts ts bt
+		(PropCxt (Map.insert (Variable v) x bs) vs) as )
+
+quantified :: Quantifier -> [RelClause] -> PropCxt -> ( Obj -> Prop ) -> Prop
+quantified q rels pc inner =
+    (case q of {"ro" -> Forall;
+	  "su'o" -> Exists}) (\x ->
 	      let prependRels :: [RelClause] -> Prop -> Prop 
 		  prependRels [] p = p
 		  prependRels ((Restrictive subs):rels) p =
-		      (case q of Just "ro" -> Impl
-				 Just "su'o" -> And
-				 Nothing -> And)
+		      (case q of "ro" -> Impl
+				 "su'o" -> And)
 			    (evalRelClause subs pc x)
 			    (prependRels rels p)
 	       in
-		prependRels rels $
-		    sentToProp' pts ts bt
-			(PropCxt (Map.insert (Variable v) x bs) vs) as
+		prependRels rels $ inner x
 	      )
 evalRelClause :: Subsentence -> PropCxt -> Obj -> Prop
 evalRelClause subs pc@(PropCxt bs vs) x =
@@ -216,3 +219,10 @@ evalRelClause subs pc@(PropCxt bs vs) x =
 	      tryUnbound n = if isNothing (Map.lookup (RelVar n) bs)
 			     then (RelVar n)
 			     else tryUnbound (n+1)
+
+selbriToRelClauseBridiTail :: Selbri -> BridiTail
+selbriToRelClauseBridiTail (Negated sb) =
+    let BridiTail3 sb' tts = selbriToRelClauseBridiTail sb
+    in BridiTail3 (Negated sb') tts
+selbriToRelClauseBridiTail (TanruUnit tu las) =
+    BridiTail3 (TanruUnit tu []) las
