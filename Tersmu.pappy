@@ -74,6 +74,7 @@ relativeClauses :: {[RelClause]}
 relativeClause :: RelClause
 	= "poi":NOI subs:subsentence KUhO? -> {Restrictive subs}
 	/ "noi":NOI subs:subsentence KUhO? -> {Incidental subs}
+	/ GOI t:term GEhU? -> {Assignment t}
 
 sumti6 :: SumtiAtom = "la":LA s:CMENE -> {Constant s}
     / "mi":KOhA -> {Constant "mi"}
@@ -86,6 +87,17 @@ sumti6 :: SumtiAtom = "la":LA s:CMENE -> {Constant s}
     / "di":KOhA -> {Variable 3}
     / "ke'a":KOhA -> {RelVar 1}
     / "ce'u":KOhA -> {LambdaVar 1}
+    / "ri":KOhA -> {Ri}
+    / "ko'a":KOhA -> {Assignable 1}
+    / "ko'e":KOhA -> {Assignable 2}
+    / "ko'i":KOhA -> {Assignable 3}
+    / "ko'o":KOhA -> {Assignable 4}
+    / "ko'u":KOhA -> {Assignable 5}
+    / "fo'a":KOhA -> {Assignable 6}
+    / "fo'e":KOhA -> {Assignable 7}
+    / "fo'i":KOhA -> {Assignable 8}
+    / "fo'o":KOhA -> {Assignable 9}
+    / "fo'u":KOhA -> {Assignable 10}
     / g:LE s:selbri -> {Description g s}
 
 quantifier :: Quantifier = q:number BOI? -> q

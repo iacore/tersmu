@@ -26,12 +26,15 @@ data Sumti = ConnectedSumti Connective Sumti Sumti
 
 data RelClause = Restrictive Subsentence  -- poi
 	       | Incidental Subsentence  -- noi
+	       | Assignment Term  -- noi
 	       deriving (Eq, Show, Ord)
 data SumtiAtom = Constant Obj
+	       | Description Gadri Selbri
 	       | Variable Int -- da
 	       | RelVar Int -- ke'a
 	       | LambdaVar Int -- ce'u
-	       | Description Gadri Selbri
+	       | Assignable Int -- ko'a
+	       | Ri -- ri
 	       deriving (Eq, Show, Ord)
 
 type Gadri = String
@@ -173,13 +176,19 @@ sentToProp' [] (t:ts) bt pc@(PropCxt bs vs) as =
 		      let as' = case tag of Untagged -> as
 					    FA n -> as{position=n}
 			  as'' = appendToArglist as' o
-		      in sentToProp' [] ts bt pc as''
+			  pc' = PropCxt (Map.insert (Ri) o bs) vs
+		      in sentToProp' [] ts bt pc' as''
 		  rv@(RelVar _) ->
 		      let vs' = delete rv vs
 			  Just o = (Map.lookup rv bs)
 			  in sentToProp' [] 
 			      (term tag (Constant o):ts) bt
 			      (PropCxt bs vs') as
+		  Ri ->
+		      let Just o = (Map.lookup Ri bs)
+			  in sentToProp' [] 
+			      (term tag (Constant o):ts) bt
+			      pc as
 		  Description g sb ->
 		      quantified (fromMaybe "su'o" q)
 				 (Restrictive (Subsentence [] []
@@ -187,6 +196,7 @@ sentToProp' [] (t:ts) bt pc@(PropCxt bs vs) as =
 				 pc
 				 (\x -> sentToProp' []
 					  (term tag (Constant x):ts) bt pc as)
+			-- TODO: optional xorlo, in some form
 
 
 
