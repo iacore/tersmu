@@ -54,9 +54,86 @@ Idea:
     lojban, and the hard work converting that to logic is done separately.
 
     Remaining complexities:
-	{su'o broda be da} -> {da de poi broda da}
+	{su'o broda be da zo'u} -> {da de poi broda da zo'u}?
 
 	Tenses and modals are of quantificatory nature (sometimes inherently
 	(ta'e, ro roi), and always if JA-connected), so should go in the
 	prenex.
+
+
+
+Handling sumti:
+    CLL seems to imply (ignoring masses):
+	A sumti is a constant, and refers to one or more individuals
+	    ('constant' can't be taken too literally - e.g. we may have a
+	    quantified variable as a linkarg in a description sumti)
+	poi narrows the referent-set of a sumti
+	sumti always appear quantified
+	we can consider bound {da} as special - it's a singular variable, so
+	    quantifiers on it are meaningless.
+
+	xorlo's modification (ignoring plural predication and Kinds etc):
+	    lo has no default quantifier, and when unquantified is magic - it
+		acts like it has a universal quantifier with tightest scope.
+	    Moreover, {lo broda} refers to only *some* individuals which
+		broda, not all.
+	    So it acts much like {le} does, but with assertive power.
+
+    Handling this in logic:
+	Naive approach:
+	    Translate to monadic second order:
+		{le broda goi ko'a cu brode ko'a}
+		    -> EX X. (describe(FA x\in X. broda(x)) /\
+				FA x\in X. FA y\in X. brode(x,y))
+		{lo broda goi ko'a cu brode ko'a}
+		    -> EX X. (FA x. (broda(x) <-> x\in X) /\
+				EX x\in X. FA y\in X. brode(x,y))
+
+	But no need for second-order quantifiers really:
+		{le broda goi ko'a cu brode ko'a}
+		    -> FA x:(describe(broda(x)). 
+			FA y:(describe(broda(y)). brode(x,y)
+
+		{lo broda goi ko'a cu brode ko'a}
+		    -> EX x:(broda(x)). FA y:(broda(y)). brode(x,y)
+
+	    So we analyse e.g. {ko'a} as binding to a unary predicate rather
+		than the corresponding set.
+
+	    Issues with that:
+	     The predicate might involve a bound variable
+	      In which case, I suppose anaphora to the sumti should simply be
+	      disallowed - or better, allowed only within the scope of the
+	      quantifier.
+	     The same description might have different referents on different
+	     uses, whereas ko'a must bind to a single choice of referents.
+	      So maybe second order quantification is necessary for {le} and
+	      {voi} after all. So probably also for xorlo. Also for {la}.
+	      Given which... is it actually worth the bother to handle {lo}
+	      differently? Wouldn't it be better to translate to monadic 2nd
+	      order, then have some proof theory which will do the reduction
+	      to 1st order if we want it?
+
+	Alternatively:
+	 Nothing 2nd order. {le broda} and {la .brod.} are considered
+	 *absolute* constants. {ro da le broda be da cu brode} is not allowed,
+	 or is equiv to {ro da le broda be de cu brode}.
+
+	 Getting goi working will be painful and monadic.
+
+    Remark: if you think that using xorban style plural predication will make
+    any of the above problems go away, think again, recalling that we still
+    need to be able to quantify over atoms.
+     
+Plural semantics:
+    Even sticking to CLL, some things seem to make a logic with plural terms
+    and variables more natural. The closest things we have to basic terms -
+    personal prosumti and le/la-clauses - are plural, and at least many
+    anaphoric sumti are plural.
+
+    So maybe we should translate to a plural logic, and from there to FOL by
+    distributivity if we want?
+
+    So it seems our intermediate logic would just be FOL with plural terms and
+    an among relation? No need even for plural quantifiers?
 

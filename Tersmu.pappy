@@ -77,11 +77,11 @@ relativeClause :: RelClause
 	/ GOI t:term GEhU? -> {Assignment t}
 
 sumti6 :: SumtiAtom = "la":LA s:CMENE -> {Constant s}
-    / "mi":KOhA -> {Constant "mi"}
-    / "do":KOhA -> {Constant "do"}
-    / "ti":KOhA -> {Constant "ti"}
-    / "ta":KOhA -> {Constant "ta"}
-    / "tu":KOhA -> {Constant "tu"}
+    / "mi":KOhA -> {PersonalProsumti "mi"}
+    / "do":KOhA -> {PersonalProsumti "do"}
+    / "ti":KOhA -> {PersonalProsumti "ti"}
+    / "ta":KOhA -> {PersonalProsumti "ta"}
+    / "tu":KOhA -> {PersonalProsumti "tu"}
     / "da":KOhA -> {Variable 1}
     / "de":KOhA -> {Variable 2}
     / "di":KOhA -> {Variable 3}

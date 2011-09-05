@@ -27,6 +27,16 @@ instance Show Prop where
 
 type PropPrintFlags = Bool -- insert newlines and tabs?
 
+bigAnd :: [Prop] -> Prop
+bigAnd [] = Not Eet
+bigAnd [p] = p
+bigAnd (p:ps) = And p (bigAnd ps)
+
+bigOr :: [Prop] -> Prop
+bigOr [] = Eet
+bigOr [p] = p
+bigOr (p:ps) = Or p (bigOr ps)
+
 serialise :: Prop -> PropPrintFlags -> State Integer String
 serialise p f = _serialise p f 0
 

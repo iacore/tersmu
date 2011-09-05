@@ -29,10 +29,11 @@ data RelClause = Restrictive Subsentence  -- poi
 	       | Assignment Term  -- noi
 	       deriving (Eq, Show, Ord)
 data SumtiAtom = Constant Obj
-	       | Description Gadri Selbri
 	       | Variable Int -- da
+	       | PersonalProsumti String -- mi
 	       | RelVar Int -- ke'a
 	       | LambdaVar Int -- ce'u
+	       | Description Gadri Selbri
 	       | Assignable Int -- ko'a
 	       | Ri -- ri
 	       deriving (Eq, Show, Ord)
@@ -167,6 +168,7 @@ sentToProp' [] (t:ts) bt pc@(PropCxt bs vs) as =
 		  Variable v ->
 		      case (Map.lookup (Variable v) bs) of
 			   Nothing ->
+			       -- export to prenex:
 			       sentToProp' [term Untagged s]
 				(term tag (Variable v):ts) bt pc as
 			   Just o ->
@@ -189,38 +191,64 @@ sentToProp' [] (t:ts) bt pc@(PropCxt bs vs) as =
 			  in sentToProp' [] 
 			      (term tag (Constant o):ts) bt
 			      pc as
-		  Description g sb ->
-		      quantified (fromMaybe "su'o" q)
-				 (Restrictive (Subsentence [] []
-				    (selbriToRelClauseBridiTail sb)):rels)
-				 pc
+		  _ -> -- rest are "plural"
+		     let pred = \x ->
+			    bigAnd (sumtiAtomToPred sa pc x:
+				map (\rel -> relToPred rel pc x) rels)
+			 q' = fromMaybe (case sa of Description "lo" _ -> "su'o"
+						    _ -> "ro")
+				        q
+		     in quantified q' pred
 				 (\x -> sentToProp' []
 					  (term tag (Constant x):ts) bt pc as)
-			-- TODO: optional xorlo, in some form
-
-
-
+		
 sentToProp' (Negation:pts) ts bt pc as =
     Not $ sentToProp' pts ts bt pc as
 sentToProp' (Sumti Untagged (Sumti5 q rels (Variable v)):pts) ts bt
 	pc@(PropCxt bs vs) as =
-	    quantified (fromMaybe "su'o" q) rels pc ( \x ->
+	    quantified (fromMaybe "su'o" q)
+		       (\x -> bigAnd (map (\rel -> relToPred rel pc x) rels))
+		       (\x ->
 		sentToProp' pts ts bt
-		(PropCxt (Map.insert (Variable v) x bs) vs) as )
+		(PropCxt (Map.insert (Variable v) x bs) vs) as)
 
-quantified :: Quantifier -> [RelClause] -> PropCxt -> ( Obj -> Prop ) -> Prop
-quantified q rels pc inner =
+sumtiAtomToPred :: SumtiAtom -> PropCxt -> (Obj -> Prop)
+sumtiAtomToPred (Description "lo" sb) pc x =
+    sentToProp (Subsentence [] [term Untagged (Constant x)]
+			    (selbriToRelClauseBridiTail sb))
+	       pc
+sumtiAtomToPred (Description "le" sb) pc x =
+    let predstr = show $
+	    sentToProp (Subsentence [] [term Untagged (Constant "_")]
+				    (selbriToRelClauseBridiTail sb))
+		       emptyPropCxt
+    in Rel ("mele(" ++ predstr ++ ")") [x]
+sumtiAtomToPred (PersonalProsumti ps) pc x = 
+    Rel ("me" ++ ps) [x]
+
+
+selbriToRelClauseBridiTail :: Selbri -> BridiTail
+selbriToRelClauseBridiTail (Negated sb) =
+    let BridiTail3 sb' tts = selbriToRelClauseBridiTail sb
+    in BridiTail3 (Negated sb') tts
+selbriToRelClauseBridiTail (TanruUnit tu las) =
+    BridiTail3 (TanruUnit tu []) las
+
+relToPred :: RelClause -> PropCxt -> (Obj -> Prop)
+relToPred (Restrictive subs) pc = \x -> evalRelClause subs pc x
+
+
+quantified :: Quantifier -> ( Obj -> Prop ) -> ( Obj -> Prop ) -> Prop
+quantified q suchthat inner =
     (case q of {"ro" -> Forall;
 	  "su'o" -> Exists}) (\x ->
-	      let prependRels :: [RelClause] -> Prop -> Prop 
-		  prependRels [] p = p
-		  prependRels ((Restrictive subs):rels) p =
+	      case suchthat x of
+		   Not Eet -> inner x
+		   _ ->
 		      (case q of "ro" -> Impl
 				 "su'o" -> And)
-			    (evalRelClause subs pc x)
-			    (prependRels rels p)
-	       in
-		prependRels rels $ inner x
+			    (suchthat x)
+			    (inner x)
 	      )
 evalRelClause :: Subsentence -> PropCxt -> Obj -> Prop
 evalRelClause subs pc@(PropCxt bs vs) x =
@@ -229,10 +257,3 @@ evalRelClause subs pc@(PropCxt bs vs) x =
 	      tryUnbound n = if isNothing (Map.lookup (RelVar n) bs)
 			     then (RelVar n)
 			     else tryUnbound (n+1)
-
-selbriToRelClauseBridiTail :: Selbri -> BridiTail
-selbriToRelClauseBridiTail (Negated sb) =
-    let BridiTail3 sb' tts = selbriToRelClauseBridiTail sb
-    in BridiTail3 (Negated sb') tts
-selbriToRelClauseBridiTail (TanruUnit tu las) =
-    BridiTail3 (TanruUnit tu []) las
