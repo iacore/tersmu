@@ -137,3 +137,48 @@ Plural semantics:
     So it seems our intermediate logic would just be FOL with plural terms and
     an among relation? No need even for plural quantifiers?
 
+    So we can actually just use FOL, with some unusual terms.
+
+zo'e:
+    Translating {lo broda} to {zo'e noi broda}, and {le} fa'u {voi}, seems
+    better than considering it as a constant.
+
+    So we should add zo'e to our logic?
+
+    Can we just consider it as introducing an existential plural quantifier?
+
+    {ro da zo'e} == {zo'e ro da}
+
+    But {da zo'e noi broda da} != {zo'e noi broda da ku'o da}
+
+    Some examples:
+	{zo'e se fetsi ro mamta} == {ro mamta cu fetsi zo'e} ==
+	{ro mamta cu fetsi da}
+
+    So why not just have it as an *innermost* existential quantifier?
+
+    Problem: in {lo plise cu na kukte}, {lo plise} should scope outside the
+    negation. So let's separate {lo} from {zo'e}.
+
+    xorxes thinks {lo} should give a function/constant, quantified outside
+    everything else, as in Skolemisation. Since we have to deal with
+    quantifiers like {so'e}, it seems we can't deSkolemise that down to
+    first-order. Nyuck.
+    
+    Meanwhile, xorxes points out that the referents of {zo'e} are often
+    intended to be obvious, and so interpreting it as an existential
+    quantifier misses that important nuance. I think the answer is to
+    interpret it as existential quantification over a contextually-glorked
+    domain.
+
+Handling descriptions and {zo'e} without really handling them:
+    Just leave them as unanalysed terms. The terms will have structure which
+    can be used in further analysis, but we consider this beyond the basic
+    logic we deal with here.
+
+    Note that the structure will sometimes mention bound variables, e.g. in
+    {ro da lo broda be da cu brode}, but that's fine.
+
+    Quantifiers we can handle by quantifying the "among [the term]" predicate.
+    
+    Relative clauses have I guess to be considered part of the term.

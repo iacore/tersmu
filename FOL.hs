@@ -2,45 +2,44 @@ module FOL where
 
 import Control.Monad.State
 
-data Prop
-    = Not   Prop
-    | And   Prop Prop
-    | Or    Prop Prop
-    | Impl  Prop Prop
-    | Equiv  Prop Prop
-    | Rel   Rel [Obj]
-    | Forall (Obj -> Prop)
-    | Exists (Obj -> Prop)
+data Prop r t
+    = Not    (Prop r t)
+    | And    (Prop r t) (Prop r t)
+    | Or     (Prop r t) (Prop r t)
+    | Impl   (Prop r t) (Prop r t)
+    | Equiv  (Prop r t) (Prop r t)
+    | Rel    r [t]
+    | Forall (t -> (Prop r t))
+    | Exists (t -> (Prop r t))
     | Eet
 
-type Rel = String
+class Term t where
+    singvar :: Int -> t
+    objlogstr :: t -> String
+    objjbostr :: t -> String
 
-type Obj = String
+class Rel r where
+    relstr :: r -> String
 
--- example = Forall (\x -> Impl (Rel "xirma" [x, "aflingre"]) (Rel "danlu" [x]) )
-example = Forall (\x -> Or
-        (Exists (\y -> And (Rel "blanu" [y]) (Rel "ponse" [x, y])))
-        (Forall (\y -> Impl (Rel "blanu" [y]) (Not (Rel "ponse" [x, y])))))
-
-instance Show Prop where
+instance (Rel r, Term t) => Show (Prop r t) where
     show p = evalState (serialise p True) 1
 
 type PropPrintFlags = Bool -- insert newlines and tabs?
 
-bigAnd :: [Prop] -> Prop
+bigAnd :: [Prop r t] -> (Prop r t)
 bigAnd [] = Not Eet
 bigAnd [p] = p
 bigAnd (p:ps) = And p (bigAnd ps)
 
-bigOr :: [Prop] -> Prop
+bigOr :: [Prop r t] -> (Prop r t)
 bigOr [] = Eet
 bigOr [p] = p
 bigOr (p:ps) = Or p (bigOr ps)
 
-serialise :: Prop -> PropPrintFlags -> State Integer String
+serialise :: (Rel r, Term t) => (Prop r t) -> PropPrintFlags -> State Int String
 serialise p f = _serialise p f 0
 
-_serialise :: Prop -> PropPrintFlags -> Int -> State Integer String
+_serialise :: (Rel r, Term t) => (Prop r t) -> PropPrintFlags -> Int -> State Int String
 _serialise (Not p) f d	    =
     do
 	s <- _serialise p f (d+1)
@@ -57,24 +56,24 @@ _serialise (Impl p1 p2) f d = do {
 _serialise (Equiv p1 p2) f d = do {
     s1 <- _serialise p1 f (d+1); s2 <- _serialise p2 f (d+1);
     return $ "( " ++ s1 ++ " <-> " ++ (if f then "\n"++(replicate (d+1) '\t') else "") ++ s2 ++ " )" }
-_serialise (Rel r os) f d   = return $ r ++ "(" ++ unwords os ++ ")"
+_serialise (Rel r ts) f d   = return $ relstr r ++ "(" ++ unwords (map objlogstr ts) ++ ")"
 _serialise (Forall q) f d   = do
     n <- get
     put $ n+1
-    let v = "x" ++ show n in
+    let v = singvar n in
         do s <- _serialise (q $ v) f (d+1)
-           return $ "FA " ++ v ++ ". " ++ s
+           return $ "FA " ++ objlogstr v ++ ". " ++ s
 _serialise (Exists q) f d   = do
     n <- get
     put $ n+1
-    let v = "x" ++ show n in
+    let v = singvar n in
         do s <- _serialise (q $ v) f (d+1)
-           return $ "EX " ++ v ++ ". " ++ s
+           return $ "EX " ++ objlogstr v ++ ". " ++ s
 _serialise Eet f d	    = return "_|_"
 
 
 -- XXX: broken
-pnf :: Prop -> Prop
+pnf :: (Prop r t) -> (Prop r t)
 pnf (Impl p1 p2) = pnf $ Or (Not p1) p2
 pnf (Equiv p1 p2) = pnf $ Or (And (Not p1) p2)
 			     (And p1 (Not p2))
@@ -111,13 +110,14 @@ pnf p = p
 
 
 
-propToForeJbo :: Prop -> String
+propToForeJbo :: (Rel r, Term t) => (Prop r t) -> String
 propToForeJbo p = unwords $ propToForeJbo' [] 1 p
     where
-    propToForeJbo' ps n (Exists f) =
-	propToForeJbo' (ps++["su'o", da n]) (n+1) (f (da n))
-    propToForeJbo' ps n (Forall f) =
-	propToForeJbo' (ps++["ro", da n]) (n+1) (f (da n))
+    propToForeJbo' :: (Rel r, Term t) => [String] -> Int -> (Prop r t) -> [String]
+    propToForeJbo' ps n ((Exists f)::(Prop r t)) =
+	propToForeJbo' (ps++["su'o", objjbostr ((singvar n)::t)]) (n+1) (f (singvar n))
+    propToForeJbo' ps n ((Forall f)::(Prop r t)) =
+	propToForeJbo' (ps++["ro", objjbostr ((singvar n)::t)]) (n+1) (f (singvar n))
     propToForeJbo' ps n p | ps /= [] =
 	ps ++ ["zo'u"] ++ (propToForeJbo' [] n p)
     propToForeJbo' ps n (And p1 p2) =
@@ -131,17 +131,6 @@ propToForeJbo p = unwords $ propToForeJbo' [] 1 p
 	["go"] ++ (propToForeJbo' ps n p1) ++ ["gi"] ++ (propToForeJbo' ps n p2)
     propToForeJbo' ps n (Not p) =
 	["na","ku"] ++ (propToForeJbo' ps n p)
-    propToForeJbo' ps n (Rel r os) =
-	os++[r]
+    propToForeJbo' ps n (Rel r ts) =
+	(map objjbostr ts)++[relstr r]
     propToForeJbo' ps n Eet = ["jitfa"]
-    da 1 = "da"
-    da 2 = "de"
-    da 3 = "di"
-    da 4 = "da xi vo"
-    da 5 = "da xi mu"
-    da 6 = "da xi xa"
-
-main :: IO ()
-main = do 
-    print example
-    print ( pnf example )
