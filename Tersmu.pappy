@@ -63,9 +63,11 @@ sumti4 :: Sumti = sumti5
 	/ pcon:gek s1:sumti b:gik s2:sumti4 -> { ConnectedSumti (pcon b) s1 s2 }
 
 sumti5 :: Sumti =
-	s:sumti6 !relativeClauses -> {Sumti5 Nothing [] s}
+	s:sumti6 !relativeClauses -> {QAtom Nothing [] s}
 	/ q:quantifier? s:sumti6 rels:relativeClauses?
-	    -> {Sumti5 q (fromMaybe [] rels) s}
+	    -> {QAtom q (fromMaybe [] rels) s}
+	/ q:quantifier sb:selbri KU? rels:relativeClauses?
+	    -> {QSelbri q (fromMaybe [] rels) sb}
 
 relativeClauses :: {[RelClause]}
 	= r:relativeClause rs:(ZIhE r:relativeClause -> r)*

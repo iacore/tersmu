@@ -43,8 +43,8 @@ instance FOL.Term JboTerm where
     objlogstr (Raw s) = s
     objlogstr ZoheTerm = "zo'e"
     objlogstr (Described g p) = g ++ " [" ++ show (p (Raw "_")) ++ "]"
-    objlogstr (Restricted p t) = objlogstr t ++
-	":" ++ show (p (Raw "_"))
+    objlogstr (Restricted p t) = objlogstr t ++ ":" ++ show (p (Raw "_"))
+
     objjbostr (Described g p) = g ++ " [" ++ propToForeJbo (p (Raw "_")) ++ "] ku"
     objjbostr (Restricted p t) = objlogstr t ++
 	" poi " ++ propToForeJbo (p (Raw "ke'a")) ++ " ku'o"
@@ -71,7 +71,8 @@ data Tag = Untagged
 	 | FA Int
 	 deriving (Eq, Show, Ord)
 data Sumti = ConnectedSumti Connective Sumti Sumti
-	   | Sumti5 (Maybe Quantifier) [RelClause] SumtiAtom
+	   | QAtom (Maybe Quantifier) [RelClause] SumtiAtom
+	   | QSelbri Quantifier [RelClause] Selbri
 	   deriving (Eq, Show, Ord)
 
 data RelClause = Restrictive Subsentence  -- poi
@@ -116,7 +117,7 @@ type Quantifier = String
 class SumtiTermType a where term :: Tag -> a -> Term
 
 instance SumtiTermType Sumti where term tag x = Sumti tag x
-instance SumtiTermType SumtiAtom where term tag x = term tag (Sumti5 Nothing [] x)
+instance SumtiTermType SumtiAtom where term tag x = term tag (QAtom Nothing [] x)
 
 connToFOL :: Connective -> Prop -> Prop -> Prop
 connToFOL (Connective True 'e' True) p1 p2 = And p1 p2
@@ -143,6 +144,7 @@ extendTail (GekSentence gs) ts =
 	      extendTailGS (NegatedGS gs) ts = NegatedGS (extendTailGS gs ts)
 
 type Bindings = Map SumtiAtom Obj
+type ImplicitVars = [SumtiAtom]
 
 data Arglist = Arglist {args :: [Obj], position::Int}
 		deriving (Show)
@@ -163,68 +165,68 @@ swapArgs os n m =
 newArglist :: Arglist
 newArglist = Arglist [] 1
 
-sentToProp :: [SumtiAtom] -> Subsentence -> Bindings -> Prop
-sentToProp vs (Subsentence ps ts bt) bs = sentToProp' vs ps ts bt bs newArglist
+sentToProp :: Subsentence -> ImplicitVars -> Bindings -> Prop
+sentToProp (Subsentence ps ts bt) vs bs = sentToProp' ps ts bt vs bs newArglist
 
-sentToProp' :: [SumtiAtom] -> [Term] -> [Term] -> BridiTail -> Bindings -> Arglist -> Prop
+sentToProp' :: [Term] -> [Term] -> BridiTail -> ImplicitVars -> Bindings -> Arglist -> Prop
 --sentToProp' a b c d e | trace ("sentToProp': "
 --    ++ show a ++ " " ++ show b ++ " " ++ show c ++ " " ++ show d ++ " " ++
 --	show e ) False = undefined
 --
-sentToProp' vs ps ts (ConnectedBT con bt1 bt2) bs as =
-    let p1 = sentToProp' vs ps ts bt1 bs as
-	p2 = sentToProp' vs ps ts bt2 bs as
+sentToProp' ps ts (ConnectedBT con bt1 bt2) vs bs as =
+    let p1 = sentToProp' ps ts bt1 vs bs as
+	p2 = sentToProp' ps ts bt2 vs bs as
 	in connToFOL con p1 p2
 
-sentToProp' vs ps ts (BridiTail3 (Negated sb) tts) bs as =
-    Not $ sentToProp' vs ps ts (BridiTail3 sb tts) bs as
+sentToProp' ps ts (BridiTail3 (Negated sb) tts) vs bs as =
+    Not $ sentToProp' ps ts (BridiTail3 sb tts) vs bs as
 
-sentToProp' (v:vs) [] [] bt bs as =
-    sentToProp' vs [] [term Untagged v] bt bs as
+sentToProp' [] [] bt (v:vs) bs as =
+    sentToProp' [] [term Untagged v] bt vs bs as
 
-sentToProp' [] [] [] (BridiTail3 sb tts) bs as | tts /= [] =
+sentToProp' [] [] (BridiTail3 sb tts) vs bs as | tts /= [] =
     let as' = case (args as) of [] -> (Arglist [] 2) 
 				_  -> as
-	in sentToProp' [] [] tts (BridiTail3 sb []) bs as'
+	in sentToProp' [] tts (BridiTail3 sb []) vs bs as'
 
-sentToProp' [] [] [] (GekSentence (ConnectedGS con s1 s2 tts)) bs as =
-    let p1 = sentToProp' []
-		(prenex s1) (terms s1) (extendTail (bridiTail s1) tts) bs as
-	p2 = sentToProp' []
-		(prenex s2) (terms s2) (extendTail (bridiTail s2) tts) bs as
+sentToProp' [] [] (GekSentence (ConnectedGS con s1 s2 tts)) vs bs as =
+    let p1 = sentToProp'
+		(prenex s1) (terms s1) (extendTail (bridiTail s1) tts) vs bs as
+	p2 = sentToProp'
+		(prenex s2) (terms s2) (extendTail (bridiTail s2) tts) vs bs as
 	in connToFOL con p1 p2
 
-sentToProp' [] [] [] (GekSentence (NegatedGS gs)) bs as =
-    Not $ sentToProp' [] [] [] (GekSentence gs) bs as
+sentToProp' [] [] (GekSentence (NegatedGS gs)) vs bs as =
+    Not $ sentToProp' [] [] (GekSentence gs) vs bs as
 
-sentToProp' [] [] [] (BridiTail3 (TanruUnit tu las) []) bs as =
+sentToProp' [] [] (BridiTail3 (TanruUnit tu las) []) vs bs as =
     case tu of Brivla bv -> Rel bv (args as)
 	       Permuted s tu ->
 		   let (Arglist os n) = as in
-		       sentToProp' [] [] [] (BridiTail3 (TanruUnit tu las) []) bs
+		       sentToProp' [] [] (BridiTail3 (TanruUnit tu las) []) vs bs
 			(Arglist (swapArgs os 1 s) n)
 
-sentToProp' vs [] (t:ts) bt bs as =
-    case t of
-	 Negation -> sentToProp' vs [t] ts bt bs as
+sentToProp' [] (t:ts) bt vs bs as =
+ let argAppended vs bs tag o =
+	 let as' = case tag of Untagged -> as
+			       FA n -> as{position=n}
+	     as'' = appendToArglist as' o
+	     bs' = Map.insert (Ri) o bs
+	 in sentToProp' [] ts bt vs bs' as''
+ in case t of
+	 Negation -> sentToProp' [t] ts bt vs bs as
 	 Sumti tag (ConnectedSumti con s1 s2) ->
-		let p1 = sentToProp' vs [] ((Sumti tag s1):ts) bt bs as
-		    p2 = sentToProp' vs [] ((Sumti tag s2):ts) bt bs as
+		let p1 = sentToProp' [] ((Sumti tag s1):ts) bt vs bs as
+		    p2 = sentToProp' [] ((Sumti tag s2):ts) bt vs bs as
 		    in connToFOL con p1 p2
-	 Sumti tag s@(Sumti5 q rels sa) ->
-	     let argAppended vs bs tag o =
-		     let as' = case tag of Untagged -> as
-					   FA n -> as{position=n}
-			 as'' = appendToArglist as' o
-			 bs' = Map.insert (Ri) o bs
-		     in sentToProp' vs [] ts bt bs' as''
-	     in case sa of
+	 Sumti tag s@(QAtom q rels sa) ->
+	     case sa of
 		  Variable v ->
 		      case (Map.lookup (Variable v) bs) of
 			   Nothing ->
 			       -- export to prenex:
-			       sentToProp' vs [term Untagged s]
-				(term tag (Variable v):ts) bt bs as
+			       sentToProp' [term Untagged s]
+				(term tag (Variable v):ts) bt vs bs as
 			   Just o ->
 			       argAppended vs bs tag o
 		  rv@(RelVar _) ->
@@ -249,14 +251,18 @@ sentToProp' vs [] (t:ts) bt bs as =
 			 Nothing -> argAppended vs bs tag o
 			 Just q' -> quantified q' (isAmong o')
 				     (\x -> argAppended vs bs tag x)
+	 Sumti tag s@(QSelbri q rels sb) ->
+	     let rs = [ relToPred rel bs | rel@(Restrictive _) <- rels ]
+		 p = (\x -> bigAnd ((selbriToPred sb bs x):[ r x | r <- rs]))
+	     in quantified q p (\x -> argAppended vs bs tag x)
 	    
-sentToProp' vs (Negation:pts) ts bt bs as =
-    Not $ sentToProp' vs pts ts bt bs as
-sentToProp' vs (Sumti Untagged (Sumti5 q rels (Variable v)):pts) ts bt bs as =
+sentToProp' (Negation:pts) ts bt vs bs as =
+    Not $ sentToProp' pts ts bt vs bs as
+sentToProp' (Sumti Untagged (QAtom q rels (Variable v)):pts) ts bt vs bs as =
 	quantified (fromMaybe "su'o" q)
 		   (\x -> bigAnd (map (\rel -> relToPred rel bs x) rels))
 		   (\x ->
-	    sentToProp' vs pts ts bt
+	    sentToProp' pts ts bt vs
 	    (Map.insert (Variable v) x bs) as)
 
 selbriToRelClauseBridiTail :: Selbri -> BridiTail
@@ -288,7 +294,7 @@ quantified q suchthat inner =
 	      )
 evalRelClause :: Subsentence -> Bindings -> Obj -> Prop
 evalRelClause subs bs x =
-    sentToProp [rv] subs (Map.insert rv x (shuntVars bs RelVar))
+    sentToProp subs [rv] (Map.insert rv x (shuntVars bs RelVar))
 	where rv = RelVar 1
 
 shuntVars :: Bindings -> (Int -> SumtiAtom) -> Bindings
