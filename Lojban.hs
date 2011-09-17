@@ -283,14 +283,15 @@ relToPred (Restrictive subs) bs = \x -> evalRelClause subs bs x
 quantified :: Quantifier -> ( Obj -> Prop ) -> ( Obj -> Prop ) -> Prop
 quantified q suchthat inner =
     (case q of {"ro" -> Forall;
-	  "su'o" -> Exists}) (\x ->
-	      case suchthat x of
-		   Not Eet -> inner x
-		   _ ->
-		      (case q of "ro" -> Impl
-				 "su'o" -> And)
-			    (suchthat x)
-			    (inner x)
+	  "su'o" -> Exists}) (\v ->
+	      let x = SingVar v 
+	      in case suchthat x of
+		      Not Eet -> inner x
+		      _ ->
+			  (case q of "ro" -> Impl
+				     "su'o" -> And)
+				(suchthat x)
+				(inner x)
 	      )
 evalRelClause :: Subsentence -> Bindings -> Obj -> Prop
 evalRelClause subs bs x =

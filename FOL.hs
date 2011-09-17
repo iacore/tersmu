@@ -9,8 +9,8 @@ data Prop r t
     | Impl   (Prop r t) (Prop r t)
     | Equiv  (Prop r t) (Prop r t)
     | Rel    r [t]
-    | Forall (t -> (Prop r t))
-    | Exists (t -> (Prop r t))
+    | Forall (Int -> (Prop r t))
+    | Exists (Int -> (Prop r t))
     | Eet
 
 class Term t where
@@ -26,6 +26,18 @@ instance (Rel r, Term t) => Show (Prop r t) where
 
 type PropPrintFlags = Bool -- insert newlines and tabs?
 
+convProp :: (r1 -> r2) -> (t1 -> t2) -> Prop r1 t1 -> Prop r2 t2
+convProp rf tf p = convProp' p
+    where convProp' (Rel r ts) = Rel (rf r) (map tf ts)
+	  convProp' (Forall f) = Forall (\v -> convProp' $ f v)
+	  convProp' (Exists f) = Exists (\v -> convProp' $ f v)
+	  convProp' (Not p) = Not $ convProp' p
+	  convProp' (And p1 p2) = And (convProp' p1) (convProp' p2)
+	  convProp' (Or p1 p2) = Or (convProp' p1) (convProp' p2)
+	  convProp' (Impl p1 p2) = Impl (convProp' p1) (convProp' p2)
+	  convProp' (Equiv p1 p2) = Equiv (convProp' p1) (convProp' p2)
+	  convProp' Eet = Eet
+
 bigAnd :: [Prop r t] -> (Prop r t)
 bigAnd [] = Not Eet
 bigAnd [p] = p
@@ -39,7 +51,7 @@ bigOr (p:ps) = Or p (bigOr ps)
 serialise :: (Rel r, Term t) => (Prop r t) -> PropPrintFlags -> State Int String
 serialise p f = _serialise p f 0
 
-_serialise :: (Rel r, Term t) => (Prop r t) -> PropPrintFlags -> Int -> State Int String
+_serialise :: (Rel r, Term t) => Prop r t -> PropPrintFlags -> Int -> State Int String
 _serialise (Not p) f d	    =
     do
 	s <- _serialise p f (d+1)
@@ -57,18 +69,16 @@ _serialise (Equiv p1 p2) f d = do {
     s1 <- _serialise p1 f (d+1); s2 <- _serialise p2 f (d+1);
     return $ "( " ++ s1 ++ " <-> " ++ (if f then "\n"++(replicate (d+1) '\t') else "") ++ s2 ++ " )" }
 _serialise (Rel r ts) f d   = return $ relstr r ++ "(" ++ unwords (map objlogstr ts) ++ ")"
-_serialise (Forall q) f d   = do
+_serialise ((Forall q)::Prop r t) f d   = do
     n <- get
     put $ n+1
-    let v = singvar n in
-        do s <- _serialise (q $ v) f (d+1)
-           return $ "FA " ++ objlogstr v ++ ". " ++ s
-_serialise (Exists q) f d   = do
+    do s <- _serialise (q n) f (d+1)
+       return $ "FA " ++ objlogstr ((singvar n)::t) ++ ". " ++ s
+_serialise ((Exists q)::Prop r t) f d   = do
     n <- get
     put $ n+1
-    let v = singvar n in
-        do s <- _serialise (q $ v) f (d+1)
-           return $ "EX " ++ objlogstr v ++ ". " ++ s
+    do s <- _serialise (q n) f (d+1)
+       return $ "EX " ++ objlogstr ((singvar n)::t) ++ ". " ++ s
 _serialise Eet f d	    = return "_|_"
 
 
@@ -115,9 +125,9 @@ propToForeJbo p = unwords $ propToForeJbo' [] 1 p
     where
     propToForeJbo' :: (Rel r, Term t) => [String] -> Int -> (Prop r t) -> [String]
     propToForeJbo' ps n ((Exists f)::(Prop r t)) =
-	propToForeJbo' (ps++["su'o", objjbostr ((singvar n)::t)]) (n+1) (f (singvar n))
+	propToForeJbo' (ps++["su'o", objjbostr ((singvar n)::t)]) (n+1) (f n)
     propToForeJbo' ps n ((Forall f)::(Prop r t)) =
-	propToForeJbo' (ps++["ro", objjbostr ((singvar n)::t)]) (n+1) (f (singvar n))
+	propToForeJbo' (ps++["ro", objjbostr ((singvar n)::t)]) (n+1) (f n)
     propToForeJbo' ps n p | ps /= [] =
 	ps ++ ["zo'u"] ++ (propToForeJbo' [] n p)
     propToForeJbo' ps n (And p1 p2) =
