@@ -18,7 +18,7 @@ repl = do
 	putStr $ 
 	    --show s ++ "\n\n"
 	    "Prop:" ++ show p ++ "\n\n" ++
-	    "jbo: " ++ (propToForeJbo p) ++ "\n\n" ++
+	    "jbo: " ++ (jboshow p) ++ "\n\n" ++
 	    --"PNF: " ++ show (pnf p) ++ "\n\n" ++
 	    ""
     repl

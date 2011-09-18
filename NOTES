@@ -157,19 +157,26 @@ zo'e:
 
     So why not just have it as an *innermost* existential quantifier?
 
-    Problem: in {lo plise cu na kukte}, {lo plise} should scope outside the
-    negation. So let's separate {lo} from {zo'e}.
+    To handle the 'obvious referents' interpretation of {zo'e} it seems we
+    should actually interpret {zo'e} as an existential quantifier with
+    tightest scope over a varying glorked domain.
+    e.g. {ro da broda zo'e} -> \forall x. \exists y\in C_x. broda(x,y)
 
-    xorxes thinks {lo} should give a function/constant, quantified outside
-    everything else, as in Skolemisation. Since we have to deal with
-    quantifiers like {so'e}, it seems we can't deSkolemise that down to
-    first-order. Nyuck.
-    
-    Meanwhile, xorxes points out that the referents of {zo'e} are often
-    intended to be obvious, and so interpreting it as an existential
-    quantifier misses that important nuance. I think the answer is to
-    interpret it as existential quantification over a contextually-glorked
-    domain.
+    With this definition of {zo'e}, {lo} == {zo'e noi} seems to explain many
+    uses of {lo}. Often {lo} gives a Skolem function, corresponding to C_x
+    being a singleton, but not always. e.g. if we don't want to resort to
+    Kinds, {so'e re'azda cu se xabju lo jukni} really should translate as
+    most h:house. \exists s:spider. dwells(s,h)
+    (so with the constant glorked domain {s | spider(s)}).
+
+    With multiple {zo'e}s, the domains have to be glorked simultaneously
+    before any existential quantification - i.e. it's \exists (x,y) \in C, not
+    \exists x\in C. \exists y \in C'_x  .
+
+    This leaves only generics and kinds to deal with. I think my preference is
+    to *not* allow {lo} to get at either - require {lo'e} for generics, and
+    {lo ka} in place of kinds. But alternatively, we could allow \Gen in place
+    of \exists as a possible quantifier for {zo'e}.
 
 Handling descriptions and {zo'e} without really handling them:
     Just leave them as unanalysed terms. The terms will have structure which

@@ -3,6 +3,7 @@ parser tersmu:
 
 {
 import Lojban
+import FOL hiding (Connective)
 
 import Data.Maybe
 import Control.Monad.State
@@ -17,7 +18,7 @@ top asubsentence
 -- top LojbanLetter
 
 asubsentence :: Subsentence
-    = subs:subsentence !Char -> subs
+    = Spacing? subs:subsentence !Char -> subs
 
 subsentence :: Subsentence
     = p:prenex? s:sentence -> {
@@ -78,7 +79,8 @@ relativeClause :: RelClause
 	/ "noi":NOI subs:subsentence KUhO? -> {Incidental subs}
 	/ GOI t:term GEhU? -> {Assignment t}
 
-sumti6 :: SumtiAtom = "la":LA s:CMENE -> {Name s}
+sumti6 :: SumtiAtom
+    = "la":LA s:CMENE -> {Name s}
     / "mi":KOhA -> {PersonalProsumti "mi"}
     / "do":KOhA -> {PersonalProsumti "do"}
     / "ti":KOhA -> {PersonalProsumti "ti"}
@@ -105,7 +107,28 @@ sumti6 :: SumtiAtom = "la":LA s:CMENE -> {Name s}
 
 quantifier :: Quantifier = q:number BOI? -> q
 
-number :: Quantifier = ns:PA+ -> {concat ns}
+number :: Quantifier
+    = "ro":PA -> Forall
+    / "su'o":PA -> Exists
+    / n:litnum -> {Exactly n}
+
+litnum :: Int
+    = ds:digit+ -> {
+	let calc [] = 0
+	    calc (d:ds) = (10*calc ds) + d
+        in calc (reverse ds)}
+
+digit :: Int
+    = "no":PA -> {0}
+    / "pa":PA -> {1}
+    / "re":PA -> {2}
+    / "ci":PA -> {3}
+    / "vo":PA -> {4}
+    / "mu":PA -> {5}
+    / "xa":PA -> {6}
+    / "ze":PA -> {7}
+    / "bi":PA -> {8}
+    / "so":PA -> {9}
 
 ek :: Connective = ln:NA?
 	se:(SE)? conchar:ekA rn:NAI?
@@ -229,7 +252,7 @@ TickChar :: Char = '\''
 Space :: {()}	= " " -> { () }
 		/ "\n" -> { () }
 
-Spacing :: {()} = Space*
+Spacing :: {()} = Space+
 
 Valsi :: String = cs:LojbanLetter+ Spacing -> cs
 
@@ -657,7 +680,7 @@ ZOhUmain :: String = "zo'u"
 {
 
 eval :: String -> Subsentence
-eval str = case tersmuasubsentence (tersmuParse "asubsentence" str) of
+eval str = case tersmuasubsentence (tersmuParse "asubsentence" (str ++ " ")) of
 -- eval :: String -> Sumti
 -- eval str = case tersmuterm (tersmuParse "term" str) of
 -- eval :: String -> String

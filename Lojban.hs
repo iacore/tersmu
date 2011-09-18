@@ -1,7 +1,7 @@
 module Lojban where
 
-import FOL hiding (Prop, Term)
-import qualified FOL (Prop, Term)
+import FOL hiding (Prop, Term, Connective)
+import qualified FOL (Prop, Term, Connective)
 
 import Data.Maybe
 import Control.Monad.State
@@ -15,8 +15,8 @@ type Prop = FOL.Prop JboRel JboTerm
 
 data JboTerm = SingVar Int
 	     | SingConst Int
-	     | Restricted (Obj -> Prop) JboTerm
-	     | Described Gadri (Obj -> Prop)
+	     | Restricted (Int -> Prop) JboTerm
+	     | Described Gadri (Int -> Prop)
 	     | Named String
 	     | Personal String
 	     | Raw String
@@ -31,8 +31,8 @@ type JboRel = String
 instance Rel JboRel where
     relstr = id
 
-isAmong :: Obj -> (Obj -> Prop)
-isAmong y = \x -> Rel "me" [x,y]
+isAmong :: Obj -> (Int -> Prop)
+isAmong y = \v -> Rel "me" [SingVar v,y]
 
 instance FOL.Term JboTerm where
     singvar n = SingVar n
@@ -42,12 +42,12 @@ instance FOL.Term JboTerm where
     objlogstr (Personal ps) = ps
     objlogstr (Raw s) = s
     objlogstr ZoheTerm = "zo'e"
-    objlogstr (Described g p) = g ++ " [" ++ show (p (Raw "_")) ++ "]"
-    objlogstr (Restricted p t) = objlogstr t ++ ":" ++ show (p (Raw "_"))
+    objlogstr (Described g p) = g ++ " [" ++ show (p 1) ++ "]"
+    objlogstr (Restricted p t) = objlogstr t ++ ":" ++ show (p 0)
 
-    objjbostr (Described g p) = g ++ " [" ++ propToForeJbo (p (Raw "_")) ++ "] ku"
+    objjbostr (Described g p) = g ++ " [" ++ jboshow (p 1) ++ "] ku"
     objjbostr (Restricted p t) = objlogstr t ++
-	" poi " ++ propToForeJbo (p (Raw "ke'a")) ++ " ku'o"
+	" poi " ++ jboshow (p 0) ++ " ku'o"
     -- XXX we don't handle nested variables properly here
     objjbostr (SingVar 1) = "da"
     objjbostr (SingVar 2) = "de"
@@ -55,10 +55,36 @@ instance FOL.Term JboTerm where
     objjbostr (SingVar 4) = "da xi vo"
     objjbostr (SingVar 5) = "da xi mu"
     objjbostr (SingVar 6) = "da xi xa"
+    objjbostr (SingVar 0) = "ke'a" -- hack
     objjbostr o = objlogstr o
 
 instance Show JboTerm where
     show t = objlogstr t
+
+instance JboShow Prop
+    where jboshow p = unwords $ jboshow' [] 1 p
+	   where
+	    jboshow' :: [String] -> Int -> Prop -> [String]
+	    jboshow' ps n (Quantified q r p) =
+	      let relstr = case r of
+		    Nothing -> []
+		    Just r' -> ["poi"] ++ jboshow' [] (n+1) (r' n)
+	      in jboshow' (ps ++ [jboshow q, objjbostr $ SingVar n]
+			    ++ relstr)
+			  (n+1) (p n)
+	    jboshow' ps n p | ps /= [] =
+		ps ++ ["zo'u"] ++ (jboshow' [] n p)
+	    jboshow' ps n (Connected c p1 p2) =
+		case c of And -> ["ge"]
+			  Or -> ["ga"]
+			  Impl -> ["ga", "nai"]
+			  Equiv -> ["go"]
+		++ (jboshow' ps n p1) ++ ["gi"] ++ (jboshow' ps n p2)
+	    jboshow' ps n (Not p) =
+		["na","ku"] ++ (jboshow' ps n p)
+	    jboshow' ps n (Rel r ts) =
+		(map objjbostr ts)++[relstr r]
+	    jboshow' ps n Eet = ["jitfa"]
 
 data Subsentence =
     Subsentence {prenex::[Term], terms::[Term], bridiTail::BridiTail}
@@ -112,19 +138,17 @@ data TanruUnit2 = Brivla String
 	        | Permuted Int TanruUnit2
 	        deriving (Eq, Show, Ord)
 
-type Quantifier = String
-
 class SumtiTermType a where term :: Tag -> a -> Term
 
 instance SumtiTermType Sumti where term tag x = Sumti tag x
 instance SumtiTermType SumtiAtom where term tag x = term tag (QAtom Nothing [] x)
 
 connToFOL :: Connective -> Prop -> Prop -> Prop
-connToFOL (Connective True 'e' True) p1 p2 = And p1 p2
-connToFOL (Connective True 'a' True) p1 p2 = Or p1 p2
-connToFOL (Connective False 'a' True) p1 p2 = Impl p1 p2
-connToFOL (Connective True 'a' False) p1 p2 = Impl p2 p1
-connToFOL (Connective True 'o' True) p1 p2 = Equiv p1 p2
+connToFOL (Connective True 'e' True) p1 p2 = Connected And p1 p2
+connToFOL (Connective True 'a' True) p1 p2 = Connected Or p1 p2
+connToFOL (Connective False 'a' True) p1 p2 = Connected Impl p1 p2
+connToFOL (Connective True 'a' False) p1 p2 = Connected Impl p2 p1
+connToFOL (Connective True 'o' True) p1 p2 = Connected Equiv p1 p2
 connToFOL (Connective True 'u' True) p1 p2 = p1
 connToFOL (Connective True 'U' True) p1 p2 = p2
 connToFOL (Connective False c b2) p1 p2 =
@@ -143,7 +167,7 @@ extendTail (GekSentence gs) ts =
 		ConnectedGS con s1 s2 (tts++ts)
 	      extendTailGS (NegatedGS gs) ts = NegatedGS (extendTailGS gs ts)
 
-type Bindings = Map SumtiAtom Obj
+type Bindings = Map SumtiAtom Int
 type ImplicitVars = [SumtiAtom]
 
 data Arglist = Arglist {args :: [Obj], position::Int}
@@ -211,8 +235,12 @@ sentToProp' [] (t:ts) bt vs bs as =
 	 let as' = case tag of Untagged -> as
 			       FA n -> as{position=n}
 	     as'' = appendToArglist as' o
-	     bs' = Map.insert (Ri) o bs
-	 in sentToProp' [] ts bt vs bs' as''
+	     vs' = case o of SingVar v ->
+				    if Map.lookup (RelVar 1) bs == Just v
+				    then delete (RelVar 1) vs
+				    else vs
+			     _ -> vs
+	 in sentToProp' [] ts bt vs' bs as''
  in case t of
 	 Negation -> sentToProp' [t] ts bt vs bs as
 	 Sumti tag (ConnectedSumti con s1 s2) ->
@@ -221,20 +249,17 @@ sentToProp' [] (t:ts) bt vs bs as =
 		    in connToFOL con p1 p2
 	 Sumti tag s@(QAtom q rels sa) ->
 	     case sa of
-		  Variable v ->
-		      case (Map.lookup (Variable v) bs) of
+		  Variable n ->
+		      case (Map.lookup (Variable n) bs) of
 			   Nothing ->
 			       -- export to prenex:
 			       sentToProp' [term Untagged s]
-				(term tag (Variable v):ts) bt vs bs as
-			   Just o ->
-			       argAppended vs bs tag o
+				(term tag (Variable n):ts) bt vs bs as
+			   Just v ->
+			       argAppended vs bs tag (SingVar v)
 		  rv@(RelVar _) ->
-		      let Just o = (Map.lookup rv bs)
-		      in argAppended (delete rv vs) bs tag o
-		  Ri ->
-		      let Just o = (Map.lookup Ri bs)
-		      in argAppended vs bs tag o
+		      let Just v = (Map.lookup rv bs)
+		      in argAppended (delete rv vs) bs tag (SingVar v)
 		  _ -> -- rest are "plural"
 		     let o = case sa of
 				 PersonalProsumti ps -> Personal ps
@@ -242,28 +267,32 @@ sentToProp' [] (t:ts) bt vs bs as =
 				 Zohe -> ZoheTerm
 				 Description g sb ->
 				     Described g (selbriToPred sb bs)
-			 rs = [ relToPred rel bs | rel@(Restrictive _) <- rels ]
+			 rs = [ evalRel subs bs | rel@(Restrictive subs) <- rels ]
 			 o' = case rs of [] -> o
 					 _  -> Restricted
 						(\x -> bigAnd [ r x | r <- rs])
 						o
 		     in case q of
-			 Nothing -> argAppended vs bs tag o
-			 Just q' -> quantified q' (isAmong o')
-				     (\x -> argAppended vs bs tag x)
+			 Nothing -> argAppended vs bs tag o'
+			 Just q' -> Quantified q' (Just $ isAmong o')
+				     (\v -> argAppended vs bs tag (SingVar v))
 	 Sumti tag s@(QSelbri q rels sb) ->
-	     let rs = [ relToPred rel bs | rel@(Restrictive _) <- rels ]
-		 p = (\x -> bigAnd ((selbriToPred sb bs x):[ r x | r <- rs]))
-	     in quantified q p (\x -> argAppended vs bs tag x)
+	     let rs = [ evalRel subs bs | rel@(Restrictive subs) <- rels ]
+		 p = Just $ (\x ->
+			bigAnd ((selbriToPred sb bs x):[ r x | r <- rs]))
+	     in Quantified q p (\v -> argAppended vs bs tag (SingVar v))
 	    
 sentToProp' (Negation:pts) ts bt vs bs as =
     Not $ sentToProp' pts ts bt vs bs as
-sentToProp' (Sumti Untagged (QAtom q rels (Variable v)):pts) ts bt vs bs as =
-	quantified (fromMaybe "su'o" q)
-		   (\x -> bigAnd (map (\rel -> relToPred rel bs x) rels))
-		   (\x ->
-	    sentToProp' pts ts bt vs
-	    (Map.insert (Variable v) x bs) as)
+sentToProp' (Sumti Untagged (QAtom q rels (Variable n)):pts) ts bt vs bs as =
+	Quantified (fromMaybe Exists q)
+		   (case rels of [] -> Nothing
+				 _  -> Just $ (\v ->
+				     let bs' = Map.insert (Variable n) v bs
+				     in bigAnd (map (\(Restrictive subs) ->
+					 evalRel subs bs' v) rels)))
+		   (\v -> sentToProp' pts ts bt vs
+			   (Map.insert (Variable n) v bs) as)
 
 selbriToRelClauseBridiTail :: Selbri -> BridiTail
 selbriToRelClauseBridiTail (Negated sb) =
@@ -272,30 +301,13 @@ selbriToRelClauseBridiTail (Negated sb) =
 selbriToRelClauseBridiTail (TanruUnit tu las) =
     BridiTail3 (TanruUnit tu []) las
 
-selbriToPred :: Selbri -> Bindings -> (Obj -> Prop)
-selbriToPred sb bs = relToPred (Restrictive $ Subsentence [] [] bt) bs
+selbriToPred :: Selbri -> Bindings -> (Int -> Prop)
+selbriToPred sb bs = evalRel (Subsentence [] [] bt) bs
     where bt = selbriToRelClauseBridiTail sb
 
-relToPred :: RelClause -> Bindings -> (Obj -> Prop)
-relToPred (Restrictive subs) bs = \x -> evalRelClause subs bs x
-
-
-quantified :: Quantifier -> ( Obj -> Prop ) -> ( Obj -> Prop ) -> Prop
-quantified q suchthat inner =
-    (case q of {"ro" -> Forall;
-	  "su'o" -> Exists}) (\v ->
-	      let x = SingVar v 
-	      in case suchthat x of
-		      Not Eet -> inner x
-		      _ ->
-			  (case q of "ro" -> Impl
-				     "su'o" -> And)
-				(suchthat x)
-				(inner x)
-	      )
-evalRelClause :: Subsentence -> Bindings -> Obj -> Prop
-evalRelClause subs bs x =
-    sentToProp subs [rv] (Map.insert rv x (shuntVars bs RelVar))
+evalRel :: Subsentence -> Bindings -> Int -> Prop
+evalRel subs bs = \v ->
+    sentToProp subs [rv] (Map.insert rv v (shuntVars bs RelVar))
 	where rv = RelVar 1
 
 shuntVars :: Bindings -> (Int -> SumtiAtom) -> Bindings
