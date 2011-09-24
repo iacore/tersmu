@@ -233,7 +233,8 @@ sentToProp' [] (t:ts) bt vs bs as =
 						delete (RelVar 1) vs
 					     _ -> vs
 			     _ -> vs
-	 in sentToProp' [] ts bt vs' bs as''
+	     bs' = Map.insert Ri o bs
+	 in sentToProp' [] ts bt vs' bs' as''
  in case t of
 	 Negation -> sentToProp' [t] ts bt vs bs as
 	 Sumti tag (ConnectedSumti con s1 s2) ->
@@ -244,43 +245,59 @@ sentToProp' [] (t:ts) bt vs bs as =
 	     let
 		rrels = [evalRel subs bs | rel@(Restrictive subs) <- rels ]
 		irels = [evalRel subs bs | rel@(Incidental subs) <- rels ]
-		(p, incBit) = case sa of
+		(p, remainingRels) = case sa of
 		  Variable n ->
 		      case (Map.lookup (Variable n) bs) of
 			   Nothing ->
 			       -- export to prenex:
-			       (sentToProp' [term Untagged s]
+			       (\bs -> sentToProp' [term Untagged s]
 				(term tag (Variable n):ts) bt vs bs as, Nothing)
 			   Just o ->
-			       (argAppended vs bs tag o, Just (irels, o))
-		  rv@(RelVar _) ->
-		      let Just o = (Map.lookup rv bs)
-		      in (argAppended (delete rv vs) bs tag o, Just (irels, o))
+			       (\bs -> argAppended vs bs tag o, Just (irels, o))
 		  _ -> -- rest are "plural"
-		      let (o,irels') = case sa of
-			     NonAnaphoricProsumti ps -> (NonAnaph ps, irels)
-			     Name s -> (Named s, irels)
-			     Zohe -> (zoheExpr irels, [])
+		      let (o,irels',vs') = case sa of
+			     NonAnaphoricProsumti ps -> (NonAnaph ps, irels, vs)
+			     rv@(RelVar _) ->
+				 let Just o = (Map.lookup rv bs)
+				 in (o, irels, delete rv vs)
+			     anaph@Ri -> 
+				 let Just o = (Map.lookup anaph bs)
+				 in (o, irels, vs)
+			     anaph@(Assignable _) -> 
+				 let Just o = (Map.lookup anaph bs)
+				 in (o, irels, vs)
+			     Name s -> (Named s, irels, vs)
+			     Zohe -> (zoheExpr irels, [], vs)
 			     Description "lo" sb ->
-				 (zoheExpr (selbriToPred sb bs:irels), [])
+				 (zoheExpr (selbriToPred sb bs:irels), [], vs)
 			     where zoheExpr [] = ZoheTerm Nothing
 				   zoheExpr irels =
 				       ZoheTerm (Just $ andPred irels)
 		     in case q of
-			 Nothing -> (argAppended vs bs tag o, Just (irels', o))
+			 Nothing -> (\bs -> argAppended vs' bs tag o, Just (irels', o))
 			 Just q' ->
-			     (quantified q' (Just $ andPred (isAmong o:rrels))
-				     (\o -> argAppended vs bs tag o),
+			     (\bs -> quantified q' (Just $ andPred (isAmong o:rrels))
+				     (\o -> argAppended vs' bs tag o),
 				 Just (irels', o))
-	    in case incBit of Nothing -> p
-			      Just ([], _) -> p
-			      Just (irels, o) ->
-				  Connected And (andPred irels o) p
+	    in case remainingRels of
+		    Nothing -> p bs
+		    Just (irels, o) ->
+			let bs' = assign bs o rels
+			in case irels of [] -> p bs'
+					 _ -> Connected And
+					    (andPred irels o) (p bs')
 	 Sumti tag s@(QSelbri q rels sb) ->
 	     let rrels = [evalRel subs bs | rel@(Restrictive subs) <- rels ]
 		 irels = [evalRel subs bs | rel@(Incidental subs) <- rels ]
 		 p = Just $ andPred (selbriToPred sb bs:rrels)
-	     in quantified q p (andPred (argAppended vs bs tag:irels))
+	     in quantified q p
+		    (andPred ((\o -> argAppended vs (assign bs o rels) tag o)
+				:irels))
+    where assign bs o rels =
+	      foldr (\n -> Map.insert (Assignable n) o)
+		    bs
+		    [n | rel@(Assignment
+			(Sumti _ (QAtom _ _ (Assignable n)))) <- rels]
 	    
 sentToProp' (Negation:pts) ts bt vs bs as =
     Not $ sentToProp' pts ts bt vs bs as

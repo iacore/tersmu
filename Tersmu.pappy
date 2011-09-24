@@ -77,12 +77,13 @@ relativeClauses :: {[RelClause]}
 relativeClause :: RelClause
 	= "poi":NOI subs:subsentence KUhO? -> {Restrictive subs}
 	/ "noi":NOI subs:subsentence KUhO? -> {Incidental subs}
-	/ GOI t:term GEhU? -> {Assignment t}
+	/ "goi":GOI t:term GEhU? -> {Assignment t}
 
 sumti6 :: SumtiAtom
     = "la":LA s:CMENE -> {Name s}
     / "mi":KOhA -> {NonAnaphoricProsumti "mi"}
     / "do":KOhA -> {NonAnaphoricProsumti "do"}
+    / "ko":KOhA -> {NonAnaphoricProsumti "ko"}
     / "ti":KOhA -> {NonAnaphoricProsumti "ti"}
     / "ta":KOhA -> {NonAnaphoricProsumti "ta"}
     / "tu":KOhA -> {NonAnaphoricProsumti "tu"}
@@ -442,7 +443,7 @@ KI :: String = s:KImain Spacing -> s
 KImain :: String = "ki" 
 --         sumti anaphora 
 KOhA :: String = s:KOhAmain Spacing -> s
-KOhAmain :: String = "da" / "de" / "di" / "da'u" / "da'e" / "di'u" / "di'e" / "de'u" / "de'e" / "dei" / "do'i" / "ko" / "mi" / "mi'o" / "ma'a" / "mi'a" / "do" / "do'o" / "ko'a" / "fo'u" / "ko'e" / "ko'i" / "ko'o" / "ko'u" / "fo'a" / "fo'e" / "fo'i" / "fo'o" / "vo'a" / "vo'e" / "vo'i" / "vo'o" / "vo'u" / "ru" / "ri" / "ra" / "ta" / "tu" / "ti" / "zi'o" / "ke'a" / "ma" / "zu'i" / "zo'e" / "ce'u" 
+KOhAmain :: String = "da" / "de" / "di" / "da'u" / "da'e" / "di'u" / "di'e" / "de'u" / "de'e" / "dei" / "do'i" / "mi" / "mi'o" / "ma'a" / "mi'a" / "do" / "do'o" / "ko'a" / "fo'u" / "ko'e" / "ko'i" / "ko'o" / "ko'u" / "fo'a" / "fo'e" / "fo'i" / "fo'o" / "vo'a" / "vo'e" / "vo'i" / "vo'o" / "vo'u" / "ru" / "ri" / "ra" / "ta" / "tu" / "ti" / "zi'o" / "ke'a" / "ma" / "zu'i" / "zo'e" / "ce'u" / "ko"
 --         right terminator for descriptions, etc. 
 KU :: String = s:KUmain Spacing -> s
 KUmain :: String = "ku" 
