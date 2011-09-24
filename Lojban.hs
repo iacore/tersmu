@@ -14,11 +14,9 @@ import Debug.Trace
 type Prop = FOL.Prop JboRel JboTerm
 
 data JboTerm = SingVar Int
-	     | Restricted (Int -> Prop) JboTerm
-	     | Described Gadri (Int -> Prop)
 	     | Named String
 	     | NonAnaph String
-	     | ZoheTerm
+	     | ZoheTerm (Maybe (JboTerm -> Prop))
 
 type Individual = Int
 
@@ -29,29 +27,26 @@ type JboRel = String
 instance Rel JboRel where
     relstr = id
 
-isAmong :: Obj -> (Int -> Prop)
-isAmong y = \v -> Rel "me" [SingVar v,y]
+isAmong :: JboTerm -> (JboTerm -> Prop)
+isAmong y = \o -> Rel "me" [o,y]
 
 instance FOL.Term JboTerm where
     singvar n = SingVar n
+    objlogstr (SingVar 0) = "_"
     objlogstr (SingVar n) = "x" ++ (show n)
     objlogstr (Named s) = s
     objlogstr (NonAnaph ps) = ps
-    objlogstr ZoheTerm = "zo'e"
-    objlogstr (Described g p) = g ++ " [" ++ show (p 1) ++ "]"
-    objlogstr (Restricted p t) = objlogstr t ++ ":" ++ show (p 0)
+    objlogstr (ZoheTerm Nothing) = "zo'e"
+    objlogstr (ZoheTerm (Just p)) = "zo'e:(" ++ show (p (SingVar 0)) ++ ")"
 
-    objjbostr (Described g p) = g ++ " [" ++ jboshow (p 1) ++ "] ku"
-    objjbostr (Restricted p t) = objlogstr t ++
-	" poi " ++ jboshow (p 0) ++ " ku'o"
-    -- XXX we don't handle nested variables properly here
+    objjbostr (ZoheTerm (Just p)) = "zo'e noi " ++ jboshow (p (SingVar 0)) ++ " ku'o"
+    objjbostr (SingVar 0) = "ke'a"
     objjbostr (SingVar 1) = "da"
     objjbostr (SingVar 2) = "de"
     objjbostr (SingVar 3) = "di"
     objjbostr (SingVar 4) = "da xi vo"
     objjbostr (SingVar 5) = "da xi mu"
     objjbostr (SingVar 6) = "da xi xa"
-    objjbostr (SingVar 0) = "ke'a" -- hack
     objjbostr o = objlogstr o
 
 instance Show JboTerm where
@@ -163,8 +158,10 @@ extendTail (GekSentence gs) ts =
 		ConnectedGS con s1 s2 (tts++ts)
 	      extendTailGS (NegatedGS gs) ts = NegatedGS (extendTailGS gs ts)
 
-type Bindings = Map SumtiAtom Int
+type Bindings = Map SumtiAtom JboTerm
 type ImplicitVars = [SumtiAtom]
+
+type JboPred = JboTerm -> Prop
 
 data Arglist = Arglist {args :: [Obj], position::Int}
 		deriving (Show)
@@ -173,11 +170,11 @@ appendToArglist as@(Arglist os n) o = Arglist (setArg os n o) (n+1)
 setArg :: [Obj] -> Int -> Obj -> [Obj]
 setArg os n o =
     let (a,b) = splitAt (n-1) os
-	in case b of [] -> a++(replicate ((n-1)-(length a)) ZoheTerm)++[o]
+	in case b of [] -> a++(replicate ((n-1)-(length a)) (ZoheTerm Nothing))++[o]
 		     (_:bs) -> a++[o]++bs
 swapArgs :: [Obj] -> Int -> Int -> [Obj]
 swapArgs os n m =
-    let lookupArg k = if k <= length os then os!!(k-1) else ZoheTerm
+    let lookupArg k = if k <= length os then os!!(k-1) else (ZoheTerm Nothing)
 	a = lookupArg n
 	b = lookupArg m
 	in setArg (setArg os m a) n b
@@ -231,10 +228,10 @@ sentToProp' [] (t:ts) bt vs bs as =
 	 let as' = case tag of Untagged -> as
 			       FA n -> as{position=n}
 	     as'' = appendToArglist as' o
-	     vs' = case o of SingVar v ->
-				    if Map.lookup (RelVar 1) bs == Just v
-				    then delete (RelVar 1) vs
-				    else vs
+	     vs' = case o of SingVar v -> case Map.lookup (RelVar 1) bs of
+					     Just (SingVar v) ->
+						delete (RelVar 1) vs
+					     _ -> vs
 			     _ -> vs
 	 in sentToProp' [] ts bt vs' bs as''
  in case t of
@@ -244,51 +241,64 @@ sentToProp' [] (t:ts) bt vs bs as =
 		    p2 = sentToProp' [] ((Sumti tag s2):ts) bt vs bs as
 		    in connToFOL con p1 p2
 	 Sumti tag s@(QAtom q rels sa) ->
-	     case sa of
+	     let
+		rrels = [evalRel subs bs | rel@(Restrictive subs) <- rels ]
+		irels = [evalRel subs bs | rel@(Incidental subs) <- rels ]
+		(p, incBit) = case sa of
 		  Variable n ->
 		      case (Map.lookup (Variable n) bs) of
 			   Nothing ->
 			       -- export to prenex:
-			       sentToProp' [term Untagged s]
-				(term tag (Variable n):ts) bt vs bs as
-			   Just v ->
-			       argAppended vs bs tag (SingVar v)
+			       (sentToProp' [term Untagged s]
+				(term tag (Variable n):ts) bt vs bs as, Nothing)
+			   Just o ->
+			       (argAppended vs bs tag o, Just (irels, o))
 		  rv@(RelVar _) ->
-		      let Just v = (Map.lookup rv bs)
-		      in argAppended (delete rv vs) bs tag (SingVar v)
+		      let Just o = (Map.lookup rv bs)
+		      in (argAppended (delete rv vs) bs tag o, Just (irels, o))
 		  _ -> -- rest are "plural"
-		     let o = case sa of
-				 NonAnaphoricProsumti ps -> NonAnaph ps
-				 Name s -> Named s
-				 Zohe -> ZoheTerm
-				 Description g sb ->
-				     Described g (selbriToPred sb bs)
-			 rs = [ evalRel subs bs | rel@(Restrictive subs) <- rels ]
-			 o' = case rs of [] -> o
-					 _  -> Restricted
-						(\x -> bigAnd [ r x | r <- rs])
-						o
+		      let (o,irels') = case sa of
+			     NonAnaphoricProsumti ps -> (NonAnaph ps, irels)
+			     Name s -> (Named s, irels)
+			     Zohe -> (zoheExpr irels, [])
+			     Description "lo" sb ->
+				 (zoheExpr (selbriToPred sb bs:irels), [])
+			     where zoheExpr [] = ZoheTerm Nothing
+				   zoheExpr irels =
+				       ZoheTerm (Just $ andPred irels)
 		     in case q of
-			 Nothing -> argAppended vs bs tag o'
-			 Just q' -> Quantified q' (Just $ isAmong o')
-				     (\v -> argAppended vs bs tag (SingVar v))
+			 Nothing -> (argAppended vs bs tag o, Just (irels', o))
+			 Just q' ->
+			     (quantified q' (Just $ andPred (isAmong o:rrels))
+				     (\o -> argAppended vs bs tag o),
+				 Just (irels', o))
+	    in case incBit of Nothing -> p
+			      Just ([], _) -> p
+			      Just (irels, o) ->
+				  Connected And (andPred irels o) p
 	 Sumti tag s@(QSelbri q rels sb) ->
-	     let rs = [ evalRel subs bs | rel@(Restrictive subs) <- rels ]
-		 p = Just $ (\x ->
-			bigAnd ((selbriToPred sb bs x):[ r x | r <- rs]))
-	     in Quantified q p (\v -> argAppended vs bs tag (SingVar v))
+	     let rrels = [evalRel subs bs | rel@(Restrictive subs) <- rels ]
+		 irels = [evalRel subs bs | rel@(Incidental subs) <- rels ]
+		 p = Just $ andPred (selbriToPred sb bs:rrels)
+	     in quantified q p (andPred (argAppended vs bs tag:irels))
 	    
 sentToProp' (Negation:pts) ts bt vs bs as =
     Not $ sentToProp' pts ts bt vs bs as
 sentToProp' (Sumti Untagged (QAtom q rels (Variable n)):pts) ts bt vs bs as =
-	Quantified (fromMaybe Exists q)
+	quantified (fromMaybe Exists q)
 		   (case rels of [] -> Nothing
-				 _  -> Just $ (\v ->
-				     let bs' = Map.insert (Variable n) v bs
+				 _  -> Just $ (\o ->
+				     let bs' = Map.insert (Variable n) o bs
 				     in bigAnd (map (\(Restrictive subs) ->
-					 evalRel subs bs' v) rels)))
-		   (\v -> sentToProp' pts ts bt vs
-			   (Map.insert (Variable n) v bs) as)
+					 evalRel subs bs' o) rels)))
+		   (\o -> sentToProp' pts ts bt vs
+			   (Map.insert (Variable n) o bs) as)
+
+quantified :: Quantifier -> Maybe JboPred -> JboPred -> Prop
+quantified q r p = Quantified q (case r of Nothing -> Nothing
+				           Just r -> Just $ singpred r)
+				(singpred p)
+    where singpred p = \v -> p (SingVar v)
 
 selbriToRelClauseBridiTail :: Selbri -> BridiTail
 selbriToRelClauseBridiTail (Negated sb) =
@@ -297,13 +307,13 @@ selbriToRelClauseBridiTail (Negated sb) =
 selbriToRelClauseBridiTail (TanruUnit tu las) =
     BridiTail3 (TanruUnit tu []) las
 
-selbriToPred :: Selbri -> Bindings -> (Int -> Prop)
+selbriToPred :: Selbri -> Bindings -> JboPred
 selbriToPred sb bs = evalRel (Subsentence [] [] bt) bs
     where bt = selbriToRelClauseBridiTail sb
 
-evalRel :: Subsentence -> Bindings -> Int -> Prop
-evalRel subs bs = \v ->
-    sentToProp subs [rv] (Map.insert rv v (shuntVars bs RelVar))
+evalRel :: Subsentence -> Bindings -> JboPred
+evalRel subs bs = \o ->
+    sentToProp subs [rv] (Map.insert rv o (shuntVars bs RelVar))
 	where rv = RelVar 1
 
 shuntVars :: Bindings -> (Int -> SumtiAtom) -> Bindings
@@ -312,3 +322,6 @@ shuntVars bs var = foldr ( \n -> Map.insert (var $ n+1)
 			 bs
 			 [ 0 .. head [ n | n <- [1..],
 				    isNothing $ Map.lookup (var n) bs ] ]
+
+andPred :: [JboPred] -> JboPred
+andPred ps x = bigAnd [p x | p <- ps]

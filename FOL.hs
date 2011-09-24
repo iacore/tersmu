@@ -46,17 +46,19 @@ instance (Rel r, Term t) => Show (Prop r t) where
 
 type PropPrintFlags = Bool -- insert newlines and tabs?
 
-convProp :: (r1 -> r2) -> (t1 -> t2) -> Prop r1 t1 -> Prop r2 t2
-convProp rf tf p = convProp' p
-    where convProp' (Rel r ts) = Rel (rf r) (map tf ts)
-	  convProp' (Quantified q r p) =
+-- terpProp: lift an interpretation of atomic formulae to an interpretation of
+-- arbitrary formulae
+terpProp :: (r1 -> [t1] -> Prop r2 t2) -> Prop r1 t1 -> Prop r2 t2
+terpProp terpAtomic p = terpProp' p
+    where terpProp' (Rel r ts) = terpAtomic r ts
+	  terpProp' (Quantified q r p) =
 	      Quantified q (case r of Nothing -> Nothing
-				      Just r' -> Just (\v -> convProp' $ r' v))
-			   (\v -> convProp' $ p v)
-	  convProp' (Not p) = Not $ convProp' p
-	  convProp' (Connected c p1 p2) =
-	      Connected c (convProp' p1) (convProp' p2)
-	  convProp' Eet = Eet
+				      Just r' -> Just (\v -> terpProp' $ r' v))
+			   (\v -> terpProp' $ p v)
+	  terpProp' (Not p) = Not $ terpProp' p
+	  terpProp' (Connected c p1 p2) =
+	      Connected c (terpProp' p1) (terpProp' p2)
+	  terpProp' Eet = Eet
 
 bigAnd :: [Prop r t] -> (Prop r t)
 bigAnd [] = Not Eet

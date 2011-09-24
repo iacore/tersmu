@@ -215,9 +215,20 @@ Two-stage interpretation:
 	derivation from the original text is likely to be fairly transparent.
 
     Second stage: zo'e expressions are replaced by existential/generic
-	quantifiers as appropriate, with domains to be glorked. The result may
-	not be so readable.
+	quantifiers as appropriate, with domains to be glorked, or (perhaps)
+	by property predications. The result may not be so readable.
 
     Interpreting the final expression in a model (as part of a discourse) is
     potentially rather complicated, due to the glorking required. But we can
     null-glork, letting the domain always be the whole universe.
+
+
+Problem regarding quantified zo'e and relative clauses:
+    Do the clauses apply to the zo'e itself or to atoms below it?
+
+    ro lo broda poi brode -> (ro (zo'e noi broda)) zi'e poi brode
+    but
+    ro mi poi broda -> (ro mi) poi broda
+
+    I think we should have this being a difference between poi and noi: poi
+    takes only singular variables. {lo broda poi brode} is a type error.
