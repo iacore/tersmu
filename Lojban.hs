@@ -14,12 +14,10 @@ import Debug.Trace
 type Prop = FOL.Prop JboRel JboTerm
 
 data JboTerm = SingVar Int
-	     | SingConst Int
 	     | Restricted (Int -> Prop) JboTerm
 	     | Described Gadri (Int -> Prop)
 	     | Named String
-	     | Personal String
-	     | Raw String
+	     | NonAnaph String
 	     | ZoheTerm
 
 type Individual = Int
@@ -37,10 +35,8 @@ isAmong y = \v -> Rel "me" [SingVar v,y]
 instance FOL.Term JboTerm where
     singvar n = SingVar n
     objlogstr (SingVar n) = "x" ++ (show n)
-    objlogstr (SingConst n) = "c" ++ (show n)
     objlogstr (Named s) = s
-    objlogstr (Personal ps) = ps
-    objlogstr (Raw s) = s
+    objlogstr (NonAnaph ps) = ps
     objlogstr ZoheTerm = "zo'e"
     objlogstr (Described g p) = g ++ " [" ++ show (p 1) ++ "]"
     objlogstr (Restricted p t) = objlogstr t ++ ":" ++ show (p 0)
@@ -107,7 +103,7 @@ data RelClause = Restrictive Subsentence  -- poi
 	       deriving (Eq, Show, Ord)
 data SumtiAtom = Name String
 	       | Variable Int -- da
-	       | PersonalProsumti String -- mi
+	       | NonAnaphoricProsumti String -- mi
 	       | RelVar Int -- ke'a
 	       | LambdaVar Int -- ce'u
 	       | Description Gadri Selbri
@@ -262,7 +258,7 @@ sentToProp' [] (t:ts) bt vs bs as =
 		      in argAppended (delete rv vs) bs tag (SingVar v)
 		  _ -> -- rest are "plural"
 		     let o = case sa of
-				 PersonalProsumti ps -> Personal ps
+				 NonAnaphoricProsumti ps -> NonAnaph ps
 				 Name s -> Named s
 				 Zohe -> ZoheTerm
 				 Description g sb ->

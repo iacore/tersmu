@@ -81,11 +81,11 @@ relativeClause :: RelClause
 
 sumti6 :: SumtiAtom
     = "la":LA s:CMENE -> {Name s}
-    / "mi":KOhA -> {PersonalProsumti "mi"}
-    / "do":KOhA -> {PersonalProsumti "do"}
-    / "ti":KOhA -> {PersonalProsumti "ti"}
-    / "ta":KOhA -> {PersonalProsumti "ta"}
-    / "tu":KOhA -> {PersonalProsumti "tu"}
+    / "mi":KOhA -> {NonAnaphoricProsumti "mi"}
+    / "do":KOhA -> {NonAnaphoricProsumti "do"}
+    / "ti":KOhA -> {NonAnaphoricProsumti "ti"}
+    / "ta":KOhA -> {NonAnaphoricProsumti "ta"}
+    / "tu":KOhA -> {NonAnaphoricProsumti "tu"}
     / "da":KOhA -> {Variable 1}
     / "de":KOhA -> {Variable 2}
     / "di":KOhA -> {Variable 3}

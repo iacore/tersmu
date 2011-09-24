@@ -189,3 +189,35 @@ Handling descriptions and {zo'e} without really handling them:
     Quantifiers we can handle by quantifying the "among [the term]" predicate.
     
     Relative clauses have I guess to be considered part of the term.
+
+Two-stage interpretation:
+    If we're willing to accept {lo} == {zo'e noi}, which I'm currently
+	thinking we should be, we can proceed as follows:
+
+    First stage: everything is reduced to predications, in particular worlds,
+	of (possibly complicated) selbri with sumti being named entities or
+	personal prosumti or bound variables or zo'e expressions (meaning zo'e
+	+ relative clauses).
+
+	i.e. we obtain something of type Prop Selbri JboTerm, where JboTerm
+	has just those four constructors.
+
+	Anaphora are resolved at this level. For zo'e expressions, anaphora
+	bind "in intension" - i.e. to the zo'e clause as a whole; they
+	therefore make sense anywhere in the scope of any variables which
+	occur bound in the zo'e expression.
+	
+	(This means that e.g. {ro te cange poi ponse lo xasli cu darxi ri}
+	doesn't really work - it becomes equivalent to {ro te cange poi ponse
+	lo xasli cu darxi lo xasli}. But nevermind, at least for now.)
+
+	The result of this first stage should be quite human-readable, and the
+	derivation from the original text is likely to be fairly transparent.
+
+    Second stage: zo'e expressions are replaced by existential/generic
+	quantifiers as appropriate, with domains to be glorked. The result may
+	not be so readable.
+
+    Interpreting the final expression in a model (as part of a discourse) is
+    potentially rather complicated, due to the glorking required. But we can
+    null-glork, letting the domain always be the whole universe.
