@@ -41,11 +41,6 @@ class Term t where
 class Rel r where
     relstr :: r -> String
 
-instance (Rel r, Term t) => Show (Prop r t) where
-    show p = evalState (serialise p True) 1
-
-type PropPrintFlags = Bool -- insert newlines and tabs?
-
 -- terpProp: lift an interpretation of atomic formulae to an interpretation of
 -- arbitrary formulae
 terpProp :: (r1 -> [t1] -> Prop r2 t2) -> Prop r1 t1 -> Prop r2 t2
@@ -69,6 +64,11 @@ bigOr :: [Prop r t] -> (Prop r t)
 bigOr [] = Eet
 bigOr [p] = p
 bigOr (p:ps) = Connected Or p (bigOr ps)
+
+instance (Rel r, Term t) => Show (Prop r t) where
+    show p = evalState (serialise p False) 1
+
+type PropPrintFlags = Bool -- insert newlines and tabs?
 
 serialise :: (Rel r, Term t) => (Prop r t) -> PropPrintFlags -> State Int String
 serialise p f = _serialise p f 0

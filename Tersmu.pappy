@@ -104,7 +104,7 @@ sumti6 :: SumtiAtom
     / "fo'o":KOhA -> {Assignable 9}
     / "fo'u":KOhA -> {Assignable 10}
     / "zo'e":KOhA -> {Zohe}
-    / g:LE s:selbri -> {Description g s}
+    / g:LE q:quantifier? s:selbri -> {Description g q s}
 
 quantifier :: Quantifier = q:number BOI? -> q
 
@@ -201,15 +201,23 @@ tailTerms :: {[Term]}
     = ts:term* VAU? -> ts
 
 selbri :: Selbri
-    = ("ja'a":NA -> {})? tu:tanruUnit -> tu
-    / "na":NA sb:selbri -> {Negated sb}
+    = "na":NA sb:selbri -> {Negated sb}
+    / ("ja'a":NA -> {})? sb:selbri4 -> {Selbri4 sb}
 
-tanruUnit :: Selbri
-    = tu:tanruUnit2 las:linkargs?-> {TanruUnit tu (fromMaybe [] las)}
+selbri4 :: Selbri4
+    = sb:selbri4 tu:tanruUnit -> {SBTanru sb tu}
+    / tanruUnit
+
+tanruUnit :: Selbri4
+    = tu:tanruUnit2 las:linkargs? -> {TanruUnit tu (fromMaybe [] las)}
 
 tanruUnit2 :: TanruUnit2
-    = bv:BRIVLA -> {Brivla bv}
-    / n:convSE tu:tanruUnit2 -> {Permuted n tu}
+    = bv:BRIVLA -> {TUBrivla bv}
+    / n:convSE tu:tanruUnit2 -> {TUPermuted n tu}
+    / g:GOhA -> {TUBrivla g}
+    / q:number m:MOI -> {TUMoi q m}
+    / ME s:sumti MEhU? -> {TUMe s}
+    / a:NU ss:subsentence KEI? -> {TUAbstraction a ss}
 
 linkargs :: {[Term]}
     = BE t:term ts:links? BEhO? -> {(t : (fromMaybe [] ts))}
@@ -257,7 +265,7 @@ Spacing :: {()} = Space+
 
 Valsi :: String = cs:LojbanLetter+ Spacing -> cs
 
-CMENE :: String = PAUSE? ss:CMENEchunk+ Spacing -> {foldl (++) [] ss}
+CMENE :: String = PAUSE? ss:CMENEchunk+ PAUSE? Spacing -> {foldl (++) [] ss}
 CMENEchunk :: String = ls:nonConsonant* c:Consonant -> {ls++[c]}
 
 PAUSE :: String = "."

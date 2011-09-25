@@ -223,7 +223,7 @@ Two-stage interpretation:
     null-glork, letting the domain always be the whole universe.
 
 
-Problem regarding quantified zo'e and relative clauses:
+Quantified zo'e and relative clauses:
     Do the clauses apply to the zo'e itself or to atoms below it?
 
     ro lo broda poi brode -> (ro (zo'e noi broda)) zi'e poi brode
@@ -232,3 +232,53 @@ Problem regarding quantified zo'e and relative clauses:
 
     I think we should have this being a difference between poi and noi: poi
     takes only singular variables. {lo broda poi brode} is a type error.
+
+Kinds/properties:
+    xorxes wants kinds in the universe, distinct from properties, with
+    {lo broda} (and hence {zo'e noi broda}) able to get a kind.
+
+    I think this is evil, for various reasons.
+
+    We can get approximately the same effect by making {lo broda} be ambiguous
+    between {zo'e noi broda} and {zo'e noi ka broda}, while keeping zo'e sane
+    (roughly: resolving as a plural existential or (maybe) generic quantifier)
+
+Notes on lambdas:
+    Currently, we're implementing lambdas expressions directly in Haskell,
+    i.e. as function types. In FOL, we're using (Int -> Prop) rather than
+    (Term -> Prop), whereas in Lojban.hs we're using (JboTerm -> JboProp).
+
+    The use of Int in the former was to make it possible to do interpretation.
+
+    The problem with using Int for the latter is that we actually do want to 
+    apply them to JboTerms.
+
+    But we run into problems when trying to interpret our JboProps - see the
+    tanru bug in crdluk/BUGS.
+
+    Ugh.
+
+    Should I be using De Bruijn indices?
+
+    Ughsai.
+
+    Solution: introduce a constructor to Prop:
+	    LambdaApp (Int -> Prop r t) t
+	which is interpreted in a model in the obvious way - it just adds a
+	binding.
+
+The big idea:
+    We reduce the problem of understanding (a fragment of) lojban to that of
+    understanding
+	(i) first order logic
+	(ii) brivla and cmene and non-anaphoric pro-sumti
+	(iii) tanru and NU-selbri
+	(iv) zo'e-terms
+    More precisely, we interpret a lojban sentence as a proposition in
+    first-order logic with the things in (ii)-(iv) as the terms and relations.
+
+    Here, a zo'e-term corresponds to an expression of the form
+    {zo'e noi broda} (or just {zo'e}); it has the corresponding unary
+    predicate (or nothing) as data.
+
+
