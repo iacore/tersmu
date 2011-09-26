@@ -6,6 +6,7 @@ data Prop r t
     = Not    (Prop r t)
     | Connected Connective (Prop r t) (Prop r t)
     | Quantified Quantifier (Maybe (Int -> Prop r t)) (Int -> Prop r t)
+    | LambdaApp (Int -> Prop r t) t
     | Rel    r [t]
     | Eet
 
@@ -42,7 +43,7 @@ class Rel r where
     relstr :: r -> String
 
 -- terpProp: lift an interpretation of atomic formulae to an interpretation of
--- arbitrary formulae
+-- arbitrary formula
 terpProp :: (r1 -> [t1] -> Prop r2 t2) -> Prop r1 t1 -> Prop r2 t2
 terpProp terpAtomic p = terpProp' p
     where terpProp' (Rel r ts) = terpAtomic r ts
@@ -54,6 +55,7 @@ terpProp terpAtomic p = terpProp' p
 	  terpProp' (Connected c p1 p2) =
 	      Connected c (terpProp' p1) (terpProp' p2)
 	  terpProp' Eet = Eet
+	  terpProp' (LambdaApp _ _) = error "Can't terp lambda"
 
 bigAnd :: [Prop r t] -> (Prop r t)
 bigAnd [] = Not Eet

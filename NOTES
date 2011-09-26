@@ -253,14 +253,8 @@ Notes on lambdas:
     The problem with using Int for the latter is that we actually do want to 
     apply them to JboTerms.
 
-    But we run into problems when trying to interpret our JboProps - see the
-    tanru bug in crdluk/BUGS.
-
-    Ugh.
-
-    Should I be using De Bruijn indices?
-
-    Ughsai.
+    But we run into problems when trying to interpret our JboProps - e.g. when
+    interpreting tanru.
 
     Solution: introduce a constructor to Prop:
 	    LambdaApp (Int -> Prop r t) t
