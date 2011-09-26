@@ -35,7 +35,7 @@ instance JboShow Quantifier where
     jboshow (Exactly n) = show n
 
 class Term t where
-    singvar :: Int -> t
+    var :: Int -> t
     objlogstr :: t -> String
     objjbostr :: t -> String
 
@@ -88,12 +88,12 @@ _serialise (Quantified q r p::Prop r t) f d =
        put $ n+1
        case r of Nothing -> do s <- _serialise (p n) f (d+1)
 			       return $ show q ++ " " ++
-				   objlogstr (singvar n::t) ++
+				   objlogstr (var n::t) ++
 				   ". " ++ s
 		 Just r' -> do s1 <- _serialise (r' n) f (d+1)
 			       s2 <- _serialise (p n) f (d+1)
 			       return $ show q ++ " " ++
-				   objlogstr (singvar n::t) ++ 
+				   objlogstr (var n::t) ++ 
 				   ":(" ++ s1 ++ ")" ++
 				   ". " ++ s2
 _serialise (Rel r ts) f d =

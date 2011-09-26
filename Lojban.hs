@@ -13,7 +13,7 @@ import Debug.Trace
 
 type Prop = FOL.Prop JboRel JboTerm
 
-data JboTerm = SingVar Int
+data JboTerm = Var Int
 	     | Named String
 	     | NonAnaph String
 	     | ZoheTerm (Maybe (JboTerm -> Prop))
@@ -33,18 +33,18 @@ type Abstractor = String
 type MOICmavo = String
 
 instance Rel JboRel where
-    relstr (Tanru p r) = "[" ++ show (p (SingVar (-1)) ) ++ "] " ++ relstr r
+    relstr (Tanru p r) = "[" ++ show (p (Var (-1)) ) ++ "] " ++ relstr r
     relstr (Moi q m) = show q ++ m
-    relstr (AbsPred a p) = a ++ "[" ++ show (p (SingVar (-1))) ++ "]"
+    relstr (AbsPred a p) = a ++ "[" ++ show (p (Var (-1))) ++ "]"
     relstr (AbsProp a p) = a ++ "[" ++ show p ++ "]"
     relstr Among = "me"
     relstr (Brivla s) = s
 
 instance JboShow JboRel where
-    jboshow (Tanru p r) = "ka " ++ jboshow (p (SingVar (-1))) ++ " kei "
+    jboshow (Tanru p r) = "ka " ++ jboshow (p (Var (-1))) ++ " kei "
 	++ jboshow r
     jboshow (Moi q m) = jboshow q ++ m
-    jboshow (AbsPred a p) = a ++ " " ++ jboshow (p (SingVar (-1))) ++ " kei"
+    jboshow (AbsPred a p) = a ++ " " ++ jboshow (p (Var (-1))) ++ " kei"
     jboshow (AbsProp a p) = a ++ " " ++ jboshow p ++ " kei"
     jboshow Among = "me"
     jboshow (Brivla s) = s
@@ -53,25 +53,25 @@ isAmong :: JboTerm -> (JboTerm -> Prop)
 isAmong y = \o -> Rel Among [o,y]
 
 instance FOL.Term JboTerm where
-    singvar n = SingVar n
-    objlogstr (SingVar (-1)) = "_"
-    objlogstr (SingVar 0) = "_"
-    objlogstr (SingVar n) = "x" ++ (show n)
+    var n = Var n
+    objlogstr (Var (-1)) = "_"
+    objlogstr (Var 0) = "_"
+    objlogstr (Var n) = "x" ++ (show n)
     objlogstr (Named s) = s
     objlogstr (NonAnaph ps) = ps
     objlogstr (ZoheTerm Nothing) = "zo'e"
-    objlogstr (ZoheTerm (Just p)) = "zo'e:(" ++ show (p (SingVar 0)) ++ ")"
+    objlogstr (ZoheTerm (Just p)) = "zo'e:(" ++ show (p (Var 0)) ++ ")"
 
-    objjbostr (ZoheTerm (Just p)) = "zo'e noi " ++ jboshow (p (SingVar 0)) ++ " ku'o"
+    objjbostr (ZoheTerm (Just p)) = "zo'e noi " ++ jboshow (p (Var 0)) ++ " ku'o"
     objjbostr (Named s) = "la " ++ s ++ "."
-    objjbostr (SingVar (-1)) = "ce'u" -- XXX: hack
-    objjbostr (SingVar 0) = "ke'a" -- XXX: hack
-    objjbostr (SingVar 1) = "da"
-    objjbostr (SingVar 2) = "de"
-    objjbostr (SingVar 3) = "di"
-    objjbostr (SingVar 4) = "da xi vo"
-    objjbostr (SingVar 5) = "da xi mu"
-    objjbostr (SingVar 6) = "da xi xa"
+    objjbostr (Var (-1)) = "ce'u" -- XXX: hack
+    objjbostr (Var 0) = "ke'a" -- XXX: hack
+    objjbostr (Var 1) = "da"
+    objjbostr (Var 2) = "de"
+    objjbostr (Var 3) = "di"
+    objjbostr (Var 4) = "da xi vo"
+    objjbostr (Var 5) = "da xi mu"
+    objjbostr (Var 6) = "da xi xa"
     objjbostr o = objlogstr o
 
 instance Show JboTerm where
@@ -88,7 +88,7 @@ instance JboShow Prop
 	      let relstr = case r of
 		    Nothing -> []
 		    Just r' -> ["poi"] ++ jboshow' [] (n+1) (r' n)
-	      in jboshow' (ps ++ [jboshow q, jboshow $ SingVar n]
+	      in jboshow' (ps ++ [jboshow q, jboshow $ Var n]
 			    ++ relstr)
 			  (n+1) (p n)
 	    jboshow' ps n p | ps /= [] =
@@ -310,8 +310,8 @@ sentToProp' [] (t:ts) bt bs as =
 			       FA n -> as{position=n}
 	     as'' = let vs = implicitvars as'
 			f v = case o of
-				   SingVar n ->
-				    case getBinding bs v of SingVar n -> True
+				   Var n ->
+				    case getBinding bs v of Var n -> True
 							    _ -> False
 				   _ -> False
 		    in as'{implicitvars = (vs\\(delvs++filter f vs))}
@@ -403,7 +403,7 @@ quantified :: Quantifier -> Maybe JboPred -> JboPred -> Prop
 quantified q r p = Quantified q (case r of Nothing -> Nothing
 				           Just r -> Just $ singpred r)
 				(singpred p)
-    where singpred p = \v -> p (SingVar v)
+    where singpred p = \v -> p (Var v)
 
 selbriToRelClauseBridiTail :: Selbri -> BridiTail
 selbriToRelClauseBridiTail (Negated sb) =
