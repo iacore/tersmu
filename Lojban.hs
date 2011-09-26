@@ -247,13 +247,16 @@ sentToProp' :: [Term] -> [Term] -> BridiTail -> Bindings -> Arglist -> Prop
 --    ++ show a ++ " " ++ show b ++ " " ++ show c ++ " " ++ show d ++ " " ++
 --	show e ) False = undefined
 --
-sentToProp' ps ts (ConnectedBT con bt1 bt2) bs as =
-    let p1 = sentToProp' ps ts bt1 bs as
-	p2 = sentToProp' ps ts bt2 bs as
-	in connToFOL con p1 p2
 
+-- yes, bridi negation really does scope over the prenex - see CLL:11.14
 sentToProp' ps ts (BridiTail3 (Negated sb) tts) bs as =
     Not $ sentToProp' ps ts (BridiTail3 sb tts) bs as
+
+-- while giheks are rather different (see e.g. CLL:9.11):
+sentToProp' [] [] (ConnectedBT con bt1 bt2) bs as =
+    let p1 = sentToProp' [] [] bt1 bs as
+	p2 = sentToProp' [] [] bt2 bs as
+	in connToFOL con p1 p2
 
 sentToProp' [] [] (BridiTail3 (Selbri4 (TanruUnit (TUMe s) _)) tts) bs as =
     sentToProp' [] []
