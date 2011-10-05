@@ -248,11 +248,11 @@ sentToProp' :: [Term] -> [Term] -> BridiTail -> Bindings -> Arglist -> Prop
 --	show e ) False = undefined
 --
 
--- yes, bridi negation really does scope over the prenex - see CLL:11.14
+-- yes, bridi negation really does scope over the prenex - see CLL:16.11.14
 sentToProp' ps ts (BridiTail3 (Negated sb) tts) bs as =
     Not $ sentToProp' ps ts (BridiTail3 sb tts) bs as
 
--- while giheks are rather different (see e.g. CLL:9.11):
+-- while giheks are rather different (see e.g. CLL:14.9.11):
 sentToProp' [] [] (ConnectedBT con bt1 bt2) bs as =
     let p1 = sentToProp' [] [] bt1 bs as
 	p2 = sentToProp' [] [] bt2 bs as
@@ -418,8 +418,11 @@ selbriToRelClauseBridiTail (Selbri4 sb) =
     in BridiTail3 (Selbri4 sb') las
 
 selbriToPred :: Selbri -> Bindings -> JboPred
-selbriToPred sb bs = evalRel (Subsentence [] [] bt) bs
+selbriToPred sb bs = \o ->
+    sentToProp (Subsentence [] [term Untagged rv] bt)
+	[] (Map.insert rv o bs)
     where bt = selbriToRelClauseBridiTail sb
+	  rv = RelVar 0 -- fake relvar, not actually bound to ke'axino
 
 evalRel :: Subsentence -> Bindings -> JboPred
 evalRel subs bs = \o ->

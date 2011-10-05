@@ -240,8 +240,23 @@ Kinds/properties:
     I think this is evil, for various reasons.
 
     We can get approximately the same effect by making {lo broda} be ambiguous
-    between {zo'e noi broda} and {zo'e noi ka broda}, while keeping zo'e sane
-    (roughly: resolving as a plural existential or (maybe) generic quantifier)
+    between {zo'e noi broda} and {zo'e noi ka broda}, while keeping zo'e sane.
+
+    So my current favoured solution is to have {zo'e noi} as close-scope
+    plural existential with glorked domain, have {lo} as ambiguous between
+    {zo'e noi}, {pa ka} and {lo'e}, with {lo'e} being about generics and
+    having exact semantics yet to be determined.
+
+    This should be mostly consistent with xorxes' use of {lo}.
+
+    In reality, I would then favour dropping the second two options, such that
+    {lo} == {zo'e noi}, and generics and properties have to be marked as such.
+    Presumably xorxes (and everyone else?) would be unhappy with that, but
+    it's blatantly sensible. We could then go back to using {lo ka} rather
+    than {pa ka} without ambiguity.
+
+    But maybe we should think through the tense system and generics before
+    making any firm decisions there?
 
 Notes on lambdas:
     Currently, we're implementing lambdas expressions directly in Haskell,
@@ -260,6 +275,9 @@ Notes on lambdas:
 	    LambdaApp (Int -> Prop r t) t
 	which is interpreted in a model in the obvious way - it just adds a
 	binding.
+
+    By the way: a monad allowing us to neatly bind a new variable would be
+    very helpful.
 
 The big idea:
     We reduce the problem of understanding (a fragment of) lojban to that of
