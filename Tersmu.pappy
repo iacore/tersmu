@@ -547,7 +547,7 @@ NOI :: String = s:NOImain Spacing -> s
 NOImain :: String = "voi" / "noi" / "poi" 
 --         abstraction  
 NU :: String = s:NUmain Spacing -> s
-NUmain :: String = "ni" / "du'u" / "si'o" / "nu" / "li'i" / "ka" / "jei" / "su'u" / "zu'o" / "mu'e" / "pu'u" / "za'i" 
+NUmain :: String = "ni" / "du'u" / "si'o" / "nu" / "li'i" / "ka" / "jei" / "su'u" / "zu'o" / "mu'e" / "pu'u" / "za'i" / "poi'i"
 --         change operator to selbri; inverse of MOhE 
 NUhA :: String = s:NUhAmain Spacing -> s
 NUhAmain :: String = "nu'a" 

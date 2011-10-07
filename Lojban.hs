@@ -101,8 +101,8 @@ data TanruUnit2 = TUBrivla String
 	        | TUPermuted Int TanruUnit2
 	        deriving (Eq, Show, Ord)
 
+-- term: convenience function to lift a Sumti or SumtiAtom to a term
 class SumtiTermType a where term :: Tag -> a -> Term
-
 instance SumtiTermType Sumti where term tag x = Sumti tag x
 instance SumtiTermType SumtiAtom where term tag x = term tag (QAtom Nothing [] x)
 
@@ -119,6 +119,7 @@ connToFOL (Connective False c b2) p1 p2 =
 connToFOL (Connective b1 c False) p1 p2 =
     connToFOL (Connective b1 c True) p1 (Not p2)
 
+-- extendTail: adds terms to the end of a bridi tail
 extendTail :: BridiTail -> [Term] -> BridiTail
 extendTail (BridiTail3 sb tts) ts = BridiTail3 sb (tts++ts)
 extendTail (ConnectedBT con bt1 bt2) ts =
@@ -144,23 +145,12 @@ data Arglist = Arglist {args :: [Maybe Obj],
 appendToArglist :: Arglist -> Obj -> Arglist
 appendToArglist as@(Arglist os n _) o = incArg (setArg as n (Just o))
     where incArg as@(Arglist os n vs) = Arglist os (n+1) vs
-
-setArg :: Arglist -> Int -> Maybe Obj -> Arglist
-setArg as@(Arglist os _ _) n o =
-    let (h,t) = splitAt (n-1) os
-	l = ((n-1)-(length h))
-    in as{args=(h++replicate l Nothing++[o]++drop 1 t)}
-
-delImplicitVars :: Arglist -> ImplicitVars -> Arglist
-delImplicitVars as@(Arglist os n vs) delvs = Arglist os n (vs\\delvs)
-
 swapArgs :: Arglist -> Int -> Int -> Arglist
 swapArgs as@(Arglist os _ _) n m =
     let lookupArg k = if k <= length os then os!!(k-1) else Nothing
 	a = lookupArg n
 	b = lookupArg m
     in setArg (setArg as m a) n b
-
 resolveArglist :: Arglist -> Bindings -> [JboTerm]
 resolveArglist as@(Arglist os _ vs) bs = resolve os vs []
     where resolve (Just o:os) vs ts = resolve os vs (ts++[o])
@@ -170,6 +160,17 @@ resolveArglist as@(Arglist os _ vs) bs = resolve os vs []
 	      resolve os [] (ts++[ZoheTerm Nothing])
 	  resolve [] (v:vs) ts = resolve [] vs (ts++[getBinding bs v])
 	  resolve [] [] ts = ts
+appendZohe :: Arglist -> Arglist
+appendZohe as = appendToArglist as $ ZoheTerm Nothing
+-- delImplicitVars :: Arglist -> ImplicitVars -> Arglist
+-- delImplicitVars as@(Arglist os n vs) delvs = Arglist os n (vs\\delvs)
+
+setArg :: Arglist -> Int -> Maybe Obj -> Arglist
+setArg as@(Arglist os _ _) n o =
+    let (h,t) = splitAt (n-1) os
+	l = ((n-1)-(length h))
+    in as{args=(h++replicate l Nothing++[o]++drop 1 t)}
+
 
 sentToProp :: Subsentence -> ImplicitVars -> Bindings -> Prop
 sentToProp (Subsentence ps ts bt) vs bs =
@@ -228,6 +229,17 @@ sentToProp' [] [] (BridiTail3 (Selbri4 sb) []) bs as =
 					   sentToProp subs [lv] (Map.insert lv
 					       o (shuntVars bs LambdaVar))))
 				     , as)
+				 | a == "poi'i" ->
+				     -- poi'i: an experimental NU, which takes
+				     -- ke'a rather than ce'u; {ko'a poi'i
+				     -- ke'a broda} means {ko'a broda}.
+				     -- http://www.lojban.org/tiki/poi'i
+				     (AbsPred a
+				      (let rv = RelVar 1
+				       in (\o ->
+					   sentToProp subs [rv] (Map.insert rv
+					       o (shuntVars bs RelVar))))
+				     , as)
 			         | otherwise -> 
 				     (AbsProp a (sentToProp subs [] bs), as)
 		 TUAmong -> (Among, as)
@@ -235,7 +247,10 @@ sentToProp' [] [] (BridiTail3 (Selbri4 sb) []) bs as =
 			   chopsb (TanruUnit tu' las)
 				  (swapArgs as 1 s)
 	(r,as') = chopsb sb as
-    in Rel r (resolveArglist as' bs)
+	
+    in case r of AbsPred "poi'i" p -> 
+			p $ head $ resolveArglist (appendZohe as') bs
+		 _ -> Rel r (resolveArglist as' bs)
 
 sentToProp' [] (t:ts) bt bs as =
  let argAppended delvs bs tag o =
@@ -415,7 +430,7 @@ instance JboShow JboRel where
 	do withShuntedRelVar (\n ->
 	       do s <- logjboshow jbo (p (Var n))
 		  s' <- logjboshow jbo r
-		  return $ if jbo then "ka " ++ s ++ " kei " ++ s'
+		  return $ if jbo then "poi'i " ++ s ++ " kei " ++ s'
 				  else "[" ++ s ++ "] " ++ s' )
     logjboshow jbo (Moi q m) = do s <- logjboshow jbo q
 				  return $ s ++ m
