@@ -15,9 +15,6 @@ data Connective = And | Or | Impl | Equiv
 data Quantifier = Exists | Forall | Exactly Int
     deriving (Eq, Ord)
 
-class JboShow t where
-    jboshow :: t -> String
-
 instance Show Connective where
     show And = "/\\"
     show Or = "\\/"
@@ -29,15 +26,8 @@ instance Show Quantifier where
     show Forall = "FA"
     show (Exactly n) = "EQ(" ++ show n ++ ")"
 
-instance JboShow Quantifier where
-    jboshow Exists = "su'o"
-    jboshow Forall = "ro"
-    jboshow (Exactly n) = show n
-
 class Term t where
     var :: Int -> t
-    objlogstr :: t -> String
-    objjbostr :: t -> String
 
 class Rel r where
     relstr :: r -> String
@@ -67,38 +57,38 @@ bigOr [] = Eet
 bigOr [p] = p
 bigOr (p:ps) = Connected Or p (bigOr ps)
 
-instance (Rel r, Term t) => Show (Prop r t) where
-    show p = evalState (serialise p False) 1
+-- instance (Rel r, Term t) => Show (Prop r t) where
+--     show p = evalState (serialise p False) 1
 
-type PropPrintFlags = Bool -- insert newlines and tabs?
+-- type PropPrintFlags = Bool -- insert newlines and tabs?
 
-serialise :: (Rel r, Term t) => (Prop r t) -> PropPrintFlags -> State Int String
-serialise p f = _serialise p f 0
-
-_serialise :: (Rel r, Term t) => Prop r t -> PropPrintFlags -> Int -> State Int String
-_serialise (Not p) f d =
-    do s <- _serialise p f (d+1)
-       return $ "! ( " ++ s ++ " )"
-_serialise (Connected c p1 p2) f d =
-    do s1 <- _serialise p1 f (d+1); s2 <- _serialise p2 f (d+1);
-       return $ "( " ++ s1 ++ " " ++ show c ++ " " ++
-	   (if f then "\n"++(replicate (d+1) '\t') else "") ++ s2 ++ " )" 
-_serialise (Quantified q r p::Prop r t) f d =
-    do n <- get
-       put $ n+1
-       case r of Nothing -> do s <- _serialise (p n) f (d+1)
-			       return $ show q ++ " " ++
-				   objlogstr (var n::t) ++
-				   ". " ++ s
-		 Just r' -> do s1 <- _serialise (r' n) f (d+1)
-			       s2 <- _serialise (p n) f (d+1)
-			       return $ show q ++ " " ++
-				   objlogstr (var n::t) ++ 
-				   ":(" ++ s1 ++ ")" ++
-				   ". " ++ s2
-_serialise (Rel r ts) f d =
-    return $ relstr r ++ "(" ++ unwords (map objlogstr ts) ++ ")"
-_serialise Eet f d = return "_|_"
+-- serialise :: (Rel r, Term t) => (Prop r t) -> PropPrintFlags -> State Int String
+-- serialise p f = _serialise p f 0
+-- 
+-- _serialise :: (Rel r, Term t) => Prop r t -> PropPrintFlags -> Int -> State Int String
+-- _serialise (Not p) f d =
+--     do s <- _serialise p f (d+1)
+--        return $ "! ( " ++ s ++ " )"
+-- _serialise (Connected c p1 p2) f d =
+--     do s1 <- _serialise p1 f (d+1); s2 <- _serialise p2 f (d+1);
+--        return $ "( " ++ s1 ++ " " ++ show c ++ " " ++
+-- 	   (if f then "\n"++(replicate (d+1) '\t') else "") ++ s2 ++ " )" 
+-- _serialise (Quantified q r p::Prop r t) f d =
+--     do n <- get
+--        put $ n+1
+--        case r of Nothing -> do s <- _serialise (p n) f (d+1)
+-- 			       return $ show q ++ " " ++
+-- 				   objlogstr (var n::t) ++
+-- 				   ". " ++ s
+-- 		 Just r' -> do s1 <- _serialise (r' n) f (d+1)
+-- 			       s2 <- _serialise (p n) f (d+1)
+-- 			       return $ show q ++ " " ++
+-- 				   objlogstr (var n::t) ++ 
+-- 				   ":(" ++ s1 ++ ")" ++
+-- 				   ". " ++ s2
+-- _serialise (Rel r ts) f d =
+--     return $ relstr r ++ "(" ++ unwords (map objlogstr ts) ++ ")"
+-- _serialise Eet f d = return "_|_"
 
 
 -- XXX: broken

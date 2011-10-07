@@ -3,6 +3,8 @@ module Lojban where
 import FOL hiding (Prop, Term, Connective)
 import qualified FOL (Prop, Term, Connective)
 
+import Bindful
+
 import Data.Maybe
 import Control.Monad.State
 import Data.List
@@ -32,80 +34,11 @@ data JboRel = Tanru JboPred JboRel
 type Abstractor = String
 type MOICmavo = String
 
-instance Rel JboRel where
-    relstr (Tanru p r) = "[" ++ show (p (Var (-1)) ) ++ "] " ++ relstr r
-    relstr (Moi q m) = show q ++ m
-    relstr (AbsPred a p) = a ++ "[" ++ show (p (Var (-1))) ++ "]"
-    relstr (AbsProp a p) = a ++ "[" ++ show p ++ "]"
-    relstr Among = "me"
-    relstr (Brivla s) = s
-
-instance JboShow JboRel where
-    jboshow (Tanru p r) = "ka " ++ jboshow (p (Var (-1))) ++ " kei "
-	++ jboshow r
-    jboshow (Moi q m) = jboshow q ++ m
-    jboshow (AbsPred a p) = a ++ " " ++ jboshow (p (Var (-1))) ++ " kei"
-    jboshow (AbsProp a p) = a ++ " " ++ jboshow p ++ " kei"
-    jboshow Among = "me"
-    jboshow (Brivla s) = s
-
-isAmong :: JboTerm -> (JboTerm -> Prop)
-isAmong y = \o -> Rel Among [o,y]
-
 instance FOL.Term JboTerm where
     var n = Var n
-    objlogstr (Var (-1)) = "_"
-    objlogstr (Var 0) = "_"
-    objlogstr (Var n) = "x" ++ (show n)
-    objlogstr (Named s) = s
-    objlogstr (NonAnaph ps) = ps
-    objlogstr (ZoheTerm Nothing) = "zo'e"
-    objlogstr (ZoheTerm (Just p)) = "zo'e:(" ++ show (p (Var 0)) ++ ")"
 
-    objjbostr (ZoheTerm (Just p)) = "zo'e noi " ++ jboshow (p (Var 0)) ++ " ku'o"
-    objjbostr (Named s) = "la " ++ s ++ "."
-    objjbostr (Var (-1)) = "ce'u" -- XXX: hack
-    objjbostr (Var 0) = "ke'a" -- XXX: hack
-    objjbostr (Var 1) = "da"
-    objjbostr (Var 2) = "de"
-    objjbostr (Var 3) = "di"
-    objjbostr (Var 4) = "da xi vo"
-    objjbostr (Var 5) = "da xi mu"
-    objjbostr (Var 6) = "da xi xa"
-    objjbostr o = objlogstr o
-
-instance Show JboTerm where
-    show t = objlogstr t
-
-instance JboShow JboTerm where
-    jboshow t = objjbostr t
-
-instance JboShow Prop
-    where jboshow p = unwords $ jboshow' [] 1 p
-	   where
-	    jboshow' :: [String] -> Int -> Prop -> [String]
-	    jboshow' ps n (Quantified q r p) =
-	      let relstr = case r of
-		    Nothing -> []
-		    Just r' -> ["poi"] ++ jboshow' [] (n+1) (r' n)
-	      in jboshow' (ps ++ [jboshow q, jboshow $ Var n]
-			    ++ relstr)
-			  (n+1) (p n)
-	    jboshow' ps n p | ps /= [] =
-		ps ++ ["zo'u"] ++ (jboshow' [] n p)
-	    jboshow' ps n (Connected c p1 p2) =
-		case c of And -> ["ge"]
-			  Or -> ["ga"]
-			  Impl -> ["ga", "nai"]
-			  Equiv -> ["go"]
-		++ (jboshow' ps n p1) ++ ["gi"] ++ (jboshow' ps n p2)
-	    jboshow' ps n (Not p) =
-		["na","ku"] ++ (jboshow' ps n p)
-	    jboshow' ps n (Rel r []) =
-		[jboshow r]
-	    jboshow' ps n (Rel r (x1:xs)) =
-		[jboshow x1, jboshow r] ++ map jboshow xs
-	    jboshow' ps n Eet = ["jitfa"]
+instance Rel JboRel where
+    relstr r = evalBindful $ logshow r
 
 data Subsentence =
     Subsentence {prenex::[Term], terms::[Term], bridiTail::BridiTail}
@@ -131,6 +64,7 @@ data SumtiAtom = Name String
 	       | NonAnaphoricProsumti String -- mi
 	       | RelVar Int -- ke'a
 	       | LambdaVar Int -- ce'u
+	       | SelbriVar -- fake
 	       | Description Gadri (Maybe Quantifier) Selbri
 	       | Assignable Int -- ko'a
 	       | Ri -- ri
@@ -207,7 +141,6 @@ type JboPred = JboTerm -> Prop
 data Arglist = Arglist {args :: [Maybe Obj],
 			position::Int,
 			implicitvars::ImplicitVars}
-		deriving (Show)
 appendToArglist :: Arglist -> Obj -> Arglist
 appendToArglist as@(Arglist os n _) o = incArg (setArg as n (Just o))
     where incArg as@(Arglist os n vs) = Arglist os (n+1) vs
@@ -340,10 +273,9 @@ sentToProp' [] (t:ts) bt bs as =
 		  _ -> -- rest are "plural"
 		      let (o,irels',delvs) = case sa of
 			     NonAnaphoricProsumti ps -> (NonAnaph ps, irels, [])
-			     rv@(RelVar _) ->
-				 (getBinding bs rv, irels, [rv])
-			     lv@(LambdaVar _) ->
-				 (getBinding bs lv, irels, [lv])
+			     RelVar _ -> (getBinding bs sa, irels, [sa])
+			     LambdaVar _ -> (getBinding bs sa, irels, [sa])
+			     SelbriVar -> (getBinding bs sa, irels, [sa])
 			     anaph@Ri -> 
 				 (getBinding bs anaph, irels, [])
 			     anaph@(Assignable _) -> 
@@ -422,7 +354,7 @@ selbriToPred sb bs = \o ->
     sentToProp (Subsentence [] [term Untagged rv] bt)
 	[] (Map.insert rv o bs)
     where bt = selbriToRelClauseBridiTail sb
-	  rv = RelVar 0 -- fake relvar, not actually bound to ke'axino
+	  rv = SelbriVar
 
 evalRel :: Subsentence -> Bindings -> JboPred
 evalRel subs bs = \o ->
@@ -438,3 +370,156 @@ shuntVars bs var = foldr ( \n -> Map.insert (var $ n+1)
 
 andPred :: [JboPred] -> JboPred
 andPred ps x = bigAnd [p x | p <- ps]
+
+
+---- Printing routines, in lojban and in (customized) logical notation
+
+class JboShow t where
+    jboshow :: t -> Bindful SumtiAtom String
+    logshow :: t -> Bindful SumtiAtom String
+    logjboshow :: Bool -> t -> Bindful SumtiAtom String
+
+    -- minimal complete definition: (jboshow and logshow) or logjboshow
+    jboshow = logjboshow True
+    logshow = logjboshow False
+    logjboshow jbo = if jbo then jboshow else logshow
+
+withNextVariable f =
+    do vals <- getValues
+       let n = head [ n | n <- [1..], not $ (Variable n) `elem` vals ]
+	   in withBinding (Variable n) f
+
+withShuntedRelVar f =
+    do twiddleBound $ \s -> case s of RelVar n -> RelVar $ n+1
+				      _ -> s
+       r <- withBinding (RelVar 1) f
+       twiddleBound $ \s -> case s of RelVar n -> RelVar $ n-1
+				      _ -> s
+       return r
+withShuntedLambda f =
+    do twiddleBound $ \s -> case s of LambdaVar n -> LambdaVar $ n+1
+				      _ -> s
+       r <- withBinding (LambdaVar 1) f
+       twiddleBound $ \s -> case s of LambdaVar n -> LambdaVar $ n-1
+				      _ -> s
+       return r
+
+instance JboShow Quantifier where
+    jboshow Exists = return "su'o"
+    jboshow Forall = return "ro"
+    jboshow (Exactly n) = return $ show n
+    logshow = return . show
+
+instance JboShow JboRel where
+    logjboshow jbo (Tanru p r) =
+	do withShuntedRelVar (\n ->
+	       do s <- logjboshow jbo (p (Var n))
+		  s' <- logjboshow jbo r
+		  return $ if jbo then "ka " ++ s ++ " kei " ++ s'
+				  else "[" ++ s ++ "] " ++ s' )
+    logjboshow jbo (Moi q m) = do s <- logjboshow jbo q
+				  return $ s ++ m
+    logjboshow jbo (AbsPred a p) =
+	do withShuntedLambda (\n ->
+	       do s <- logjboshow jbo (p (Var n))
+		  return $ if jbo then a ++ " " ++ s ++ " kei" 
+				  else a ++ "[" ++ s ++ "]" )
+    logjboshow jbo (AbsProp a p) =
+	do s <- logjboshow jbo p
+	   return $ if jbo then a ++ " " ++ s ++ " kei"
+			   else a ++ "[" ++ s ++ "]"
+    logjboshow _ Among = return "me"
+    logjboshow _ (Brivla s) = return s
+
+isAmong :: JboTerm -> (JboTerm -> Prop)
+isAmong y = \o -> Rel Among [o,y]
+
+instance JboShow JboTerm where
+    logjboshow _ (ZoheTerm Nothing) = return "zo'e"
+    logjboshow jbo (ZoheTerm (Just p)) =
+	do withShuntedRelVar (\n ->
+	       do s <- logjboshow jbo (p (Var n))
+		  return $ if jbo then "zo'e noi " ++ s ++ " ku'o" 
+				  else "zo'e:(" ++ s ++ ")" )
+    logjboshow jbo (Var n) =
+	do v <- binding n 
+	   return $ if jbo then case v of
+				    Variable 1 -> "da"
+				    Variable 2 -> "de"
+				    Variable 3 -> "di"
+				    Variable n -> "da xi " ++ jbonum n
+				    RelVar 1 -> "ke'a"
+				    RelVar n -> "ke'a xi " ++ jbonum n
+				    LambdaVar 1 -> "ce'u"
+				    LambdaVar n -> "ce'u xi " ++ jbonum n
+			    else case v of
+				    Variable n -> "x" ++ show n
+				    RelVar 1 -> "_"
+				    RelVar n -> "_" ++ show n
+				    LambdaVar n -> "\\" ++ show n
+    logjboshow True (Named s) = return $ "la " ++ s ++ "."
+    logjboshow False (Named s) = return s
+    logjboshow _ (NonAnaph s) = return s
+	
+jbonum 0 = "no"
+jbonum 1 = "pa"
+jbonum 2 = "re"
+jbonum 3 = "ci"
+jbonum 4 = "vo"
+jbonum 5 = "mu"
+jbonum 6 = "xa"
+jbonum 7 = "ze"
+jbonum 8 = "bi"
+jbonum 9 = "so"
+
+instance JboShow Prop
+    where {logjboshow jbo p = liftM (if jbo then unwords else concat)
+				$ logjboshow' jbo [] p
+	where
+	  logjboshow' :: Bool -> [String] -> Prop -> Bindful SumtiAtom [String]
+	  logjboshow' jbo ps (Quantified q r p) =
+	     withNextVariable (\n ->
+	      do qs <- logjboshow jbo q
+	         vs <- logjboshow jbo (Var n)
+	         rss <- case r of
+	      	    Nothing -> return []
+	      	    Just r' ->
+	      		do ss <- withShuntedRelVar (\m ->
+	      			  logjboshow' jbo [] (r' m) )
+	      		   return $ [if jbo then "poi" else ":("]
+	      			     ++ ss
+	      			     ++ [if jbo then "ku'o" else ")"]
+	         logjboshow' jbo (ps ++ [qs,vs] ++ rss) (p n) )
+	  logjboshow' jbo ps p | ps /= [] =
+	      do ss <- logjboshow' jbo [] p
+	         return $ ps ++ [if jbo then "zo'u" else ". "] ++ ss
+	  logjboshow' jbo ps (Connected c p1 p2) =
+	      do ss1 <- logjboshow' jbo ps p1
+	         ss2 <- logjboshow' jbo ps p2
+	         return $ if jbo then case c of And -> ["ge"]
+					        Or -> ["ga"]
+					        Impl -> ["ga", "nai"]
+					        Equiv -> ["go"]
+	      			++ ss1 ++ ["gi"] ++ ss2
+	      		   else ["("] ++ ss1 ++
+	      		        [" "++show c++" "] ++ ss2 ++ [")"]
+	  logjboshow' jbo ps (Not p) =
+	      do ss <- logjboshow' jbo ps p
+	         return $ (if jbo then ["na","ku"] else ["!"]) ++ ss
+	  logjboshow' jbo@True ps (Rel r []) =
+	      do s <- jboshow r
+	         return [s]
+	  logjboshow' True ps (Rel r (x1:xs)) =
+	      do s1 <- jboshow x1
+	         s2 <- jboshow r
+	         ss <- mapM jboshow xs
+	         return $ [s1,s2] ++ ss
+	  logjboshow' False ps (Rel r ts) =
+	      do s <- logshow r
+		 tss <- mapM logshow ts
+	         return $
+	             [s ++ "(" ++ (concat $ intersperse "," tss) ++ ")"]
+	  logjboshow' True ps Eet = return ["jitfa"]
+	  logjboshow' False ps Eet = return ["_|_"]
+	  }
+

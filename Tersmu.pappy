@@ -87,10 +87,13 @@ sumti6 :: SumtiAtom
     / "ti":KOhA -> {NonAnaphoricProsumti "ti"}
     / "ta":KOhA -> {NonAnaphoricProsumti "ta"}
     / "tu":KOhA -> {NonAnaphoricProsumti "tu"}
+    / "da":KOhA "xi":XI n:litnum -> {Variable n}
     / "da":KOhA -> {Variable 1}
     / "de":KOhA -> {Variable 2}
     / "di":KOhA -> {Variable 3}
+    / "ke'a":KOhA "xi":XI n:litnum -> {RelVar n}
     / "ke'a":KOhA -> {RelVar 1}
+    / "ce'u":KOhA "xi":XI n:litnum -> {LambdaVar n}
     / "ce'u":KOhA -> {LambdaVar 1}
     / "ri":KOhA -> {Ri}
     / "ko'a":KOhA -> {Assignable 1}
