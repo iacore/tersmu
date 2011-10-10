@@ -13,8 +13,8 @@ repl :: IO ()
 repl = do 
     putStr "> "
     text <- getLine
-    let s = eval text
-	p = statementToProp s Map.empty
+    let ss = eval text
+	p = statementsToProp ss Map.empty
 	in
 	putStr $ 
 	    --show s ++ "\n\n"

@@ -45,6 +45,7 @@ data Statement = Statement [Term] Statement1
 
 data Statement1 = ConnectedStatement Connective Statement1 Statement1
 		| StatementSentence Sentence
+		| StatementStatements [Statement]
 		deriving (Eq, Show, Ord)
 
 data Subsentence = Subsentence [Term] Sentence
@@ -182,6 +183,9 @@ setArg as@(Arglist os _ _) n o =
 
 type Cont = Bindings -> Prop -> Prop
 
+statementsToProp :: [Statement] -> Bindings -> Prop
+statementsToProp ss bs = bigAnd $ map (\s -> statementToProp s bs) ss
+
 statementToProp :: Statement -> Bindings -> Prop
 statementToProp (Statement [] s) bs =
     statement1ToProp s bs nullc
@@ -194,6 +198,8 @@ statement1ToProp (ConnectedStatement con s1 s2) bs c =
     statement1ToProp s1 bs (\bs -> \p1 ->
 	statement1ToProp s2 bs (\bs -> \p2 ->
 	    c bs $ connToFOL con p1 p2 ) )
+statement1ToProp (StatementStatements ss) bs c =
+    c bs $ statementsToProp ss bs
 statement1ToProp (StatementSentence (Sentence ts bt)) bs c =
     sentToProp ts bt bs (Arglist [] 1 []) c
 
@@ -216,10 +222,6 @@ subsentToProp (Subsentence ps (Sentence ts bt)) vs bs =
     where nullc bs p = p
 
 sentToProp :: [Term] -> BridiTail -> Bindings -> Arglist -> (Bindings -> Prop -> Prop) -> Prop
---sentToProp a b c d e | trace ("sentToProp: "
---    ++ show a ++ " " ++ show b ++ " " ++ show c ++ " " ++ show d ++ " " ++
---	show e ) False = undefined
---
 
 -- yes, bridi negation really does scope over the prenex - see CLL:16.11.14
 sentToProp ts (BridiTail3 (Negated sb) tts) bs as c =

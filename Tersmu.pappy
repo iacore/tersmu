@@ -12,13 +12,25 @@ import qualified Data.Map as Map
 
 }
 
-top astatement
+top atext1
 -- top term
 -- top CMENE
 -- top LojbanLetter
 
-astatement :: Statement
-    = Spacing? s:statement !Char -> s
+atext1 :: {[Statement]}
+    = Spacing? ss:text1 !Char -> ss
+
+text1 :: {[Statement]}
+    = ((I con:jek? BO? -> con)+ -> {()} / NIhO+ -> {()})?
+	ssm:(paragraphs)? -> {fromMaybe [] ssm}
+
+paragraphs :: {[Statement]}
+    = ss:paragraph ssm:(NIhO+ free* ss':paragraphs -> ss')?
+	-> {ss ++ fromMaybe [] ssm}
+
+paragraph :: {[Statement]}
+    = s:statement ss:(I s:statement -> s)*
+	-> {(s:ss)}
 
 statement :: Statement
     = s:statement1 -> {Statement [] s}
@@ -40,6 +52,7 @@ statement2 :: Statement1
 
 statement3 :: Statement1
     = {(ts,bt)}:sentence -> {StatementSentence (Sentence ts bt)}
+    / TUhE ss:text1 TUhU? -> {StatementStatements ss}
 
 asubsentence :: Subsentence
     = Spacing? subs:subsentence !Char -> subs
@@ -726,8 +739,8 @@ ZOhUmain :: String = "zo'u"
 
 {
 
-eval :: String -> Statement
-eval str = case tersmuastatement (tersmuParse "astatement" (str ++ " ")) of
+eval :: String -> [Statement]
+eval str = case tersmuatext1 (tersmuParse "atext1" (str ++ " ")) of
 -- eval :: String -> Sumti
 -- eval str = case tersmuterm (tersmuParse "term" str) of
 -- eval :: String -> String
