@@ -12,19 +12,42 @@ import qualified Data.Map as Map
 
 }
 
-top asubsentence
+top astatement
 -- top term
 -- top CMENE
 -- top LojbanLetter
+
+astatement :: Statement
+    = Spacing? s:statement !Char -> s
+
+statement :: Statement
+    = s:statement1 -> {Statement [] s}
+    / ps:prenex {Statement ps' s}:statement ->
+	{Statement (ps++ps') s}
+
+statement1 :: Statement1
+    = s:statement2 jekss:(_jekstatements)*
+    -> { foldl (\s1 -> \(con,s2) -> ConnectedStatement con s1 s2) s jekss }
+-- _jekstatements: helper for statement1
+_jekstatements :: {(Connective, Statement1)}
+    = I con:jek s:statement2 -> {(con,s)}
+
+statement2 :: Statement1
+    = s1:statement3 jeks:( I con:jek BO s:statement2 -> {(con,s)} )?
+	-> { if (isNothing jeks) then s1
+				 else (let Just (con,s2) = jeks
+				       in ConnectedStatement con s1 s2) }
+
+statement3 :: Statement1
+    = {(ts,bt)}:sentence -> {StatementSentence (Sentence ts bt)}
 
 asubsentence :: Subsentence
     = Spacing? subs:subsentence !Char -> subs
 
 subsentence :: Subsentence
-    = p:prenex? s:sentence -> {
-	let (ts, bt) = s
-	    ps = fromMaybe [] p
-	    in Subsentence ps ts bt }
+    = {(ts,bt)}:sentence -> {Subsentence [] (Sentence ts bt)}
+    / ps:prenex {Subsentence ps' s}:subsentence ->
+	{ Subsentence (ps++ps') s }
 
 prenex :: {[Term]} = ps:terms ZOhU -> ps
 
@@ -134,8 +157,15 @@ digit :: Int
     / "bi":PA -> {8}
     / "so":PA -> {9}
 
+
 ek :: Connective = ln:NA?
 	se:(SE)? conchar:ekA rn:NAI?
+    -> { Connective (isNothing ln) 
+		    (if (isJust se) && conchar=='u' then 'U' else conchar)
+		    (isNothing rn) }
+
+jek :: Connective = ln:NA?
+	se:(SE)? conchar:jekA rn:NAI?
     -> { Connective (isNothing ln) 
 		    (if (isJust se) && conchar=='u' then 'U' else conchar)
 		    (isNothing rn) }
@@ -157,6 +187,11 @@ ekA :: Char = ".a":A -> {'a'}
     / ".o":A -> {'o'}
     / ".u":A -> {'u'}
     -- / "ji":A
+
+jekA :: Char = "ja":JA -> {'a'}
+    / "je":JA -> {'e'}
+    / "jo":JA -> {'o'}
+    / "ju":JA -> {'u'}
 
 gihekGIhA :: Char = "gi'a":GIhA -> {'a'}
     / "gi'e":GIhA -> {'e'}
@@ -429,7 +464,7 @@ Imain :: String = ".i"
 
 --         jeks; logical connectives within tanru 
 JA :: String = s:JAmain Spacing -> s
-JAmain :: String = "je" / "je'i" / "jo" / "ja" / "ju" 
+JAmain :: String = "je'i" / "je" / "jo" / "ja" / "ju" 
 --         modal conversion flag 
 JAI :: String = s:JAImain Spacing -> s
 JAImain :: String = "jai" 
@@ -691,8 +726,8 @@ ZOhUmain :: String = "zo'u"
 
 {
 
-eval :: String -> Subsentence
-eval str = case tersmuasubsentence (tersmuParse "asubsentence" (str ++ " ")) of
+eval :: String -> Statement
+eval str = case tersmuastatement (tersmuParse "astatement" (str ++ " ")) of
 -- eval :: String -> Sumti
 -- eval str = case tersmuterm (tersmuParse "term" str) of
 -- eval :: String -> String

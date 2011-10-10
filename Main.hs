@@ -14,7 +14,7 @@ repl = do
     putStr "> "
     text <- getLine
     let s = eval text
-	p = sentToProp s [] Map.empty
+	p = statementToProp s Map.empty
 	in
 	putStr $ 
 	    --show s ++ "\n\n"

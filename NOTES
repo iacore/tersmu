@@ -293,4 +293,15 @@ The big idea:
     {zo'e noi broda} (or just {zo'e}); it has the corresponding unary
     predicate (or nothing) as data.
 
+Handling 'statement':
+    Surprisingly painful!
 
+    We want to hold to the rule that we raise quantification and sumti
+    connectives to the prenex... so we want to process 'linearly', holding on
+    to bindings as we go... so we can't (monadlessly, at least) just recurse
+    on the structure of the afterthought connected sentences...
+
+    Eventual realisation: continuations solve the problem.
+
+    We could wrap them in a monad, but I'm not convinced that would be
+    clarificatory.
