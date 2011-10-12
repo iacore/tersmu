@@ -155,12 +155,6 @@ data Arglist = Arglist {args :: [Maybe Obj],
 appendToArglist :: Arglist -> Obj -> Arglist
 appendToArglist as@(Arglist os n _) o = incArg (setArg as n (Just o))
     where incArg as@(Arglist os n vs) = Arglist os (n+1) vs
-swapArgs :: Arglist -> Int -> Int -> Arglist
-swapArgs as@(Arglist os _ _) n m =
-    let lookupArg k = if k <= length os then os!!(k-1) else Nothing
-	a = lookupArg n
-	b = lookupArg m
-    in setArg (setArg as m a) n b
 resolveArglist :: Arglist -> Bindings -> [JboTerm]
 resolveArglist as@(Arglist os _ vs) bs = resolve os vs []
     where resolve (Just o:os) vs ts = resolve os vs (ts++[o])
@@ -180,6 +174,13 @@ setArg as@(Arglist os _ _) n o =
     let (h,t) = splitAt (n-1) os
 	l = ((n-1)-(length h))
     in as{args=(h++replicate l Nothing++[o]++drop 1 t)}
+
+swapTerms :: [JboTerm] -> Int -> Int -> [JboTerm]
+swapTerms ts n m = take (max n m) $
+	swap (ts ++ (repeat $ ZoheTerm Nothing)) (n-1) (m-1)
+    where swap :: [a] -> Int -> Int -> [a]
+	  swap as n m = [ if i == n then as!!m else
+			    if i == m then as!!n else as!!i | i <- [0..] ]
 
 type Cont = Bindings -> Prop -> Prop
 
@@ -258,14 +259,15 @@ sentToProp [] (GekSentence (NegatedGS gs)) bs as c =
     sentToProp [] (GekSentence gs) bs as (negatedCont c)
 
 sentToProp [] (BridiTail3 (Selbri4 sb) []) bs as c =
-    let chopsb (SBTanru seltau tertau) as =
+    let chopsb :: Selbri4 -> (JboRel, [JboTerm] -> [JboTerm])
+	chopsb (SBTanru seltau tertau) =
 	    let p = selbriToPred (Selbri4 seltau) bs
-		(r,as') = chopsb tertau as
-	    in (Tanru p r, as')
-	chopsb (TanruUnit tu las) as =
+		(r,perm) = chopsb tertau
+	    in (Tanru p r, perm)
+	chopsb (TanruUnit tu las) =
 	    case tu of
-		 TUBrivla bv -> (Brivla bv, as)
-		 TUMoi q m -> (Moi q m, as)
+		 TUBrivla bv -> (Brivla bv, id)
+		 TUMoi q m -> (Moi q m, id)
 		 TUAbstraction a subs ->
 		     case a of _ | a `elem` ["ka", "ni"] ->
 				     (AbsPred a
@@ -273,7 +275,7 @@ sentToProp [] (BridiTail3 (Selbri4 sb) []) bs as c =
 				       in (\o ->
 					   subsentToProp subs [lv] (Map.insert lv
 					       o (shuntVars bs LambdaVar))))
-				     , as)
+				     , id)
 				 | a == "poi'i" ->
 				     -- poi'i: an experimental NU, which takes
 				     -- ke'a rather than ce'u; {ko'a poi'i
@@ -284,18 +286,18 @@ sentToProp [] (BridiTail3 (Selbri4 sb) []) bs as c =
 				       in (\o ->
 					   subsentToProp subs [rv] (Map.insert rv
 					       o (shuntVars bs RelVar))))
-				     , as)
+				     , id)
 			         | otherwise -> 
-				     (AbsProp a (subsentToProp subs [] bs), as)
-		 TUAmong -> (Among, as)
+				     (AbsProp a (subsentToProp subs [] bs), id)
+		 TUAmong -> (Among, id)
 		 TUPermuted s tu' ->
-			   chopsb (TanruUnit tu' las)
-				  (swapArgs as 1 s)
-	(r,as') = chopsb sb as
+			   let (r, perm) = chopsb (TanruUnit tu' las)
+			   in (r, \ts -> swapTerms (perm ts) 1 s)
+	(r,perm) = chopsb sb
 	
     in c bs $ case r of AbsPred "poi'i" p -> 
-			    p $ head $ resolveArglist (appendZohe as') bs
-			_ -> Rel r (resolveArglist as' bs)
+			    p $ head $ perm $ resolveArglist (appendZohe as) bs
+			_ -> Rel r (perm $ resolveArglist as bs)
 
 sentToProp (t:ts) bt bs as c =
  let argAppended delvs bs tag o =
