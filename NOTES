@@ -178,6 +178,9 @@ zo'e:
     {lo ka} in place of kinds. But alternatively, we could allow \Gen in place
     of \exists as a possible quantifier for {zo'e}.
 
+    Note that unfilled places often do seem to be generics - e.g. adjectival
+    uses of predicates, like {ko'a sutra} or {ko'a jdari}.
+
 Handling descriptions and {zo'e} without really handling them:
     Just leave them as unanalysed terms. The terms will have structure which
     can be used in further analysis, but we consider this beyond the basic
@@ -233,6 +236,20 @@ Quantified zo'e and relative clauses:
     I think we should have this being a difference between poi and noi: poi
     takes only singular variables. {lo broda poi brode} is a type error.
 
+    xorxes on this issue:
+    """
+    ...we still have a way to differentiate both possibilities, at least for
+    the "lo broda ku" type of sumti (not for "ko'a"), because there are three
+    different points where a relative clause may be attached: "lo (1) broda
+    (2) ku (3)". We could say that when attahed at (2) the restriction occurs
+    before singular quantification over referents, and that when attached at
+    (3) it occurs as a restriction on the singular quantifier. One problem
+    with that is that (2) is the "normal" place of attachment (i.e. with
+    elided "ku") and (3) requires an explicit "ku". But I guess it doesn't
+    matter too much because in many cases both meanings will agree anyway.
+    """
+
+
 Kinds/properties:
     xorxes wants kinds in the universe, distinct from properties, with
     {lo broda} (and hence {zo'e noi broda}) able to get a kind.
@@ -257,6 +274,12 @@ Kinds/properties:
 
     But maybe we should think through the tense system and generics before
     making any firm decisions there?
+
+    Note that if it's true that unfilled places can be generics, this would
+    mean doing away with the "unfilled place == zo'e" rule, which would be
+    painful. An alternative would be to declare generic unfilled places to be
+    erroneous - perhaps saying it should be {ko'a selkuclykai}, or
+    {ko'a zilselkucli}, rather than {ko'a se kucli}, etc.
 
 Notes on lambdas:
     Currently, we're implementing lambdas expressions directly in Haskell,
@@ -305,3 +328,35 @@ Handling 'statement':
 
     We could wrap them in a monad, but I'm not convinced that would be
     clarificatory.
+
+Rethinking anaphora:
+    The idea that we can have {lo broda ri} equivalent to {lo broda lo broda}
+    is flawed - consider e.g. {mi cpacu lo plise gi'e citka ri}.
+
+    So anaphora are going to let us distinguish between an approach to {lo}
+    using kinds and one which strips them out, unless the latter has some
+    bizarre rules.
+
+    e.g. what does {lo remna cu prami ri} mean?
+
+loi:
+    can be the (mundane) iota operator.
+
+New thinking on handling descriptors:
+    Handle {lo broda} analogously to unbound {da}: export to outermost scope as
+    a glorked Skolem function (which generally is just a constant). So
+    {ro broda lo brode cu brodi} -> {GL X:brode(_). FA x:broda(_). brodi(x,X)}
+    {ro da lo brode be da cu brodi} -> {GL F:brode(_,\1). FA x:broda(_). brodi(x,F(x))}
+
+    Then there's no issue with anaphora, except where they break through
+    prenexes (e.g. in {loi nu ro da loi broda be da ku goi ko'a brode cu brodi
+    ko'a}, and between statements) - which probably just shouldn't be allowed.
+
+    {zo'e} we can treat as {lo du}. Or, perhaps better for now, leave as a
+    term (but not handling {noi} in any magic way for it).
+
+    Implementing this: looks like we need to pass around another
+    continuation...
+
+    Has the time come for a monad? One which simultaneously handles: bindings,
+    glorkings and prenex exportation? It seems so.

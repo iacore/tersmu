@@ -7,6 +7,7 @@ import Bindful
 
 import Data.Maybe
 import Control.Monad.State
+import Control.Monad.Cont
 import Data.List
 import Data.Map (Map)
 import qualified Data.Map as Map
@@ -18,7 +19,7 @@ type Prop = FOL.Prop JboRel JboTerm
 data JboTerm = Var Int
 	     | Named String
 	     | NonAnaph String
-	     | ZoheTerm (Maybe (JboTerm -> Prop))
+	     | ZoheTerm
 
 type Individual = Int
 
@@ -161,11 +162,11 @@ resolveArglist as@(Arglist os _ vs) bs = resolve os vs []
 	  resolve (Nothing:os) (v:vs) ts =
 	      resolve os vs (ts++[getBinding bs v])
 	  resolve (Nothing:os) [] ts =
-	      resolve os [] (ts++[ZoheTerm Nothing])
+	      resolve os [] (ts++[ZoheTerm])
 	  resolve [] (v:vs) ts = resolve [] vs (ts++[getBinding bs v])
 	  resolve [] [] ts = ts
 appendZohe :: Arglist -> Arglist
-appendZohe as = appendToArglist as $ ZoheTerm Nothing
+appendZohe as = appendToArglist as ZoheTerm
 -- delImplicitVars :: Arglist -> ImplicitVars -> Arglist
 -- delImplicitVars as@(Arglist os n vs) delvs = Arglist os n (vs\\delvs)
 
@@ -177,95 +178,106 @@ setArg as@(Arglist os _ _) n o =
 
 swapTerms :: [JboTerm] -> Int -> Int -> [JboTerm]
 swapTerms ts n m = take (max n m) $
-	swap (ts ++ (repeat $ ZoheTerm Nothing)) (n-1) (m-1)
+	swap (ts ++ (repeat ZoheTerm)) (n-1) (m-1)
     where swap :: [a] -> Int -> Int -> [a]
 	  swap as n m = [ if i == n then as!!m else
 			    if i == m then as!!n else as!!i | i <- [0..] ]
 
-type Cont = Bindings -> Prop -> Prop
+type StatementMonad = StateT Bindings (Cont Prop)
+
+liftOut :: (r -> r) -> Cont r a -> Cont r a
+liftOut f m = Cont $ \c -> f $ runCont m c
+liftOutST :: (r -> r) -> StateT s (Cont r) a -> StateT s (Cont r) a
+liftOutST f m = StateT $ \s -> Cont $ \c -> f $ runCont (runStateT m s) c
+liftOut2 :: (r -> r -> r) -> Cont r a -> Cont r a -> Cont r a
+liftOut2 f m1 m2 = Cont $ \c -> f (runCont m1 c) (runCont m2 c)
+liftOutST2 :: (r -> r -> r) -> StateT s (Cont r) a -> StateT s (Cont r) a -> StateT s (Cont r) a
+liftOutST2 f m1 m2 = StateT $ \s -> Cont $ \c -> f (runCont (runStateT m1 s) c) (runCont (runStateT m2 s) c)
+runSM :: Bindings -> StatementMonad Prop -> Prop
+runSM bs m = runCont (runStateT m bs) (\(p,s) -> p)
 
 statementsToProp :: [Statement] -> Bindings -> Prop
-statementsToProp ss bs = bigAnd $ map (\s -> statementToProp s bs) ss
+statementsToProp ss bs = bigAnd $ map (\s -> runSM bs $ statementToProp s) ss
 
-statementToProp :: Statement -> Bindings -> Prop
-statementToProp (Statement [] s) bs =
-    statement1ToProp s bs nullc
-    where nullc bs p = p
-statementToProp (Statement ps s) bs =
-    prenex ps bs (\bs -> statementToProp (Statement [] s) bs)
+statementToProp :: Statement -> StatementMonad Prop
+statementToProp (Statement ps s) = prenexed ps $ statement1ToProp s
 
-statement1ToProp :: Statement1 -> Bindings -> Cont -> Prop
-statement1ToProp (ConnectedStatement con s1 s2) bs c =
-    statement1ToProp s1 bs (\bs -> \p1 ->
-	statement1ToProp s2 bs (\bs -> \p2 ->
-	    c bs $ connToFOL con p1 p2 ) )
-statement1ToProp (StatementStatements ss) bs c =
-    c bs $ statementsToProp ss bs
-statement1ToProp (StatementSentence (Sentence ts bt)) bs c =
-    sentToProp ts bt bs (Arglist [] 1 []) c
+statement1ToProp :: Statement1 -> StatementMonad Prop
+statement1ToProp (ConnectedStatement con s1 s2) =
+    do p1 <- statement1ToProp s1
+       p2 <- statement1ToProp s2
+       return $ connToFOL con p1 p2
+statement1ToProp (StatementStatements ss) =
+    do bs <- get
+       return $ statementsToProp ss bs
+statement1ToProp (StatementSentence (Sentence ts bt)) =
+    sentToProp ts bt (Arglist [] 1 [])
 
-prenex :: [Term] -> Bindings -> (Bindings -> Prop) -> Prop
-prenex (Negation:ps) bs f = Not $ prenex ps bs f
-prenex (Sumti Untagged (QAtom q rels (Variable n)):ps) bs f =
-	quantified (fromMaybe Exists q)
-		   (case rels of [] -> Nothing
-				 _  -> Just $ (\o ->
-				     let bs' = Map.insert (Variable n) o bs
-				     in bigAnd (map (\(Restrictive subs) ->
-					 evalRel subs bs' o) rels)))
-		   (\o -> prenex ps (Map.insert (Variable n) o bs) f)
-prenex [] bs f = f bs
-    
+prenexed :: [Term] -> StatementMonad Prop -> StatementMonad Prop
+prenexed [] m = do bs <- get
+		   return $ runSM bs m
+prenexed (t:ts) m = do p <- handleTerm t drop replace append handleIncidentals
+		       p' <- prenexed ts m
+		       case p of Not Eet -> return p'
+				 _ -> return $ Connected And p p'
+    where drop = return $ Not Eet
+	  replace _ = return $ Not Eet
+	  append _ _ _ = return $ Not Eet
+	  handleIncidentals ps _ = return $ bigAnd ps
+
 
 subsentToProp :: Subsentence -> ImplicitVars -> Bindings -> Prop
 subsentToProp (Subsentence ps (Sentence ts bt)) vs bs =
-    prenex ps bs (\bs -> sentToProp ts bt bs (Arglist [] 1 vs) nullc)
-    where nullc bs p = p
+    runSM bs $ prenexed ps $ sentToProp ts bt (Arglist [] 1 vs)
 
-sentToProp :: [Term] -> BridiTail -> Bindings -> Arglist -> (Bindings -> Prop -> Prop) -> Prop
+sentToProp :: [Term] -> BridiTail -> Arglist -> StatementMonad Prop
 
 -- yes, bridi negation really does scope over the prenex - see CLL:16.11.14
-sentToProp ts (BridiTail3 (Negated sb) tts) bs as c =
-    sentToProp ts (BridiTail3 sb tts) bs as (negatedCont c)
+sentToProp ts (BridiTail3 (Negated sb) tts) as =
+    do p <- sentToProp ts (BridiTail3 sb tts) as
+       return $ Not p
 
 -- while giheks are rather different (see e.g. CLL:14.9.11):
-sentToProp [] (ConnectedBT con bt1 bt2) bs as c =
-    sentToProp [] bt1 bs as (\bs -> \p1 -> 
-	sentToProp [] bt2 bs as (\bs -> \p2 ->
-	    c bs $ connToFOL con p1 p2 ) )
+sentToProp [] (ConnectedBT con bt1 bt2) as =
+    do p1 <- sentToProp [] bt1 as
+       p2 <- sentToProp [] bt2 as
+       return $ connToFOL con p1 p2
 
-sentToProp [] (BridiTail3 (Selbri4 (TanruUnit (TUMe s) _)) tts) bs as c =
+sentToProp [] (BridiTail3 (Selbri4 (TanruUnit (TUMe s) _)) tts) as =
     sentToProp []
 	(BridiTail3 (Selbri4 (TanruUnit TUAmong [])) (Sumti Untagged s:tts))
-	bs as c
+	as
 
-sentToProp [] (BridiTail3 sb tts) bs as c | tts /= [] =
+sentToProp [] (BridiTail3 sb tts) as | tts /= [] =
     let as' = case (args as) of [] -> as{position=2}
 				_  -> as
-	in sentToProp tts (BridiTail3 sb []) bs as' c
+	in sentToProp tts (BridiTail3 sb []) as'
 
 sentToProp [] (GekSentence (ConnectedGS con
 	(Subsentence pr1 (Sentence ts1 bt1))
-	(Subsentence pr2 (Sentence ts2 bt2)) tts)) bs as c =
-    let p1 = subsentToProp
-		(Subsentence pr1 (Sentence ts1 (extendTail bt1 tts)))
-		[] bs
-	p2 = subsentToProp
-		(Subsentence pr2 (Sentence ts2 (extendTail bt2 tts)))
-		[] bs
-	in c bs $ connToFOL con p1 p2
+	(Subsentence pr2 (Sentence ts2 bt2)) tts)) as =
+    do bs <- get
+       let p1 = subsentToProp
+		    (Subsentence pr1 (Sentence ts1 (extendTail bt1 tts)))
+		    [] bs
+	   p2 = subsentToProp
+		    (Subsentence pr2 (Sentence ts2 (extendTail bt2 tts)))
+		    [] bs
+       return $ connToFOL con p1 p2
 
-sentToProp [] (GekSentence (NegatedGS gs)) bs as c =
-    sentToProp [] (GekSentence gs) bs as (negatedCont c)
+sentToProp [] (GekSentence (NegatedGS gs)) as =
+    do p <- sentToProp [] (GekSentence gs) as
+       return $ Not p
 
-sentToProp [] (BridiTail3 (Selbri4 sb) []) bs as c =
-    let chopsb :: Selbri4 -> (JboRel, [JboTerm] -> [JboTerm])
-	chopsb (SBTanru seltau tertau) =
-	    let p = selbriToPred (Selbri4 seltau) bs
-		(r,perm) = chopsb tertau
-	    in (Tanru p r, perm)
-	chopsb (TanruUnit tu las) =
-	    case tu of
+sentToProp [] (BridiTail3 (Selbri4 sb) []) as =
+    do bs <- get
+       let chopsb :: Selbri4 -> (JboRel, [JboTerm] -> [JboTerm])
+	   chopsb (SBTanru seltau tertau) =
+	       let p = selbriToPred (Selbri4 seltau) bs
+		   (r,perm) = chopsb tertau
+	       in (Tanru p r, perm)
+	   chopsb (TanruUnit tu las) =
+	       case tu of
 		 TUBrivla bv -> (Brivla bv, id)
 		 TUMoi q m -> (Moi q m, id)
 		 TUAbstraction a subs ->
@@ -293,14 +305,17 @@ sentToProp [] (BridiTail3 (Selbri4 sb) []) bs as c =
 		 TUPermuted s tu' ->
 			   let (r, perm) = chopsb (TanruUnit tu' las)
 			   in (r, \ts -> swapTerms (perm ts) 1 s)
-	(r,perm) = chopsb sb
+	   (r,perm) = chopsb sb
 	
-    in c bs $ case r of AbsPred "poi'i" p -> 
-			    p $ head $ perm $ resolveArglist (appendZohe as) bs
-			_ -> Rel r (perm $ resolveArglist as bs)
+       return $ case r of AbsPred "poi'i" p -> p $ head $ perm $
+				    resolveArglist (appendZohe as) bs
+			  _ -> Rel r (perm $ resolveArglist as bs)
 
-sentToProp (t:ts) bt bs as c =
- let argAppended delvs bs tag o =
+sentToProp (t:ts) bt as =
+ let drop = sentToProp ts bt as
+     replace t = sentToProp (t:ts) bt as
+     append delvs tag o =
+      do bs <- get
 	 let as' = case tag of Untagged -> as
 			       FA n -> as{position=n}
 	     as'' = let vs = implicitvars as'
@@ -311,78 +326,81 @@ sentToProp (t:ts) bt bs as c =
 				   _ -> False
 		    in as'{implicitvars = (vs\\(delvs++filter f vs))}
 	     as''' = appendToArglist as'' o
-	     bs' = Map.insert Ri o bs
-	 in sentToProp ts bt bs' as''' c
- in case t of
-	 Negation -> sentToProp ts bt bs as (negatedCont c)
-	 Sumti tag (ConnectedSumti con s1 s2) ->
-	     -- sumti connectives are, in effect, raised to the prenex - i.e.
-	     -- treated parallel to unbound variables
-	     let p1 = sentToProp ((Sumti tag s1):ts) bt bs as c
-		 p2 = sentToProp ((Sumti tag s2):ts) bt bs as c
-		 in connToFOL con p1 p2
-	 Sumti tag s@(QAtom q rels sa) ->
-	     let
-		rrels = [evalRel subs bs | rel@(Restrictive subs) <- rels ]
-		irels = [evalRel subs bs | rel@(Incidental subs) <- rels ]
-		(p, remainingRels) = case sa of
-		  Variable n ->
-		      case (Map.lookup (Variable n) bs) of
-			   Nothing ->
-			       -- export to prenex:
-			       (\bs -> prenex [term Untagged s] bs (\bs ->
-				   sentToProp (term tag (Variable n):ts) bt bs
-				       as c), Nothing)
-			   Just o ->
-			       (\bs -> argAppended [] bs tag o, Just (irels, o))
-		  _ -> -- rest are "plural"
-		      let (o,irels',delvs) = case sa of
-			     NonAnaphoricProsumti ps -> (NonAnaph ps, irels, [])
-			     RelVar _ -> (getBinding bs sa, irels, [sa])
-			     LambdaVar _ -> (getBinding bs sa, irels, [sa])
-			     SelbriVar -> (getBinding bs sa, irels, [sa])
-			     anaph@Ri -> 
-				 (getBinding bs anaph, irels, [])
-			     anaph@(Assignable _) -> 
-				 (getBinding bs anaph, irels, [])
-			     Name s -> (Named s, irels, [])
-			     Zohe -> (zoheExpr irels, [], [])
-			     Description _ innerq sb ->
-				 let irels' =
-					 if isJust innerq then ((\o ->
-					     Rel (Moi (fromJust innerq)
-						    "mei") [o]) : irels)
-					    else irels
-				     irels'' = (selbriToPred sb bs:irels')
-				 in (zoheExpr irels'', [], [])
-			     where zoheExpr [] = ZoheTerm Nothing
-				   zoheExpr irels =
-				       ZoheTerm (Just $ andPred irels)
-		     in case q of
-			 Nothing -> (\bs -> argAppended delvs bs tag o, Just (irels', o))
-			 Just q' ->
-			     (\bs -> quantified q' (Just $ andPred (isAmong o:rrels))
-				     (\o -> argAppended delvs bs tag o),
-				 Just (irels', o))
-	    in case remainingRels of
-		    Nothing -> p bs
-		    Just (irels, o) ->
-			let bs' = assign bs o rels
-			in case irels of [] -> p bs'
-					 _ -> Connected And
-					    (andPred irels o) (p bs')
-	 Sumti tag s@(QSelbri q rels sb) ->
-	     let rrels = [evalRel subs bs | rel@(Restrictive subs) <- rels ]
-		 irels = [evalRel subs bs | rel@(Incidental subs) <- rels ]
-		 p = Just $ andPred (selbriToPred sb bs:rrels)
-	     in quantified q p
-		    (andPred ((\o -> argAppended [] (assign bs o rels) tag o)
-				:irels))
-    where assign bs o rels =
-	      foldr (\n -> Map.insert (Assignable n) o)
+	 put $ Map.insert Ri o bs
+	 sentToProp ts bt as'''
+     handleIncidentals ps m =
+	case ps of [] -> m
+		   _ -> do p <- m
+			   return $ Connected And (bigAnd ps) p
+ in handleTerm t drop replace append handleIncidentals
+ 
+handleTerm t drop replace append handleIncidentals =
+    let assign o rels bs =
+	 -- goi assignment. TODO: proper pattern-matching semantics
+	 foldr (\n -> Map.insert (Assignable n) o)
 		    bs
 		    [n | rel@(Assignment
 			(Sumti _ (QAtom _ _ (Assignable n)))) <- rels]
+
+    in case t of
+	 Negation -> liftOutST Not drop
+	 Sumti tag (ConnectedSumti con s1 s2) ->
+	     -- sumti connectives are, in effect, raised to the prenex - i.e.
+	     -- treated parallel to unbound variables
+	     liftOutST2 (connToFOL con) (replace $ Sumti tag s1)
+					(replace $ Sumti tag s2)
+	 Sumti tag s@(QAtom q rels sa) ->
+	     do bs <- get
+		let
+		 rrels = [evalRel subs bs | rel@(Restrictive subs) <- rels ]
+		 irels = [evalRel subs bs | rel@(Incidental subs) <- rels ]
+		 doRels o m =
+		     do modify $ assign o rels
+			handleIncidentals [r o | r <- irels] m
+	        case sa of
+		  Variable n ->
+		    case (Map.lookup (Variable n) bs) of
+		     Nothing ->
+		       StateT $ \bs -> Cont $ \c ->
+			 quantified (fromMaybe Exists q)
+			  (case [ ss | (Restrictive ss) <- rels ] of
+			    [] -> Nothing
+			    sss -> Just $ (\o ->
+				let bs' = Map.insert (Variable n) o bs
+				in bigAnd
+				    (map (\ss -> evalRel ss bs' o) sss)))
+			  (\o -> let bs' = (Map.insert (Variable n) o bs)
+				 in runCont (runStateT (
+				     doRels o $ replace $
+					 Sumti tag (QAtom Nothing rels
+					     (Variable n))) bs') c)
+		     Just o -> doRels o $ append [] tag o
+		  _ ->
+		      let (o,delvs) = case sa of
+			     RelVar _ -> (getBinding bs sa, [sa])
+			     LambdaVar _ -> (getBinding bs sa, [sa])
+			     SelbriVar -> (getBinding bs sa, [sa])
+			     anaph@Ri -> 
+				 (getBinding bs anaph, [])
+			     anaph@(Assignable _) -> 
+				 (getBinding bs anaph, [])
+			     NonAnaphoricProsumti ps -> (NonAnaph ps, [])
+			     Name s -> (Named s, [])
+			     Zohe -> (ZoheTerm, [])
+		     in case q of
+			 Nothing -> doRels o $ append delvs tag o
+			 Just q' -> doRels o $
+			     do bs <- get
+				return $ quantified q' (Just $ andPred (isAmong o:rrels))
+				    (\o -> runSM bs $ append delvs tag o)
+	 Sumti tag s@(QSelbri q rels sb) ->
+	     do bs <- get
+		let rrels = [evalRel subs bs | rel@(Restrictive subs) <- rels ]
+		    irels = [evalRel subs bs | rel@(Incidental subs) <- rels ]
+		    p = Just $ andPred (selbriToPred sb bs:rrels)
+	        return $ quantified q p
+		    (andPred ((\o -> runSM (assign o rels bs) $ append [] tag o)
+				:irels))
 	    
 
 quantified :: Quantifier -> Maybe JboPred -> JboPred -> Prop
@@ -424,10 +442,6 @@ shuntVars bs var = foldr ( \n -> Map.insert (var $ n+1)
 
 andPred :: [JboPred] -> JboPred
 andPred ps x = bigAnd [p x | p <- ps]
-
-negatedCont :: Cont -> Cont
-negatedCont c = \bs -> \p -> c bs $ Not p
-
 
 ---- Printing routines, in lojban and in (customized) logical notation
 
@@ -492,12 +506,7 @@ isAmong :: JboTerm -> (JboTerm -> Prop)
 isAmong y = \o -> Rel Among [o,y]
 
 instance JboShow JboTerm where
-    logjboshow _ (ZoheTerm Nothing) = return "zo'e"
-    logjboshow jbo (ZoheTerm (Just p)) =
-	do withShuntedRelVar (\n ->
-	       do s <- logjboshow jbo (p (Var n))
-		  return $ if jbo then "zo'e noi " ++ s ++ " ku'o" 
-				  else "zo'e:(" ++ s ++ ")" )
+    logjboshow _ (ZoheTerm) = return "zo'e"
     logjboshow jbo (Var n) =
 	do v <- binding n 
 	   return $ if jbo then case v of
