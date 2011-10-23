@@ -12,7 +12,7 @@ data Prop r t
 
 data Connective = And | Or | Impl | Equiv
     deriving (Eq, Ord)
-data Quantifier = Exists | Forall | Exactly Int
+data Quantifier = Exists | Forall | Exactly Int | Glork
     deriving (Eq, Ord)
 
 instance Show Connective where
@@ -24,6 +24,7 @@ instance Show Connective where
 instance Show Quantifier where
     show Exists = "EX"
     show Forall = "FA"
+    show Glork = "GL"
     show (Exactly n) = "EQ(" ++ show n ++ ")"
 
 class Term t where

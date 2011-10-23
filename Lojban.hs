@@ -185,14 +185,8 @@ swapTerms ts n m = take (max n m) $
 
 type StatementMonad = StateT Bindings (Cont Prop)
 
-liftOut :: (r -> r) -> Cont r a -> Cont r a
-liftOut f m = Cont $ \c -> f $ runCont m c
-liftOutST :: (r -> r) -> StateT s (Cont r) a -> StateT s (Cont r) a
-liftOutST f m = StateT $ \s -> Cont $ \c -> f $ runCont (runStateT m s) c
-liftOut2 :: (r -> r -> r) -> Cont r a -> Cont r a -> Cont r a
-liftOut2 f m1 m2 = Cont $ \c -> f (runCont m1 c) (runCont m2 c)
-liftOutST2 :: (r -> r -> r) -> StateT s (Cont r) a -> StateT s (Cont r) a -> StateT s (Cont r) a
-liftOutST2 f m1 m2 = StateT $ \s -> Cont $ \c -> f (runCont (runStateT m1 s) c) (runCont (runStateT m2 s) c)
+mapStM = mapStateT . mapCont
+mapStM2 f m1 m2 = StateT $ \s -> Cont $ \c -> f (runCont (runStateT m1 s) c) (runCont (runStateT m2 s) c)
 runSM :: Bindings -> StatementMonad Prop -> Prop
 runSM bs m = runCont (runStateT m bs) (\(p,s) -> p)
 
@@ -233,6 +227,7 @@ subsentToProp (Subsentence ps (Sentence ts bt)) vs bs =
 sentToProp :: [Term] -> BridiTail -> Arglist -> StatementMonad Prop
 
 -- yes, bridi negation really does scope over the prenex - see CLL:16.11.14
+-- FIXME: not any more!
 sentToProp ts (BridiTail3 (Negated sb) tts) as =
     do p <- sentToProp ts (BridiTail3 sb tts) as
        return $ Not p
@@ -343,11 +338,11 @@ handleTerm t drop replace append handleIncidentals =
 			(Sumti _ (QAtom _ _ (Assignable n)))) <- rels]
 
     in case t of
-	 Negation -> liftOutST Not drop
+	 Negation -> mapStM Not drop
 	 Sumti tag (ConnectedSumti con s1 s2) ->
 	     -- sumti connectives are, in effect, raised to the prenex - i.e.
 	     -- treated parallel to unbound variables
-	     liftOutST2 (connToFOL con) (replace $ Sumti tag s1)
+	     mapStM2 (connToFOL con) (replace $ Sumti tag s1)
 					(replace $ Sumti tag s2)
 	 Sumti tag s@(QAtom q rels sa) ->
 	     do bs <- get
@@ -357,10 +352,19 @@ handleTerm t drop replace append handleIncidentals =
 		 doRels o m =
 		     do modify $ assign o rels
 			handleIncidentals [r o | r <- irels] m
+		 doQuant q o f =
+		     case q of Nothing -> f o
+			       Just q' ->
+				   do bs <- get
+				      return $ quantified q' (Just $ andPred (isAmong o:rrels))
+					  (\o -> runSM bs $ f o)
 	        case sa of
 		  Variable n ->
 		    case (Map.lookup (Variable n) bs) of
 		     Nothing ->
+		       -- Unfortunately necessary unmonadic ugliness: the
+		       -- effect is to lift the quantification to the prenex,
+		       -- as if we'd just used mapStM (which we can't):
 		       StateT $ \bs -> Cont $ \c ->
 			 quantified (fromMaybe Exists q)
 			  (case [ ss | (Restrictive ss) <- rels ] of
@@ -375,6 +379,16 @@ handleTerm t drop replace append handleIncidentals =
 					 Sumti tag (QAtom Nothing rels
 					     (Variable n))) bs') c)
 		     Just o -> doRels o $ append [] tag o
+		  Description _ innerq sb ->
+		       do bs <- get
+			  let r = andPred $
+				  (if isJust innerq then [(\o -> Rel (Moi (fromJust innerq) "mei") [o])]
+						    else []) ++ [selbriToPred sb bs]
+			  StateT $ \bs -> Cont $ \c ->
+			       quantified Glork (Just r)
+				(\o -> runCont (runStateT
+				    (doRels o $ doQuant q o $ append [] tag)
+				bs) c)
 		  _ ->
 		      let (o,delvs) = case sa of
 			     RelVar _ -> (getBinding bs sa, [sa])
@@ -387,20 +401,16 @@ handleTerm t drop replace append handleIncidentals =
 			     NonAnaphoricProsumti ps -> (NonAnaph ps, [])
 			     Name s -> (Named s, [])
 			     Zohe -> (ZoheTerm, [])
-		     in case q of
-			 Nothing -> doRels o $ append delvs tag o
-			 Just q' -> doRels o $
-			     do bs <- get
-				return $ quantified q' (Just $ andPred (isAmong o:rrels))
-				    (\o -> runSM bs $ append delvs tag o)
+		     in doRels o $ doQuant q o $ append delvs tag
 	 Sumti tag s@(QSelbri q rels sb) ->
 	     do bs <- get
 		let rrels = [evalRel subs bs | rel@(Restrictive subs) <- rels ]
 		    irels = [evalRel subs bs | rel@(Incidental subs) <- rels ]
 		    p = Just $ andPred (selbriToPred sb bs:rrels)
-	        return $ quantified q p
-		    (andPred ((\o -> runSM (assign o rels bs) $ append [] tag o)
-				:irels))
+	        StateT $ \bs -> Cont $ \c ->
+		    quantified q p
+		     (andPred ((\o -> runCont (runStateT (append [] tag o) (assign o rels bs)) c)
+				    :irels))
 	    
 
 quantified :: Quantifier -> Maybe JboPred -> JboPred -> Prop
@@ -460,6 +470,12 @@ withNextVariable f =
        let n = head [ n | n <- [1..], not $ (Variable n) `elem` vals ]
 	   in withBinding (Variable n) f
 
+withNextAssignable f =
+    do vals <- getValues
+       let n = head [ n | n <- [1..], not $ (Assignable n) `elem` vals ]
+	   in withBinding (Assignable n) f
+
+
 withShuntedRelVar f =
     do twiddleBound $ \s -> case s of RelVar n -> RelVar $ n+1
 				      _ -> s
@@ -510,14 +526,14 @@ instance JboShow JboTerm where
     logjboshow jbo (Var n) =
 	do v <- binding n 
 	   return $ if jbo then case v of
-				    Variable 1 -> "da"
-				    Variable 2 -> "de"
-				    Variable 3 -> "di"
+				    Variable n | n <= 3 -> "d" ++ vowelnum n
 				    Variable n -> "da xi " ++ jbonum n
 				    RelVar 1 -> "ke'a"
 				    RelVar n -> "ke'a xi " ++ jbonum n
 				    LambdaVar 1 -> "ce'u"
 				    LambdaVar n -> "ce'u xi " ++ jbonum n
+				    Assignable n | n <= 5 -> "ko'" ++ vowelnum n
+				    Assignable n -> "ko'a " ++ jbonum n
 			    else case v of
 				    Variable n -> "x" ++ show n
 				    RelVar 1 -> "_"
@@ -527,6 +543,12 @@ instance JboShow JboTerm where
     logjboshow False (Named s) = return s
     logjboshow _ (NonAnaph s) = return s
 	
+
+vowelnum 1 = "a"
+vowelnum 2 = "e"
+vowelnum 3 = "i"
+vowelnum 4 = "o"
+vowelnum 5 = "u"
 jbonum 0 = "no"
 jbonum 1 = "pa"
 jbonum 2 = "re"
@@ -537,6 +559,7 @@ jbonum 6 = "xa"
 jbonum 7 = "ze"
 jbonum 8 = "bi"
 jbonum 9 = "so"
+jbonum n = jbonum (n `div` 10) ++ jbonum (n `mod` 10)
 
 instance JboShow Prop
     where {logjboshow jbo p = liftM (if jbo then unwords else concat)
@@ -544,18 +567,25 @@ instance JboShow Prop
 	where
 	  logjboshow' :: Bool -> [String] -> Prop -> Bindful SumtiAtom [String]
 	  logjboshow' jbo ps (Quantified q r p) =
-	     withNextVariable (\n ->
-	      do qs <- logjboshow jbo q
-	         vs <- logjboshow jbo (Var n)
-	         rss <- case r of
-	      	    Nothing -> return []
-	      	    Just r' ->
+	    if jbo && q == Glork
+	      then withNextAssignable $ \n ->
+		  do vs <- logjboshow jbo (Var n)
+		     rss <- withShuntedRelVar (\m ->
+			   logjboshow' jbo [] (fromJust r $ m) )
+		     logjboshow' jbo (ps ++ ["lo", "poi'i"] ++ rss ++ ["goi",vs]) (p n)
+	      else withNextVariable $ \n ->
+	        do qs <- logjboshow jbo q
+	           vs <- logjboshow jbo (Var n)
+	           rss <- case r of
+	      	      Nothing -> return []
+	      	      Just r' ->
 	      		do ss <- withShuntedRelVar (\m ->
 	      			  logjboshow' jbo [] (r' m) )
 	      		   return $ [if jbo then "poi" else ":("]
 	      			     ++ ss
 	      			     ++ [if jbo then "ku'o" else ")"]
-	         logjboshow' jbo (ps ++ [qs,vs] ++ rss) (p n) )
+	           logjboshow' jbo (ps ++ [qs, (if jbo then "" else " ") ++ vs]
+			++ rss) (p n)
 	  logjboshow' jbo ps p | ps /= [] =
 	      do ss <- logjboshow' jbo [] p
 	         return $ ps ++ [if jbo then "zo'u" else ". "] ++ ss

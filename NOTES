@@ -360,3 +360,16 @@ New thinking on handling descriptors:
 
     Has the time come for a monad? One which simultaneously handles: bindings,
     glorkings and prenex exportation? It seems so.
+
+    But handling Skolem functions seems to be remarkably painful. Note that
+    they can in principle be functions not only of explicitly quantified
+    things, because we also have e.g. {ti .e ta lo broda be ri cu brode}...
+
+    Remind me what's so good about the Skolem function approach anyway? Why
+    not just have a GL quantifier scoping as with {da}? Main issue: negations
+    can then scope over the {lo}. So we have something like CLL-lo, but with a
+    plural variable. So modulo glorkiness, the same as {pi za'u} ought to be.
+    Then again - we could consider this to be correct xorlo, and have the fact
+    that it's possible to pull it back out of negations and quantifiers,
+    sometimes involving introducing a Skolem function, as being part of the
+    semantics of GL.
