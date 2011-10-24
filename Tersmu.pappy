@@ -143,7 +143,10 @@ sumti6 :: SumtiAtom
     / "fo'o":KOhA -> {Assignable 9}
     / "fo'u":KOhA -> {Assignable 10}
     / "zo'e":KOhA -> {Zohe}
-    / g:LE q:quantifier? s:selbri -> {Description g q s}
+    / g:LE s:sumti6 srels:relativeClauses? q:quantifier? sb:selbri rels:relativeClauses? KU? ->
+	{Description g (Just (QAtom Nothing (fromMaybe [] srels) s)) q sb (fromMaybe [] rels)}
+    / g:LE rels1:relativeClauses? q:quantifier? sb:selbri rels2:relativeClauses? KU? ->
+	{Description g Nothing q sb ((fromMaybe [] rels1)++(fromMaybe [] rels2))}
 
 quantifier :: Quantifier = q:number BOI? -> q
 
@@ -178,7 +181,7 @@ ek :: Connective = ln:NA?
 		    (isNothing rn) }
 
 jek :: Connective = ln:NA?
-	se:(SE)? conchar:jekA rn:NAI?
+	se:(SE)? conchar:jekJA rn:NAI?
     -> { Connective (isNothing ln) 
 		    (if (isJust se) && conchar=='u' then 'U' else conchar)
 		    (isNothing rn) }
@@ -201,7 +204,7 @@ ekA :: Char = ".a":A -> {'a'}
     / ".u":A -> {'u'}
     -- / "ji":A
 
-jekA :: Char = "ja":JA -> {'a'}
+jekJA :: Char = "ja":JA -> {'a'}
     / "je":JA -> {'e'}
     / "jo":JA -> {'o'}
     / "ju":JA -> {'u'}

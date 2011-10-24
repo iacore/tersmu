@@ -76,7 +76,7 @@ data SumtiAtom = Name String
 	       | RelVar Int -- ke'a
 	       | LambdaVar Int -- ce'u
 	       | SelbriVar -- fake
-	       | Description Gadri (Maybe Quantifier) Selbri
+	       | Description Gadri (Maybe Sumti) (Maybe Quantifier) Selbri [RelClause]
 	       | Assignable Int -- ko'a
 	       | Ri -- ri
 	       | Zohe -- zo'e
@@ -330,14 +330,22 @@ sentToProp (t:ts) bt as =
  in handleTerm t drop replace append handleIncidentals
  
 handleTerm t drop replace append handleIncidentals =
-    let assign o rels bs =
+    do bs <- get
+       let assign o rels bs' =
 	 -- goi assignment. TODO: proper pattern-matching semantics
-	 foldr (\n -> Map.insert (Assignable n) o)
-		    bs
+	     foldr (\n -> Map.insert (Assignable n) o)
+		    bs'
 		    [n | rel@(Assignment
 			(Sumti _ (QAtom _ _ (Assignable n)))) <- rels]
-
-    in case t of
+	   incidentalps rels  = [evalRel subs bs | (Incidental subs) <- rels ] 
+	   restrictiveps rels = [evalRel subs bs | (Restrictive subs) <- rels ] 
+	   quantifyAtPrenex q r p =
+	       -- Unfortunately necessary unmonadic ugliness: the
+	       -- effect is to lift the quantification to the prenex,
+	       -- as if we'd just used mapStM (which we can't):
+	       StateT $ \bs -> Cont $ \c ->
+		   quantified q r (\o -> runCont (runStateT (p o) bs) c)
+       case t of
 	 Negation -> mapStM Not drop
 	 Sumti tag (ConnectedSumti con s1 s2) ->
 	     -- sumti connectives are, in effect, raised to the prenex - i.e.
@@ -345,51 +353,47 @@ handleTerm t drop replace append handleIncidentals =
 	     mapStM2 (connToFOL con) (replace $ Sumti tag s1)
 					(replace $ Sumti tag s2)
 	 Sumti tag s@(QAtom q rels sa) ->
-	     do bs <- get
-		let
-		 rrels = [evalRel subs bs | rel@(Restrictive subs) <- rels ]
-		 irels = [evalRel subs bs | rel@(Incidental subs) <- rels ]
-		 doRels o m =
-		     do modify $ assign o rels
-			handleIncidentals [r o | r <- irels] m
+	     do let
+		 doRels o m = doGivenRels rels o m
+		 doGivenRels rels o m =
+			do modify $ assign o rels
+			   handleIncidentals [r o | r <- incidentalps rels] m
 		 doQuant q o f =
 		     case q of Nothing -> f o
 			       Just q' ->
 				   do bs <- get
-				      return $ quantified q' (Just $ andPred (isAmong o:rrels))
+				      return $ quantified q' (Just $ andPred (isAmong o:restrictiveps rels))
 					  (\o -> runSM bs $ f o)
 	        case sa of
 		  Variable n ->
 		    case (Map.lookup (Variable n) bs) of
 		     Nothing ->
-		       -- Unfortunately necessary unmonadic ugliness: the
-		       -- effect is to lift the quantification to the prenex,
-		       -- as if we'd just used mapStM (which we can't):
-		       StateT $ \bs -> Cont $ \c ->
-			 quantified (fromMaybe Exists q)
+			 quantifyAtPrenex (fromMaybe Exists q)
 			  (case [ ss | (Restrictive ss) <- rels ] of
 			    [] -> Nothing
 			    sss -> Just $ (\o ->
 				let bs' = Map.insert (Variable n) o bs
 				in bigAnd
 				    (map (\ss -> evalRel ss bs' o) sss)))
-			  (\o -> let bs' = (Map.insert (Variable n) o bs)
-				 in runCont (runStateT (
-				     doRels o $ replace $
-					 Sumti tag (QAtom Nothing rels
-					     (Variable n))) bs') c)
+			  (\o -> do modify $ Map.insert (Variable n) o
+				    doRels o $ replace $ Sumti tag (QAtom Nothing rels (Variable n)))
 		     Just o -> doRels o $ append [] tag o
-		  Description _ innerq sb ->
-		      -- TODO: inner relative clauses
+		  Description _ s innerq sb innerRels ->
 		       do bs <- get
 			  let r = andPred $
-				  (if isJust innerq then [(\o -> Rel (Moi (fromJust innerq) "mei") [o])]
-						    else []) ++ [selbriToPred sb bs]
-			  StateT $ \bs -> Cont $ \c ->
-			       quantified Glork (Just r)
-				(\o -> runCont (runStateT
-				    (doRels o $ doQuant q o $ append [] tag)
-				bs) c)
+			       (case innerq of
+				 Just iq -> [(\o -> Rel (Moi iq "mei") [o])]
+				 _ -> []) ++
+			       (case s of
+				 -- FIXME: handle arbitrary s here
+				 Just (QAtom Nothing isrels (NonAnaphoricProsumti ps)) -> 
+				     [\o -> Rel (Brivla "srana") [NonAnaph ps,o]]
+				 Nothing -> []) ++
+			       restrictiveps innerRels ++
+			       [selbriToPred sb bs]
+			  quantifyAtPrenex Glork (Just r)
+				(\o -> doGivenRels innerRels o $ doQuant q o $
+					(\o' -> doRels o' $ append [] tag o'))
 		  _ ->
 		      let (o,delvs) = case sa of
 			     RelVar _ -> (getBinding bs sa, [sa])
@@ -405,13 +409,11 @@ handleTerm t drop replace append handleIncidentals =
 		     in doRels o $ doQuant q o $ append delvs tag
 	 Sumti tag s@(QSelbri q rels sb) ->
 	     do bs <- get
-		let rrels = [evalRel subs bs | rel@(Restrictive subs) <- rels ]
-		    irels = [evalRel subs bs | rel@(Incidental subs) <- rels ]
-		    p = Just $ andPred (selbriToPred sb bs:rrels)
-	        StateT $ \bs -> Cont $ \c ->
-		    quantified q p
-		     (andPred ((\o -> runCont (runStateT (append [] tag o) (assign o rels bs)) c)
-				    :irels))
+		let r = Just $ andPred (selbriToPred sb bs:restrictiveps rels)
+		quantifyAtPrenex q r
+		     (\o -> do modify $ assign o rels
+			       p <- append [] tag o
+			       return $ bigAnd (p : map ($ o) (incidentalps rels)))
 	    
 
 quantified :: Quantifier -> Maybe JboPred -> JboPred -> Prop
@@ -573,23 +575,23 @@ instance JboShow Prop
 		  do vs <- logjboshow jbo (Var n)
 		     rss <- withShuntedRelVar (\m ->
 			   logjboshow' jbo [] (fromJust r $ m) )
-		     logjboshow' jbo (ps ++ ["lo", "poi'i"] ++ rss ++ ["goi",vs]) (p n)
+		     logjboshow' jbo (ps ++ ["lo", "poi'i"] ++ rss ++ ["kei goi",vs]) (p n)
 	      else withNextVariable $ \n ->
 	        do qs <- logjboshow jbo q
 	           vs <- logjboshow jbo (Var n)
 	           rss <- case r of
-	      	      Nothing -> return []
+	      	      Nothing -> return $ if jbo then [] else [". "]
 	      	      Just r' ->
 	      		do ss <- withShuntedRelVar (\m ->
 	      			  logjboshow' jbo [] (r' m) )
 	      		   return $ [if jbo then "poi" else ":("]
 	      			     ++ ss
-	      			     ++ [if jbo then "ku'o" else ")"]
+	      			     ++ [if jbo then "ku'o" else "). "]
 	           logjboshow' jbo (ps ++ [qs, (if jbo then "" else " ") ++ vs]
 			++ rss) (p n)
 	  logjboshow' jbo ps p | ps /= [] =
 	      do ss <- logjboshow' jbo [] p
-	         return $ ps ++ [if jbo then "zo'u" else ". "] ++ ss
+	         return $ ps ++ [if jbo then "zo'u" else ""] ++ ss
 	  logjboshow' jbo ps (Connected c p1 p2) =
 	      do ss1 <- logjboshow' jbo ps p1
 	         ss2 <- logjboshow' jbo ps p2
@@ -616,7 +618,7 @@ instance JboShow Prop
 		 tss <- mapM logshow ts
 	         return $
 	             [s ++ "(" ++ (concat $ intersperse "," tss) ++ ")"]
-	  logjboshow' True ps Eet = return ["jitfa"]
-	  logjboshow' False ps Eet = return ["_|_"]
+	  logjboshow' True ps Eet = return ["jitfa to SPOFU toi"]
+	  logjboshow' False ps Eet = return ["_|_ (BUG)"]
 	  }
 
