@@ -283,13 +283,15 @@ gekSentence :: GekSentence
 	/ NA gs:gekSentence -> {NegatedGS gs}
 
 convSE :: Integer
-    = "se":SE -> {2}
+    = SE XI n:litnum -> n
+    / "se":SE -> {2}
     / "te":SE -> {3}
     / "ve":SE -> {4}
     / "xe":SE -> {5}
 
 tagFA :: Integer
-    = "fa":FA -> {1}
+    = FA XI n:litnum -> n
+    / "fa":FA -> {1}
     / "fe":FA -> {2}
     / "fi":FA -> {3}
     / "fo":FA -> {4}

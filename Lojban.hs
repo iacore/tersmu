@@ -177,7 +177,7 @@ setArg as@(Arglist os _ _) n o =
     in as{args=(h++replicate l Nothing++[o]++drop 1 t)}
 
 swapTerms :: [JboTerm] -> Int -> Int -> [JboTerm]
-swapTerms ts n m = take (max n m) $
+swapTerms ts n m = take (max (max n m) (length ts)) $
 	swap (ts ++ (repeat ZoheTerm)) (n-1) (m-1)
     where swap :: [a] -> Int -> Int -> [a]
 	  swap as n m = [ if i == n then as!!m else
@@ -380,6 +380,7 @@ handleTerm t drop replace append handleIncidentals =
 					     (Variable n))) bs') c)
 		     Just o -> doRels o $ append [] tag o
 		  Description _ innerq sb ->
+		      -- TODO: inner relative clauses
 		       do bs <- get
 			  let r = andPred $
 				  (if isJust innerq then [(\o -> Rel (Moi (fromJust innerq) "mei") [o])]
@@ -505,7 +506,7 @@ instance JboShow JboRel where
 		  return $ if jbo then "poi'i " ++ s ++ " kei " ++ s'
 				  else "[" ++ s ++ "] " ++ s' )
     logjboshow jbo (Moi q m) = do s <- logjboshow jbo q
-				  return $ s ++ m
+				  return $ s ++ " " ++ m
     logjboshow jbo (AbsPred a p) =
 	do withShuntedLambda (\n ->
 	       do s <- logjboshow jbo (p (Var n))
