@@ -351,7 +351,7 @@ handleTerm t drop replace append handleIncidentals =
 	     -- sumti connectives are, in effect, raised to the prenex - i.e.
 	     -- treated parallel to unbound variables
 	     mapStM2 (connToFOL con) (replace $ Sumti tag s1)
-					(replace $ Sumti tag s2)
+				     (replace $ Sumti tag s2)
 	 Sumti tag s@(QAtom q rels sa) ->
 	     do let
 		 doRels o m = doGivenRels rels o m
