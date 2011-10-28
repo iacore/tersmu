@@ -132,6 +132,7 @@ sumti6 :: SumtiAtom
     / "ce'u":KOhA "xi":XI n:litnum -> {LambdaVar n}
     / "ce'u":KOhA -> {LambdaVar 1}
     / "ri":KOhA -> {Ri}
+    / "ko'a":KOhA "xi":XI n:litnum -> {Assignable n}
     / "ko'a":KOhA -> {Assignable 1}
     / "ko'e":KOhA -> {Assignable 2}
     / "ko'i":KOhA -> {Assignable 3}

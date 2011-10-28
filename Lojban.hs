@@ -23,8 +23,6 @@ data JboTerm = Var Int
 
 type Individual = Int
 
-type Obj = JboTerm
-
 data JboRel = Tanru JboPred JboRel
 	    | AbsPred Abstractor JboPred
 	    | AbsProp Abstractor Prop
@@ -150,10 +148,10 @@ type ImplicitVars = [SumtiAtom]
 
 type JboPred = JboTerm -> Prop
 
-data Arglist = Arglist {args :: [Maybe Obj],
+data Arglist = Arglist {args :: [Maybe JboTerm],
 			position::Int,
 			implicitvars::ImplicitVars}
-appendToArglist :: Arglist -> Obj -> Arglist
+appendToArglist :: Arglist -> JboTerm -> Arglist
 appendToArglist as@(Arglist os n _) o = incArg (setArg as n (Just o))
     where incArg as@(Arglist os n vs) = Arglist os (n+1) vs
 resolveArglist :: Arglist -> Bindings -> [JboTerm]
@@ -170,7 +168,7 @@ appendZohe as = appendToArglist as ZoheTerm
 -- delImplicitVars :: Arglist -> ImplicitVars -> Arglist
 -- delImplicitVars as@(Arglist os n vs) delvs = Arglist os n (vs\\delvs)
 
-setArg :: Arglist -> Int -> Maybe Obj -> Arglist
+setArg :: Arglist -> Int -> Maybe JboTerm -> Arglist
 setArg as@(Arglist os _ _) n o =
     let (h,t) = splitAt (n-1) os
 	l = ((n-1)-(length h))
@@ -210,15 +208,14 @@ statement1ToProp (StatementSentence (Sentence ts bt)) =
 prenexed :: [Term] -> StatementMonad Prop -> StatementMonad Prop
 prenexed [] m = do bs <- get
 		   return $ runSM bs m
-prenexed (t:ts) m = do p <- handleTerm t drop replace append handleIncidentals
+prenexed (t:ts) m = do p <- handlePrenexTerm t
 		       p' <- prenexed ts m
-		       case p of Not Eet -> return p'
-				 _ -> return $ Connected And p p'
-    where drop = return $ Not Eet
-	  replace _ = return $ Not Eet
-	  append _ _ _ = return $ Not Eet
-	  handleIncidentals ps _ = return $ bigAnd ps
-
+		       return $ bigAnd [p,p']
+    where handlePrenexTerm t =
+	      handleTerm t drop append
+	  drop = return $ Not Eet
+	  append _ _ o = do modify $ Map.insert Ri o
+			    return $ Not Eet
 
 subsentToProp :: Subsentence -> ImplicitVars -> Bindings -> Prop
 subsentToProp (Subsentence ps (Sentence ts bt)) vs bs =
@@ -308,28 +305,28 @@ sentToProp [] (BridiTail3 (Selbri4 sb) []) as =
 
 sentToProp (t:ts) bt as =
  let drop = sentToProp ts bt as
-     replace t = sentToProp (t:ts) bt as
      append delvs tag o =
       do bs <- get
-	 let as' = case tag of Untagged -> as
-			       FA n -> as{position=n}
-	     as'' = let vs = implicitvars as'
-			f v = case o of
-				   Var n ->
-				    case getBinding bs v of Var m -> n==m
-							    _ -> False
-				   _ -> False
-		    in as'{implicitvars = (vs\\(delvs++filter f vs))}
-	     as''' = appendToArglist as'' o
-	 put $ Map.insert Ri o bs
-	 sentToProp ts bt as'''
-     handleIncidentals ps m =
-	case ps of [] -> m
-		   _ -> do p <- m
-			   return $ Connected And (bigAnd ps) p
- in handleTerm t drop replace append handleIncidentals
+         let as' = case tag of
+        	     Untagged -> as
+        	     FA n -> as{position=n}
+             as'' = let vs  = implicitvars as'
+        		f v = case o of
+        		        Var n ->
+        			  case getBinding bs v of
+        			    Var m -> n==m
+        			    _     -> False
+        		        _ -> False
+        	    in as'{implicitvars = (vs\\(delvs++filter f vs))}
+             as''' = appendToArglist as'' o
+         put $ Map.insert Ri o bs
+         sentToProp ts bt as'''
+ in handleTerm t drop append
  
-handleTerm t drop replace append handleIncidentals =
+handleTerm :: Term -> StatementMonad Prop ->
+    ([SumtiAtom] -> Tag -> JboTerm -> StatementMonad Prop) ->
+    StatementMonad Prop
+handleTerm t drop append =
     do bs <- get
        let assign o rels bs' =
 	 -- goi assignment. TODO: proper pattern-matching semantics
@@ -337,6 +334,7 @@ handleTerm t drop replace append handleIncidentals =
 		    bs'
 		    [n | rel@(Assignment
 			(Sumti _ (QAtom _ _ (Assignable n)))) <- rels]
+	   replace t' = handleTerm t' drop append
 	   incidentalps rels  = [evalRel subs bs | (Incidental subs) <- rels ] 
 	   restrictiveps rels = [evalRel subs bs | (Restrictive subs) <- rels ] 
 	   quantifyAtPrenex q r p =
@@ -357,7 +355,9 @@ handleTerm t drop replace append handleIncidentals =
 		 doRels o m = doGivenRels rels o m
 		 doGivenRels rels o m =
 			do modify $ assign o rels
-			   handleIncidentals [r o | r <- incidentalps rels] m
+			   p <- m
+			   let ps = [r o | r <- incidentalps rels]
+			   return $ bigAnd $ ps ++ [p]
 		 doQuant q o f =
 		     case q of Nothing -> f o
 			       Just q' ->
@@ -373,27 +373,35 @@ handleTerm t drop replace append handleIncidentals =
 			    [] -> Nothing
 			    sss -> Just $ (\o ->
 				let bs' = Map.insert (Variable n) o bs
-				in bigAnd
-				    (map (\ss -> evalRel ss bs' o) sss)))
+				in bigAnd (map (\ss -> evalRel ss bs' o) sss)))
 			  (\o -> do modify $ Map.insert (Variable n) o
-				    doRels o $ replace $ Sumti tag (QAtom Nothing rels (Variable n)))
+				    replace $ Sumti tag (QAtom Nothing rels (Variable n)))
 		     Just o -> doRels o $ append [] tag o
-		  Description _ s innerq sb innerRels ->
-		       do bs <- get
-			  let r = andPred $
-			       (case innerq of
-				 Just iq -> [(\o -> Rel (Moi iq "mei") [o])]
-				 _ -> []) ++
-			       (case s of
-				 -- FIXME: handle arbitrary s here
-				 Just (QAtom Nothing isrels (NonAnaphoricProsumti ps)) -> 
-				     [\o -> Rel (Brivla "srana") [NonAnaph ps,o]]
-				 Nothing -> []) ++
-			       restrictiveps innerRels ++
-			       [selbriToPred sb bs]
-			  quantifyAtPrenex Glork (Just r)
-				(\o -> doGivenRels innerRels o $ doQuant q o $
-					(\o' -> doRels o' $ append [] tag o'))
+		  Description _ mis miq sb innerRels ->
+		      -- XXX: currently treating all gadri identically... and
+		      -- in a way which probably doesn't fit any of the
+		      -- definitions of any of them...
+		      let withInnerJboterm mio =
+			   do bs <- get
+			      let r = andPred $
+				   (case miq of
+				     Just iq -> [(\o -> Rel (Moi iq "mei") [o])]
+				     _ -> []) ++
+				   (case mio of
+				     Just io -> 
+					 [\o -> Rel (Brivla "srana") [io,o]]
+				     Nothing -> []) ++
+				   restrictiveps innerRels ++
+				   [selbriToPred sb bs]
+			      quantifyAtPrenex Glork (Just r)
+				    (\o -> doGivenRels innerRels o $ doQuant q o $
+					    (\o' -> doRels o' $ append [] tag o'))
+		      in case mis of
+			  Nothing -> withInnerJboterm Nothing
+			  Just is -> handleTerm (term Untagged is) dropInner appendInner
+			     where dropInner = withInnerJboterm Nothing
+				   appendInner _ _ io = withInnerJboterm $ Just io
+		          -- [sometimes I do love functional programming]
 		  _ ->
 		      let (o,delvs) = case sa of
 			     RelVar _ -> (getBinding bs sa, [sa])
@@ -406,7 +414,7 @@ handleTerm t drop replace append handleIncidentals =
 			     NonAnaphoricProsumti ps -> (NonAnaph ps, [])
 			     Name s -> (Named s, [])
 			     Zohe -> (ZoheTerm, [])
-		     in doRels o $ doQuant q o $ append delvs tag
+		      in doRels o $ doQuant q o $ append delvs tag
 	 Sumti tag s@(QSelbri q rels sb) ->
 	     do bs <- get
 		let r = Just $ andPred (selbriToPred sb bs:restrictiveps rels)

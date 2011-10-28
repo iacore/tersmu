@@ -48,15 +48,11 @@ terpProp terpAtomic p = terpProp' p
 	  terpProp' Eet = Eet
 	  terpProp' (LambdaApp _ _) = error "Can't terp lambda"
 
-bigAnd :: [Prop r t] -> (Prop r t)
-bigAnd [] = Not Eet
-bigAnd [p] = p
-bigAnd (p:ps) = Connected And p (bigAnd ps)
-
-bigOr :: [Prop r t] -> (Prop r t)
-bigOr [] = Eet
-bigOr [p] = p
-bigOr (p:ps) = Connected Or p (bigOr ps)
+bigAnd :: [Prop r t] -> Prop r t
+bigAnd ps = bigAnd' $ filter (\p -> case p of {Not Eet -> False; _ -> True}) ps
+    where bigAnd' [] = Not Eet
+	  bigAnd' [p] = p
+	  bigAnd' (p:ps) = Connected And p (bigAnd' ps)
 
 -- instance (Rel r, Term t) => Show (Prop r t) where
 --     show p = evalState (serialise p False) 1
