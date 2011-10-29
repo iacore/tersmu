@@ -15,7 +15,13 @@ Arguable bugs:
     don't see how to sensibly extend that to arbitrary statements, so I'm
     ignoring it.
 
-Not bugs:
+    We don't handle donkey anaphora, and so are not in accordance with the
+    CLL. For example, we have
+	> ro ponse be su'o xasli cu darxi ri
+	Prop:FA x1:(EX x2:(xasli(_)). ponse(_,x2)). darxi(x1,x1)
+    , which contradicts CLL:7.6.
+
+Probably not bugs:
     This might seem wrong:
 	> na ku mi noi brode cu broda
 	Prop:!(brode(mi) /\ broda(mi))

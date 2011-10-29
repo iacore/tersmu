@@ -114,6 +114,12 @@ relativeClause :: RelClause
 	= "poi":NOI subs:subsentence KUhO? -> {Restrictive subs}
 	/ "noi":NOI subs:subsentence KUhO? -> {Incidental subs}
 	/ "goi":GOI t:term GEhU? -> {Assignment t}
+	/ "ne":GOI t:term GEhU? -> {IncidentalGOI "ne" t}
+	/ "no'u":GOI t:term GEhU? -> {IncidentalGOI "no'u" t}
+	/ "pe":GOI t:term GEhU? -> {RestrictiveGOI "pe" t}
+	/ "po'u":GOI t:term GEhU? -> {RestrictiveGOI "po'u" t}
+	/ "po":GOI t:term GEhU? -> {RestrictiveGOI "po" t}
+	/ "po'e":GOI t:term GEhU? -> {RestrictiveGOI "po'e" t}
 
 sumti6 :: SumtiAtom
     = "la":LA s:CMENE -> {Name s}
@@ -487,7 +493,7 @@ GIhA :: String = s:GIhAmain Spacing -> s
 GIhAmain :: String = "gi'e" / "gi'i" / "gi'o" / "gi'a" / "gi'u" 
 --         attaches a sumti modifier to a sumti 
 GOI :: String = s:GOImain Spacing -> s
-GOImain :: String = "no'u" / "ne" / "po" / "goi" / "po'u" / "pe" / "po'e" 
+GOImain :: String = "no'u" / "ne" / "goi" / "po'u" / "pe" / "po'e" / "po"
 --         pro-bridi 
 GOhA :: String = s:GOhAmain Spacing -> s
 GOhAmain :: String = "mo" / "nei" / "go'u" / "go'o" / "go'i" / "no'a" / "go'e" / "go'a" / "du" / "bu'a" / "bu'e" / "bu'i" / "co'e" 

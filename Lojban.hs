@@ -67,6 +67,8 @@ data Sumti = ConnectedSumti Connective Sumti Sumti
 data RelClause = Restrictive Subsentence  -- poi
 	       | Incidental Subsentence  -- noi
 	       | Assignment Term  -- goi
+	       | RestrictiveGOI String Term  -- pe etc.
+	       | IncidentalGOI String Term  -- ne etc.
 	       deriving (Eq, Show, Ord)
 data SumtiAtom = Name String
 	       | Variable Int -- da
@@ -160,23 +162,12 @@ type JboPred = JboTerm -> Prop
 data Arglist = Arglist {args :: [Maybe JboTerm],
 			position::Int,
 			implicitvars::ImplicitVars}
+
 nullArgs vs = Arglist [] 1 vs
+
 appendToArglist :: Arglist -> JboTerm -> Arglist
 appendToArglist as@(Arglist os n _) o = incArg (setArg as n (Just o))
     where incArg as@(Arglist os n vs) = Arglist os (n+1) vs
-resolveArglist :: SentenceMonad [JboTerm]
-resolveArglist = do as <- get
-		    bs <- getBindings
-		    return $ resolveArglist_ as bs
-resolveArglist_ :: Arglist -> Bindings -> [JboTerm]
-resolveArglist_ as@(Arglist os _ vs) bs = resolve os vs []
-    where resolve (Just o:os) vs ts = resolve os vs (ts++[o])
-	  resolve (Nothing:os) (v:vs) ts =
-	      resolve os vs (ts++[getBinding bs v])
-	  resolve (Nothing:os) [] ts =
-	      resolve os [] (ts++[ZoheTerm])
-	  resolve [] (v:vs) ts = resolve [] vs (ts++[getBinding bs v])
-	  resolve [] [] ts = ts
 appendZohe :: Arglist -> Arglist
 appendZohe as = appendToArglist as ZoheTerm
 -- delImplicitVars :: Arglist -> ImplicitVars -> Arglist
@@ -212,6 +203,24 @@ putBindings :: Bindings -> SentenceMonad ()
 putBindings = lift . put
 modifyBindings :: (Bindings -> Bindings) -> SentenceMonad ()
 modifyBindings = lift . modify
+
+advanceArgPosToBridi :: SentenceMonad ()
+advanceArgPosToBridi =
+   modify $ \as -> case (args as) of [] -> as{position=2}
+				     _  -> as
+resolveArglist :: SentenceMonad [JboTerm]
+resolveArglist =
+    do as@(Arglist os _ vs) <- get
+       bs <- getBindings
+       let resolve (Just o:os) vs ts = resolve os vs (ts++[o])
+	   resolve (Nothing:os) (v:vs) ts =
+	       resolve os vs (ts++[getBinding bs v])
+	   resolve (Nothing:os) [] ts =
+	       resolve os [] (ts++[ZoheTerm])
+	   resolve [] (v:vs) ts = resolve [] vs (ts++[getBinding bs v])
+	   resolve [] [] ts = ts
+       return $ resolve os vs []
+
 
 statementsToProp :: [Statement] -> Bindings -> Prop
 statementsToProp ss bs = bigAnd $ map (\s -> runStM bs $ statementToProp s) ss
@@ -294,8 +303,7 @@ sentToProp (t:ts) bt =
     handleSentenceTerm t $ sentToProp ts bt
 
 sentToProp [] (BridiTail3 sb tts) | tts /= [] =
-    do modify $ \as -> case (args as) of [] -> as{position=2}
-					 _  -> as
+    do advanceArgPosToBridi
        sentToProp tts (BridiTail3 sb [])
 
 data JboRels = ConnectedRels Connective JboRels JboRels
@@ -345,7 +353,8 @@ sentToProp [] (BridiTail3 (Selbri2 (Selbri3 sb)) []) =
 	   permute a b (ConnectedRels con r1 r2) =
 	       ConnectedRels con (permute a b r1) (permute a b r2)
 	   evaljborels (JboRel r (la:las) perm) =
-	       handleSentenceTerm la $ evaljborels (JboRel r las perm)
+	       do advanceArgPosToBridi
+		  handleSentenceTerm la $ evaljborels (JboRel r las perm)
 	   evaljborels (JboRel (AbsPred "poi'i" p) [] perm) =
 	       do ts <- resolveArglist
 		  return $ p $ head $ (perm ts) ++ [ZoheTerm]
@@ -393,14 +402,55 @@ handleTerm t drop append =
 		    [n | rel@(Assignment
 			(Sumti _ (QAtom _ _ (Assignable n)))) <- rels]
 	   replace t' = handleTerm t' drop append
-	   incidentalps rels  = [evalRel subs bs | (Incidental subs) <- rels ] 
-	   restrictiveps rels = [evalRel subs bs | (Restrictive subs) <- rels ] 
 	   quantifyAtPrenex q r p =
 	       -- Unfortunately necessary unmonadic ugliness: the
 	       -- effect is to lift the quantification to the prenex,
 	       -- as if we'd just used mapSentM (which we can't):
 	       StateT $ \as -> StateT $ \bs -> Cont $ \c ->
 		   quantified q r (\o -> runCont (runStateT (runStateT (p o) as) bs) c)
+	   withRestrictives :: [RelClause] -> ([JboPred] -> SentenceMonad Prop)
+	   withRestrictives rels f =
+	     withRestrictives' rels [] f
+	     where withRestrictives' [] ps f = f ps
+		   withRestrictives' (Restrictive subs:rels) ps f =
+		       do bs <- getBindings
+			  withRestrictives' rels (evalRel subs bs:ps) f
+		   withRestrictives' (RestrictiveGOI gstr t:rels) ps f =
+		       handleTerm t dropInner appendInner
+		    where
+		      dropInner = withRestrictives' rels ps f
+		      appendInner _ _ io = withRestrictives' rels
+			    ((\o -> Rel sb [io,o]):ps) f
+		      sb = case gstr of
+			    "pe" -> Brivla "srana"
+			    "po'u" -> Brivla "du"
+			    -- XXX: following are rather approximate... the
+			    -- BPFK subordinators section suggests more
+			    -- complicated expressions
+			    "po'e" -> Tanru (\o -> Rel (Brivla "jinzi") [o])
+					(Brivla "srana")
+			    "po" -> Tanru (\o -> Rel (Brivla "steci") [o])
+					(Brivla "srana")
+		   withRestrictives' (rel:rels) ps f =
+		       withRestrictives' rels ps f
+	   withIncidentals :: [RelClause] -> ([JboPred] -> SentenceMonad Prop)
+	   withIncidentals rels f =
+	     withIncidentals' rels [] f
+	     where withIncidentals' [] ps f = f ps
+		   withIncidentals' (Incidental subs:rels) ps f =
+		       do bs <- getBindings
+			  withIncidentals' rels (evalRel subs bs:ps) f
+		   withIncidentals' (IncidentalGOI gstr t:rels) ps f =
+		       handleTerm t dropInner appendInner
+		    where
+		      dropInner = withIncidentals' rels ps f
+		      appendInner _ _ io = withIncidentals' rels
+			    ((\o -> Rel sb [io,o]):ps) f
+		      sb = case gstr of "ne" -> Brivla "srana"
+					"no'u" -> Brivla "du"
+		   withIncidentals' (rel:rels) ps f =
+		       withIncidentals' rels ps f
+			   
        case t of
 	 Negation -> mapSentM Not drop
 	 Sumti tag (ConnectedSumti con s1 s2) ->
@@ -412,49 +462,41 @@ handleTerm t drop append =
 	     do let
 		 doRels o m = doGivenRels rels o m
 		 doGivenRels rels o m =
+		     withIncidentals rels $ \ips ->
 			do modifyBindings $ assign o rels
 			   p <- m
-			   let ps = [r o | r <- incidentalps rels]
-			   return $ bigAnd $ ps ++ [p]
+			   return $ bigAnd (p : map ($o) ips)
 		 doQuant q o f =
 		     case q of Nothing -> f o
-			       Just q' ->
-				   quantifyAtPrenex q' (Just $ andPred (isAmong o:restrictiveps rels)) f
+			       Just q' -> withRestrictives rels $ \rps ->
+				   quantifyAtPrenex q' (Just $ andPred (isAmong o:rps)) f
 	        case sa of
 		  Variable n ->
 		    case (Map.lookup (Variable n) bs) of
 		     Nothing ->
+			 withRestrictives rels $ \rps ->
 			 quantifyAtPrenex (fromMaybe Exists q)
-			  (case [ ss | (Restrictive ss) <- rels ] of
+			  (case rps of
 			    [] -> Nothing
-			    sss -> Just $ (\o ->
-				let bs' = Map.insert (Variable n) o bs
-				in bigAnd (map (\ss -> evalRel ss bs' o) sss)))
+			    _ -> Just $ andPred rps)
 			  (\o -> do modifyBindings $ Map.insert (Variable n) o
 				    replace $ Sumti tag (QAtom Nothing rels (Variable n)))
 		     Just o -> doRels o $ append [] tag o
 		  Description gadri mis miq sb innerRels ->
-		      let withInnerJboterm mio =
-			   do bs <- getBindings
-			      let r = andPred $
+		      let innerRels' = innerRels ++
+			      case mis of Nothing -> []
+					  Just is -> [RestrictiveGOI "pe" (term Untagged is)]
+		      in withRestrictives innerRels' $ \irps ->
+			  do bs <- getBindings
+			     let r = andPred $
 				   (case miq of
 				     Just iq -> [(\o -> Rel (Moi iq "mei") [o])]
 				     _ -> []) ++
-				   (case mio of
-				     Just io -> 
-					 [\o -> Rel (Brivla "srana") [io,o]]
-				     Nothing -> []) ++
-				   restrictiveps innerRels ++
+				   irps ++
 				   [selbriToPred sb bs]
-			      quantifyAtPrenex (Gadri gadri) (Just r)
+			     quantifyAtPrenex (Gadri gadri) (Just r)
 				    (\o -> doGivenRels innerRels o $ doQuant q o $
 					    (\o' -> doRels o' $ append [] tag o'))
-		      in case mis of
-			  Nothing -> withInnerJboterm Nothing
-			  Just is -> handleTerm (term Untagged is) dropInner appendInner
-			     where dropInner = withInnerJboterm Nothing
-				   appendInner _ _ io = withInnerJboterm $ Just io
-		          -- [sometimes I do love functional programming]
 		  _ ->
 		      let (o,delvs) = case sa of
 			     RelVar _ -> (getBinding bs sa, [sa])
@@ -469,12 +511,14 @@ handleTerm t drop append =
 			     Zohe -> (ZoheTerm, [])
 		      in doRels o $ doQuant q o $ append delvs tag
 	 Sumti tag s@(QSelbri q rels sb) ->
+	     withRestrictives rels $ \rps ->
+	     withIncidentals rels $ \ips ->
 	     do bs <- getBindings
-		let r = Just $ andPred (selbriToPred sb bs:restrictiveps rels)
+		let r = Just $ andPred (selbriToPred sb bs:rps)
 		quantifyAtPrenex q r
 		     (\o -> do modifyBindings $ assign o rels
 			       p <- append [] tag o
-			       return $ bigAnd (p : map ($ o) (incidentalps rels)))
+			       return $ bigAnd (p : map ($o) ips))
 	    
 
 quantified :: Quantifier -> Maybe JboPred -> JboPred -> Prop
@@ -671,4 +715,3 @@ instance JboShow Prop
 	  logjboshow' True ps Eet = return ["jitfa to SPOFU toi"]
 	  logjboshow' False ps Eet = return ["_|_ (BUG)"]
 	  }
-
