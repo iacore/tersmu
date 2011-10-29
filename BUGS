@@ -1,0 +1,35 @@
+Definite bugs:
+    ka can't handle multiple ce'u (should return a relation)
+
+Arguable bugs:
+    in {broda be da brode ro da}, the first da is in the scope of the second
+
+    seltau are considered to be unary predicates rather than higher arity
+    relations. Not clear whether that's correct or not.
+
+    quantifiers on bound variables are ignored. This is contrary to
+    CLL:16.14.1-2. But I don't see how to make sense of what's specified
+    there.
+
+    According to CLL:16.11.14, bridi negation scopes over the prenex... but I
+    don't see how to sensibly extend that to arbitrary statements, so I'm
+    ignoring it.
+
+Not bugs:
+    This might seem wrong:
+	> na ku mi noi brode cu broda
+	Prop:!(brode(mi) /\ broda(mi))
+    but consider that e.g.
+	> na ku da ro broda be da ku noi brodi cu brodu
+	Prop:!EX x1. FA x2:(broda(_,x1)). (brodu(x1,x2) /\ brodi(x2))
+    is probably right...
+
+    Also,
+	> ro da na ku broda .i je de brode
+	Prop:FA x1. !EX x2. (broda(x1) /\ brode(x2))
+    is right, because
+    	> ro da na ku broda de .i je de brode
+	Prop:FA x1. !EX x2. (broda(x1,x2) /\ brode(x2))
+    has to be; c.f.
+	> ro da na broda de .i je de brode
+	Prop:FA x1. EX x2. (!broda(x1,x2) /\ brode(x2)) .
