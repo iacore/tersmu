@@ -774,7 +774,7 @@ ZOhUmain :: String = "zo'u"
 
 {
 
-eval :: String -> [Statement]
+eval :: String -> Either [Statement] Int
 eval str = case tersmuatext1 (tersmuParse "atext1" (str ++ " ")) of
 -- eval :: String -> Sumti
 -- eval str = case tersmuterm (tersmuParse "term" str) of
@@ -782,6 +782,6 @@ eval str = case tersmuatext1 (tersmuParse "atext1" (str ++ " ")) of
 -- eval str = case tersmuCMENE (tersmuParse "CMENE" str) of
 -- eval :: String -> Char
 -- eval str = case tersmuLojbanLetter (tersmuParse "LojbanLetter" str) of
-	Parsed p _ _ -> p
-	NoParse e -> error (show e)
+	Parsed p _ _ -> Left p
+	NoParse e -> Right (posCol (errorPos e))
 }
