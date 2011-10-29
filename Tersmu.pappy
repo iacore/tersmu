@@ -257,17 +257,35 @@ tailTerms :: {[Term]}
 
 selbri :: Selbri
     = "na":NA sb:selbri -> {Negated sb}
-    / ("ja'a":NA -> {})? sb:selbri4 -> {Selbri4 sb}
+    / ("ja'a":NA -> {})? sb:selbri2 -> {Selbri2 sb}
+
+selbri2 :: Selbri2
+    = sb:selbri3 CO sb':selbri2 -> {SBInverted sb sb'}
+    / sb:selbri3 -> {Selbri3 sb}
+
+selbri3 :: Selbri3
+    = sb:selbri3 sb':selbri4 -> {SBTanru sb sb'}
+    / sb:selbri4 -> {Selbri4 sb}
 
 selbri4 :: Selbri4
-    = sb:selbri4 tu:tanruUnit -> {SBTanru sb tu}
-    / tanruUnit
+    = sb:selbri5 jekss:(_jeksbs)*
+	-> { foldl (\sb1 -> \(con,sb2) -> ConnectedSB con sb1 sb2) sb jekss }
+-- _jeksbs: helper for selbri4
+_jeksbs :: {(Connective, Selbri4)}
+    = con:jek sb:selbri5 -> {(con,sb)}
+
+selbri5 :: Selbri4
+    = sb1:tanruUnit jeks:( con:jek BO sb:selbri5 -> {(con,sb)} )?
+	-> { if (isNothing jeks) then sb1
+				 else (let Just (con,sb2) = jeks
+				       in ConnectedSB con sb1 sb2) }
 
 tanruUnit :: Selbri4
     = tu:tanruUnit2 las:linkargs? -> {TanruUnit tu (fromMaybe [] las)}
 
 tanruUnit2 :: TanruUnit2
     = bv:BRIVLA -> {TUBrivla bv}
+    / KE sb:selbri3 KEhE? -> {TUSelbri3 sb}
     / n:convSE tu:tanruUnit2 -> {TUPermuted n tu}
     / g:GOhA -> {TUBrivla g}
     / q:number m:MOI -> {TUMoi q m}
