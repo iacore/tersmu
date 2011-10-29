@@ -410,3 +410,8 @@ Semantics of GL:
     glorking. Sometimes at least, xorxes seems to talk about it and use it as
     if it was merely giving a plural existential with outermost scope (or an
     existential over skolem functions).
+
+Giving up on gadri:
+    Just treat them as uninterpreted quantifiers:
+    {broda lo brode ri} -> "{lo} x1:(brode(_)). broda(zo'e,x1,x1)" ;
+    for now at least, we leave further processing to the pragmatics module.

@@ -433,10 +433,7 @@ handleTerm t drop append =
 			  (\o -> do modifyBindings $ Map.insert (Variable n) o
 				    replace $ Sumti tag (QAtom Nothing rels (Variable n)))
 		     Just o -> doRels o $ append [] tag o
-		  Description _ mis miq sb innerRels ->
-		      -- XXX: currently treating all gadri identically... and
-		      -- in a way which probably doesn't fit any of the
-		      -- definitions of any of them...
+		  Description gadri mis miq sb innerRels ->
 		      let withInnerJboterm mio =
 			   do bs <- getBindings
 			      let r = andPred $
@@ -449,7 +446,7 @@ handleTerm t drop append =
 				     Nothing -> []) ++
 				   restrictiveps innerRels ++
 				   [selbriToPred sb bs]
-			      quantifyAtPrenex Glork (Just r)
+			      quantifyAtPrenex (Gadri gadri) (Just r)
 				    (\o -> doGivenRels innerRels o $ doQuant q o $
 					    (\o' -> doRels o' $ append [] tag o'))
 		      in case mis of
@@ -621,26 +618,27 @@ instance JboShow Prop
 				$ logjboshow' jbo [] p
 	where
 	  logjboshow' :: Bool -> [String] -> Prop -> Bindful SumtiAtom [String]
-	  logjboshow' jbo ps (Quantified q r p) =
-	    if jbo && q == Glork
-	      then withNextAssignable $ \n ->
+	  logjboshow' True ps (Quantified (Gadri gadri) r p) =
+	      withNextAssignable $ \n ->
 		  do vs <- logjboshow jbo (Var n)
 		     rss <- withShuntedRelVar (\m ->
 			   logjboshow' jbo [] (fromJust r $ m) )
-		     logjboshow' jbo (ps ++ ["lo", "poi'i"] ++ rss ++ ["kei goi",vs]) (p n)
-	      else withNextVariable $ \n ->
-	        do qs <- logjboshow jbo q
-	           vs <- logjboshow jbo (Var n)
-	           rss <- case r of
-	      	      Nothing -> return $ if jbo then [] else [". "]
-	      	      Just r' ->
-	      		do ss <- withShuntedRelVar (\m ->
-	      			  logjboshow' jbo [] (r' m) )
-	      		   return $ [if jbo then "poi" else ":("]
-	      			     ++ ss
-	      			     ++ [if jbo then "ku'o" else "). "]
-	           logjboshow' jbo (ps ++ [qs, (if jbo then "" else " ") ++ vs]
-			++ rss) (p n)
+		     logjboshow' jbo (ps ++ [gadri, "poi'i"] ++ rss ++
+			 ["kei goi",vs]) (p n)
+	  logjboshow' jbo ps (Quantified q r p) =
+	      withNextVariable $ \n ->
+		  do qs <- logjboshow jbo q
+		     vs <- logjboshow jbo (Var n)
+		     rss <- case r of
+			Nothing -> return $ if jbo then [] else [". "]
+			Just r' ->
+			 do ss <- withShuntedRelVar (\m ->
+				  logjboshow' jbo [] (r' m) )
+			    return $ [if jbo then "poi" else ":("]
+				     ++ ss
+				     ++ [if jbo then "ku'o" else "). "]
+		     logjboshow' jbo (ps ++
+			 [qs, (if jbo then "" else " ") ++ vs] ++ rss) (p n)
 	  logjboshow' jbo ps p | ps /= [] =
 	      do ss <- logjboshow' jbo [] p
 	         return $ ps ++ [if jbo then "zo'u" else ""] ++ ss

@@ -548,7 +548,7 @@ LAhE :: String = s:LAhEmain Spacing -> s
 LAhEmain :: String = "tu'a" / "lu'a" / "lu'o" / "la'e" / "vu'i" / "lu'i" / "lu'e" 
 --         sumti descriptors 
 LE :: String = s:LEmain Spacing -> s
-LEmain :: String = "le" / "lei" / "loi" / "lo" / "le'i" / "lo'i" / "le'e" / "lo'e" 
+LEmain :: String =  "le'i" / "lo'i" / "le'e" / "lo'e" / "le" / "lei" / "loi" / "lo"
 --         possibly ungrammatical text right quote 
 LEhU :: String = s:LEhUmain Spacing -> s
 LEhUmain :: String = "le'u" 
