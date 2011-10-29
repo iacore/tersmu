@@ -59,7 +59,7 @@ data Term = Sumti Tag Sumti
 data Tag = Untagged
 	 | FA Int
 	 deriving (Eq, Show, Ord)
-data Sumti = ConnectedSumti Connective Sumti Sumti
+data Sumti = ConnectedSumti Connective Sumti Sumti [RelClause]
 	   | QAtom (Maybe Quantifier) [RelClause] SumtiAtom
 	   | QSelbri Quantifier [RelClause] Selbri
 	   deriving (Eq, Show, Ord)
@@ -150,6 +150,13 @@ extendTail (GekSentence gs) ts =
 	where extendTailGS (ConnectedGS con s1 s2 tts) ts = 
 		ConnectedGS con s1 s2 (tts++ts)
 	      extendTailGS (NegatedGS gs) ts = NegatedGS (extendTailGS gs ts)
+
+appendRelsToSumti newrels (ConnectedSumti con s1 s2 rels) =
+    ConnectedSumti con s1 s2 (rels++newrels)
+appendRelsToSumti newrels (QAtom q rels sa) =
+    QAtom q (rels++newrels) sa
+appendRelsToSumti newrels (QSelbri q rels s) =
+    QSelbri q (rels++newrels) s
 
 type Bindings = Map SumtiAtom JboTerm
 getBinding :: Bindings -> SumtiAtom -> JboTerm
@@ -408,7 +415,7 @@ handleTerm t drop append =
 	       -- as if we'd just used mapSentM (which we can't):
 	       StateT $ \as -> StateT $ \bs -> Cont $ \c ->
 		   quantified q r (\o -> runCont (runStateT (runStateT (p o) as) bs) c)
-	   withRestrictives :: [RelClause] -> ([JboPred] -> SentenceMonad Prop)
+	   withRestrictives :: [RelClause] -> ([JboPred] -> SentenceMonad Prop) -> SentenceMonad Prop
 	   withRestrictives rels f =
 	     withRestrictives' rels [] f
 	     where withRestrictives' [] ps f = f ps
@@ -433,7 +440,7 @@ handleTerm t drop append =
 					(Brivla "srana")
 		   withRestrictives' (rel:rels) ps f =
 		       withRestrictives' rels ps f
-	   withIncidentals :: [RelClause] -> ([JboPred] -> SentenceMonad Prop)
+	   withIncidentals :: [RelClause] -> ([JboPred] -> SentenceMonad Prop) -> SentenceMonad Prop
 	   withIncidentals rels f =
 	     withIncidentals' rels [] f
 	     where withIncidentals' [] ps f = f ps
@@ -453,11 +460,12 @@ handleTerm t drop append =
 			   
        case t of
 	 Negation -> mapSentM Not drop
-	 Sumti tag (ConnectedSumti con s1 s2) ->
+	 Sumti tag (ConnectedSumti con s1 s2 rels) ->
 	     -- sumti connectives are, in effect, raised to the prenex - i.e.
 	     -- treated parallel to unbound variables
-	     mapSentM2 (connToFOL con) (replace $ Sumti tag s1)
-				     (replace $ Sumti tag s2)
+	     mapSentM2 (connToFOL con)
+		(replace $ Sumti tag $ appendRelsToSumti rels s1)
+		(replace $ Sumti tag $ appendRelsToSumti rels s2)
 	 Sumti tag s@(QAtom q rels sa) ->
 	     do let
 		 doRels o m = doGivenRels rels o m

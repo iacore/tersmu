@@ -75,17 +75,22 @@ term :: Term = s:sumti -> {Sumti Untagged s}
 	    / n:tagFA s:sumti -> {Sumti (FA n) s}
 	    / NA KU -> {Negation}
 
-sumti :: Sumti = sumti1
+sumti :: Sumti =
+    s:sumti1 rels:(VUhO rels:relativeClauses -> rels)?
+	-> {
+	    case rels of Nothing -> s
+		         Just rels -> appendRelsToSumti rels s }
+
 
 sumti1 :: Sumti = s1:sumti2
     eks:( con:ek KE s:sumti
 	(KEhE -> {()})? -> {(con,s)} )?
     -> { if (isNothing eks) then s1
 			    else (let Just (con,s2) = eks in
-				      ConnectedSumti con s1 s2) }
+				      ConnectedSumti con s1 s2 []) }
 
 sumti2 :: Sumti = s:sumti3 ekss:(_eksumti)*
-    -> { foldl (\s1 -> \(con,s2) -> ConnectedSumti con s1 s2) s ekss }
+    -> { foldl (\s1 -> \(con,s2) -> ConnectedSumti con s1 s2 []) s ekss }
 -- _eksumti: helper for sumti2
 _eksumti :: {(Connective, Sumti)}
     = con:ek s:sumti3 -> {(con,s)}
@@ -94,10 +99,10 @@ sumti3 :: Sumti = s1:sumti4
 	eks:( con:ek BO s:sumti3 -> {(con,s)} )?
 	    -> { if (isNothing eks) then s1
 				    else (let Just (con,s2) = eks in
-					      ConnectedSumti con s1 s2) }
+					      ConnectedSumti con s1 s2 []) }
 
 sumti4 :: Sumti = sumti5
-	/ pcon:gek s1:sumti b:gik s2:sumti4 -> { ConnectedSumti (pcon b) s1 s2 }
+	/ pcon:gek s1:sumti b:gik s2:sumti4 -> { ConnectedSumti (pcon b) s1 s2 [] }
 
 sumti5 :: Sumti =
 	s:sumti6 !relativeClauses -> {QAtom Nothing [] s}
