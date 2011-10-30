@@ -154,11 +154,19 @@ sumti6 :: SumtiAtom
     / "fo'i":KOhA -> {Assignable 8}
     / "fo'o":KOhA -> {Assignable 9}
     / "fo'u":KOhA -> {Assignable 10}
+    / l:lerfuString -> {LerfuString l}
     / "zo'e":KOhA -> {Zohe}
     / g:LE s:sumti6 srels:relativeClauses? q:quantifier? sb:selbri rels:relativeClauses? KU? ->
 	{Description g (Just (QAtom Nothing (fromMaybe [] srels) s)) q sb (fromMaybe [] rels)}
     / g:LE rels1:relativeClauses? q:quantifier? sb:selbri rels2:relativeClauses? KU? ->
 	{Description g Nothing q sb ((fromMaybe [] rels1)++(fromMaybe [] rels2))}
+    / LU t:text1 LIhU? -> {Quote t}
+
+lerfuString :: {[Lerfu]} = lerfu+
+lerfu :: Lerfu
+    = BY
+    / PAUSE? v:Vowel PAUSE? Spacing? BU -> {[v]}
+    -- (TODO: doing this properly needs a proper morphology algorithm...)
 
 quantifier :: Quantifier = q:number BOI? -> q
 

@@ -19,6 +19,7 @@ type Prop = FOL.Prop JboRel JboTerm
 data JboTerm = Var Int
 	     | Named String
 	     | NonAnaph String
+	     | JboQuote [Statement]
 	     | ZoheTerm
 	     deriving (Eq, Show, Ord)
 
@@ -33,6 +34,8 @@ data JboRel = Tanru JboPred JboRel
 
 type Abstractor = String
 type MOICmavo = String
+
+type Lerfu = String
 
 instance FOL.Term JboTerm where
     var n = Var n
@@ -79,7 +82,9 @@ data SumtiAtom = Name String
 	       | SelbriVar -- fake
 	       | Description Gadri (Maybe Sumti) (Maybe Quantifier) Selbri [RelClause]
 	       | Assignable Int -- ko'a
+	       | LerfuString [Lerfu]
 	       | Ri -- ri
+	       | Quote [Statement]
 	       | Zohe -- zo'e
 	       deriving (Eq, Show, Ord)
 
@@ -161,7 +166,10 @@ appendRelsToSumti newrels (QSelbri q rels s) =
 
 type Bindings = Map SumtiAtom JboTerm
 getBinding :: Bindings -> SumtiAtom -> JboTerm
-getBinding bs v = fromJust $ Map.lookup v bs
+getBinding bs v =
+    case Map.lookup v bs of
+      Just o -> o
+      Nothing -> error $ show v ++ " not bound.\n"
 
 type ImplicitVars = [SumtiAtom]
 
@@ -213,6 +221,16 @@ putBindings :: Bindings -> SentenceMonad ()
 putBindings = lift . put
 modifyBindings :: (Bindings -> Bindings) -> SentenceMonad ()
 modifyBindings = lift . modify
+
+updateAnaphoraWithJboTerm :: JboTerm -> SentenceMonad ()
+updateAnaphoraWithJboTerm o =
+    do modifyBindings $ Map.insert Ri o
+       case o of Named (c:_) -> modifyBindings $
+				   Map.insert (LerfuString [lerfuOfChar c]) o
+		 _ -> return ()
+
+lerfuOfChar c | c `elem` "aoeuiy" = [c]
+lerfuOfChar c = (c:"y")
 
 advanceArgPosToBridi :: SentenceMonad ()
 advanceArgPosToBridi =
@@ -396,7 +414,7 @@ handleSentenceTerm t m =
 			_ -> False
 	     in as{implicitvars = (vs\\(delvs++filter f vs))}
 	 modify $ \as -> appendToArglist as o
-         modifyBindings $ Map.insert Ri o
+	 updateAnaphoraWithJboTerm o
 	 m
  in handleTerm t drop append
  
@@ -407,10 +425,12 @@ handleTerm t drop append =
     do bs <- getBindings
        let assign o rels bs' =
 	 -- goi assignment. TODO: proper pattern-matching semantics
-	     foldr (\n -> Map.insert (Assignable n) o)
+	     foldr (\sa -> Map.insert sa o)
 		    bs'
-		    [n | rel@(Assignment
-			(Sumti _ (QAtom _ _ (Assignable n)))) <- rels]
+		    ([sa | rel@(Assignment
+			(Sumti _ (QAtom _ _ sa@(Assignable _)))) <- rels] ++
+		    [sa | rel@(Assignment
+			(Sumti _ (QAtom _ _ sa@(LerfuString _)))) <- rels])
 	   replace t' = handleTerm t' drop append
 	   quantifyAtPrenex q r p =
 	       -- Unfortunately necessary unmonadic ugliness: the
@@ -517,9 +537,12 @@ handleTerm t drop append =
 				 (getBinding bs anaph, [])
 			     anaph@(Assignable _) -> 
 				 (getBinding bs anaph, [])
+			     anaph@(LerfuString _) -> 
+				 (getBinding bs anaph, [])
 			     NonAnaphoricProsumti ps -> (NonAnaph ps, [])
 			     Name s -> (Named s, [])
 			     Zohe -> (ZoheTerm, [])
+			     Quote t -> (JboQuote t, [])
 		      in doRels o $ doQuant q o $ append delvs tag
 	 Sumti tag s@(QSelbri q rels sb) ->
 	     withRestrictives rels $ \rps ->
@@ -670,6 +693,8 @@ instance JboShow JboTerm where
 				    LambdaVar n -> "\\" ++ show n
     logjboshow True (Named s) = return $ "la " ++ s ++ "."
     logjboshow False (Named s) = return s
+    logjboshow True (JboQuote ss) = return $ "lu li'o li'u"
+    logjboshow False (JboQuote ss) = return $ "\"...\""
     logjboshow _ (NonAnaph s) = return s
 	
 

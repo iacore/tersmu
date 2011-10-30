@@ -14,6 +14,7 @@ import System.Exit
 repl :: IO ()
 repl = do 
     text <- getLine
+    when (text == "") repl
     case eval text of
 	 Left ss ->
 	     let p = statementsToProp ss Map.empty
