@@ -20,6 +20,7 @@ data JboTerm = Var Int
 	     | Named String
 	     | NonAnaph String
 	     | ZoheTerm
+	     deriving (Eq, Show, Ord)
 
 type Individual = Int
 
@@ -189,9 +190,11 @@ setArg as@(Arglist os _ _) n o =
 swapTerms :: [JboTerm] -> Int -> Int -> [JboTerm]
 swapTerms ts n m = take (max (max n m) (length ts)) $
 	swap (ts ++ (repeat ZoheTerm)) (n-1) (m-1)
-    where swap :: [a] -> Int -> Int -> [a]
-	  swap as n m = [ if i == n then as!!m else
-			    if i == m then as!!n else as!!i | i <- [0..] ]
+
+swap :: [a] -> Int -> Int -> [a]
+swap as n m = [ if i == n then as!!m else
+		if i == m then as!!n else as!!i | i <- [0..] ]
+swapFinite as n m = take (length as) $ swap as n m
 
 type StatementMonad = StateT Bindings (Cont Prop)
 type SentenceMonad = StateT Arglist (StateT Bindings (Cont Prop))
@@ -601,13 +604,35 @@ instance JboShow Quantifier where
     jboshow (Exactly n) = return $ show n
     logshow = return . show
 
+logjboshowpred jbo p = withShuntedRelVar (\n ->
+   if not jbo
+     then logjboshow jbo (p n)
+     else case p n of
+	   Rel sb ts | isJust $ elemIndex (Var n) ts ->
+	       do s <- logjboshow jbo sb
+		  let i = 1 + fromJust (elemIndex (Var n) ts)
+		      ts' = takeWhile (/= ZoheTerm) $ tail $
+				case i of 1 -> ts
+					  _ -> swapFinite ts 0 (i-1)
+		      s' = case i of 1 -> s
+				     _ -> seToStr i ++ " " ++ s
+		  case ts' of
+		    [] -> return s'
+		    _ ->
+		      do tss <- sequence $ map (logjboshow jbo) ts'
+			 return $ s' ++ " be " ++
+			      concat (intersperse " bei " tss)
+	   _ -> do s <- logjboshow jbo (p n)
+		   return $ "poi'i " ++ s ++ " kei" )
+
 instance JboShow JboRel where
     logjboshow jbo (Tanru p r) =
-	do withShuntedRelVar (\n ->
-	       do s <- logjboshow jbo (p (Var n))
-		  s' <- logjboshow jbo r
-		  return $ if jbo then "poi'i " ++ s ++ " kei " ++ s'
-				  else "[" ++ s ++ "] " ++ s' )
+      do rstr <- logjboshow jbo r
+	 pstr <- logjboshowpred jbo (\n -> p (Var n))
+	 if jbo
+	    then return $ pstr ++ " " ++ rstr
+	    else return $ "[" ++ pstr ++ "] " ++ rstr
+
     logjboshow jbo (Moi q m) = do s <- logjboshow jbo q
 				  return $ s ++ " " ++ m
     logjboshow jbo (AbsPred a p) =
@@ -665,6 +690,12 @@ jbonum 8 = "bi"
 jbonum 9 = "so"
 jbonum n = jbonum (n `div` 10) ++ jbonum (n `mod` 10)
 
+seToStr 2 = "se"
+seToStr 3 = "te"
+seToStr 4 = "ve"
+seToStr 5 = "xe"
+seToStr n = "se xi " ++ jbonum n
+
 instance JboShow Prop
     where {logjboshow jbo p = liftM (if jbo then unwords else concat)
 				$ logjboshow' jbo [] p
@@ -673,10 +704,9 @@ instance JboShow Prop
 	  logjboshow' True ps (Quantified (Gadri gadri) r p) =
 	      withNextAssignable $ \n ->
 		  do vs <- logjboshow jbo (Var n)
-		     rss <- withShuntedRelVar (\m ->
-			   logjboshow' jbo [] (fromJust r $ m) )
-		     logjboshow' jbo (ps ++ [gadri, "poi'i"] ++ rss ++
-			 ["kei goi",vs]) (p n)
+		     rss <- logjboshowpred jbo (fromJust r)
+		     logjboshow' jbo (ps ++ [gadri] ++ [rss] ++
+			 ["ku","goi",vs]) (p n)
 	  logjboshow' jbo ps (Quantified q r p) =
 	      withNextVariable $ \n ->
 		  do qs <- logjboshow jbo q
