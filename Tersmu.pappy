@@ -3,7 +3,7 @@ parser tersmu:
 
 {
 import Lojban
-import FOL hiding (Connective)
+import FOL hiding (Connective, Term)
 
 import Data.Maybe
 import Control.Monad.State
@@ -283,7 +283,7 @@ selbri2 :: Selbri2
     / sb:selbri3 -> {Selbri3 sb}
 
 selbri3 :: Selbri3
-    = sb:selbri3 sb':selbri4 -> {SBTanru sb sb'}
+    = sb:selbri3 sb':selbri4 -> {SB3Tanru sb sb'}
     / sb:selbri4 -> {Selbri4 sb}
 
 selbri4 :: Selbri4
@@ -294,10 +294,14 @@ _jeksbs :: {(Connective, Selbri4)}
     = con:jek sb:selbri5 -> {(con,sb)}
 
 selbri5 :: Selbri4
-    = sb1:tanruUnit jeks:( con:jek BO sb:selbri5 -> {(con,sb)} )?
+    = sb1:selbri6 jeks:( con:jek BO sb:selbri5 -> {(con,sb)} )?
 	-> { if (isNothing jeks) then sb1
 				 else (let Just (con,sb2) = jeks
 				       in ConnectedSB con sb1 sb2) }
+
+selbri6 :: Selbri4
+    = tu:tanruUnit BO sb:selbri6 -> {SB4Tanru tu sb}
+    / tanruUnit
 
 tanruUnit :: Selbri4
     = tu:tanruUnit2 las:linkargs? -> {TanruUnit tu (fromMaybe [] las)}

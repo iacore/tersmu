@@ -110,11 +110,12 @@ data Selbri2 = SBInverted Selbri3 Selbri2
 	     | Selbri3 Selbri3
 	     deriving (Eq, Show, Ord)
 
-data Selbri3 = SBTanru Selbri3 Selbri4
+data Selbri3 = SB3Tanru Selbri3 Selbri4
 	     | Selbri4 Selbri4
 	     deriving (Eq, Show, Ord)
 
-data Selbri4 = ConnectedSB Connective Selbri4 Selbri4
+data Selbri4 = SB4Tanru Selbri4 Selbri4
+	     | ConnectedSB Connective Selbri4 Selbri4
 	     | TanruUnit TanruUnit2 [Term]
 	     deriving (Eq, Show, Ord)
 
@@ -249,9 +250,11 @@ resolveArglist =
 	   resolve [] [] ts = ts
        return $ resolve os vs []
 
+data JboRels = ConnectedRels Connective JboRels JboRels
+	     | JboRel JboRel [Term] ([JboTerm] -> [JboTerm])
 
-statementsToProp :: [Statement] -> Bindings -> Prop
-statementsToProp ss bs = bigAnd $ map (\s -> runStM bs $ statementToProp s) ss
+statementsToProp :: [Statement] -> StatementMonad Prop
+statementsToProp ss = sequence (map statementToProp ss) >>= return . bigAnd
 
 statementToProp :: Statement -> StatementMonad Prop
 statementToProp (Statement ps s) = prenexed ps $ statement1ToProp s
@@ -262,8 +265,7 @@ statement1ToProp (ConnectedStatement con s1 s2) =
        p2 <- statement1ToProp s2
        return $ connToFOL con p1 p2
 statement1ToProp (StatementStatements ss) =
-    do bs <- get
-       return $ statementsToProp ss bs
+    statementsToProp ss
 statement1ToProp (StatementSentence s) =
     evalSentence s []
 
@@ -276,7 +278,7 @@ prenexed (t:ts) m = do p <- evalStateT (handlePrenexTerm t) (nullArgs [])
     where handlePrenexTerm t =
 	      handleTerm t drop append
 	  drop = return $ Not Eet
-	  append _ _ o = do modifyBindings $ Map.insert Ri o
+	  append _ _ o = do updateAnaphoraWithJboTerm o
 			    return $ Not Eet
 
 subsentToProp :: Subsentence -> ImplicitVars -> Bindings -> Prop
@@ -288,28 +290,6 @@ evalSentence (Sentence ts bt) vs =
     evalStateT (sentToProp ts bt) (nullArgs vs)
 
 sentToProp :: [Term] -> BridiTail -> SentenceMonad Prop
-
-sentToProp ts (BridiTail3 (Negated sb) tts) =
-    do p <- sentToProp ts (BridiTail3 sb tts)
-       return $ Not p
-
--- while giheks are rather different (see e.g. CLL:14.9.11):
-sentToProp [] (ConnectedBT con bt1 bt2) =
-    do saveArgs <- get
-       p1 <- sentToProp [] bt1
-       put saveArgs
-       p2 <- sentToProp [] bt2
-       return $ connToFOL con p1 p2
-
-sentToProp [] (BridiTail3 (Selbri2 (Selbri3 (Selbri4 (TanruUnit (TUMe s) _)))) tts) =
-    sentToProp []
-	(BridiTail3 (Selbri2 (Selbri3 (Selbri4 (TanruUnit TUAmong [])))) (Sumti Untagged s:tts))
-
-sentToProp [] (BridiTail3 (Selbri2 sb@(SBInverted _ _)) tts) =
-    sentToProp [] (BridiTail3 (Selbri2 (Selbri3 (uninvert sb))) [])
-	where uninvert (SBInverted sb1 (Selbri3 sb2)) = SBTanru (Selbri4 (sb4ise sb2 tts)) (sb4ise sb1 [])
-	      uninvert (SBInverted sb1 sb2@(SBInverted _ _)) = SBTanru (uninvert sb2) (sb4ise sb1 [])
-	      sb4ise sb las = TanruUnit (TUSelbri3 sb) las
 
 sentToProp [] (GekSentence (ConnectedGS con
 	(Subsentence pr1 (Sentence ts1 bt1))
@@ -327,6 +307,27 @@ sentToProp [] (GekSentence (NegatedGS gs)) =
     do p <- sentToProp [] (GekSentence gs)
        return $ Not p
 
+sentToProp [] (ConnectedBT con bt1 bt2) =
+    do saveArgs <- get
+       p1 <- sentToProp [] bt1
+       put saveArgs
+       p2 <- sentToProp [] bt2
+       return $ connToFOL con p1 p2
+
+sentToProp ts (BridiTail3 (Negated sb) tts) =
+    do p <- sentToProp ts (BridiTail3 sb tts)
+       return $ Not p
+
+sentToProp [] (BridiTail3 (Selbri2 (Selbri3 (Selbri4 (TanruUnit (TUMe s) _)))) tts) =
+    sentToProp []
+	(BridiTail3 (Selbri2 (Selbri3 (Selbri4 (TanruUnit TUAmong [])))) (Sumti Untagged s:tts))
+
+sentToProp [] (BridiTail3 (Selbri2 sb@(SBInverted _ _)) tts) =
+    sentToProp [] (BridiTail3 (Selbri2 (Selbri3 (uninvert sb))) [])
+	where uninvert (SBInverted sb1 (Selbri3 sb2)) = SB3Tanru (Selbri4 (sb4ise sb2 tts)) (sb4ise sb1 [])
+	      uninvert (SBInverted sb1 sb2@(SBInverted _ _)) = SB3Tanru (uninvert sb2) (sb4ise sb1 [])
+	      sb4ise sb las = TanruUnit (TUSelbri3 sb) las
+
 sentToProp (t:ts) bt =
     handleSentenceTerm t $ sentToProp ts bt
 
@@ -334,15 +335,16 @@ sentToProp [] (BridiTail3 sb tts) | tts /= [] =
     do advanceArgPosToBridi
        sentToProp tts (BridiTail3 sb [])
 
-data JboRels = ConnectedRels Connective JboRels JboRels
-	     | JboRel JboRel [Term] ([JboTerm] -> [JboTerm])
 sentToProp [] (BridiTail3 (Selbri2 (Selbri3 sb)) []) =
     do bs <- getBindings
-       let sb3tojborels (SBTanru seltau tertau) extralas =
+       let sb3tojborels (SB3Tanru seltau tertau) extralas =
 	       let p = selbriToPred (Selbri2 (Selbri3 seltau)) bs
 	       in tanruise p (sb4tojborels tertau extralas)
 	   sb3tojborels (Selbri4 sb) extralas =
 	       sb4tojborels sb extralas
+	   sb4tojborels (SB4Tanru seltau tertau) extralas =
+	       let p = selbriToPred (Selbri2 (Selbri3 (Selbri4 seltau))) bs
+	       in tanruise p (sb4tojborels tertau extralas)
 	   sb4tojborels (ConnectedSB con sb1 sb2) extralas =
 	       ConnectedRels con (sb4tojborels sb1 extralas)
 				 (sb4tojborels sb2 extralas)
@@ -653,8 +655,8 @@ instance JboShow JboRel where
       do rstr <- logjboshow jbo r
 	 pstr <- logjboshowpred jbo (\n -> p (Var n))
 	 if jbo
-	    then return $ pstr ++ " " ++ rstr
-	    else return $ "[" ++ pstr ++ "] " ++ rstr
+	    then return $ "ke " ++ pstr ++ " " ++ rstr ++ " ke'e"
+	    else return $ "<" ++ pstr ++ "><" ++ rstr ++ ">"
 
     logjboshow jbo (Moi q m) = do s <- logjboshow jbo q
 				  return $ s ++ " " ++ m
