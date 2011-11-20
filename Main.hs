@@ -8,22 +8,25 @@ import Bindful
 import Control.Monad.State
 import Data.Map (Map)
 import qualified Data.Map as Map
+import Data.List
 import IO
 import System.Exit
+import System.Process
 
 repl :: IO ()
 repl = do 
-    text <- getLine
+    text' <- getLine
+    text <- morph text'
     when (text == "") repl
     case eval text of
 	 Left ss ->
-	     let p = statementsToProp ss Map.empty
+	     let p = runStM Map.empty $ statementsToProp ss
 		 logstr = evalBindful $ logshow p
 		 jbostr = evalBindful $ jboshow p
 		 -- check that jbostr is a fixed point:
 		 Left checkss = eval jbostr
 		 True = jbostr == (evalBindful $ jboshow $
-			 statementsToProp checkss Map.empty)
+			 runStM Map.empty $ statementsToProp checkss)
 	     in putStr $ 
 		--show s ++ "\n\n"
 		"Prop:" ++ logstr ++ "\n\n" ++
@@ -42,3 +45,16 @@ main :: IO()
 main = repl `catch` (\e -> if isEOFError e then exitWith ExitSuccess
 					   else do putStr $ show e
 						   exitFailure)
+
+morph :: String -> IO String
+morph = vlatai . (map (\c -> case c of {'.' -> ' '; _ -> c}))
+
+vlatai :: String -> IO String
+vlatai s = do vws <- sequence $ map vlatai' (words s)
+	      return $ unwords vws
+    where vlatai' w =
+	    do (_, Just out, _, _) <- createProcess
+		   (proc "vlatai" [w]){ std_out = CreatePipe } 
+	       line <- hGetLine out
+	       return $ drop ( (+3) $ last $ findIndices (== ':') line ) line
+    -- FIXME: currently dies if we don't have vlatai in the path...

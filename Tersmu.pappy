@@ -218,10 +218,10 @@ gek :: {Bool -> Connective} = se:(SE)? conchar:gekGA ln:NAI?
 
 gik :: Bool = GI rn:NAI? -> { isNothing rn }
 
-ekA :: Char = ".a":A -> {'a'}
-    / ".e":A -> {'e'}
-    / ".o":A -> {'o'}
-    / ".u":A -> {'u'}
+ekA :: Char = "a":A -> {'a'}
+    / "e":A -> {'e'}
+    / "o":A -> {'o'}
+    / "u":A -> {'u'}
     -- / "ji":A
 
 jekJA :: Char = "ja":JA -> {'a'}
@@ -383,7 +383,7 @@ BRIVLATail :: String =
 
 --         eks; basic afterthought logical connectives 
 A :: String = s:Amain Spacing -> s
-Amain :: String = ".a" / ".e" / "ji" / ".o" / ".u" 
+Amain :: String = "a" / "e" / "ji" / "o" / "u" 
 
 --         modal operators 
 BAI :: String = s:BAImain Spacing -> s
@@ -420,7 +420,7 @@ BU :: String = s:BUmain Spacing -> s
 BUmain :: String = "bu" 
 --         individual lerfu words 
 BY :: String = s:BYmain Spacing -> s
-BYmain :: String = "jo'o" / "ru'o" / "ge'o" / "je'o" / "lo'a" / "na'a" / "se'e" / "to'a" / "ga'e" / ".y'y" / "by" / "cy" / "dy" / "fy" / "gy" / "jy" / "ky" / "ly" / "my" / "ny" / "py" / "ry" / "sy" / "ty" / "vy" / "xy" / "zy" 
+BYmain :: String = "jo'o" / "ru'o" / "ge'o" / "je'o" / "lo'a" / "na'a" / "se'e" / "to'a" / "ga'e" / "y'y" / "by" / "cy" / "dy" / "fy" / "gy" / "jy" / "ky" / "ly" / "my" / "ny" / "py" / "ry" / "sy" / "ty" / "vy" / "xy" / "zy" 
 
 --         specifies actualitypotentiality of tense 
 CAhA :: String = s:CAhAmain Spacing -> s
@@ -520,7 +520,7 @@ GUhAmain :: String = "gu'e" / "gu'i" / "gu'o" / "gu'a" / "gu'u"
 
 --         sentence link 
 I :: String = s:Imain Spacing -> s
-Imain :: String = ".i" 
+Imain :: String = "i" 
 
 --         jeks; logical connectives within tanru 
 JA :: String = s:JAmain Spacing -> s
@@ -722,7 +722,7 @@ TUhUmain :: String = "tu'u"
 
 --         attitudinals, observationals, discursives 
 UI :: String = s:UImain Spacing -> s
-UImain :: String = ".i'a" / ".ie" / ".a'e" / ".u'i" / ".i'o" / ".i'e" / ".a'a" / ".ia" / ".o'i" / ".o'e" / ".e'e" / ".oi" / ".uo" / ".e'i" / ".u'o" / ".au" / ".ua" / ".a'i" / ".i'u" / ".ii" / ".u'a" / ".ui" / ".a'o" / ".ai" / ".a'u" / ".iu" / ".ei" / ".o'o" / ".e'a" / ".uu" / ".o'a" / ".o'u" / ".u'u" / ".e'o" / ".io" / ".e'u" / ".ue" / ".i'i" / ".u'e" / "ba'a" / "ja'o" / "ca'e" / "su'a" / "ti'e" / "ka'u" / "se'o" / "za'a" / "pe'i" / "ru'a" / "ju'a" / "ta'o" / "ra'u" / "li'a" / "ba'u" / "mu'a" / "do'a" / "to'u" / "va'i" / "pa'e" / "zu'u" / "sa'e" / "la'a" / "ke'u" / "sa'u" / "da'i" / "je'u" / "sa'a" / "kau" / "ta'u" / "na'i" / "jo'a" / "bi'u" / "li'o" / "pau" / "mi'u" / "ku'i" / "ji'a" / "si'a" / "po'o" / "pe'a" / "ro'i" / "ro'e" / "ro'o" / "ro'u" / "ro'a" / "re'e" / "le'o" / "ju'o" / "fu'i" / "dai" / "ga'i" / "zo'o" / "be'u" / "ri'e" / "se'i" / "se'a" / "vu'e" / "ki'a" / "xu" / "ge'e" / "bu'o" 
+UImain :: String = "i'a" / "ie" / "a'e" / "u'i" / "i'o" / "i'e" / "a'a" / "ia" / "o'i" / "o'e" / "e'e" / "oi" / "uo" / "e'i" / "u'o" / "au" / "ua" / "a'i" / "i'u" / "ii" / "u'a" / "ui" / "a'o" / "ai" / "a'u" / "iu" / "ei" / "o'o" / "e'a" / "uu" / "o'a" / "o'u" / "u'u" / "e'o" / "io" / "e'u" / "ue" / "i'i" / "u'e" / "ba'a" / "ja'o" / "ca'e" / "su'a" / "ti'e" / "ka'u" / "se'o" / "za'a" / "pe'i" / "ru'a" / "ju'a" / "ta'o" / "ra'u" / "li'a" / "ba'u" / "mu'a" / "do'a" / "to'u" / "va'i" / "pa'e" / "zu'u" / "sa'e" / "la'a" / "ke'u" / "sa'u" / "da'i" / "je'u" / "sa'a" / "kau" / "ta'u" / "na'i" / "jo'a" / "bi'u" / "li'o" / "pau" / "mi'u" / "ku'i" / "ji'a" / "si'a" / "po'o" / "pe'a" / "ro'i" / "ro'e" / "ro'o" / "ro'u" / "ro'a" / "re'e" / "le'o" / "ju'o" / "fu'i" / "dai" / "ga'i" / "zo'o" / "be'u" / "ri'e" / "se'i" / "se'a" / "vu'e" / "ki'a" / "xu" / "ge'e" / "bu'o" 
 
 --         distance in space-time 
 VA :: String = s:VAmain Spacing -> s
@@ -756,7 +756,7 @@ XImain :: String = "xi"
 
 --         hesitation 
 Y :: String = s:Ymain Spacing -> s
-Ymain :: String = ".y" 
+Ymain :: String = "y" 
 
 --         event properties - inchoative, etc. 
 ZAhO :: String = s:ZAhOmain Spacing -> s

@@ -415,3 +415,41 @@ Giving up on gadri:
     Just treat them as uninterpreted quantifiers:
     {broda lo brode ri} -> "{lo} x1:(brode(_)). broda(zo'e,x1,x1)" ;
     for now at least, we leave further processing to the pragmatics module.
+
+    (Yes, this is a complete cop-out)
+
+Questions:
+    {ma} needs to get outermost scope: in {ro broda ma brode} or {ko'a .e ko'e
+    ma brode}, the only sensible interpretation is that a constant is desired
+    as the answer.
+
+Weak dedonkeyisation:
+    A (weak) donkey is a situation of anaphoric reference to something which
+    is within (but not bound by) a quantifier of which the anaphor is out of
+    scope.
+
+    e.g. {ro da zo'u tu'e da broda .i ri brode} is a weak donkeys, and
+    {ro da broda .i ri brode} of a strong donkey.
+
+    {la .alis cu verba .i ri ji'a fanza} isn't literally a weak donkey, but
+    dealing with it is just as difficult as dealing with the weak donkey
+    {da zo'u la .alis cu verba .i ri ji'a fanza}, so let's call these weak
+    donkeys too.
+
+    There's no theoretical problem in interpreting weak donkey anaphora
+    correctly, so we should.
+
+GOhA:
+    Often donkey. e.g. {ro da broda .i go'i} is donkey.
+
+    {broda .i go'i} is *always* weakly donkey.
+
+    Obvious algorithm: process all terms, leaving some jboterms and a
+    (possibly complicated, in particular possibly tagged) selbri; assign that
+    lot to go'i, with the jboterms effectively becoming linkargs. These
+    jboterms will generally be (weakly) donkey when the go'i is used. Note
+    that some strong donkeys may be overriden with new terms, and this should
+    be supported.
+
+    Problem: bound terms may appear in the selbri itself, in linkargs or NU.
+    Donkeys everywhere!

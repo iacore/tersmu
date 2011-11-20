@@ -1,6 +1,13 @@
 Definite bugs:
     ka can't handle multiple ce'u (should return a relation)
 
+    se broda be mi do
+    Prop:broda(do,zo'e,mi)
+    jbo: do broda zo'e mi
+    
+    linkargs overwrite sentence and briditail terms; should be the other way
+    round.
+
 Arguable bugs:
     in {broda be da brode ro da}, the first da is in the scope of the second
 
@@ -14,6 +21,10 @@ Arguable bugs:
     According to CLL:16.11.14, bridi negation scopes over the prenex... but I
     don't see how to sensibly extend that to arbitrary statements, so I'm
     ignoring it.
+
+    Meanwhile, the BPFK section on brivla negation currently states that {na}
+    "has scope over quantifiers that follow". Currently that's how I have
+    {na ku} working, but not bare {na}.
 
     We don't handle donkey anaphora, and so are not in accordance with the
     CLL. For example, we have
