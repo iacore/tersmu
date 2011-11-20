@@ -110,18 +110,13 @@ data Selbri2 = SBInverted Selbri3 Selbri2
 	     | Selbri3 Selbri3
 	     deriving (Eq, Show, Ord)
 
-data Selbri3 = SB3Tanru Selbri3 Selbri4
-	     | Selbri4 Selbri4
-	     deriving (Eq, Show, Ord)
-
-data Selbri4 = SB4Tanru Selbri4 Selbri4
-	     | ConnectedSB Connective Selbri4 Selbri4
+data Selbri3 = SBTanru Selbri3 Selbri3
+	     | ConnectedSB Connective Selbri3 Selbri3
 	     | TanruUnit TanruUnit2 [Term]
 	     deriving (Eq, Show, Ord)
 
 data TanruUnit2 = TUBrivla String
 		| TUMe Sumti
-		| TUAmong -- fake selbri produced by {me ko'a}
 		| TUMoi Quantifier String
 		| TUAbstraction String Subsentence
 	        | TUPermuted Int TanruUnit2
@@ -318,15 +313,10 @@ sentToProp ts (BridiTail3 (Negated sb) tts) =
     do p <- sentToProp ts (BridiTail3 sb tts)
        return $ Not p
 
-sentToProp [] (BridiTail3 (Selbri2 (Selbri3 (Selbri4 (TanruUnit (TUMe s) _)))) tts) =
-    sentToProp []
-	(BridiTail3 (Selbri2 (Selbri3 (Selbri4 (TanruUnit TUAmong [])))) (Sumti Untagged s:tts))
-
 sentToProp [] (BridiTail3 (Selbri2 sb@(SBInverted _ _)) tts) =
     sentToProp [] (BridiTail3 (Selbri2 (Selbri3 (uninvert sb))) [])
-	where uninvert (SBInverted sb1 (Selbri3 sb2)) = SB3Tanru (Selbri4 (sb4ise sb2 tts)) (sb4ise sb1 [])
-	      uninvert (SBInverted sb1 sb2@(SBInverted _ _)) = SB3Tanru (uninvert sb2) (sb4ise sb1 [])
-	      sb4ise sb las = TanruUnit (TUSelbri3 sb) las
+	where uninvert (SBInverted sb1 (Selbri3 sb2)) = SBTanru (TanruUnit (TUSelbri3 sb2) tts) sb1
+	      uninvert (SBInverted sb1 sb2@(SBInverted _ _)) = SBTanru (uninvert sb2) sb1
 
 sentToProp (t:ts) bt =
     handleSentenceTerm t $ sentToProp ts bt
@@ -337,18 +327,13 @@ sentToProp [] (BridiTail3 sb tts) | tts /= [] =
 
 sentToProp [] (BridiTail3 (Selbri2 (Selbri3 sb)) []) =
     do bs <- getBindings
-       let sb3tojborels (SB3Tanru seltau tertau) extralas =
+       let sb3ToJboRels (SBTanru seltau tertau) extralas =
 	       let p = selbriToPred (Selbri2 (Selbri3 seltau)) bs
-	       in tanruise p (sb4tojborels tertau extralas)
-	   sb3tojborels (Selbri4 sb) extralas =
-	       sb4tojborels sb extralas
-	   sb4tojborels (SB4Tanru seltau tertau) extralas =
-	       let p = selbriToPred (Selbri2 (Selbri3 (Selbri4 seltau))) bs
-	       in tanruise p (sb4tojborels tertau extralas)
-	   sb4tojborels (ConnectedSB con sb1 sb2) extralas =
-	       ConnectedRels con (sb4tojborels sb1 extralas)
-				 (sb4tojborels sb2 extralas)
-	   sb4tojborels (TanruUnit tu las1) extralas =
+	       in tanruise p (sb3ToJboRels tertau extralas)
+	   sb3ToJboRels (ConnectedSB con sb1 sb2) extralas =
+	       ConnectedRels con (sb3ToJboRels sb1 extralas)
+				 (sb3ToJboRels sb2 extralas)
+	   sb3ToJboRels (TanruUnit tu las1) extralas =
 	    let las = las1++extralas
 	    in case tu of
 		 TUBrivla bv -> JboRel (Brivla bv) las id
@@ -372,10 +357,10 @@ sentToProp [] (BridiTail3 (Selbri2 (Selbri3 sb)) []) =
 			   las id
 		       | otherwise -> 
 			 JboRel (AbsProp a (subsentToProp subs [] bs)) las id
-		 TUAmong -> JboRel Among las id
+		 TUMe s -> JboRel Among (Sumti Untagged s:las) id
 		 TUPermuted s tu' ->
-			   permute 1 s (sb4tojborels (TanruUnit tu' las) [])
-		 TUSelbri3 sb -> sb3tojborels sb las
+			   permute 1 s (sb3ToJboRels (TanruUnit tu' las) [])
+		 TUSelbri3 sb -> sb3ToJboRels sb las
 	   tanruise p (JboRel r las perm) = JboRel (Tanru p r) las perm
 	   tanruise p (ConnectedRels con r1 r2) =
 	       ConnectedRels con (tanruise p r1) (tanruise p r2)
@@ -397,7 +382,7 @@ sentToProp [] (BridiTail3 (Selbri2 (Selbri3 sb)) []) =
 		  put as
 		  p2 <- evaljborels r2
 		  return $ connToFOL con p1 p2
-       evaljborels (sb3tojborels sb [])
+       evaljborels (sb3ToJboRels sb [])
 
 handleSentenceTerm t m =
  let drop = m

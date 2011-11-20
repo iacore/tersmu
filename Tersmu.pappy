@@ -216,6 +216,10 @@ gek :: {Bool -> Connective} = se:(SE)? conchar:gekGA ln:NAI?
     -> { Connective (isNothing ln) 
 		    (if (isJust se) && conchar=='u' then 'U' else conchar) }
 
+guhek :: {Bool -> Connective} = se:(SE)? conchar:guhekGUhA ln:NAI?
+    -> { Connective (isNothing ln) 
+		    (if (isJust se) && conchar=='u' then 'U' else conchar) }
+
 gik :: Bool = GI rn:NAI? -> { isNothing rn }
 
 ekA :: Char = "a":A -> {'a'}
@@ -238,6 +242,11 @@ gekGA :: Char = "ga":GA -> {'a'}
     / "ge":GA -> {'e'}
     / "go":GA -> {'o'}
     / "gu":GA -> {'u'}
+
+guhekGUhA :: Char = "gu'a":GUhA -> {'a'}
+    / "gu'e":GUhA -> {'e'}
+    / "gu'o":GUhA -> {'o'}
+    / "gu'u":GUhA -> {'u'}
 
 bridiTail :: BridiTail
     = bt1:bridiTail1 gihek:(con:gihek KE bt2:bridiTail KEhE? -> {(con, bt2)})?
@@ -283,27 +292,33 @@ selbri2 :: Selbri2
     / sb:selbri3 -> {Selbri3 sb}
 
 selbri3 :: Selbri3
-    = sb:selbri3 sb':selbri4 -> {SB3Tanru sb sb'}
-    / sb:selbri4 -> {Selbri4 sb}
+    = sb:selbri3 sb':selbri4 -> {SBTanru sb sb'}
+    / selbri4
 
-selbri4 :: Selbri4
+selbri4 :: Selbri3
     = sb:selbri5 jekss:(_jeksbs)*
 	-> { foldl (\sb1 -> \(con,sb2) -> ConnectedSB con sb1 sb2) sb jekss }
 -- _jeksbs: helper for selbri4
-_jeksbs :: {(Connective, Selbri4)}
+_jeksbs :: {(Connective, Selbri3)}
     = con:jek sb:selbri5 -> {(con,sb)}
 
-selbri5 :: Selbri4
+selbri5 :: Selbri3
     = sb1:selbri6 jeks:( con:jek BO sb:selbri5 -> {(con,sb)} )?
 	-> { if (isNothing jeks) then sb1
 				 else (let Just (con,sb2) = jeks
 				       in ConnectedSB con sb1 sb2) }
 
-selbri6 :: Selbri4
-    = tu:tanruUnit BO sb:selbri6 -> {SB4Tanru tu sb}
+-- XXX: we deviate from the official grammar by allowing only selbri3 rather
+-- than arbitrary selbri in the first part of a guhek; this is to avoid
+-- connecting inverted selbri to non-inverted selbri, the semantics of which
+-- are unclear.
+selbri6 :: Selbri3
+    = tu:tanruUnit BO sb:selbri6 -> {SBTanru tu sb}
     / tanruUnit
+    / pcon:guhek sb1:selbri3 b:gik sb2:selbri6
+	-> { ConnectedSB (pcon b) sb1 sb2 }
 
-tanruUnit :: Selbri4
+tanruUnit :: Selbri3
     = tu:tanruUnit2 las:linkargs? -> {TanruUnit tu (fromMaybe [] las)}
 
 tanruUnit2 :: TanruUnit2
