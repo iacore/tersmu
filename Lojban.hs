@@ -59,6 +59,8 @@ data Sentence = Sentence [Term] BridiTail
 
 data Term = Sumti Tag Sumti
 	  | Negation
+	  | Termset [Term]
+	  | ConnectedTerms Connective Term Term
 	  deriving (Eq, Show, Ord)
 data Tag = Untagged
 	 | FA Int
@@ -485,6 +487,11 @@ handleTerm t drop append =
 	     mapSentM2 (connToFOL con)
 		(replace $ Sumti tag $ appendRelsToSumti rels s1)
 		(replace $ Sumti tag $ appendRelsToSumti rels s2)
+	 ConnectedTerms con t1 t2 ->
+	     mapSentM2 (connToFOL con) (replace t1) (replace t2)
+	 Termset (t:ts) -> do replace t
+			      replace $ Termset ts
+	 Termset [] -> drop
 	 Sumti tag s@(QAtom q rels sa) ->
 	     do let
 		 doRels o m = doGivenRels rels o m

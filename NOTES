@@ -428,8 +428,8 @@ Weak dedonkeyisation:
     is within (but not bound by) a quantifier of which the anaphor is out of
     scope.
 
-    e.g. {ro da zo'u tu'e da broda .i ri brode} is a weak donkeys, and
-    {ro da broda .i ri brode} of a strong donkey.
+    e.g. {ro da zo'u da broda .i ri brode} is a weak donkey, and
+    {ro da broda .i ri brode} is a strong donkey.
 
     {la .alis cu verba .i ri ji'a fanza} isn't literally a weak donkey, but
     dealing with it is just as difficult as dealing with the weak donkey
@@ -438,6 +438,11 @@ Weak dedonkeyisation:
 
     There's no theoretical problem in interpreting weak donkey anaphora
     correctly, so we should.
+
+    Actually, there kind of is. e.g. {broda ko'a .e ko'e .i ri brode}. So
+    maybe we shouldn't.
+
+    It would also require some fairly severe uglification of the code.
 
 GOhA:
     Often donkey. e.g. {ro da broda .i go'i} is donkey.

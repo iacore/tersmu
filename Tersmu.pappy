@@ -69,11 +69,23 @@ sentence :: {([Term], BridiTail)}
 	bt:bridiTail
 	-> { (fromMaybe [] mts1, bt) }
 
-terms :: {[Term]} = term+
+terms :: {[Term]} = terms1+
+terms1 :: Term 
+    = ts1:terms2 PEhE con:jek ts2:terms2 -> { ConnectedTerms con ts1 ts2 }
+    / terms2
+terms2 :: Term
+    = t:term ts:(CEhE t:terms2 -> t)+ -> { Termset (t:ts) }
+    / term
 
 term :: Term = s:sumti -> {Sumti Untagged s}
 	    / n:tagFA s:sumti -> {Sumti (FA n) s}
+	    / termset
 	    / NA KU -> {Negation}
+
+termset :: Term
+    = NUhI pcon:gek ts1:terms NUhU b:gik ts2:terms NUhU?
+	-> { ConnectedTerms (pcon b) (Termset ts1) (Termset ts2) }
+    / NUhI ts:terms NUhU? -> { Termset ts }
 
 sumti :: Sumti =
     s:sumti1 rels:(VUhO rels:relativeClauses -> rels)?
@@ -281,7 +293,7 @@ bridiTail3 :: BridiTail
     / gs:gekSentence -> { GekSentence gs }
 
 tailTerms :: {[Term]}
-    = ts:term* VAU? -> ts
+    = ts:terms? VAU? -> { fromMaybe [] ts }
 
 selbri :: Selbri
     = "na":NA sb:selbri -> {Negated sb}

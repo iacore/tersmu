@@ -29,6 +29,9 @@ Arguable bugs:
 	Prop:FA x1:(EX x2:(xasli(_)). ponse(_,x2)). darxi(x1,x1)
     , which contradicts CLL:7.6.
 
+    Termset quantification: CLL:16.7.5 has quantifiers in the same termset
+    having "equal scope", but I don't understand what this means.
+
 Probably not bugs:
     This might seem wrong:
 	> na ku mi noi brode cu broda
