@@ -265,16 +265,25 @@ statement1ToProp (StatementSentence s) =
     evalSentence s []
 
 prenexed :: [Term] -> StatementMonad Prop -> StatementMonad Prop
-prenexed [] m = do bs <- get
-		   return $ runStM bs m
-prenexed (t:ts) m = do p <- evalStateT (handlePrenexTerm t) (nullArgs [])
-		       p' <- prenexed ts m
-		       return $ bigAnd [p,p']
-    where handlePrenexTerm t =
-	      handleTerm t drop append
-	  drop = return $ Not Eet
-	  append _ _ o = do updateAnaphoraWithJboTerm o
-			    return $ Not Eet
+prenexed ts m =
+    do bs <- get
+       return $ runStM bs $ prenexed' ts m
+       -- Note to posterity: if we ever want to (weakly) dedonkey,
+       -- this is probably the place to do it. Currently, it looks
+       -- like this will involve redefining our Conts to be Cont
+       -- (Prop,Bindings), and making whatever decisions we want to make about
+       -- how to understand e.g. {broda ko'a .e ko'e .i ri brode}. Looks
+       -- painful.
+    where
+	prenexed' [] m = m
+	prenexed' (t:ts) m =
+	    do p <- evalStateT (handlePrenexTerm t) (nullArgs [])
+	       p' <- prenexed ts m
+	       return $ bigAnd [p,p']
+	handlePrenexTerm t = handleTerm t drop append
+        drop = return $ Not Eet
+        append _ _ o = do updateAnaphoraWithJboTerm o
+			  return $ Not Eet
 
 subsentToProp :: Subsentence -> ImplicitVars -> Bindings -> Prop
 subsentToProp (Subsentence ps s) vs bs =
