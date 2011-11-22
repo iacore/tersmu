@@ -19,11 +19,11 @@ type Prop = FOL.Prop JboRel JboTerm
 data JboTerm = Var Int
 	     | Named String
 	     | NonAnaph String
+	     | UnboundAssignable Int
+	     | UnboundLerfuString [Lerfu]
 	     | JboQuote [Statement]
 	     | ZoheTerm
 	     deriving (Eq, Show, Ord)
-
-type Individual = Int
 
 data JboRel = Tanru JboPred JboRel
 	    | AbsPred Abstractor JboPred
@@ -32,10 +32,12 @@ data JboRel = Tanru JboPred JboRel
 	    | Among
 	    | Brivla String
 
+type JboPred = JboTerm -> Prop
+
 type Abstractor = String
 type MOICmavo = String
 
-type Lerfu = String
+type Lerfu = Char
 
 instance FOL.Term JboTerm where
     var n = Var n
@@ -43,6 +45,8 @@ instance FOL.Term JboTerm where
 instance Rel JboRel where
     relstr r = evalBindful $ logshow r
 
+
+-- Abstract syntax:
 data Statement = Statement [Term] Statement1
     deriving (Eq, Show, Ord)
 
@@ -62,13 +66,18 @@ data Term = Sumti Tag Sumti
 	  | Termset [Term]
 	  | ConnectedTerms Connective Term Term
 	  deriving (Eq, Show, Ord)
+
 data Tag = Untagged
 	 | FA Int
 	 deriving (Eq, Show, Ord)
+
 data Sumti = ConnectedSumti Connective Sumti Sumti [RelClause]
 	   | QAtom (Maybe Quantifier) [RelClause] SumtiAtom
 	   | QSelbri Quantifier [RelClause] Selbri
 	   deriving (Eq, Show, Ord)
+
+data Connective = Connective Bool Char Bool
+		deriving (Eq, Show, Ord)
 
 data RelClause = Restrictive Subsentence  -- poi
 	       | Incidental Subsentence  -- noi
@@ -76,6 +85,7 @@ data RelClause = Restrictive Subsentence  -- poi
 	       | RestrictiveGOI String Term  -- pe etc.
 	       | IncidentalGOI String Term  -- ne etc.
 	       deriving (Eq, Show, Ord)
+
 data SumtiAtom = Name String
 	       | Variable Int -- da
 	       | NonAnaphoricProsumti String -- mi
@@ -91,9 +101,6 @@ data SumtiAtom = Name String
 	       deriving (Eq, Show, Ord)
 
 type Gadri = String
-
-data Connective = Connective Bool Char Bool
-		deriving (Eq, Show, Ord)
 
 data BridiTail = ConnectedBT Connective BridiTail BridiTail
 	       | BridiTail3 Selbri [Term]
@@ -125,10 +132,6 @@ data TanruUnit2 = TUBrivla String
 		| TUSelbri3 Selbri3
 	        deriving (Eq, Show, Ord)
 
--- term: convenience function to lift a Sumti or SumtiAtom to a term
-class SumtiTermType a where term :: Tag -> a -> Term
-instance SumtiTermType Sumti where term tag x = Sumti tag x
-instance SumtiTermType SumtiAtom where term tag x = term tag (QAtom Nothing [] x)
 
 connToFOL :: Connective -> Prop -> Prop -> Prop
 connToFOL (Connective True 'e' True) p1 p2 = Connected And p1 p2
@@ -143,7 +146,6 @@ connToFOL (Connective False c b2) p1 p2 =
 connToFOL (Connective b1 c False) p1 p2 =
     connToFOL (Connective b1 c True) p1 (Not p2)
 
--- extendTail: adds terms to the end of a bridi tail
 extendTail :: BridiTail -> [Term] -> BridiTail
 extendTail (BridiTail3 sb tts) ts = BridiTail3 sb (tts++ts)
 extendTail (ConnectedBT con bt1 bt2) ts =
@@ -162,20 +164,24 @@ appendRelsToSumti newrels (QAtom q rels sa) =
 appendRelsToSumti newrels (QSelbri q rels s) =
     QSelbri q (rels++newrels) s
 
+
 type Bindings = Map SumtiAtom JboTerm
+
 getBinding :: Bindings -> SumtiAtom -> JboTerm
 getBinding bs v =
     case Map.lookup v bs of
       Just o -> o
-      Nothing -> error $ show v ++ " not bound.\n"
+      Nothing -> case v of
+		      (Assignable n) -> UnboundAssignable n
+		      (LerfuString s) -> UnboundLerfuString s
+		      _ -> error $ show v ++ " not bound.\n"
 
-type ImplicitVars = [SumtiAtom]
-
-type JboPred = JboTerm -> Prop
 
 data Arglist = Arglist {args :: [Maybe JboTerm],
 			position::Int,
 			implicitvars::ImplicitVars}
+
+type ImplicitVars = [SumtiAtom]
 
 nullArgs vs = Arglist [] 1 vs
 
@@ -202,6 +208,7 @@ swap as n m = [ if i == n then as!!m else
 		if i == m then as!!n else as!!i | i <- [0..] ]
 swapFinite as n m = take (length as) $ swap as n m
 
+
 type StatementMonad = StateT Bindings (Cont Prop)
 type SentenceMonad = StateT Arglist (StateT Bindings (Cont Prop))
 
@@ -224,16 +231,14 @@ updateAnaphoraWithJboTerm :: JboTerm -> SentenceMonad ()
 updateAnaphoraWithJboTerm o =
     do modifyBindings $ Map.insert Ri o
        case o of Named (c:_) -> modifyBindings $
-				   Map.insert (LerfuString [lerfuOfChar c]) o
+				   Map.insert (LerfuString [c]) o
 		 _ -> return ()
-
-lerfuOfChar c | c `elem` "aoeuiy" = [c]
-lerfuOfChar c = (c:"y")
 
 advanceArgPosToBridi :: SentenceMonad ()
 advanceArgPosToBridi =
    modify $ \as -> case (args as) of [] -> as{position=2}
 				     _  -> as
+
 resolveArglist :: SentenceMonad [JboTerm]
 resolveArglist =
     do as@(Arglist os _ vs) <- get
@@ -247,8 +252,6 @@ resolveArglist =
 	   resolve [] [] ts = ts
        return $ resolve os vs []
 
-data JboRels = ConnectedRels Connective JboRels JboRels
-	     | JboRel JboRel [Term] ([JboTerm] -> [JboTerm])
 
 statementsToProp :: [Statement] -> StatementMonad Prop
 statementsToProp ss = sequence (map statementToProp ss) >>= return . bigAnd
@@ -270,12 +273,6 @@ prenexed :: [Term] -> StatementMonad Prop -> StatementMonad Prop
 prenexed ts m =
     do bs <- get
        return $ runStM bs $ prenexed' ts m
-       -- Note to posterity: if we ever want to (weakly) dedonkey,
-       -- this is probably the place to do it. Currently, it looks
-       -- like this will involve redefining our Conts to be Cont
-       -- (Prop,Bindings), and making whatever decisions we want to make about
-       -- how to understand e.g. {broda ko'a .e ko'e .i ri brode}. Looks
-       -- painful.
     where
 	prenexed' [] m = m
 	prenexed' (t:ts) m =
@@ -291,16 +288,20 @@ subsentToProp :: Subsentence -> ImplicitVars -> Bindings -> Prop
 subsentToProp (Subsentence ps s) vs bs =
     runStM bs $ prenexed ps $ evalSentence s vs
 
-evalSentence :: Sentence -> [SumtiAtom] -> StatementMonad Prop
+evalSentence :: Sentence -> ImplicitVars -> StatementMonad Prop
 evalSentence (Sentence ts bt) vs =
     evalStateT (sentToProp ts bt) (nullArgs vs)
+
+
+data JboRels = ConnectedRels Connective JboRels JboRels
+	     | JboRel JboRel [Term] ([JboTerm] -> [JboTerm])
 
 sentToProp :: [Term] -> BridiTail -> SentenceMonad Prop
 
 sentToProp [] (GekSentence (ConnectedGS con
 	(Subsentence pr1 (Sentence ts1 bt1))
 	(Subsentence pr2 (Sentence ts2 bt2)) tts)) =
-    do bs <- lift get
+    do bs <- getBindings
        let p1 = subsentToProp
 		    (Subsentence pr1 (Sentence ts1 (extendTail bt1 tts)))
 		    [] bs
@@ -314,9 +315,9 @@ sentToProp [] (GekSentence (NegatedGS gs)) =
        return $ Not p
 
 sentToProp [] (ConnectedBT con bt1 bt2) =
-    do saveArgs <- get
+    do as <- get
        p1 <- sentToProp [] bt1
-       put saveArgs
+       put as
        p2 <- sentToProp [] bt2
        return $ connToFOL con p1 p2
 
@@ -404,12 +405,10 @@ handleSentenceTerm t m =
         	     FA n -> as{position=n}
 	 modify $ \as ->
 	     let vs  = implicitvars as
-		 f v = case o of
-			Var n ->
-			  case getBinding bs v of
-			    Var m -> n==m
-			    _     -> False
-			_ -> False
+		 f v = case o of Var n -> case getBinding bs v of
+						    Var m -> n==m
+						    _     -> False
+				 _ -> False
 	     in as{implicitvars = (vs\\(delvs++filter f vs))}
 	 modify $ \as -> appendToArglist as o
 	 updateAnaphoraWithJboTerm o
@@ -422,7 +421,7 @@ handleTerm :: (Term -> SentenceMonad Prop ->
 handleTerm t drop append =
     do bs <- getBindings
        let assign o rels bs' =
-	 -- goi assignment. TODO: proper pattern-matching semantics
+	     -- goi assignment. TODO: proper pattern-matching semantics
 	     foldr (\sa -> Map.insert sa o)
 		    bs'
 		    ([sa | rel@(Assignment
@@ -519,7 +518,7 @@ handleTerm t drop append =
 		  Description gadri mis miq sb innerRels ->
 		      let innerRels' = innerRels ++
 			      case mis of Nothing -> []
-					  Just is -> [RestrictiveGOI "pe" (term Untagged is)]
+					  Just is -> [RestrictiveGOI "pe" (Sumti Untagged is)]
 		      in withRestrictives innerRels' $ \irps ->
 			  do bs <- getBindings
 			     let r = andPred $
@@ -585,6 +584,7 @@ shuntVars bs var = foldr ( \n -> Map.insert (var $ n+1)
 
 andPred :: [JboPred] -> JboPred
 andPred ps x = bigAnd [p x | p <- ps]
+
 
 ---- Printing routines, in lojban and in (customized) logical notation
 
@@ -688,7 +688,8 @@ instance JboShow JboTerm where
 				    LambdaVar 1 -> "ce'u"
 				    LambdaVar n -> "ce'u xi " ++ jbonum n
 				    Assignable n | n <= 5 -> "ko'" ++ vowelnum n
-				    Assignable n -> "ko'a " ++ jbonum n
+				    Assignable n | n <= 10 -> "fo'" ++ vowelnum (n-5)
+				    Assignable n -> "ko'a xi " ++ jbonum n
 			    else case v of
 				    Variable n -> "x" ++ show n
 				    RelVar 1 -> "_"
@@ -698,6 +699,14 @@ instance JboShow JboTerm where
     logjboshow False (Named s) = return s
     logjboshow True (JboQuote ss) = return $ "lu li'o li'u"
     logjboshow False (JboQuote ss) = return $ "\"...\""
+    logjboshow _ (UnboundAssignable n) = return $
+	case n of _ | n <= 5 -> "ko'" ++ vowelnum n
+	          _ | n <= 10 -> "fo'" ++ vowelnum (n-5)
+		  _ -> "ko'a xi " ++ jbonum n
+    logjboshow _ (UnboundLerfuString s) = return $ concat $ intersperse " " $
+	map (\c -> case c of _ | c `elem` "aoeui" -> (c:"bu")
+			     'y' -> "y bu"
+			     _ -> (c:"y")) s
     logjboshow _ (NonAnaph s) = return s
 	
 

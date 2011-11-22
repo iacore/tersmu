@@ -176,9 +176,8 @@ sumti6 :: SumtiAtom
 
 lerfuString :: {[Lerfu]} = lerfu+
 lerfu :: Lerfu
-    = BY
-    / PAUSE? v:Vowel PAUSE? Spacing? BU -> {[v]}
-    -- (TODO: doing this properly needs a proper morphology algorithm...)
+    = s:BY -> {s!!0}
+    / PAUSE? v:Vowel PAUSE? Spacing? BU -> {v}
 
 quantifier :: Quantifier = q:number BOI? -> q
 

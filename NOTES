@@ -1,5 +1,8 @@
 First goal: handle the "first order fragment" of lojban
 
+(Note to reader: what follows is largely stream-of-consciousness, extended
+over many months. Don't expect consistency, do expect tangents)
+
 Handling quantifiers:
     binding happens where a prenex is or could be, i.e. at 'statement' and at
     'subsentence'.
@@ -443,6 +446,13 @@ Weak dedonkeyisation:
     maybe we shouldn't.
 
     It would also require some fairly severe uglification of the code.
+
+    How to do it when we do it: probably we should separate out binding of
+    {ko'a}, {ri} and letterals from binding of {da} and {ke'a} etc. Only the
+    latter exhibit current scope behaviour.
+
+    So we need to complicate our monads. We should prob do this at the same
+    time as handling illocutions and descriptions.
 
 GOhA:
     Often donkey. e.g. {ro da broda .i go'i} is donkey.

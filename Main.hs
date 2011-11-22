@@ -29,7 +29,7 @@ repl = do
 			 runStM Map.empty $ statementsToProp checkss)
 	     in putStr $ 
 		--show s ++ "\n\n"
-		"Prop:" ++ logstr ++ "\n\n" ++
+		"Prop:" ++ logstr ++ "\n" ++
 		"jbo: " ++ jbostr ++ "\n\n" ++
 		--"PNF: " ++ show (pnf p) ++ "\n\n" ++
 		""
