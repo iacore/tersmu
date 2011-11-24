@@ -333,11 +333,7 @@ sentToProp [] (BridiTail3 (Selbri2 sb@(SBInverted _ _)) tts) =
 sentToProp (t:ts) bt =
     handleSentenceTerm t $ sentToProp ts bt
 
-sentToProp [] (BridiTail3 sb tts) | tts /= [] =
-    do advanceArgPosToBridi
-       sentToProp tts (BridiTail3 sb [])
-
-sentToProp [] (BridiTail3 (Selbri2 (Selbri3 sb)) []) =
+sentToProp [] (BridiTail3 (Selbri2 (Selbri3 sb)) tts) =
     do bs <- getBindings
        let sb3ToJboRels (SBTanru seltau tertau) extralas =
 	       let p = selbriToPred (Selbri2 (Selbri3 seltau)) bs
@@ -394,7 +390,7 @@ sentToProp [] (BridiTail3 (Selbri2 (Selbri3 sb)) []) =
 		  put as
 		  p2 <- evaljborels r2
 		  return $ connToFOL con p1 p2
-       evaljborels (sb3ToJboRels sb [])
+       evaljborels (sb3ToJboRels sb tts)
 
 handleSentenceTerm t m =
  let drop = m
