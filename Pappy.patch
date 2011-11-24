@@ -1,0 +1,60 @@
+diff --git a/SimplifyGrammar.hs b/SimplifyGrammar.hs
+index f94a2fa..6e1855e 100644
+--- a/SimplifyGrammar.hs
++++ b/SimplifyGrammar.hs
+@@ -167,7 +167,7 @@ peephole g = nonterms g where
+ 
+ 	-- Helper for sequence flattening code above
+ 	flattenseq m ms1 idi f ms2 =
+-		case simpidi ms1 of
++		case (simpidi ms1) && (nosempreds ms1) of
+ 			True -> (ms', True) where
+ 					(ms', _) = seq (rebind ms1 ++ ms2)
+ 			False -> (m' : ms2', sm || sms2) where
+@@ -181,6 +181,12 @@ peephole g = nonterms g where
+ 		simpidi (MatchName d id' : ms) | id' == idi = True
+ 		simpidi (m : ms) = simpidi ms
+ 
++		-- Make sure no semantic predicates - would need to rebind 
++		-- inside them, which would require parsing Haskell
++		nosempreds [] = True
++		nosempreds (MatchPred pred : ms) = False
++		nosempreds (m : ms) = nosempreds ms
++
+ 		-- Convert the matcher for idi into the appropriate substitute
+ 		rebind [] = error "flattenseq/rebind - oops!"
+ 		rebind (MatchName r id' : ms) | id' == idi = f r : ms
+diff --git a/WriteParser.hs b/WriteParser.hs
+index 08dc536..8241e0d 100644
+--- a/WriteParser.hs
++++ b/WriteParser.hs
+@@ -121,7 +121,10 @@ writeParser memos (parsername, topcode, topnts, nonterms) =
+ 
+ 	-- The number of sub-derivation structures to use
+ 	nsubderivs :: Int
+-	nsubderivs = round (sqrt (fromInteger (toEnum nmemos)) / 2.0)
++	nsubderivs = max (round (sqrt (fromInteger (toEnum nmemos)) / 2.0)) 
++		         1 -- seems that reduction-generated derivs have 
++			   -- nowhere to go if we have 0 subderivs
++			   -- TODO - sometimes do actually want 0
+ 
+ 	-- Find the appropriate sub-derivation structure
+ 	-- for a particular nonterminal index
+@@ -475,7 +478,16 @@ writeParser memos (parsername, topcode, topnts, nonterms) =
+ 				" " ++ join d es ++ "\n"
+ 
+ 			where	code (ProdName id) = id
+-				code (ProdCode c) = c
++				code (ProdCode c) = indentcode c
++
++				indentcode = myunlines . 
++					     map (\l -> (ind (i+1)) ++ l) .
++					     lines
++
++				-- extra newline at the start, rather than 
++				-- at the end as unlines has it
++				myunlines [] = ""
++				myunlines (l:ls) = ('\n':l) ++ (myunlines ls)
+ 
+ 	prule i d es f (RuleAlt []) = error "prule: no alternatives!"
+ 	prule i d es f (RuleAlt [r]) = prule i d es f r

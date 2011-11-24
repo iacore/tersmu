@@ -168,11 +168,21 @@ sumti6 :: SumtiAtom
     / "fo'u":KOhA -> {Assignable 10}
     / l:lerfuString -> {LerfuString l}
     / "zo'e":KOhA -> {Zohe}
-    / g:LE s:sumti6 srels:relativeClauses? q:quantifier? sb:selbri rels:relativeClauses? KU? ->
-	{Description g (Just (QAtom Nothing (fromMaybe [] srels) s)) q sb (fromMaybe [] rels)}
-    / g:LE rels1:relativeClauses? q:quantifier? sb:selbri rels2:relativeClauses? KU? ->
-	{Description g Nothing q sb ((fromMaybe [] rels1)++(fromMaybe [] rels2))}
+    / g:(LA/LE) {(is,q,sb,rels)}:sumtiTail KU? ->
+	{Description g is q sb rels}
     / LU t:text1 LIhU? -> {Quote t}
+
+sumtiTail :: {(Maybe Sumti, Maybe Quantifier, Selbri, [RelClause])}
+    = s:sumti6 srels:relativeClauses? {(q,sb,rels)}:sumtiTail1
+	-> {(Just (QAtom Nothing (fromMaybe [] srels) s),q,sb,rels)}
+    / rels1:relativeClauses? {(q,sb,rels)}:sumtiTail1
+	-> {(Nothing,q,sb,(fromMaybe [] rels1)++rels)}
+
+sumtiTail1 :: {(Maybe Quantifier, Selbri, [RelClause])}
+    = sb:selbri rels:relativeClauses?
+	-> {(Nothing,sb,fromMaybe [] rels)}
+    / q:quantifier? sb:selbri rels:relativeClauses?
+	-> {(q,sb,fromMaybe [] rels)}
 
 lerfuString :: {[Lerfu]} = lerfu+
 lerfu :: Lerfu
