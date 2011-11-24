@@ -171,6 +171,7 @@ sumti6 :: SumtiAtom
     / g:(LA/LE) {(is,q,sb,rels)}:sumtiTail KU? ->
 	{Description g is q sb rels}
     / LU t:text1 LIhU? -> {Quote t}
+    / ZO s:Valsi -> {Word s}
 
 sumtiTail :: {(Maybe Sumti, Maybe Quantifier, Selbri, [RelClause])}
     = s:sumti6 srels:relativeClauses? {(q,sb,rels)}:sumtiTail1

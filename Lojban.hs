@@ -22,6 +22,7 @@ data JboTerm = Var Int
 	     | UnboundAssignable Int
 	     | UnboundLerfuString [Lerfu]
 	     | JboQuote [Statement]
+	     | Valsi String
 	     | ZoheTerm
 	     deriving (Eq, Show, Ord)
 
@@ -97,6 +98,7 @@ data SumtiAtom = Name String
 	       | LerfuString [Lerfu]
 	       | Ri -- ri
 	       | Quote [Statement]
+	       | Word String
 	       | Zohe -- zo'e
 	       deriving (Eq, Show, Ord)
 
@@ -252,6 +254,10 @@ resolveArglist =
 	   resolve [] [] ts = ts
        return $ resolve os vs []
 
+stripZohe :: [JboTerm] -> [JboTerm]
+stripZohe = reverse . stripZohe' . reverse
+    where stripZohe' (ZoheTerm:ts) = ts
+	  stripZohe' ts = ts
 
 statementsToProp :: [Statement] -> StatementMonad Prop
 statementsToProp ss = sequence (map statementToProp ss) >>= return . bigAnd
@@ -383,7 +389,7 @@ sentToProp [] (BridiTail3 (Selbri2 (Selbri3 sb)) tts) =
 		  return $ p $ head $ (perm ts) ++ [ZoheTerm]
 	   evaljborels (JboRel r [] perm) =
 	       do ts <- resolveArglist
-		  return $ Rel r (perm ts)
+		  return $ Rel r (stripZohe (perm ts))
 	   evaljborels (ConnectedRels con r1 r2) =
 	       do as <- get
 		  p1 <- evaljborels r1
@@ -541,6 +547,7 @@ handleTerm t drop append =
 			     Name s -> (Named s, [])
 			     Zohe -> (ZoheTerm, [])
 			     Quote t -> (JboQuote t, [])
+			     Word s -> (Valsi s, [])
 		      in doRels o $ doQuant q o $ append delvs tag
 	 Sumti tag s@(QSelbri q rels sb) ->
 	     withRestrictives rels $ \rps ->
@@ -673,7 +680,8 @@ isAmong :: JboTerm -> (JboTerm -> Prop)
 isAmong y = \o -> Rel Among [o,y]
 
 instance JboShow JboTerm where
-    logjboshow _ (ZoheTerm) = return "zo'e"
+    logjboshow False (ZoheTerm) = return " "
+    logjboshow True (ZoheTerm) = return "zo'e"
     logjboshow jbo (Var n) =
 	do v <- binding n 
 	   return $ if jbo then case v of
@@ -695,6 +703,8 @@ instance JboShow JboTerm where
     logjboshow False (Named s) = return s
     logjboshow True (JboQuote ss) = return $ "lu li'o li'u"
     logjboshow False (JboQuote ss) = return $ "\"...\""
+    logjboshow True (Valsi s) = return $ "zo " ++ s
+    logjboshow False (Valsi s) = return $ "{" ++ s ++ "}"
     logjboshow _ (UnboundAssignable n) = return $
 	case n of _ | n <= 5 -> "ko'" ++ vowelnum n
 	          _ | n <= 10 -> "fo'" ++ vowelnum (n-5)

@@ -1,10 +1,17 @@
-Tersmu.hs: Tersmu.pappy
+tersmu: *.hs Pappy
+	ghc -o tersmu -iPappy -XMultiParamTypeClasses -XFunctionalDependencies \
+	    -XTypeSynonymInstances -XFlexibleInstances --make Main
+Pappy:
+	mkdir Pappy
+	cd Pappy && \
+	wget http://pdos.csail.mit.edu/~baford/packrat/thesis/pappy.tgz && \
+	tar -xzf pappy.tgz && \
+	rm pappy.tgz && \
+	patch < ../Pappy.patch
+Pappy/pappy: Pappy
+	cd Pappy && \
+	ghc --make -o pappy Main.hs
+Tersmu.hs: Tersmu.pappy Pappy/pappy
 	Pappy/pappy Tersmu.pappy
-Main: *.hs
-	ghc -iPappy -XMultiParamTypeClasses -XFunctionalDependencies -XTypeSynonymInstances -XFlexibleInstances --make Main
-#test: Tersmu.hs
-	#rlwrap runhugs -P:Pappy Main.hs
-test: Main
-	rlwrap ./Main
-FOLtest: FOL.hs
-	runhugs FOL.hs
+test: tersmu
+	rlwrap ./tersmu

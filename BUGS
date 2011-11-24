@@ -1,5 +1,11 @@
+All known divergence from CLL prescription, or from plausible interpretations
+thereof, is noted here.
+
 Definite bugs:
     ka can't handle multiple ce'u (should return a relation)
+
+    Only the simplest {goi} phrases, those of the form {[sumti] goi ko'a}, are
+    currently handled.
 
 Probably bugs:
     Current gadri (non)-handling is probably inconsistent with xorlo.
@@ -25,7 +31,9 @@ Possibly bugs:
     According to CLL:16.11.14, bridi negation scopes over the prenex... but I
     don't see how to sensibly extend that to arbitrary statements, so I'm
     ignoring it.
-    Meanwhile, the BPFK section on brivla negation currently states that {na}
+    c.f. http://www.lojban.org/tiki/BPFK+Section%3A+brivla+Negators and links
+    therefrom.
+    Meanwhile, that BPFK section on brivla negation currently states that {na}
     "has scope over quantifiers that follow". Currently that's how I have
     {na ku} working, but not bare {na}.
 
