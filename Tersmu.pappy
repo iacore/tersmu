@@ -271,20 +271,18 @@ guhekGUhA :: Char = "gu'a":GUhA -> {'a'}
     / "gu'u":GUhA -> {'u'}
 
 bridiTail :: BridiTail
-    = bt1:bridiTail1 gihek:(con:gihek KE bt2:bridiTail KEhE? -> {(con, bt2)})?
-	tts:tailTerms
+    = bt1:bridiTail1 gihek:(con:gihek KE bt2:bridiTail KEhE? tts:tailTerms ->
+	{(con, bt2, tts)} )?
 	    -> {
-		case gihek of Nothing -> extendTail bt1 tts
-			      Just (con, bt2) ->
-				  ConnectedBT con (extendTail bt1 tts)
-						  (extendTail bt2 tts)}
+		case gihek of Nothing -> bt1
+			      Just (con, bt2, tts) ->
+				  ConnectedBT con bt1 bt2 tts }
 
 bridiTail1 :: BridiTail
     = bt:bridiTail2 giheks:_gihekbt*
     -> { foldl (\bt1 -> \(con,bt2,tts) ->
-	ConnectedBT con (extendTail bt1 tts)
-			(extendTail bt2 tts)
-	    ) bt giheks }
+		    ConnectedBT con bt1 bt2 tts
+		) bt giheks }
 -- _gihekbt: helper for bridiTail1
 _gihekbt :: {(Connective, BridiTail, [Term])}
     = con:gihek bt:bridiTail2 tts:tailTerms -> {(con, bt, tts)}
@@ -295,8 +293,7 @@ bridiTail2 :: BridiTail
 	    -> {
 		case gihek of Nothing -> bt1
 			      Just (con, bt2, tts) ->
-				  ConnectedBT con (extendTail bt1 tts)
-						  (extendTail bt2 tts)}
+				  ConnectedBT con bt1 bt2 tts }
 
 bridiTail3 :: BridiTail
     = sb:selbri ts:tailTerms -> { BridiTail3 sb ts }

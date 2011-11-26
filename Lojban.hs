@@ -104,7 +104,7 @@ data SumtiAtom = Name String
 
 type Gadri = String
 
-data BridiTail = ConnectedBT Connective BridiTail BridiTail
+data BridiTail = ConnectedBT Connective BridiTail BridiTail [Term]
 	       | BridiTail3 Selbri [Term]
 	       | GekSentence GekSentence
 	       deriving (Eq, Show, Ord)
@@ -150,9 +150,8 @@ connToFOL (Connective b1 c False) p1 p2 =
 
 extendTail :: BridiTail -> [Term] -> BridiTail
 extendTail (BridiTail3 sb tts) ts = BridiTail3 sb (tts++ts)
-extendTail (ConnectedBT con bt1 bt2) ts =
-    ConnectedBT con (extendTail bt1 ts)
-                    (extendTail bt2 ts)
+extendTail (ConnectedBT con bt1 bt2 tts) ts =
+    ConnectedBT con bt1 bt2 (tts++ts)
 extendTail (GekSentence gs) ts =
     GekSentence (extendTailGS gs ts)
 	where extendTailGS (ConnectedGS con s1 s2 tts) ts = 
@@ -320,11 +319,11 @@ sentToProp [] (GekSentence (NegatedGS gs)) =
     do p <- sentToProp [] (GekSentence gs)
        return $ Not p
 
-sentToProp [] (ConnectedBT con bt1 bt2) =
+sentToProp [] (ConnectedBT con bt1 bt2 tts) =
     do as <- get
-       p1 <- sentToProp [] bt1
+       p1 <- sentToProp [] (extendTail bt1 tts)
        put as
-       p2 <- sentToProp [] bt2
+       p2 <- sentToProp [] (extendTail bt2 tts)
        return $ connToFOL con p1 p2
 
 sentToProp ts (BridiTail3 (Negated sb) tts) =
