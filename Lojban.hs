@@ -303,6 +303,9 @@ data JboRels = ConnectedRels Connective JboRels JboRels
 
 sentToProp :: [Term] -> BridiTail -> SentenceMonad Prop
 
+sentToProp (t:ts) bt =
+    handleSentenceTerm t $ sentToProp ts bt
+
 sentToProp [] (GekSentence (ConnectedGS con
 	(Subsentence pr1 (Sentence ts1 bt1))
 	(Subsentence pr2 (Sentence ts2 bt2)) tts)) =
@@ -324,8 +327,8 @@ sentToProp [] (ConnectedBT con bt1 bt2 tts) =
 	(sentToProp [] (extendTail bt1 tts))
 	(sentToProp [] (extendTail bt2 tts))
 
-sentToProp ts (BridiTail3 (Negated sb) tts) =
-    do p <- sentToProp ts (BridiTail3 sb tts)
+sentToProp [] (BridiTail3 (Negated sb) tts) =
+    do p <- sentToProp [] (BridiTail3 sb tts)
        return $ Not p
 
 sentToProp [] (BridiTail3 (Selbri2 sb@(SBInverted _ _)) tts) =
@@ -333,10 +336,11 @@ sentToProp [] (BridiTail3 (Selbri2 sb@(SBInverted _ _)) tts) =
 	where uninvert (SBInverted sb1 (Selbri3 sb2)) = SBTanru (TanruUnit (TUSelbri3 sb2) tts) sb1
 	      uninvert (SBInverted sb1 sb2@(SBInverted _ _)) = SBTanru (uninvert sb2) sb1
 
-sentToProp (t:ts) bt =
-    handleSentenceTerm t $ sentToProp ts bt
+sentToProp [] (BridiTail3 sb tts) | tts /= [] =
+    do advanceArgPosToBridi
+       sentToProp tts (BridiTail3 sb [])
 
-sentToProp [] (BridiTail3 (Selbri2 (Selbri3 sb)) tts) =
+sentToProp [] (BridiTail3 (Selbri2 (Selbri3 sb)) []) =
     do bs <- getBindings
        let sb3ToJboRels (SBTanru seltau tertau) extralas =
 	       let p = selbriToPred (Selbri2 (Selbri3 seltau)) bs
@@ -393,7 +397,7 @@ sentToProp [] (BridiTail3 (Selbri2 (Selbri3 sb)) tts) =
 		  put as
 		  p2 <- evaljborels r2
 		  return $ connToFOL con p1 p2
-       evaljborels (sb3ToJboRels sb tts)
+       evaljborels (sb3ToJboRels sb [])
 
 handleSentenceTerm t m =
  let drop = m
