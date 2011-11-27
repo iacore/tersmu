@@ -37,13 +37,6 @@ Possibly bugs:
     "has scope over quantifiers that follow". Currently that's how I have
     {na ku} working, but not bare {na}.
 
-    We have {broda gi'e brode vau da} equiv to {broda da gi'e brode da};
-    similarly for JA-connected selbri. I'm not sure whether this is right, nor
-    whether there's a coherent alternative. (I suppose the alternative would
-    have to be to handle these tailterms with an 'append' which appends the
-    result to the tails of all the connected bridi it's a tailterm of. I don't
-    currently see why this couldn't work, but haven't thought it through.)
-
     Termset quantification: CLL:16.7.5 has quantifiers in the same termset
     having "equal scope", but I don't understand what this means.
 
