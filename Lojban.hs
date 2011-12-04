@@ -323,9 +323,11 @@ sentToProp [] (GekSentence (NegatedGS gs)) =
        return $ Not p
 
 sentToProp [] (ConnectedBT con bt1 bt2 tts) =
-    mapSentM2 (connToFOL con)
-	(sentToProp [] (extendTail bt1 tts))
-	(sentToProp [] (extendTail bt2 tts))
+    do as <- get
+       p1 <- sentToProp [] (extendTail bt1 tts)
+       put as
+       p2 <- sentToProp [] (extendTail bt2 tts)
+       return $ connToFOL con p1 p2
 
 sentToProp [] (BridiTail3 (Negated sb) tts) =
     do p <- sentToProp [] (BridiTail3 sb tts)
