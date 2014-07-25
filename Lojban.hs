@@ -295,7 +295,7 @@ subsentToProp (Subsentence ps s) vs bs =
 
 evalSentence :: Sentence -> ImplicitVars -> StatementMonad Prop
 evalSentence (Sentence ts bt) vs =
-    evalStateT (sentToProp ts bt) (nullArgs vs)
+    prenexed [] $ evalStateT (sentToProp ts bt) (nullArgs vs)
 
 
 data JboRels = ConnectedRels Connective JboRels JboRels

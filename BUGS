@@ -7,6 +7,13 @@ Definite bugs:
     Only the simplest {goi} phrases, those of the form {[sumti] goi ko'a}, are
     currently handled.
 
+    Implicit {ke'a} and {ce'u} aren't eliminated when they are given
+    explicitly in a nested context - e.g. we currently have:
+    ro da poi ro de poi ke'a broda ke'a xi re cu brode cu brodi
+    Prop:FA x1:(FA x2:(broda(_,_2)). brode(x2,_)). brodi(x1)
+    jbo: ro da poi ro de poi ke'a broda ke'a xi re ku'o zo'u de brode ke'a
+    ku'o zo'u da brodi
+
 Probably bugs:
     Current gadri (non)-handling is probably inconsistent with xorlo.
 
@@ -20,10 +27,23 @@ Probably bugs:
     selbri. That's because I don't see a sensible way to deal with things like
     {gu'e broda co brode gi brodi ko'a}
 
+    We have
+	> na ku mi noi brode cu broda
+	Prop:!(brode(mi) /\ broda(mi))
+    this being forced if we're to avoid scope-breaking, since consider:
+	> na ku da ro broda be da ku noi brodi cu brodu
+	Prop:!EX x1. FA x2:(broda(_,x1)). (brodu(x1,x2) /\ brodi(x2)) .
+    xorxes thinks {noi}-phrases should be separated out as new statements, with
+    their own separate illocutionary power (default: claim), and if {ke'a} is
+    often donkey then we should deal with it as we deal with any donkey.
+    I suspect he's right.
+
 Possibly bugs:
     Quantifiers on bound variables are ignored. This is contrary to
     CLL:16.14.1-2. But I don't see how to make sense of what's specified
-    there.
+    there. (xorxes suggests that {PA da} when {da} is already bound should be
+    treated as introducing a new quantifier, with subsequent {da} in its
+    scope.
 
     Seltau are considered to be unary predicates rather than higher arity
     relations.
@@ -41,22 +61,3 @@ Possibly bugs:
     having "equal scope", but I don't understand what this means.
 
     We treat {broda zo'e goi ko'a ko'a} as equivalent to {broda zo'e zo'e}.
-
-Probably not bugs:
-    This might at first seem wrong:
-	> na ku mi noi brode cu broda
-	Prop:!(brode(mi) /\ broda(mi))
-    but consider that e.g.
-	> na ku da ro broda be da ku noi brodi cu brodu
-	Prop:!EX x1. FA x2:(broda(_,x1)). (brodu(x1,x2) /\ brodi(x2))
-    is probably right.
-
-    Also,
-	> ro da na ku broda .i je de brode
-	Prop:FA x1. !EX x2. (broda(x1) /\ brode(x2))
-    is right, because
-    	> ro da na ku broda de .i je de brode
-	Prop:FA x1. !EX x2. (broda(x1,x2) /\ brode(x2))
-    has to be; c.f.
-	> ro da na broda de .i je de brode
-	Prop:FA x1. EX x2. (!broda(x1,x2) /\ brode(x2)) .

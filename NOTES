@@ -426,12 +426,33 @@ Questions:
     ma brode}, the only sensible interpretation is that a constant is desired
     as the answer.
 
+    Actually, no. There is a scope-respecting alternative, which is to work
+    syntactically. The answer to a {ma} question is a sumti fragment, which is
+    evaluated in the scope at which the {ma} occurred - i.e. syntactically
+    replacing the {ma} in the question. So e.g. {ro da poi remna cu prami ma}
+    could be answered with {lo da mamta}.
+
+    As for {ro da broda xu} - an answer would be something like {ro da go'i
+    gi'o brode}.
+
+    I'm not sure about this... what would {broda .ijo xu brode} mean, if only
+    the second sentence is questioned? Is the first stated? Or stated iff the
+    second is true? I doubt there are coherent answers to such questions.
+
+    The simpler approach is to say that "illocutionary operators" scope over
+    the entire statement (or, in the case of du'u, subsentence).
+
+    This doesn't actually rule out {ma}-answers like that above, though - we
+    want an answer which makes the statement as a whole true, but that answer
+    could be a skolem function. But maybe that's introducing unnecessary
+    complexity.
+
 Weak dedonkeyisation:
     A (weak) donkey is a situation of anaphoric reference to something which
     is within (but not bound by) a quantifier of which the anaphor is out of
     scope.
 
-    e.g. {ro da zo'u da broda .i ri brode} is a weak donkey, and
+    e.g. {ro da zo'u da broda le brodi .i ri brode} is a weak donkey, and
     {ro da broda .i ri brode} is a strong donkey.
 
     {la .alis cu verba .i ri ji'a fanza} isn't literally a weak donkey, but
@@ -442,17 +463,34 @@ Weak dedonkeyisation:
     There's no theoretical problem in interpreting weak donkey anaphora
     correctly, so we should.
 
-    Actually, there kind of is. e.g. {broda ko'a .e ko'e .i ri brode}. So
-    maybe we shouldn't.
+    Note that {broda ko'a .e ko'e .i ri brode} is effectively a strong donkey.
 
-    It would also require some fairly severe uglification of the code.
+    How to weakly dedonkify when we do it: probably we should separate out
+    binding of {ko'a}, {ri} and letterals from binding of {da} and {ke'a} etc.
+    Only the latter exhibit current scope behaviour.
 
-    How to do it when we do it: probably we should separate out binding of
-    {ko'a}, {ri} and letterals from binding of {da} and {ke'a} etc. Only the
-    latter exhibit current scope behaviour.
+    So we need to complicate our monads.
 
-    So we need to complicate our monads. We should prob do this at the same
-    time as handling illocutions and descriptions.
+    We also need to consider how to handle description sumti. {le broda},
+    and under xorlo {lo broda}, should be magic. "Magic" could mean "Skolem
+    function". I suspect it could also just mean "quantified just within the
+    scope of the lowest mentioned variable" (sumti-connectants counting). But
+    I suppose Skolem functions are actually a better fit - in an infinite
+    model, it's presumably going to interpreted as a definable function. So in
+    {PA da poi broda lo brode be da}, we just get "the skolem function
+    broda(_) -> brode(_) I expect you to be able to glork". The current
+    sentence provides part of the context for the glorker to make use of, but
+    nothing formal.
+
+    Clearly anaphora will refer only to a value of this skolem function rather
+    than the function itself; the point is just that it will make sense
+    everywhere within the scope of the variables/anaphora appearing in the
+    description.
+
+    Issue: it isn't really clear, at least to me, whether we need an explicit
+    {da} in the description to cause the skolem function to be non-constant
+    wrt {da}. I *think* we should, just on the basis that the alternative
+    makes excessive cognitive demands.
 
 GOhA:
     Often donkey. e.g. {ro da broda .i go'i} is donkey.
@@ -468,3 +506,179 @@ GOhA:
 
     Problem: bound terms may appear in the selbri itself, in linkargs or NU.
     Donkeys everywhere!
+
+Illocution and scope:
+    As with questions, I actually don't see why these shouldn't respect scope.
+
+    So e.g. {pa tricu e'u ko se gapcpare} means "there's one tree I suggest
+    you climb", whereas {e'u ko pa tricu gapcpare} means "I suggest you climb
+    one tree". Figuring out precisely where the scope of a UI goes is an
+    exercise for the author.
+
+    But as with questions, this is probably a bad idea. A
+    statement/du'u-subsentence should have a single uniform
+    illocutionary force. So the first example above should just be {e'u ko
+    gapcpare le pa tricu}.
+
+    (This doesn't get the author out of doing the exercise, though, because it
+    does seem reasonable that "modal UI" like {ei} should respect scope.)
+
+    Note that illocution scope is not the same as noi's side-statement scope
+    or lo's existential-presupposition scope, because the latter break out
+    even of du'u-subsentences.
+
+Handling unquantified terms:
+    (amongst which: {la foob}, {mi}, and, at least under xorlo, description
+    sumti (arguably CLL description-sumti go via such too))
+
+    These should be understood *before* we get into the "logical" part of the
+    parsing - e.g. {ko'a .e ko'e la foob broda} shouldn't be equivalent to
+    {ko'a la foob broda .ije ko'e la foob broda}, because we should allow
+    Pragmatics to give the two different interpretations in the latter.
+
+    In other words, they are discourse referents. (Note though that, beyond
+    giving us this terminology, discourse referent theory appears to be of no
+    use to us.)
+
+    Main issue: this neat separation isn't really possible, because e.g.
+    whether we interpret {lo broda be da} as a function or as a constant
+    depends on whether {da} is already bound when the term appears.
+
+    So... how to handle {da .e ko'a lo broda be da brode}? Or {ge broda da gi
+    brode vau lo brodi be da}, or equiv {broda da gi'e brode ko'a vau lo brodi
+    be da}?
+
+    Suggested simple solution: {lo broda be da} with unbound {da} is an error.
+    {lo broda be su'o da} is fine, though.
+
+    So {lo broda be da}, or {lo broda be ri}, or even {lo broda be ko'a}, is
+    in interpreted in the first place as a discourse referent *function*,
+    about which we know that every value satisfies broda(f(x),x). At first we
+    have no information on its domain - that comes by looking at the possible
+    values of {da/ri/ko'a} when it's actually used. Anaphora can never be
+    bound to such functions, only their values.
+
+Giheks, geks, and tailterms:
+    Xorxes convinced me to change the handling of giheks to parallel eks
+    rather than ijeks, but I'm not sure I'm happy about this. They feel more
+    afterthoughty to me. The only issue with treating them as such is
+    tailterms.
+
+    To quote myself:
+    """
+    I can't deny that there's something fairly horrible about {broda gi'e
+    brode vau na ku} ending up as equivalent to {broda gi'e brode}...
+
+    I see one other possible approach: interpret the connected tail terms of
+    a connected briditail once, but have any resulting sumti be appended to
+    both bridi. That would sole the {vau na ku} and {vau PA da} uglinesses,
+    and I don't see any theoretical problems with it. It would, however,
+    complicate the code quite a bit, suggesting that it isn't very natural.
+    """
+
+    A more critical problem than coding difficulties: {broda da gi'e brode vau
+    de} surely shouldn't have the {da} scoping over the {de}. Surely?
+
+    Or maybe it should... an alternative would be to consider a gek or a gihek
+    as analagous to a *jek* - producing a relation which we then consider an
+    atom for scope purposes. This does make its own sense - a gekSentence sans
+    its tailterms does have the feel of an independent unit.
+
+    No, that's ridiculous.
+
+    I've decided to switch back to the original behaviour - we handle
+    tailterms with extendTail, then handle them analogously to ijeks. My
+    reasoning: giheks ought to be analogous to ijeks, being afterthought; the
+    extendTail handling of tailterms is the only sensible one I can find, and
+    has the advantage of being conceptually very simple.
+
+    FIXME: rethink this in light of my tag-forced change in ijek handling (I
+    expect we now find that xorxes was right)
+
+Quantifier scope in tanru units:
+    Can we use {ko'a mecrai pilji be ro ko'e} for "ko'a is the least common
+    multiple of (the referents of) ko'e"?
+
+Tags:
+    I think it would be healthiest to sort out tags *before* "discourse
+    referents" and "illocution" and such higher gubbins - because if our
+    current scope handling needs to be overhauled to handle tags, we'd best
+    know about it now. I hope it doesn't need to be.
+
+    We have three kinds of tags to deal with:
+	selbri tags
+	term tags
+	tagged connectives
+
+    SELBri and term tags are to be handled analogously to NA, and pose no real
+    issue.
+
+    For tag connectives: recall that {ba gi broda gi brode} does two things:
+    it claims that an event ko'a of broda occurs, and it claims that an event of
+    brode occurs ba ko'a. Since this claim can occur deep within the logical
+    structure of a statement, we should think of these as truth conditions
+    rather than anything merely illocutionary, and should represent it in our
+    logic. I think the best way to do that may actually be to simply copy the
+    {[stag] gi P gi Q} construction from lojban, its semantics being those
+    just described.
+
+    (But don't let's forget the whole ugly issue with modal-tense asymmetry
+    here... we don't want to copy the lojban *too* faithfully...)
+
+    So we seem to want to complicate the logic in two ways: firstly by adding
+    modal operators, and secondly by adding modal connectives.
+
+    What about e.g {broda .i JA ba bo brode}? I think the most natural rule
+    is to say that the {ba} is adding an extra condition to the case that both
+    connectunts are true, and has no effect in the other cases - because
+    there's no claimed event to test the tense condition on. Amazingly, this
+    is all-but specified in the CLL - see 10.17.10.
+
+    But it seems we do have to understand {na pu broda .i ba bo brode} as making
+    the tense claim {le nu brode cu balvi le nu na pu broda} - though what the
+    truth conditions for that are, I'm not sure.
+
+    Examples it would be nice to have work:
+    {mi na.a ba bo do klama} ~= "if I go, you'll go"
+    {mi u mu'i nai bo do krici} ~= "I believe [it], not motivated by any belief
+	[in it] of yours"
+
+
+    So it looks like there's no issue. If we can handle {na broda} and {naku}
+    and {je}, then we can handle tags. Of course, giving semantics to the
+    resulting logic is another issue...
+
+    One problem, actually: 10.13.7 mandates {pu broda baku} == {puba broda}.
+    So we're forced to equate {pu broda} with {pu ku broda}. So we're forced
+    to export it to the prenex. But then everything falls apart; we're
+    inconsistent with many of the examples in the book - e.g. 14.18.1. Arse.
+
+    OK. So xorxes is right and I am wrong. Unsurprisingly. Tags and negation
+    are *bridi* operators, not statement operators. Is it possible to
+    reconcile this with the CLL's insistence that quantifiers do span a
+    statement? Not if we want negation to interact properly with both
+    quantifiers and tags.
+
+
+Tense, Events and Davidson:
+    Davidson, translated: {broda} claims {da nu broda}.
+    Then {pu ko'a broda} claims {su'o nu broda gi'e purci ko'a},
+    {broda i ba bo brode} claims {su'o nu broda cu se balvi su'o nu brode},
+    etc.
+
+    This doesn't literally work, of course, as probably we have da nu broda
+    and de nu na broda for every broda.
+
+    In {ko'a ckaji lo ka broda}, we can tag both {ckaji} and {broda}... with
+    what results? What are the meanings when untagged?
+
+    Clearly du'us often do refer to actions, even when no tag makes it
+    explicit; hence the same goes for kas.
+
+    What exactly is the difference between a nu and a du'u, other than some
+    predicates accepting only one of them? Crucial difference: there's only
+    one du'u broda, but generally many nu broda. Though I wonder if that isn't
+    just malgli...
+
+Eventual interaction with a theorem prover:
+    http://www.eprover.org/ looks good
