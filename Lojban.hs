@@ -8,9 +8,12 @@ import Bindful
 import Data.Maybe
 import Control.Monad.State
 import Control.Monad.Cont
+import Control.Applicative
 import Data.List
 import Data.Map (Map)
 import qualified Data.Map as Map
+import Data.Set (Set)
+import qualified Data.Set as Set
 
 import Debug.Trace
 
@@ -26,11 +29,13 @@ data JboTerm = Var Int
 	     | ZoheTerm
 	     deriving (Eq, Show, Ord)
 
-data JboRel = Tanru JboPred JboRel
+data JboRel = ConnectedRels Connective JboRel JboRel
+	    | PermutedRel Int JboRel
+	    | Tanru JboPred JboRel
 	    | AbsPred Abstractor JboPred
 	    | AbsProp Abstractor Prop
 	    | Moi Quantifier MOICmavo
-	    | Among
+	    | Among JboTerm
 	    | Brivla String
 
 type JboPred = JboTerm -> Prop
@@ -46,6 +51,13 @@ instance FOL.Term JboTerm where
 instance Rel JboRel where
     relstr r = evalBindful $ logshow r
 
+-- subTerm s t p: replace instances of s with t in p
+subTerm :: JboTerm -> JboTerm -> Prop -> Prop
+subTerm s t = terpProp $ \r -> \ts -> Rel (subTermInRel s t r) $ map (\x -> if x==s then t else x) ts
+subTermInRel t t' (Tanru p r) = Tanru (\o -> subTerm t t' (p o)) (subTermInRel t t' r)
+subTermInRel t t' (AbsPred a p) = AbsPred a (\o -> subTerm t t' (p o))
+subTermInRel t t' (AbsProp a p) = AbsProp a (subTerm t t' p)
+subTermInRel _ _ r = r
 
 -- Abstract syntax:
 data Statement = Statement [Term] Statement1
@@ -70,6 +82,7 @@ data Term = Sumti Tag Sumti
 
 data Tag = Untagged
 	 | FA Int
+	 | BAI String
 	 deriving (Eq, Show, Ord)
 
 data Sumti = ConnectedSumti Connective Sumti Sumti [RelClause]
@@ -82,9 +95,9 @@ data Connective = Connective Bool Char Bool
 
 data RelClause = Restrictive Subsentence  -- poi
 	       | Incidental Subsentence  -- noi
-	       | Assignment Term  -- goi
-	       | RestrictiveGOI String Term  -- pe etc.
-	       | IncidentalGOI String Term  -- ne etc.
+	       | Assignment Sumti  -- goi
+	       | RestrictiveGOI String Sumti  -- pe etc.
+	       | IncidentalGOI String Sumti  -- ne etc.
 	       deriving (Eq, Show, Ord)
 
 data SumtiAtom = Name String
@@ -167,6 +180,7 @@ appendRelsToSumti newrels (QSelbri q rels s) =
 
 
 type Bindings = Map SumtiAtom JboTerm
+type VarBindings = Map SumtiAtom JboTerm
 
 getBinding :: Bindings -> SumtiAtom -> JboTerm
 getBinding bs v =
@@ -178,27 +192,47 @@ getBinding bs v =
 		      _ -> error $ show v ++ " not bound.\n"
 
 
-data Arglist = Arglist {args :: [Maybe JboTerm],
-			position::Int,
-			implicitvars::ImplicitVars}
+data ArgPos = NPos Int | JaiPos | BaiPos String
+    deriving (Eq, Show, Ord)
+type Args = Map ArgPos JboTerm
 
-type ImplicitVars = [SumtiAtom]
+nullArgs = Map.empty
 
-nullArgs vs = Arglist [] 1 vs
+joinArgs :: Args -> Args -> Args
+joinArgs = Map.union
 
-appendToArglist :: Arglist -> JboTerm -> Arglist
-appendToArglist as@(Arglist os n _) o = incArg (setArg as n (Just o))
-    where incArg as@(Arglist os n vs) = Arglist os (n+1) vs
-appendZohe :: Arglist -> Arglist
-appendZohe as = appendToArglist as ZoheTerm
--- delImplicitVars :: Arglist -> ImplicitVars -> Arglist
--- delImplicitVars as@(Arglist os n vs) delvs = Arglist os n (vs\\delvs)
+swapArgs :: ArgPos -> ArgPos -> Args -> Args
+swapArgs p1 p2 = Map.mapKeys (\p -> if p == p1 then p2 else if p == p2 then p1 else p)
 
-setArg :: Arglist -> Int -> Maybe JboTerm -> Arglist
-setArg as@(Arglist os _ _) n o =
-    let (h,t) = splitAt (n-1) os
-	l = ((n-1)-(length h))
-    in as{args=(h++replicate l Nothing++[o]++drop 1 t)}
+setArg :: ArgPos -> JboTerm -> Args -> Args
+setArg = Map.insert
+
+data Arglist = Arglist {args :: Args, position::Int}
+nullArglist = Arglist Map.empty 1
+
+appendToArglist :: JboTerm -> Arglist -> Arglist
+appendToArglist o (Arglist as n) = Arglist (Map.insert (NPos n) o as) (n+1)
+
+argsToJboterms :: Args -> [JboTerm]
+argsToJboterms as = map (\n -> Map.findWithDefault ZoheTerm (NPos n) as) [1..max] where
+    max = maximum $ 1:[n | NPos n <- Map.keys as]
+
+
+data Arg = Arg Tag JboTerm
+addArg :: Arg -> BridiM ()
+addArg arg@(Arg tag o) = modifyArglist $
+	(appendToArglist o) .
+	(\as -> case tag of
+	    Untagged -> as
+	    FA n -> as{position=n})
+
+-- | addImplicit: adds a jboterm at first empty positional slot
+addImplicit :: JboTerm -> BridiM ()
+addImplicit o = modifyArglist $ \al ->
+    let as = args al
+	gap = head $ [1..] \\ [n | NPos n <- Map.keys as]
+    in al{args=(Map.insert (NPos gap) o as)}
+
 
 swapTerms :: [JboTerm] -> Int -> Int -> [JboTerm]
 swapTerms ts n m = take (max (max n m) (length ts)) $
@@ -210,387 +244,464 @@ swap as n m = [ if i == n then as!!m else
 swapFinite as n m = take (length as) $ swap as n m
 
 
-type StatementMonad = StateT Bindings (Cont Prop)
-type SentenceMonad = StateT Arglist (StateT Bindings (Cont Prop))
+class (Monad m,Applicative m) => Sumbastiful m where
+    getSumbastiBindings :: m Bindings
+    putSumbastiBindings :: Bindings -> m ()
+    setSumbasti :: SumtiAtom -> JboTerm -> m ()
+    setSumbasti a t = (Map.insert a t <$> getSumbastiBindings) >>= putSumbastiBindings
+    getSumbasti :: SumtiAtom -> m JboTerm
+    getSumbasti a = (`getBinding` a) <$> getSumbastiBindings
 
-mapSentM = mapStateT . mapStateT . mapCont
-mapSentM2 f m1 m2 = StateT $ \as -> StateT $ \bs -> Cont $ \c ->
-    f (runCont (runStateT (runStateT m1 as) bs) c)
-      (runCont (runStateT (runStateT m2 as) bs) c)
-runStM :: Bindings -> StatementMonad Prop -> Prop
-runStM bs m = runCont (runStateT m bs) (\(p,s) -> p)
-runSentM :: Arglist -> Bindings -> SentenceMonad Prop -> Prop
-runSentM as bs m = runCont (runStateT (runStateT m as) bs) (\((p,_),_) -> p)
-getBindings :: SentenceMonad Bindings
-getBindings = lift get
-putBindings :: Bindings -> SentenceMonad ()
-putBindings = lift . put
-modifyBindings :: (Bindings -> Bindings) -> SentenceMonad ()
-modifyBindings = lift . modify
+class (Monad m,Applicative m) => Varpool m where
+    getNextFresh :: m Int
+    putNextFresh :: Int -> m ()
+    getReferenced :: m (Set Int)
+    putReferenced :: Set Int -> m ()
 
-updateAnaphoraWithJboTerm :: JboTerm -> SentenceMonad ()
-updateAnaphoraWithJboTerm o =
-    do modifyBindings $ Map.insert Ri o
-       case o of Named (c:_) -> modifyBindings $
-				   Map.insert (LerfuString [c]) o
-		 _ -> return ()
+    getFreshVar :: m JboTerm
+    -- note: crucial that we don't reuse variables, so we can catch "donkey
+    -- sentences" which involve scope-breaking sumbasti references to unbound
+    -- variables (e.g. {ro cange poi ponse su'o xasli cu darxi ri}).
+    getFreshVar = do
+	n <- getNextFresh
+	putNextFresh $ n+1
+	return $ Var n
+    setReferenced :: Int -> m ()
+    setReferenced n = getReferenced >>= putReferenced . Set.insert n
+    referenced :: Int -> m Bool
+    referenced n = getReferenced >>= return . (n `Set.member`)
 
-advanceArgPosToBridi :: SentenceMonad ()
-advanceArgPosToBridi =
-   modify $ \as -> case (args as) of [] -> as{position=2}
-				     _  -> as
+-- ParseState holds all the funny stuff which doesn't respect the parse tree
+data ParseState = ParseState {sumbastiBindings::Bindings, nextFreshVar::Int, referencedVars::Set Int}
+type ParseM = State ParseState
+nullParseState = ParseState Map.empty 0 Set.empty
+class (Monad m,Applicative m) => ParseStateful m where
+    getParseState :: m ParseState
+    putParseState :: ParseState -> m ()
+    modifyParseState :: (ParseState -> ParseState) -> m ()
+    modifyParseState f = (f <$> getParseState) >>= putParseState
 
-resolveArglist :: SentenceMonad [JboTerm]
-resolveArglist =
-    do as@(Arglist os _ vs) <- get
-       bs <- getBindings
-       let resolve (Just o:os) vs ts = resolve os vs (ts++[o])
-	   resolve (Nothing:os) (v:vs) ts =
-	       resolve os vs (ts++[getBinding bs v])
-	   resolve (Nothing:os) [] ts =
-	       resolve os [] (ts++[ZoheTerm])
-	   resolve [] (v:vs) ts = resolve [] vs (ts++[getBinding bs v])
-	   resolve [] [] ts = ts
-       return $ resolve os vs []
+data BridiParseState = BridiParseState {arglist::Arglist,varBindings::VarBindings}
+nullBridiParseState = BridiParseState nullArglist Map.empty
 
-stripZohe :: [JboTerm] -> [JboTerm]
-stripZohe = reverse . stripZohe' . reverse
-    where stripZohe' (ZoheTerm:ts) = ts
-	  stripZohe' ts = ts
+type BridiM = (StateT BridiParseState) (ContT Prop ParseM)
 
-statementsToProp :: [Statement] -> StatementMonad Prop
-statementsToProp ss = sequence (map statementToProp ss) >>= return . bigAnd
+runBridiM :: BridiM Prop -> Prop
+runBridiM =
+    (`evalState` nullParseState) . (`runContT` return) . (`evalStateT` nullBridiParseState)
 
-statementToProp :: Statement -> StatementMonad Prop
-statementToProp (Statement ps s) = prenexed ps $ statement1ToProp s
+instance ParseStateful BridiM where
+    getParseState = lift get
+    putParseState = lift . put
+instance Sumbastiful BridiM where
+    getSumbastiBindings = sumbastiBindings <$> getParseState
+    putSumbastiBindings bs = modifyParseState $ \ps -> ps{sumbastiBindings=bs}
+instance Varpool BridiM where
+    getNextFresh = nextFreshVar <$> getParseState
+    putNextFresh n = modifyParseState $ \ps -> ps{nextFreshVar=n}
+    getReferenced = referencedVars <$> getParseState
+    putReferenced rv = modifyParseState $ \ps -> ps{referencedVars=rv}
 
-statement1ToProp :: Statement1 -> StatementMonad Prop
-statement1ToProp (ConnectedStatement con s1 s2) =
-    do p1 <- statement1ToProp s1
-       p2 <- statement1ToProp s2
+class (Monad m,Applicative m) => Arglistful m where
+    getArglist :: m Arglist
+    putArglist :: Arglist -> m ()
+    modifyArglist :: (Arglist -> Arglist) -> m ()
+    modifyArglist f = (f <$> getArglist) >>= putArglist
+instance Arglistful BridiM where
+    getArglist = arglist <$> get
+    putArglist al = modify $ \s -> s{arglist=al}
+
+class (Monad m,Applicative m) => VarBindful m where
+    getVarBindings :: m VarBindings
+    putVarBindings :: VarBindings -> m ()
+    modifyVarBindings :: (VarBindings -> VarBindings) -> m ()
+    modifyVarBindings f = (f <$> getVarBindings) >>= putVarBindings
+    setVarBinding :: SumtiAtom -> JboTerm -> m ()
+    setVarBinding a t = (Map.insert a t <$> getVarBindings) >>= putVarBindings
+    lookupVarBinding :: SumtiAtom -> m (Maybe JboTerm)
+    lookupVarBinding a = Map.lookup a <$> getVarBindings 
+    getVarBinding :: SumtiAtom -> m JboTerm
+    getVarBinding a = fromJust <$> lookupVarBinding a
+instance VarBindful BridiM where
+    getVarBindings = varBindings <$> get
+    putVarBindings vbs = modify $ \s -> s{varBindings=vbs}
+
+type Bridi = Args -> Prop
+
+mapProp :: (Prop -> Prop) -> BridiM ()
+mapProp f = lift $ ContT $ \k -> f <$> k ()
+
+-- |mapBridiM2 f m1 m2: fork, doing m1 and m2 then joining final Props with f;
+--  ParseState threaded through as m1 then m2 then continuation.
+mapBridiM2 :: (Prop -> Prop -> Prop) -> BridiM a -> BridiM a -> BridiM a
+mapBridiM2 f m1 m2 =
+    -- XXX: ugliness warning
+    StateT $ \s -> ContT $ \k -> state $ \ps ->
+	let e1 = execBridiMParseState m1 s
+	    e2 = execBridiMParseState m2 s
+	    s1 = runContT (runStateT m1 s) $ (modify e2 >>) . k
+	    s2 = runContT (runStateT (lift (modify e1) >> m2) s) k
+	    p1 = evalState s1 ps
+	    (p2,ps') = runState s2 ps
+	in (f p1 p2,ps')
+
+-- |execBridiMParseState m s: extract the ParseState modifications performed
+-- in the process of m with initial BridiParseState s
+execBridiMParseState :: BridiM a -> BridiParseState -> (ParseState -> ParseState)
+execBridiMParseState m s = execState $ (`runContT` (\_ -> return Eet)) $ (`runStateT` s) $ m
+
+updateParseStateWithJboTerm :: JboTerm -> BridiM ()
+updateParseStateWithJboTerm o = do
+	setSumbasti Ri o
+	case o of
+	    Named (c:_) -> setSumbasti (LerfuString [c]) o
+	    _ -> return ()
+	case o of
+	    Var n -> setReferenced n
+	    _ -> return ()
+
+doAssigns :: JboTerm -> [SumtiAtom] -> BridiM ()
+doAssigns o = mapM_ (`setSumbasti` o)
+
+doIncidentals :: JboTerm -> [JboPred] -> BridiM ()
+doIncidentals o ips =
+    -- TODO
+    return ()
+
+advanceArgPosToBridi :: Arglistful m => m ()
+advanceArgPosToBridi = modifyArglist $ \al ->
+    if Map.null $ args al
+       then al{position=2}
+       else al
+
+ignoringArgs :: Arglistful m => m a -> m a
+ignoringArgs m = do
+    al <- getArglist
+    m <* putArglist al
+
+partiallyResolveBridi :: (Bridi,BridiParseState) -> Bridi
+partiallyResolveBridi (b,s) =
+    \extraArgs -> b $ joinArgs (args $ arglist s) extraArgs
+resolveBridi :: (Bridi,BridiParseState) -> Prop
+resolveBridi (b,s) = partiallyResolveBridi (b,s) nullArgs
+
+parseStatements :: [Statement] -> BridiM Prop
+parseStatements ss = mapM parseStatement ss >>= return . bigAnd
+
+parseStatement :: Statement -> BridiM Prop
+parseStatement (Statement ps s) = do
+    ignoringArgs $ parseTerms ps
+    parseStatement1 s
+
+parseStatement1 :: Statement1 -> BridiM Prop
+parseStatement1 (ConnectedStatement con s1 s2) =
+    do p1 <- parseStatement1 s1
+       p2 <- parseStatement1 s2
        return $ connToFOL con p1 p2
-statement1ToProp (StatementStatements ss) =
-    statementsToProp ss
-statement1ToProp (StatementSentence s) =
-    evalSentence s []
+parseStatement1 (StatementStatements ss) =
+    parseStatements ss
+parseStatement1 (StatementSentence s) =
+    -- TODO: assign go'i
+    runSubBridiM $ parseSentence s
 
-prenexed :: [Term] -> StatementMonad Prop -> StatementMonad Prop
-prenexed ts m =
-    do bs <- get
-       return $ runStM bs $ prenexed' ts m
+parseSubsentence :: Subsentence -> BridiM Bridi
+parseSubsentence (Subsentence ps s) = do
+    ignoringArgs $ parseTerms ps
+    parseSentence s
+
+runSubBridiM :: BridiM Bridi -> BridiM Prop
+runSubBridiM m = do
+    s <- get
+    p <- lift.lift $ (`runContT` return.resolveBridi) $ (`runStateT` s) $ m
+    return $ p
+
+
+parseSentence :: Sentence -> BridiM Bridi
+parseSentence (Sentence ts bt) =
+    parseTerms ts >> parseBTail bt
+
+parseBTail :: BridiTail -> BridiM Bridi
+parseBTail (GekSentence (ConnectedGS con ss1 ss2 tts)) =
+    mapBridiM2 (connToFOL con) (parseSubsentence ss1) (parseSubsentence ss2)
+	<* parseTerms tts
+
+parseBTail (GekSentence (NegatedGS gs)) =
+    mapProp Not >> parseBTail (GekSentence gs)
+
+parseBTail (ConnectedBT con bt1 bt2 tts) =
+    parseBTail (GekSentence (ConnectedGS con
+	(Subsentence [] (Sentence [] bt1))
+	(Subsentence [] (Sentence [] bt2)) tts))
+
+parseBTail (BridiTail3 (Negated sb) tts) =
+    -- XXX: need to handle Negated here as well as in parseSelbri, because of
+    -- the SBInverted handling within parseBTail below.
+    -- Make sure to do the same for tags when we implement them.
+    mapProp Not >> parseBTail (BridiTail3 sb tts)
+
+parseBTail (BridiTail3 (Selbri2 (SBInverted sb sb')) tts) =
+    jboRelToBridi <$> getInvertedRel sb sb' where
+    getInvertedRel sb sb' = do
+	tertau <- parseSelbri3 sb
+	seltau <- case sb' of
+	    SBInverted sb'' sb''' -> parsedSelbriToPred $ jboRelToBridi <$> getInvertedRel sb'' sb'''
+	    Selbri3 sb'' -> selbriToPred $ Selbri2 (Selbri3 (TanruUnit (TUSelbri3 sb'') tts))
+	return $ Tanru seltau tertau
+
+parseBTail (BridiTail3 sb tts) = do
+    advanceArgPosToBridi
+    parseSelbri sb <* parseTerms tts
+
+parseSelbri :: Selbri -> BridiM Bridi
+parseSelbri (Negated sb) =
+    mapProp Not >> parseSelbri sb
+parseSelbri (Selbri2 sb) =
+    jboRelToBridi <$> parseSelbri2 sb
+
+-- Note that non-logical connections mean that we can't actually eliminate the
+-- ConnectedRels or PermutedRel constructors (consider {se broda joi brode})
+jboRelToBridi :: JboRel -> Bridi
+jboRelToBridi = jboRelToBridi' . pullOutPermutations where
+    jboRelToBridi' (PermutedRel n rel) =
+	jboRelToBridi' rel . swapArgs (NPos 1) (NPos n)
+    jboRelToBridi' rel = \as -> Rel rel (argsToJboterms as)
+    pullOutPermutations r@(Tanru seltau tertau) =
+	case pullOutPermutations tertau of
+	    PermutedRel n tertau' ->
+		PermutedRel n $ pullOutPermutations (Tanru seltau tertau')
+	    _ -> r
+    pullOutPermutations (PermutedRel n rel) =
+	PermutedRel n $ pullOutPermutations rel
+    pullOutPermutations rel = rel
+
+parseSelbri2 :: Selbri2 -> BridiM JboRel
+parseSelbri2 (SBInverted sb sb') = do
+    -- XXX: this works correctly only when there are no tailterms; see
+    -- parseBTail above for tailterm handling.
+    tertau <- parseSelbri3 sb
+    seltau <- selbriToPred $ (Selbri2 sb')
+    return $ Tanru seltau tertau
+
+parseSelbri2 (Selbri3 sb) =
+    parseSelbri3 sb
+
+parseSelbri3 :: Selbri3 -> BridiM JboRel
+parseSelbri3 (SBTanru sb sb') = do
+    seltau <- selbriToPred $ (Selbri2 (Selbri3 sb))
+    tertau <- parseSelbri3 sb'
+    return $ Tanru seltau tertau
+parseSelbri3 (ConnectedSB con sb sb') =
+    -- XXX: CLL arguably prescribes handling logical connections like
+    -- non-logical connections here, with indeterminate semantics; but we
+    -- handle them like giheks.
+    mapBridiM2 (connToFOL con) (parseSelbri3 sb) (parseSelbri3 sb')
+parseSelbri3 (TanruUnit tu2 las) =
+    parseTU tu2 <* parseTerms las
+
+parseTU :: TanruUnit2 -> BridiM JboRel
+parseTU (TUBrivla bv) = return $ Brivla bv
+parseTU (TUMe s) = do
+    o <- parseSumti s
+    return $ Among o
+parseTU (TUMoi q m) = return $ Moi q m
+parseTU (TUAbstraction a ss) =
+    case
+	case a of
+	    "poi'i" ->
+		 -- poi'i: an experimental NU, which takes ke'a rather
+		 -- than ce'u; {ko'a poi'i ke'a broda} means
+		 -- {ko'a broda}. See http://www.lojban.org/tiki/poi'i
+		 Just RelVar
+	    "ka" -> Just LambdaVar
+	    "ni" -> Just LambdaVar
+	    _ -> Nothing
+    of
+	Just rv -> do
+	    pred <- subsentToPred ss rv
+	    return $ AbsPred a pred
+	Nothing -> AbsProp a <$>
+	    (runSubBridiM $ putArglist nullArglist >> parseSubsentence ss)
+parseTU (TUPermuted n tu) =
+    PermutedRel n <$> parseTU tu
+parseTU (TUSelbri3 sb) = parseSelbri3 sb
+
+parseTerms :: [Term] -> BridiM ()
+parseTerms = mapM_ parseTerm
+
+parseTerm :: Term -> BridiM ()
+parseTerm t = case t of
+    Termset ts -> mapM_ parseTerm ts
+    ConnectedTerms con t1 t2 ->
+	mapBridiM2 (connToFOL con)
+	    (parseTerm t1)
+	    (parseTerm t2)
+    Negation -> mapProp Not
+    Sumti tag s -> do 
+	o <- parseSumti s
+	addArg $ Arg tag o
+
+parseSumti :: Sumti -> BridiM JboTerm
+parseSumti s = do
+    (o,ips,as) <- case s of
+	(ConnectedSumti con s1 s2 rels) -> do
+	    [o1,o2] <- mapM parseSumti [s1,s2]
+	    fresh <- getFreshVar
+	    mapProp $ \p ->
+		connToFOL con
+		(subTerm fresh o1 p)
+		(subTerm fresh o2 p)
+	    (_,ips,as) <- parseRels rels
+	    return (fresh,ips,as)
+	(QAtom mq rels sa) -> do
+	    (rps,ips,as) <- parseRels rels
+	    o <- case sa of
+		 Variable _ -> parseVariable sa rps mq
+		 _ -> do
+		     o <- parseSumtiAtom sa
+		     case mq of
+		       Nothing -> return o
+		       Just q -> quantify q $ Just $ isAmong o
+	    return (o,ips,as)
+	(QSelbri q rels sb) -> do 
+	    (rps,ips,as) <- parseRels rels
+	    sr <- selbriToPred sb
+	    o <- quantify q (andMPred $ sr:rps)
+	    return (o,ips,as)
+    updateParseStateWithJboTerm o
+    doAssigns o as
+    doIncidentals o ips
+    return o
+
+parseRels :: [RelClause] -> BridiM ([JboPred],[JboPred],[SumtiAtom])
+parseRels [] = return ([],[],[])
+parseRels (r:rs) = do
+    (rps,ips,as) <- case r of
+	Restrictive ss -> do
+	    rp <- subsentToPred ss RelVar
+	    return ([rp],[],[])
+	Incidental ss -> do
+	    ip <- subsentToPred ss RelVar
+	    return ([],[ip],[])
+	RestrictiveGOI goi s -> do
+	    o <- parseSumti s
+	    let rel = case goi of
+		    "pe" -> Brivla "srana"
+		    "po'u" -> Brivla "du"
+		    -- XXX: following are rather approximate... the
+		    -- BPFK subordinators section suggests more
+		    -- complicated expressions
+		    "po'e" -> Tanru (\o -> Rel (Brivla "jinzi") [o])
+				(Brivla "srana")
+		    "po" -> Tanru (\o -> Rel (Brivla "steci") [o])
+				(Brivla "srana")
+		rp = \x -> Rel rel [x,o]
+	    return ([rp],[],[])
+	IncidentalGOI goi s -> do
+	    o <- parseSumti s
+	    let rel = case goi of
+		    "ne" -> Brivla "srana"
+		    "no'u" -> Brivla "du"
+		ip = \x -> Rel rel [x,o]
+	    return ([],[ip],[])
+	Assignment (QAtom Nothing [] sa) | isAssignable sa -> 
+	    return ([],[],[sa])
+	Assignment _ ->
+	    -- TODO: handle {mi fa'u do vu'o goi ko'a fa'u ko'e}?
+	    return ([],[],[])
+    (rps',ips',as') <- parseRels rs
+    return (rps++rps',ips++ips',as++as')
+
+isAssignable :: SumtiAtom -> Bool
+isAssignable (Assignable _) = True
+isAssignable (LerfuString _) = True
+isAssignable _ = False
+
+parseVariable sa@(Variable n) rps mq = do
+    x <- lookupVarBinding sa
+    case x of
+	 Nothing -> do
+	    o <- quantify (fromMaybe Exists mq) $ andMPred rps
+	    setVarBinding sa o
+	    return o
+	 Just o -> do
+	    return o
+parseSumtiAtom sa = case sa of
+    Description gadri mis miq sb innerRels -> do
+	let innerRels' = innerRels
+		++ case mis of
+		    Nothing -> []
+		    Just is -> [IncidentalGOI "ne" is]
+	(_,ips,as) <- parseRels innerRels'
+	sr <- selbriToPred sb
+	let r = andPred $
+		   (case miq of
+		     Just iq -> [(\o -> Rel (Moi iq "mei") [o])]
+		     _ -> []) ++
+		   ips ++
+		   [sr]
+	o <- quantify (Gadri gadri) (Just r)
+	doAssigns o as
+	return o
+    RelVar _ -> getVarBinding sa
+    LambdaVar _ -> getVarBinding sa
+    anaph@Ri -> getSumbasti sa
+    anaph@(Assignable _) -> getSumbasti sa
+    anaph@(LerfuString _) -> getSumbasti sa
+    NonAnaphoricProsumti ps -> return $ NonAnaph ps
+    Name s -> return $ Named s
+    Zohe -> return $ ZoheTerm
+    Quote t -> return $ JboQuote t
+    Word s -> return $ Valsi s
+
+
+quantify :: Quantifier -> Maybe JboPred -> BridiM JboTerm
+quantify q r = do
+    fresh <- getFreshVar
+    mapProp $ \p ->
+	Quantified q (singpred <$> r) $
+	    \v -> subTerm fresh (Var v) p
+    return fresh
     where
-	prenexed' [] m = m
-	prenexed' (t:ts) m =
-	    do p <- evalStateT (handlePrenexTerm t) (nullArgs [])
-	       p' <- prenexed ts m
-	       return $ bigAnd [p,p']
-	handlePrenexTerm t = handleTerm t drop append
-        drop = return $ Not Eet
-        append _ _ o = do updateAnaphoraWithJboTerm o
-			  return $ Not Eet
+	singpred r = \v -> r (Var v)
 
-subsentToProp :: Subsentence -> ImplicitVars -> Bindings -> Prop
-subsentToProp (Subsentence ps s) vs bs =
-    runStM bs $ prenexed ps $ evalSentence s vs
+selbriToPred :: Selbri -> BridiM JboPred
+selbriToPred sb = do
+    parsedSelbriToPred $ parseSelbri sb
+parsedSelbriToPred :: BridiM Bridi -> BridiM JboPred
+parsedSelbriToPred m = do
+    fresh <- getFreshVar
+    p <- runSubBridiM $ putArglist nullArglist >> m <* addImplicit fresh
+    return $ \o -> subTerm fresh o p 
 
-evalSentence :: Sentence -> ImplicitVars -> StatementMonad Prop
-evalSentence (Sentence ts bt) vs =
-    prenexed [] $ evalStateT (sentToProp ts bt) (nullArgs vs)
+subsentToPred :: Subsentence -> (Int -> SumtiAtom) -> BridiM JboPred
+subsentToPred ss rv = do
+    fresh@(Var n) <- getFreshVar
+    p <- runSubBridiM $ do
+	modifyVarBindings $ shuntVars rv
+	setVarBinding (rv 1) fresh
+	p <- putArglist nullArglist >> parseSubsentence ss
+	reffed <- referenced n
+	when (not reffed) $ addImplicit fresh
+	return p
+    return $ \o -> subTerm fresh o p
 
 
-data JboRels = ConnectedRels Connective JboRels JboRels
-	     | JboRel JboRel [Term] ([JboTerm] -> [JboTerm])
-
-sentToProp :: [Term] -> BridiTail -> SentenceMonad Prop
-
-sentToProp (t:ts) bt =
-    handleSentenceTerm t $ sentToProp ts bt
-
-sentToProp [] (GekSentence (ConnectedGS con
-	(Subsentence pr1 (Sentence ts1 bt1))
-	(Subsentence pr2 (Sentence ts2 bt2)) tts)) =
-    do bs <- getBindings
-       let p1 = subsentToProp
-		    (Subsentence pr1 (Sentence ts1 (extendTail bt1 tts)))
-		    [] bs
-	   p2 = subsentToProp
-		    (Subsentence pr2 (Sentence ts2 (extendTail bt2 tts)))
-		    [] bs
-       return $ connToFOL con p1 p2
-
-sentToProp [] (GekSentence (NegatedGS gs)) =
-    do p <- sentToProp [] (GekSentence gs)
-       return $ Not p
-
-sentToProp [] (ConnectedBT con bt1 bt2 tts) =
-    do as <- get
-       p1 <- sentToProp [] (extendTail bt1 tts)
-       put as
-       p2 <- sentToProp [] (extendTail bt2 tts)
-       return $ connToFOL con p1 p2
-
-sentToProp [] (BridiTail3 (Negated sb) tts) =
-    do p <- sentToProp [] (BridiTail3 sb tts)
-       return $ Not p
-
-sentToProp [] (BridiTail3 (Selbri2 sb@(SBInverted _ _)) tts) =
-    sentToProp [] (BridiTail3 (Selbri2 (Selbri3 (uninvert sb))) [])
-	where uninvert (SBInverted sb1 (Selbri3 sb2)) = SBTanru (TanruUnit (TUSelbri3 sb2) tts) sb1
-	      uninvert (SBInverted sb1 sb2@(SBInverted _ _)) = SBTanru (uninvert sb2) sb1
-
-sentToProp [] (BridiTail3 sb tts) | tts /= [] =
-    do advanceArgPosToBridi
-       sentToProp tts (BridiTail3 sb [])
-
-sentToProp [] (BridiTail3 (Selbri2 (Selbri3 sb)) []) =
-    do bs <- getBindings
-       let sb3ToJboRels (SBTanru seltau tertau) extralas =
-	       let p = selbriToPred (Selbri2 (Selbri3 seltau)) bs
-	       in tanruise p (sb3ToJboRels tertau extralas)
-	   sb3ToJboRels (ConnectedSB con sb1 sb2) extralas =
-	       ConnectedRels con (sb3ToJboRels sb1 extralas)
-				 (sb3ToJboRels sb2 extralas)
-	   sb3ToJboRels (TanruUnit tu las1) extralas =
-	    let las = las1++extralas
-	    in case tu of
-		 TUBrivla bv -> JboRel (Brivla bv) las id
-		 TUMoi q m -> JboRel (Moi q m) las id
-		 TUAbstraction a subs ->
-		   case a of
-		     "poi'i" ->
-			 -- poi'i: an experimental NU, which takes ke'a rather
-			 -- than ce'u; {ko'a poi'i ke'a broda} means
-			 -- {ko'a broda}. See http://www.lojban.org/tiki/poi'i
-			 JboRel (AbsPred a
-			  (let rv = RelVar 1
-			   in (\o -> subsentToProp subs [rv] (Map.insert rv o
-				   (shuntVars bs RelVar)))))
-			   las id
-		     _ | a `elem` ["ka", "ni"] ->
-			 JboRel (AbsPred a
-			  (let lv = LambdaVar 1
-			   in (\o -> subsentToProp subs [lv] (Map.insert lv o
-				   (shuntVars bs LambdaVar)))))
-			   las id
-		       | otherwise -> 
-			 JboRel (AbsProp a (subsentToProp subs [] bs)) las id
-		 TUMe s -> JboRel Among (Sumti Untagged s:las) id
-		 TUPermuted s tu' ->
-			   permute 1 s (sb3ToJboRels (TanruUnit tu' las) [])
-		 TUSelbri3 sb -> sb3ToJboRels sb las
-	   tanruise p (JboRel r las perm) = JboRel (Tanru p r) las perm
-	   tanruise p (ConnectedRels con r1 r2) =
-	       ConnectedRels con (tanruise p r1) (tanruise p r2)
-	   permute a b (JboRel r las perm) = JboRel r las (\ts -> swapTerms (perm ts) a b)
-	   permute a b (ConnectedRels con r1 r2) =
-	       ConnectedRels con (permute a b r1) (permute a b r2)
-	   evaljborels (JboRel r (la:las) perm) =
-	       do advanceArgPosToBridi
-		  handleSentenceTerm la $ evaljborels (JboRel r las perm)
-	   evaljborels (JboRel (AbsPred "poi'i" p) [] perm) =
-	       do ts <- resolveArglist
-		  return $ p $ head $ (perm ts) ++ [ZoheTerm]
-	   evaljborels (JboRel r [] perm) =
-	       do ts <- resolveArglist
-		  return $ Rel r (stripZohe (perm ts))
-	   evaljborels (ConnectedRels con r1 r2) =
-	       do as <- get
-		  p1 <- evaljborels r1
-		  put as
-		  p2 <- evaljborels r2
-		  return $ connToFOL con p1 p2
-       evaljborels (sb3ToJboRels sb [])
-
-handleSentenceTerm t m =
- let drop = m
-     append delvs tag o =
-      do bs <- getBindings
-         modify $ \as -> case tag of
-        	     Untagged -> as
-        	     FA n -> as{position=n}
-	 modify $ \as ->
-	     let vs  = implicitvars as
-		 f v = case o of Var n -> case getBinding bs v of
-						    Var m -> n==m
-						    _     -> False
-				 _ -> False
-	     in as{implicitvars = (vs\\(delvs++filter f vs))}
-	 modify $ \as -> appendToArglist as o
-	 updateAnaphoraWithJboTerm o
-	 m
- in handleTerm t drop append
- 
-handleTerm :: (Term -> SentenceMonad Prop ->
-	([SumtiAtom] -> Tag -> JboTerm -> SentenceMonad Prop) ->
-	SentenceMonad Prop)
-handleTerm t drop append =
-    do bs <- getBindings
-       let assign o rels bs' =
-	     -- goi assignment. TODO: proper pattern-matching semantics
-	     foldr (\sa -> Map.insert sa o)
-		    bs'
-		    ([sa | rel@(Assignment
-			(Sumti _ (QAtom _ _ sa@(Assignable _)))) <- rels] ++
-		    [sa | rel@(Assignment
-			(Sumti _ (QAtom _ _ sa@(LerfuString _)))) <- rels])
-	   replace t' = handleTerm t' drop append
-	   quantifyAtPrenex q r p =
-	       -- Unfortunately necessary unmonadic ugliness: the
-	       -- effect is to lift the quantification to the prenex,
-	       -- as if we'd just used mapSentM (which we can't):
-	       StateT $ \as -> StateT $ \bs -> Cont $ \c ->
-		   quantified q r (\o -> runCont (runStateT (runStateT (p o) as) bs) c)
-	   withRestrictives :: [RelClause] -> ([JboPred] -> SentenceMonad Prop) -> SentenceMonad Prop
-	   withRestrictives rels f =
-	     withRestrictives' rels [] f
-	     where withRestrictives' [] ps f = f ps
-		   withRestrictives' (Restrictive subs:rels) ps f =
-		       do bs <- getBindings
-			  withRestrictives' rels (evalRel subs bs:ps) f
-		   withRestrictives' (RestrictiveGOI gstr t:rels) ps f =
-		       handleTerm t dropInner appendInner
-		    where
-		      dropInner = withRestrictives' rels ps f
-		      appendInner _ _ io = withRestrictives' rels
-			    ((\o -> Rel sb [io,o]):ps) f
-		      sb = case gstr of
-			    "pe" -> Brivla "srana"
-			    "po'u" -> Brivla "du"
-			    -- XXX: following are rather approximate... the
-			    -- BPFK subordinators section suggests more
-			    -- complicated expressions
-			    "po'e" -> Tanru (\o -> Rel (Brivla "jinzi") [o])
-					(Brivla "srana")
-			    "po" -> Tanru (\o -> Rel (Brivla "steci") [o])
-					(Brivla "srana")
-		   withRestrictives' (rel:rels) ps f =
-		       withRestrictives' rels ps f
-	   withIncidentals :: [RelClause] -> ([JboPred] -> SentenceMonad Prop) -> SentenceMonad Prop
-	   withIncidentals rels f =
-	     withIncidentals' rels [] f
-	     where withIncidentals' [] ps f = f ps
-		   withIncidentals' (Incidental subs:rels) ps f =
-		       do bs <- getBindings
-			  withIncidentals' rels (evalRel subs bs:ps) f
-		   withIncidentals' (IncidentalGOI gstr t:rels) ps f =
-		       handleTerm t dropInner appendInner
-		    where
-		      dropInner = withIncidentals' rels ps f
-		      appendInner _ _ io = withIncidentals' rels
-			    ((\o -> Rel sb [io,o]):ps) f
-		      sb = case gstr of "ne" -> Brivla "srana"
-					"no'u" -> Brivla "du"
-		   withIncidentals' (rel:rels) ps f =
-		       withIncidentals' rels ps f
-			   
-       case t of
-	 Negation -> mapSentM Not drop
-	 Sumti tag (ConnectedSumti con s1 s2 rels) ->
-	     -- sumti connectives are, in effect, raised to the prenex - i.e.
-	     -- treated parallel to unbound variables
-	     mapSentM2 (connToFOL con)
-		(replace $ Sumti tag $ appendRelsToSumti rels s1)
-		(replace $ Sumti tag $ appendRelsToSumti rels s2)
-	 ConnectedTerms con t1 t2 ->
-	     mapSentM2 (connToFOL con) (replace t1) (replace t2)
-	 Termset (t:ts) -> do replace t
-			      replace $ Termset ts
-	 Termset [] -> drop
-	 Sumti tag s@(QAtom q rels sa) ->
-	     do let
-		 doRels o m = doGivenRels rels o m
-		 doGivenRels rels o m =
-		     withIncidentals rels $ \ips ->
-			do modifyBindings $ assign o rels
-			   p <- m
-			   return $ bigAnd (p : map ($o) ips)
-		 doQuant q o f =
-		     case q of Nothing -> f o
-			       Just q' -> withRestrictives rels $ \rps ->
-				   quantifyAtPrenex q' (Just $ andPred (isAmong o:rps)) f
-	        case sa of
-		  Variable n ->
-		    case (Map.lookup (Variable n) bs) of
-		     Nothing ->
-			 withRestrictives rels $ \rps ->
-			 quantifyAtPrenex (fromMaybe Exists q)
-			  (case rps of
-			    [] -> Nothing
-			    _ -> Just $ andPred rps)
-			  (\o -> do modifyBindings $ Map.insert (Variable n) o
-				    replace $ Sumti tag (QAtom Nothing rels (Variable n)))
-		     Just o -> doRels o $ append [] tag o
-		  Description gadri mis miq sb innerRels ->
-		      let innerRels' = innerRels ++
-			      case mis of Nothing -> []
-					  Just is -> [RestrictiveGOI "pe" (Sumti Untagged is)]
-		      in withRestrictives innerRels' $ \irps ->
-			  do bs <- getBindings
-			     let r = andPred $
-				   (case miq of
-				     Just iq -> [(\o -> Rel (Moi iq "mei") [o])]
-				     _ -> []) ++
-				   irps ++
-				   [selbriToPred sb bs]
-			     quantifyAtPrenex (Gadri gadri) (Just r)
-				    (\o -> doGivenRels innerRels o $ doQuant q o $
-					    (\o' -> doRels o' $ append [] tag o'))
-		  _ ->
-		      let (o,delvs) = case sa of
-			     RelVar _ -> (getBinding bs sa, [sa])
-			     LambdaVar _ -> (getBinding bs sa, [sa])
-			     SelbriVar -> (getBinding bs sa, [sa])
-			     anaph@Ri -> 
-				 (getBinding bs anaph, [])
-			     anaph@(Assignable _) -> 
-				 (getBinding bs anaph, [])
-			     anaph@(LerfuString _) -> 
-				 (getBinding bs anaph, [])
-			     NonAnaphoricProsumti ps -> (NonAnaph ps, [])
-			     Name s -> (Named s, [])
-			     Zohe -> (ZoheTerm, [])
-			     Quote t -> (JboQuote t, [])
-			     Word s -> (Valsi s, [])
-		      in doRels o $ doQuant q o $ append delvs tag
-	 Sumti tag s@(QSelbri q rels sb) ->
-	     withRestrictives rels $ \rps ->
-	     withIncidentals rels $ \ips ->
-	     do bs <- getBindings
-		let r = Just $ andPred (selbriToPred sb bs:rps)
-		quantifyAtPrenex q r
-		     (\o -> do modifyBindings $ assign o rels
-			       p <- append [] tag o
-			       return $ bigAnd (p : map ($o) ips))
-	    
-
-quantified :: Quantifier -> Maybe JboPred -> JboPred -> Prop
-quantified q r p = Quantified q (case r of Nothing -> Nothing
-				           Just r -> Just $ singpred r)
-				(singpred p)
-    where singpred p = \v -> p (Var v)
-
-selbriToPred :: Selbri -> Bindings -> JboPred
-selbriToPred sb bs = \o ->
-    subsentToProp (Subsentence [] (Sentence [] bt))
-	[rv] (Map.insert rv o bs)
-    where bt = BridiTail3 sb []
-	  rv = SelbriVar
-
-evalRel :: Subsentence -> Bindings -> JboPred
-evalRel subs bs = \o ->
-    subsentToProp subs [rv] (Map.insert rv o (shuntVars bs RelVar))
-	where rv = RelVar 1
-
-shuntVars :: Bindings -> (Int -> SumtiAtom) -> Bindings
-shuntVars bs var = foldr ( \n -> Map.insert (var $ n+1)
-					    (getBinding bs (var n)) )
+shuntVars :: (Int -> SumtiAtom) -> Bindings -> Bindings
+shuntVars var bs = foldr ( \n -> Map.insert (var $ n+1)
+					    (fromJust $ Map.lookup (var n) bs) )
 			 bs
-			 [ 0 .. head [ n | n <- [1..],
+			 [ 1 .. head [ n-1 | n <- [1..],
 				    isNothing $ Map.lookup (var n) bs ] ]
 
 andPred :: [JboPred] -> JboPred
 andPred ps x = bigAnd [p x | p <- ps]
 
+andMPred :: [JboPred] -> Maybe JboPred
+andMPred [] = Nothing
+andMPred ps = Just $ andPred ps
+
+isAmong :: JboTerm -> (JboTerm -> Prop)
+isAmong y = \o -> Rel (Among y) [o]
 
 ---- Printing routines, in lojban and in (customized) logical notation
 
@@ -635,6 +746,11 @@ instance JboShow Quantifier where
     jboshow Forall = return "ro"
     jboshow (Exactly n) = return $ show n
     logshow = return . show
+instance JboShow Connective where
+    logjboshow _ (Connective b c b') =
+	return $ (if not b then "na." else "") ++
+	    [c] ++
+	    if not b' then "nai" else ""
 
 logjboshowpred jbo p = withShuntedRelVar (\n ->
    if not jbo
@@ -658,6 +774,15 @@ logjboshowpred jbo p = withShuntedRelVar (\n ->
 		   return $ "poi'i " ++ s ++ " kei" )
 
 instance JboShow JboRel where
+    logjboshow jbo (ConnectedRels conn r r') = do
+	s <- logjboshow jbo r
+	s' <- logjboshow jbo conn
+	s'' <- logjboshow jbo r'
+	return $ if jbo
+	    then s ++ " " ++ s' ++ " " ++ s''
+	    else "(" ++ s ++ " " ++ s' ++ " " ++ s'' ++ ")"
+    logjboshow jbo (PermutedRel n r) =
+	((seToStr n ++ " ") ++) <$> logjboshow jbo r
     logjboshow jbo (Tanru p r) =
       do rstr <- logjboshow jbo r
 	 pstr <- logjboshowpred jbo (\n -> p (Var n))
@@ -676,11 +801,10 @@ instance JboShow JboRel where
 	do s <- logjboshow jbo p
 	   return $ if jbo then a ++ " " ++ s ++ " kei"
 			   else a ++ "[" ++ s ++ "]"
-    logjboshow _ Among = return "me"
+    logjboshow jbo (Among t) = do
+	s <- logjboshow jbo t
+	return $ if jbo then "me " ++ s ++ " me'u" else "Among[" ++ s ++ "]"
     logjboshow _ (Brivla s) = return s
-
-isAmong :: JboTerm -> (JboTerm -> Prop)
-isAmong y = \o -> Rel Among [o,y]
 
 instance JboShow JboTerm where
     logjboshow False (ZoheTerm) = return " "

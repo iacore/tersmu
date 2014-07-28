@@ -21,13 +21,13 @@ repl = do
     when (text == "") repl
     case eval text of
 	 Left ss ->
-	     let p = runStM Map.empty $ statementsToProp ss
+	     let p = runBridiM $ parseStatements ss
 		 logstr = evalBindful $ logshow p
 		 jbostr = evalBindful $ jboshow p
 		 -- check that jbostr is a fixed point:
 		 Left checkss = eval jbostr
 		 True = jbostr == (evalBindful $ jboshow $
-			 runStM Map.empty $ statementsToProp checkss)
+			 runBridiM $ parseStatements checkss)
 	     in putStr $ 
 		--show s ++ "\n\n"
 		"Prop: " ++ logstr ++ "\n" ++

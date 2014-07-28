@@ -682,3 +682,131 @@ Tense, Events and Davidson:
 
 Eventual interaction with a theorem prover:
     http://www.eprover.org/ looks good
+
+
+The true horror of CLL lojban:
+	ro da na broda .i je da brode
+    seems forced by the rules on the scopes of na and da to come out as
+	na ku ro da zo'u ge da broda gi da brode
+    , so the rule has to be that a na gets shifted to the outside of the
+    statement prenex - which is counterintuitive to say the least.
+
+    Meanwhile, CLL rules force tenses to *not* be exported to the statement
+    prenex, but rather (effectively) to a (non-existent (but see 16.10.5,6))
+    sentence prenex, in order.
+
+    I see no actual contradiction, but it's pretty horrible.
+
+    Furthermore, according to 16.10, sumti connectives parallel variables, and
+    we seem forced to render
+	mi .e do broda ro da .ije da brode
+    as
+	ge ro da zo'u ge mi broda da gi da brode
+	gi ro da zo'u ge do broda da gi da brode
+    which is furtherly horrible.
+
+    Given all of which, I believe we should GIVE UP on slavishly implementing
+    CLL's bugs, and instead give a sensible semantics.
+
+    Clearly, that means xorxes' semantics. So {na broda} is interchangeable
+    with {na ku broda}; sentences have prenexes (semantically whether or not
+    grammatically); giheks work like geks, as does everything else; Cont isn't
+    needed (!).
+
+2014 rewrite:
+    Aims:
+	Simplify code, in particular dropping continuations, at cost of
+	slavish CLL-support.
+
+	Handle weak donkey anaphora.
+
+	Prepare to handle illocution and side-assumptions.
+
+    donkeys:
+	to handle {ri} correctly, we can't handle quantification with
+	functions.
+
+	We need to clearly distinguish "monadic" bindings of sumbasti, like ri
+	and ko'a, from parse-respecting bindings of variables, like da and
+	ke'a. As an organising principle, I suggest:
+
+	    Use monads *only* for parse-disrespecting structure
+		(e.g. sumbasti, noi clauses, xorlo etc).
+
+	In particular, we must handle variables as follows:
+	    pass down variable bindings as an explicit argument;
+	    use a monad to obtain a fresh variable each time;
+	    allow sumbasti to bind to variables;
+	    have use of a sumbasti bound to an unbound variable be an error.
+	
+	This way, we handle things like
+	    {ro prenu prami py} == {ro prenu goi ko'a prami ko'a}
+	    {ga prami lo xirma gi cliva ri} == {prami gi'a cliva vau lo xirma}
+	while considering as errors true donkeys like
+	    {ro cange poi ponse su'o xasli cu darxi ri}.
+
+	We should also handle logically connected sumti as variables, so we
+	correctly disallow the donkey
+	    {mi .e do vu'o goi ko'a broda .i ko'a brode}
+	.
+
+    implicit vars:
+	at the top of the NU/poi: get the Prop, check inside it for an
+	instance of the variable; if find none, replace first ZoheTerm in each
+	Rel with it.
+
+    connectives, terms, and xorlo:
+	if we really want to implement xorlo properly, then we do not want to
+	make the mistake of thinking
+	    {ko'a .e ko'e lo broda cu brode}
+	is equivalent to
+	    {ge ko'a lo broda cu brode gi ko'e lo broda cu brode}
+	, because under xorlo it isn't.
+
+	Handling logically connected sumti with variables deals with this.
+
+    tailterms:
+	similar problem with
+	    {broda gi'e broda vau lo brodi}
+	, complicated by wanting the gihek to scope over quantified tail
+	terms.
+
+	The correct solution is, of course, the same: use a relation
+	variable!
+
+	Recall that a pro-bridi (e.g. {go'i}) comes with an arglist. Normally
+	it's set at 1; the only difference here is that the arglist is set
+	wherever it ended up.
+
+	So let's put full pro-bridi support in right now, in analogy with the
+	pro-sumti support?
+
+	Basic problem: tailterms are parse-disrespecting monstrosities.
+
+	e.g. unclear what to do with
+	    {ge ro da zo'u broda da gi ro da zo'u brode da vau da da}
+	On the one hand, clearly the final da can't be in the scope of either roda.
+	On the other hand, we're under fairly clear instructions to equate
+	    {ge pu broda gi ca brode vau baku}
+	with
+	    {ge puba broda gi caba brode}
+
+	Solution: parsing a term results (effectively) in
+	    (Prop -> Prop, Maybe Arg, Bindings -> Bindings)
+	(along with anaphoric bindings, side-assumptions etc).
+	The Bindings here are purely parse-respecting, and are just for the da-series.
+	Arg is a JboTerm maybe tagged with a numerical FA position (or a modal?).
+	This return value is used as follows:
+	    The Prop map is applied with mapCont;
+	    The Bindings are applied scope-respectingly;
+	    Any Arg is added to the list (unless in prenex).
+	Here we use continuations (sorry!) to ensure that the Prop map and any
+	Arg are applied to the correct bridis.
+
+	Using Cont really is very natural here.
+
+	So this gives
+	    {ge ro da zo'u broda da gi ro da zo'u brode da vau da da}
+	==
+	    {ge ro da su'o de zo'u broda da de de gi ro da su'o de zo'u brode da de de}
+

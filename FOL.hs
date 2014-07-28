@@ -1,5 +1,4 @@
-module FOL where
-
+module FOL where 
 import Control.Monad.State
 
 data Prop r t
