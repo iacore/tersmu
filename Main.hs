@@ -9,7 +9,8 @@ import Control.Monad.State
 import Data.Map (Map)
 import qualified Data.Map as Map
 import Data.List
-import IO
+import System.IO
+import System.IO.Error
 import System.Exit
 import System.Process
 
@@ -42,7 +43,7 @@ repl = do
     repl
 
 main :: IO()
-main = repl `catch` (\e -> if isEOFError e then exitWith ExitSuccess
+main = repl `catchIOError` (\e -> if isEOFError e then exitWith ExitSuccess
 					   else do putStr $ show e
 						   exitFailure)
 
