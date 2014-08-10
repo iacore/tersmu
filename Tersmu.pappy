@@ -2,14 +2,13 @@
 parser tersmu:
 
 {
-import Lojban
-import FOL hiding (Connective, Term)
+import JboSyntax
+import FOL hiding (Term)
 
 import Data.Maybe
 import Control.Monad.State
 import Data.Map (Map)
 import qualified Data.Map as Map
-
 }
 
 top atext1
@@ -41,7 +40,7 @@ statement1 :: Statement1
     = s:statement2 jekss:(_jekstatements)*
     -> { foldl (\s1 -> \(con,s2) -> ConnectedStatement con s1 s2) s jekss }
 -- _jekstatements: helper for statement1
-_jekstatements :: {(Connective, Statement1)}
+_jekstatements :: {(JboConnective, Statement1)}
     = I con:jek s:statement2 -> {(con,s)}
 
 statement2 :: Statement1
@@ -104,7 +103,7 @@ sumti1 :: Sumti = s1:sumti2
 sumti2 :: Sumti = s:sumti3 ekss:(_eksumti)*
     -> { foldl (\s1 -> \(con,s2) -> ConnectedSumti con s1 s2 []) s ekss }
 -- _eksumti: helper for sumti2
-_eksumti :: {(Connective, Sumti)}
+_eksumti :: {(JboConnective, Sumti)}
     = con:ek s:sumti3 -> {(con,s)}
 
 sumti3 :: Sumti = s1:sumti4
@@ -218,30 +217,30 @@ digit :: Int
     / "so":PA -> {9}
 
 
-ek :: Connective = ln:NA?
+ek :: JboConnective = ln:NA?
 	se:(SE)? conchar:ekA rn:NAI?
-    -> { Connective (isNothing ln) 
+    -> { JboConnective (isNothing ln) 
 		    (if (isJust se) && conchar=='u' then 'U' else conchar)
 		    (isNothing rn) }
 
-jek :: Connective = ln:NA?
+jek :: JboConnective = ln:NA?
 	se:(SE)? conchar:jekJA rn:NAI?
-    -> { Connective (isNothing ln) 
+    -> { JboConnective (isNothing ln) 
 		    (if (isJust se) && conchar=='u' then 'U' else conchar)
 		    (isNothing rn) }
 
-gihek :: Connective = ln:NA?
+gihek :: JboConnective = ln:NA?
 	se:(SE)? conchar:gihekGIhA rn:NAI?
-    -> { Connective (isNothing ln) 
+    -> { JboConnective (isNothing ln) 
 		    (if (isJust se) && conchar=='u' then 'U' else conchar)
 		    (isNothing rn) }
 
-gek :: {Bool -> Connective} = se:(SE)? conchar:gekGA ln:NAI?
-    -> { Connective (isNothing ln) 
+gek :: {Bool -> JboConnective} = se:(SE)? conchar:gekGA ln:NAI?
+    -> { JboConnective (isNothing ln) 
 		    (if (isJust se) && conchar=='u' then 'U' else conchar) }
 
-guhek :: {Bool -> Connective} = se:(SE)? conchar:guhekGUhA ln:NAI?
-    -> { Connective (isNothing ln) 
+guhek :: {Bool -> JboConnective} = se:(SE)? conchar:guhekGUhA ln:NAI?
+    -> { JboConnective (isNothing ln) 
 		    (if (isJust se) && conchar=='u' then 'U' else conchar) }
 
 gik :: Bool = GI rn:NAI? -> { isNothing rn }
@@ -286,7 +285,7 @@ bridiTail1 :: BridiTail
 		    ConnectedBT con bt1 bt2 tts
 		) bt giheks }
 -- _gihekbt: helper for bridiTail1
-_gihekbt :: {(Connective, BridiTail, [Term])}
+_gihekbt :: {(JboConnective, BridiTail, [Term])}
     = con:gihek bt:bridiTail2 tts:tailTerms -> {(con, bt, tts)}
 
 bridiTail2 :: BridiTail
@@ -320,7 +319,7 @@ selbri4 :: Selbri3
     = sb:selbri5 jekss:(_jeksbs)*
 	-> { foldl (\sb1 -> \(con,sb2) -> ConnectedSB con sb1 sb2) sb jekss }
 -- _jeksbs: helper for selbri4
-_jeksbs :: {(Connective, Selbri3)}
+_jeksbs :: {(JboConnective, Selbri3)}
     = con:jek sb:selbri5 -> {(con,sb)}
 
 selbri5 :: Selbri3

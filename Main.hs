@@ -1,7 +1,9 @@
 module Main where
 
 import Tersmu
-import Lojban
+import JboParse (parseStatements)
+import BridiM (runBridiM)
+import JboShow
 import FOL
 import Bindful
 
