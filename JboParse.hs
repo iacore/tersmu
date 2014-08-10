@@ -10,15 +10,15 @@ import Control.Monad
 import Control.Applicative
 import Data.List
 
-parseStatements :: [Statement] -> BridiM JboProp
+parseStatements :: [Statement] -> JboPropM JboProp
 parseStatements ss = mapM parseStatement ss >>= return . bigAnd
 
-parseStatement :: Statement -> BridiM JboProp
+parseStatement :: Statement -> JboPropM JboProp
 parseStatement (Statement ps s) = do
     ignoringArgs $ parseTerms ps
     parseStatement1 s
 
-parseStatement1 :: Statement1 -> BridiM JboProp
+parseStatement1 :: Statement1 -> JboPropM JboProp
 parseStatement1 (ConnectedStatement con s1 s2) =
     do p1 <- parseStatement1 s1
        p2 <- parseStatement1 s2
@@ -26,9 +26,10 @@ parseStatement1 (ConnectedStatement con s1 s2) =
 parseStatement1 (StatementStatements ss) =
     parseStatements ss
 parseStatement1 (StatementSentence s) = do
-    -- TODO: assign go'i
     as <- getArglist
-    runSubBridiM $ putArglist as >> parseSentence s
+    b <- partiallyRunSubBridiM $ putArglist as >> parseSentence s
+    setBribasti "go'i" b
+    return $ b nullArgs
 
 parseSubsentence :: Subsentence -> BridiM Bridi
 parseSubsentence (Subsentence ps s) = do
@@ -42,7 +43,7 @@ parseSentence (Sentence ts bt) =
 
 parseBTail :: BridiTail -> BridiM Bridi
 parseBTail (GekSentence (ConnectedGS con ss1 ss2 tts)) =
-    mapBridiM2 (connToFOL con) (parseSubsentence ss1) (parseSubsentence ss2)
+    mapParseM2 (connToFOL con) (parseSubsentence ss1) (parseSubsentence ss2)
 	<* parseTerms tts
 
 parseBTail (GekSentence (NegatedGS gs)) =
@@ -95,12 +96,13 @@ parseSelbri3 (ConnectedSB con sb sb') =
     -- Note that in any case, non-logical connections mean that we can't
     -- actually eliminate the ConnectedRels or PermutedRel constructors
     -- (consider {se broda joi brode})
-    mapBridiM2 (connToFOL con) (parseSelbri3 sb) (parseSelbri3 sb')
+    mapParseM2 (connToFOL con) (parseSelbri3 sb) (parseSelbri3 sb')
 parseSelbri3 (TanruUnit tu2 las) =
     parseTU tu2 <* parseTerms las
 
 parseTU :: TanruUnit2 -> BridiM Bridi
-parseTU (TUBrivla bv) = return $ jboRelToBridi $ Brivla bv
+parseTU (TUBrivla bv) = getBribasti bv
+parseTU (TUGOhA g) = getBribasti g
 parseTU (TUMe s) = do
     o <- parseSumti s
     return $ jboRelToBridi $ Among o
@@ -126,18 +128,15 @@ parseTU (TUPermuted n tu) =
     (.swapArgs (NPos 1) (NPos n)) <$> parseTU tu
 parseTU (TUSelbri3 sb) = parseSelbri3 sb
 
-jboRelToBridi :: JboRel -> Bridi
-jboRelToBridi rel = \as -> Rel rel (argsToJboterms as)
 
-
-parseTerms :: [Term] -> BridiM ()
+parseTerms :: PreProp r => [Term] -> ParseM r ()
 parseTerms = mapM_ parseTerm
 
-parseTerm :: Term -> BridiM ()
+parseTerm :: PreProp r => Term -> ParseM r ()
 parseTerm t = case t of
     Termset ts -> mapM_ parseTerm ts
     ConnectedTerms con t1 t2 ->
-	mapBridiM2 (connToFOL con)
+	mapParseM2 (connToFOL con)
 	    (parseTerm t1)
 	    (parseTerm t2)
     Negation -> mapProp Not
@@ -145,7 +144,7 @@ parseTerm t = case t of
 	o <- parseSumti s
 	addArg $ Arg tag o
 
-parseSumti :: Sumti -> BridiM JboTerm
+parseSumti :: PreProp r => Sumti -> ParseM r JboTerm
 parseSumti s = do
     (o,ips,as) <- case s of
 	(ConnectedSumti con s1 s2 rels) -> do
@@ -177,7 +176,7 @@ parseSumti s = do
     doIncidentals o ips
     return o
 
-parseRels :: [RelClause] -> BridiM ([JboPred],[JboPred],[SumtiAtom])
+parseRels :: PreProp r => [RelClause] -> ParseM r ([JboPred],[JboPred],[SumtiAtom])
 parseRels [] = return ([],[],[])
 parseRels (r:rs) = do
     (rps,ips,as) <- case r of
@@ -222,6 +221,7 @@ isAssignable (LerfuString _) = True
 isAssignable (Name _) = True
 isAssignable _ = False
 
+parseVariable :: PreProp r => SumtiAtom -> [JboPred] -> Maybe Quantifier -> ParseM r JboTerm
 parseVariable sa@(Variable n) rps mq = do
     x <- lookupVarBinding sa
     case x of
@@ -231,6 +231,7 @@ parseVariable sa@(Variable n) rps mq = do
 	    return o
 	 Just o -> do
 	    return o
+parseSumtiAtom :: PreProp r => SumtiAtom -> ParseM r JboTerm
 parseSumtiAtom sa = case sa of
     Description gadri mis miq sb innerRels -> do
 	let innerRels' = innerRels
@@ -260,7 +261,7 @@ parseSumtiAtom sa = case sa of
     Word s -> return $ Valsi s
 
 
-quantify :: Quantifier -> Maybe JboPred -> BridiM JboTerm
+quantify :: PreProp r => Quantifier -> Maybe JboPred -> ParseM r JboTerm
 quantify q r = do
     fresh <- getFreshVar
     mapProp $ \p ->
@@ -278,16 +279,16 @@ applySeltau seltauM tertau = do
     let f = terpProp (\r ts -> Rel (Tanru stpred r) ts)
     return $ f . tertau 
 
-selbriToPred :: Selbri -> BridiM JboPred
+selbriToPred :: Selbri -> ParseM r JboPred
 selbriToPred sb = do
     parsedSelbriToPred $ parseSelbri sb
-parsedSelbriToPred :: BridiM Bridi -> BridiM JboPred
+parsedSelbriToPred :: BridiM Bridi -> ParseM r JboPred
 parsedSelbriToPred m = do
     fresh <- getFreshVar
     p <- runSubBridiM $ m <* addImplicit fresh
     return $ \o -> subTerm fresh o p 
 
-subsentToPred :: Subsentence -> (Int -> SumtiAtom) -> BridiM JboPred
+subsentToPred :: Subsentence -> (Int -> SumtiAtom) -> ParseM r JboPred
 subsentToPred ss rv = do
     fresh@(Var n) <- getFreshVar
     p <- runSubBridiM $ do

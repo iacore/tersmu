@@ -19,17 +19,19 @@ import Control.Monad.Cont
 -- ParseState holds all the funny stuff which doesn't respect the tree
 -- structure of the logical parse; it is threaded through as we parse the text
 -- left-to-right.
-data ParseState = ParseState {sumbastiBindings::Bindings, nextFreshVar::Int, referencedVars::Set Int}
-nullParseState = ParseState Map.empty 0 Set.empty
+data ParseState = ParseState {sumbastiBindings::SumbastiBindings, bribastiBindings::BribastiBindings, nextFreshVar::Int, referencedVars::Set Int}
+nullParseState = ParseState Map.empty Map.empty 0 Set.empty
 
 -- BridiParseState holds state which respects the logical structure
 data BridiParseState = BridiParseState {arglist::Arglist,varBindings::VarBindings}
 nullBridiParseState = BridiParseState nullArglist Map.empty
 
-type BridiM = (StateT BridiParseState) (ContT JboProp (State ParseState))
+type ParseM r = (StateT BridiParseState) (ContT r (State ParseState))
+type BridiM = ParseM Bridi
+type JboPropM = ParseM JboProp
 
-runBridiM :: BridiM JboProp -> JboProp
-runBridiM =
+runJboPropM :: JboPropM JboProp -> JboProp
+runJboPropM =
     (`evalState` nullParseState) . (`runContT` return) . (`evalStateT` nullBridiParseState)
 
 class (Monad m,Applicative m) => ParseStateful m where
@@ -37,24 +39,24 @@ class (Monad m,Applicative m) => ParseStateful m where
     putParseState :: ParseState -> m ()
     modifyParseState :: (ParseState -> ParseState) -> m ()
     modifyParseState f = (f <$> getParseState) >>= putParseState
-instance ParseStateful BridiM where
+instance ParseStateful (ParseM r) where
     getParseState = lift get
     putParseState = lift . put
 
-type Bindings = Map SumtiAtom JboTerm
+type SumbastiBindings = Map SumtiAtom JboTerm
 class (Monad m,Applicative m) => Sumbastiful m where
-    getSumbastiBindings :: m Bindings
-    putSumbastiBindings :: Bindings -> m ()
+    getSumbastiBindings :: m SumbastiBindings
+    putSumbastiBindings :: SumbastiBindings -> m ()
     setSumbasti :: SumtiAtom -> JboTerm -> m ()
     setSumbasti a t = (Map.insert a t <$> getSumbastiBindings) >>= putSumbastiBindings
     getSumbasti :: SumtiAtom -> m JboTerm
-    getSumbasti a = (`getBinding` a) <$> getSumbastiBindings
-instance Sumbastiful BridiM where
+    getSumbasti a = (`getSumbastiBinding` a) <$> getSumbastiBindings
+instance Sumbastiful (ParseM r) where
     getSumbastiBindings = sumbastiBindings <$> getParseState
     putSumbastiBindings bs = modifyParseState $ \ps -> ps{sumbastiBindings=bs}
 
-getBinding :: Bindings -> SumtiAtom -> JboTerm
-getBinding bs v =
+getSumbastiBinding :: SumbastiBindings -> SumtiAtom -> JboTerm
+getSumbastiBinding bs v =
     case Map.lookup v bs of
       Just o -> o
       Nothing -> case v of
@@ -62,12 +64,23 @@ getBinding bs v =
 		      (LerfuString s) -> UnboundLerfuString s
 		      _ -> error $ show v ++ " not bound.\n"
 
-shuntVars :: (Int -> SumtiAtom) -> Bindings -> Bindings
-shuntVars var bs = foldr ( \n -> Map.insert (var $ n+1)
-					    (fromJust $ Map.lookup (var n) bs) )
-			 bs
-			 [ 1 .. head [ n-1 | n <- [1..],
-				    isNothing $ Map.lookup (var n) bs ] ]
+type BribastiBindings = Map String Bridi
+class (Monad m,Applicative m) => Bribastiful m where
+    getBribastiBindings :: m BribastiBindings
+    putBribastiBindings :: BribastiBindings -> m ()
+    setBribasti :: String -> Bridi -> m ()
+    setBribasti s b = (Map.insert s b <$> getBribastiBindings) >>= putBribastiBindings
+    getBribasti :: String -> m Bridi
+    getBribasti s = (`getBribastiBinding` s) <$> getBribastiBindings
+instance Bribastiful (ParseM r) where
+    getBribastiBindings = bribastiBindings <$> getParseState
+    putBribastiBindings bs = modifyParseState $ \ps -> ps{bribastiBindings=bs}
+
+getBribastiBinding :: BribastiBindings -> String -> Bridi
+getBribastiBinding bs s =
+    case Map.lookup s bs of
+      Just b -> b
+      Nothing -> jboRelToBridi $ Brivla s
 
 class (Monad m,Applicative m) => Varpool m where
     getNextFresh :: m Int
@@ -87,7 +100,7 @@ class (Monad m,Applicative m) => Varpool m where
     setReferenced n = getReferenced >>= putReferenced . Set.insert n
     referenced :: Int -> m Bool
     referenced n = getReferenced >>= return . (n `Set.member`)
-instance Varpool BridiM where
+instance Varpool (ParseM r) where
     getNextFresh = nextFreshVar <$> getParseState
     putNextFresh n = modifyParseState $ \ps -> ps{nextFreshVar=n}
     getReferenced = referencedVars <$> getParseState
@@ -102,9 +115,13 @@ class (Monad m,Applicative m) => Arglistful m where
     putArglist :: Arglist -> m ()
     modifyArglist :: (Arglist -> Arglist) -> m ()
     modifyArglist f = (f <$> getArglist) >>= putArglist
-instance Arglistful BridiM where
+instance Arglistful (ParseM r) where
     getArglist = arglist <$> get
     putArglist al = modify $ \s -> s{arglist=al}
+
+type Bridi = Args -> JboProp
+jboRelToBridi :: JboRel -> Bridi
+jboRelToBridi rel = \as -> Rel rel (argsToJboterms as)
 
 nullArgs = Map.empty
 nullArglist = Arglist nullArgs 1
@@ -141,14 +158,14 @@ swapTerms ts n m = take (max (max n m) (length ts)) $
 	swap (ts ++ (repeat ZoheTerm)) (n-1) (m-1)
 
 -- | addImplicit: adds a jboterm at first empty positional slot
-addImplicit :: JboTerm -> BridiM ()
+addImplicit :: JboTerm -> ParseM r ()
 addImplicit o = modifyArglist $ \al ->
     let as = args al
 	gap = head $ [1..] \\ [n | NPos n <- Map.keys as]
     in al{args=(Map.insert (NPos gap) o as)}
 
 data Arg = Arg Tag JboTerm
-addArg :: Arg -> BridiM ()
+addArg :: Arg -> ParseM r ()
 addArg arg@(Arg tag o) = modifyArglist $
 	(appendToArglist o) .
 	(\as -> case tag of
@@ -167,48 +184,68 @@ class (Monad m,Applicative m) => VarBindful m where
     lookupVarBinding a = Map.lookup a <$> getVarBindings 
     getVarBinding :: SumtiAtom -> m JboTerm
     getVarBinding a = fromJust <$> lookupVarBinding a
-instance VarBindful BridiM where
+instance VarBindful (ParseM r) where
     getVarBindings = varBindings <$> get
     putVarBindings vbs = modify $ \s -> s{varBindings=vbs}
 
-type Bridi = Args -> JboProp
+shuntVars :: (Int -> SumtiAtom) -> VarBindings -> VarBindings
+shuntVars var bs = foldr ( \n -> Map.insert (var $ n+1)
+					    (fromJust $ Map.lookup (var n) bs) )
+			 bs
+			 [ 1 .. head [ n-1 | n <- [1..],
+				    isNothing $ Map.lookup (var n) bs ] ]
 
 
-mapProp :: (JboProp -> JboProp) -> BridiM ()
-mapProp f = lift $ ContT $ \k -> f <$> k ()
+class PreProp r where
+    liftToProp :: (JboProp -> JboProp) -> r -> r
+    liftToProp2 :: (JboProp -> JboProp -> JboProp) -> r -> r -> r
+    dummyPreProp :: r
+instance PreProp JboProp where
+    liftToProp = id
+    liftToProp2 = id
+    dummyPreProp = Eet
+instance PreProp Bridi where
+    liftToProp = liftA
+    liftToProp2 = liftA2
+    dummyPreProp = \_ -> Eet
 
--- |mapBridiM2 f m1 m2: fork, doing m1 and m2 then joining final Props with f;
+mapProp :: (PreProp r) => (JboProp -> JboProp) -> ParseM r ()
+mapProp f = lift $ ContT $ \k -> (liftToProp f) <$> k ()
+
+-- |mapParseM2 f m1 m2: fork, doing m1 and m2 then joining final Props with f;
 --  ParseState threaded through as m1 then m2 then continuation.
-mapBridiM2 :: (JboProp -> JboProp -> JboProp) -> BridiM a -> BridiM a -> BridiM a
-mapBridiM2 f m1 m2 =
+mapParseM2 :: (PreProp r) => (JboProp -> JboProp -> JboProp) -> ParseM r a -> ParseM r a -> ParseM r a
+mapParseM2 f m1 m2 =
     -- XXX: ugliness warning
     StateT $ \s -> ContT $ \k -> state $ \ps ->
-	let e1 = execBridiMParseState m1 s
-	    e2 = execBridiMParseState m2 s
+	let e1 = execParseMParseState m1 s
+	    e2 = execParseMParseState m2 s
 	    s1 = runContT (runStateT m1 s) $ (modify e2 >>) . k
 	    s2 = runContT (runStateT (lift (modify e1) >> m2) s) k
-	    p1 = evalState s1 ps
-	    (p2,ps') = runState s2 ps
-	in (f p1 p2,ps')
+	    r1 = evalState s1 ps
+	    (r2,ps') = runState s2 ps
+	in ((liftToProp2 f) r1 r2,ps')
 
--- |execBridiMParseState m s: extract the ParseState modifications performed
+-- |execParseMParseState m s: extract the ParseState modifications performed
 -- in the process of m with initial BridiParseState s
-execBridiMParseState :: BridiM a -> BridiParseState -> (ParseState -> ParseState)
-execBridiMParseState m s = execState $ (`runContT` (\_ -> return Eet)) $ (`runStateT` s) $ m
+execParseMParseState :: PreProp r => ParseM r a -> BridiParseState -> (ParseState -> ParseState)
+execParseMParseState m s = execState $ (`runContT` (\_ -> return dummyPreProp)) $ (`runStateT` s) $ m
 
 partiallyResolveBridi :: (Bridi,BridiParseState) -> Bridi
 partiallyResolveBridi (b,s) =
-    \extraArgs -> b $ joinArgs (args $ arglist s) extraArgs
+    \extraArgs -> b $ joinArgs extraArgs (args $ arglist s)
 resolveBridi :: (Bridi,BridiParseState) -> JboProp
 resolveBridi (b,s) = partiallyResolveBridi (b,s) nullArgs
 
-runSubBridiM :: BridiM Bridi -> BridiM JboProp
-runSubBridiM m = do
-    s <- get
-    p <- lift.lift $ (`runContT` return.resolveBridi) $ (`runStateT` s) $ putArglist nullArglist >> m
-    return $ p
+runSubBridiM :: BridiM Bridi -> ParseM r JboProp
+runSubBridiM m = ($nullArgs) <$> partiallyRunSubBridiM m
 
-updateParseStateWithJboTerm :: JboTerm -> BridiM ()
+partiallyRunSubBridiM :: BridiM Bridi -> ParseM r Bridi
+partiallyRunSubBridiM m = do
+    s <- get
+    lift.lift $ (`runContT` return.partiallyResolveBridi) $ (`runStateT` s) $ putArglist nullArglist >> m
+
+updateParseStateWithJboTerm :: JboTerm -> ParseM r ()
 updateParseStateWithJboTerm o = do
 	setSumbasti Ri o
 	case o of
@@ -218,10 +255,10 @@ updateParseStateWithJboTerm o = do
 	    Var n -> setReferenced n
 	    _ -> return ()
 
-doAssigns :: JboTerm -> [SumtiAtom] -> BridiM ()
+doAssigns :: JboTerm -> [SumtiAtom] -> ParseM r ()
 doAssigns o = mapM_ (`setSumbasti` o)
 
-doIncidentals :: JboTerm -> [JboPred] -> BridiM ()
+doIncidentals :: JboTerm -> [JboPred] -> ParseM r ()
 doIncidentals o ips =
     -- TODO
     return ()

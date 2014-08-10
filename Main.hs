@@ -2,7 +2,7 @@ module Main where
 
 import Tersmu
 import JboParse (parseStatements)
-import BridiM (runBridiM)
+import BridiM (runJboPropM)
 import JboShow
 import FOL
 import Bindful
@@ -23,13 +23,13 @@ repl = do
     when (text == "") repl
     case eval text of
 	 Left ss ->
-	     let p = runBridiM $ parseStatements ss
+	     let p = runJboPropM $ parseStatements ss
 		 logstr = evalBindful $ logshow p
 		 jbostr = evalBindful $ jboshow p
 		 -- check that jbostr is a fixed point:
 		 Left checkss = eval jbostr
 		 True = jbostr == (evalBindful $ jboshow $
-			 runBridiM $ parseStatements checkss)
+			 runJboPropM $ parseStatements checkss)
 	     in putStr $ 
 		--show s ++ "\n\n"
 		"Prop: " ++ logstr ++ "\n" ++

@@ -83,6 +83,7 @@ data Selbri3 = SBTanru Selbri3 Selbri3
 	     deriving (Eq, Show, Ord)
 
 data TanruUnit2 = TUBrivla String
+		| TUGOhA String
 		| TUMe Sumti
 		| TUMoi Quantifier String
 		| TUAbstraction String Subsentence

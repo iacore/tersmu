@@ -345,7 +345,7 @@ tanruUnit2 :: TanruUnit2
     = bv:BRIVLA -> {TUBrivla bv}
     / KE sb:selbri3 KEhE? -> {TUSelbri3 sb}
     / n:convSE tu:tanruUnit2 -> {TUPermuted n tu}
-    / g:GOhA -> {TUBrivla g}
+    / g:GOhA -> {TUGOhA g}
     / q:number m:MOI -> {TUMoi q m}
     / ME s:sumti MEhU? -> {TUMe s}
     / a:NU ss:subsentence KEI? -> {TUAbstraction a ss}
