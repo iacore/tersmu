@@ -205,8 +205,7 @@ resolveBridi (b,s) = partiallyResolveBridi (b,s) nullArgs
 runSubBridiM :: BridiM Bridi -> BridiM JboProp
 runSubBridiM m = do
     s <- get
-    putArglist nullArglist
-    p <- lift.lift $ (`runContT` return.resolveBridi) $ (`runStateT` s) $ m
+    p <- lift.lift $ (`runContT` return.resolveBridi) $ (`runStateT` s) $ putArglist nullArglist >> m
     return $ p
 
 updateParseStateWithJboTerm :: JboTerm -> BridiM ()

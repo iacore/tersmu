@@ -60,13 +60,11 @@ parseBTail (BridiTail3 (Negated sb) tts) =
     mapProp Not >> parseBTail (BridiTail3 sb tts)
 
 parseBTail (BridiTail3 (Selbri2 (SBInverted sb sb')) tts) =
-    jboRelToBridi <$> getInvertedRel sb sb' where
-    getInvertedRel sb sb' = do
-	tertau <- parseSelbri3 sb
-	seltau <- case sb' of
-	    SBInverted sb'' sb''' -> parsedSelbriToPred $ jboRelToBridi <$> getInvertedRel sb'' sb'''
-	    Selbri3 sb'' -> selbriToPred $ Selbri2 (Selbri3 (TanruUnit (TUSelbri3 sb'') tts))
-	return $ Tanru seltau tertau
+    getInvertedRel sb sb' where
+    getInvertedRel sb sb' =
+	(parseSelbri3 sb >>=) $ applySeltau $ case sb' of
+	    SBInverted sb'' sb''' -> getInvertedRel sb'' sb'''
+	    Selbri3 sb'' -> parseSelbri $ Selbri2 (Selbri3 (TanruUnit (TUSelbri3 sb'') tts))
 
 parseBTail (BridiTail3 sb tts) = do
     advanceArgPosToBridi
@@ -76,54 +74,37 @@ parseSelbri :: Selbri -> BridiM Bridi
 parseSelbri (Negated sb) =
     mapProp Not >> parseSelbri sb
 parseSelbri (Selbri2 sb) =
-    jboRelToBridi <$> parseSelbri2 sb
+    parseSelbri2 sb
 
--- Note that non-logical connections mean that we can't actually eliminate the
--- ConnectedRels or PermutedRel constructors (consider {se broda joi brode})
-jboRelToBridi :: JboRel -> Bridi
-jboRelToBridi = jboRelToBridi' . pullOutPermutations where
-    jboRelToBridi' (PermutedRel n rel) =
-	jboRelToBridi' rel . swapArgs (NPos 1) (NPos n)
-    jboRelToBridi' rel = \as -> Rel rel (argsToJboterms as)
-    pullOutPermutations r@(Tanru seltau tertau) =
-	case pullOutPermutations tertau of
-	    PermutedRel n tertau' ->
-		PermutedRel n $ pullOutPermutations (Tanru seltau tertau')
-	    _ -> r
-    pullOutPermutations (PermutedRel n rel) =
-	PermutedRel n $ pullOutPermutations rel
-    pullOutPermutations rel = rel
-
-parseSelbri2 :: Selbri2 -> BridiM JboRel
+parseSelbri2 :: Selbri2 -> BridiM Bridi
 parseSelbri2 (SBInverted sb sb') = do
     -- XXX: this works correctly only when there are no tailterms; see
     -- parseBTail above for tailterm handling.
-    tertau <- parseSelbri3 sb
-    seltau <- selbriToPred $ (Selbri2 sb')
-    return $ Tanru seltau tertau
+    parseSelbri3 sb >>= applySeltau (parseSelbri2 sb')
 
 parseSelbri2 (Selbri3 sb) =
     parseSelbri3 sb
 
-parseSelbri3 :: Selbri3 -> BridiM JboRel
+parseSelbri3 :: Selbri3 -> BridiM Bridi
 parseSelbri3 (SBTanru sb sb') = do
-    seltau <- selbriToPred $ (Selbri2 (Selbri3 sb))
-    tertau <- parseSelbri3 sb'
-    return $ Tanru seltau tertau
+    applySeltau (parseSelbri3 sb) =<< parseSelbri3 sb'
 parseSelbri3 (ConnectedSB con sb sb') =
     -- XXX: CLL arguably prescribes handling logical connections like
     -- non-logical connections here, with indeterminate semantics; but we
     -- handle them like giheks.
+    -- Note that in any case, non-logical connections mean that we can't
+    -- actually eliminate the ConnectedRels or PermutedRel constructors
+    -- (consider {se broda joi brode})
     mapBridiM2 (connToFOL con) (parseSelbri3 sb) (parseSelbri3 sb')
 parseSelbri3 (TanruUnit tu2 las) =
     parseTU tu2 <* parseTerms las
 
-parseTU :: TanruUnit2 -> BridiM JboRel
-parseTU (TUBrivla bv) = return $ Brivla bv
+parseTU :: TanruUnit2 -> BridiM Bridi
+parseTU (TUBrivla bv) = return $ jboRelToBridi $ Brivla bv
 parseTU (TUMe s) = do
     o <- parseSumti s
-    return $ Among o
-parseTU (TUMoi q m) = return $ Moi q m
+    return $ jboRelToBridi $ Among o
+parseTU (TUMoi q m) = return $ jboRelToBridi $ Moi q m
 parseTU (TUAbstraction a ss) =
     case
 	case a of
@@ -138,12 +119,16 @@ parseTU (TUAbstraction a ss) =
     of
 	Just rv -> do
 	    pred <- subsentToPred ss rv
-	    return $ AbsPred a pred
-	Nothing -> AbsProp a <$>
+	    return $ jboRelToBridi $ AbsPred a pred
+	Nothing -> jboRelToBridi . AbsProp a <$>
 	    (runSubBridiM $ parseSubsentence ss)
 parseTU (TUPermuted n tu) =
-    PermutedRel n <$> parseTU tu
+    (.swapArgs (NPos 1) (NPos n)) <$> parseTU tu
 parseTU (TUSelbri3 sb) = parseSelbri3 sb
+
+jboRelToBridi :: JboRel -> Bridi
+jboRelToBridi rel = \as -> Rel rel (argsToJboterms as)
+
 
 parseTerms :: [Term] -> BridiM ()
 parseTerms = mapM_ parseTerm
@@ -284,6 +269,14 @@ quantify q r = do
     return fresh
     where
 	singpred r = \v -> r (Var v)
+
+-- |applySeltau: operate on a Bridi with a seltau by tanruising every JboRel
+-- in the JboProp.
+applySeltau :: BridiM Bridi -> Bridi -> BridiM Bridi
+applySeltau seltauM tertau = do
+    stpred <- parsedSelbriToPred seltauM
+    let f = terpProp (\r ts -> Rel (Tanru stpred r) ts)
+    return $ f . tertau 
 
 selbriToPred :: Selbri -> BridiM JboPred
 selbriToPred sb = do
