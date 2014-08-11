@@ -114,6 +114,8 @@ instance JboShow JboRel where
     logjboshow jbo (Among t) = do
 	s <- logjboshow jbo t
 	return $ if jbo then "me " ++ s ++ " me'u" else "Among[" ++ s ++ "]"
+    logjboshow jbo Equal =
+	return $ if jbo then du else "="
     logjboshow _ (Brivla s) = return s
 
 instance JboShow JboTerm where

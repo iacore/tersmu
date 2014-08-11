@@ -20,6 +20,10 @@ Probably bugs:
     Only sumti are allowed in GOI phrases, not arbitrary terms. That's mostly
     sensible - but means we don't allow {pe BAI ko'a}, which is actually used.
 
+    The way we have {cei broda} working probably isn't as intended; for
+    non-compound bridi, we should probably have it binding to the whole bridi
+    like {go'i} does.
+
 Possibly bugs:
     Quantifiers on bound variables are ignored. This is contrary to
     CLL:16.14.1-2. But I don't see how to make sense of what's specified

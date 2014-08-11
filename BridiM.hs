@@ -72,6 +72,9 @@ class (Monad m,Applicative m) => Bribastiful m where
     setBribasti s b = (Map.insert s b <$> getBribastiBindings) >>= putBribastiBindings
     getBribasti :: String -> m Bridi
     getBribasti s = (`getBribastiBinding` s) <$> getBribastiBindings
+instance Bribastiful (State ParseState) where
+    getBribastiBindings = bribastiBindings <$> get
+    putBribastiBindings bs = modify $ \ps -> ps{bribastiBindings=bs}
 instance Bribastiful (ParseM r) where
     getBribastiBindings = bribastiBindings <$> getParseState
     putBribastiBindings bs = modifyParseState $ \ps -> ps{bribastiBindings=bs}
@@ -91,7 +94,7 @@ class (Monad m,Applicative m) => Varpool m where
     getFreshVar :: m JboTerm
     -- note: crucial that we don't reuse variables, so we can catch "donkey
     -- sentences" which involve scope-breaking sumbasti references to unbound
-    -- variables (e.g. {ro cange poi ponse su'o xasli cu darxi ri}).
+    -- variables (e.g. {ro selcange poi ponse su'o xasli cu darxi ri}).
     getFreshVar = do
 	n <- getNextFresh
 	putNextFresh $ n+1
@@ -238,12 +241,22 @@ resolveBridi :: (Bridi,BridiParseState) -> JboProp
 resolveBridi (b,s) = partiallyResolveBridi (b,s) nullArgs
 
 runSubBridiM :: BridiM Bridi -> ParseM r JboProp
-runSubBridiM m = ($nullArgs) <$> partiallyRunSubBridiM m
+runSubBridiM m = ($nullArgs) <$> partiallyRunBridiM (putArglist nullArglist >> m)
 
-partiallyRunSubBridiM :: BridiM Bridi -> ParseM r Bridi
-partiallyRunSubBridiM m = do
+partiallyRunBridiM :: BridiM Bridi -> ParseM r Bridi
+partiallyRunBridiM m = do
     s <- get
-    lift.lift $ (`runContT` return.partiallyResolveBridi) $ (`runStateT` s) $ putArglist nullArglist >> m
+    lift.lift $ (`runContT` return.partiallyResolveBridi) $ (`runStateT` s) $ m
+
+setBribastiToCurrent :: String -> BridiM ()
+setBribastiToCurrent bv =
+    -- XXX: results often counterintuitive, probably not what CLL intended
+    -- (e.g. {da broda cei brode .i brode} is a donkey, but
+    -- {broda cei brode fa da .i brode} is fine).
+    lift $ ContT $ \k -> do 
+	b <- k () 
+	setBribasti bv b
+	return b
 
 updateParseStateWithJboTerm :: JboTerm -> ParseM r ()
 updateParseStateWithJboTerm o = do

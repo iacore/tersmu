@@ -26,8 +26,7 @@ parseStatement1 (ConnectedStatement con s1 s2) =
 parseStatement1 (StatementStatements ss) =
     parseStatements ss
 parseStatement1 (StatementSentence s) = do
-    as <- getArglist
-    b <- partiallyRunSubBridiM $ putArglist as >> parseSentence s
+    b <- partiallyRunBridiM $ parseSentence s
     setBribasti "go'i" b
     return $ b nullArgs
 
@@ -99,6 +98,14 @@ parseSelbri3 (ConnectedSB con sb sb') =
     mapParseM2 (connToFOL con) (parseSelbri3 sb) (parseSelbri3 sb')
 parseSelbri3 (TanruUnit tu2 las) =
     parseTU tu2 <* parseTerms las
+parseSelbri3 (BridiBinding tu tu') = do
+    case tu' of
+	TanruUnit (TUBrivla bv) [] ->
+	    if bv `elem` map (\v -> "brod" ++ [v]) "aeiou"
+		then setBribastiToCurrent bv
+		else return ()
+	_ -> return ()
+    parseSelbri3 tu
 
 parseTU :: TanruUnit2 -> BridiM Bridi
 parseTU (TUBrivla bv) = getBribasti bv
@@ -164,11 +171,11 @@ parseSumti s = do
 		     o <- parseSumtiAtom sa
 		     case mq of
 		       Nothing -> return o
-		       Just q -> quantify q $ Just $ isAmong o
+		       Just q -> quantify q $ andMPred $ (isAmong o):rps
 	    return (o,ips,as)
 	(QSelbri q rels sb) -> do 
-	    (rps,ips,as) <- parseRels rels
 	    sr <- selbriToPred sb
+	    (rps,ips,as) <- parseRels rels
 	    o <- quantify q (andMPred $ sr:rps)
 	    return (o,ips,as)
     updateParseStateWithJboTerm o

@@ -79,6 +79,7 @@ data Selbri2 = SBInverted Selbri3 Selbri2
 
 data Selbri3 = SBTanru Selbri3 Selbri3
 	     | ConnectedSB JboConnective Selbri3 Selbri3
+	     | BridiBinding Selbri3 Selbri3
 	     | TanruUnit TanruUnit2 [Term]
 	     deriving (Eq, Show, Ord)
 

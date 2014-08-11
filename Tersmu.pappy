@@ -339,6 +339,9 @@ selbri6 :: Selbri3
 	-> { ConnectedSB (pcon b) sb1 sb2 }
 
 tanruUnit :: Selbri3
+    = tu:tanruUnit CEI tu':tanruUnit1 -> {BridiBinding tu tu'}
+    / tanruUnit1
+tanruUnit1 :: Selbri3
     = tu:tanruUnit2 las:linkargs? -> {TanruUnit tu (fromMaybe [] las)}
 
 tanruUnit2 :: TanruUnit2

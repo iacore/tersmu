@@ -28,6 +28,7 @@ data JboRel = ConnectedRels JboConnective JboRel JboRel
 	    | AbsProp Abstractor JboProp
 	    | Moi Quantifier MOICmavo
 	    | Among JboTerm
+	    | Equal
 	    | Brivla String
 
 type JboPred = JboTerm -> JboProp
