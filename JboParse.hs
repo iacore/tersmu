@@ -218,6 +218,7 @@ parseRels (r:rs) = do
 	    return ([],[],[sa])
 	Assignment _ ->
 	    -- TODO: handle {mi fa'u do vu'o goi ko'a fa'u ko'e}?
+	    -- TODO: handle {ko'a goi lo broda}
 	    return ([],[],[])
     (rps',ips',as') <- parseRels rs
     return (rps++rps',ips++ips',as++as')
@@ -241,20 +242,25 @@ parseVariable sa@(Variable n) rps mq = do
 parseSumtiAtom :: PreProp r => SumtiAtom -> ParseM r JboTerm
 parseSumtiAtom sa = case sa of
     Description gadri mis miq sb innerRels -> do
+	-- Below is a bastard combination of CLL and xorlo.
+	-- TODO: implement proper CLL rules, as an option.
+	-- TODO: also properly implement xorlo
+	-- TODO: we're not handling innerRels CLLy - see 8.6.5-7
 	let innerRels' = innerRels
 		++ case mis of
 		    Nothing -> []
-		    Just is -> [IncidentalGOI "ne" is]
-	(_,ips,as) <- parseRels innerRels'
+		    Just is -> [RestrictiveGOI "pe" is]
+	(rps,ips,as) <- parseRels innerRels'
 	sr <- selbriToPred sb
 	let r = andPred $
 		   (case miq of
 		     Just iq -> [(\o -> Rel (Moi iq "mei") [o])]
 		     _ -> []) ++
-		   ips ++
+		   rps ++
 		   [sr]
 	o <- quantify (Gadri gadri) (Just r)
 	doAssigns o as
+	doIncidentals o ips
 	return o
     RelVar _ -> getVarBinding sa
     LambdaVar _ -> getVarBinding sa
