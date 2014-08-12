@@ -94,7 +94,7 @@ class (Monad m,Applicative m) => Varpool m where
     getFreshVar :: m JboTerm
     -- note: crucial that we don't reuse variables, so we can catch "donkey
     -- sentences" which involve scope-breaking sumbasti references to unbound
-    -- variables (e.g. {ro selcange poi ponse su'o xasli cu darxi ri}).
+    -- variables (e.g. {ro tercange poi ponse su'o xasli cu darxi ri}).
     getFreshVar = do
 	n <- getNextFresh
 	putNextFresh $ n+1
