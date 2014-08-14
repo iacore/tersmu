@@ -1,13 +1,13 @@
 module Main where
 
 import Tersmu
-import JboParse (parseStatements)
-import BridiM (evalParseM)
+import JboParse (evalText)
 import JboShow
 import FOL
 import Bindful
 
 import Control.Monad.State
+import Control.Applicative
 import Data.Map (Map)
 import qualified Data.Map as Map
 import Data.List
@@ -18,22 +18,29 @@ import System.Process
 
 repl :: IO ()
 repl = do 
+    putStr "> "
+    hFlush stdout
     text' <- getLine
     text <- morph text'
     when (text == "") repl
     case eval text of
 	 Left ss ->
-	     let p = evalParseM $ parseStatements ss
-		 logstr = evalBindful $ logshow p
-		 jbostr = evalBindful $ jboshow p
+	     let ps = evalText ss
+		 logstr = evalBindful $ logshow ps
+		 jbostr = evalBindful $ jboshow ps
+		 {-
 		 -- check that jbostr is a fixed point:
 		 Left checkss = eval jbostr
 		 True = jbostr == (evalBindful $ jboshow $
-			 evalParseM $ parseStatements checkss)
+			 evalText checkss)
+		 -}
 	     in putStr $ 
+		"\n" ++
 		--show s ++ "\n\n"
-		"Prop: " ++ logstr ++ "\n" ++
-		"jbo: " ++ jbostr ++ "\n\n" ++
+		--"Prop: " ++
+		logstr ++ "\n\n" ++
+		--"jbo: " ++
+		jbostr ++ "\n\n" ++
 		--"PNF: " ++ show (pnf p) ++ "\n\n" ++
 		""
 	 Right pos ->
@@ -53,8 +60,7 @@ morph :: String -> IO String
 morph = vlatai . (map (\c -> case c of {'.' -> ' '; _ -> c}))
 
 vlatai :: String -> IO String
-vlatai s = do vws <- sequence $ map vlatai' (words s)
-	      return $ unwords vws
+vlatai s = unwords <$> mapM vlatai' (words s)
     where vlatai' w =
 	    do (_, Just out, _, _) <- createProcess
 		   (proc "vlatai" [w]){ std_out = CreatePipe } 

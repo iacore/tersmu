@@ -23,23 +23,27 @@ data ParseState = ParseState
     { sumbastiBindings::SumbastiBindings
     , bribastiBindings::BribastiBindings
     , nextFreshVar::Int
+    , nextFreshConstant::Int
     , referencedVars::Set Int
     , sideSentences::[JboProp]
     }
-nullParseState = ParseState Map.empty Map.empty 0 Set.empty []
+nullParseState = ParseState Map.empty Map.empty 0 0 Set.empty []
+type ParseStateM = State ParseState
 
 -- BridiParseState holds state which respects the logical structure
 data BridiParseState = BridiParseState {arglist::Arglist,varBindings::VarBindings}
 nullBridiParseState = BridiParseState nullArglist Map.empty
 
-type ParseM r = (StateT BridiParseState) (ContT r (State ParseState))
+type ParseM r = (StateT BridiParseState) (ContT r ParseStateM)
 type BridiM = ParseM Bridi
 type JboPropM = ParseM JboProp
 
-evalParseM :: ParseM r r -> r
+evalParseStateM :: ParseStateM a -> a
+evalParseStateM = (`evalState` nullParseState)
+
+evalParseM :: ParseM r r -> ParseStateM r
 evalParseM =
-	(`evalState` nullParseState)
-	. (`runContT` return)
+	(`runContT` return)
 	. (`evalStateT` nullBridiParseState)
 
 class (Monad m,Applicative m) => ParseStateful m where
@@ -47,6 +51,9 @@ class (Monad m,Applicative m) => ParseStateful m where
     putParseState :: ParseState -> m ()
     modifyParseState :: (ParseState -> ParseState) -> m ()
     modifyParseState f = (f <$> getParseState) >>= putParseState
+instance ParseStateful (ParseStateM) where
+    getParseState = get
+    putParseState = put
 instance ParseStateful (ParseM r) where
     getParseState = lift get
     putParseState = lift . put
@@ -94,8 +101,10 @@ getBribastiBinding bs s =
       Nothing -> jboRelToBridi $ Brivla s
 
 class (Monad m,Applicative m) => Varpool m where
-    getNextFresh :: m Int
-    putNextFresh :: Int -> m ()
+    getNextFreshVar :: m Int
+    putNextFreshVar :: Int -> m ()
+    getNextFreshConstant :: m Int
+    putNextFreshConstant :: Int -> m ()
     getReferenced :: m (Set Int)
     putReferenced :: Set Int -> m ()
 
@@ -104,16 +113,23 @@ class (Monad m,Applicative m) => Varpool m where
     -- sentences" which involve scope-breaking sumbasti references to unbound
     -- variables (e.g. {ro tercange poi ponse su'o xasli cu darxi ri}).
     getFreshVar = do
-	n <- getNextFresh
-	putNextFresh $ n+1
+	n <- getNextFreshVar
+	putNextFreshVar $ n+1
 	return $ Var n
+    getFreshConstant :: m JboTerm
+    getFreshConstant = do
+	n <- getNextFreshConstant
+	putNextFreshConstant $ n+1
+	return $ Constant n
     setReferenced :: Int -> m ()
     setReferenced n = getReferenced >>= putReferenced . Set.insert n
     referenced :: Int -> m Bool
     referenced n = getReferenced >>= return . (n `Set.member`)
 instance Varpool (ParseM r) where
-    getNextFresh = nextFreshVar <$> getParseState
-    putNextFresh n = modifyParseState $ \ps -> ps{nextFreshVar=n}
+    getNextFreshVar = nextFreshVar <$> getParseState
+    putNextFreshVar n = modifyParseState $ \ps -> ps{nextFreshVar=n}
+    getNextFreshConstant = nextFreshConstant <$> getParseState
+    putNextFreshConstant n = modifyParseState $ \ps -> ps{nextFreshConstant=n}
     getReferenced = referencedVars <$> getParseState
     putReferenced rv = modifyParseState $ \ps -> ps{referencedVars=rv}
 
@@ -121,7 +137,7 @@ addSideSentence :: JboProp -> ParseM r ()
 addSideSentence p =
     modifyParseState $ \pst -> pst{sideSentences=p:sideSentences pst}
 
-takeSideSentence :: ParseM r [JboProp]
+takeSideSentence :: ParseStateful m => m [JboProp]
 takeSideSentence =
     (sideSentences <$> getParseState)
 	<* (modifyParseState $ \pst -> pst{sideSentences=[]})

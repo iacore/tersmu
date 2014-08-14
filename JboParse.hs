@@ -10,15 +10,23 @@ import Control.Monad
 import Control.Applicative
 import Data.List
 
+evalText :: [Statement] -> [JboProp]
+evalText ss =
+    evalParseStateM $ concat <$> mapM evalStatement ss
+
+evalStatement :: Statement -> ParseStateM [JboProp]
+evalStatement s = do
+    p <- evalParseM $ parseStatement s
+    ps <- takeSideSentence
+    return $ ps ++ [p]
+
 parseStatements :: [Statement] -> JboPropM JboProp
-parseStatements ss = mapM parseStatement ss >>= return . bigAnd
+parseStatements ss = bigAnd <$> mapM parseStatement ss
 
 parseStatement :: Statement -> JboPropM JboProp
 parseStatement (Statement ps s) = do
     ignoringArgs $ parseTerms ps
-    p <- parseStatement1 s
-    ps <- takeSideSentence
-    return $ bigAnd $ ps ++ [p]
+    parseStatement1 s
 
 parseStatement1 :: Statement1 -> JboPropM JboProp
 parseStatement1 (ConnectedStatement con s1 s2) =
@@ -225,7 +233,7 @@ parseRels (r:rs) = do
 	    return ([],[],[sa])
 	Assignment _ ->
 	    -- TODO: handle {mi fa'u do vu'o goi ko'a fa'u ko'e}?
-	    -- TODO: handle {ko'a goi lo broda}
+	    -- TODO: handle {ko'a goi lo broda}?
 	    return ([],[],[])
     (rps',ips',as') <- parseRels rs
     return (rps++rps',ips++ips',as++as')
@@ -246,6 +254,7 @@ parseVariable sa@(Variable n) rps mq = do
 	    return o
 	 Just o -> do
 	    return o
+
 parseSumtiAtom :: PreProp r => SumtiAtom -> ParseM r (JboTerm, ParsedRels)
 parseSumtiAtom sa = do
     (rps,ips,as) <- case sa of
@@ -253,34 +262,32 @@ parseSumtiAtom sa = do
 	    let rels' = rels
 		    ++ case mis of
 			Nothing -> []
-			Just is -> [RestrictiveGOI "pe" is]
+			Just is -> [IncidentalGOI "ne" is]
 	    in parseRels rels'
 	_ -> return ([],[],[])
     o <- case sa of
 	Description gadri _ miq sb _ irels -> do
-	    -- Below is a bastard combination of CLL and xorlo.
-	    -- TODO: implement proper CLL rules, as an option.
-	    -- TODO: also properly implement xorlo
+	    -- TODO: gadri other than {lo}
 	    sr <- selbriToPred sb
 	    (irps,iips,ias) <- parseRels irels
-	    let r = andPred $
+	    let xorlo_ips = sr : 
 		       (case miq of
 			 Just iq -> [(\o -> Rel (Moi iq "mei") [o])]
 			 _ -> []) ++
-		       irps ++
-		       [sr]
-	    o <- quantify (Gadri gadri) (Just r)
+		       iips
+	    o <- getFreshConstant
 	    doAssigns o ias
-	    doIncidentals o iips
+	    doIncidentals o xorlo_ips
 	    return o
 	RelVar _ -> getVarBinding sa
 	LambdaVar _ -> getVarBinding sa
 	anaph@Ri -> getSumbasti sa
 	anaph@(Assignable _) -> getSumbasti sa
 	anaph@(LerfuString _) -> getSumbasti sa
+	Zohe -> getFreshConstant
+	-- TODO: following ought all to give fresh constants, really
 	NonAnaphoricProsumti ps -> return $ NonAnaph ps
 	Name s -> return $ Named s
-	Zohe -> return $ ZoheTerm
 	Quote t -> return $ JboQuote t
 	Word s -> return $ Valsi s
     return (o,(rps,ips,as))

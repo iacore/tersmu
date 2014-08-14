@@ -186,7 +186,9 @@ sumtiTail1 :: {(Maybe Quantifier, Selbri, [RelClause])}
     / q:quantifier? sb:selbri rels:relativeClauses?
 	-> {(q,sb,fromMaybe [] rels)}
 
-lerfuString :: {[Lerfu]} = lerfu+
+-- XXX: really ought to allow arbitrary PA
+lerfuString :: {[Lerfu]} = c:lerfu cs:(lerfu / n:digit -> {show n !! 0})*
+    -> {c:cs}
 lerfu :: Lerfu
     = s:BY -> {s!!0}
     / PAUSE? v:Vowel PAUSE? Spacing? BU -> {v}

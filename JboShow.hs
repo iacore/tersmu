@@ -138,6 +138,8 @@ instance JboShow JboTerm where
 				    RelVar 1 -> "_"
 				    RelVar n -> "_" ++ show n
 				    LambdaVar n -> "\\" ++ show n
+    logjboshow True (Constant n) = return $ "cy " ++ jbonum n
+    logjboshow False (Constant n) = return $ "c" ++ show n
     logjboshow True (Named s) = return $ "la " ++ s ++ "."
     logjboshow False (Named s) = return s
     logjboshow True (JboQuote ss) = return $ "lu li'o li'u"
@@ -151,6 +153,7 @@ instance JboShow JboTerm where
     logjboshow _ (UnboundLerfuString s) = return $ concat $ intersperse " " $
 	map (\c -> case c of _ | c `elem` "aoeui" -> (c:"bu")
 			     'y' -> "y bu"
+			     _ | c `elem` ['0'..'9'] -> jbonum $ fromEnum c - fromEnum '0'
 			     _ -> (c:"y")) s
     logjboshow _ (NonAnaph s) = return s
 	
@@ -235,3 +238,7 @@ instance JboShow JboProp
 	  logjboshow' True ps Eet = return ["jitfa to SPOFU toi"]
 	  logjboshow' False ps Eet = return ["_|_ (BUG)"]
 	  }
+
+instance JboShow [JboProp] where
+    jboshow ps = concat . intersperse "\n.i " <$> mapM jboshow ps
+    logshow ps = concat . intersperse "\n" <$> mapM logshow ps

@@ -12,6 +12,7 @@ import Control.Applicative
 type JboProp = Prop JboRel JboTerm
 
 data JboTerm = Var Int
+	     | Constant Int
 	     | Named String
 	     | NonAnaph String
 	     | UnboundAssignable Int
