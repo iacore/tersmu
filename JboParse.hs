@@ -165,17 +165,19 @@ parseSumti s = do
 		(subTerm fresh o2 p)
 	    (_,ips,as) <- parseRels rels
 	    return (fresh,ips,as)
-	(QAtom mq rels sa) -> do
-	    (rps,ips,as) <- parseRels rels
-	    o <- case sa of
-		 Variable _ -> parseVariable sa rps mq
-		 _ -> do
-		     o <- parseSumtiAtom sa
-		     case mq of
-		       Nothing -> return o
-		       Just q -> quantify q $ andMPred $ (isAmong o):rps
-	    return (o,ips,as)
-	(QSelbri q rels sb) -> do 
+	(QAtom mq rels sa) -> case sa of
+	     Variable _ -> do
+		(rps,ips,as) <- parseRels rels
+		o <- parseVariable sa rps mq
+		return (o,ips,as)
+	     _ -> do
+		 (o,(rps,ips,as)) <- parseSumtiAtom sa
+		 (rps',ips',as') <- parseRels rels
+		 o' <- case mq of
+		   Nothing -> return o
+		   Just q -> quantify q $ andMPred $ (isAmong o):(rps++rps')
+		 return (o',ips++ips',as++as')
+	(QSelbri q rels sb) -> do
 	    sr <- selbriToPred sb
 	    (rps,ips,as) <- parseRels rels
 	    o <- quantify q (andMPred $ sr:rps)
@@ -185,7 +187,8 @@ parseSumti s = do
     doIncidentals o ips
     return o
 
-parseRels :: PreProp r => [RelClause] -> ParseM r ([JboPred],[JboPred],[SumtiAtom])
+type ParsedRels = ([JboPred],[JboPred],[SumtiAtom])
+parseRels :: PreProp r => [RelClause] -> ParseM r ParsedRels
 parseRels [] = return ([],[],[])
 parseRels (r:rs) = do
     (rps,ips,as) <- case r of
@@ -241,39 +244,44 @@ parseVariable sa@(Variable n) rps mq = do
 	    return o
 	 Just o -> do
 	    return o
-parseSumtiAtom :: PreProp r => SumtiAtom -> ParseM r JboTerm
-parseSumtiAtom sa = case sa of
-    Description gadri mis miq sb innerRels -> do
-	-- Below is a bastard combination of CLL and xorlo.
-	-- TODO: implement proper CLL rules, as an option.
-	-- TODO: also properly implement xorlo
-	-- TODO: we're not handling innerRels CLLy - see 8.6.5-7
-	let innerRels' = innerRels
-		++ case mis of
-		    Nothing -> []
-		    Just is -> [RestrictiveGOI "pe" is]
-	(rps,ips,as) <- parseRels innerRels'
-	sr <- selbriToPred sb
-	let r = andPred $
-		   (case miq of
-		     Just iq -> [(\o -> Rel (Moi iq "mei") [o])]
-		     _ -> []) ++
-		   rps ++
-		   [sr]
-	o <- quantify (Gadri gadri) (Just r)
-	doAssigns o as
-	doIncidentals o ips
-	return o
-    RelVar _ -> getVarBinding sa
-    LambdaVar _ -> getVarBinding sa
-    anaph@Ri -> getSumbasti sa
-    anaph@(Assignable _) -> getSumbasti sa
-    anaph@(LerfuString _) -> getSumbasti sa
-    NonAnaphoricProsumti ps -> return $ NonAnaph ps
-    Name s -> return $ Named s
-    Zohe -> return $ ZoheTerm
-    Quote t -> return $ JboQuote t
-    Word s -> return $ Valsi s
+parseSumtiAtom :: PreProp r => SumtiAtom -> ParseM r (JboTerm, ParsedRels)
+parseSumtiAtom sa = do
+    (rps,ips,as) <- case sa of
+	Description _ mis _ _ rels _ ->
+	    let rels' = rels
+		    ++ case mis of
+			Nothing -> []
+			Just is -> [RestrictiveGOI "pe" is]
+	    in parseRels rels'
+	_ -> return ([],[],[])
+    o <- case sa of
+	Description gadri _ miq sb _ irels -> do
+	    -- Below is a bastard combination of CLL and xorlo.
+	    -- TODO: implement proper CLL rules, as an option.
+	    -- TODO: also properly implement xorlo
+	    sr <- selbriToPred sb
+	    (irps,iips,ias) <- parseRels irels
+	    let r = andPred $
+		       (case miq of
+			 Just iq -> [(\o -> Rel (Moi iq "mei") [o])]
+			 _ -> []) ++
+		       irps ++
+		       [sr]
+	    o <- quantify (Gadri gadri) (Just r)
+	    doAssigns o ias
+	    doIncidentals o iips
+	    return o
+	RelVar _ -> getVarBinding sa
+	LambdaVar _ -> getVarBinding sa
+	anaph@Ri -> getSumbasti sa
+	anaph@(Assignable _) -> getSumbasti sa
+	anaph@(LerfuString _) -> getSumbasti sa
+	NonAnaphoricProsumti ps -> return $ NonAnaph ps
+	Name s -> return $ Named s
+	Zohe -> return $ ZoheTerm
+	Quote t -> return $ JboQuote t
+	Word s -> return $ Valsi s
+    return (o,(rps,ips,as))
 
 
 quantify :: PreProp r => Quantifier -> Maybe JboPred -> ParseM r JboTerm

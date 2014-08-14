@@ -47,7 +47,7 @@ data SumtiAtom = Name String
 	       | RelVar Int -- ke'a
 	       | LambdaVar Int -- ce'u
 	       | SelbriVar -- fake
-	       | Description Gadri (Maybe Sumti) (Maybe Quantifier) Selbri [RelClause]
+	       | Description Gadri (Maybe Sumti) (Maybe Quantifier) Selbri [RelClause] [RelClause]
 	       | Assignable Int -- ko'a
 	       | LerfuString [Lerfu]
 	       | Ri -- ri
