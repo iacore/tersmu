@@ -111,7 +111,9 @@ parseSelbri3 (BridiBinding tu tu') = do
 
 parseTU :: TanruUnit2 -> BridiM Bridi
 parseTU (TUBrivla bv) = getBribasti bv
-parseTU (TUGOhA g) = getBribasti g
+parseTU (TUGOhA g) = case g of
+    "du" -> return $ jboRelToBridi $ Equal
+    _ -> getBribasti g
 parseTU (TUMe s) = do
     o <- parseSumti s
     return $ jboRelToBridi $ Among o
