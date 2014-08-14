@@ -19,8 +19,14 @@ import Control.Monad.Cont
 -- ParseState holds all the funny stuff which doesn't respect the tree
 -- structure of the logical parse; it is threaded through as we parse the text
 -- left-to-right.
-data ParseState = ParseState {sumbastiBindings::SumbastiBindings, bribastiBindings::BribastiBindings, nextFreshVar::Int, referencedVars::Set Int}
-nullParseState = ParseState Map.empty Map.empty 0 Set.empty
+data ParseState = ParseState
+    { sumbastiBindings::SumbastiBindings
+    , bribastiBindings::BribastiBindings
+    , nextFreshVar::Int
+    , referencedVars::Set Int
+    , sideSentences::[JboProp]
+    }
+nullParseState = ParseState Map.empty Map.empty 0 Set.empty []
 
 -- BridiParseState holds state which respects the logical structure
 data BridiParseState = BridiParseState {arglist::Arglist,varBindings::VarBindings}
@@ -110,6 +116,15 @@ instance Varpool (ParseM r) where
     putNextFresh n = modifyParseState $ \ps -> ps{nextFreshVar=n}
     getReferenced = referencedVars <$> getParseState
     putReferenced rv = modifyParseState $ \ps -> ps{referencedVars=rv}
+
+addSideSentence :: JboProp -> ParseM r ()
+addSideSentence p =
+    modifyParseState $ \pst -> pst{sideSentences=p:sideSentences pst}
+
+takeSideSentence :: ParseM r [JboProp]
+takeSideSentence =
+    (sideSentences <$> getParseState)
+	<* (modifyParseState $ \pst -> pst{sideSentences=[]})
 
 data Arglist = Arglist {args :: Args, position::Int}
 type Args = Map ArgPos JboTerm
@@ -274,6 +289,6 @@ doAssigns :: JboTerm -> [SumtiAtom] -> ParseM r ()
 doAssigns o = mapM_ (`setSumbasti` o)
 
 doIncidentals :: JboTerm -> [JboPred] -> ParseM r ()
-doIncidentals o ips =
-    -- TODO
-    return ()
+doIncidentals o ips = case andMPred ips of
+    Nothing -> return ()
+    Just p -> addSideSentence $ p o

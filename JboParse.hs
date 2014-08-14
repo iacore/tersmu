@@ -16,7 +16,9 @@ parseStatements ss = mapM parseStatement ss >>= return . bigAnd
 parseStatement :: Statement -> JboPropM JboProp
 parseStatement (Statement ps s) = do
     ignoringArgs $ parseTerms ps
-    parseStatement1 s
+    p <- parseStatement1 s
+    ps <- takeSideSentence
+    return $ bigAnd $ ps ++ [p]
 
 parseStatement1 :: Statement1 -> JboPropM JboProp
 parseStatement1 (ConnectedStatement con s1 s2) =
