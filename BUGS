@@ -7,6 +7,8 @@ Definite bugs:
     Only the simplest {goi} phrases, those of the form {[sumti] goi ko'a}, are
     currently handled.
 
+    {ri} doesn't ignore anaphoric pro-sumti.
+
 Probably bugs:
     Current gadri (non)-handling is probably inconsistent with xorlo.
 
@@ -36,10 +38,11 @@ Possibly bugs:
 
     We treat {broda zo'e goi ko'a ko'a} as equivalent to {broda zo'e zo'e}.
 
-Other deviations from CLL, not considered bugs:
+Other deviations from CLL, not considered bugs, but which maybe ought to be
+optional:
     {na broda} is equivalent to {naku broda}.
 
-    Implicit quantifiers don't scope over sentence boundaries.
+    Quantifiers don't scope over (even connected) sentence boundaries.
 
     Logical tanru connectives are treated like other logical connectives.
     (This seems to contradict only the letter of CLL, and is consistent with

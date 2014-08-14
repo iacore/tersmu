@@ -30,9 +30,11 @@ type ParseM r = (StateT BridiParseState) (ContT r (State ParseState))
 type BridiM = ParseM Bridi
 type JboPropM = ParseM JboProp
 
-runJboPropM :: JboPropM JboProp -> JboProp
-runJboPropM =
-    (`evalState` nullParseState) . (`runContT` return) . (`evalStateT` nullBridiParseState)
+evalParseM :: ParseM r r -> r
+evalParseM =
+	(`evalState` nullParseState)
+	. (`runContT` return)
+	. (`evalStateT` nullBridiParseState)
 
 class (Monad m,Applicative m) => ParseStateful m where
     getParseState :: m ParseState

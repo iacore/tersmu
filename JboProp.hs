@@ -59,3 +59,13 @@ connToFOL (JboConnective False c b2) p1 p2 =
     connToFOL (JboConnective True c b2) (Not p1) p2
 connToFOL (JboConnective b1 c False) p1 p2 =
     connToFOL (JboConnective b1 c True) p1 (Not p2)
+
+andPred :: [JboPred] -> JboPred
+andPred ps x = bigAnd [p x | p <- ps]
+
+andMPred :: [JboPred] -> Maybe JboPred
+andMPred [] = Nothing
+andMPred ps = Just $ andPred ps
+
+isAmong :: JboTerm -> (JboTerm -> JboProp)
+isAmong y = \o -> Rel (Among y) [o]

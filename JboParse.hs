@@ -312,14 +312,3 @@ subsentToPred ss rv = do
 	when (not reffed) $ addImplicit fresh
 	return p
     return $ \o -> subTerm fresh o p
-
-
-andPred :: [JboPred] -> JboPred
-andPred ps x = bigAnd [p x | p <- ps]
-
-andMPred :: [JboPred] -> Maybe JboPred
-andMPred [] = Nothing
-andMPred ps = Just $ andPred ps
-
-isAmong :: JboTerm -> (JboTerm -> JboProp)
-isAmong y = \o -> Rel (Among y) [o]
