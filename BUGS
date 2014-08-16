@@ -47,3 +47,6 @@ optional:
     Logical tanru connectives are treated like other logical connectives.
     (This seems to contradict only the letter of CLL, and is consistent with
     its examples.)
+
+    We use the tag grammar from xorxes' zasni gerna, which allows some tag
+    constructions which the official parser considers ungrammatical.

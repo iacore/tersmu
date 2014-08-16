@@ -159,9 +159,16 @@ parseTerm t = case t of
 	    (parseTerm t1)
 	    (parseTerm t2)
     Negation -> mapProp Not
-    Sumti tag s -> do 
+    Sumti (Tagged tag) s -> do
+	op <- parseTag tag
 	o <- parseSumti s
-	addArg $ Arg tag o
+	doModal $ JboTagged op (Just o)
+    Sumti taggedness s -> do
+	o <- parseSumti s
+	addArg $ Arg taggedness o
+    BareTag tag -> do
+	op <- parseTag tag
+	doModal $ JboTagged op Nothing
 
 parseSumti :: PreProp r => Sumti -> ParseM r JboTerm
 parseSumti s = do
@@ -292,6 +299,24 @@ parseSumtiAtom sa = do
 	Word s -> return $ Valsi s
     return (o,(rps,ips,as))
 
+parseTag :: PreProp r => Tag -> ParseM r JboTag
+parseTag (ConnectedTag conn tag1 tag2) = do
+    mapParseM2 (connToFOL conn)
+	(parseTag tag1)
+	(parseTag tag2)
+parseTag (TagUnit nahe se nai u) = TagUnit nahe se nai <$> parseTagUnit u
+parseTagUnit :: PreProp r => TagUnit -> ParseM r JboTagUnit
+parseTagUnit (TenseCmavo c) = return $ TenseCmavo c
+parseTagUnit (BAI c) = return $ BAI c
+parseTagUnit (FAhA m c) = return $ FAhA m c
+parseTagUnit (TAhE_ZAhO f c) = return $ TAhE_ZAhO f c
+parseTagUnit (ROI f q) = ROI f <$> parseQuantifier q
+parseTagUnit (FIhO selbri) = FIhO <$> selbriToPred selbri
+parseTagUnit KI = error "TODO: ki"
+parseTagUnit CUhE = error "TODO: cu'e"
+
+parseQuantifier :: PreProp r => Quantifier -> ParseM r Quantifier
+parseQuantifier = return
 
 quantify :: PreProp r => Quantifier -> Maybe JboPred -> ParseM r JboTerm
 quantify q r = do
@@ -303,12 +328,15 @@ quantify q r = do
     where
 	singpred r = \v -> r (Var v)
 
+doModal :: PreProp r => JboOperator -> ParseM r ()
+doModal op = mapProp (Modal op)
+
 -- |applySeltau: operate on a Bridi with a seltau by tanruising every JboRel
 -- in the JboProp.
 applySeltau :: BridiM Bridi -> Bridi -> BridiM Bridi
 applySeltau seltauM tertau = do
     stpred <- parsedSelbriToPred seltauM
-    let f = terpProp (\r ts -> Rel (Tanru stpred r) ts)
+    let f = terpProp (\r ts -> Rel (Tanru stpred r) ts) id
     return $ f . tertau 
 
 selbriToPred :: Selbri -> ParseM r JboPred

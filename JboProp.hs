@@ -9,7 +9,7 @@ import Bindful
 import Data.Maybe
 import Control.Applicative
 
-type JboProp = Prop JboRel JboTerm
+type JboProp = Prop JboRel JboTerm JboOperator
 
 data JboTerm = Var Int
 	     | Constant Int
@@ -27,26 +27,43 @@ data JboRel = ConnectedRels JboConnective JboRel JboRel
 	    | Tanru JboPred JboRel
 	    | AbsPred Abstractor JboPred
 	    | AbsProp Abstractor JboProp
-	    | Moi Quantifier MOICmavo
+	    | Moi Quantifier Cmavo
 	    | Among JboTerm
 	    | Equal
 	    | Brivla String
 
+data JboOperator
+    = JboTagged JboTag (Maybe JboTerm)
+    | WithEventAs JboTerm
+type JboTag = AbsTag Quantifier JboPred
+type JboTagUnit = AbsTagUnit Quantifier JboPred
+
 type JboPred = JboTerm -> JboProp
 
 type Abstractor = String
-type MOICmavo = String
 
 instance FOL.Term JboTerm where
     var n = Var n
 
 -- subTerm s t p: replace instances of s with t in p
 subTerm :: JboTerm -> JboTerm -> JboProp -> JboProp
-subTerm s t = terpProp $ \r -> \ts -> Rel (subTermInRel s t r) $ map (\x -> if x==s then t else x) ts
-subTermInRel t t' (Tanru p r) = Tanru (\o -> subTerm t t' (p o)) (subTermInRel t t' r)
-subTermInRel t t' (AbsPred a p) = AbsPred a (\o -> subTerm t t' (p o))
-subTermInRel t t' (AbsProp a p) = AbsProp a (subTerm t t' p)
-subTermInRel _ _ r = r
+subTerm s t = terpProp
+    (\r -> \ts -> Rel (subTermInRel r) $ map (\x -> if x==s then t else x) ts)
+    subTermInOp
+    where
+    subTermInRel (Tanru p r) = Tanru (\o -> subTerm s t (p o)) (subTermInRel r)
+    subTermInRel (AbsPred a p) = AbsPred a (\o -> subTerm s t (p o))
+    subTermInRel (AbsProp a p) = AbsProp a (subTerm s t p)
+    subTermInRel r = r
+    subTermInOp (JboTagged tag mt) =
+	JboTagged (subTermInTag tag) $ if mt == Just s then Just t else mt
+    subTermInOp (WithEventAs x) = WithEventAs $ if x==s then t else x
+    subTermInTag (ConnectedTag conn tag1 tag2) =
+	ConnectedTag conn (subTermInTag tag1) (subTermInTag tag2)
+    subTermInTag (TagUnit nahe se nai tu) = TagUnit nahe se nai $ subTermInTagUnit tu
+    subTermInTagUnit (FIhO fiho) = FIhO $ subTermInPred fiho
+    subTermInTagUnit tu = tu
+    subTermInPred p = \x -> subTerm s t (p x)
 
 connToFOL :: JboConnective -> JboProp -> JboProp -> JboProp
 connToFOL (JboConnective True 'e' True) p1 p2 = Connected And p1 p2

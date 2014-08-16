@@ -18,16 +18,38 @@ data Subsentence = Subsentence [Term] Sentence
 data Sentence = Sentence [Term] BridiTail
     deriving (Eq, Show, Ord)
 
-data Term = Sumti Tag Sumti
+data Term = Sumti Tagged Sumti
 	  | Negation
 	  | Termset [Term]
 	  | ConnectedTerms JboConnective Term Term
+	  | BareTag Tag
 	  deriving (Eq, Show, Ord)
 
-data Tag = Untagged
-	 | FA Int
-	 | BAI String
+data Tagged = Untagged
+	 | Tagged Tag
+	 | FATagged Int
 	 deriving (Eq, Show, Ord)
+
+data AbsTag q fiho
+    = TagUnit {tagNahe::Maybe Cmavo, tagSE::Maybe Int, tagNAI::Bool, tagUnit::AbsTagUnit q fiho}
+    | ConnectedTag JboConnective (AbsTag q fiho) (AbsTag q fiho)
+instance (Eq q, Eq fiho) => Eq (AbsTag q fiho)
+instance (Show q, Show fiho) => Show (AbsTag q fiho)
+instance (Ord q, Ord fiho) => Ord (AbsTag q fiho)
+data AbsTagUnit q fiho
+    = TenseCmavo Cmavo
+    | FAhA {fahaHasMohi::Bool, fahaCmavo::Cmavo}
+    | ROI {roiIsSpace::Bool, roiQuantifier::q}
+    | TAhE_ZAhO {taheZoheIsSpace::Bool, taheZahoCmavo::Cmavo}
+    | BAI Cmavo
+    | FIhO fiho
+    | CUhE
+    | KI
+
+type Tag = AbsTag Quantifier Selbri
+type TagUnit = AbsTagUnit Quantifier Selbri
+
+type Cmavo = String
 
 data Sumti = ConnectedSumti JboConnective Sumti Sumti [RelClause]
 	   | QAtom (Maybe Quantifier) [RelClause] SumtiAtom

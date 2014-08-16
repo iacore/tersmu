@@ -8,6 +8,7 @@ import Util
 
 import Data.Maybe
 import Control.Applicative
+import Data.Traversable (traverse)
 import Data.List
 
 ---- Printing routines, in lojban and in (customized) logical notation
@@ -62,6 +63,37 @@ instance JboShow JboConnective where
 	    [c] ++
 	    if not b' then "nai" else ""
 
+instance JboShow JboTag where
+    logjboshow jbo (ConnectedTag conn tag1 tag2) = do
+	[s1,s2] <- mapM (logjboshow jbo) [tag1,tag2]
+	conns <- logjboshow jbo conn
+	return $ if jbo
+	    then s1 ++ " " ++ conns ++ " " ++ s2
+	    else conns ++ "(" ++ s1 ++ "," ++ s2 ++ ")"
+    logjboshow jbo (TagUnit nahe se nai tu) = do
+	tus <- logjboshow jbo tu
+	return $ maybe "" (++" ") nahe
+	    ++ maybe "" ((++" ").seToStr) se
+	    ++ tus
+	    ++ if nai then " nai" else ""
+instance JboShow JboTagUnit where
+    logjboshow jbo (TenseCmavo s) = return s
+    logjboshow jbo (BAI s) = return s
+    logjboshow jbo (FAhA mohi s) = return $
+	(if mohi then "mo'i " else "") ++ s
+    logjboshow jbo (ROI fehe q) = do
+	qs <- logjboshow jbo q
+	return $ 
+	    (if fehe then "fe'e " else "") ++ qs ++ " roi"
+    logjboshow jbo (TAhE_ZAhO fehe s) = return $
+	(if fehe then "fe'e " else "") ++ s
+    logjboshow jbo (FIhO p) = do
+	ps <- logjboshow jbo p
+	return $ "fi'o " ++ ps ++ if jbo then " fe'u" else ""
+
+instance JboShow JboPred where
+    logjboshow jbo p = logjboshowpred jbo (\n -> p (Var n))
+
 logjboshowpred jbo p = withShuntedRelVar (\n ->
    if not jbo
      then logjboshow jbo (p n)
@@ -95,7 +127,7 @@ instance JboShow JboRel where
 	((seToStr n ++ " ") ++) <$> logjboshow jbo r
     logjboshow jbo (Tanru p r) =
       do rstr <- logjboshow jbo r
-	 pstr <- logjboshowpred jbo (\n -> p (Var n))
+	 pstr <- logjboshow jbo p
 	 if jbo
 	    then return $ "ke " ++ pstr ++ " " ++ rstr ++ " ke'e"
 	    else return $ "<" ++ pstr ++ "><" ++ rstr ++ ">"
@@ -206,6 +238,15 @@ instance JboShow JboProp
 				     ++ [if jbo then "ku'o" else "). "]
 		     logjboshow' jbo (ps ++
 			 [qs, (if jbo then "" else " ") ++ vs] ++ rss) (p n)
+	  logjboshow' jbo ps (Modal (WithEventAs t) p) = do
+	    ts <- logjboshow jbo t
+	    logjboshow' jbo (ps ++ if jbo then ["fi'o","du"] ++ [ts] else [ts] ++ ["=. "]) p
+	  logjboshow' jbo ps (Modal (JboTagged tag mt) p) = do
+	    tags <- logjboshow jbo tag
+	    mtl <- maybeToList <$> traverse (logjboshow jbo) mt
+	    logjboshow' jbo (ps ++ if jbo
+		then [tags] ++ mtl ++ ["ku"]
+		else ["(",tags,")","("] ++ mtl ++ ["). "]) p
 	  logjboshow' jbo ps p | ps /= [] =
 	      do ss <- logjboshow' jbo [] p
 	         return $ ps ++ [if jbo then "zo'u" else ""] ++ ss

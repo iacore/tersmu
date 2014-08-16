@@ -1,11 +1,11 @@
 module FOL where 
 import Control.Monad.State
 
-data Prop r t
-    = Not    (Prop r t)
-    | Connected Connective (Prop r t) (Prop r t)
-    | Quantified Quantifier (Maybe (Int -> Prop r t)) (Int -> Prop r t)
-    | LambdaApp (Int -> Prop r t) t
+data Prop r t o
+    = Not    (Prop r t o)
+    | Connected Connective (Prop r t o) (Prop r t o)
+    | Quantified Quantifier (Maybe (Int -> Prop r t o)) (Int -> Prop r t o)
+    | Modal o (Prop r t o)
     | Rel    r [t]
     | Eet
 
@@ -32,10 +32,10 @@ class Term t where
 class Rel r where
     relstr :: r -> String
 
--- terpProp: lift an interpretation of atomic formulae to an interpretation of
--- arbitrary formula
-terpProp :: (r1 -> [t1] -> Prop r2 t2) -> Prop r1 t1 -> Prop r2 t2
-terpProp terpAtomic p = terpProp' p
+-- terpProp: lift an interpretation of atomic formulae and operators to an
+-- interpretation of arbitrary formula
+terpProp :: (r1 -> [t1] -> Prop r2 t2 o2) -> (o1 -> o2) -> Prop r1 t1 o1 -> Prop r2 t2 o2
+terpProp terpAtomic terpOp p = terpProp' p
     where terpProp' (Rel r ts) = terpAtomic r ts
 	  terpProp' (Quantified q r p) =
 	      Quantified q (case r of Nothing -> Nothing
@@ -45,9 +45,9 @@ terpProp terpAtomic p = terpProp' p
 	  terpProp' (Connected c p1 p2) =
 	      Connected c (terpProp' p1) (terpProp' p2)
 	  terpProp' Eet = Eet
-	  terpProp' (LambdaApp _ _) = error "Can't terp lambda"
+	  terpProp' (Modal o p) = Modal (terpOp o) (terpProp' p)
 
-bigAnd :: [Prop r t] -> Prop r t
+bigAnd :: [Prop r t o] -> Prop r t o
 bigAnd ps = bigAnd' $ filter (\p -> case p of {Not Eet -> False; _ -> True}) ps
     where bigAnd' [] = Not Eet
 	  bigAnd' [p] = p

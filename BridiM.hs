@@ -200,13 +200,14 @@ addImplicit o = modifyArglist $ \al ->
 	gap = head $ [1..] \\ [n | NPos n <- Map.keys as]
     in al{args=(Map.insert (NPos gap) o as)}
 
-data Arg = Arg Tag JboTerm
+data Arg = Arg Tagged JboTerm
 addArg :: Arg -> ParseM r ()
 addArg arg@(Arg tag o) = modifyArglist $
 	(appendToArglist o) .
 	(\as -> case tag of
 	    Untagged -> as
-	    FA n -> as{position=n})
+	    FATagged n -> as{position=n}
+	    Tagged _ -> error "Now how did that get here?")
 
 type VarBindings = Map SumtiAtom JboTerm
 class (Monad m,Applicative m) => VarBindful m where
