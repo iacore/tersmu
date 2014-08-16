@@ -83,6 +83,10 @@ parseBTail (BridiTail3 sb tts) = do
 parseSelbri :: Selbri -> BridiM Bridi
 parseSelbri (Negated sb) =
     mapProp Not >> parseSelbri sb
+parseSelbri (TaggedSelbri tag sb) = do
+    op <- parseTag tag
+    doModal $ JboTagged op Nothing
+    parseSelbri sb
 parseSelbri (Selbri2 sb) =
     parseSelbri2 sb
 

@@ -310,6 +310,7 @@ tailTerms :: {[Term]}
 selbri :: Selbri
     = "na":NA sb:selbri -> {Negated sb}
     / ("ja'a":NA -> {})? sb:selbri2 -> {Selbri2 sb}
+    / tag:tag sb:selbri -> {TaggedSelbri tag sb}
 
 selbri2 :: Selbri2
     = sb:selbri3 CO sb':selbri2 -> {SBInverted sb sb'}

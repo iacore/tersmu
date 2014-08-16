@@ -95,6 +95,7 @@ data GekSentence = ConnectedGS JboConnective Subsentence Subsentence [Term]
 		 deriving (Eq, Show, Ord)
 
 data Selbri = Negated Selbri
+	    | TaggedSelbri Tag Selbri
 	    | Selbri2 Selbri2
 	    deriving (Eq, Show, Ord)
 
