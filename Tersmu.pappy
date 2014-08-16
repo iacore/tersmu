@@ -393,8 +393,10 @@ _jektag :: {(JboConnective, Tag)}
 
 -- XXX: we use the relaxed tag grammar of xorxes' zasni gerna
 tag1 :: Tag
-    = nahe:(NAhE)? se:(convSE)? tb:tagUnit nai:(NAI)? ->
-	{ TagUnit nahe se (isJust nai) tb }
+    = dtus:decoratedTagUnit+ -> {DecoratedTagUnits dtus}
+decoratedTagUnit :: DecoratedTagUnit
+    = nahe:(NAhE)? se:(convSE)? tu:tagUnit nai:(NAI)? ->
+	{ DecoratedTagUnit nahe se (isJust nai) tu }
 tagUnit :: TagUnit
     = s:(PU / ZI / ZEhA / VA / VEhA / VIhA / CAhA) -> {TenseCmavo s}
     / s:BAI -> {BAI s}

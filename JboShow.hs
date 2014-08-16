@@ -70,12 +70,14 @@ instance JboShow JboTag where
 	return $ if jbo
 	    then s1 ++ " " ++ conns ++ " " ++ s2
 	    else conns ++ "(" ++ s1 ++ "," ++ s2 ++ ")"
-    logjboshow jbo (TagUnit nahe se nai tu) = do
-	tus <- logjboshow jbo tu
-	return $ maybe "" (++" ") nahe
-	    ++ maybe "" ((++" ").seToStr) se
-	    ++ tus
-	    ++ if nai then " nai" else ""
+    logjboshow jbo (DecoratedTagUnits dtus) =
+	(concat.intersperse " " <$>) $ (`mapM` dtus)
+	$ \(DecoratedTagUnit nahe se nai tu) -> do
+	    tus <- logjboshow jbo tu
+	    return $ maybe "" (++" ") nahe
+		++ maybe "" ((++" ").seToStr) se
+		++ tus
+		++ if nai then " nai" else ""
 instance JboShow JboTagUnit where
     logjboshow jbo (TenseCmavo s) = return s
     logjboshow jbo (BAI s) = return s

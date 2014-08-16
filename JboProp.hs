@@ -60,7 +60,8 @@ subTerm s t = terpProp
     subTermInOp (WithEventAs x) = WithEventAs $ if x==s then t else x
     subTermInTag (ConnectedTag conn tag1 tag2) =
 	ConnectedTag conn (subTermInTag tag1) (subTermInTag tag2)
-    subTermInTag (TagUnit nahe se nai tu) = TagUnit nahe se nai $ subTermInTagUnit tu
+    subTermInTag (DecoratedTagUnits dtus) = DecoratedTagUnits $ map subTermInDTU dtus
+    subTermInDTU (DecoratedTagUnit nahe se nai tu) = DecoratedTagUnit nahe se nai $ subTermInTagUnit tu
     subTermInTagUnit (FIhO fiho) = FIhO $ subTermInPred fiho
     subTermInTagUnit tu = tu
     subTermInPred p = \x -> subTerm s t (p x)

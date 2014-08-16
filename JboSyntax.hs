@@ -31,11 +31,13 @@ data Tagged = Untagged
 	 deriving (Eq, Show, Ord)
 
 data AbsTag q fiho
-    = TagUnit {tagNahe::Maybe Cmavo, tagSE::Maybe Int, tagNAI::Bool, tagUnit::AbsTagUnit q fiho}
+    = DecoratedTagUnits [DecoratedAbsTagUnit q fiho]
     | ConnectedTag JboConnective (AbsTag q fiho) (AbsTag q fiho)
 instance (Eq q, Eq fiho) => Eq (AbsTag q fiho)
 instance (Show q, Show fiho) => Show (AbsTag q fiho)
 instance (Ord q, Ord fiho) => Ord (AbsTag q fiho)
+data DecoratedAbsTagUnit q fiho = DecoratedTagUnit
+    {tagNahe::Maybe Cmavo, tagSE::Maybe Int, tagNAI::Bool, tagUnit::AbsTagUnit q fiho}
 data AbsTagUnit q fiho
     = TenseCmavo Cmavo
     | FAhA {fahaHasMohi::Bool, fahaCmavo::Cmavo}
@@ -47,6 +49,7 @@ data AbsTagUnit q fiho
     | KI
 
 type Tag = AbsTag Quantifier Selbri
+type DecoratedTagUnit = DecoratedAbsTagUnit Quantifier Selbri
 type TagUnit = AbsTagUnit Quantifier Selbri
 
 type Cmavo = String

@@ -304,7 +304,9 @@ parseTag (ConnectedTag conn tag1 tag2) = do
     mapParseM2 (connToFOL conn)
 	(parseTag tag1)
 	(parseTag tag2)
-parseTag (TagUnit nahe se nai u) = TagUnit nahe se nai <$> parseTagUnit u
+parseTag (DecoratedTagUnits dtus) = (DecoratedTagUnits <$>) $
+    (`mapM` dtus) $ \(DecoratedTagUnit nahe se nai u) ->
+	DecoratedTagUnit nahe se nai <$> parseTagUnit u
 parseTagUnit :: PreProp r => TagUnit -> ParseM r JboTagUnit
 parseTagUnit (TenseCmavo c) = return $ TenseCmavo c
 parseTagUnit (BAI c) = return $ BAI c

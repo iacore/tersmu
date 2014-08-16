@@ -77,7 +77,9 @@ event of a proposition. See notes/tenseConnections for details.
 
 (It should be a variable rather than a constant so we can handle things like
     ro danlu cu jbena gi'e ba bo morsi
-?
+->
+    Ax:danlu(_). Ey. (y=. jbena(x) /\ (ba)(y). morsi(x))
+)
 
 Tense grammar
 -------------
