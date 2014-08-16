@@ -7,6 +7,8 @@ Definite bugs:
     Only the simplest {goi} phrases, those of the form {[sumti] goi ko'a}, are
     currently handled.
 
+    {pe bai ko'a} and its ilk aren't implemented properly.
+
     {ri} doesn't ignore anaphoric pro-sumti.
 
 Probably bugs:
@@ -18,9 +20,6 @@ Probably bugs:
 
     Seltau are considered to be unary predicates rather than higher arity
     relations.
-
-    Only sumti are allowed in GOI phrases, not arbitrary terms. That's mostly
-    sensible - but means we don't allow {pe BAI ko'a}, which is actually used.
 
     The way we have {cei broda} working probably isn't as intended; for
     non-compound bridi, we should probably have it binding to the whole bridi

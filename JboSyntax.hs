@@ -61,9 +61,9 @@ data Sumti = ConnectedSumti JboConnective Sumti Sumti [RelClause]
 
 data RelClause = Restrictive Subsentence  -- poi
 	       | Incidental Subsentence  -- noi
-	       | Assignment Sumti  -- goi
-	       | RestrictiveGOI String Sumti  -- pe etc.
-	       | IncidentalGOI String Sumti  -- ne etc.
+	       | Assignment Term  -- goi
+	       | RestrictiveGOI String Term  -- pe etc.
+	       | IncidentalGOI String Term  -- ne etc.
 	       deriving (Eq, Show, Ord)
 
 data SumtiAtom = Name String

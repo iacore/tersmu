@@ -155,24 +155,28 @@ parseTU (TUSelbri3 sb) = parseSelbri3 sb
 parseTerms :: PreProp r => [Term] -> ParseM r ()
 parseTerms = mapM_ parseTerm
 
-parseTerm :: PreProp r => Term -> ParseM r ()
+parseTerm :: PreProp r => Term -> ParseM r (Maybe JboTerm)
 parseTerm t = case t of
-    Termset ts -> mapM_ parseTerm ts
-    ConnectedTerms con t1 t2 ->
+    Termset ts -> mapM_ parseTerm ts >> return Nothing
+    ConnectedTerms con t1 t2 -> do
 	mapParseM2 (connToFOL con)
 	    (parseTerm t1)
 	    (parseTerm t2)
-    Negation -> mapProp Not
+	return Nothing
+    Negation -> mapProp Not >> return Nothing
     Sumti (Tagged tag) s -> do
 	op <- parseTag tag
 	o <- parseSumti s
 	doModal $ JboTagged op (Just o)
+	return Nothing
     Sumti taggedness s -> do
 	o <- parseSumti s
 	addArg $ Arg taggedness o
+	return $ Just o
     BareTag tag -> do
 	op <- parseTag tag
 	doModal $ JboTagged op Nothing
+	return Nothing
 
 parseSumti :: PreProp r => Sumti -> ParseM r JboTerm
 parseSumti s = do
@@ -219,28 +223,35 @@ parseRels (r:rs) = do
 	Incidental ss -> do
 	    ip <- subsentToPred ss RelVar
 	    return ([],[ip],[])
-	RestrictiveGOI goi s -> do
-	    o <- parseSumti s
-	    let rel = case goi of
-		    "pe" -> Brivla "srana"
-		    "po'u" -> Brivla "du"
-		    -- XXX: following are rather approximate... the
-		    -- BPFK subordinators section suggests more
-		    -- complicated expressions
-		    "po'e" -> Tanru (\o -> Rel (Brivla "jinzi") [o])
-				(Brivla "srana")
-		    "po" -> Tanru (\o -> Rel (Brivla "steci") [o])
-				(Brivla "srana")
-		rp = \x -> Rel rel [x,o]
-	    return ([rp],[],[])
-	IncidentalGOI goi s -> do
-	    o <- parseSumti s
-	    let rel = case goi of
-		    "ne" -> Brivla "srana"
-		    "no'u" -> Brivla "du"
-		ip = \x -> Rel rel [x,o]
-	    return ([],[ip],[])
-	Assignment (QAtom Nothing [] sa) | isAssignable sa -> 
+	RestrictiveGOI goi t -> do
+	    -- TODO: semantics of {pe BAI} etc
+	    mo <- parseTerm t
+	    case mo of
+		Nothing -> return ([],[],[])
+		Just o ->
+		    let rel = case goi of
+			    "pe" -> Brivla "srana"
+			    "po'u" -> Brivla "du"
+			    -- XXX: following are rather approximate... the
+			    -- BPFK subordinators section suggests more
+			    -- complicated expressions
+			    "po'e" -> Tanru (\o -> Rel (Brivla "jinzi") [o])
+					(Brivla "srana")
+			    "po" -> Tanru (\o -> Rel (Brivla "steci") [o])
+					(Brivla "srana")
+			rp = \x -> Rel rel [x,o]
+		    in return ([rp],[],[])
+	IncidentalGOI goi t -> do
+	    mo <- parseTerm t
+	    case mo of
+		Nothing -> return ([],[],[])
+		Just o ->
+		    let rel = case goi of
+			    "ne" -> Brivla "srana"
+			    "no'u" -> Brivla "du"
+			ip = \x -> Rel rel [x,o]
+		    in return ([],[ip],[])
+	Assignment (Sumti Untagged (QAtom Nothing [] sa)) | isAssignable sa -> 
 	    return ([],[],[sa])
 	Assignment _ ->
 	    -- TODO: handle {mi fa'u do vu'o goi ko'a fa'u ko'e}?
@@ -273,7 +284,7 @@ parseSumtiAtom sa = do
 	    let rels' = rels
 		    ++ case mis of
 			Nothing -> []
-			Just is -> [IncidentalGOI "ne" is]
+			Just is -> [IncidentalGOI "ne" (Sumti Untagged is)]
 	    in parseRels rels'
 	_ -> return ([],[],[])
     o <- case sa of

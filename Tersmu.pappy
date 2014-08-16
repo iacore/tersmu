@@ -129,17 +129,15 @@ relativeClauses :: {[RelClause]}
 	    -> {(r:rs)}
 
 relativeClause :: RelClause
-    -- XXX: official grammar has GOI taking a term rather than a sumti, but
-    -- they have no sensible semantics for terms other than sumtis.
 	= "poi":NOI subs:subsentence KUhO? -> {Restrictive subs}
 	/ "noi":NOI subs:subsentence KUhO? -> {Incidental subs}
-	/ "goi":GOI s:sumti GEhU? -> {Assignment s}
-	/ "ne":GOI s:sumti GEhU? -> {IncidentalGOI "ne" s}
-	/ "no'u":GOI s:sumti GEhU? -> {IncidentalGOI "no'u" s}
-	/ "pe":GOI s:sumti GEhU? -> {RestrictiveGOI "pe" s}
-	/ "po'u":GOI s:sumti GEhU? -> {RestrictiveGOI "po'u" s}
-	/ "po":GOI s:sumti GEhU? -> {RestrictiveGOI "po" s}
-	/ "po'e":GOI s:sumti GEhU? -> {RestrictiveGOI "po'e" s}
+	/ "goi":GOI t:term GEhU? -> {Assignment t}
+	/ "ne":GOI t:term GEhU? -> {IncidentalGOI "ne" t}
+	/ "no'u":GOI t:term GEhU? -> {IncidentalGOI "no'u" t}
+	/ "pe":GOI t:term GEhU? -> {RestrictiveGOI "pe" t}
+	/ "po'u":GOI t:term GEhU? -> {RestrictiveGOI "po'u" t}
+	/ "po":GOI t:term GEhU? -> {RestrictiveGOI "po" t}
+	/ "po'e":GOI t:term GEhU? -> {RestrictiveGOI "po'e" t}
 
 sumti6 :: SumtiAtom
     = "la":LA s:CMENE -> {Name s}
