@@ -213,9 +213,15 @@ instance JboShow JboTerm where
     logjboshow _ (UnboundLerfuString s) = return $ concat $ intersperse " " $
 	map (\c -> case c of _ | c `elem` "aoeui" -> (c:"bu")
 			     'y' -> "y bu"
+			     'h' -> "y'y"
 			     _ | c `elem` ['0'..'9'] -> jbonum $ fromEnum c - fromEnum '0'
 			     _ -> (c:"y")) s
     logjboshow _ (NonAnaph s) = return s
+    logjboshow jbo (JoikedTerms joik t1 t2) = do
+	[ts1,ts2] <- mapM (logjboshow jbo) [t1,t2]
+	joiks <- logjboshow jbo joik
+	return $ if jbo then ts1 ++ " " ++ joiks ++ " ke " ++ ts2 ++ " ke'e"
+	    else "(" ++ ts1 ++ " {" ++ joiks ++ "} " ++ ts2 ++ ")"
 	
 
 vowelnum 1 = "a"
@@ -288,6 +294,14 @@ instance JboShow JboProp
 	      			++ ss1 ++ ["gi"] ++ ss2
 	      		   else ["("] ++ ss1 ++
 	      		        [" "++show c++" "] ++ ss2 ++ [")"]
+	  logjboshow' jbo ps (NonLogConnected joik p1 p2) =
+	      do ss1 <- logjboshow' jbo ps p1
+	         ss2 <- logjboshow' jbo ps p2
+		 joiks <- logjboshow jbo joik
+	         return $ if jbo then [joik,"gi"]
+	      			++ ss1 ++ ["gi"] ++ ss2
+	      		   else ["("] ++ ss1 ++
+	      		        [" {"++joik++"} "] ++ ss2 ++ [")"]
 	  logjboshow' jbo ps (Not p) =
 	      do ss <- logjboshow' jbo ps p
 	         return $ (if jbo then ["na","ku"] else ["!"]) ++ ss

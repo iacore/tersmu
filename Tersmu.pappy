@@ -197,7 +197,7 @@ sumtiTail1 :: {(Maybe Quantifier, Selbri, [RelClause])}
 lerfuString :: {[Lerfu]} = c:lerfu cs:(lerfu / n:digit -> {show n !! 0})*
     -> {c:cs}
 lerfu :: Lerfu
-    = s:BY -> {s!!0}
+    = s:BY -> {if s=="y'y" then 'h' else s!!0}
     / PAUSE? v:Vowel PAUSE? Spacing? BU -> {v}
 
 quantifier :: Quantifier = q:number BOI? -> q

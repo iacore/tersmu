@@ -1,11 +1,12 @@
 module FOL where 
 import Control.Monad.State
 
-data Prop r t o
-    = Not    (Prop r t o)
-    | Connected Connective (Prop r t o) (Prop r t o)
-    | Quantified Quantifier (Maybe (Int -> Prop r t o)) (Int -> Prop r t o)
-    | Modal o (Prop r t o)
+data Prop r t c o
+    = Not    (Prop r t c o)
+    | Connected Connective (Prop r t c o) (Prop r t c o)
+    | NonLogConnected c (Prop r t c o) (Prop r t c o)
+    | Quantified Quantifier (Maybe (Int -> Prop r t c o)) (Int -> Prop r t c o)
+    | Modal o (Prop r t c o)
     | Rel    r [t]
     | Eet
 
@@ -34,7 +35,7 @@ class Rel r where
 
 -- terpProp: lift an interpretation of atomic formulae and operators to an
 -- interpretation of arbitrary formula
-terpProp :: (r1 -> [t1] -> Prop r2 t2 o2) -> (o1 -> o2) -> Prop r1 t1 o1 -> Prop r2 t2 o2
+terpProp :: (r1 -> [t1] -> Prop r2 t2 c o2) -> (o1 -> o2) -> Prop r1 t1 c o1 -> Prop r2 t2 c o2
 terpProp terpAtomic terpOp p = terpProp' p
     where terpProp' (Rel r ts) = terpAtomic r ts
 	  terpProp' (Quantified q r p) =
@@ -44,10 +45,12 @@ terpProp terpAtomic terpOp p = terpProp' p
 	  terpProp' (Not p) = Not $ terpProp' p
 	  terpProp' (Connected c p1 p2) =
 	      Connected c (terpProp' p1) (terpProp' p2)
+	  terpProp' (NonLogConnected c p1 p2) =
+	      NonLogConnected c (terpProp' p1) (terpProp' p2)
 	  terpProp' Eet = Eet
 	  terpProp' (Modal o p) = Modal (terpOp o) (terpProp' p)
 
-bigAnd :: [Prop r t o] -> Prop r t o
+bigAnd :: [Prop r t c o] -> Prop r t c o
 bigAnd ps = bigAnd' $ filter (\p -> case p of {Not Eet -> False; _ -> True}) ps
     where bigAnd' [] = Not Eet
 	  bigAnd' [p] = p

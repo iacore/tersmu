@@ -184,19 +184,26 @@ parseSumti :: PreProp r => Sumti -> ParseM r JboTerm
 parseSumti s = do
     (o,ips,as) <- case s of
 	(ConnectedSumti fore con s1 s2 rels) -> do
-	    [o1,o2] <- mapM parseSumti [s1,s2]
-	    fresh <- getFreshVar
-	    {-
-	    mapProp $ \p ->
-		connToFOL con
-		(subTerm fresh o1 p)
-		(subTerm fresh o2 p)
-	    -}
-	    doConnective fore con 
-		(mapProp $ \p -> subTerm fresh o1 p)
-		(mapProp $ \p -> subTerm fresh o2 p)
+	    o <- case con of
+		JboConnLog _ lcon -> do
+		    o <- getFreshVar
+		    {-
+		    mapProp $ \p ->
+			connToFOL lcon
+			(subTerm o o1 p)
+			(subTerm o o2 p)
+		    -}
+		    doConnective fore con 
+			(do {o1 <- parseSumti s1; mapProp $ \p -> subTerm o o1 p})
+			(do {o2 <- parseSumti s2; mapProp $ \p -> subTerm o o2 p})
+		    return o
+		JboConnJoik mtag joik -> do
+		    when (isJust mtag) $ warning
+			"Ignoring tag on non-logically connected sumti"
+		    [o1,o2] <- mapM parseSumti [s1,s2]
+		    return $ JoikedTerms joik o1 o2
 	    (_,ips,as) <- parseRels rels
-	    return (fresh,ips,as)
+	    return (o,ips,as)
 	(QAtom mq rels sa) -> case sa of
 	     Variable _ -> do
 		(rps,ips,as) <- parseRels rels
@@ -399,20 +406,23 @@ subsentToPred ss rv = do
 
 doConnective :: PreProp r => Bool -> Connective -> ParseM r a -> ParseM r a -> ParseM r a
 doConnective isForethought con m1 m2 = do
-    (m1',m2',lcon) <- case con of
-	JboConnLog Nothing lcon -> return $ (m1,m2,lcon)
-	JboConnLog (Just tag) lcon -> do
+    let (mtag,con') = case con of
+	    JboConnLog mtag lcon -> (mtag, connToFOL lcon)
+	    JboConnJoik mtag joik -> (mtag, joikToFOL joik)
+    (m1',m2') <- case mtag of
+	Nothing -> return $ (m1,m2)
+	Just tag -> do
 	    v <- quantify Exists Nothing
 	    if isForethought then do
 		    tag' <- parseTag tag
 		    return $ (doModal (WithEventAs v) >> m1
-			, doModal (JboTagged tag' $ Just v) >> m2
-			, lcon)
+			, doModal (JboTagged tag' $ Just v) >> m2)
 		else if isTense tag
 		    then return $ (doModal (WithEventAs v) >> m1
-			    , parseTag tag >>= doModal . (`JboTagged` Just v) >> m2
-			    , lcon)
+			    , parseTag tag >>= doModal . (`JboTagged` Just v) >> m2)
 		    else return $ ( (parseTag tag >>= doModal . (`JboTagged` Just v)) >> m1
-			    , doModal (WithEventAs v) >> m2
-			    , lcon)
-    mapParseM2 (connToFOL lcon) m1' m2'
+			    , doModal (WithEventAs v) >> m2)
+    mapParseM2 con' m1' m2'
+
+-- TODO
+warning = error

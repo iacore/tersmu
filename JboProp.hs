@@ -9,7 +9,7 @@ import Bindful
 import Data.Maybe
 import Control.Applicative
 
-type JboProp = Prop JboRel JboTerm JboOperator
+type JboProp = Prop JboRel JboTerm Joik JboOperator
 
 data JboTerm = Var Int
 	     | Constant Int
@@ -20,6 +20,7 @@ data JboTerm = Var Int
 	     | JboQuote [Statement]
 	     | Valsi String
 	     | ZoheTerm
+	     | JoikedTerms Joik JboTerm JboTerm
 	     deriving (Eq, Show, Ord)
 
 data JboRel = Tanru JboPred JboRel
@@ -48,9 +49,11 @@ instance FOL.Term JboTerm where
 -- subTerm s t p: replace instances of s with t in p
 subTerm :: JboTerm -> JboTerm -> JboProp -> JboProp
 subTerm s t = terpProp
-    (\r -> \ts -> Rel (subTermInRel r) $ map (\x -> if x==s then t else x) ts)
+    (\r -> \ts -> Rel (subTermInRel r) $ map subTermInTerm ts)
     subTermInOp
     where
+    subTermInTerm (JoikedTerms joik t1 t2) = JoikedTerms joik (subTermInTerm t1) (subTermInTerm t2)
+    subTermInTerm x = if x == s then t else x
     subTermInRel (Tanru p r) = Tanru (subTermInPred p) (subTermInRel r)
     subTermInRel (TanruConnective con p p') = TanruConnective con (subTermInPred p) (subTermInPred p')
     subTermInRel (AbsPred a p) = AbsPred a (\o -> subTerm s t (p o))
@@ -58,7 +61,7 @@ subTerm s t = terpProp
     subTermInRel r = r
     subTermInOp (JboTagged tag mt) =
 	JboTagged (subTermInTag tag) $ if mt == Just s then Just t else mt
-    subTermInOp (WithEventAs x) = WithEventAs $ if x==s then t else x
+    subTermInOp (WithEventAs x) = WithEventAs $ subTermInTerm x
     subTermInTag (ConnectedTag conn tag1 tag2) =
 	ConnectedTag conn (subTermInTag tag1) (subTermInTag tag2)
     subTermInTag (DecoratedTagUnits dtus) = DecoratedTagUnits $ map subTermInDTU dtus
@@ -79,6 +82,9 @@ connToFOL (LogJboConnective False c b2) p1 p2 =
     connToFOL (LogJboConnective True c b2) (Not p1) p2
 connToFOL (LogJboConnective b1 c False) p1 p2 =
     connToFOL (LogJboConnective b1 c True) p1 (Not p2)
+
+joikToFOL :: Joik -> JboProp -> JboProp -> JboProp
+joikToFOL joik = NonLogConnected joik
 
 andPred :: [JboPred] -> JboPred
 andPred ps x = bigAnd [p x | p <- ps]
