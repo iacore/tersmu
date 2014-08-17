@@ -73,10 +73,10 @@ logjboshowConn True prefix (JboConnLog mtag lcon) = do
     lc <- logjboshowLogConn True prefix lcon
     mtags <- maybe "" ((" "++).(++" bo")) <$> traverse (logjboshow True) mtag
     return $ lc ++ mtags
-logjboshowConn True prefix (JboConnJOI mtag joi) = do
-    jois <- logjboshow True joi
+logjboshowConn True prefix (JboConnJoik mtag joik) = do
+    jois <- logjboshow True joik
     mtags <- maybe "" ((" "++).(++" bo")) <$> traverse (logjboshow True) mtag
-    return $ mtags
+    return $ jois ++ mtags
 
 instance JboShow JboTag where
     logjboshow jbo (ConnectedTag con tag1 tag2) = do

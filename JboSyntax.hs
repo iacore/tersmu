@@ -54,11 +54,13 @@ type TagUnit = AbsTagUnit Quantifier Selbri
 
 data AbsConnective tag
     = JboConnLog (Maybe tag) LogJboConnective
-    | JboConnJOI (Maybe tag) Cmavo
+    | JboConnJoik (Maybe tag) Joik
 type Connective = AbsConnective Tag
 instance (Eq tag) => Eq (AbsConnective tag)
 instance (Show tag) => Show (AbsConnective tag)
 instance (Ord tag) => Ord (AbsConnective tag)
+
+type Joik = String
 
 -- XXX we arbitarily consider a mix of tense and "modal" to be a tense
 isTense :: AbsTag q fiho -> Bool

@@ -343,9 +343,9 @@ parseConnective :: PreProp r => Connective -> ParseM r JboConnective
 parseConnective (JboConnLog mtag lcon) = do
     mtag' <- traverse parseTag mtag
     return $ JboConnLog mtag' lcon
-parseConnective (JboConnJOI mtag joi) = do
+parseConnective (JboConnJoik mtag joik) = do
     mtag' <- traverse parseTag mtag
-    return $ JboConnJOI mtag' joi
+    return $ JboConnJoik mtag' joik
 
 parseQuantifier :: PreProp r => Quantifier -> ParseM r Quantifier
 parseQuantifier = return
@@ -412,7 +412,7 @@ doConnective isForethought con m1 m2 = do
 		    then return $ (doModal (WithEventAs v) >> m1
 			    , parseTag tag >>= doModal . (`JboTagged` Just v) >> m2
 			    , lcon)
-		    else return $ ( m1 <* (parseTag tag >>= doModal . (`JboTagged` Just v))
+		    else return $ ( (parseTag tag >>= doModal . (`JboTagged` Just v)) >> m1
 			    , doModal (WithEventAs v) >> m2
 			    , lcon)
     mapParseM2 (connToFOL lcon) m1' m2'

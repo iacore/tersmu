@@ -14,8 +14,13 @@ bu'a
 
 ki
 
-irrealis UI
-
-Strong donkeys?
+stripping things we can't handle
+    (e.g. hackily by literally deleting words until we get a parse? I suppose
+    that's a bit *too* simplistic - consider {je ui nai}. But with some
+    special-casing for things like that, it could work ok)
 
 Pretty printing
+
+UI etc
+
+Strong donkeys?

@@ -9,6 +9,11 @@ import Data.Maybe
 import Control.Monad.State
 import Data.Map (Map)
 import qualified Data.Map as Map
+
+data JekJoik = JJJek LogJboConnective | JJJoik Joik
+jjJboCon :: (Maybe Tag) -> JekJoik -> Connective
+jjJboCon mtag (JJJek lcon) = JboConnLog mtag lcon
+jjJboCon mtag (JJJoik joik) = JboConnJoik mtag joik
 }
 
 top atext1
@@ -20,7 +25,7 @@ atext1 :: {[Statement]}
     = Spacing? ss:text1 !Char -> ss
 
 text1 :: {[Statement]}
-    = ((I lcon:jek? BO? -> lcon)+ -> {()} / NIhO+ -> {()})?
+    = ((I jj:joikJek? BO? -> jj)+ -> {()} / NIhO+ -> {()})?
 	ssm:(paragraphs)? -> {fromMaybe [] ssm}
 
 paragraphs :: {[Statement]}
@@ -41,14 +46,14 @@ statement1 :: Statement1
     -> { foldl (\s1 -> \(con,s2) -> ConnectedStatement con s1 s2) s jekss }
 -- _jekstatements: helper for statement1
 _jekstatements :: {(Connective, Statement1)}
-    = I lcon:jek s:statement2 -> {(JboConnLog Nothing lcon,s)}
+    = I jj:joikJek s:statement2 -> {(jjJboCon Nothing jj,s)}
 
 statement2 :: Statement1
-    = s1:statement3 jeks:( I mlcon:(jek)? mtag:(tag)? BO s:statement2
-	    -> {(JboConnLog mtag $ fromMaybe (LogJboConnective True 'e' True) mlcon,s)} )?
-	-> { if (isNothing jeks) then s1
-				 else (let Just (con,s2) = jeks
-				       in ConnectedStatement con s1 s2) }
+    = s1:statement3 boSt:( I mjj:(joikJek)? mtag:(tag)? BO s:statement2
+	    -> {(jjJboCon mtag $ fromMaybe (JJJek $ LogJboConnective True 'e' True) mjj,s)} )?
+	-> { case boSt of
+	    Nothing -> s1
+	    Just (con,s2) -> ConnectedStatement con s1 s2 }
 
 statement3 :: Statement1
     = {(ts,bt)}:sentence -> {StatementSentence (Sentence ts bt)}
@@ -71,7 +76,7 @@ sentence :: {([Term], BridiTail)}
 
 terms :: {[Term]} = terms1+
 terms1 :: Term 
-    = ts1:terms2 PEhE lcon:jek ts2:terms2 -> { ConnectedTerms False (JboConnLog Nothing lcon) ts1 ts2 }
+    = ts1:terms2 PEhE jj:joikJek ts2:terms2 -> { ConnectedTerms False (jjJboCon Nothing jj) ts1 ts2 }
     / terms2
 terms2 :: Term
     = t:term ts:(CEhE t:terms2 -> t)+ -> { Termset (t:ts) }
@@ -92,29 +97,29 @@ termset :: Term
 
 sumti :: Sumti =
     s:sumti1 rels:(VUhO rels:relativeClauses -> rels)?
-	-> {
-	    case rels of Nothing -> s
-		         Just rels -> appendRelsToSumti rels s }
+	-> { case rels of
+	    Nothing -> s
+	    Just rels -> appendRelsToSumti rels s }
 
 
 sumti1 :: Sumti = s1:sumti2
-    eks:( lcon:ek mtag:(tag)? KE s:sumti
-	(KEhE -> {()})? -> {(JboConnLog mtag lcon,s)} )?
-    -> { if (isNothing eks) then s1
-			    else (let Just (con,s2) = eks in
-				      ConnectedSumti False con s1 s2 []) }
+    eks:( jj:joikEk mtag:(tag)? KE s:sumti
+	(KEhE -> {()})? -> {(jjJboCon mtag jj,s)} )?
+    -> { case eks of
+	Nothing -> s1
+	Just (con,s2) -> ConnectedSumti False con s1 s2 [] }
 
 sumti2 :: Sumti = s:sumti3 ekss:(_eksumti)*
     -> { foldl (\s1 -> \(con,s2) -> ConnectedSumti False con s1 s2 []) s ekss }
 -- _eksumti: helper for sumti2
 _eksumti :: {(Connective, Sumti)}
-    = lcon:ek s:sumti3 -> {(JboConnLog Nothing lcon,s)}
+    = jj:joikEk s:sumti3 -> {(jjJboCon Nothing jj,s)}
 
 sumti3 :: Sumti = s1:sumti4
-	eks:( lcon:ek mtag:(tag)? BO s:sumti3 -> {(JboConnLog mtag lcon,s)} )?
-	    -> { if (isNothing eks) then s1
-				    else (let Just (con,s2) = eks in
-					      ConnectedSumti False con s1 s2 []) }
+	eks:( jj:joikEk mtag:(tag)? BO s:sumti3 -> {(jjJboCon mtag jj,s)} )?
+	    -> { case eks of
+		Nothing -> s1
+		Just (con,s2) -> ConnectedSumti False con s1 s2 [] }
 
 sumti4 :: Sumti = sumti5
 	/ pcon:gek s1:sumti b:gik s2:sumti4 -> { ConnectedSumti True (pcon b) s1 s2 [] }
@@ -244,7 +249,7 @@ gek :: {Bool -> Connective}
 	-> { JboConnLog Nothing . LogJboConnective (isNothing ln) 
 		    (if (isJust se) && conchar=='u' then 'U' else conchar) }
     / tag:tag gik -> { \_ -> JboConnLog (Just tag) (LogJboConnective True 'e' True) }
-    -- / joik GI ->
+    / joik:joik GI -> { \_ -> JboConnJoik Nothing joik } 
 
 guhek :: {Bool -> LogJboConnective} = se:(SE)? conchar:guhekGUhA ln:NAI?
     -> { LogJboConnective (isNothing ln) 
@@ -277,6 +282,21 @@ guhekGUhA :: Char = "gu'a":GUhA -> {'a'}
     / "gu'e":GUhA -> {'e'}
     / "gu'o":GUhA -> {'o'}
     / "gu'u":GUhA -> {'u'}
+
+-- joiks entirely unparsed for now
+joik :: String
+    = se:SE? joi:JOI nai:NAI? -> { (fromMaybe "" se) ++ joi ++ (fromMaybe "" nai) }
+    / interval
+    / g1:GAhO i:interval g2:GAhO -> { g1 ++ i ++ g2 }
+interval :: String
+    = se:SE? bihi:BIhI nai:NAI? -> { (fromMaybe "" se) ++ bihi ++ (fromMaybe "" nai) }
+
+joikJek :: JekJoik
+    = jj:jek -> { JJJek jj }
+    / jj:joik -> { JJJoik jj }
+joikEk :: JekJoik
+    = jj:ek -> { JJJek jj }
+    / jj:joik -> { JJJoik jj }
 
 bridiTail :: BridiTail
     = bt1:bridiTail1 gihek:(lcon:gihek mtag:(tag)? KE bt2:bridiTail KEhE? tts:tailTerms ->
@@ -328,13 +348,13 @@ selbri4 :: Selbri3
 	-> { foldl (\sb1 -> \(con,sb2) -> ConnectedSB False con sb1 sb2) sb jekss }
 -- _jeksbs: helper for selbri4
 _jeksbs :: {(Connective, Selbri3)}
-    = lcon:jek sb:selbri5 -> {(JboConnLog Nothing lcon,sb)}
+    = jj:joikJek sb:selbri5 -> {(jjJboCon Nothing jj,sb)}
 
 selbri5 :: Selbri3
-    = sb1:selbri6 jeks:( lcon:jek mtag:(tag)? BO sb:selbri5 -> {(JboConnLog mtag lcon,sb)} )?
-	-> { if (isNothing jeks) then sb1
-				 else (let Just (con,sb2) = jeks
-				       in ConnectedSB False con sb1 sb2) }
+    = sb1:selbri6 jeksb:( jj:joikJek mtag:(tag)? BO sb:selbri5 -> {(jjJboCon mtag jj,sb)} )?
+	-> { case jeksb of
+	    Nothing -> sb1
+	    Just (con,sb2) -> ConnectedSB False con sb1 sb2 }
 
 -- XXX: we deviate from the official grammar by allowing only selbri3 rather
 -- than arbitrary selbri in the first part of a guhek; this is to avoid
