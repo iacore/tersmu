@@ -1,11 +1,12 @@
 module JboParse where
 
-import FOL hiding (Term)
+import FOL hiding (Term,Connective)
 import JboProp
 import JboSyntax
 import BridiM
 
 import Data.Maybe
+import Data.Traversable (traverse)
 import Control.Monad
 import Control.Applicative
 import Data.List
@@ -100,14 +101,17 @@ parseSelbri2 (Selbri3 sb) =
 parseSelbri3 :: Selbri3 -> BridiM Bridi
 parseSelbri3 (SBTanru sb sb') = do
     applySeltau (parseSelbri3 sb) =<< parseSelbri3 sb'
-parseSelbri3 (ConnectedSB fore con sb sb') =
-    -- XXX: CLL arguably prescribes handling logical connections like
-    -- non-logical connections here, with indeterminate semantics; but we
-    -- handle them like giheks.
-    -- Note that in any case, non-logical connections mean that we can't
-    -- actually eliminate the ConnectedRels or PermutedRel constructors
-    -- (consider {se broda joi brode})
-    doConnective fore con (parseSelbri3 sb) (parseSelbri3 sb')
+parseSelbri3 (ConnectedSB fore con sb sb') = do
+    (con',p,p') <- if fore then do
+	    con' <- parseConnective con
+	    [p,p'] <- mapM selbri3ToPred [sb,sb']
+	    return (con',p,p')
+	else do
+	    p <- selbri3ToPred sb
+	    con' <- parseConnective con
+	    p' <- selbri3ToPred sb'
+	    return (con',p,p')
+    return $ jboRelToBridi $ TanruConnective con' p p'
 parseSelbri3 (TanruUnit tu2 las) =
     parseTU tu2 <* parseTerms las
 parseSelbri3 (BridiBinding tu tu') = do
@@ -335,6 +339,14 @@ parseTagUnit (FIhO selbri) = FIhO <$> selbriToPred selbri
 parseTagUnit KI = error "TODO: ki"
 parseTagUnit CUhE = error "TODO: cu'e"
 
+parseConnective :: PreProp r => Connective -> ParseM r JboConnective
+parseConnective (JboConnLog mtag lcon) = do
+    mtag' <- traverse parseTag mtag
+    return $ JboConnLog mtag' lcon
+parseConnective (JboConnJOI mtag joi) = do
+    mtag' <- traverse parseTag mtag
+    return $ JboConnJOI mtag' joi
+
 parseQuantifier :: PreProp r => Quantifier -> ParseM r Quantifier
 parseQuantifier = return
 
@@ -362,6 +374,8 @@ applySeltau seltauM tertau = do
     let f = terpProp (\r ts -> Rel (Tanru stpred r) ts) id
     return $ f . tertau 
 
+selbri3ToPred :: Selbri3 -> ParseM r JboPred
+selbri3ToPred = selbriToPred . Selbri2 . Selbri3
 selbriToPred :: Selbri -> ParseM r JboPred
 selbriToPred sb = do
     parsedSelbriToPred $ parseSelbri sb
@@ -383,7 +397,7 @@ subsentToPred ss rv = do
 	return p
     return $ \o -> subTerm fresh o p
 
-doConnective :: PreProp r => Bool -> JboConnective -> ParseM r a -> ParseM r a -> ParseM r a
+doConnective :: PreProp r => Bool -> Connective -> ParseM r a -> ParseM r a -> ParseM r a
 doConnective isForethought con m1 m2 = do
     (m1',m2',lcon) <- case con of
 	JboConnLog Nothing lcon -> return $ (m1,m2,lcon)

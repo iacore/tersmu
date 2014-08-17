@@ -1,18 +1,13 @@
 module JboSyntax where
-import FOL hiding (Term)
+import FOL hiding (Term, Connective)
 -- Abstract syntax:
 data Statement = Statement [Term] Statement1
-    deriving (Eq, Show, Ord)
-
-data JboConnective
-    = JboConnLog (Maybe Tag) LogJboConnective
-    | JboConnJOI (Maybe Tag) Cmavo
     deriving (Eq, Show, Ord)
 
 data LogJboConnective = LogJboConnective Bool Char Bool
 		deriving (Eq, Show, Ord)
 
-data Statement1 = ConnectedStatement JboConnective Statement1 Statement1
+data Statement1 = ConnectedStatement Connective Statement1 Statement1
 		| StatementSentence Sentence
 		| StatementStatements [Statement]
 		deriving (Eq, Show, Ord)
@@ -26,7 +21,7 @@ data Sentence = Sentence [Term] BridiTail
 data Term = Sumti Tagged Sumti
 	  | Negation
 	  | Termset [Term]
-	  | ConnectedTerms Bool JboConnective Term Term
+	  | ConnectedTerms Bool Connective Term Term
 	  | BareTag Tag
 	  deriving (Eq, Show, Ord)
 
@@ -37,7 +32,7 @@ data Tagged = Untagged
 
 data AbsTag q fiho
     = DecoratedTagUnits [DecoratedAbsTagUnit q fiho]
-    | ConnectedTag JboConnective (AbsTag q fiho) (AbsTag q fiho)
+    | ConnectedTag (AbsConnective (AbsTag q fiho)) (AbsTag q fiho) (AbsTag q fiho)
 instance (Eq q, Eq fiho) => Eq (AbsTag q fiho)
 instance (Show q, Show fiho) => Show (AbsTag q fiho)
 instance (Ord q, Ord fiho) => Ord (AbsTag q fiho)
@@ -57,6 +52,14 @@ type Tag = AbsTag Quantifier Selbri
 type DecoratedTagUnit = DecoratedAbsTagUnit Quantifier Selbri
 type TagUnit = AbsTagUnit Quantifier Selbri
 
+data AbsConnective tag
+    = JboConnLog (Maybe tag) LogJboConnective
+    | JboConnJOI (Maybe tag) Cmavo
+type Connective = AbsConnective Tag
+instance (Eq tag) => Eq (AbsConnective tag)
+instance (Show tag) => Show (AbsConnective tag)
+instance (Ord tag) => Ord (AbsConnective tag)
+
 -- XXX we arbitarily consider a mix of tense and "modal" to be a tense
 isTense :: AbsTag q fiho -> Bool
 isTense (ConnectedTag _ t1 t2) = isTense t1 || isTense t2
@@ -68,7 +71,7 @@ isTense (DecoratedTagUnits dtus) = or $ map isTenseDTU dtus
 
 type Cmavo = String
 
-data Sumti = ConnectedSumti Bool JboConnective Sumti Sumti [RelClause]
+data Sumti = ConnectedSumti Bool Connective Sumti Sumti [RelClause]
 	   | QAtom (Maybe Quantifier) [RelClause] SumtiAtom
 	   | QSelbri Quantifier [RelClause] Selbri
 	   deriving (Eq, Show, Ord)
@@ -99,12 +102,12 @@ type Lerfu = Char
 
 type Gadri = String
 
-data BridiTail = ConnectedBT JboConnective BridiTail BridiTail [Term]
+data BridiTail = ConnectedBT Connective BridiTail BridiTail [Term]
 	       | BridiTail3 Selbri [Term]
 	       | GekSentence GekSentence
 	       deriving (Eq, Show, Ord)
 
-data GekSentence = ConnectedGS JboConnective Subsentence Subsentence [Term]
+data GekSentence = ConnectedGS Connective Subsentence Subsentence [Term]
 		 | NegatedGS GekSentence
 		 deriving (Eq, Show, Ord)
 
@@ -118,7 +121,7 @@ data Selbri2 = SBInverted Selbri3 Selbri2
 	     deriving (Eq, Show, Ord)
 
 data Selbri3 = SBTanru Selbri3 Selbri3
-	     | ConnectedSB Bool JboConnective Selbri3 Selbri3
+	     | ConnectedSB Bool Connective Selbri3 Selbri3
 	     | BridiBinding Selbri3 Selbri3
 	     | TanruUnit TanruUnit2 [Term]
 	     deriving (Eq, Show, Ord)

@@ -22,9 +22,8 @@ data JboTerm = Var Int
 	     | ZoheTerm
 	     deriving (Eq, Show, Ord)
 
-data JboRel = ConnectedRels JboConnective JboRel JboRel
-	    | PermutedRel Int JboRel
-	    | Tanru JboPred JboRel
+data JboRel = Tanru JboPred JboRel
+	    | TanruConnective JboConnective JboPred JboPred
 	    | AbsPred Abstractor JboPred
 	    | AbsProp Abstractor JboProp
 	    | Moi Quantifier Cmavo
@@ -37,6 +36,7 @@ data JboOperator
     | WithEventAs JboTerm
 type JboTag = AbsTag Quantifier JboPred
 type JboTagUnit = AbsTagUnit Quantifier JboPred
+type JboConnective = AbsConnective JboTag
 
 type JboPred = JboTerm -> JboProp
 
@@ -51,7 +51,8 @@ subTerm s t = terpProp
     (\r -> \ts -> Rel (subTermInRel r) $ map (\x -> if x==s then t else x) ts)
     subTermInOp
     where
-    subTermInRel (Tanru p r) = Tanru (\o -> subTerm s t (p o)) (subTermInRel r)
+    subTermInRel (Tanru p r) = Tanru (subTermInPred p) (subTermInRel r)
+    subTermInRel (TanruConnective con p p') = TanruConnective con (subTermInPred p) (subTermInPred p')
     subTermInRel (AbsPred a p) = AbsPred a (\o -> subTerm s t (p o))
     subTermInRel (AbsProp a p) = AbsProp a (subTerm s t p)
     subTermInRel r = r

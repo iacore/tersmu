@@ -52,21 +52,36 @@ withShuntedLambda f =
 				      _ -> s
        return r
 
+instance JboShow String where
+    logjboshow _ s = return s
+
 instance JboShow Quantifier where
     jboshow Exists = return "su'o"
     jboshow Forall = return "ro"
     jboshow (Exactly n) = return $ show n
     logshow = return . show
-instance JboShow LogJboConnective where
-    logjboshow _ (LogJboConnective b c b') =
-	return $ (if not b then "na." else "") ++
-	    [c] ++
-	    if not b' then "nai" else ""
+
+logjboshowLogConn _ prefix (LogJboConnective b c b') =
+	return $ (if not b then "na " else "") ++
+	    prefix ++ [c] ++
+	    if not b' then " nai" else ""
+
+logjboshowConn False prefix con = do
+    js <- logjboshowConn True prefix con
+    return $ "{"++js++"}"
+logjboshowConn True prefix (JboConnLog mtag lcon) = do
+    lc <- logjboshowLogConn True prefix lcon
+    mtags <- maybe "" ((" "++).(++" bo")) <$> traverse (logjboshow True) mtag
+    return $ lc ++ mtags
+logjboshowConn True prefix (JboConnJOI mtag joi) = do
+    jois <- logjboshow True joi
+    mtags <- maybe "" ((" "++).(++" bo")) <$> traverse (logjboshow True) mtag
+    return $ mtags
 
 instance JboShow JboTag where
-    logjboshow jbo (ConnectedTag (JboConnLog Nothing lcon) tag1 tag2) = do
+    logjboshow jbo (ConnectedTag con tag1 tag2) = do
 	[s1,s2] <- mapM (logjboshow jbo) [tag1,tag2]
-	conns <- logjboshow jbo lcon
+	conns <- logjboshowConn jbo "." con
 	return $ if jbo
 	    then s1 ++ " " ++ conns ++ " " ++ s2
 	    else conns ++ "(" ++ s1 ++ "," ++ s2 ++ ")"
@@ -96,6 +111,8 @@ instance JboShow JboTagUnit where
 instance JboShow JboPred where
     logjboshow jbo p = logjboshowpred jbo (\n -> p (Var n))
 
+-- FIXME: bugs with interactions between actual ke'a and these fake ones
+-- e.g. du da poi du be fa ke'a du
 logjboshowpred jbo p = withShuntedRelVar (\n ->
    if not jbo
      then logjboshow jbo (p n)
@@ -126,9 +143,16 @@ instance JboShow JboRel where
 	return $ if jbo
 	    then s ++ " " ++ s' ++ " " ++ s''
 	    else "(" ++ s ++ " " ++ s' ++ " " ++ s'' ++ ")"
-    -}
     logjboshow jbo (PermutedRel n r) =
 	((seToStr n ++ " ") ++) <$> logjboshow jbo r
+    -}
+    logjboshow jbo (TanruConnective con p p') = do
+	[ps,ps'] <- mapM (logjboshow jbo) [p,p']
+	cs <- logjboshowConn jbo "j" con
+	if jbo
+	    then return $ "ke " ++ ps ++ " ke'e " ++ cs ++ " ke " ++ ps' ++ " ke'e"
+	    else return $ "<" ++ ps ++ ">" ++ cs ++ "<" ++ ps' ++ ">"
+
     logjboshow jbo (Tanru p r) =
       do rstr <- logjboshow jbo r
 	 pstr <- logjboshow jbo p

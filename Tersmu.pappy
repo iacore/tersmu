@@ -3,7 +3,7 @@ parser tersmu:
 
 {
 import JboSyntax
-import FOL hiding (Term)
+import FOL hiding (Term,Connective)
 
 import Data.Maybe
 import Control.Monad.State
@@ -40,7 +40,7 @@ statement1 :: Statement1
     = s:statement2 jekss:(_jekstatements)*
     -> { foldl (\s1 -> \(con,s2) -> ConnectedStatement con s1 s2) s jekss }
 -- _jekstatements: helper for statement1
-_jekstatements :: {(JboConnective, Statement1)}
+_jekstatements :: {(Connective, Statement1)}
     = I lcon:jek s:statement2 -> {(JboConnLog Nothing lcon,s)}
 
 statement2 :: Statement1
@@ -107,7 +107,7 @@ sumti1 :: Sumti = s1:sumti2
 sumti2 :: Sumti = s:sumti3 ekss:(_eksumti)*
     -> { foldl (\s1 -> \(con,s2) -> ConnectedSumti False con s1 s2 []) s ekss }
 -- _eksumti: helper for sumti2
-_eksumti :: {(JboConnective, Sumti)}
+_eksumti :: {(Connective, Sumti)}
     = lcon:ek s:sumti3 -> {(JboConnLog Nothing lcon,s)}
 
 sumti3 :: Sumti = s1:sumti4
@@ -239,7 +239,7 @@ gihek :: LogJboConnective = ln:NA?
 		    (if (isJust se) && conchar=='u' then 'U' else conchar)
 		    (isNothing rn) }
 
-gek :: {Bool -> JboConnective}
+gek :: {Bool -> Connective}
     = se:(SE)? conchar:gekGA ln:NAI?
 	-> { JboConnLog Nothing . LogJboConnective (isNothing ln) 
 		    (if (isJust se) && conchar=='u' then 'U' else conchar) }
@@ -292,7 +292,7 @@ bridiTail1 :: BridiTail
 		    ConnectedBT con bt1 bt2 tts
 		) bt giheks }
 -- _gihekbt: helper for bridiTail1
-_gihekbt :: {(JboConnective, BridiTail, [Term])}
+_gihekbt :: {(Connective, BridiTail, [Term])}
     = lcon:gihek bt:bridiTail2 tts:tailTerms -> {(JboConnLog Nothing lcon, bt, tts)}
 
 bridiTail2 :: BridiTail
@@ -327,7 +327,7 @@ selbri4 :: Selbri3
     = sb:selbri5 jekss:(_jeksbs)*
 	-> { foldl (\sb1 -> \(con,sb2) -> ConnectedSB False con sb1 sb2) sb jekss }
 -- _jeksbs: helper for selbri4
-_jeksbs :: {(JboConnective, Selbri3)}
+_jeksbs :: {(Connective, Selbri3)}
     = lcon:jek sb:selbri5 -> {(JboConnLog Nothing lcon,sb)}
 
 selbri5 :: Selbri3
@@ -392,7 +392,7 @@ tag :: Tag
     = tag:tag1 jekts:(_jektag)* ->
 	{ foldl (\t1 -> \(con,t2) -> ConnectedTag con t1 t2) tag jekts }
 -- _jektag: helper for tag
-_jektag :: {(JboConnective, Tag)}
+_jektag :: {(Connective, Tag)}
     = lcon:jek tag:tag1 -> {(JboConnLog Nothing lcon,tag)}
 
 -- XXX: we use the relaxed tag grammar of xorxes' zasni gerna
