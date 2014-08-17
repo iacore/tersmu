@@ -57,16 +57,16 @@ instance JboShow Quantifier where
     jboshow Forall = return "ro"
     jboshow (Exactly n) = return $ show n
     logshow = return . show
-instance JboShow JboConnective where
-    logjboshow _ (JboConnective b c b') =
+instance JboShow LogJboConnective where
+    logjboshow _ (LogJboConnective b c b') =
 	return $ (if not b then "na." else "") ++
 	    [c] ++
 	    if not b' then "nai" else ""
 
 instance JboShow JboTag where
-    logjboshow jbo (ConnectedTag conn tag1 tag2) = do
+    logjboshow jbo (ConnectedTag (JboConnLog Nothing lcon) tag1 tag2) = do
 	[s1,s2] <- mapM (logjboshow jbo) [tag1,tag2]
-	conns <- logjboshow jbo conn
+	conns <- logjboshow jbo lcon
 	return $ if jbo
 	    then s1 ++ " " ++ conns ++ " " ++ s2
 	    else conns ++ "(" ++ s1 ++ "," ++ s2 ++ ")"
@@ -118,6 +118,7 @@ logjboshowpred jbo p = withShuntedRelVar (\n ->
 		   return $ "poi'i " ++ s ++ " kei" )
 
 instance JboShow JboRel where
+    {-
     logjboshow jbo (ConnectedRels conn r r') = do
 	s <- logjboshow jbo r
 	s' <- logjboshow jbo conn
@@ -125,6 +126,7 @@ instance JboShow JboRel where
 	return $ if jbo
 	    then s ++ " " ++ s' ++ " " ++ s''
 	    else "(" ++ s ++ " " ++ s' ++ " " ++ s'' ++ ")"
+    -}
     logjboshow jbo (PermutedRel n r) =
 	((seToStr n ++ " ") ++) <$> logjboshow jbo r
     logjboshow jbo (Tanru p r) =

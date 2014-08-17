@@ -65,10 +65,23 @@ natch). Then {ki} would just repeat the operator on all future bridi.
 I think giving up on {ki} would be preferable (it can always be replaced with
 {ca ko'a zo'u tu'e}, after all).
 
-Cunning alternative: have {ki} with a tense be equivalent to {ca zo'e ki} (if
-that parses right) - i.e. it fixes a constant time, and sets the base time to
-that. Makes much sense! Similarly with other tags.
+Cunning alternative: have {ki} with a tense implicitly insert a {ca zo'e};
+it fixes a constant time, and sets the base time to that. Makes much sense!
+Similarly with other tags.
 
+More precisely:
+    ki appears at the end of a taglist, indicating what subset of
+    time,space,actuality,jbomodals the ki applies to. Whether sumtcita or
+    bare, it then acts like the underlying taglist, with the additional effect
+    of setting as a reference:
+	if tense, a constant time/space/actuality coincident with the
+	    remaining event
+	if jbomodal sumtcita, the seltcita sumti
+	if a combination of these two: hrm.
+
+No, that doesn't quite work either.
+
+New idea?
 
 Connectives
 -----------

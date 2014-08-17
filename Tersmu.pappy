@@ -20,7 +20,7 @@ atext1 :: {[Statement]}
     = Spacing? ss:text1 !Char -> ss
 
 text1 :: {[Statement]}
-    = ((I con:jek? BO? -> con)+ -> {()} / NIhO+ -> {()})?
+    = ((I lcon:jek? BO? -> lcon)+ -> {()} / NIhO+ -> {()})?
 	ssm:(paragraphs)? -> {fromMaybe [] ssm}
 
 paragraphs :: {[Statement]}
@@ -41,10 +41,11 @@ statement1 :: Statement1
     -> { foldl (\s1 -> \(con,s2) -> ConnectedStatement con s1 s2) s jekss }
 -- _jekstatements: helper for statement1
 _jekstatements :: {(JboConnective, Statement1)}
-    = I con:jek s:statement2 -> {(con,s)}
+    = I lcon:jek s:statement2 -> {(JboConnLog Nothing lcon,s)}
 
 statement2 :: Statement1
-    = s1:statement3 jeks:( I con:jek BO s:statement2 -> {(con,s)} )?
+    = s1:statement3 jeks:( I mlcon:(jek)? mtag:(tag)? BO s:statement2
+	    -> {(JboConnLog mtag $ fromMaybe (LogJboConnective True 'e' True) mlcon,s)} )?
 	-> { if (isNothing jeks) then s1
 				 else (let Just (con,s2) = jeks
 				       in ConnectedStatement con s1 s2) }
@@ -70,7 +71,7 @@ sentence :: {([Term], BridiTail)}
 
 terms :: {[Term]} = terms1+
 terms1 :: Term 
-    = ts1:terms2 PEhE con:jek ts2:terms2 -> { ConnectedTerms con ts1 ts2 }
+    = ts1:terms2 PEhE lcon:jek ts2:terms2 -> { ConnectedTerms False (JboConnLog Nothing lcon) ts1 ts2 }
     / terms2
 terms2 :: Term
     = t:term ts:(CEhE t:terms2 -> t)+ -> { Termset (t:ts) }
@@ -85,8 +86,9 @@ term :: Term = s:sumti -> {Sumti Untagged s}
 
 termset :: Term
     = NUhI pcon:gek ts1:terms NUhU b:gik ts2:terms NUhU?
-	-> { ConnectedTerms (pcon b) (Termset ts1) (Termset ts2) }
+	-> { ConnectedTerms True (pcon b) (Termset ts1) (Termset ts2) }
     / NUhI ts:terms NUhU? -> { Termset ts }
+    -- TODO: gek-termset
 
 sumti :: Sumti =
     s:sumti1 rels:(VUhO rels:relativeClauses -> rels)?
@@ -96,26 +98,26 @@ sumti :: Sumti =
 
 
 sumti1 :: Sumti = s1:sumti2
-    eks:( con:ek KE s:sumti
-	(KEhE -> {()})? -> {(con,s)} )?
+    eks:( lcon:ek mtag:(tag)? KE s:sumti
+	(KEhE -> {()})? -> {(JboConnLog mtag lcon,s)} )?
     -> { if (isNothing eks) then s1
 			    else (let Just (con,s2) = eks in
-				      ConnectedSumti con s1 s2 []) }
+				      ConnectedSumti False con s1 s2 []) }
 
 sumti2 :: Sumti = s:sumti3 ekss:(_eksumti)*
-    -> { foldl (\s1 -> \(con,s2) -> ConnectedSumti con s1 s2 []) s ekss }
+    -> { foldl (\s1 -> \(con,s2) -> ConnectedSumti False con s1 s2 []) s ekss }
 -- _eksumti: helper for sumti2
 _eksumti :: {(JboConnective, Sumti)}
-    = con:ek s:sumti3 -> {(con,s)}
+    = lcon:ek s:sumti3 -> {(JboConnLog Nothing lcon,s)}
 
 sumti3 :: Sumti = s1:sumti4
-	eks:( con:ek BO s:sumti3 -> {(con,s)} )?
+	eks:( lcon:ek mtag:(tag)? BO s:sumti3 -> {(JboConnLog mtag lcon,s)} )?
 	    -> { if (isNothing eks) then s1
 				    else (let Just (con,s2) = eks in
-					      ConnectedSumti con s1 s2 []) }
+					      ConnectedSumti False con s1 s2 []) }
 
 sumti4 :: Sumti = sumti5
-	/ pcon:gek s1:sumti b:gik s2:sumti4 -> { ConnectedSumti (pcon b) s1 s2 [] }
+	/ pcon:gek s1:sumti b:gik s2:sumti4 -> { ConnectedSumti True (pcon b) s1 s2 [] }
 
 sumti5 :: Sumti =
 	s:sumti6 !relativeClauses -> {QAtom Nothing [] s}
@@ -219,30 +221,33 @@ digit :: Int
     / "so":PA -> {9}
 
 
-ek :: JboConnective = ln:NA?
+ek :: LogJboConnective = ln:NA?
 	se:(SE)? conchar:ekA rn:NAI?
-    -> { JboConnective (isNothing ln) 
+    -> { LogJboConnective (isNothing ln) 
 		    (if (isJust se) && conchar=='u' then 'U' else conchar)
 		    (isNothing rn) }
 
-jek :: JboConnective = ln:NA?
+jek :: LogJboConnective = ln:NA?
 	se:(SE)? conchar:jekJA rn:NAI?
-    -> { JboConnective (isNothing ln) 
+    -> { LogJboConnective (isNothing ln) 
 		    (if (isJust se) && conchar=='u' then 'U' else conchar)
 		    (isNothing rn) }
 
-gihek :: JboConnective = ln:NA?
+gihek :: LogJboConnective = ln:NA?
 	se:(SE)? conchar:gihekGIhA rn:NAI?
-    -> { JboConnective (isNothing ln) 
+    -> { LogJboConnective (isNothing ln) 
 		    (if (isJust se) && conchar=='u' then 'U' else conchar)
 		    (isNothing rn) }
 
-gek :: {Bool -> JboConnective} = se:(SE)? conchar:gekGA ln:NAI?
-    -> { JboConnective (isNothing ln) 
+gek :: {Bool -> JboConnective}
+    = se:(SE)? conchar:gekGA ln:NAI?
+	-> { JboConnLog Nothing . LogJboConnective (isNothing ln) 
 		    (if (isJust se) && conchar=='u' then 'U' else conchar) }
+    / tag:tag gik -> { \_ -> JboConnLog (Just tag) (LogJboConnective True 'e' True) }
+    -- / joik GI ->
 
-guhek :: {Bool -> JboConnective} = se:(SE)? conchar:guhekGUhA ln:NAI?
-    -> { JboConnective (isNothing ln) 
+guhek :: {Bool -> LogJboConnective} = se:(SE)? conchar:guhekGUhA ln:NAI?
+    -> { LogJboConnective (isNothing ln) 
 		    (if (isJust se) && conchar=='u' then 'U' else conchar) }
 
 gik :: Bool = GI rn:NAI? -> { isNothing rn }
@@ -274,8 +279,8 @@ guhekGUhA :: Char = "gu'a":GUhA -> {'a'}
     / "gu'u":GUhA -> {'u'}
 
 bridiTail :: BridiTail
-    = bt1:bridiTail1 gihek:(con:gihek KE bt2:bridiTail KEhE? tts:tailTerms ->
-	{(con, bt2, tts)} )?
+    = bt1:bridiTail1 gihek:(lcon:gihek mtag:(tag)? KE bt2:bridiTail KEhE? tts:tailTerms ->
+	{(JboConnLog mtag lcon, bt2, tts)} )?
 	    -> {
 		case gihek of Nothing -> bt1
 			      Just (con, bt2, tts) ->
@@ -288,11 +293,11 @@ bridiTail1 :: BridiTail
 		) bt giheks }
 -- _gihekbt: helper for bridiTail1
 _gihekbt :: {(JboConnective, BridiTail, [Term])}
-    = con:gihek bt:bridiTail2 tts:tailTerms -> {(con, bt, tts)}
+    = lcon:gihek bt:bridiTail2 tts:tailTerms -> {(JboConnLog Nothing lcon, bt, tts)}
 
 bridiTail2 :: BridiTail
     = bt1:bridiTail3
-	gihek:(con:gihek BO bt2:bridiTail2 tts:tailTerms -> {(con,bt2,tts)})?
+	gihek:(lcon:gihek mtag:(tag)? BO bt2:bridiTail2 tts:tailTerms -> {(JboConnLog mtag lcon,bt2,tts)})?
 	    -> {
 		case gihek of Nothing -> bt1
 			      Just (con, bt2, tts) ->
@@ -320,16 +325,16 @@ selbri3 :: Selbri3
 
 selbri4 :: Selbri3
     = sb:selbri5 jekss:(_jeksbs)*
-	-> { foldl (\sb1 -> \(con,sb2) -> ConnectedSB con sb1 sb2) sb jekss }
+	-> { foldl (\sb1 -> \(con,sb2) -> ConnectedSB False con sb1 sb2) sb jekss }
 -- _jeksbs: helper for selbri4
 _jeksbs :: {(JboConnective, Selbri3)}
-    = con:jek sb:selbri5 -> {(con,sb)}
+    = lcon:jek sb:selbri5 -> {(JboConnLog Nothing lcon,sb)}
 
 selbri5 :: Selbri3
-    = sb1:selbri6 jeks:( con:jek BO sb:selbri5 -> {(con,sb)} )?
+    = sb1:selbri6 jeks:( lcon:jek mtag:(tag)? BO sb:selbri5 -> {(JboConnLog mtag lcon,sb)} )?
 	-> { if (isNothing jeks) then sb1
 				 else (let Just (con,sb2) = jeks
-				       in ConnectedSB con sb1 sb2) }
+				       in ConnectedSB False con sb1 sb2) }
 
 -- XXX: we deviate from the official grammar by allowing only selbri3 rather
 -- than arbitrary selbri in the first part of a guhek; this is to avoid
@@ -339,7 +344,7 @@ selbri6 :: Selbri3
     = tu:tanruUnit BO sb:selbri6 -> {SBTanru tu sb}
     / tanruUnit
     / pcon:guhek sb1:selbri3 b:gik sb2:selbri6
-	-> { ConnectedSB (pcon b) sb1 sb2 }
+	-> { ConnectedSB True (JboConnLog Nothing $ pcon b) sb1 sb2 }
 
 tanruUnit :: Selbri3
     = tu:tanruUnit CEI tu':tanruUnit1 -> {BridiBinding tu tu'}
@@ -388,7 +393,7 @@ tag :: Tag
 	{ foldl (\t1 -> \(con,t2) -> ConnectedTag con t1 t2) tag jekts }
 -- _jektag: helper for tag
 _jektag :: {(JboConnective, Tag)}
-    = con:jek tag:tag1 -> {(con,tag)}
+    = lcon:jek tag:tag1 -> {(JboConnLog Nothing lcon,tag)}
 
 -- XXX: we use the relaxed tag grammar of xorxes' zasni gerna
 tag1 :: Tag

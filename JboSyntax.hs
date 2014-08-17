@@ -4,7 +4,12 @@ import FOL hiding (Term)
 data Statement = Statement [Term] Statement1
     deriving (Eq, Show, Ord)
 
-data JboConnective = JboConnective Bool Char Bool
+data JboConnective
+    = JboConnLog (Maybe Tag) LogJboConnective
+    | JboConnJOI (Maybe Tag) Cmavo
+    deriving (Eq, Show, Ord)
+
+data LogJboConnective = LogJboConnective Bool Char Bool
 		deriving (Eq, Show, Ord)
 
 data Statement1 = ConnectedStatement JboConnective Statement1 Statement1
@@ -21,7 +26,7 @@ data Sentence = Sentence [Term] BridiTail
 data Term = Sumti Tagged Sumti
 	  | Negation
 	  | Termset [Term]
-	  | ConnectedTerms JboConnective Term Term
+	  | ConnectedTerms Bool JboConnective Term Term
 	  | BareTag Tag
 	  deriving (Eq, Show, Ord)
 
@@ -52,9 +57,18 @@ type Tag = AbsTag Quantifier Selbri
 type DecoratedTagUnit = DecoratedAbsTagUnit Quantifier Selbri
 type TagUnit = AbsTagUnit Quantifier Selbri
 
+-- XXX we arbitarily consider a mix of tense and "modal" to be a tense
+isTense :: AbsTag q fiho -> Bool
+isTense (ConnectedTag _ t1 t2) = isTense t1 || isTense t2
+isTense (DecoratedTagUnits dtus) = or $ map isTenseDTU dtus
+    where isTenseDTU (DecoratedTagUnit _ _ _ tu) = case tu of
+	    BAI _ ->  False
+	    FIhO _ -> False
+	    _ -> True
+
 type Cmavo = String
 
-data Sumti = ConnectedSumti JboConnective Sumti Sumti [RelClause]
+data Sumti = ConnectedSumti Bool JboConnective Sumti Sumti [RelClause]
 	   | QAtom (Maybe Quantifier) [RelClause] SumtiAtom
 	   | QSelbri Quantifier [RelClause] Selbri
 	   deriving (Eq, Show, Ord)
@@ -104,7 +118,7 @@ data Selbri2 = SBInverted Selbri3 Selbri2
 	     deriving (Eq, Show, Ord)
 
 data Selbri3 = SBTanru Selbri3 Selbri3
-	     | ConnectedSB JboConnective Selbri3 Selbri3
+	     | ConnectedSB Bool JboConnective Selbri3 Selbri3
 	     | BridiBinding Selbri3 Selbri3
 	     | TanruUnit TanruUnit2 [Term]
 	     deriving (Eq, Show, Ord)
@@ -118,8 +132,8 @@ data TanruUnit2 = TUBrivla String
 		| TUSelbri3 Selbri3
 	        deriving (Eq, Show, Ord)
 
-appendRelsToSumti newrels (ConnectedSumti con s1 s2 rels) =
-    ConnectedSumti con s1 s2 (rels++newrels)
+appendRelsToSumti newrels (ConnectedSumti fore con s1 s2 rels) =
+    ConnectedSumti fore con s1 s2 (rels++newrels)
 appendRelsToSumti newrels (QAtom q rels sa) =
     QAtom q (rels++newrels) sa
 appendRelsToSumti newrels (QSelbri q rels s) =

@@ -18,3 +18,11 @@ For these:
     for BAI: add to the left a tag with an event variable for the right;
     for tense: add a tense operator to the right with an event variable for
 	the left.
+
+Actually, there's a better solution than the "TT-skimming" approach above,
+which is the one that's now implemented:
+> broda i ja ba bo brode
+EX x1. (x1=. broda( ) \/ (ba)(x1). brode( ))
+
+this works as desired: since EX x1. (ba)(x1). brode() is just equivalent to
+brode(), there's only a tense condition in the case that both disjuncts hold.

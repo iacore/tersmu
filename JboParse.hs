@@ -30,9 +30,7 @@ parseStatement (Statement ps s) = do
 
 parseStatement1 :: Statement1 -> JboPropM JboProp
 parseStatement1 (ConnectedStatement con s1 s2) =
-    do p1 <- parseStatement1 s1
-       p2 <- parseStatement1 s2
-       return $ connToFOL con p1 p2
+    doConnective False con (parseStatement1 s1) (parseStatement1 s2)
 parseStatement1 (StatementStatements ss) =
     parseStatements ss
 parseStatement1 (StatementSentence s) = do
@@ -52,7 +50,7 @@ parseSentence (Sentence ts bt) =
 
 parseBTail :: BridiTail -> BridiM Bridi
 parseBTail (GekSentence (ConnectedGS con ss1 ss2 tts)) =
-    mapParseM2 (connToFOL con) (parseSubsentence ss1) (parseSubsentence ss2)
+    doConnective True con (parseSubsentence ss1) (parseSubsentence ss2)
 	<* parseTerms tts
 
 parseBTail (GekSentence (NegatedGS gs)) =
@@ -84,8 +82,8 @@ parseSelbri :: Selbri -> BridiM Bridi
 parseSelbri (Negated sb) =
     mapProp Not >> parseSelbri sb
 parseSelbri (TaggedSelbri tag sb) = do
-    op <- parseTag tag
-    doModal $ JboTagged op Nothing
+    tag' <- parseTag tag
+    doBareTag tag'
     parseSelbri sb
 parseSelbri (Selbri2 sb) =
     parseSelbri2 sb
@@ -102,14 +100,14 @@ parseSelbri2 (Selbri3 sb) =
 parseSelbri3 :: Selbri3 -> BridiM Bridi
 parseSelbri3 (SBTanru sb sb') = do
     applySeltau (parseSelbri3 sb) =<< parseSelbri3 sb'
-parseSelbri3 (ConnectedSB con sb sb') =
+parseSelbri3 (ConnectedSB fore con sb sb') =
     -- XXX: CLL arguably prescribes handling logical connections like
     -- non-logical connections here, with indeterminate semantics; but we
     -- handle them like giheks.
     -- Note that in any case, non-logical connections mean that we can't
     -- actually eliminate the ConnectedRels or PermutedRel constructors
     -- (consider {se broda joi brode})
-    mapParseM2 (connToFOL con) (parseSelbri3 sb) (parseSelbri3 sb')
+    doConnective fore con (parseSelbri3 sb) (parseSelbri3 sb')
 parseSelbri3 (TanruUnit tu2 las) =
     parseTU tu2 <* parseTerms las
 parseSelbri3 (BridiBinding tu tu') = do
@@ -158,36 +156,41 @@ parseTerms = mapM_ parseTerm
 parseTerm :: PreProp r => Term -> ParseM r (Maybe JboTerm)
 parseTerm t = case t of
     Termset ts -> mapM_ parseTerm ts >> return Nothing
-    ConnectedTerms con t1 t2 -> do
-	mapParseM2 (connToFOL con)
+    ConnectedTerms fore con t1 t2 -> do
+	doConnective fore con
 	    (parseTerm t1)
 	    (parseTerm t2)
 	return Nothing
     Negation -> mapProp Not >> return Nothing
     Sumti (Tagged tag) s -> do
-	op <- parseTag tag
+	tag' <- parseTag tag
 	o <- parseSumti s
-	doModal $ JboTagged op (Just o)
+	doModal $ JboTagged tag' (Just o)
 	return Nothing
     Sumti taggedness s -> do
 	o <- parseSumti s
 	addArg $ Arg taggedness o
 	return $ Just o
     BareTag tag -> do
-	op <- parseTag tag
-	doModal $ JboTagged op Nothing
+	tag' <- parseTag tag
+	doBareTag tag'
 	return Nothing
 
 parseSumti :: PreProp r => Sumti -> ParseM r JboTerm
 parseSumti s = do
     (o,ips,as) <- case s of
-	(ConnectedSumti con s1 s2 rels) -> do
+	(ConnectedSumti fore con s1 s2 rels) -> do
 	    [o1,o2] <- mapM parseSumti [s1,s2]
 	    fresh <- getFreshVar
+	    {-
 	    mapProp $ \p ->
 		connToFOL con
 		(subTerm fresh o1 p)
 		(subTerm fresh o2 p)
+	    -}
+	    doConnective fore con 
+		(mapProp $ \p -> subTerm fresh o1 p)
+		(mapProp $ \p -> subTerm fresh o2 p)
 	    (_,ips,as) <- parseRels rels
 	    return (fresh,ips,as)
 	(QAtom mq rels sa) -> case sa of
@@ -315,8 +318,8 @@ parseSumtiAtom sa = do
     return (o,(rps,ips,as))
 
 parseTag :: PreProp r => Tag -> ParseM r JboTag
-parseTag (ConnectedTag conn tag1 tag2) = do
-    mapParseM2 (connToFOL conn)
+parseTag (ConnectedTag con tag1 tag2) = do
+    doConnective False con
 	(parseTag tag1)
 	(parseTag tag2)
 parseTag (DecoratedTagUnits dtus) = (DecoratedTagUnits <$>) $
@@ -348,6 +351,9 @@ quantify q r = do
 doModal :: PreProp r => JboOperator -> ParseM r ()
 doModal op = mapProp (Modal op)
 
+doBareTag :: PreProp r => JboTag -> ParseM r ()
+doBareTag tag = doModal $ JboTagged tag Nothing
+
 -- |applySeltau: operate on a Bridi with a seltau by tanruising every JboRel
 -- in the JboProp.
 applySeltau :: BridiM Bridi -> Bridi -> BridiM Bridi
@@ -376,3 +382,23 @@ subsentToPred ss rv = do
 	when (not reffed) $ addImplicit fresh
 	return p
     return $ \o -> subTerm fresh o p
+
+doConnective :: PreProp r => Bool -> JboConnective -> ParseM r a -> ParseM r a -> ParseM r a
+doConnective isForethought con m1 m2 = do
+    (m1',m2',lcon) <- case con of
+	JboConnLog Nothing lcon -> return $ (m1,m2,lcon)
+	JboConnLog (Just tag) lcon -> do
+	    v <- quantify Exists Nothing
+	    if isForethought then do
+		    tag' <- parseTag tag
+		    return $ (doModal (WithEventAs v) >> m1
+			, doModal (JboTagged tag' $ Just v) >> m2
+			, lcon)
+		else if isTense tag
+		    then return $ (doModal (WithEventAs v) >> m1
+			    , parseTag tag >>= doModal . (`JboTagged` Just v) >> m2
+			    , lcon)
+		    else return $ ( m1 <* (parseTag tag >>= doModal . (`JboTagged` Just v))
+			    , doModal (WithEventAs v) >> m2
+			    , lcon)
+    mapParseM2 (connToFOL lcon) m1' m2'

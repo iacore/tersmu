@@ -66,18 +66,18 @@ subTerm s t = terpProp
     subTermInTagUnit tu = tu
     subTermInPred p = \x -> subTerm s t (p x)
 
-connToFOL :: JboConnective -> JboProp -> JboProp -> JboProp
-connToFOL (JboConnective True 'e' True) p1 p2 = Connected And p1 p2
-connToFOL (JboConnective True 'a' True) p1 p2 = Connected Or p1 p2
-connToFOL (JboConnective False 'a' True) p1 p2 = Connected Impl p1 p2
-connToFOL (JboConnective True 'a' False) p1 p2 = Connected Impl p2 p1
-connToFOL (JboConnective True 'o' True) p1 p2 = Connected Equiv p1 p2
-connToFOL (JboConnective True 'u' True) p1 p2 = p1
-connToFOL (JboConnective True 'U' True) p1 p2 = p2
-connToFOL (JboConnective False c b2) p1 p2 =
-    connToFOL (JboConnective True c b2) (Not p1) p2
-connToFOL (JboConnective b1 c False) p1 p2 =
-    connToFOL (JboConnective b1 c True) p1 (Not p2)
+connToFOL :: LogJboConnective -> JboProp -> JboProp -> JboProp
+connToFOL (LogJboConnective True 'e' True) p1 p2 = Connected And p1 p2
+connToFOL (LogJboConnective True 'a' True) p1 p2 = Connected Or p1 p2
+connToFOL (LogJboConnective False 'a' True) p1 p2 = Connected Impl p1 p2
+connToFOL (LogJboConnective True 'a' False) p1 p2 = Connected Impl p2 p1
+connToFOL (LogJboConnective True 'o' True) p1 p2 = Connected Equiv p1 p2
+connToFOL (LogJboConnective True 'u' True) p1 p2 = p1
+connToFOL (LogJboConnective True 'U' True) p1 p2 = p2
+connToFOL (LogJboConnective False c b2) p1 p2 =
+    connToFOL (LogJboConnective True c b2) (Not p1) p2
+connToFOL (LogJboConnective b1 c False) p1 p2 =
+    connToFOL (LogJboConnective b1 c True) p1 (Not p2)
 
 andPred :: [JboPred] -> JboPred
 andPred ps x = bigAnd [p x | p <- ps]
