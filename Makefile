@@ -10,7 +10,7 @@ Pappy:
 	patch < ../Pappy.patch
 Pappy/pappy: Pappy
 	cd Pappy && \
-	ghc --make -o pappy Main.hs
+	ghc --make -package haskell98 -hide-package base -o pappy Main.hs
 Tersmu.hs: Tersmu.pappy Pappy/pappy
 	Pappy/pappy Tersmu.pappy
 test: tersmu
