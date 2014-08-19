@@ -1,3 +1,17 @@
+diff --git a/ReadGrammar.hs b/ReadGrammar.hs
+index 3405d05..ff7e7b9 100644
+--- a/ReadGrammar.hs
++++ b/ReadGrammar.hs
+@@ -265,7 +265,8 @@ symbols = [
+ 	"*",
+ 	"?",
+ 	"&",
+-	"!"]
++	"!",
++	","]
+ 
+ 
+ -- Raw code block, ignoring following whitespace
 diff --git a/SimplifyGrammar.hs b/SimplifyGrammar.hs
 index f94a2fa..6e1855e 100644
 --- a/SimplifyGrammar.hs
