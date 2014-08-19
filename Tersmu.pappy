@@ -16,11 +16,25 @@ jjJboCon mtag (JJJek lcon) = JboConnLog mtag lcon
 jjJboCon mtag (JJJoik joik) = JboConnJoik mtag joik
 }
 
-top atext1
--- top term
--- top CMENE
--- top LojbanLetter
+top atext1,frees,textHead,wholeStatement
 
+----- auxiliary productions used in preparsing:
+wholeStatement :: Statement
+    = s:statement (NIhO+ -> {()} / I -> {()} / !Char -> {()}) -> s
+
+textHead :: {()}
+    = (i:I joikJek? BO? -> i / NIhO)* -> {()}
+
+frees :: {[Free]} = free+
+-- XXX: we incorporate indicators into free
+free :: Free
+    = TO ps:paragraphs TOI? -> {Bracketed ps}
+    / SEI mts:(ts:terms CU? -> ts)? sb:selbri SEhU? -> {Discursive $ BridiTail3 sb $ fromMaybe [] mts}
+    / FUhE? is:(indicator+) -> {Indicators is}
+indicator :: Indicator
+    = i:(c:(UI/CAI) nai:NAI? -> { Indicator (isJust nai) c } / c:(DAhO/FUhO) -> { Indicator False c }) !BU -> i
+
+----- main grammar:
 atext1 :: {[Statement]}
     = Spacing? ss:text1 !Char -> ss
 
@@ -29,7 +43,7 @@ text1 :: {[Statement]}
 	ssm:(paragraphs)? -> {fromMaybe [] ssm}
 
 paragraphs :: {[Statement]}
-    = ss:paragraph ssm:(NIhO+ free* ss':paragraphs -> ss')?
+    = ss:paragraph ssm:(NIhO+ ss':paragraphs -> ss')?
 	-> {ss ++ fromMaybe [] ssm}
 
 paragraph :: {[Statement]}
@@ -56,23 +70,23 @@ statement2 :: Statement1
 	    Just (con,s2) -> ConnectedStatement con s1 s2 }
 
 statement3 :: Statement1
-    = {(ts,bt)}:sentence -> {StatementSentence (Sentence ts bt)}
+    = s:sentence -> {StatementSentence s}
     / TUhE ss:text1 TUhU? -> {StatementStatements ss}
 
 asubsentence :: Subsentence
     = Spacing? subs:subsentence !Char -> subs
 
 subsentence :: Subsentence
-    = {(ts,bt)}:sentence -> {Subsentence [] (Sentence ts bt)}
+    = s:sentence -> {Subsentence [] s}
     / ps:prenex {Subsentence ps' s}:subsentence ->
 	{ Subsentence (ps++ps') s }
 
 prenex :: {[Term]} = ps:terms ZOhU -> ps
 
-sentence :: {([Term], BridiTail)}
+sentence :: {Sentence}
     = mts1:(ts:terms CU? -> ts)?
 	bt:bridiTail
-	-> { (fromMaybe [] mts1, bt) }
+	-> { Sentence (fromMaybe [] mts1) bt }
 
 terms :: {[Term]} = terms1+
 terms1 :: Term 
@@ -374,6 +388,7 @@ tanruUnit1 :: Selbri3
 
 tanruUnit2 :: TanruUnit2
     = bv:BRIVLA -> {TUBrivla bv}
+    -- TODO: zei
     / KE sb:selbri3 KEhE? -> {TUSelbri3 sb}
     / n:convSE tu:tanruUnit2 -> {TUPermuted n tu}
     / g:GOhA -> {TUGOhA g}
@@ -430,9 +445,6 @@ tagUnit :: TagUnit
     / FIhO s:selbri FEhU? -> { FIhO s }
     / CUhE -> { CUhE }
     / KI -> { KI }
-
-free :: {()}
-    = TO sentence (TOI->{()})? -> {()}
 
 LojbanLetter :: Char = Consonant / Vowel / OtherLetter
 nonConsonant :: Char = Vowel / OtherLetter
@@ -871,18 +883,3 @@ ZOImain :: String = "zoi" / "la'o"
 --         prenex terminator (not elidable) 
 ZOhU :: String = s:ZOhUmain Spacing -> s
 ZOhUmain :: String = "zo'u" 
-
-
-{
-
-eval :: String -> Either [Statement] Int
-eval str = case tersmuatext1 (tersmuParse "atext1" (str ++ " ")) of
--- eval :: String -> Sumti
--- eval str = case tersmuterm (tersmuParse "term" str) of
--- eval :: String -> String
--- eval str = case tersmuCMENE (tersmuParse "CMENE" str) of
--- eval :: String -> Char
--- eval str = case tersmuLojbanLetter (tersmuParse "LojbanLetter" str) of
-	Parsed p _ _ -> Left p
-	NoParse e -> Right (posCol (errorPos e))
-}

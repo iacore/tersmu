@@ -11,6 +11,8 @@ Definite bugs:
 
     {ri} doesn't ignore anaphoric pro-sumti.
 
+    UI and other indicators are entirely ignored.
+
 Probably bugs:
     Current gadri (non)-handling is probably inconsistent with xorlo.
 

@@ -18,6 +18,15 @@ data Subsentence = Subsentence [Term] Sentence
 data Sentence = Sentence [Term] BridiTail
     deriving (Eq, Show, Ord)
 
+data Free
+    = Bracketed [Statement]
+    | Discursive BridiTail
+    | Indicators [Indicator]
+    deriving (Eq, Show, Ord)
+
+data Indicator = Indicator {indicatorNai :: Bool, indicatorCmavo :: Cmavo}
+    deriving (Eq, Show, Ord)
+
 data Term = Sumti Tagged Sumti
 	  | Negation
 	  | Termset [Term]

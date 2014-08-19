@@ -15,6 +15,7 @@ import qualified Data.Set as Set
 
 import Control.Monad.State
 import Control.Monad.Cont
+import Control.Monad.Identity
 
 -- ParseState holds all the funny stuff which doesn't respect the tree
 -- structure of the logical parse; it is threaded through as we parse the text
@@ -28,7 +29,8 @@ data ParseState = ParseState
     , sideSentences::[JboProp]
     }
 nullParseState = ParseState Map.empty Map.empty 0 0 Set.empty []
-type ParseStateM = State ParseState
+type ParseStateT = StateT ParseState
+type ParseStateM = ParseStateT Identity
 
 -- BridiParseState holds state which respects the logical structure
 data BridiParseState = BridiParseState {arglist::Arglist,varBindings::VarBindings}
@@ -38,8 +40,9 @@ type ParseM r = (StateT BridiParseState) (ContT r ParseStateM)
 type BridiM = ParseM Bridi
 type JboPropM = ParseM JboProp
 
-evalParseStateM :: ParseStateM a -> a
-evalParseStateM = (`evalState` nullParseState)
+evalParseStateT :: Monad m => ParseStateT m a -> m a
+evalParseStateT = (`evalStateT` nullParseState)
+evalParseStateM = runIdentity . evalParseStateT
 
 evalParseM :: ParseM r r -> ParseStateM r
 evalParseM =
@@ -51,7 +54,7 @@ class (Monad m,Applicative m) => ParseStateful m where
     putParseState :: ParseState -> m ()
     modifyParseState :: (ParseState -> ParseState) -> m ()
     modifyParseState f = (f <$> getParseState) >>= putParseState
-instance ParseStateful (ParseStateM) where
+instance (Monad m,Functor m) => ParseStateful (ParseStateT m) where
     getParseState = get
     putParseState = put
 instance ParseStateful (ParseM r) where

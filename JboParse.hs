@@ -21,6 +21,16 @@ evalStatement s = do
     ps <- takeSideSentence
     return $ ps ++ [p]
 
+evalFree :: Free -> ParseStateM [JboProp]
+evalFree (Discursive bt) =
+    ((\p -> [p]) <$>) $ evalParseM $
+	($nullArgs) <$> partiallyRunBridiM (parseBTail bt)
+evalFree (Bracketed sts) =
+    concat <$> mapM evalStatement sts
+evalFree (Indicators _) =
+    -- TODO
+    return []
+
 parseStatements :: [Statement] -> JboPropM JboProp
 parseStatements ss = bigAnd <$> mapM parseStatement ss
 
