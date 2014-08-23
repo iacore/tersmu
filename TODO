@@ -1,4 +1,4 @@
-Improve parsing of indicators&free (see notes/free)
+Improve parsing of indicators&free (see notes/free).
 
 Questions and imperatives.
 
@@ -7,6 +7,8 @@ strict CLL mode?
 alternative tags mode, doing away with modals and non-logical sentence
 connectives in favour of extra WithEventAs and binary relations corresponding
 to tags (see notes/tags)?
+
+option to render sumti (and tag, abstractor) connectives as quantifiers?
 
 no'a
 

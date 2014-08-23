@@ -16,6 +16,8 @@ import Data.List
 instance Rel JboRel where
     relstr r = evalBindful $ logshow r
 
+instance HasUnbound SumtiAtom where
+    unbound n = Zohe
 class JboShow t where
     jboshow :: t -> Bindful SumtiAtom String
     logshow :: t -> Bindful SumtiAtom String
@@ -193,11 +195,13 @@ instance JboShow JboTerm where
 				    Assignable n | n <= 5 -> "ko'" ++ vowelnum n
 				    Assignable n | n <= 10 -> "fo'" ++ vowelnum (n-5)
 				    Assignable n -> "ko'a xi " ++ jbonum n
+				    Zohe -> "lo XASLI zei da ku"
 			    else case v of
 				    Variable n -> "x" ++ show n
 				    RelVar 1 -> "_"
 				    RelVar n -> "_" ++ show n
 				    LambdaVar n -> "\\" ++ show n
+				    Zohe -> "[DONKEY]"
     logjboshow True (Constant n) = return $ "cy " ++ jbonum n
     logjboshow False (Constant n) = return $ "c" ++ show n
     logjboshow True (Named s) = return $ "la " ++ s ++ "."
@@ -252,12 +256,14 @@ instance JboShow JboProp
 				<$> logjboshow' jbo [] p
 	where
 	  logjboshow' :: Bool -> [String] -> JboProp -> Bindful SumtiAtom [String]
+	  {-
 	  logjboshow' True ps (Quantified (Gadri gadri) r p) =
 	      withNextAssignable $ \n ->
 		  do vs <- logjboshow jbo (Var n)
 		     rss <- logjboshowpred jbo (fromJust r)
 		     logjboshow' jbo (ps ++ [gadri] ++ [rss] ++
 			 ["ku","goi",vs]) (p n)
+	  -}
 	  logjboshow' jbo ps (Quantified q r p) =
 	      withNextVariable $ \n ->
 		  do qs <- logjboshow jbo q

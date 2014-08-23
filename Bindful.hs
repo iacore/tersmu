@@ -7,7 +7,7 @@ import Data.Map (Map)
 import qualified Data.Map as Map
 import Control.Monad.State
 
-class (Monad m) => BindfulMonad s m | m -> s where
+class Monad m => BindfulMonad s m | m -> s where
     withBinding :: s -> (Int -> m r) -> m r
     binding :: Int -> m s
     twiddleBound :: (s -> s) -> m ()
@@ -22,7 +22,9 @@ class (Monad m) => BindfulMonad s m | m -> s where
 
 type Bindful s = State (Map Int s)
 
-instance BindfulMonad s (Bindful s) where
+class HasUnbound s where
+    unbound :: Int -> s
+instance (HasUnbound s) => BindfulMonad s (Bindful s) where
     withBinding v f = do n <- nextFree
 			 bind n v
 			 r <- f n
@@ -30,7 +32,7 @@ instance BindfulMonad s (Bindful s) where
 			 return r
     binding n = do bs <- get
 		   case Map.lookup n bs of
-			  Nothing -> error $ show n ++ " unbound"
+			  Nothing -> return $ unbound n
 			  Just v -> return v
     getValues = gets Map.elems
     twiddleBound f = do ks <- gets Map.keys

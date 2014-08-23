@@ -1,6 +1,12 @@
 All known divergence from CLL prescription, or from plausible interpretations
 thereof, is noted here.
 
+Bug traces:
+    > broda joi brode cei brodi .i brodi
+    <broda(_)>{joi}<brode(_)>( )
+    zo'e ke broda ke'e joi ke brode ke'e
+    tersmu: 1 unbound
+
 Definite bugs:
     ka can't handle multiple ce'u (should return a relation)
 
@@ -42,6 +48,8 @@ Possibly bugs:
 Other deviations from CLL, not considered bugs, but which maybe ought to be
 optional:
     {na broda} is equivalent to {naku broda}.
+
+    Consequently, {ja'a} has no effect.
 
     Quantifiers don't scope over (even connected) sentence boundaries.
 

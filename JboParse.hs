@@ -73,10 +73,13 @@ parseBTail (ConnectedBT con bt1 bt2 tts) =
 	(Subsentence [] (Sentence [] bt2)) tts))
 
 parseBTail (BridiTail3 (Negated sb) tts) =
-    -- XXX: need to handle Negated here as well as in parseSelbri, because of
-    -- the SBInverted handling within parseBTail below.
-    -- Make sure to do the same for tags when we implement them.
+    -- XXX: need to handle Negated and tags here as well as in parseSelbri,
+    -- because of the SBInverted handling within parseBTail below.
     mapProp Not >> parseBTail (BridiTail3 sb tts)
+parseBTail (BridiTail3 (TaggedSelbri tag sb) tts) = do
+    tag' <- parseTag tag
+    doBareTag tag'
+    parseBTail (BridiTail3 sb tts)
 
 parseBTail (BridiTail3 (Selbri2 (SBInverted sb sb')) tts) =
     getInvertedRel sb sb' where
@@ -249,7 +252,7 @@ parseRels (r:rs) = do
 	    return ([],[ip],[])
 	RestrictiveGOI goi t -> do
 	    -- TODO: semantics of {pe BAI} etc
-	    mo <- parseTerm t
+	    mo <- ignoringArgs $ parseTerm t
 	    case mo of
 		Nothing -> return ([],[],[])
 		Just o ->
@@ -266,7 +269,7 @@ parseRels (r:rs) = do
 			rp = \x -> Rel rel [x,o]
 		    in return ([rp],[],[])
 	IncidentalGOI goi t -> do
-	    mo <- parseTerm t
+	    mo <- ignoringArgs $ parseTerm t
 	    case mo of
 		Nothing -> return ([],[],[])
 		Just o ->
