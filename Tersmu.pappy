@@ -190,6 +190,7 @@ sumti6 :: SumtiAtom
     / "fo'u":KOhA -> {Assignable 10}
     / l:lerfuString -> {LerfuString l}
     / "zo'e":KOhA -> {Zohe}
+    / "ma":KOhA k:("kau":UI x:("xi":XI n:litnum -> n)? -> {fromMaybe 1 x})? -> {SumtiQ k}
     / g:(LA/LE) {(is,q,sb,rels,irels)}:sumtiTail KU? ->
 	{Description g is q sb rels irels}
     / LU t:text1 LIhU? -> {Quote t}

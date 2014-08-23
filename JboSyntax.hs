@@ -107,6 +107,7 @@ data SumtiAtom = Name String
 	       | Quote [Statement]
 	       | Word String
 	       | Zohe -- zo'e
+	       | SumtiQ (Maybe Int) -- ma [kau]
 	       deriving (Eq, Show, Ord)
 
 type Lerfu = Char

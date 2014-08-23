@@ -12,6 +12,7 @@ import Control.Applicative
 type JboProp = Prop JboRel JboTerm Joik JboOperator
 
 data JboTerm = Var Int
+	     | PreVar Int
 	     | Constant Int
 	     | Named String
 	     | NonAnaph String

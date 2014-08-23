@@ -17,7 +17,7 @@ evalText ss =
 
 evalStatement :: Statement -> ParseStateM [JboProp]
 evalStatement s = do
-    p <- evalParseM $ parseStatement s
+    p <- evalParseM (parseStatement s) >>= doQuestions True
     ps <- takeSideSentence
     return $ ps ++ [p]
 
@@ -158,10 +158,10 @@ parseTU (TUAbstraction a ss) =
 	    _ -> Nothing
     of
 	Just rv -> do
-	    pred <- subsentToPred ss rv
+	    pred <- subsentToPred ss rv >>= doQuestionsPred False
 	    return $ jboRelToBridi $ AbsPred a pred
 	Nothing -> jboRelToBridi . AbsProp a <$>
-	    (runSubBridiM $ parseSubsentence ss)
+	    (runSubBridiM (parseSubsentence ss) >>= doQuestions False)
 parseTU (TUPermuted n tu) =
     (.swapArgs (NPos 1) (NPos n)) <$> parseTU tu
 parseTU (TUSelbri3 sb) = parseSelbri3 sb
@@ -248,7 +248,7 @@ parseRels (r:rs) = do
 	    rp <- subsentToPred ss RelVar
 	    return ([rp],[],[])
 	Incidental ss -> do
-	    ip <- subsentToPred ss RelVar
+	    ip <- subsentToPred ss RelVar >>= doQuestionsPred True
 	    return ([],[ip],[])
 	RestrictiveGOI goi t -> do
 	    -- TODO: semantics of {pe BAI} etc
@@ -333,6 +333,7 @@ parseSumtiAtom sa = do
 	anaph@Ri -> getSumbasti sa
 	anaph@(Assignable _) -> getSumbasti sa
 	anaph@(LerfuString _) -> getSumbasti sa
+	SumtiQ kau -> addSumtiQuestion kau
 	Zohe -> getFreshConstant
 	-- TODO: following ought all to give fresh constants, really
 	NonAnaphoricProsumti ps -> return $ NonAnaph ps
@@ -407,7 +408,7 @@ parsedSelbriToPred m = do
 
 subsentToPred :: Subsentence -> (Int -> SumtiAtom) -> ParseM r JboPred
 subsentToPred ss rv = do
-    fresh@(Var n) <- getFreshVar
+    fresh@(PreVar n) <- getFreshVar
     p <- runSubBridiM $ do
 	modifyVarBindings $ shuntVars rv
 	setVarBinding (rv 1) fresh

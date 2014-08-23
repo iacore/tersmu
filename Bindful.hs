@@ -22,9 +22,7 @@ class Monad m => BindfulMonad s m | m -> s where
 
 type Bindful s = State (Map Int s)
 
-class HasUnbound s where
-    unbound :: Int -> s
-instance (HasUnbound s) => BindfulMonad s (Bindful s) where
+instance BindfulMonad s (Bindful s) where
     withBinding v f = do n <- nextFree
 			 bind n v
 			 r <- f n
@@ -32,7 +30,7 @@ instance (HasUnbound s) => BindfulMonad s (Bindful s) where
 			 return r
     binding n = do bs <- get
 		   case Map.lookup n bs of
-			  Nothing -> return $ unbound n
+			  Nothing -> error $ "unbound " ++ show n
 			  Just v -> return v
     getValues = gets Map.elems
     twiddleBound f = do ks <- gets Map.keys

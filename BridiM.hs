@@ -8,6 +8,7 @@ import FOL hiding (Term)
 import Data.Maybe
 import Control.Applicative
 import Data.List
+import Data.Either
 import Data.Map (Map)
 import qualified Data.Map as Map
 import Data.Set (Set)
@@ -26,9 +27,10 @@ data ParseState = ParseState
     , nextFreshVar::Int
     , nextFreshConstant::Int
     , referencedVars::Set Int
+    , questionBindings::[QuestionBinding]
     , sideSentences::[JboProp]
     }
-nullParseState = ParseState Map.empty Map.empty 0 0 Set.empty []
+nullParseState = ParseState Map.empty Map.empty 0 0 Set.empty [] []
 type ParseStateT = StateT ParseState
 type ParseStateM = ParseStateT Identity
 
@@ -49,29 +51,74 @@ evalParseM =
 	(`runContT` return)
 	. (`evalStateT` nullBridiParseState)
 
+type SumbastiBindings = Map SumtiAtom JboTerm
+type BribastiBindings = Map String Bridi
+
+data QuestionBinding = QuestionBinding {qVariable :: JboTerm, qKauDepth :: Maybe Int}
+
 class (Monad m,Applicative m) => ParseStateful m where
     getParseState :: m ParseState
     putParseState :: ParseState -> m ()
     modifyParseState :: (ParseState -> ParseState) -> m ()
     modifyParseState f = (f <$> getParseState) >>= putParseState
+
+    getSumbastiBindings :: m SumbastiBindings
+    getSumbastiBindings = sumbastiBindings <$> getParseState
+    putSumbastiBindings :: SumbastiBindings -> m ()
+    putSumbastiBindings bs = modifyParseState $ \ps -> ps{sumbastiBindings=bs}
+    setSumbasti :: SumtiAtom -> JboTerm -> m ()
+    setSumbasti a t = (Map.insert a t <$> getSumbastiBindings) >>= putSumbastiBindings
+    getSumbasti :: SumtiAtom -> m JboTerm
+    getSumbasti a = (`getSumbastiBinding` a) <$> getSumbastiBindings
+
+    getBribastiBindings :: m BribastiBindings
+    getBribastiBindings = bribastiBindings <$> getParseState
+    putBribastiBindings :: BribastiBindings -> m ()
+    putBribastiBindings bs = modifyParseState $ \ps -> ps{bribastiBindings=bs}
+    setBribasti :: String -> Bridi -> m ()
+    setBribasti s b = (Map.insert s b <$> getBribastiBindings) >>= putBribastiBindings
+    getBribasti :: String -> m Bridi
+    getBribasti s = (`getBribastiBinding` s) <$> getBribastiBindings
+
+    getNextFreshVar :: m Int
+    getNextFreshVar = nextFreshVar <$> getParseState
+    putNextFreshVar :: Int -> m ()
+    putNextFreshVar n = modifyParseState $ \ps -> ps{nextFreshVar=n}
+    getNextFreshConstant :: m Int
+    getNextFreshConstant = nextFreshConstant <$> getParseState
+    putNextFreshConstant :: Int -> m ()
+    putNextFreshConstant n = modifyParseState $ \ps -> ps{nextFreshConstant=n}
+    getReferenced :: m (Set Int)
+    getReferenced = referencedVars <$> getParseState
+    putReferenced :: Set Int -> m ()
+    putReferenced rv = modifyParseState $ \ps -> ps{referencedVars=rv}
+
+    getFreshVar :: m JboTerm
+    -- note: crucial that we don't reuse variables, so we can catch "donkey
+    -- sentences" which involve scope-breaking sumbasti references to unbound
+    -- variables (e.g. {ro tercange poi ponse su'o xasli cu darxi ri}).
+    getFreshVar = do
+	n <- getNextFreshVar
+	putNextFreshVar $ n+1
+	return $ PreVar n
+    getFreshConstant :: m JboTerm
+    getFreshConstant = do
+	n <- getNextFreshConstant
+	putNextFreshConstant $ n+1
+	return $ Constant n
+    setReferenced :: Int -> m ()
+    setReferenced n = getReferenced >>= putReferenced . Set.insert n
+    referenced :: Int -> m Bool
+    referenced n = getReferenced >>= return . (n `Set.member`)
+
+    addQuestionBinding :: QuestionBinding -> m ()
+    addQuestionBinding b = modifyParseState $ \ps -> ps{questionBindings=b:questionBindings ps}
 instance (Monad m,Functor m) => ParseStateful (ParseStateT m) where
     getParseState = get
     putParseState = put
 instance ParseStateful (ParseM r) where
     getParseState = lift get
     putParseState = lift . put
-
-type SumbastiBindings = Map SumtiAtom JboTerm
-class (Monad m,Applicative m) => Sumbastiful m where
-    getSumbastiBindings :: m SumbastiBindings
-    putSumbastiBindings :: SumbastiBindings -> m ()
-    setSumbasti :: SumtiAtom -> JboTerm -> m ()
-    setSumbasti a t = (Map.insert a t <$> getSumbastiBindings) >>= putSumbastiBindings
-    getSumbasti :: SumtiAtom -> m JboTerm
-    getSumbasti a = (`getSumbastiBinding` a) <$> getSumbastiBindings
-instance Sumbastiful (ParseM r) where
-    getSumbastiBindings = sumbastiBindings <$> getParseState
-    putSumbastiBindings bs = modifyParseState $ \ps -> ps{sumbastiBindings=bs}
 
 getSumbastiBinding :: SumbastiBindings -> SumtiAtom -> JboTerm
 getSumbastiBinding bs v =
@@ -82,61 +129,14 @@ getSumbastiBinding bs v =
 		      (LerfuString s) -> UnboundLerfuString s
 		      _ -> error $ show v ++ " not bound.\n"
 
-type BribastiBindings = Map String Bridi
-class (Monad m,Applicative m) => Bribastiful m where
-    getBribastiBindings :: m BribastiBindings
-    putBribastiBindings :: BribastiBindings -> m ()
-    setBribasti :: String -> Bridi -> m ()
-    setBribasti s b = (Map.insert s b <$> getBribastiBindings) >>= putBribastiBindings
-    getBribasti :: String -> m Bridi
-    getBribasti s = (`getBribastiBinding` s) <$> getBribastiBindings
-instance Bribastiful (State ParseState) where
-    getBribastiBindings = bribastiBindings <$> get
-    putBribastiBindings bs = modify $ \ps -> ps{bribastiBindings=bs}
-instance Bribastiful (ParseM r) where
-    getBribastiBindings = bribastiBindings <$> getParseState
-    putBribastiBindings bs = modifyParseState $ \ps -> ps{bribastiBindings=bs}
-
 getBribastiBinding :: BribastiBindings -> String -> Bridi
 getBribastiBinding bs s =
     case Map.lookup s bs of
       Just b -> b
       Nothing -> jboRelToBridi $ Brivla s
 
-class (Monad m,Applicative m) => Varpool m where
-    getNextFreshVar :: m Int
-    putNextFreshVar :: Int -> m ()
-    getNextFreshConstant :: m Int
-    putNextFreshConstant :: Int -> m ()
-    getReferenced :: m (Set Int)
-    putReferenced :: Set Int -> m ()
 
-    getFreshVar :: m JboTerm
-    -- note: crucial that we don't reuse variables, so we can catch "donkey
-    -- sentences" which involve scope-breaking sumbasti references to unbound
-    -- variables (e.g. {ro tercange poi ponse su'o xasli cu darxi ri}).
-    getFreshVar = do
-	n <- getNextFreshVar
-	putNextFreshVar $ n+1
-	return $ Var n
-    getFreshConstant :: m JboTerm
-    getFreshConstant = do
-	n <- getNextFreshConstant
-	putNextFreshConstant $ n+1
-	return $ Constant n
-    setReferenced :: Int -> m ()
-    setReferenced n = getReferenced >>= putReferenced . Set.insert n
-    referenced :: Int -> m Bool
-    referenced n = getReferenced >>= return . (n `Set.member`)
-instance Varpool (ParseM r) where
-    getNextFreshVar = nextFreshVar <$> getParseState
-    putNextFreshVar n = modifyParseState $ \ps -> ps{nextFreshVar=n}
-    getNextFreshConstant = nextFreshConstant <$> getParseState
-    putNextFreshConstant n = modifyParseState $ \ps -> ps{nextFreshConstant=n}
-    getReferenced = referencedVars <$> getParseState
-    putReferenced rv = modifyParseState $ \ps -> ps{referencedVars=rv}
-
-addSideSentence :: JboProp -> ParseM r ()
+addSideSentence :: ParseStateful m => JboProp -> m ()
 addSideSentence p =
     modifyParseState $ \pst -> pst{sideSentences=p:sideSentences pst}
 
@@ -144,6 +144,31 @@ takeSideSentence :: ParseStateful m => m [JboProp]
 takeSideSentence =
     (sideSentences <$> getParseState)
 	<* (modifyParseState $ \pst -> pst{sideSentences=[]})
+
+
+addSumtiQuestion :: ParseStateful m => Maybe Int -> m JboTerm
+addSumtiQuestion kau = do
+    o <- getFreshVar
+    addQuestionBinding $ QuestionBinding {qVariable=o, qKauDepth=kau}
+    return o
+doQuestions :: ParseStateful m => Bool -> JboProp -> m JboProp
+doQuestions top p =
+    foldl doQuestion p <$> deKau top
+doQuestionsPred :: ParseStateful m => Bool -> JboPred -> m JboPred
+doQuestionsPred top p =
+    deKau top >>= \qs -> return $ \o -> foldl doQuestion (p o) qs
+doQuestion :: JboProp -> QuestionBinding -> JboProp
+doQuestion p qb = Quantified Question Nothing $
+	\v -> subTerm (qVariable qb) (Var v) p
+deKau :: ParseStateful m => Bool -> m [QuestionBinding]
+deKau top = do
+    qbs <- questionBindings <$> getParseState
+    let deKauQB qb = if top || qKauDepth qb == Just 1
+		then Left qb
+		else Right qb {qKauDepth = (+(-1))<$>qKauDepth qb}
+	(outqbs,qbs') = partitionEithers $ map deKauQB qbs
+    modifyParseState $ \ps -> ps{questionBindings = qbs'}
+    return outqbs
 
 data Arglist = Arglist {args :: Args, position::Int}
 type Args = Map ArgPos JboTerm
@@ -302,7 +327,7 @@ updateParseStateWithJboTerm o = do
 	    Named (c:_) -> setSumbasti (LerfuString [c]) o
 	    _ -> return ()
 	case o of
-	    Var n -> setReferenced n
+	    PreVar n -> setReferenced n
 	    _ -> return ()
 
 doAssigns :: JboTerm -> [SumtiAtom] -> ParseM r ()
