@@ -14,6 +14,7 @@ import Control.Applicative
 import Data.Map (Map)
 import qualified Data.Map as Map
 import Data.List
+import Data.Char
 import System.IO
 import System.IO.Error
 import System.Exit
@@ -73,5 +74,5 @@ vlatai s = unwords <$> mapM vlatai' (words s)
 	    do (_, Just out, _, _) <- createProcess
 		   (proc "vlatai" [w]){ std_out = CreatePipe } 
 	       line <- hGetLine out
-	       return $ filter (/='/') $ drop ( (+3) $ last $ findIndices (== ':') line ) line
+	       return $ filter (/='/') $ dropWhile isSpace $ drop ( (+1) $ last $ findIndices (== ':') line ) line
     -- FIXME: currently dies if we don't have vlatai in the path...
