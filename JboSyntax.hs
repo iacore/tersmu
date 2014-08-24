@@ -103,7 +103,7 @@ data SumtiAtom = Name String
 	       | Description Gadri (Maybe Sumti) (Maybe Quantifier) Selbri [RelClause] [RelClause]
 	       | Assignable Int -- ko'a
 	       | LerfuString [Lerfu]
-	       | Ri -- ri
+	       | Ri Int -- ri
 	       | Quote [Statement]
 	       | NonJboQuote String
 	       | ErrorQuote [String]
@@ -158,3 +158,11 @@ appendRelsToSumti newrels (QAtom q rels sa) =
     QAtom q (rels++newrels) sa
 appendRelsToSumti newrels (QSelbri q rels s) =
     QSelbri q (rels++newrels) s
+
+getsRi :: SumtiAtom -> Bool
+getsRi Zohe = False
+getsRi (Assignable _) = False
+getsRi (LerfuString _) = False
+getsRi (Variable _) = False
+getsRi (NonAnaphoricProsumti p) = p `elem` ["ti","ta","tu"]
+getsRi _ = True

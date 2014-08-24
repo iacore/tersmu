@@ -69,6 +69,8 @@ class (Monad m,Applicative m) => ParseStateful m where
     getSumbastiBindings = sumbastiBindings <$> getParseState
     putSumbastiBindings :: SumbastiBindings -> m ()
     putSumbastiBindings bs = modifyParseState $ \ps -> ps{sumbastiBindings=bs}
+    modifySumbastiBindings :: (SumbastiBindings -> SumbastiBindings) -> m ()
+    modifySumbastiBindings f = (f <$> getSumbastiBindings) >>= putSumbastiBindings
     setSumbasti :: SumtiAtom -> JboTerm -> m ()
     setSumbasti a t = (Map.insert a t <$> getSumbastiBindings) >>= putSumbastiBindings
     getSumbasti :: SumtiAtom -> m JboTerm
@@ -256,7 +258,7 @@ instance VarBindful (ParseM r) where
     getVarBindings = varBindings <$> get
     putVarBindings vbs = modify $ \s -> s{varBindings=vbs}
 
-shuntVars :: (Int -> SumtiAtom) -> VarBindings -> VarBindings
+shuntVars :: Ord a => (Int -> a) -> Map a b -> Map a b
 shuntVars var bs = foldr ( \n -> Map.insert (var $ n+1)
 					    (fromJust $ Map.lookup (var n) bs) )
 			 bs
@@ -323,15 +325,15 @@ setBribastiToCurrent bv =
 	setBribasti bv b
 	return b
 
-updateParseStateWithJboTerm :: JboTerm -> ParseM r ()
-updateParseStateWithJboTerm o = do
-	setSumbasti Ri o
-	case o of
-	    Named (c:_) -> setSumbasti (LerfuString [c]) o
-	    _ -> return ()
-	case o of
-	    PreVar n -> setReferenced n
-	    _ -> return ()
+updateSumbastiWithSumtiAtom :: SumtiAtom -> JboTerm -> ParseM r ()
+updateSumbastiWithSumtiAtom sa o | getsRi sa = 
+    modifySumbastiBindings (shuntVars Ri) >> setSumbasti (Ri 1) o
+updateSumbastiWithSumtiAtom _ _ =
+    return ()
+
+updateReferenced :: JboTerm -> ParseM r ()
+updateReferenced (PreVar n) = setReferenced n
+updateReferenced _ = return ()
 
 doAssigns :: JboTerm -> [Either SumtiAtom JboTerm] -> ParseM r JboTerm
 doAssigns o as = case o of

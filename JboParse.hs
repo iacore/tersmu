@@ -236,7 +236,7 @@ parseSumti s = do
 	    return (o,ips,as)
     o <- doAssigns o as
     o <- bindUnbound o
-    updateParseStateWithJboTerm o
+    updateReferenced o
     doIncidentals o ips
     return o
     where
@@ -337,7 +337,7 @@ parseSumtiAtom sa = do
 	    return o
 	RelVar _ -> getVarBinding sa
 	LambdaVar _ -> getVarBinding sa
-	anaph@Ri -> getSumbasti sa
+	anaph@(Ri _) -> getSumbasti sa
 	anaph@(Assignable _) -> getSumbasti sa
 	anaph@(LerfuString _) -> getSumbasti sa
 	SumtiQ kau -> addSumtiQuestion kau
@@ -353,6 +353,7 @@ parseSumtiAtom sa = do
 	ErrorQuote vs -> return $ JboErrorQuote vs
 	NonJboQuote s -> return $ JboNonJboQuote s
 	Word s -> return $ Valsi s
+    updateSumbastiWithSumtiAtom sa o
     return (o,(rps,ips,as))
 
 parseTag :: PreProp r => Tag -> ParseM r JboTag
