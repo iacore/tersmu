@@ -135,10 +135,13 @@ data Selbri2 = SBInverted Selbri3 Selbri2
 	     deriving (Eq, Show, Ord)
 
 data Selbri3 = SBTanru Selbri3 Selbri3
-	     | ConnectedSB Bool Connective Selbri3 Selbri3
+	     | ConnectedSB Bool Connective Selbri Selbri3
 	     | BridiBinding Selbri3 Selbri3
 	     | TanruUnit TanruUnit2 [Term]
 	     deriving (Eq, Show, Ord)
+
+sb3tosb :: Selbri3 -> Selbri
+sb3tosb = Selbri2 . Selbri3
 
 data TanruUnit2 = TUBrivla String
 		| TUGOhA String

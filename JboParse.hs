@@ -117,12 +117,13 @@ parseSelbri3 (SBTanru sb sb') = do
 parseSelbri3 (ConnectedSB fore con sb sb') = do
     (con',p,p') <- if fore then do
 	    con' <- parseConnective con
-	    [p,p'] <- mapM selbri3ToPred [sb,sb']
+	    p <- selbriToPred sb
+	    p' <- selbriToPred $ sb3tosb sb'
 	    return (con',p,p')
 	else do
-	    p <- selbri3ToPred sb
+	    p <- selbriToPred sb
 	    con' <- parseConnective con
-	    p' <- selbri3ToPred sb'
+	    p' <- selbriToPred $ sb3tosb sb'
 	    return (con',p,p')
     return $ jboRelToBridi $ TanruConnective con' p p'
 parseSelbri3 (TanruUnit tu2 las) =
@@ -408,11 +409,8 @@ applySeltau seltauM tertau = do
     let f = terpProp (\r ts -> Rel (Tanru stpred r) ts) id
     return $ f . tertau 
 
-selbri3ToPred :: Selbri3 -> ParseM r JboPred
-selbri3ToPred = selbriToPred . Selbri2 . Selbri3
 selbriToPred :: Selbri -> ParseM r JboPred
-selbriToPred sb = do
-    parsedSelbriToPred $ parseSelbri sb
+selbriToPred sb = parsedSelbriToPred $ parseSelbri sb
 parsedSelbriToPred :: BridiM Bridi -> ParseM r JboPred
 parsedSelbriToPred m = do
     fresh <- getFreshVar
