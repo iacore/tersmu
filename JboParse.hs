@@ -8,6 +8,7 @@ import BridiM
 import Data.Maybe
 import Data.Traversable (traverse)
 import Control.Monad
+import Control.Monad.Trans
 import Control.Applicative
 import Data.List
 
@@ -23,7 +24,7 @@ evalStatement s = do
 
 evalFree :: Free -> ParseStateM [JboProp]
 evalFree (Discursive bt) =
-    ((\p -> [p]) <$>) $ evalParseM $
+    ((\p -> [p]) <$>) $
 	($nullArgs) <$> partiallyRunBridiM (parseBTail bt)
 evalFree (Bracketed sts) =
     concat <$> mapM evalStatement sts
@@ -45,7 +46,7 @@ parseStatement1 (ConnectedStatement con s1 s2) =
 parseStatement1 (StatementStatements ss) =
     parseStatements ss
 parseStatement1 (StatementSentence s) = do
-    b <- partiallyRunBridiM $ parseSentence s
+    b <- lift.lift $ partiallyRunBridiM $ parseSentence s
     setBribasti "go'i" b
     return $ b nullArgs
 
