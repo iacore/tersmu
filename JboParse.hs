@@ -89,7 +89,6 @@ parseBTail (BridiTail3 (Selbri2 (SBInverted sb sb')) tts) =
 	    Selbri3 sb'' -> parseSelbri $ Selbri2 (Selbri3 (TanruUnit (TUSelbri3 sb'') tts))
 
 parseBTail (BridiTail3 sb tts) = do
-    advanceArgPosToBridi
     parseSelbri sb <* parseTerms tts
 
 parseSelbri :: Selbri -> BridiM Bridi
@@ -126,7 +125,7 @@ parseSelbri3 (ConnectedSB fore con sb sb') = do
 	    return (con',p,p')
     return $ jboRelToBridi $ TanruConnective con' p p'
 parseSelbri3 (TanruUnit tu2 las) =
-    parseTU tu2 <* parseTerms las
+    advanceArgPosToBridi >> parseTU tu2 <* parseTerms las
 parseSelbri3 (BridiBinding tu tu') = do
     case tu' of
 	TanruUnit (TUBrivla bv) [] ->
