@@ -87,6 +87,13 @@ data Sumti = ConnectedSumti Bool Connective Sumti Sumti [RelClause]
 	   | QSelbri Quantifier [RelClause] Selbri
 	   deriving (Eq, Show, Ord)
 
+appendRelsToSumti newrels (ConnectedSumti fore con s1 s2 rels) =
+    ConnectedSumti fore con s1 s2 (rels++newrels)
+appendRelsToSumti newrels (QAtom q rels sa) =
+    QAtom q (rels++newrels) sa
+appendRelsToSumti newrels (QSelbri q rels s) =
+    QSelbri q (rels++newrels) s
+
 data RelClause = Restrictive Subsentence  -- poi
 	       | Incidental Subsentence  -- noi
 	       | Assignment Term  -- goi
@@ -111,10 +118,16 @@ data SumtiAtom = Name String
 	       | Zohe -- zo'e
 	       | SumtiQ (Maybe Int) -- ma [kau]
 	       deriving (Eq, Show, Ord)
-
 type Lerfu = Char
-
 type Gadri = String
+
+getsRi :: SumtiAtom -> Bool
+getsRi Zohe = False
+getsRi (Assignable _) = False
+getsRi (LerfuString _) = False
+getsRi (Variable _) = False
+getsRi (NonAnaphoricProsumti p) = p `elem` ["ti","ta","tu"]
+getsRi _ = True
 
 data BridiTail = ConnectedBT Connective BridiTail BridiTail [Term]
 	       | BridiTail3 Selbri [Term]
@@ -152,17 +165,19 @@ data TanruUnit2 = TUBrivla String
 		| TUSelbri3 Selbri3
 	        deriving (Eq, Show, Ord)
 
-appendRelsToSumti newrels (ConnectedSumti fore con s1 s2 rels) =
-    ConnectedSumti fore con s1 s2 (rels++newrels)
-appendRelsToSumti newrels (QAtom q rels sa) =
-    QAtom q (rels++newrels) sa
-appendRelsToSumti newrels (QSelbri q rels s) =
-    QSelbri q (rels++newrels) s
-
-getsRi :: SumtiAtom -> Bool
-getsRi Zohe = False
-getsRi (Assignable _) = False
-getsRi (LerfuString _) = False
-getsRi (Variable _) = False
-getsRi (NonAnaphoricProsumti p) = p `elem` ["ti","ta","tu"]
-getsRi _ = True
+lerfuStringOfSelbri :: Selbri -> [Lerfu]
+lerfuStringOfSelbri (Negated sb) = lerfuStringOfSelbri sb
+lerfuStringOfSelbri (TaggedSelbri _ sb) = lerfuStringOfSelbri sb
+lerfuStringOfSelbri (Selbri2 sb2) = sb2tols sb2
+    where
+	sb2tols (SBInverted sb3 sb2) = sb3tols sb3 ++ sb2tols sb2
+	sb2tols (Selbri3 sb3) = sb3tols sb3
+	sb3tols (SBTanru sb sb') = sb3tols sb ++ sb3tols sb'
+	sb3tols (ConnectedSB _ _ sb sb3) = sbtols sb ++ sb3tols sb3
+	sb3tols (BridiBinding sb3 _) = sb3tols sb3
+	sb3tols (TanruUnit tu _) = tutols tu
+	sbtols = lerfuStringOfSelbri
+	tutols (TUBrivla s) = take 1 s
+	tutols (TUAbstraction s _) = take 1 s
+	tutols (TUSelbri3 sb3) = sb3tols sb3
+	tutols _ = []

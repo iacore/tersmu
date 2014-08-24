@@ -169,23 +169,12 @@ sumti6 :: SumtiAtom
     / "ti":KOhA -> {NonAnaphoricProsumti "ti"}
     / "ta":KOhA -> {NonAnaphoricProsumti "ta"}
     / "tu":KOhA -> {NonAnaphoricProsumti "tu"}
-    / "da":KOhA n:("xi":XI n:litnum -> n)? -> {Variable $ fromMaybe 1 n}
-    / "de":KOhA -> {Variable 2}
-    / "di":KOhA -> {Variable 3}
-    / "ke'a":KOhA n:("xi":XI n:litnum -> n)? -> {RelVar $ fromMaybe 1 n}
-    / "ce'u":KOhA n:("xi":XI n:litnum -> n)? -> {LambdaVar $ fromMaybe 1 n}
-    / "ri":KOhA n:("xi":XI n:litnum -> n)? -> {Ri $ fromMaybe 1 n}
-    / "ko'a":KOhA n:("xi":XI n:litnum -> n)? -> {Assignable $ fromMaybe 1 n}
-    / "ko'e":KOhA -> {Assignable 2}
-    / "ko'i":KOhA -> {Assignable 3}
-    / "ko'o":KOhA -> {Assignable 4}
-    / "ko'u":KOhA -> {Assignable 5}
-    / "fo'a":KOhA -> {Assignable 6}
-    / "fo'e":KOhA -> {Assignable 7}
-    / "fo'i":KOhA -> {Assignable 8}
-    / "fo'o":KOhA -> {Assignable 9}
-    / "fo'u":KOhA -> {Assignable 10}
-    / l:lerfuString -> {LerfuString l}
+    / n:variable mn:("xi":XI n:litnum -> n)? -> {Variable $ fromMaybe n mn}
+    / "ke'a":KOhA mn:("xi":XI n:litnum -> n)? -> {RelVar $ fromMaybe 1 mn}
+    / "ce'u":KOhA mn:("xi":XI n:litnum -> n)? -> {LambdaVar $ fromMaybe 1 mn}
+    / "ri":KOhA mn:("xi":XI n:litnum -> n)? -> {Ri $ fromMaybe 1 mn}
+    / n:"ko'a":KOhA mn:("xi":XI n:litnum -> n)? -> {Assignable $ fromMaybe n mn}
+    / l:lerfuString !MOI BOI? -> {LerfuString l}
     / "zo'e":KOhA -> {Zohe}
     / "ma":KOhA k:("kau":UI x:("xi":XI n:litnum -> n)? -> {fromMaybe 1 x})? -> {SumtiQ k}
     / g:(LA/LE) {(is,q,sb,rels,irels)}:sumtiTail KU? ->
@@ -194,6 +183,22 @@ sumti6 :: SumtiAtom
     / ZO s:Valsi -> {Word s}
     / s:nonJboQuote -> {NonJboQuote s}
     / vs:errorQuote -> {ErrorQuote vs}
+
+variable :: Int
+    = "da":KOhA -> {1}
+    / "de":KOhA -> {2}
+    / "di":KOhA -> {3}
+assignable :: Int
+    = "ko'a":KOhA -> {1}
+    / "ko'e":KOhA -> {2}
+    / "ko'i":KOhA -> {3}
+    / "ko'o":KOhA -> {4}
+    / "ko'u":KOhA -> {5}
+    / "fo'a":KOhA -> {6}
+    / "fo'e":KOhA -> {7}
+    / "fo'i":KOhA -> {8}
+    / "fo'o":KOhA -> {9}
+    / "fo'u":KOhA -> {10}
 
 nonJboText :: String
     -- TODO: not sure how to do this properly... some preparsing magic, I

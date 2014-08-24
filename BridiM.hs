@@ -54,7 +54,14 @@ evalParseM =
 liftParseStateMToParseM :: ParseStateM a -> ParseM r a
 liftParseStateMToParseM = lift.lift
 
-type SumbastiBindings = Map SumtiAtom JboTerm
+-- |Sumbasti: we differentiate between lerfu strings explicitly assigned with
+-- goi and those getting implicit referents based on first letters of
+-- names / description selbri; explicit assignations take priority.
+data Sumbasti = Sumbasti
+    {sumbastiExplicitlyAssigned::Bool, sumbastiAtom::SumtiAtom}
+    deriving (Eq, Show, Ord)
+type SumbastiBindings = Map Sumbasti JboTerm
+
 type BribastiBindings = Map String Bridi
 
 data QuestionBinding = QuestionBinding {qVariable :: JboTerm, qKauDepth :: Maybe Int}
@@ -71,7 +78,7 @@ class (Monad m,Applicative m) => ParseStateful m where
     putSumbastiBindings bs = modifyParseState $ \ps -> ps{sumbastiBindings=bs}
     modifySumbastiBindings :: (SumbastiBindings -> SumbastiBindings) -> m ()
     modifySumbastiBindings f = (f <$> getSumbastiBindings) >>= putSumbastiBindings
-    setSumbasti :: SumtiAtom -> JboTerm -> m ()
+    setSumbasti :: Sumbasti -> JboTerm -> m ()
     setSumbasti a t = (Map.insert a t <$> getSumbastiBindings) >>= putSumbastiBindings
     getSumbasti :: SumtiAtom -> m JboTerm
     getSumbasti a = (`getSumbastiBinding` a) <$> getSumbastiBindings
@@ -126,13 +133,15 @@ instance ParseStateful (ParseM r) where
     putParseState = lift . put
 
 getSumbastiBinding :: SumbastiBindings -> SumtiAtom -> JboTerm
-getSumbastiBinding bs v =
-    case Map.lookup v bs of
-      Just o -> o
-      Nothing -> case v of
-		      (Assignable n) -> UnboundAssignable n
-		      (LerfuString s) -> UnboundLerfuString s
-		      _ -> error $ show v ++ " not bound.\n"
+getSumbastiBinding bs a =
+    case Map.lookup (Sumbasti True a) bs of
+	Just o -> o
+	Nothing -> case Map.lookup (Sumbasti False a) bs of 
+	    Just o -> o
+	    Nothing -> case a of
+		Assignable n -> UnboundAssignable n
+		LerfuString s -> UnboundLerfuString s
+		_ -> error $ show a ++ " not bound.\n"
 
 getBribastiBinding :: BribastiBindings -> String -> Bridi
 getBribastiBinding bs s =
@@ -326,10 +335,18 @@ setBribastiToCurrent bv =
 	return b
 
 updateSumbastiWithSumtiAtom :: SumtiAtom -> JboTerm -> ParseM r ()
-updateSumbastiWithSumtiAtom sa o | getsRi sa = 
-    modifySumbastiBindings (shuntVars Ri) >> setSumbasti (Ri 1) o
-updateSumbastiWithSumtiAtom _ _ =
-    return ()
+updateSumbastiWithSumtiAtom sa o = do
+    when (getsRi sa) $ do
+	modifySumbastiBindings $ shuntVars $ \n -> Sumbasti False $ Ri n
+	setSumbasti (Sumbasti False $ Ri 1) o
+    case sa of
+	Name s ->
+	    setSumbasti (Sumbasti False $ LerfuString $ take 1 s) o
+	Description _ _ _ sb _ _ ->
+	    let ls = lerfuStringOfSelbri sb
+	    in mapM_ (`setSumbasti` o) $
+		map (Sumbasti False . LerfuString) [ls, take 1 ls]
+	_ -> return ()
 
 updateReferenced :: JboTerm -> ParseM r ()
 updateReferenced (PreVar n) = setReferenced n
@@ -339,11 +356,11 @@ doAssigns :: JboTerm -> [Either SumtiAtom JboTerm] -> ParseM r JboTerm
 doAssigns o as = case o of
     UnboundAssignable _ -> assignRight o $ rights as
     UnboundLerfuString _ -> assignRight o $ rights as
-    _ -> mapM_ (`setSumbasti` o) (lefts as) >> return o
+    _ -> mapM_ (`setSumbasti` o) (map (Sumbasti True) $ lefts as) >> return o
     where
 	assignRight o [] = return o
 	assignRight o ras = let ra = last ras
-	    in setSumbasti (sumtiAtomOfUnbound o) ra >> return ra
+	    in setSumbasti (Sumbasti True $ sumtiAtomOfUnbound o) ra >> return ra
 	sumtiAtomOfUnbound (UnboundAssignable n) = Assignable n
 	sumtiAtomOfUnbound (UnboundLerfuString n) = LerfuString n
 
