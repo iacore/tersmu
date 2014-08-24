@@ -306,11 +306,12 @@ resolveBridi :: (Bridi,BridiParseState) -> JboProp
 resolveBridi (b,s) = partiallyResolveBridi (b,s) nullArgs
 
 runSubBridiM :: BridiM Bridi -> ParseM r JboProp
-runSubBridiM m = lift.lift $ ($nullArgs) <$> partiallyRunBridiM m
+runSubBridiM m = ($nullArgs) <$> partiallyRunBridiM (putArglist nullArglist >> m)
 
-partiallyRunBridiM :: BridiM Bridi -> ParseStateM Bridi
-partiallyRunBridiM m =
-    (`runContT` return.partiallyResolveBridi) $ (`runStateT` nullBridiParseState) $ m
+partiallyRunBridiM :: BridiM Bridi -> ParseM r Bridi
+partiallyRunBridiM m = do
+    s <- get
+    lift.lift $ (`runContT` return.partiallyResolveBridi) $ (`runStateT` s) $ m
 
 setBribastiToCurrent :: String -> BridiM ()
 setBribastiToCurrent bv =
