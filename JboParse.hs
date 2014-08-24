@@ -21,21 +21,36 @@ evalStatement s = do
     ps <- takeSideSentence
     return $ ps ++ [p]
 
-evalFree :: Free -> ParseStateM [JboProp]
+data FreeReturn
+    = FRSides [JboProp]
+    | FRTruthQ (Maybe Int)
+    | FRIgnored
+evalFree :: Free -> ParseStateM FreeReturn
 evalFree (Discursive bt) =
-    ((\p -> [p]) <$>) $ evalParseM $
+    (FRSides . (\p -> [p]) <$>) $ evalParseM $
 	($nullArgs) <$> partiallyRunBridiM (parseBTail bt)
 evalFree (Bracketed sts) =
-    concat <$> mapM evalStatement sts
-evalFree (Indicators _) =
-    -- TODO
-    return []
+    FRSides . concat <$> mapM evalStatement sts
+evalFree (TruthQ kau) = return $ FRTruthQ kau
+evalFree _ = return FRIgnored
+
+doFrees :: [FreeIndex] -> ParseM r ()
+doFrees = mapM_ doFree
+doFree :: FreeIndex -> ParseM r ()
+doFree fi = do
+    f <- lookupFree fi
+    fr <- liftParseStateMToParseM $ evalFree f
+    case fr of
+	FRSides ps -> mapM_ addSideSentence ps
+	FRTruthQ kau -> addQuestion $ Question kau QTruth
+	FRIgnored -> return ()
 
 parseStatements :: [Statement] -> JboPropM JboProp
 parseStatements ss = bigAnd <$> mapM parseStatement ss
 
 parseStatement :: Statement -> JboPropM JboProp
-parseStatement (Statement ps s) = do
+parseStatement (Statement fs ps s) = do
+    doFrees fs
     ignoringArgs $ parseTerms ps
     parseStatement1 s
 
@@ -50,10 +65,10 @@ parseStatement1 (StatementSentence s) = do
     return $ b nullArgs
 
 parseSubsentence :: Subsentence -> BridiM Bridi
-parseSubsentence (Subsentence ps s) = do
+parseSubsentence (Subsentence fs ps s) = do
+    doFrees fs
     ignoringArgs $ parseTerms ps
     parseSentence s
-
 
 parseSentence :: Sentence -> BridiM Bridi
 parseSentence (Sentence ts bt) =
@@ -69,8 +84,8 @@ parseBTail (GekSentence (NegatedGS gs)) =
 
 parseBTail (ConnectedBT con bt1 bt2 tts) =
     parseBTail (GekSentence (ConnectedGS con
-	(Subsentence [] (Sentence [] bt1))
-	(Subsentence [] (Sentence [] bt2)) tts))
+	(Subsentence [] [] (Sentence [] bt1))
+	(Subsentence [] [] (Sentence [] bt2)) tts))
 
 parseBTail (BridiTail3 (Negated sb) tts) =
     -- XXX: need to handle Negated and tags here as well as in parseSelbri,

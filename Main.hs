@@ -1,9 +1,9 @@
 module Main where
 
 import ParseText
-import JboParse (evalText, evalStatement, evalFree)
+import JboParse (evalText, evalStatement)
 import JboSyntax
-import BridiM (ParseStateT, evalParseStateT)
+import BridiM (ParseStateT, evalParseStateT, setFrees)
 import JboShow
 import FOL
 import Bindful
@@ -32,10 +32,8 @@ repl = do
 
 showParseResult :: Either (String,Int) (Statement,[Free]) -> ParseStateT IO ()
 showParseResult (Right (s,fs)) = do
-    ps <- mapStateT (return.runIdentity) $ do
-	fsps <- concat <$> mapM evalFree fs
-	stps <- evalStatement s
-	return $ fsps ++ stps
+    setFrees fs
+    ps <- mapStateT (return.runIdentity) $ evalStatement s
     let logstr = evalBindful $ logshow ps
 	jbostr = evalBindful $ jboshow ps
 	{-

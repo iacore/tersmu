@@ -37,15 +37,6 @@ Actually, a small modification to the above should suffice:
     To find the start of a statement/fragment/subsentence: ignoring all quotes, look
     for NU NAI? / NOI / TO / I / NIhO / [startOfString].
 
-    A pappy rule to do this (recall we assume all sisasu dealt with already)
-    lastStatementOrSubsentence :: {()}
-	= (nonJboQuote / errorQuote / ZO valsi / valsi BU / valsi ZEI / valsi)*
-	    (NU NAI? -> {()} / NOI / TO / I / NIhO)
-    nonJboQuote :: String
-	= ZOI v:valsi ws((w:word !&{w==v})*) (w:valsi &{w==v}) -> {unword ws}
-    errorQuote :: [String]
-	/ LOhU vs:((!LEhU v:valsi)*) LEhU -> vs
-
     Then we need to add to the start of statement, fragment, and free, a rule
     to match the magic tokens, which are looked up in the master list.
     

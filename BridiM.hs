@@ -27,10 +27,11 @@ data ParseState = ParseState
     , nextFreshVar::Int
     , nextFreshConstant::Int
     , referencedVars::Set Int
-    , questionBindings::[QuestionBinding]
+    , questions::[Question]
+    , freeDict::Map Int Free
     , sideSentences::[JboProp]
     }
-nullParseState = ParseState Map.empty Map.empty 0 0 Set.empty [] []
+nullParseState = ParseState Map.empty Map.empty 0 0 Set.empty [] Map.empty []
 type ParseStateT = StateT ParseState
 type ParseStateM = ParseStateT Identity
 
@@ -64,7 +65,10 @@ type SumbastiBindings = Map Sumbasti JboTerm
 
 type BribastiBindings = Map String Bridi
 
-data QuestionBinding = QuestionBinding {qVariable :: JboTerm, qKauDepth :: Maybe Int}
+data Question = Question {qKauDepth :: Maybe Int, qInfo::QInfo}
+data QInfo
+    = QTruth
+    | QSumti JboTerm
 
 class (Monad m,Applicative m) => ParseStateful m where
     getParseState :: m ParseState
@@ -123,8 +127,19 @@ class (Monad m,Applicative m) => ParseStateful m where
     referenced :: Int -> m Bool
     referenced n = getReferenced >>= return . (n `Set.member`)
 
-    addQuestionBinding :: QuestionBinding -> m ()
-    addQuestionBinding b = modifyParseState $ \ps -> ps{questionBindings=b:questionBindings ps}
+    addQuestion :: Question -> m ()
+    addQuestion b = modifyParseState $ \ps -> ps{questions=b:questions ps}
+
+    putFreeDict :: Map Int Free -> m ()
+    putFreeDict d = modifyParseState $ \ps -> ps{freeDict = d}
+    setFrees :: [Free] -> m ()
+    setFrees fs = putFreeDict $ Map.fromList $ zip [0..] fs
+    lookupFree :: Int -> m Free
+    lookupFree n = do
+	d <- freeDict <$> getParseState
+	case Map.lookup n d of
+	    Just f -> return f
+	    Nothing -> error "No such free!"
 instance (Monad m,Functor m) => ParseStateful (ParseStateT m) where
     getParseState = get
     putParseState = put
@@ -163,26 +178,27 @@ takeSideSentence =
 addSumtiQuestion :: ParseStateful m => Maybe Int -> m JboTerm
 addSumtiQuestion kau = do
     o <- getFreshVar
-    addQuestionBinding $ QuestionBinding {qVariable=o, qKauDepth=kau}
+    addQuestion $ Question kau $ QSumti o
     return o
 doQuestions :: ParseStateful m => Bool -> JboProp -> m JboProp
 doQuestions top p =
-    foldl doQuestion p <$> deKau top
+    foldr doQInfo p <$> deKau top
 doQuestionsPred :: ParseStateful m => Bool -> JboPred -> m JboPred
 doQuestionsPred top p =
-    deKau top >>= \qs -> return $ \o -> foldl doQuestion (p o) qs
-doQuestion :: JboProp -> QuestionBinding -> JboProp
-doQuestion p qb = Quantified Question Nothing $
-	\v -> subTerm (qVariable qb) (Var v) p
-deKau :: ParseStateful m => Bool -> m [QuestionBinding]
+    deKau top >>= \qs -> return $ \o -> foldr doQInfo (p o) qs
+doQInfo :: QInfo -> JboProp -> JboProp
+doQInfo (QSumti qv) p = Quantified QuestionQuantifier Nothing $
+	\v -> subTerm qv (Var v) p
+doQInfo QTruth p = Modal QTruthModal p
+deKau :: ParseStateful m => Bool -> m [QInfo]
 deKau top = do
-    qbs <- questionBindings <$> getParseState
-    let deKauQB qb = if top || qKauDepth qb == Just 1
-		then Left qb
-		else Right qb {qKauDepth = (+(-1))<$>qKauDepth qb}
-	(outqbs,qbs') = partitionEithers $ map deKauQB qbs
-    modifyParseState $ \ps -> ps{questionBindings = qbs'}
-    return outqbs
+    qs <- questions <$> getParseState
+    let deKauq q = if top || qKauDepth q == Just 1
+		then Left q
+		else Right q {qKauDepth = (+(-1))<$>qKauDepth q}
+	(outqs,qs') = partitionEithers $ map deKauq qs
+    modifyParseState $ \ps -> ps{questions = qs'}
+    return $ map qInfo outqs
 
 data Arglist = Arglist {args :: Args, position::Int}
 type Args = Map ArgPos JboTerm

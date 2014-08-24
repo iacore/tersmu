@@ -10,14 +10,8 @@ import Control.Applicative
 -- |parseText: split text into statements, strip indicators&free from each,
 -- and parse the stripped statements.
 -- TODO: fragments, and handling the 'text' production in full detail
--- XXX: the same treatment is *not* given to the nested paragraphs of a
---  TO ... [TOI] production; instead, all subfrees are lifted to the same
---  level as that free.
---  Similarly, frees in subsentences (e.g. in abstractions) are associated
---  with the enclosing top level statement rather than the subsentence.
---  Same with quotes.
---  These are all problematic.
---  See notes/free for a solution.
+-- (Note: could just use the 'text' production, but then a failure in one
+-- statement causes the whole text to fail) 
 parseText :: String -> [ Either (String,Int) (Statement,[Free]) ]
 parseText = parseText' . stripTextHead 
     where parseText' str = case parseStatement str of
@@ -35,26 +29,41 @@ stripTextHead str =
     in afterPos (dvPos d) str
 
 afterPos :: Pos -> String -> String
-afterPos d s = drop (posCol d - 1) s
+afterPos p s = drop (posCol p - 1) s
 
 stripFrees :: (String -> Result TersmuDerivs a)
     -> String -> Either Int ((a,[Free]),String)
-stripFrees = stripFrees' False [] where
-    stripFrees' :: Bool -> [Free] -> (String -> Result TersmuDerivs a)
+stripFrees = stripFrees' False [] 0 where
+    stripFrees' :: Bool -> [Free] -> Int -> (String -> Result TersmuDerivs a)
 	-> String -> Either Int ((a,[Free]),String)
-    stripFrees' inFree frees parse str = case parse str of
+    stripFrees' inFree frees countFrom parse str = case parse str of
 	Parsed a d _ -> Right ((a,frees), afterPos (dvPos d) str)
 	NoParse e ->
 	    let ep = errorPoint e
 	    in if inFree && ep == 0
 	    then Left 0
 	    else let (head,tail) = splitAt ep str in
-	    case stripFrees' True [] (tersmufrees . tersmuParse "frees") tail of
+	    case stripFrees' True [] (countFrom + length frees) (tersmufrees . tersmuParse "frees") tail of
 		Left n -> Left $ ep + n
-		Right ((frees',frees''),tail') ->
-		    stripFrees' inFree (frees++frees'++frees'') parse $ head++tail'
+		Right ((newfrees,subfrees),tail') ->
+		    let (head',offset) = addAnnotations head
+			    $ map (+(countFrom + length subfrees))
+				[0..length newfrees - 1]
+		    in mapError (+((length tail - length tail')-offset)) $ stripFrees' inFree
+			(frees++subfrees++newfrees)
+			(countFrom + length subfrees + length newfrees)
+			parse $ head'++tail'
     errorPoint :: ParseError -> Int
     errorPoint e = posCol (errorPos e) - 1
+    mapError :: (e -> e) -> Either e a -> Either e a
+    mapError f (Left e) = Left $ f e
+    mapError _ (Right x) = Right x
+    addAnnotations :: String -> [Int] -> (String,Int)
+    addAnnotations s ns =
+	let Parsed _ d _ = tersmulastStatementOrSubsentence . tersmuParse "lastStatementOrSubsentence" $ s
+	    (head,tail) = splitAt (posCol (dvPos d) - 1) s
+	    annotations = concat ["^" ++ show n ++ " " | n <- ns]
+	in (head ++ annotations ++ tail, length annotations)
 
 -- Direct parsing without any preprocessing - currently unused
 parseAText :: String -> Either Int [Statement]

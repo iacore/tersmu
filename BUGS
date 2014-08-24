@@ -22,10 +22,6 @@ Definite bugs:
     {zoi} works only if the following word is {zoi} (or, arbitrarily, {gy}).
 
 Probably bugs:
-    We have the first part of a guhek being a selbri3 rather than an arbitrary
-    selbri. That's because I don't see a sensible way to deal with things like
-    {gu'e broda co brode gi brodi ko'a}
-
     Seltau are considered to be unary predicates rather than higher arity
     relations.
 
@@ -49,5 +45,5 @@ optional:
 
     Quantifiers don't scope over (even connected) sentence boundaries.
 
-    We use the tag grammar from xorxes' zasni gerna, which allows some tag
-    constructions which the official parser considers ungrammatical.
+    Some constructs are accepted which the official grammar rejects; e.g. the
+    tag grammar we use is essentially that of xorxes' zasni gerna.

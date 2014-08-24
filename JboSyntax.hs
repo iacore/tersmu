@@ -1,7 +1,7 @@
 module JboSyntax where
 import FOL hiding (Term, Connective)
 -- Abstract syntax:
-data Statement = Statement [Term] Statement1
+data Statement = Statement [FreeIndex] [Term] Statement1
     deriving (Eq, Show, Ord)
 
 data LogJboConnective = LogJboConnective Bool Char Bool
@@ -12,7 +12,7 @@ data Statement1 = ConnectedStatement Connective Statement1 Statement1
 		| StatementStatements [Statement]
 		deriving (Eq, Show, Ord)
 
-data Subsentence = Subsentence [Term] Sentence
+data Subsentence = Subsentence [FreeIndex] [Term] Sentence
     deriving (Eq, Show, Ord)
 
 data Sentence = Sentence [Term] BridiTail
@@ -21,11 +21,11 @@ data Sentence = Sentence [Term] BridiTail
 data Free
     = Bracketed [Statement]
     | Discursive BridiTail
-    | Indicators [Indicator]
+    | TruthQ (Maybe Int)
+    | Indicator {indicatorNai :: Bool, indicatorCmavo :: Cmavo}
     deriving (Eq, Show, Ord)
 
-data Indicator = Indicator {indicatorNai :: Bool, indicatorCmavo :: Cmavo}
-    deriving (Eq, Show, Ord)
+type FreeIndex = Int
 
 data Term = Sumti Tagged Sumti
 	  | Negation

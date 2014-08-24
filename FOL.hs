@@ -12,7 +12,7 @@ data Prop r t c o
 
 data Connective = And | Or | Impl | Equiv
     deriving (Eq, Ord)
-data Quantifier = Exists | Forall | Exactly Int | Gadri String | Question
+data Quantifier = Exists | Forall | Exactly Int | Gadri String | QuestionQuantifier
     deriving (Eq, Ord)
 
 instance Show Connective where
@@ -26,7 +26,7 @@ instance Show Quantifier where
     show Forall = "FA"
     show (Gadri g) = "{"++g++"}"
     show (Exactly n) = "EQ(" ++ show n ++ ")"
-    show Question = "?"
+    show QuestionQuantifier = "?"
 
 class Term t where
     var :: Int -> t

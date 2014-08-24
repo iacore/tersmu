@@ -37,6 +37,7 @@ data JboRel = Tanru JboPred JboRel
 
 data JboOperator
     = JboTagged JboTag (Maybe JboTerm)
+    | QTruthModal
     | WithEventAs JboTerm
 type JboTag = AbsTag Quantifier JboPred
 type JboTagUnit = AbsTagUnit Quantifier JboPred
@@ -72,6 +73,7 @@ subTerm s t = terpProp
     subTermInOp (JboTagged tag mt) =
 	JboTagged (subTermInTag tag) $ if mt == Just s then Just t else mt
     subTermInOp (WithEventAs x) = WithEventAs $ subTermInTerm x
+    subTermInOp op = op
     subTermInTag (ConnectedTag conn tag1 tag2) =
 	ConnectedTag conn (subTermInTag tag1) (subTermInTag tag2)
     subTermInTag (DecoratedTagUnits dtus) = DecoratedTagUnits $ map subTermInDTU dtus

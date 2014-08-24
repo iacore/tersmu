@@ -280,7 +280,7 @@ instance JboShow JboProp
 		     logjboshow' jbo (ps ++ [gadri] ++ [rss] ++
 			 ["ku","goi",vs]) (p n)
 	  -}
-	  logjboshow' True ps (Quantified Question _ p) =
+	  logjboshow' True ps (Quantified QuestionQuantifier _ p) =
 	      withNextAssignable $ \n ->
 		  do as <- logjboshow jbo (Var n)
 		     logjboshow' jbo (ps ++ ["ma","goi",as]) (p n)
@@ -301,6 +301,8 @@ instance JboShow JboProp
 	  logjboshow' jbo ps (Modal (WithEventAs t) p) = do
 	    ts <- logjboshow jbo t
 	    logjboshow' jbo (ps ++ if jbo then ["fi'o","du"] ++ [ts] else [ts] ++ ["=. "]) p
+	  logjboshow' jbo ps (Modal QTruthModal p) =
+	    logjboshow' jbo (ps ++ if jbo then ["xu","kau"] else ["?. "]) p
 	  logjboshow' jbo ps (Modal (JboTagged tag mt) p) = do
 	    tags <- logjboshow jbo tag
 	    mtl <- maybeToList <$> traverse (logjboshow jbo) mt
