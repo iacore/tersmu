@@ -51,6 +51,9 @@ evalParseM =
 	(`runContT` return)
 	. (`evalStateT` nullBridiParseState)
 
+liftParseStateMToParseM :: ParseStateM a -> ParseM r a
+liftParseStateMToParseM = lift.lift
+
 type SumbastiBindings = Map SumtiAtom JboTerm
 type BribastiBindings = Map String Bridi
 

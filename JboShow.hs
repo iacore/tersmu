@@ -203,8 +203,25 @@ instance JboShow JboTerm where
     logjboshow False (Constant n) = return $ "c" ++ show n
     logjboshow True (Named s) = return $ "la " ++ s ++ "."
     logjboshow False (Named s) = return s
-    logjboshow True (JboQuote ss) = return $ "lu li'o li'u"
-    logjboshow False (JboQuote ss) = return $ "\"...\""
+    logjboshow jbo (JboQuote (ParsedQuote ps)) = do
+	pss <- logjboshow jbo ps
+	return $
+	    (if jbo then "lu " else "<< ") ++
+	    pss ++
+	    (if jbo then " li'u" else " >>")
+    logjboshow jbo (JboErrorQuote vs) = return $
+	(if jbo then "lo'u " else "{ ") ++
+	unwords vs ++
+	(if jbo then " le'u" else " }")
+    logjboshow jbo (JboNonJboQuote s) = return $
+	let zoik = head
+		[ zoik
+		| n <- [0..]
+		, let zoik = "zoi" ++ if n > 0 then ("k"++) $ concat $ replicate (n-1) "yk" else ""
+		, not $ isInfixOf zoik s ]
+	in (if jbo then "zoi " ++ zoik ++ " " else "<< ") ++
+	    s ++
+	    (if jbo then " " ++ zoik else " >>")
     logjboshow True (Valsi s) = return $ "zo " ++ s
     logjboshow False (Valsi s) = return $ "{" ++ s ++ "}"
     {-

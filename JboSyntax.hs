@@ -105,6 +105,8 @@ data SumtiAtom = Name String
 	       | LerfuString [Lerfu]
 	       | Ri -- ri
 	       | Quote [Statement]
+	       | NonJboQuote String
+	       | ErrorQuote [String]
 	       | Word String
 	       | Zohe -- zo'e
 	       | SumtiQ (Maybe Int) -- ma [kau]

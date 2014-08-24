@@ -18,7 +18,9 @@ data JboTerm = Var Int
 	     | NonAnaph String
 	     | UnboundAssignable Int
 	     | UnboundLerfuString [Lerfu]
-	     | JboQuote [Statement]
+	     | JboQuote ParsedQuote
+	     | JboErrorQuote [String]
+	     | JboNonJboQuote String
 	     | Valsi String
 	     | ZoheTerm
 	     | JoikedTerms Joik JboTerm JboTerm
@@ -46,6 +48,13 @@ type Abstractor = String
 
 instance FOL.Term JboTerm where
     var n = Var n
+
+-- |ParsedQuote: using this newtype so we can provide dummy instances for use
+-- in derived instances for JboTerm
+newtype ParsedQuote = ParsedQuote [JboProp]
+instance Eq ParsedQuote where x == y = False
+instance Show ParsedQuote where show q = "<< ... >>"
+instance Ord ParsedQuote where x <= y = False
 
 -- subTerm s t p: replace instances of s with t in p
 subTerm :: JboTerm -> JboTerm -> JboProp -> JboProp

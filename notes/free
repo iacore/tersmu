@@ -51,3 +51,7 @@ Actually, a small modification to the above should suffice:
     
 Note with this approach, we can revert to using the text production for the
 main parse.
+
+Those indicators with proper grammatical functions, like {kau}, should be
+parsed in the main grammar (and so won't give rise to parse errors, so won't
+trigger the special handling above).

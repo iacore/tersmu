@@ -46,7 +46,7 @@ parseStatement1 (ConnectedStatement con s1 s2) =
 parseStatement1 (StatementStatements ss) =
     parseStatements ss
 parseStatement1 (StatementSentence s) = do
-    b <- lift.lift $ partiallyRunBridiM $ parseSentence s
+    b <- liftParseStateMToParseM $ partiallyRunBridiM $ parseSentence s
     setBribasti "go'i" b
     return $ b nullArgs
 
@@ -346,7 +346,13 @@ parseSumtiAtom sa = do
 	-- TODO: following ought all to give fresh constants, really
 	NonAnaphoricProsumti ps -> return $ NonAnaph ps
 	Name s -> return $ Named s
-	Quote t -> return $ JboQuote t
+	Quote sts ->
+	    -- TODO: quotes shouldn't have access to higher level bindings
+	    -- TODO: should probably return the unparsed text as well?
+	    JboQuote . ParsedQuote . concat <$>
+		(liftParseStateMToParseM $ mapM evalStatement sts)
+	ErrorQuote vs -> return $ JboErrorQuote vs
+	NonJboQuote s -> return $ JboNonJboQuote s
 	Word s -> return $ Valsi s
     return (o,(rps,ips,as))
 

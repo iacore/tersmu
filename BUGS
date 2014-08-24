@@ -14,14 +14,13 @@ Bug traces:
 Definite bugs:
     ka can't handle multiple ce'u (should return a relation)
 
-    Only the simplest {goi} phrases, those of the form {[sumti] goi ko'a}, are
-    currently handled.
-
     {pe bai ko'a} and its ilk aren't implemented properly.
 
     {ri} doesn't ignore anaphoric pro-sumti.
 
     UI and other indicators are entirely ignored.
+
+    {zoi} works only if the following word is {zoi} (or, arbitrarily, {gy}).
 
 Probably bugs:
     Current gadri (non)-handling is probably inconsistent with xorlo.

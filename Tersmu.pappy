@@ -9,6 +9,7 @@ import Data.Maybe
 import Control.Monad.State
 import Data.Map (Map)
 import qualified Data.Map as Map
+import Data.Char (isSpace)
 
 data JekJoik = JJJek LogJboConnective | JJJoik Joik
 jjJboCon :: (Maybe Tag) -> JekJoik -> Connective
@@ -195,6 +196,18 @@ sumti6 :: SumtiAtom
 	{Description g is q sb rels irels}
     / LU t:text1 LIhU? -> {Quote t}
     / ZO s:Valsi -> {Word s}
+    / s:nonJboQuote -> {NonJboQuote s}
+    / vs:errorQuote -> {ErrorQuote vs}
+
+nonJboText :: String
+    -- TODO: not sure how to do this properly... some preparsing magic, I
+    -- suppose
+    = "zoi":Valsi ws:(w:Word &{w/="zoi"} -> w)* "zoi":Valsi -> {unwords ws}
+    / "gy":Valsi ws:(w:Word &{w/="gy"} -> w)* "gy":Valsi -> {unwords ws}
+nonJboQuote :: String = "zoi":ZOI s:nonJboText -> s
+nonJboNamed :: String = "la'o":ZOI s:nonJboText -> s
+errorQuote :: {[String]}
+    = LOhU vs:((!LEhU v:Valsi -> v)*) LEhU -> vs
 
 sumtiTail :: {(Maybe Sumti, Maybe Quantifier, Selbri, [RelClause])}
     = s:sumti6 srels:relativeClauses? {(q,sb,irels)}:sumtiTail1
@@ -458,12 +471,13 @@ VowelNotY :: Char = c:Char &{c `elem` "aeiou"} -> c
 YChar :: Char = 'y'
 TickChar :: Char = '\''
 
-Space :: {()}	= " " -> { () }
-		/ "\n" -> { () }
+Space :: {()}	= c:Char &{isSpace c} -> {()}
 
 Spacing :: {()} = Space+
 
 Valsi :: String = cs:LojbanLetter+ Spacing -> cs
+
+Word :: String = cs:(!Space !PAUSE c:Char -> c)+ Spacing -> cs
 
 CMENE :: String = PAUSE? ss:CMENEchunk+ PAUSE? Spacing -> {foldl (++) [] ss}
 CMENEchunk :: String = ls:nonConsonant* c:Consonant -> {ls++[c]}
