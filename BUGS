@@ -5,7 +5,8 @@ Bug traces:
     > broda joi brode cei brodi .i brodi
     <broda(_)>{joi}<brode(_)>( )
     zo'e ke broda ke'e joi ke brode ke'e
-    tersmu: 1 unbound
+    brode([DONKEY])
+    lo XASLI zei da ku brode
 
     > ko'a goi ko'e ko'e brode
     brode(c0,c1)
@@ -23,8 +24,6 @@ Definite bugs:
     {zoi} works only if the following word is {zoi} (or, arbitrarily, {gy}).
 
 Probably bugs:
-    Current gadri (non)-handling is probably inconsistent with xorlo.
-
     We have the first part of a guhek being a selbri3 rather than an arbitrary
     selbri. That's because I don't see a sensible way to deal with things like
     {gu'e broda co brode gi brodi ko'a}
@@ -37,16 +36,12 @@ Probably bugs:
     like {go'i} does.
 
 Possibly bugs:
-    Quantifiers on bound variables are ignored. This is contrary to
-    CLL:16.14.1-2. But I don't see how to make sense of what's specified
-    there. (xorxes suggests that {PA da} when {da} is already bound should be
-    treated as introducing a new quantifier, with subsequent {da} in its
-    scope.)
+    Quantifiers on bound variables rebind the variable. This is contrary to
+    CLL:16.14.1-2, but I don't see how to make sense of what's specified
+    there.
 
     Termset quantification: CLL:16.7.5 has quantifiers in the same termset
     having "equal scope", but I don't understand what this means.
-
-    We treat {broda zo'e goi ko'a ko'a} as equivalent to {broda zo'e zo'e}.
 
 Other deviations from CLL, not considered bugs, but which maybe ought to be
 optional:

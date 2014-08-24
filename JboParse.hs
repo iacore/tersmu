@@ -304,12 +304,11 @@ isAssignable _ = False
 parseVariable :: PreProp r => SumtiAtom -> [JboPred] -> Maybe Quantifier -> ParseM r JboTerm
 parseVariable sa@(Variable n) rps mq = do
     x <- lookupVarBinding sa
-    case x of
-	 Nothing -> do
+    case (x,mq) of
+	 (Just o,Nothing) -> return o
+	 _ -> do
 	    o <- quantify (fromMaybe Exists mq) $ andMPred rps
 	    setVarBinding sa o
-	    return o
-	 Just o -> do
 	    return o
 
 parseSumtiAtom :: PreProp r => SumtiAtom -> ParseM r (JboTerm, ParsedRels)
