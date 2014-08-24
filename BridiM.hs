@@ -330,8 +330,17 @@ updateParseStateWithJboTerm o = do
 	    PreVar n -> setReferenced n
 	    _ -> return ()
 
-doAssigns :: JboTerm -> [SumtiAtom] -> ParseM r ()
-doAssigns o = mapM_ (`setSumbasti` o)
+doAssigns :: JboTerm -> [Either SumtiAtom JboTerm] -> ParseM r JboTerm
+doAssigns o as = case o of
+    UnboundAssignable _ -> assignRight o $ rights as
+    UnboundLerfuString _ -> assignRight o $ rights as
+    _ -> mapM_ (`setSumbasti` o) (lefts as) >> return o
+    where
+	assignRight o [] = return o
+	assignRight o ras = let ra = last ras
+	    in setSumbasti (sumtiAtomOfUnbound o) ra >> return ra
+	sumtiAtomOfUnbound (UnboundAssignable n) = Assignable n
+	sumtiAtomOfUnbound (UnboundLerfuString n) = LerfuString n
 
 doIncidentals :: JboTerm -> [JboPred] -> ParseM r ()
 doIncidentals o ips = case andMPred ips of

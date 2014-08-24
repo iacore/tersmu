@@ -7,6 +7,10 @@ Bug traces:
     zo'e ke broda ke'e joi ke brode ke'e
     tersmu: 1 unbound
 
+    > ko'a goi ko'e ko'e brode
+    brode(c0,c1)
+
+
 Definite bugs:
     ka can't handle multiple ce'u (should return a relation)
 

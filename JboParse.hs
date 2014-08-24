@@ -234,12 +234,21 @@ parseSumti s = do
 	    (rps,ips,as) <- parseRels rels
 	    o <- quantify q (andMPred $ sr:rps)
 	    return (o,ips,as)
+    o <- doAssigns o as
+    o <- bindUnbound o
     updateParseStateWithJboTerm o
-    doAssigns o as
     doIncidentals o ips
     return o
+    where
+	bindUnbound o@(UnboundAssignable _) = assignFreshConstant o
+	bindUnbound o@(UnboundLerfuString _) = assignFreshConstant o
+	bindUnbound o = return o
+	assignFreshConstant o = do
+	    o' <- getFreshConstant
+	    doAssigns o [Right o']
+	    return o'
 
-type ParsedRels = ([JboPred],[JboPred],[SumtiAtom])
+type ParsedRels = ([JboPred],[JboPred],[Either SumtiAtom JboTerm])
 parseRels :: PreProp r => [RelClause] -> ParseM r ParsedRels
 parseRels [] = return ([],[],[])
 parseRels (r:rs) = do
@@ -279,11 +288,10 @@ parseRels (r:rs) = do
 			ip = \x -> Rel rel [x,o]
 		    in return ([],[ip],[])
 	Assignment (Sumti Untagged (QAtom Nothing [] sa)) | isAssignable sa -> 
-	    return ([],[],[sa])
-	Assignment _ ->
-	    -- TODO: handle {mi fa'u do vu'o goi ko'a fa'u ko'e}?
-	    -- TODO: handle {ko'a goi lo broda}?
-	    return ([],[],[])
+	    return ([],[],[Left sa])
+	Assignment t -> do
+	    mo <- ignoringArgs $ parseTerm t
+	    return ([],[], maybeToList $ Right <$> mo)
     (rps',ips',as') <- parseRels rs
     return (rps++rps',ips++ips',as++as')
 

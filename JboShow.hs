@@ -207,6 +207,7 @@ instance JboShow JboTerm where
     logjboshow False (JboQuote ss) = return $ "\"...\""
     logjboshow True (Valsi s) = return $ "zo " ++ s
     logjboshow False (Valsi s) = return $ "{" ++ s ++ "}"
+    {-
     logjboshow _ (UnboundAssignable n) = return $
 	case n of _ | n <= 5 -> "ko'" ++ vowelnum n
 	          _ | n <= 10 -> "fo'" ++ vowelnum (n-5)
@@ -217,6 +218,7 @@ instance JboShow JboTerm where
 			     'h' -> "y'y"
 			     _ | c `elem` ['0'..'9'] -> jbonum $ fromEnum c - fromEnum '0'
 			     _ -> (c:"y")) s
+    -}
     logjboshow _ (NonAnaph s) = return s
     logjboshow jbo (JoikedTerms joik t1 t2) = do
 	[ts1,ts2] <- mapM (logjboshow jbo) [t1,t2]

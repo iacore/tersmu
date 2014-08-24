@@ -99,7 +99,13 @@ Is it actually a good idea even with zo'e?
 Only way I can see to render it in lojban is with subscripted ko'a -
     ci da broda lo brode be da
 ->
-    .i ro da zo'u zo'e goi ko'a xi da brode da .i ci da broda ko'a xi da
+    ro da zo'u zo'e goi ko'a xi da brode da .i ci da broda ko'a xi da
+, pretending that {xi da} parses, which it doesn't. Not good.
+Marginally better:
+    ci da poi brodi cu broda lo brode be da
+->
+    zo'e goi fy zo'u ro da poi brodi zo'u li ma'o fy mo'e da brode da
+    .i ci da zo'u da broda li ma'o fy mo'e da
 
 I think for a first implementation we should ignore all this, and just
 universally quantify as above.
