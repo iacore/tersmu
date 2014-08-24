@@ -179,6 +179,11 @@ parseTU (TUAbstraction a ss) =
 	    (runSubBridiM (parseSubsentence ss) >>= doQuestions False)
 parseTU (TUPermuted n tu) =
     (.swapArgs (NPos 1) (NPos n)) <$> parseTU tu
+parseTU (TUJai (Just tag) tu) = do
+    tag' <- parseTag tag
+    (.swapArgs (NPos 1) JaiPos) . withJaiAsTag tag' <$> parseTU tu
+parseTU (TUJai Nothing tu) =
+    (.swapArgs (NPos 1) JaiPos) . withJaiAsRaising <$> parseTU tu
 parseTU (TUSelbri3 sb) = parseSelbri3 sb
 
 

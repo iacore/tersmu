@@ -118,6 +118,7 @@ terms2 :: Term
 
 term :: Term = s:sumti -> {Sumti Untagged s}
 	    / tag:tag s:sumti -> {Sumti (Tagged tag) s}
+	    / "fai":FA s:sumti -> {Sumti FAITagged s}
 	    / n:tagFA s:sumti -> {Sumti (FATagged n) s}
 	    / termset
 	    / NA KU -> {Negation}
@@ -422,6 +423,7 @@ tanruUnit2 :: TanruUnit2
     -- TODO: zei
     / KE sb:selbri3 KEhE? -> {TUSelbri3 sb}
     / n:convSE tu:tanruUnit2 -> {TUPermuted n tu}
+    / JAI mt:tag? tu:tanruUnit2 -> {TUJai mt tu}
     / g:GOhA -> {TUGOhA g}
     / q:number m:MOI -> {TUMoi q m}
     / ME s:sumti MEhU? -> {TUMe s}

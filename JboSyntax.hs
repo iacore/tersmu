@@ -37,6 +37,7 @@ data Term = Sumti Tagged Sumti
 data Tagged = Untagged
 	 | Tagged Tag
 	 | FATagged Int
+	 | FAITagged
 	 deriving (Eq, Show, Ord)
 
 data AbsTag q fiho
@@ -162,6 +163,7 @@ data TanruUnit2 = TUBrivla String
 		| TUMoi Quantifier String
 		| TUAbstraction String Subsentence
 	        | TUPermuted Int TanruUnit2
+		| TUJai (Maybe Tag) TanruUnit2
 		| TUSelbri3 Selbri3
 	        deriving (Eq, Show, Ord)
 

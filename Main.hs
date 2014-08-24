@@ -67,10 +67,15 @@ morph :: String -> IO String
 morph = vlatai . (map (\c -> case c of {'.' -> ' '; _ -> c}))
 
 vlatai :: String -> IO String
-vlatai s = unwords <$> mapM vlatai' (words s)
-    where vlatai' w =
+vlatai s = unwords <$> mapM vlatai' (words $ deMunge s)
+    where
+	vlatai' w =
+	    -- FIXME: currently dies if we don't have vlatai in the path...
 	    do (_, Just out, _, _) <- createProcess
 		   (proc "vlatai" [w]){ std_out = CreatePipe } 
 	       line <- hGetLine out
 	       return $ filter (/='/') $ dropWhile isSpace $ drop ( (+1) $ last $ findIndices (== ':') line ) line
-    -- FIXME: currently dies if we don't have vlatai in the path...
+	deMunge =
+	    -- I've seen this non-ascii apostrophe used on the mriste,
+	    -- distressingly enough
+	    map (\c -> case c of {'\8217' -> '\''; _ -> c})

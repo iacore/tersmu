@@ -202,7 +202,7 @@ deKau top = do
 
 data Arglist = Arglist {args :: Args, position::Int}
 type Args = Map ArgPos JboTerm
-data ArgPos = NPos Int | JaiPos | BaiPos String
+data ArgPos = NPos Int | JaiPos
     deriving (Eq, Show, Ord)
 class (Monad m,Applicative m) => Arglistful m where
     getArglist :: m Arglist
@@ -216,6 +216,14 @@ instance Arglistful (ParseM r) where
 type Bridi = Args -> JboProp
 jboRelToBridi :: JboRel -> Bridi
 jboRelToBridi rel = \as -> Rel rel (argsToJboterms as)
+
+withJaiAsTag :: JboTag -> Bridi -> Bridi
+withJaiAsTag jtag b = \as -> case Map.lookup JaiPos as of
+    Nothing -> b as
+    Just a -> Modal (JboTagged jtag $ Just a) $ b (Map.delete JaiPos as)
+
+withJaiAsRaising :: Bridi -> Bridi
+withJaiAsRaising = error "TODO - bare jai"
 
 nullArgs = Map.empty
 nullArglist = Arglist nullArgs 1
@@ -231,6 +239,9 @@ setArg = Map.insert
 
 appendToArglist :: JboTerm -> Arglist -> Arglist
 appendToArglist o (Arglist as n) = Arglist (Map.insert (NPos n) o as) (n+1)
+
+addFaiToArglist :: JboTerm -> Arglist -> Arglist
+addFaiToArglist o (Arglist as n) = Arglist (Map.insert (JaiPos) o as) n
 
 advanceArgPosToBridi :: Arglistful m => m ()
 advanceArgPosToBridi = modifyArglist $ \al ->
@@ -260,7 +271,8 @@ addImplicit o = modifyArglist $ \al ->
 
 data Arg = Arg Tagged JboTerm
 addArg :: Arg -> ParseM r ()
-addArg arg@(Arg tag o) = modifyArglist $
+addArg (Arg FAITagged o) = modifyArglist $ addFaiToArglist o
+addArg (Arg tag o) = modifyArglist $
 	(appendToArglist o) .
 	(\as -> case tag of
 	    Untagged -> as
