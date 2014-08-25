@@ -223,7 +223,9 @@ withJaiAsTag jtag b = \as -> case Map.lookup JaiPos as of
     Just a -> Modal (JboTagged jtag $ Just a) $ b (Map.delete JaiPos as)
 
 withJaiAsRaising :: Bridi -> Bridi
-withJaiAsRaising = error "TODO - bare jai"
+withJaiAsRaising b = \as -> case Map.lookup JaiPos as of
+    Nothing -> b as
+    Just a -> b (setArg (NPos 1) (QualifiedTerm (LAhE "tu'a") a) as)
 
 nullArgs = Map.empty
 nullArglist = Arglist nullArgs 1
