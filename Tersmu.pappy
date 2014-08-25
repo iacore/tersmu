@@ -118,8 +118,8 @@ terms2 :: Term
 
 term :: Term = s:sumti -> {Sumti Untagged s}
 	    / tag:tag s:sumti -> {Sumti (Tagged tag) s}
-	    / "fai":FA s:sumti -> {Sumti FAITagged s}
 	    / n:tagFA s:sumti -> {Sumti (FATagged n) s}
+	    / "fai":FA s:sumti -> {Sumti FAITagged s}
 	    / termset
 	    / NA KU -> {Negation}
 	    / tag:tag KU -> {BareTag tag}
@@ -161,10 +161,13 @@ sumti4 :: Sumti = sumti5
 
 sumti5 :: Sumti =
 	s:sumti6 !relativeClauses -> {QAtom Nothing [] s}
-	/ q:quantifier? s:sumti6 rels:relativeClauses?
-	    -> {QAtom q (fromMaybe [] rels) s}
-	/ q:quantifier sb:selbri KU? rels:relativeClauses?
-	    -> {QSelbri q (fromMaybe [] rels) sb}
+	/ q:quantifier? s:sumti6 rels:maybeRelativeClauses
+	    -> {QAtom q rels s}
+	/ q:quantifier sb:selbri KU? rels:maybeRelativeClauses
+	    -> {QSelbri q rels sb}
+
+maybeRelativeClauses :: {[RelClause]}
+    = mrels:relativeClauses? -> {fromMaybe [] mrels}
 
 relativeClauses :: {[RelClause]}
 	= r:relativeClause rs:(ZIhE r:relativeClause -> r)*
@@ -182,8 +185,8 @@ relativeClause :: RelClause
 	/ "po'e":GOI t:term GEhU? -> {RestrictiveGOI "po'e" t}
 
 sumti6 :: SumtiAtom
-    = qual:(l:LAhE -> {LAhE l} / n:NAhE BO -> {NAhE_BO n}) rels:relativeClauses? s:sumti LUhU?
-	-> {QualifiedSumti qual (fromMaybe [] rels) s}
+    = qual:(l:LAhE -> {LAhE l} / n:NAhE BO -> {NAhE_BO n}) rels:maybeRelativeClauses s:sumti LUhU?
+	-> {QualifiedSumti qual rels s}
     / "la":LA s:CMENE -> {Name s}
     / "mi":KOhA -> {NonAnaphoricProsumti "mi"}
     / "do":KOhA -> {NonAnaphoricProsumti "do"}
@@ -233,16 +236,16 @@ errorQuote :: {[String]}
     = LOhU vs:((!LEhU v:Valsi -> v)*) LEhU -> vs
 
 sumtiTail :: {(Maybe Sumti, Maybe Quantifier, Selbri, [RelClause])}
-    = s:sumti6 srels:relativeClauses? {(q,sb,irels)}:sumtiTail1
-	-> {(Just (QAtom Nothing (fromMaybe [] srels) s),q,sb,[],irels)}
-    / rels:relativeClauses? {(q,sb,irels)}:sumtiTail1
-	-> {(Nothing,q,sb,(fromMaybe [] rels),irels)}
+    = s:sumti6 srels:maybeRelativeClauses {(q,sb,irels)}:sumtiTail1
+	-> {(Just (QAtom Nothing srels s),q,sb,[],irels)}
+    / rels:maybeRelativeClauses {(q,sb,irels)}:sumtiTail1
+	-> {(Nothing,q,sb,rels,irels)}
 
 sumtiTail1 :: {(Maybe Quantifier, Selbri, [RelClause])}
-    = sb:selbri rels:relativeClauses?
-	-> {(Nothing,sb,fromMaybe [] rels)}
-    / q:quantifier? sb:selbri rels:relativeClauses?
-	-> {(q,sb,fromMaybe [] rels)}
+    = sb:selbri rels:maybeRelativeClauses
+	-> {(Nothing,sb,rels)}
+    / q:quantifier? sb:selbri rels:maybeRelativeClauses
+	-> {(q,sb,rels)}
 
 -- XXX: really ought to allow arbitrary PA
 lerfuString :: {[Lerfu]} = c:lerfu cs:(lerfu / n:digit -> {show n !! 0})*
@@ -600,7 +603,7 @@ DOhUmain :: String = "do'u"
 
 --         modifier head generic case tag 
 FA :: String = s:FAmain Spacing -> s
-FAmain :: String = "fa" / "fe" / "fi" / "fo" / "fu" / "fai" / "fi'a" 
+FAmain :: String =  "fai" / "fi'a" / "fa" / "fe" / "fi" / "fo" / "fu"
 --         superdirections in space 
 FAhA :: String = s:FAhAmain Spacing -> s
 FAhAmain :: String = "du'a" / "be'a" / "ne'u" / "vu'a" / "ga'u" / "ti'a" / "ni'a" / "ca'u" / "zu'a" / "ri'u" / "ru'u" / "re'o" / "te'e" / "bu'u" / "ne'a" / "pa'o" / "ne'i" / "to'o" / "zo'i" / "ze'o" / "zo'a" / "fa'a" 
@@ -686,7 +689,7 @@ KI :: String = s:KImain Spacing -> s
 KImain :: String = "ki" 
 --         sumti anaphora 
 KOhA :: String = s:KOhAmain Spacing -> s
-KOhAmain :: String = "da" / "de" / "di" / "da'u" / "da'e" / "di'u" / "di'e" / "de'u" / "de'e" / "dei" / "do'i" / "mi" / "mi'o" / "ma'a" / "mi'a" / "do" / "do'o" / "ko'a" / "fo'u" / "ko'e" / "ko'i" / "ko'o" / "ko'u" / "fo'a" / "fo'e" / "fo'i" / "fo'o" / "vo'a" / "vo'e" / "vo'i" / "vo'o" / "vo'u" / "ru" / "ri" / "ra" / "ta" / "tu" / "ti" / "zi'o" / "ke'a" / "ma" / "zu'i" / "zo'e" / "ce'u" / "ko"
+KOhAmain :: String = "da'u" / "da'e" / "di'u" / "di'e" / "de'u" / "de'e" / "dei" / "do'i" / "mi'o" / "ma'a" / "mi'a" / "do'o" / "ko'a" / "fo'u" / "ko'e" / "ko'i" / "ko'o" / "ko'u" / "fo'a" / "fo'e" / "fo'i" / "fo'o" / "vo'a" / "vo'e" / "vo'i" / "vo'o" / "vo'u" / "zi'o" / "ke'a" / "zu'i" / "zo'e" / "ce'u" / "ko" / "da" / "de" / "di" / "mi" / "ma" / "ru" / "ri" / "ra" / "ta" / "tu" / "ti" / "do"
 --         right terminator for descriptions, etc. 
 KU :: String = s:KUmain Spacing -> s
 KUmain :: String = "ku" 
@@ -699,7 +702,7 @@ KUhOmain :: String = "ku'o"
 
 --         name descriptors 
 LA :: String = s:LAmain Spacing -> s
-LAmain :: String = "la" / "lai" / "la'i" 
+LAmain :: String = "lai" / "la'i" / "la"
 --         lerfu prefixes 
 LAU :: String = s:LAUmain Spacing -> s
 LAUmain :: String = "ce'a" / "lau" / "zai" / "tau" 
@@ -792,7 +795,7 @@ NUhUmain :: String = "nu'u"
 
 --         numbers and numeric punctuation 
 PA :: String = s:PAmain Spacing -> s
-PAmain :: String = "no" / "pa" / "re" / "ci" / "vo" / "mu" / "xa" / "ze" / "bi" / "so" / "dau" / "fei" / "gai" / "jau" / "rei" / "vai" / "pi" / "pi'e" / "fi'u" / "za'u" / "me'i" / "ni'u" / "ki'o" / "ce'i" / "ma'u" / "ra'e" / "da'a" / "so'a" / "ji'i" / "su'o" / "su'e" / "ro" / "rau" / "so'u" / "so'i" / "so'e" / "so'o" / "mo'a" / "du'e" / "te'o" / "ka'o" / "ci'i" / "tu'o" / "xo" / "pai" / "no'o" 
+PAmain :: String =  "pi'e" / "fi'u" / "za'u" / "me'i" / "ni'u" / "ki'o" / "ce'i" / "ma'u" / "ra'e" / "da'a" / "so'a" / "ji'i" / "su'o" / "su'e" / "rau" / "so'u" / "so'i" / "so'e" / "so'o" / "mo'a" / "du'e" / "te'o" / "ka'o" / "ci'i" / "tu'o" / "pai" / "no'o" / "ro" / "xo" / "no" / "pa" / "re" / "ci" / "vo" / "mu" / "xa" / "ze" / "bi" / "so" / "dau" / "fei" / "gai" / "jau" / "rei" / "vai" / "pi"
 --         afterthought termset connective prefix 
 PEhE :: String = s:PEhEmain Spacing -> s
 PEhEmain :: String = "pe'e" 

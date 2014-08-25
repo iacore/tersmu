@@ -11,11 +11,6 @@ Bug traces:
     > ko'a goi ko'e ko'e brode
     brode(c0,c1)
 
-    > broda fai ko'a
-    Parse error:
-	    {broda fai ko'a }
-		   ^
-
 
 Definite bugs:
     ka can't handle multiple ce'u (should return a relation)
