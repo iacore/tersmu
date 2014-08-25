@@ -7,6 +7,8 @@ import BridiM (ParseStateT, evalParseStateT, setFrees)
 import JboShow
 import FOL
 import Bindful
+import Morphology
+import Parse
 
 import Control.Monad.State
 import Control.Monad.Identity
@@ -24,10 +26,10 @@ repl :: IO ()
 repl = do 
     putStr "> "
     hFlush stdout
-    text' <- getLine
-    text <- morph text'
+    text <- morph <$> getLine
+    --print text
     when (text == "") repl
-    evalParseStateT $ mapM showParseResult $ parseText (text ++ " ")
+    evalParseStateT $ mapM showParseResult $ parseText text
     repl
 
 showParseResult :: Either (String,Int) (Statement,[Free]) -> ParseStateT IO ()
@@ -63,19 +65,6 @@ main = repl `catchIOError` (\e -> if isEOFError e then exitWith ExitSuccess
 					   else do putStr $ show e
 						   exitFailure)
 
-morph :: String -> IO String
-morph = vlatai . (map (\c -> case c of {'.' -> ' '; _ -> c}))
-
-vlatai :: String -> IO String
-vlatai s = unwords <$> mapM vlatai' (words $ deMunge s)
-    where
-	vlatai' w =
-	    -- FIXME: currently dies if we don't have vlatai in the path...
-	    do (_, Just out, _, _) <- createProcess
-		   (proc "vlatai" [w]){ std_out = CreatePipe } 
-	       line <- hGetLine out
-	       return $ filter (/='/') $ dropWhile isSpace $ drop ( (+1) $ last $ findIndices (== ':') line ) line
-	deMunge =
-	    -- I've seen this non-ascii apostrophe used on the mriste,
-	    -- distressingly enough
-	    map (\c -> case c of {'\8217' -> '\''; _ -> c})
+morph :: String -> String
+morph s = let Parsed words _ _ = morphologywords $ morphologyParse "words" $ s ++ " "
+	in unwords $ words

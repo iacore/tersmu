@@ -12,6 +12,8 @@ Pappy/pappy: Pappy
 	cd Pappy && \
 	ghc --make -package haskell98 -hide-package base -o pappy Main.hs
 Tersmu.hs: Tersmu.pappy Pappy/pappy
-	Pappy/pappy Tersmu.pappy
+	time Pappy/pappy Tersmu.pappy
+Morphology.hs: Morphology.pappy Pappy/pappy
+	time Pappy/pappy Morphology.pappy
 test: tersmu
 	rlwrap ./tersmu

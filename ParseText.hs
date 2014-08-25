@@ -13,7 +13,7 @@ import Control.Applicative
 -- (Note: could just use the 'text' production, but then a failure in one
 -- statement causes the whole text to fail) 
 parseText :: String -> [ Either (String,Int) (Statement,[Free]) ]
-parseText = parseText' . stripTextHead 
+parseText = parseText' . stripTextHead . (++" ")
     where parseText' str = case parseStatement str of
 	    Left n -> [Left (str,n)]
 	    Right (parsed,tail) -> if null tail

@@ -487,7 +487,7 @@ tagUnit :: TagUnit
 LojbanLetter :: Char = Consonant / Vowel / OtherLetter
 nonConsonant :: Char = Vowel / OtherLetter
 
-InitialPair :: String = "bl" /  "br" /  "cf" /  "ck" /  "cl" /  "cm" /  "cn" /  "cp" /  "cr" /  "ct" /  "dj" /  "dr" /  "dz" /  "fl" /  "fr" /  "gl" /  "gr" /  "jb" /  "jd" /  "jg" /  "jm" /  "jv" /  "kl" /  "kr" /  "ml" /  "mr" /  "pl" /  "pr" /  "sf" /  "sk" /  "sl" /  "sm" /  "sn" /  "sp" /  "sr" /  "st" /  "tc" /  "tr" /  "ts" /  "vl" /  "vr" /  "xl" /  "xr" /  "zb" /  "zd" /  "zg" /  "zm" /  "zv"
+-- InitialPair :: String = "bl" /  "br" /  "cf" /  "ck" /  "cl" /  "cm" /  "cn" /  "cp" /  "cr" /  "ct" /  "dj" /  "dr" /  "dz" /  "fl" /  "fr" /  "gl" /  "gr" /  "jb" /  "jd" /  "jg" /  "jm" /  "jv" /  "kl" /  "kr" /  "ml" /  "mr" /  "pl" /  "pr" /  "sf" /  "sk" /  "sl" /  "sm" /  "sn" /  "sp" /  "sr" /  "st" /  "tc" /  "tr" /  "ts" /  "vl" /  "vr" /  "xl" /  "xr" /  "zb" /  "zd" /  "zg" /  "zm" /  "zv"
 Vowel :: Char = c:Char &{c `elem` "aeiouy"} -> c
 Consonant :: Char = c:Char &{c `elem` "bcdfgjklmnprstvxz"} -> c
 OtherLetter :: Char = c:Char &{c `elem` "',"} -> c
@@ -503,23 +503,15 @@ Valsi :: String = cs:LojbanLetter+ Spacing -> cs
 
 Word :: String = cs:(!Space !PAUSE c:Char -> c)+ Spacing -> cs
 
-CMENE :: String = PAUSE? ss:CMENEchunk+ PAUSE? Spacing -> {foldl (++) [] ss}
-CMENEchunk :: String = ls:nonConsonant* c:Consonant -> {ls++[c]}
+-- Simple morphology classification - we've already used the full morphology
+-- algorithm to split input into valid words, so this suffices:
+CMENE :: String = ls:(l:LojbanLetter !Spacing -> l)* c:Consonant Spacing -> {ls++[c]}
+CMAVO :: String
+    = c:Consonant vs:(Vowel/TickChar)* Spacing -> {c:vs}
+    / vs:(Vowel/TickChar)+ Spacing -> vs
+BRIVLA :: String = !CMENE !CMAVO w:Valsi -> w
 
 PAUSE :: String = "."
-
-BRIVLA :: String = 
-	    a:InitialPair b:LojbanLetter c:LojbanLetter r:BRIVLATail -> {a++(b:c:r)}
-	  / a:Consonant !YChar b:Vowel c:Consonant d:(YChar?) 
-	      e:Consonant r:BRIVLATail 
-		  -> { case d of {Just d -> (a:b:c:d:e:r); Nothing -> (a:b:c:e:r)} }
-	  / a:Consonant !YChar b:Vowel c:(TickChar?) !YChar
-	      d:Vowel e:Consonant f:Consonant r:BRIVLATail
-		  -> { case c of {Just c -> (a:b:c:d:e:f:r); Nothing -> (a:b:d:e:f:r)} }
-
-BRIVLATail :: String = 
-	       a:VowelNotY !LojbanLetter Spacing -> { [a] }
-	     / a:LojbanLetter r:BRIVLATail -> { (a:r) }
 
 --         eks; basic afterthought logical connectives 
 A :: String = s:Amain Spacing -> s
