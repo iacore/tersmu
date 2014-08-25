@@ -242,6 +242,12 @@ instance JboShow JboTerm where
 	joiks <- logjboshow jbo joik
 	return $ if jbo then ts1 ++ " " ++ joiks ++ " ke " ++ ts2 ++ " ke'e"
 	    else "(" ++ ts1 ++ " {" ++ joiks ++ "} " ++ ts2 ++ ")"
+    logjboshow jbo (QualifiedTerm qual t) = do
+	ts <- logjboshow jbo t
+	let quals = case qual of {LAhE l -> l; NAhE_BO n -> n ++ " bo"}
+	return $ if jbo
+	    then quals ++ " " ++ ts ++ " lu'u"
+	    else "{" ++ quals ++ "}(" ++ ts ++ ")"
 	
 
 vowelnum 1 = "a"

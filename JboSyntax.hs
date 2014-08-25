@@ -118,6 +118,7 @@ data SumtiAtom = Name String
 	       | Word String
 	       | Zohe -- zo'e
 	       | SumtiQ (Maybe Int) -- ma [kau]
+	       | QualifiedSumti SumtiQualifier [RelClause] Sumti
 	       deriving (Eq, Show, Ord)
 type Lerfu = Char
 type Gadri = String
@@ -129,6 +130,9 @@ getsRi (LerfuString _) = False
 getsRi (Variable _) = False
 getsRi (NonAnaphoricProsumti p) = p `elem` ["ti","ta","tu"]
 getsRi _ = True
+
+data SumtiQualifier = LAhE String | NAhE_BO String
+    deriving (Eq, Show, Ord)
 
 data BridiTail = ConnectedBT Connective BridiTail BridiTail [Term]
 	       | BridiTail3 Selbri [Term]

@@ -24,6 +24,7 @@ data JboTerm = Var Int
 	     | Valsi String
 	     | ZoheTerm
 	     | JoikedTerms Joik JboTerm JboTerm
+	     | QualifiedTerm SumtiQualifier JboTerm
 	     deriving (Eq, Show, Ord)
 
 data JboRel = Tanru JboPred JboRel
@@ -64,11 +65,13 @@ subTerm s t = terpProp
     subTermInOp
     where
     subTermInTerm (JoikedTerms joik t1 t2) = JoikedTerms joik (subTermInTerm t1) (subTermInTerm t2)
+    subTermInTerm (QualifiedTerm qual t) = QualifiedTerm qual (subTermInTerm t)
     subTermInTerm x = if x == s then t else x
     subTermInRel (Tanru p r) = Tanru (subTermInPred p) (subTermInRel r)
     subTermInRel (TanruConnective con p p') = TanruConnective con (subTermInPred p) (subTermInPred p')
     subTermInRel (AbsPred a p) = AbsPred a (\o -> subTerm s t (p o))
     subTermInRel (AbsProp a p) = AbsProp a (subTerm s t p)
+    subTermInRel (Among t) = Among $ subTermInTerm t
     subTermInRel r = r
     subTermInOp (JboTagged tag mt) =
 	JboTagged (subTermInTag tag) $ if mt == Just s then Just t else mt

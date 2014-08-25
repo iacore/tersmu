@@ -182,7 +182,9 @@ relativeClause :: RelClause
 	/ "po'e":GOI t:term GEhU? -> {RestrictiveGOI "po'e" t}
 
 sumti6 :: SumtiAtom
-    = "la":LA s:CMENE -> {Name s}
+    = qual:(l:LAhE -> {LAhE l} / n:NAhE BO -> {NAhE_BO n}) rels:relativeClauses? s:sumti LUhU?
+	-> {QualifiedSumti qual (fromMaybe [] rels) s}
+    / "la":LA s:CMENE -> {Name s}
     / "mi":KOhA -> {NonAnaphoricProsumti "mi"}
     / "do":KOhA -> {NonAnaphoricProsumti "do"}
     / "ko":KOhA -> {NonAnaphoricProsumti "ko"}

@@ -340,6 +340,7 @@ parseSumtiAtom sa = do
 			Nothing -> []
 			Just is -> [IncidentalGOI "ne" (Sumti Untagged is)]
 	    in parseRels rels'
+	QualifiedSumti _ rels _ -> parseRels rels
 	_ -> return ([],[],[])
     o <- case sa of
 	Description gadri _ miq sb _ irels -> do
@@ -355,6 +356,9 @@ parseSumtiAtom sa = do
 	    doAssigns o ias
 	    doIncidentals o xorlo_ips
 	    return o
+	QualifiedSumti qual _ s -> do
+	    o <- parseSumti s
+	    return $ QualifiedTerm qual o
 	RelVar _ -> getVarBinding sa
 	LambdaVar _ -> getVarBinding sa
 	anaph@(Ri _) -> getSumbasti sa
