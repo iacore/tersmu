@@ -202,7 +202,7 @@ parseTerm t = case t of
     Sumti (Tagged tag) s -> do
 	tag' <- parseTag tag
 	o <- parseSumti s
-	doModal $ JboTagged tag' (Just o)
+	doTag tag' (Just o)
 	return Nothing
     Sumti taggedness s -> do
 	o <- parseSumti s
@@ -383,10 +383,12 @@ parseSumtiAtom sa = do
     return (o,(rps,ips,as))
 
 parseTag :: PreProp r => Tag -> ParseM r JboTag
-parseTag (ConnectedTag con tag1 tag2) = do
+parseTag (ConnectedTag con@(JboConnLog _ _) tag1 tag2) = do
     doConnective False con
 	(parseTag tag1)
 	(parseTag tag2)
+parseTag (ConnectedTag joicon tag1 tag2) =
+    ConnectedTag <$> parseConnective joicon <*> parseTag tag1 <*> parseTag tag2
 parseTag (DecoratedTagUnits dtus) = (DecoratedTagUnits <$>) $
     (`mapM` dtus) $ \(DecoratedTagUnit nahe se nai u) ->
 	DecoratedTagUnit nahe se nai <$> parseTagUnit u
@@ -421,11 +423,22 @@ quantify q r = do
     where
 	singpred r = \v -> r (Var v)
 
+doTag :: PreProp r => JboTag -> Maybe JboTerm -> ParseM r ()
+doTag (DecoratedTagUnits dtus) Nothing =
+    -- separate into a stream of possibly negated modals
+    -- (no obvious way to make sense of this with JOI connection,
+    -- and doesn't fit current sumtcita handling)
+    mapM_ doDTU dtus where
+	doDTU dtu = do
+	    when (tagNAI dtu) $ mapProp Not
+	    doModal $ JboTagged (DecoratedTagUnits [dtu{tagNAI=False}]) Nothing
+doTag jtag mt = doModal $ JboTagged jtag mt
+
 doModal :: PreProp r => JboOperator -> ParseM r ()
 doModal op = mapProp (Modal op)
 
 doBareTag :: PreProp r => JboTag -> ParseM r ()
-doBareTag tag = doModal $ JboTagged tag Nothing
+doBareTag tag = doTag tag Nothing
 
 -- |applySeltau: operate on a Bridi with a seltau by tanruising every JboRel
 -- in the JboProp.
@@ -467,11 +480,11 @@ doConnective isForethought con m1 m2 = do
 	    if isForethought then do
 		    tag' <- parseTag tag
 		    return $ (doModal (WithEventAs v) >> m1
-			, doModal (JboTagged tag' $ Just v) >> m2)
+			, (doTag tag' $ Just v) >> m2)
 		else if isTense tag
 		    then return $ (doModal (WithEventAs v) >> m1
-			    , parseTag tag >>= doModal . (`JboTagged` Just v) >> m2)
-		    else return $ ( (parseTag tag >>= doModal . (`JboTagged` Just v)) >> m1
+			    , parseTag tag >>= (`doTag` Just v) >> m2)
+		    else return $ ( (parseTag tag >>= (`doTag` Just v)) >> m1
 			    , doModal (WithEventAs v) >> m2)
     mapParseM2 con' m1' m2'
 

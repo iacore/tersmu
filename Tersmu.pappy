@@ -468,7 +468,7 @@ tag :: Tag
 	{ foldl (\t1 -> \(con,t2) -> ConnectedTag con t1 t2) tag jekts }
 -- _jektag: helper for tag
 _jektag :: {(Connective, Tag)}
-    = lcon:jek tag:tag1 -> {(JboConnLog Nothing lcon,tag)}
+    = jj:joikJek tag:tag1 -> {(jjJboCon Nothing jj,tag)}
 
 -- XXX: we use the relaxed tag grammar of xorxes' zasni gerna
 tag1 :: Tag
