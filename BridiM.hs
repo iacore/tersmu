@@ -250,6 +250,7 @@ advanceArgPosToBridi = modifyArglist $ \al ->
     if Map.null $ args al
        then al{position=2}
        else al
+setArgPos n = modifyArglist $ \al -> al{position=n}
 
 ignoringArgs :: Arglistful m => m a -> m a
 ignoringArgs m = do

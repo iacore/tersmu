@@ -32,6 +32,7 @@ data Term = Sumti Tagged Sumti
 	  | Termset [Term]
 	  | ConnectedTerms Bool Connective Term Term
 	  | BareTag Tag
+	  | BareFA (Maybe Int)
 	  deriving (Eq, Show, Ord)
 
 data Tagged = Untagged

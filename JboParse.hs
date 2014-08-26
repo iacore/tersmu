@@ -208,6 +208,8 @@ parseTerm t = case t of
 	o <- parseSumti s
 	addArg $ Arg taggedness o
 	return $ Just o
+    BareFA (Just n) -> setArgPos n >> return Nothing
+    BareFA Nothing -> return Nothing
     BareTag tag -> do
 	tag' <- parseTag tag
 	doBareTag tag'

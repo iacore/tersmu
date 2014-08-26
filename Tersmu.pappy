@@ -117,12 +117,14 @@ terms2 :: Term
     / term
 
 term :: Term = s:sumti -> {Sumti Untagged s}
-	    / tag:tag s:sumti -> {Sumti (Tagged tag) s}
+	    / !gek tag:tag s:sumti -> {Sumti (Tagged tag) s}
+	    / !gek tag:tag KU? -> {BareTag tag}
 	    / n:tagFA s:sumti -> {Sumti (FATagged n) s}
+	    / n:tagFA KU?  -> {BareFA $ Just n}
 	    / "fai":FA s:sumti -> {Sumti FAITagged s}
+	    / FA KU? -> {BareFA Nothing}
 	    / termset
 	    / NA KU -> {Negation}
-	    / tag:tag KU -> {BareTag tag}
 
 termset :: Term
     = NUhI pcon:gek ts1:terms NUhU b:gik ts2:terms NUhU?
