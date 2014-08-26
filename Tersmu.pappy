@@ -256,7 +256,7 @@ lerfu :: Lerfu
     = s:BY -> {if s=="y'y" then 'h' else s!!0}
     / PAUSE? v:Vowel PAUSE? Spacing? BU -> {v}
 
-quantifier :: Quantifier = q:number BOI? -> q
+quantifier :: Quantifier = q:number !MOI BOI? -> q
 
 number :: Quantifier
     = "ro":PA -> Forall
@@ -370,7 +370,7 @@ bridiTail1 :: BridiTail
 		) bt giheks }
 -- _gihekbt: helper for bridiTail1
 _gihekbt :: {(Connective, BridiTail, [Term])}
-    = lcon:gihek bt:bridiTail2 tts:tailTerms -> {(JboConnLog Nothing lcon, bt, tts)}
+    = lcon:gihek !(tag? BO -> {()}) !(tag? KE -> {()}) bt:bridiTail2 tts:tailTerms -> {(JboConnLog Nothing lcon, bt, tts)}
 
 bridiTail2 :: BridiTail
     = bt1:bridiTail3
