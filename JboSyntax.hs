@@ -21,8 +21,12 @@ data Sentence = Sentence [Term] BridiTail
 data Free
     = Bracketed [Statement]
     | Discursive BridiTail
+    | Vocative [COI] (Maybe Sumti)
     | TruthQ (Maybe Int)
     | Indicator {indicatorNai :: Bool, indicatorCmavo :: Cmavo}
+    deriving (Eq, Show, Ord)
+
+data COI = COI {coiCOI::String, coiNAI::Bool}
     deriving (Eq, Show, Ord)
 
 type FreeIndex = Int

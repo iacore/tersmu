@@ -36,6 +36,15 @@ indicator :: Free
     = "xu":UI k:("kau":UI x:("xi":XI n:litnum -> n)? -> {fromMaybe 1 x})? -> {TruthQ k}
     / i:(c:(UI/CAI) nai:NAI? -> { Indicator (isJust nai) c }
     / c:(DAhO/FUhO) -> { Indicator False c }) !BU -> i
+    / cs:vocative n:name rels:maybeRelativeClauses DOhU? -> { Vocative cs $ Just (QAtom Nothing rels n) }
+    / cs:vocative rels1:maybeRelativeClauses sb:selbri rels2:maybeRelativeClauses DOhU?
+	-> { Vocative cs $ Just (QAtom Nothing (rels1++rels2) (Description "le" Nothing Nothing sb [] [])) }
+    / cs:vocative ms:sumti? DOhU? -> { Vocative cs ms }
+
+vocative :: {[COI]}
+    = cs:coi* DOI -> cs / coi+
+coi :: COI
+    = c:COI mn:NAI? -> {COI c $ isJust mn}
 
 freeAnnotations :: {[FreeIndex]} = freeAnnotation*
 freeAnnotation :: FreeIndex
