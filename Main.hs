@@ -69,6 +69,6 @@ morph,stripPunc,morphParse :: String -> String
 morph = morphParse . stripPunc
 stripPunc =
     -- TODO: shouldn't strip inside zoi quotes
-    filter $ \c -> isAlphaNum c || isSpace c || c `elem` ",'"
+    map $ \c -> if isAlphaNum c || isSpace c || c `elem` ",'" then c else ' '
 morphParse s = let Parsed words _ _ = morphologywords $ morphologyParse "words" $ s ++ " "
 	in unwords $ words
