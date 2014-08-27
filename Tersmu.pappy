@@ -189,7 +189,7 @@ relativeClause :: RelClause
 sumti6 :: SumtiAtom
     = qual:(l:LAhE -> {LAhE l} / n:NAhE BO -> {NAhE_BO n}) rels:maybeRelativeClauses s:sumti LUhU?
 	-> {QualifiedSumti qual rels s}
-    / "la":LA s:CMENE -> {Name s}
+    / "la":LA n:name -> n
     / "mi":KOhA -> {NonAnaphoricProsumti "mi"}
     / "do":KOhA -> {NonAnaphoricProsumti "do"}
     / "ko":KOhA -> {NonAnaphoricProsumti "ko"}
@@ -210,6 +210,9 @@ sumti6 :: SumtiAtom
     / ZO s:Valsi -> {Word s}
     / s:nonJboQuote -> {NonJboQuote s}
     / vs:errorQuote -> {ErrorQuote vs}
+
+name :: SumtiAtom
+    = rels:maybeRelativeClauses cs:CMENE+ -> {Name rels $ unwords cs}
 
 variable :: Int
     = "da":KOhA -> {1}
@@ -237,7 +240,7 @@ nonJboNamed :: String = "la'o":ZOI s:nonJboText -> s
 errorQuote :: {[String]}
     = LOhU vs:((!LEhU v:Valsi -> v)*) LEhU -> vs
 
-sumtiTail :: {(Maybe Sumti, Maybe Quantifier, Selbri, [RelClause])}
+sumtiTail :: {(Maybe Sumti, Maybe Quantifier, Selbri, [RelClause], [RelClause])}
     = s:sumti6 srels:maybeRelativeClauses {(q,sb,irels)}:sumtiTail1
 	-> {(Just (QAtom Nothing srels s),q,sb,[],irels)}
     / rels:maybeRelativeClauses {(q,sb,irels)}:sumtiTail1

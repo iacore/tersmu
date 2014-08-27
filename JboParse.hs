@@ -320,7 +320,7 @@ parseRels (r:rs) = do
 isAssignable :: SumtiAtom -> Bool
 isAssignable (Assignable _) = True
 isAssignable (LerfuString _) = True
-isAssignable (Name _) = True
+isAssignable (Name _ _) = True
 isAssignable _ = False
 
 parseVariable :: PreProp r => SumtiAtom -> [JboPred] -> Maybe Quantifier -> ParseM r JboTerm
@@ -343,6 +343,12 @@ parseSumtiAtom sa = do
 			Just is -> [IncidentalGOI "ne" (Sumti Untagged is)]
 	    in parseRels rels'
 	QualifiedSumti _ rels _ -> parseRels rels
+	Name rels _ ->
+	    -- XXX: this construction, LA relativeClauses CMENE, appears not
+	    -- to be mentioned in CLL; an alternative plausible semantics
+	    -- would be that the relative clauses become "part of the name",
+	    -- as with inner relative clauses in LA description sumti.
+	    parseRels rels
 	_ -> return ([],[],[])
     o <- case sa of
 	Description gadri _ miq sb _ irels -> do
@@ -370,7 +376,7 @@ parseSumtiAtom sa = do
 	Zohe -> getFreshConstant
 	-- TODO: following ought all to give fresh constants, really
 	NonAnaphoricProsumti ps -> return $ NonAnaph ps
-	Name s -> return $ Named s
+	Name _ s -> return $ Named s
 	Quote sts ->
 	    -- TODO: quotes shouldn't have access to higher level bindings
 	    -- TODO: should probably return the unparsed text as well?

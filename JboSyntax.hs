@@ -103,7 +103,7 @@ data RelClause = Restrictive Subsentence  -- poi
 	       | IncidentalGOI String Term  -- ne etc.
 	       deriving (Eq, Show, Ord)
 
-data SumtiAtom = Name String
+data SumtiAtom = Name [RelClause] String
 	       | Variable Int -- da
 	       | NonAnaphoricProsumti String -- mi
 	       | RelVar Int -- ke'a

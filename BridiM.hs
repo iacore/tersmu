@@ -371,7 +371,7 @@ updateSumbastiWithSumtiAtom sa o = do
 	modifySumbastiBindings $ shuntVars $ \n -> Sumbasti False $ Ri n
 	setSumbasti (Sumbasti False $ Ri 1) o
     case sa of
-	Name s ->
+	Name _ s ->
 	    setSumbasti (Sumbasti False $ LerfuString $ take 1 s) o
 	Description _ _ _ sb _ _ ->
 	    let ls = lerfuStringOfSelbri sb
