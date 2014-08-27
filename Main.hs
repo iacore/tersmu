@@ -65,6 +65,10 @@ main = repl `catchIOError` (\e -> if isEOFError e then exitWith ExitSuccess
 					   else do putStr $ show e
 						   exitFailure)
 
-morph :: String -> String
-morph s = let Parsed words _ _ = morphologywords $ morphologyParse "words" $ s ++ " "
+morph,stripPunc,morphParse :: String -> String
+morph = morphParse . stripPunc
+stripPunc =
+    -- TODO: shouldn't strip inside zoi quotes
+    filter $ \c -> isAlphaNum c || isSpace c || c `elem` ",'"
+morphParse s = let Parsed words _ _ = morphologywords $ morphologyParse "words" $ s ++ " "
 	in unwords $ words
