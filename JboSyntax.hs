@@ -167,7 +167,7 @@ sb3tosb :: Selbri3 -> Selbri
 sb3tosb = Selbri2 . Selbri3
 
 data TanruUnit2 = TUBrivla String
-		| TUGOhA String
+		| TUGOhA String Int
 		| TUMe Sumti
 		| TUMoi Quantifier String
 		| TUAbstraction String Subsentence

@@ -63,7 +63,11 @@ data Sumbasti = Sumbasti
     deriving (Eq, Show, Ord)
 type SumbastiBindings = Map Sumbasti JboTerm
 
-type BribastiBindings = Map String Bridi
+data Bribasti
+    = BribastiBrivla String
+    | BribastiGOhA String Int
+    deriving (Eq, Show, Ord)
+type BribastiBindings = Map Bribasti Bridi
 
 data Question = Question {qKauDepth :: Maybe Int, qInfo::QInfo}
 data QInfo
@@ -91,9 +95,11 @@ class (Monad m,Applicative m) => ParseStateful m where
     getBribastiBindings = bribastiBindings <$> getParseState
     putBribastiBindings :: BribastiBindings -> m ()
     putBribastiBindings bs = modifyParseState $ \ps -> ps{bribastiBindings=bs}
-    setBribasti :: String -> Bridi -> m ()
+    modifyBribastiBindings :: (BribastiBindings -> BribastiBindings) -> m ()
+    modifyBribastiBindings f = (f <$> getBribastiBindings) >>= putBribastiBindings
+    setBribasti :: Bribasti -> Bridi -> m ()
     setBribasti s b = (Map.insert s b <$> getBribastiBindings) >>= putBribastiBindings
-    getBribasti :: String -> m Bridi
+    getBribasti :: Bribasti -> m Bridi
     getBribasti s = (`getBribastiBinding` s) <$> getBribastiBindings
 
     getNextFreshVar :: m Int
@@ -158,11 +164,13 @@ getSumbastiBinding bs a =
 		LerfuString s -> UnboundLerfuString s
 		_ -> error $ show a ++ " not bound.\n"
 
-getBribastiBinding :: BribastiBindings -> String -> Bridi
-getBribastiBinding bs s =
-    case Map.lookup s bs of
-      Just b -> b
-      Nothing -> jboRelToBridi $ Brivla s
+getBribastiBinding :: BribastiBindings -> Bribasti -> Bridi
+getBribastiBinding bs bb =
+    case Map.lookup bb bs of
+	Just b -> b
+	Nothing -> jboRelToBridi $ case bb of
+	    BribastiBrivla s -> Brivla s
+	    BribastiGOhA g n -> UnboundGOhA g n
 
 
 addSideSentence :: ParseStateful m => JboProp -> m ()
@@ -305,6 +313,9 @@ shuntVars var bs = foldr ( \n -> Map.insert (var $ n+1)
 			 [ 1 .. head [ n-1 | n <- [1..],
 				    isNothing $ Map.lookup (var n) bs ] ]
 
+setShunting :: Ord a => (Int -> a) -> b -> Map a b -> Map a b
+setShunting var b = Map.insert (var 1) b . shuntVars var
+
 
 class PreProp r where
     liftToProp :: (JboProp -> JboProp) -> r -> r
@@ -355,21 +366,20 @@ partiallyRunBridiM m = do
     s <- get
     lift.lift $ (`runContT` return.partiallyResolveBridi) $ (`runStateT` s) $ m
 
-setBribastiToCurrent :: String -> BridiM ()
-setBribastiToCurrent bv =
+setBribastiToCurrent :: Bribasti -> BridiM ()
+setBribastiToCurrent bb =
     -- XXX: results often counterintuitive, probably not what CLL intended
     -- (e.g. {da broda cei brode .i brode} is a donkey, but
     -- {broda cei brode fa da .i brode} is fine).
     lift $ ContT $ \k -> do 
 	b <- k () 
-	setBribasti bv b
+	setBribasti bb b
 	return b
 
 updateSumbastiWithSumtiAtom :: SumtiAtom -> JboTerm -> ParseM r ()
 updateSumbastiWithSumtiAtom sa o = do
-    when (getsRi sa) $ do
-	modifySumbastiBindings $ shuntVars $ \n -> Sumbasti False $ Ri n
-	setSumbasti (Sumbasti False $ Ri 1) o
+    when (getsRi sa) $
+	modifySumbastiBindings $ setShunting (\n -> Sumbasti False $ Ri n) o
     case sa of
 	Name _ s ->
 	    setSumbasti (Sumbasti False $ LerfuString $ take 1 s) o

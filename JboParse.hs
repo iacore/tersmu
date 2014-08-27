@@ -61,7 +61,7 @@ parseStatement1 (StatementStatements ss) =
     parseStatements ss
 parseStatement1 (StatementSentence s) = do
     b <- partiallyRunBridiM $ parseSentence s
-    setBribasti "go'i" b
+    modifyBribastiBindings $ setShunting (BribastiGOhA "go'i") b
     return $ b nullArgs
 
 parseSubsentence :: Subsentence -> BridiM Bridi
@@ -146,16 +146,16 @@ parseSelbri3 (BridiBinding tu tu') = do
     case tu' of
 	TanruUnit (TUBrivla bv) [] ->
 	    if bv `elem` map (\v -> "brod" ++ [v]) "aeiou"
-		then setBribastiToCurrent bv
+		then setBribastiToCurrent $ BribastiBrivla bv
 		else return ()
 	_ -> return ()
     parseSelbri3 tu
 
 parseTU :: TanruUnit2 -> BridiM Bridi
-parseTU (TUBrivla bv) = getBribasti bv
-parseTU (TUGOhA g) = case g of
+parseTU (TUBrivla bv) = getBribasti $ BribastiBrivla bv
+parseTU (TUGOhA g n) = case g of
     "du" -> return $ jboRelToBridi $ Equal
-    _ -> getBribasti g
+    _ -> getBribasti $ BribastiGOhA g n
 parseTU (TUMe s) = do
     o <- parseSumti s
     return $ jboRelToBridi $ Among o
@@ -466,8 +466,7 @@ subsentToPred :: Subsentence -> (Int -> SumtiAtom) -> ParseM r JboPred
 subsentToPred ss rv = do
     fresh@(PreVar n) <- getFreshVar
     p <- runSubBridiM $ do
-	modifyVarBindings $ shuntVars rv
-	setVarBinding (rv 1) fresh
+	modifyVarBindings $ setShunting rv fresh
 	p <- parseSubsentence ss
 	reffed <- referenced n
 	when (not reffed) $ addImplicit fresh

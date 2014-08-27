@@ -34,6 +34,7 @@ data JboRel = Tanru JboPred JboRel
 	    | Moi Quantifier Cmavo
 	    | Among JboTerm
 	    | Equal
+	    | UnboundGOhA String Int
 	    | Brivla String
 
 data JboOperator

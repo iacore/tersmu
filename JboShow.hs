@@ -176,6 +176,9 @@ instance JboShow JboRel where
 	return $ if jbo then "me " ++ s ++ " me'u" else "Among[" ++ s ++ "]"
     logjboshow jbo Equal =
 	return $ if jbo then "du" else "="
+    logjboshow jbo (UnboundGOhA g n) = return $
+	(if jbo then unwords else concat) $
+	    g : if n==1 then [] else ["xi",jbonum n]
     logjboshow _ (Brivla s) = return s
 
 instance JboShow JboTerm where

@@ -443,7 +443,7 @@ tanruUnit2 :: TanruUnit2
     / KE sb:selbri3 KEhE? -> {TUSelbri3 sb}
     / n:convSE tu:tanruUnit2 -> {TUPermuted n tu}
     / JAI mt:tag? tu:tanruUnit2 -> {TUJai mt tu}
-    / g:GOhA -> {TUGOhA g}
+    / g:GOhA mn:("xi":XI n:litnum -> n)? -> {TUGOhA g $ fromMaybe 1 mn}
     / q:number m:MOI -> {TUMoi q m}
     / ME s:sumti MEhU? -> {TUMe s}
     / a:NU ss:subsentence KEI? -> {TUAbstraction a ss}

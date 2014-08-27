@@ -37,6 +37,9 @@ Possibly bugs:
     Termset quantification: CLL:16.7.5 has quantifiers in the same termset
     having "equal scope", but I don't understand what this means.
 
+    We don't handle {nei} or {no'a}, which have murky and self-referential
+    semantics.
+
 Other deviations from CLL, not considered bugs, but which maybe ought to be
 optional:
     {na broda} is equivalent to {naku broda}.
