@@ -210,6 +210,7 @@ sumti6 :: SumtiAtom
     / "ce'u":KOhA mn:("xi":XI n:litnum -> n)? -> {LambdaVar $ fromMaybe 1 mn}
     / "ri":KOhA mn:("xi":XI n:litnum -> n)? -> {Ri $ fromMaybe 1 mn}
     / n:assignable mn:("xi":XI n:litnum -> n)? -> {Assignable $ fromMaybe n mn}
+    / n:mainBridiSumbasti mn:("xi":XI n:litnum -> n)? -> {MainBridiSumbasti $ fromMaybe n mn}
     / l:lerfuString !MOI BOI? -> {LerfuString l}
     / "zo'e":KOhA -> {Zohe}
     / "ma":KOhA k:("kau":UI x:("xi":XI n:litnum -> n)? -> {fromMaybe 1 x})? -> {SumtiQ k}
@@ -238,6 +239,12 @@ assignable :: Int
     / "fo'i":KOhA -> {8}
     / "fo'o":KOhA -> {9}
     / "fo'u":KOhA -> {10}
+mainBridiSumbasti :: Int
+    = "vo'a":KOhA -> {1}
+    / "vo'e":KOhA -> {2}
+    / "vo'i":KOhA -> {3}
+    / "vo'o":KOhA -> {4}
+    / "vo'u":KOhA -> {5}
 
 nonJboText :: String
     -- TODO: not sure how to do this properly... some preparsing magic, I

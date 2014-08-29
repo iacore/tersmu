@@ -117,6 +117,7 @@ data SumtiAtom = Name [RelClause] String
 	       | Assignable Int -- ko'a
 	       | LerfuString [Lerfu]
 	       | Ri Int -- ri
+	       | MainBridiSumbasti Int -- vo'a
 	       | Quote [Statement]
 	       | NonJboQuote String
 	       | ErrorQuote [String]
@@ -132,6 +133,7 @@ getsRi :: SumtiAtom -> Bool
 getsRi Zohe = False
 getsRi (Assignable _) = False
 getsRi (LerfuString _) = False
+getsRi (MainBridiSumbasti _) = False
 getsRi (Variable _) = False
 getsRi (NonAnaphoricProsumti p) = p `elem` ["ti","ta","tu"]
 getsRi _ = True

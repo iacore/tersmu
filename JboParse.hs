@@ -362,9 +362,10 @@ parseSumtiAtom sa = do
 	    return $ QualifiedTerm qual o
 	RelVar _ -> getVarBinding sa
 	LambdaVar _ -> getVarBinding sa
-	anaph@(Ri _) -> getSumbasti sa
-	anaph@(Assignable _) -> getSumbasti sa
-	anaph@(LerfuString _) -> getSumbasti sa
+	Ri _ -> getSumbasti sa
+	Assignable _ -> getSumbasti sa
+	LerfuString _ -> getSumbasti sa
+	MainBridiSumbasti _ -> getSumbasti sa
 	SumtiQ kau -> addSumtiQuestion kau
 	Zohe -> getFreshConstant
 	-- TODO: following ought all to give fresh constants, really

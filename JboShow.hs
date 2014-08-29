@@ -201,6 +201,8 @@ instance JboShow SumtiAtom where
 		    'h' -> "y'y"
 		    _ | c `elem` ['0'..'9'] -> jbonum $ fromEnum c - fromEnum '0'
 		    _ -> (c:"y")) s
+	    MainBridiSumbasti n | n <= 5 -> "vo'" ++ vowelnum n
+	    MainBridiSumbasti n -> "vo'a xi " ++ jbonum n
 	else case v of
 	    Variable n -> return $ "x" ++ show n
 	    RelVar 1 -> return $ "_"
