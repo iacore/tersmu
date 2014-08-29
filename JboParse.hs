@@ -262,6 +262,7 @@ parseSumti s = do
     doIncidentals o ips
     return o
     where
+	bindUnbound o@(UnboundSumbasti (MainBridiSumbasti _)) = return o
 	bindUnbound o@(UnboundSumbasti _) = assignFreshConstant o
 	bindUnbound o = return o
 	assignFreshConstant o = do

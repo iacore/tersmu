@@ -36,8 +36,8 @@ type ParseStateT = StateT ParseState
 type ParseStateM = ParseStateT Identity
 
 -- BridiParseState holds state which respects the logical structure
-data BridiParseState = BridiParseState {arglist::Arglist,varBindings::VarBindings}
-nullBridiParseState = BridiParseState nullArglist Map.empty
+data BridiParseState = BridiParseState {arglist::Arglist,varBindings::VarBindings,isSubBridi::Bool}
+nullBridiParseState = BridiParseState nullArglist Map.empty False
 
 type ParseM r = (StateT BridiParseState) (ContT r ParseStateM)
 type BridiM = ParseM Bridi
@@ -240,9 +240,6 @@ swapArgs p1 p2 = Map.mapKeys (\p -> if p == p1 then p2 else if p == p2 then p1 e
 setArg :: ArgPos -> JboTerm -> Args -> Args
 setArg = Map.insert
 
-appendToArglist :: JboTerm -> Arglist -> Arglist
-appendToArglist o (Arglist as n) = Arglist (Map.insert (NPos n) o as) (n+1)
-
 addFaiToArglist :: JboTerm -> Arglist -> Arglist
 addFaiToArglist o (Arglist as n) = Arglist (Map.insert (JaiPos) o as) n
 
@@ -251,7 +248,6 @@ advanceArgPosToBridi = modifyArglist $ \al ->
     if Map.null $ args al
        then al{position=2}
        else al
-setArgPos n = modifyArglist $ \al -> al{position=n}
 
 ignoringArgs :: Arglistful m => m a -> m a
 ignoringArgs m = do
@@ -267,21 +263,26 @@ swapTerms ts n m = take (max (max n m) (length ts)) $
 	swap (ts ++ (repeat ZoheTerm)) (n-1) (m-1)
 
 -- | addImplicit: adds a jboterm at first empty positional slot
-addImplicit :: JboTerm -> ParseM r ()
-addImplicit o = modifyArglist $ \al ->
-    let as = args al
-	gap = head $ [1..] \\ [n | NPos n <- Map.keys as]
-    in al{args=(Map.insert (NPos gap) o as)}
+addImplicit :: PreProp r => JboTerm -> ParseM r ()
+addImplicit o = do
+    al <- getArglist
+    let gap = head $ [1..] \\ [n | NPos n <- Map.keys $ args al]
+    putArglist $ al{args=(Map.insert (NPos gap) o $ args al)}
 
 data Arg = Arg Tagged JboTerm
-addArg :: Arg -> ParseM r ()
+addArg :: PreProp r => Arg -> ParseM r ()
 addArg (Arg FAITagged o) = modifyArglist $ addFaiToArglist o
-addArg (Arg tag o) = modifyArglist $
-	(appendToArglist o) .
-	(\as -> case tag of
-	    Untagged -> as
-	    FATagged n -> as{position=n}
-	    Tagged _ -> error "Now how did that get here?")
+addArg (Arg tag o) = do
+    al <- getArglist
+    let n = case tag of
+	    Untagged -> position al
+	    FATagged n -> n
+    setArgInArglist (NPos n) o
+    isMainBridi <- not . isSubBridi <$> get
+    when isMainBridi $ mapProp $ subTerm (UnboundSumbasti $ MainBridiSumbasti n) o
+    setArgPos $ n+1
+setArgInArglist p o = modifyArglist $ \al -> al{args = setArg p o $ args al}
+setArgPos n = modifyArglist $ \al -> al{position=n}
 
 type VarBindings = Map SumtiAtom JboTerm
 class (Monad m,Applicative m) => VarBindful m where
@@ -352,7 +353,10 @@ resolveBridi :: (Bridi,BridiParseState) -> JboProp
 resolveBridi (b,s) = partiallyResolveBridi (b,s) nullArgs
 
 runSubBridiM :: BridiM Bridi -> ParseM r JboProp
-runSubBridiM m = ($nullArgs) <$> partiallyRunBridiM (putArglist nullArglist >> m)
+runSubBridiM m = (($nullArgs) <$>)$ partiallyRunBridiM $ do
+    modify $ \s -> s{isSubBridi=True}
+    putArglist nullArglist
+    m
 
 partiallyRunBridiM :: BridiM Bridi -> ParseM r Bridi
 partiallyRunBridiM m = do

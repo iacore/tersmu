@@ -40,6 +40,8 @@ Possibly bugs:
     We don't handle {nei} or {no'a}, which have murky and self-referential
     semantics.
 
+    We don't handle {soi}.
+
 Other deviations from CLL, not considered bugs, but which maybe ought to be
 optional:
     {na broda} is equivalent to {naku broda}.
@@ -50,3 +52,7 @@ optional:
 
     Some constructs are accepted which the official grammar rejects; e.g. the
     tag grammar we use is essentially that of xorxes' zasni gerna.
+
+Other behaviour whose correctness may not be immediately obvious:
+    The {vo'a} series can only refer backwards. To see why, consider
+	{vo'e broda ko'a gi'e brode ko'e}.

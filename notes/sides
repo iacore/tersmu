@@ -129,6 +129,10 @@ donkeys - universally quantify over the domain of the donkey variable?
     ro tercange poi ponse su'o xasli cu darxi ro xasli
 ? Not exactly intuitive...
 
+voha:
+    donkey vo'a should behave the same way as other donkeys, e.g. in
+        ko'a .e ko'a broda lo brode be vo'a
+
 Implementation
 --------------
 We have some extra information to go in ParseState:
