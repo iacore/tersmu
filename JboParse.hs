@@ -61,7 +61,7 @@ parseStatement1 (StatementStatements ss) =
     parseStatements ss
 parseStatement1 (StatementSentence s) = do
     b <- partiallyRunBridiM $ parseSentence s
-    modifyBribastiBindings $ setShunting (BribastiGOhA "go'i") b
+    modifyBribastiBindings $ setShunting (TUGOhA "go'i") b
     return $ b nullArgs
 
 parseSubsentence :: Subsentence -> BridiM Bridi
@@ -146,16 +146,15 @@ parseSelbri3 (BridiBinding tu tu') = do
     case tu' of
 	TanruUnit (TUBrivla bv) [] ->
 	    if bv `elem` map (\v -> "brod" ++ [v]) "aeiou"
-		then setBribastiToCurrent $ BribastiBrivla bv
+		then setBribastiToCurrent $ TUBrivla bv
 		else return ()
 	_ -> return ()
     parseSelbri3 tu
 
-parseTU :: TanruUnit2 -> BridiM Bridi
-parseTU (TUBrivla bv) = getBribasti $ BribastiBrivla bv
-parseTU (TUGOhA g n) = case g of
-    "du" -> return $ jboRelToBridi $ Equal
-    _ -> getBribasti $ BribastiGOhA g n
+parseTU :: TanruUnit -> BridiM Bridi
+parseTU (TUBrivla bv) = getBribasti $ TUBrivla bv
+parseTU (TUGOhA "du" _) = return $ jboRelToBridi Equal
+parseTU tu@(TUGOhA _ _) = getBribasti tu
 parseTU (TUMe s) = do
     o <- parseSumti s
     return $ jboRelToBridi $ Among o
@@ -257,13 +256,13 @@ parseSumti s = do
 	    o <- quantify q (andMPred $ sr:rps)
 	    return (o,ips,as)
     o <- doAssigns o as
-    o <- bindUnbound o
+    -- |TODO: make this an option?
+    -- o <- bindUnbound o
     updateReferenced o
     doIncidentals o ips
     return o
     where
-	bindUnbound o@(UnboundAssignable _) = assignFreshConstant o
-	bindUnbound o@(UnboundLerfuString _) = assignFreshConstant o
+	bindUnbound o@(UnboundSumbasti _) = assignFreshConstant o
 	bindUnbound o = return o
 	assignFreshConstant o = do
 	    o' <- getFreshConstant
@@ -316,12 +315,6 @@ parseRels (r:rs) = do
 	    return ([],[], maybeToList $ Right <$> mo)
     (rps',ips',as') <- parseRels rs
     return (rps++rps',ips++ips',as++as')
-
-isAssignable :: SumtiAtom -> Bool
-isAssignable (Assignable _) = True
-isAssignable (LerfuString _) = True
-isAssignable (Name _ _) = True
-isAssignable _ = False
 
 parseVariable :: PreProp r => SumtiAtom -> [JboPred] -> Maybe Quantifier -> ParseM r JboTerm
 parseVariable sa@(Variable n) rps mq = do

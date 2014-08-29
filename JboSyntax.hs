@@ -136,6 +136,12 @@ getsRi (Variable _) = False
 getsRi (NonAnaphoricProsumti p) = p `elem` ["ti","ta","tu"]
 getsRi _ = True
 
+isAssignable :: SumtiAtom -> Bool
+isAssignable (Assignable _) = True
+isAssignable (LerfuString _) = True
+isAssignable (Name _ _) = True
+isAssignable _ = False
+
 data SumtiQualifier = LAhE String | NAhE_BO String
     deriving (Eq, Show, Ord)
 
@@ -160,19 +166,19 @@ data Selbri2 = SBInverted Selbri3 Selbri2
 data Selbri3 = SBTanru Selbri3 Selbri3
 	     | ConnectedSB Bool Connective Selbri Selbri3
 	     | BridiBinding Selbri3 Selbri3
-	     | TanruUnit TanruUnit2 [Term]
+	     | TanruUnit TanruUnit [Term]
 	     deriving (Eq, Show, Ord)
 
 sb3tosb :: Selbri3 -> Selbri
 sb3tosb = Selbri2 . Selbri3
 
-data TanruUnit2 = TUBrivla String
+data TanruUnit = TUBrivla String
 		| TUGOhA String Int
 		| TUMe Sumti
 		| TUMoi Quantifier String
 		| TUAbstraction String Subsentence
-	        | TUPermuted Int TanruUnit2
-		| TUJai (Maybe Tag) TanruUnit2
+	        | TUPermuted Int TanruUnit
+		| TUJai (Maybe Tag) TanruUnit
 		| TUSelbri3 Selbri3
 	        deriving (Eq, Show, Ord)
 

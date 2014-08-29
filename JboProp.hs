@@ -16,8 +16,7 @@ data JboTerm = Var Int
 	     | Constant Int
 	     | Named String
 	     | NonAnaph String
-	     | UnboundAssignable Int
-	     | UnboundLerfuString [Lerfu]
+	     | UnboundSumbasti SumtiAtom
 	     | JboQuote ParsedQuote
 	     | JboErrorQuote [String]
 	     | JboNonJboQuote String
@@ -34,7 +33,7 @@ data JboRel = Tanru JboPred JboRel
 	    | Moi Quantifier Cmavo
 	    | Among JboTerm
 	    | Equal
-	    | UnboundGOhA String Int
+	    | UnboundBribasti TanruUnit
 	    | Brivla String
 
 data JboOperator

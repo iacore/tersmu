@@ -176,31 +176,44 @@ instance JboShow JboRel where
 	return $ if jbo then "me " ++ s ++ " me'u" else "Among[" ++ s ++ "]"
     logjboshow jbo Equal =
 	return $ if jbo then "du" else "="
-    logjboshow jbo (UnboundGOhA g n) = return $
+    logjboshow jbo (UnboundBribasti (TUGOhA g n)) = return $
 	(if jbo then unwords else concat) $
 	    g : if n==1 then [] else ["xi",jbonum n]
+    logjboshow jbo (UnboundBribasti (TUBrivla s)) = return s
     logjboshow _ (Brivla s) = return s
 
+instance JboShow SumtiAtom where
+    logjboshow jbo v =
+	if jbo then return $ case v of
+	    Variable n | n <= 3 -> "d" ++ vowelnum n
+	    Variable n -> "da xi " ++ jbonum n
+	    RelVar 1 -> "ke'a"
+	    RelVar n -> "ke'a xi " ++ jbonum n
+	    LambdaVar 1 -> "ce'u"
+	    LambdaVar n -> "ce'u xi " ++ jbonum n
+	    Assignable n | n <= 5 -> "ko'" ++ vowelnum n
+	    Assignable n | n <= 10 -> "fo'" ++ vowelnum (n-5)
+	    Assignable n -> "ko'a xi " ++ jbonum n
+	    LerfuString s -> concat $ intersperse " " $
+		map (\c -> case c of
+		    _ | c `elem` "aoeui" -> (c:"bu")
+		    'y' -> "y bu"
+		    'h' -> "y'y"
+		    _ | c `elem` ['0'..'9'] -> jbonum $ fromEnum c - fromEnum '0'
+		    _ -> (c:"y")) s
+	else case v of
+	    Variable n -> return $ "x" ++ show n
+	    RelVar 1 -> return $ "_"
+	    RelVar n -> return $ "_" ++ show n
+	    LambdaVar n -> return $ "\\" ++ show n
+	    LerfuString s -> return s
+	    v -> do
+		s <- logjboshow True v
+		return $ "{" ++ s ++ "}"
 instance JboShow JboTerm where
     logjboshow False (ZoheTerm) = return " "
     logjboshow True (ZoheTerm) = return "zo'e"
-    logjboshow jbo (Var n) =
-	do v <- binding n 
-	   return $ if jbo then case v of
-				    Variable n | n <= 3 -> "d" ++ vowelnum n
-				    Variable n -> "da xi " ++ jbonum n
-				    RelVar 1 -> "ke'a"
-				    RelVar n -> "ke'a xi " ++ jbonum n
-				    LambdaVar 1 -> "ce'u"
-				    LambdaVar n -> "ce'u xi " ++ jbonum n
-				    Assignable n | n <= 5 -> "ko'" ++ vowelnum n
-				    Assignable n | n <= 10 -> "fo'" ++ vowelnum (n-5)
-				    Assignable n -> "ko'a xi " ++ jbonum n
-			    else case v of
-				    Variable n -> "x" ++ show n
-				    RelVar 1 -> "_"
-				    RelVar n -> "_" ++ show n
-				    LambdaVar n -> "\\" ++ show n
+    logjboshow jbo (Var n) = binding n >>= logjboshow jbo
     logjboshow jbo (PreVar n) = return $ if jbo then "lo XASLI zei da ku" else "[DONKEY]"
     logjboshow True (Constant n) = return $ "cy " ++ jbonum n
     logjboshow False (Constant n) = return $ "c" ++ show n
@@ -227,18 +240,7 @@ instance JboShow JboTerm where
 	    (if jbo then " " ++ zoik else " >>")
     logjboshow True (Valsi s) = return $ "zo " ++ s
     logjboshow False (Valsi s) = return $ "{" ++ s ++ "}"
-    {-
-    logjboshow _ (UnboundAssignable n) = return $
-	case n of _ | n <= 5 -> "ko'" ++ vowelnum n
-	          _ | n <= 10 -> "fo'" ++ vowelnum (n-5)
-		  _ -> "ko'a xi " ++ jbonum n
-    logjboshow _ (UnboundLerfuString s) = return $ concat $ intersperse " " $
-	map (\c -> case c of _ | c `elem` "aoeui" -> (c:"bu")
-			     'y' -> "y bu"
-			     'h' -> "y'y"
-			     _ | c `elem` ['0'..'9'] -> jbonum $ fromEnum c - fromEnum '0'
-			     _ -> (c:"y")) s
-    -}
+    logjboshow jbo (UnboundSumbasti sa) = logjboshow jbo sa
     logjboshow _ (NonAnaph s) = return s
     logjboshow jbo (JoikedTerms joik t1 t2) = do
 	[ts1,ts2] <- mapM (logjboshow jbo) [t1,t2]

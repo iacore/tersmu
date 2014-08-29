@@ -63,11 +63,7 @@ data Sumbasti = Sumbasti
     deriving (Eq, Show, Ord)
 type SumbastiBindings = Map Sumbasti JboTerm
 
-data Bribasti
-    = BribastiBrivla String
-    | BribastiGOhA String Int
-    deriving (Eq, Show, Ord)
-type BribastiBindings = Map Bribasti Bridi
+type BribastiBindings = Map TanruUnit Bridi
 
 data Question = Question {qKauDepth :: Maybe Int, qInfo::QInfo}
 data QInfo
@@ -97,9 +93,9 @@ class (Monad m,Applicative m) => ParseStateful m where
     putBribastiBindings bs = modifyParseState $ \ps -> ps{bribastiBindings=bs}
     modifyBribastiBindings :: (BribastiBindings -> BribastiBindings) -> m ()
     modifyBribastiBindings f = (f <$> getBribastiBindings) >>= putBribastiBindings
-    setBribasti :: Bribasti -> Bridi -> m ()
+    setBribasti :: TanruUnit -> Bridi -> m ()
     setBribasti s b = (Map.insert s b <$> getBribastiBindings) >>= putBribastiBindings
-    getBribasti :: Bribasti -> m Bridi
+    getBribasti :: TanruUnit -> m Bridi
     getBribasti s = (`getBribastiBinding` s) <$> getBribastiBindings
 
     getNextFreshVar :: m Int
@@ -159,18 +155,15 @@ getSumbastiBinding bs a =
 	Just o -> o
 	Nothing -> case Map.lookup (Sumbasti False a) bs of 
 	    Just o -> o
-	    Nothing -> case a of
-		Assignable n -> UnboundAssignable n
-		LerfuString s -> UnboundLerfuString s
-		_ -> error $ show a ++ " not bound.\n"
+	    Nothing -> UnboundSumbasti a
 
-getBribastiBinding :: BribastiBindings -> Bribasti -> Bridi
+getBribastiBinding :: BribastiBindings -> TanruUnit -> Bridi
 getBribastiBinding bs bb =
     case Map.lookup bb bs of
 	Just b -> b
 	Nothing -> jboRelToBridi $ case bb of
-	    BribastiBrivla s -> Brivla s
-	    BribastiGOhA g n -> UnboundGOhA g n
+	    TUBrivla s -> Brivla s
+	    _ -> UnboundBribasti bb
 
 
 addSideSentence :: ParseStateful m => JboProp -> m ()
@@ -366,7 +359,7 @@ partiallyRunBridiM m = do
     s <- get
     lift.lift $ (`runContT` return.partiallyResolveBridi) $ (`runStateT` s) $ m
 
-setBribastiToCurrent :: Bribasti -> BridiM ()
+setBribastiToCurrent :: TanruUnit -> BridiM ()
 setBribastiToCurrent bb =
     -- XXX: results often counterintuitive, probably not what CLL intended
     -- (e.g. {da broda cei brode .i brode} is a donkey, but
@@ -395,15 +388,12 @@ updateReferenced _ = return ()
 
 doAssigns :: JboTerm -> [Either SumtiAtom JboTerm] -> ParseM r JboTerm
 doAssigns o as = case o of
-    UnboundAssignable _ -> assignRight o $ rights as
-    UnboundLerfuString _ -> assignRight o $ rights as
+    UnboundSumbasti a | isAssignable a -> assignRight o a $ rights as
     _ -> mapM_ (`setSumbasti` o) (map (Sumbasti True) $ lefts as) >> return o
     where
-	assignRight o [] = return o
-	assignRight o ras = let ra = last ras
-	    in setSumbasti (Sumbasti True $ sumtiAtomOfUnbound o) ra >> return ra
-	sumtiAtomOfUnbound (UnboundAssignable n) = Assignable n
-	sumtiAtomOfUnbound (UnboundLerfuString n) = LerfuString n
+	assignRight o a [] = return o
+	assignRight o a ras = let ra = last ras
+	    in setSumbasti (Sumbasti True a) ra >> return ra
 
 doIncidentals :: JboTerm -> [JboPred] -> ParseM r ()
 doIncidentals o ips = case andMPred ips of

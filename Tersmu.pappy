@@ -437,7 +437,7 @@ tanruUnit :: Selbri3
 tanruUnit1 :: Selbri3
     = tu:tanruUnit2 las:linkargs? -> {TanruUnit tu (fromMaybe [] las)}
 
-tanruUnit2 :: TanruUnit2
+tanruUnit2 :: TanruUnit
     = bv:BRIVLA -> {TUBrivla bv}
     -- TODO: zei
     / KE sb:selbri3 KEhE? -> {TUSelbri3 sb}
