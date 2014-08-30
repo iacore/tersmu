@@ -128,6 +128,7 @@ freeVars :: JboProp -> [JboTerm]
 freeVars p = execWriter $ collectFrees p where
 	collectFrees = traverseTerms_ collectFreesInTerm
 	collectFreesInTerm free@(Var _) = tell $ [free]
+	collectFreesInTerm free@(UnboundSumbasti (MainBridiSumbasti _)) = tell $ [free]
 	collectFreesInTerm (JoikedTerms joik t1 t2) = collectFreesInTerm t1 *> collectFreesInTerm t2
 	collectFreesInTerm (QualifiedTerm qual t) = collectFreesInTerm t
 	collectFreesInTerm (Constant _ ts) = traverse_ collectFreesInTerm ts

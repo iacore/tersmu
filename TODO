@@ -2,8 +2,6 @@ Rest of the question words.
 
 ko
 
-donkey-lo?
-
 strict CLL mode?
 
 alternative tags mode, doing away with modals and non-logical sentence
@@ -11,6 +9,8 @@ connectives in favour of extra WithEventAs and binary relations corresponding
 to tags (see notes/tags)?
 
 option to render sumti (and tag, abstractor) connectives as quantifiers?
+
+pebai
 
 NAhE
 
@@ -23,5 +23,3 @@ mekso
 Pretty printing
 
 Do something with (some) indicators?
-
-Strong donkeys?
