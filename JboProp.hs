@@ -30,6 +30,7 @@ data JboTerm = BoundVar Int
 
 data JboRel = Tanru JboPred JboRel
 	    | TanruConnective JboConnective JboPred JboPred
+	    | ScalarNegatedRel NAhE JboRel
 	    | AbsPred Abstractor JboPred
 	    | AbsProp Abstractor JboProp
 	    | Moi Quantifier Cmavo

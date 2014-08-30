@@ -435,8 +435,9 @@ selbri5 :: Selbri3
 selbri6 :: Selbri3
     = tu:tanruUnit BO sb:selbri6 -> {SBTanru tu sb}
     / tanruUnit
-    / pcon:guhek sb1:selbri b:gik sb2:selbri6
-	-> { ConnectedSB True (JboConnLog Nothing $ pcon b) sb1 sb2 }
+    / mn:NAhE? pcon:guhek sb1:selbri b:gik sb2:selbri6
+	-> { maybe id ScalarNegatedSB mn $
+	    ConnectedSB True (JboConnLog Nothing $ pcon b) sb1 sb2 }
 
 tanruUnit :: Selbri3
     = tu:tanruUnit CEI tu':tanruUnit1 -> {BridiBinding tu tu'}
@@ -453,6 +454,7 @@ tanruUnit2 :: TanruUnit
     / g:GOhA mn:("xi":XI n:litnum -> n)? -> {TUGOhA g $ fromMaybe 1 mn}
     / q:number m:MOI -> {TUMoi q m}
     / ME s:sumti MEhU? -> {TUMe s}
+    / n:NAhE tu:tanruUnit2 -> {TUSelbri3 $ ScalarNegatedSB n $ TanruUnit tu []}
     / a:NU ss:subsentence KEI? -> {TUAbstraction a ss}
     / XOhI t:tag -> {TUXOhI t}
 

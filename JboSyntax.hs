@@ -168,8 +168,11 @@ data Selbri2 = SBInverted Selbri3 Selbri2
 data Selbri3 = SBTanru Selbri3 Selbri3
 	     | ConnectedSB Bool Connective Selbri Selbri3
 	     | BridiBinding Selbri3 Selbri3
+	     | ScalarNegatedSB NAhE Selbri3
 	     | TanruUnit TanruUnit [Term]
 	     deriving (Eq, Show, Ord)
+
+type NAhE = Cmavo
 
 sb3tosb :: Selbri3 -> Selbri
 sb3tosb = Selbri2 . Selbri3

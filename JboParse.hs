@@ -140,6 +140,8 @@ parseSelbri3 (ConnectedSB fore con sb sb') = do
 	    p' <- selbriToPred $ sb3tosb sb'
 	    return (con',p,p')
     return $ jboRelToBridi $ TanruConnective con' p p'
+parseSelbri3 (ScalarNegatedSB nahe sb) =
+    mapRelsInBridi (ScalarNegatedRel nahe) <$> parseSelbri3 sb
 parseSelbri3 (TanruUnit tu2 las) =
     advanceArgPosToBridi >> parseTU tu2 <* parseTerms las
 parseSelbri3 (BridiBinding tu tu') = do
@@ -443,11 +445,14 @@ doBareTag tag = doTag tag Nothing
 
 -- |applySeltau: operate on a Bridi with a seltau by tanruising every JboRel
 -- in the JboProp.
+-- XXX: not clear that this is correct in e.g.
+-- {broda gi'e brode .i brodi go'i}, but not clear what is correct.
 applySeltau :: BridiM Bridi -> Bridi -> BridiM Bridi
 applySeltau seltauM tertau = do
     stpred <- parsedSelbriToPred seltauM
-    let f = terpProp (\r ts -> Rel (Tanru stpred r) ts) id
-    return $ f . tertau 
+    return $ mapRelsInBridi (Tanru stpred) tertau
+mapRelsInBridi :: (JboRel -> JboRel) -> Bridi -> Bridi
+mapRelsInBridi f b = (terpProp (\r ts -> Rel (f r) ts) id) . b
 
 selbriToPred :: Selbri -> ParseM r JboPred
 selbriToPred sb = parsedSelbriToPred $ parseSelbri sb

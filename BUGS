@@ -8,10 +8,6 @@ Bug traces:
     brode([DONKEY])
     lo XASLI zei da ku brode
 
-    > ko'a goi ko'e ko'e brode
-    brode(c0,c1)
-
-
 Definite bugs:
     ka can't handle multiple ce'u (should return a relation)
 
@@ -24,10 +20,6 @@ Definite bugs:
 Probably bugs:
     Seltau are considered to be unary predicates rather than higher arity
     relations.
-
-    The way we have {cei broda} working probably isn't as intended; for
-    non-compound bridi, we should probably have it binding to the whole bridi
-    like {go'i} does.
 
 Possibly bugs:
     Quantifiers on bound variables rebind the variable. This is contrary to

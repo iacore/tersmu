@@ -152,16 +152,18 @@ instance JboShow JboRel where
 	if jbo
 	    then return $ "ke " ++ ps ++ " ke'e " ++ cs ++ " ke " ++ ps' ++ " ke'e"
 	    else return $ "<" ++ ps ++ ">" ++ cs ++ "<" ++ ps' ++ ">"
-
     logjboshow jbo (Tanru p r) =
       do rstr <- logjboshow jbo r
 	 pstr <- logjboshow jbo p
 	 if jbo
 	    then return $ "ke " ++ pstr ++ " " ++ rstr ++ " ke'e"
 	    else return $ "<" ++ pstr ++ "><" ++ rstr ++ ">"
-
-    logjboshow jbo (Moi q m) = do s <- logjboshow jbo q
-				  return $ s ++ " " ++ m
+    logjboshow jbo (ScalarNegatedRel n r) = do
+	rs <- logjboshow jbo r
+	return $ if jbo then n ++ " " ++ rs else "{"++n++"}("++rs++")"
+    logjboshow jbo (Moi q m) = do
+	s <- logjboshow jbo q
+	return $ s ++ " " ++ m
     logjboshow jbo (AbsPred a p) =
 	do withShuntedLambda (\n ->
 	       do s <- logjboshow jbo (p (BoundVar n))
