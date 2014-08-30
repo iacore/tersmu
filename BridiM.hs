@@ -329,14 +329,19 @@ mapProp f = lift $ ContT $ \k -> (liftToProp f) <$> k ()
 
 -- |mapParseM2 f m1 m2: fork, doing m1 and m2 then joining final Props with f;
 --  ParseState threaded through as m1 then m2 then continuation.
+--  For this to make sense and be symmetric, it is necessary that the
+--  ParseState changes caused by the continuation do not depend on which
+--  branch it is evaluated in. To ensure this, variable bindings introduced in
+--  m1 and m2 are ignored - consider {ko'a .e da broda zo'e ne da} to see why.
 mapParseM2 :: (PreProp r) => (JboProp -> JboProp -> JboProp) -> ParseM r a -> ParseM r a -> ParseM r a
 mapParseM2 f m1 m2 =
     -- XXX: ugliness warning
     StateT $ \s -> ContT $ \k -> state $ \ps ->
 	let e1 = execParseMParseState m1 s
 	    e2 = execParseMParseState m2 s
-	    s1 = runContT (runStateT m1 s) $ (modify e2 >>) . k
-	    s2 = runContT (runStateT (lift (modify e1) >> m2) s) k
+	    [m1',m2'] = map (<* putVarBindings (varBindings s)) [m1,m2]
+	    s1 = runContT (runStateT m1' s) $ (modify e2 >>) . k
+	    s2 = runContT (runStateT (lift (modify e1) >> m2') s) k
 	    r1 = evalState s1 ps
 	    (r2,ps') = runState s2 ps
 	in ((liftToProp2 f) r1 r2,ps')
