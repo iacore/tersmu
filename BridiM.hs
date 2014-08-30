@@ -118,12 +118,12 @@ class (Monad m,Applicative m) => ParseStateful m where
     getFreshVar = do
 	n <- getNextFreshVar
 	putNextFreshVar $ n+1
-	return $ PreVar n
+	return $ Var n
     getFreshConstant :: m JboTerm
     getFreshConstant = do
 	n <- getNextFreshConstant
 	putNextFreshConstant $ n+1
-	return $ Constant n
+	return $ Constant n []
     setReferenced :: Int -> m ()
     setReferenced n = getReferenced >>= putReferenced . Set.insert n
     referenced :: Int -> m Bool
@@ -189,7 +189,7 @@ doQuestionsPred top p =
     deKau top >>= \qs -> return $ \o -> foldr doQInfo (p o) qs
 doQInfo :: QInfo -> JboProp -> JboProp
 doQInfo (QSumti qv) p = Quantified QuestionQuantifier Nothing $
-	\v -> subTerm qv (Var v) p
+	\v -> subTerm qv (BoundVar v) p
 doQInfo QTruth p = Modal QTruthModal p
 deKau :: ParseStateful m => Bool -> m [QInfo]
 deKau top = do
@@ -387,7 +387,7 @@ updateSumbastiWithSumtiAtom sa o = do
 	_ -> return ()
 
 updateReferenced :: JboTerm -> ParseM r ()
-updateReferenced (PreVar n) = setReferenced n
+updateReferenced (Var n) = setReferenced n
 updateReferenced _ = return ()
 
 doAssigns :: JboTerm -> [Either SumtiAtom JboTerm] -> ParseM r JboTerm
@@ -399,7 +399,15 @@ doAssigns o as = case o of
 	assignRight o a ras = let ra = last ras
 	    in setSumbasti (Sumbasti True a) ra >> return ra
 
-doIncidentals :: JboTerm -> [JboPred] -> ParseM r ()
+doIncidentals :: JboTerm -> [JboPred] -> ParseM r JboTerm
 doIncidentals o ips = case andMPred ips of
-    Nothing -> return ()
-    Just p -> addSideSentence $ p o
+    Nothing -> return o
+    Just pred -> do
+	let frees = freeVars $ pred o
+	    o' = case o of
+		Constant n params -> Constant n $ params ++ frees
+		_ -> o
+	    p = foldr (\free p -> Quantified Forall Nothing $
+		\v -> subTerm free (BoundVar v) p) (pred o') frees
+	addSideSentence p
+	return o'

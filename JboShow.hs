@@ -109,7 +109,7 @@ instance JboShow JboTagUnit where
 	return $ "fi'o " ++ ps ++ if jbo then " fe'u" else ""
 
 instance JboShow JboPred where
-    logjboshow jbo p = logjboshowpred jbo (\n -> p (Var n))
+    logjboshow jbo p = logjboshowpred jbo (\n -> p (BoundVar n))
 
 -- FIXME: bugs with interactions between actual ke'a and these fake ones
 -- e.g. du da poi du be fa ke'a du
@@ -117,9 +117,9 @@ logjboshowpred jbo p = withShuntedRelVar (\n ->
    if not jbo
      then logjboshow jbo (p n)
      else case p n of
-	   Rel sb ts | isJust $ elemIndex (Var n) ts ->
+	   Rel sb ts | isJust $ elemIndex (BoundVar n) ts ->
 	       do s <- logjboshow jbo sb
-		  let i = 1 + fromJust (elemIndex (Var n) ts)
+		  let i = 1 + fromJust (elemIndex (BoundVar n) ts)
 		      ts' = takeWhile (/= ZoheTerm) $ tail $
 				case i of 1 -> ts
 					  _ -> swapFinite ts 0 (i-1)
@@ -164,7 +164,7 @@ instance JboShow JboRel where
 				  return $ s ++ " " ++ m
     logjboshow jbo (AbsPred a p) =
 	do withShuntedLambda (\n ->
-	       do s <- logjboshow jbo (p (Var n))
+	       do s <- logjboshow jbo (p (BoundVar n))
 		  return $ if jbo then a ++ " " ++ s ++ " kei" 
 				  else a ++ "[" ++ s ++ "]" )
     logjboshow jbo (AbsProp a p) =
@@ -215,10 +215,17 @@ instance JboShow SumtiAtom where
 instance JboShow JboTerm where
     logjboshow False (ZoheTerm) = return " "
     logjboshow True (ZoheTerm) = return "zo'e"
-    logjboshow jbo (Var n) = binding n >>= logjboshow jbo
-    logjboshow jbo (PreVar n) = return $ if jbo then "lo XASLI zei da ku" else "[DONKEY]"
-    logjboshow True (Constant n) = return $ "cy " ++ jbonum n
-    logjboshow False (Constant n) = return $ "c" ++ show n
+    logjboshow jbo (BoundVar n) = binding n >>= logjboshow jbo
+    logjboshow jbo (Var n) = return $ if jbo then "lo XASLI zei da ku" else "[DONKEY]"
+    logjboshow True (Constant n []) = return $ "cy " ++ jbonum n
+    logjboshow False (Constant n []) = return $ "c" ++ show n
+    logjboshow jbo (Constant n ts) = do
+	ss <- mapM (logjboshow jbo) ts
+	return $ if jbo
+	    then "li ma'o fy" ++ jbonum n ++ " " ++
+		(concat . intersperse " " $ (map ("mo'e "++) ss)) ++ " lo'o"
+	    else "f" ++ show n ++ "(" ++
+		(concat . intersperse "," $ ss) ++ ")"
     logjboshow True (Named s) = return $ "la " ++ s ++ "."
     logjboshow False (Named s) = return s
     logjboshow jbo (JboQuote (ParsedQuote ps)) = do
@@ -288,19 +295,19 @@ instance JboShow JboProp
 	  {-
 	  logjboshow' True ps (Quantified (Gadri gadri) r p) =
 	      withNextAssignable $ \n ->
-		  do vs <- logjboshow jbo (Var n)
+		  do vs <- logjboshow jbo (BoundVar n)
 		     rss <- logjboshowpred jbo (fromJust r)
 		     logjboshow' jbo (ps ++ [gadri] ++ [rss] ++
 			 ["ku","goi",vs]) (p n)
 	  -}
 	  logjboshow' True ps (Quantified QuestionQuantifier _ p) =
 	      withNextAssignable $ \n ->
-		  do as <- logjboshow jbo (Var n)
+		  do as <- logjboshow jbo (BoundVar n)
 		     logjboshow' jbo (ps ++ ["ma","goi",as]) (p n)
 	  logjboshow' jbo ps (Quantified q r p) =
 	      withNextVariable $ \n ->
 		  do qs <- logjboshow jbo q
-		     vs <- logjboshow jbo (Var n)
+		     vs <- logjboshow jbo (BoundVar n)
 		     rss <- case r of
 			Nothing -> return $ if jbo then [] else [". "]
 			Just r' ->

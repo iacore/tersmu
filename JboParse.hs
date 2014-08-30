@@ -255,11 +255,11 @@ parseSumti s = do
 	    (rps,ips,as) <- parseRels rels
 	    o <- quantify q (andMPred $ sr:rps)
 	    return (o,ips,as)
+    o <- doIncidentals o ips
     o <- doAssigns o as
     -- |TODO: make this an option?
     -- o <- bindUnbound o
     updateReferenced o
-    doIncidentals o ips
     return o
     where
 	bindUnbound o@(UnboundSumbasti (MainBridiSumbasti _)) = return o
@@ -330,12 +330,7 @@ parseVariable sa@(Variable n) rps mq = do
 parseSumtiAtom :: PreProp r => SumtiAtom -> ParseM r (JboTerm, ParsedRels)
 parseSumtiAtom sa = do
     (rps,ips,as) <- case sa of
-	Description _ mis _ _ rels _ ->
-	    let rels' = rels
-		    ++ case mis of
-			Nothing -> []
-			Just is -> [IncidentalGOI "ne" (Sumti Untagged is)]
-	    in parseRels rels'
+	Description _ _ _ _ rels _ -> parseRels rels
 	QualifiedSumti _ rels _ -> parseRels rels
 	Name rels _ ->
 	    -- XXX: this construction, LA relativeClauses CMENE, appears not
@@ -345,18 +340,20 @@ parseSumtiAtom sa = do
 	    parseRels rels
 	_ -> return ([],[],[])
     o <- case sa of
-	Description gadri _ miq sb _ irels -> do
+	Description gadri mis miq sb _ irels -> do
 	    -- TODO: gadri other than {lo}
 	    sr <- selbriToPred sb
-	    (irps,iips,ias) <- parseRels irels
+	    (irps,iips,ias) <- parseRels $
+		irels ++ maybeToList ((\is ->
+		    IncidentalGOI "ne" (Sumti Untagged is)) <$> mis)
 	    let xorlo_ips = sr : 
-		       (case miq of
-			 Just iq -> [(\o -> Rel (Moi iq "mei") [o])]
-			 _ -> []) ++
-		       iips
+		    (case miq of
+			Just iq -> [(\o -> Rel (Moi iq "mei") [o])]
+			_ -> [])
+		    ++ iips
 	    o <- getFreshConstant
+	    o <- doIncidentals o xorlo_ips
 	    doAssigns o ias
-	    doIncidentals o xorlo_ips
 	    return o
 	QualifiedSumti qual _ s -> do
 	    o <- parseSumti s
@@ -419,10 +416,10 @@ quantify q r = do
     fresh <- getFreshVar
     mapProp $ \p ->
 	Quantified q (singpred <$> r) $
-	    \v -> subTerm fresh (Var v) p
+	    \v -> subTerm fresh (BoundVar v) p
     return fresh
     where
-	singpred r = \v -> r (Var v)
+	singpred r = \v -> r (BoundVar v)
 
 doTag :: PreProp r => JboTag -> Maybe JboTerm -> ParseM r ()
 doTag (DecoratedTagUnits dtus) Nothing =
@@ -459,7 +456,7 @@ parsedSelbriToPred m = do
 
 subsentToPred :: Subsentence -> (Int -> SumtiAtom) -> ParseM r JboPred
 subsentToPred ss rv = do
-    fresh@(PreVar n) <- getFreshVar
+    fresh@(Var n) <- getFreshVar
     p <- runSubBridiM $ do
 	modifyVarBindings $ setShunting rv fresh
 	p <- parseSubsentence ss

@@ -8,12 +8,14 @@ import Bindful
 
 import Data.Maybe
 import Control.Applicative
+import Data.Foldable (traverse_)
+import Control.Monad.Writer
 
 type JboProp = Prop JboRel JboTerm Joik JboOperator
 
-data JboTerm = Var Int
-	     | PreVar Int
-	     | Constant Int
+data JboTerm = BoundVar Int
+	     | Var Int
+	     | Constant Int [JboTerm]
 	     | Named String
 	     | NonAnaph String
 	     | UnboundSumbasti SumtiAtom
@@ -41,6 +43,7 @@ data JboOperator
     | QTruthModal
     | WithEventAs JboTerm
 type JboTag = AbsTag Quantifier JboPred
+type JboDecoratedTagUnit = DecoratedAbsTagUnit Quantifier JboPred
 type JboTagUnit = AbsTagUnit Quantifier JboPred
 type JboConnective = AbsConnective JboTag
 
@@ -49,7 +52,7 @@ type JboPred = JboTerm -> JboProp
 type Abstractor = String
 
 instance FOL.Term JboTerm where
-    var n = Var n
+    var n = BoundVar n
 
 -- |ParsedQuote: using this newtype so we can provide dummy instances for use
 -- in derived instances for JboTerm
@@ -66,6 +69,7 @@ subTerm s t = terpProp
     where
     subTermInTerm (JoikedTerms joik t1 t2) = JoikedTerms joik (subTermInTerm t1) (subTermInTerm t2)
     subTermInTerm (QualifiedTerm qual t) = QualifiedTerm qual (subTermInTerm t)
+    subTermInTerm (Constant n ts) = Constant n $ map subTermInTerm ts
     subTermInTerm x = if x == s then t else x
     subTermInRel (Tanru p r) = Tanru (subTermInPred p) (subTermInRel r)
     subTermInRel (TanruConnective con p p') = TanruConnective con (subTermInPred p) (subTermInPred p')
@@ -84,6 +88,50 @@ subTerm s t = terpProp
     subTermInTagUnit (FIhO fiho) = FIhO $ subTermInPred fiho
     subTermInTagUnit tu = tu
     subTermInPred p = \x -> subTerm s t (p x)
+
+-- TODO: would be neater to make a proper Traversable instance, such that
+-- subTerm above could use it too - but I'm not sure how to handle quantifiers
+class Termful t where
+    --traverseTerms :: Applicative f => (JboTerm -> f JboTerm) -> t -> f t
+    traverseTerms_ :: Applicative f => (JboTerm -> f ()) -> t -> f ()
+    --traverseTerms_ f = (\x -> ()) <$> traverseTerms (\t -> f t *> pure (Var 0))
+instance (Termful r, Termful o) => Termful (Prop r JboTerm c o) where
+    traverseTerms_ f (Rel r ts) = traverseTerms_ f r *> traverse_ f ts
+    traverseTerms_ f (Quantified q r p) =
+	case r of {Nothing -> pure (); Just r' -> traverseTerms_ f (r' 0)}
+	*> traverseTerms_ f (p 0)
+    traverseTerms_ f (Not p) = traverseTerms_ f p
+    traverseTerms_ f (Connected c p1 p2) = traverseTerms_ f p1 *> traverseTerms_ f p2
+    traverseTerms_ f (NonLogConnected c p1 p2) = traverseTerms_ f p1 *> traverseTerms_ f p2
+    traverseTerms_ f Eet = pure ()
+    traverseTerms_ f (Modal o p) = traverseTerms_ f o *> traverseTerms_ f p
+instance Termful JboRel where
+    traverseTerms_ f (Tanru p r) = traverseTerms_ f p *> traverseTerms_ f r
+    traverseTerms_ f (TanruConnective con p p') = traverseTerms_ f p *> traverseTerms_ f p'
+    traverseTerms_ f (AbsPred a p) = traverseTerms_ f p
+    traverseTerms_ f (AbsProp a p) = traverseTerms_ f p
+    traverseTerms_ f (Among t) = f t
+    traverseTerms_ f _ = pure ()
+instance Termful JboPred where traverseTerms_ f p = traverseTerms_ f $ p ZoheTerm
+instance Termful JboOperator where
+    traverseTerms_ f (JboTagged tag mt) = traverseTerms_ f tag *> traverse_ f mt
+    traverseTerms_ f (WithEventAs x) = f x
+instance Termful JboTag where
+    traverseTerms_ f (ConnectedTag conn tag1 tag2) = traverseTerms_ f tag1 *> traverseTerms_ f tag2
+    traverseTerms_ f (DecoratedTagUnits dtus) = traverse_ (traverseTerms_ f) dtus
+instance Termful JboDecoratedTagUnit where traverseTerms_ f (DecoratedTagUnit nahe se nai tu) = traverseTerms_ f tu
+instance Termful JboTagUnit where
+    traverseTerms_ f (FIhO fiho) = traverseTerms_ f fiho
+    traverseTerms_ f _ = pure ()
+
+freeVars :: JboProp -> [JboTerm]
+freeVars p = execWriter $ collectFrees p where
+	collectFrees = traverseTerms_ collectFreesInTerm
+	collectFreesInTerm free@(Var _) = tell $ [free]
+	collectFreesInTerm (JoikedTerms joik t1 t2) = collectFreesInTerm t1 *> collectFreesInTerm t2
+	collectFreesInTerm (QualifiedTerm qual t) = collectFreesInTerm t
+	collectFreesInTerm (Constant _ ts) = traverse_ collectFreesInTerm ts
+	collectFreesInTerm _ = pure ()
 
 connToFOL :: LogJboConnective -> JboProp -> JboProp -> JboProp
 connToFOL (LogJboConnective True 'e' True) p1 p2 = Connected And p1 p2
