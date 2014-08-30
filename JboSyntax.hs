@@ -181,6 +181,7 @@ data TanruUnit = TUBrivla String
 		| TUAbstraction String Subsentence
 	        | TUPermuted Int TanruUnit
 		| TUJai (Maybe Tag) TanruUnit
+		| TUXOhI Tag
 		| TUSelbri3 Selbri3
 	        deriving (Eq, Show, Ord)
 

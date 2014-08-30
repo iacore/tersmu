@@ -36,6 +36,7 @@ data JboRel = Tanru JboPred JboRel
 	    | Among JboTerm
 	    | Equal
 	    | UnboundBribasti TanruUnit
+	    | TagRel JboTag -- xo'i
 	    | Brivla String
 
 data JboOperator

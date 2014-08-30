@@ -183,13 +183,23 @@ parseTU (TUJai (Just tag) tu) = do
     (.swapArgs (NPos 1) JaiPos) . withJaiAsTag tag' <$> parseTU tu
 parseTU (TUJai Nothing tu) =
     (.swapArgs (NPos 1) JaiPos) . withJaiAsRaising <$> parseTU tu
+parseTU (TUXOhI tag) = do
+    -- xo'i: experimental cmavo which extracts the underlying binary relation
+    -- from a tag; essentially an inverse to fi'o. Proposed by selpa'i.
+    -- Necessary for handling e.g. the {ne BAI} construction.
+    jbotag <- parseTag tag
+    return $ jboRelToBridi $ TagRel jbotag
 parseTU (TUSelbri3 sb) = parseSelbri3 sb
 
 
 parseTerms :: PreProp r => [Term] -> ParseM r ()
-parseTerms = mapM_ parseTerm
+parseTerms = mapM_ (\t -> do
+	ret <- parseTerm t
+	case ret of
+	    Just (Left (jbotag,mo)) -> doTag jbotag mo
+	    _ -> return ())
 
-parseTerm :: PreProp r => Term -> ParseM r (Maybe JboTerm)
+parseTerm :: PreProp r => Term -> ParseM r (Maybe (Either (JboTag, Maybe JboTerm) JboTerm))
 parseTerm t = case t of
     Termset ts -> mapM_ parseTerm ts >> return Nothing
     ConnectedTerms fore con t1 t2 -> do
@@ -199,20 +209,16 @@ parseTerm t = case t of
 	return Nothing
     Negation -> mapProp Not >> return Nothing
     Sumti (Tagged tag) s -> do
-	tag' <- parseTag tag
+	jbotag <- parseTag tag
 	o <- parseSumti s
-	doTag tag' (Just o)
-	return Nothing
+	return $ Just $ Left (jbotag, Just o)
     Sumti taggedness s -> do
 	o <- parseSumti s
 	addArg $ Arg taggedness o
-	return $ Just o
+	return $ Just $ Right o
     BareFA (Just n) -> setArgPos n >> return Nothing
     BareFA Nothing -> return Nothing
-    BareTag tag -> do
-	tag' <- parseTag tag
-	doBareTag tag'
-	return Nothing
+    BareTag tag -> (\jt -> Just $ Left (jt, Nothing)) <$> parseTag tag
 
 parseSumti :: PreProp r => Sumti -> ParseM r JboTerm
 parseSumti s = do
@@ -281,41 +287,38 @@ parseRels (r:rs) = do
 	Incidental ss -> do
 	    ip <- subsentToPred ss RelVar >>= doQuestionsPred True
 	    return ([],[ip],[])
-	RestrictiveGOI goi t -> do
-	    -- TODO: semantics of {pe BAI} etc
-	    mo <- ignoringArgs $ parseTerm t
-	    case mo of
-		Nothing -> return ([],[],[])
-		Just o ->
-		    let rel = case goi of
-			    "pe" -> Brivla "srana"
-			    "po'u" -> Brivla "du"
-			    -- XXX: following are rather approximate... the
-			    -- BPFK subordinators section suggests more
-			    -- complicated expressions
-			    "po'e" -> Tanru (\o -> Rel (Brivla "jinzi") [o])
-					(Brivla "srana")
-			    "po" -> Tanru (\o -> Rel (Brivla "steci") [o])
-					(Brivla "srana")
-			rp = \x -> Rel rel [x,o]
-		    in return ([rp],[],[])
-	IncidentalGOI goi t -> do
-	    mo <- ignoringArgs $ parseTerm t
-	    case mo of
-		Nothing -> return ([],[],[])
-		Just o ->
-		    let rel = case goi of
-			    "ne" -> Brivla "srana"
-			    "no'u" -> Brivla "du"
-			ip = \x -> Rel rel [x,o]
-		    in return ([],[ip],[])
+	RestrictiveGOI goi t -> goiRels goi True t
+	IncidentalGOI goi t -> goiRels goi False t
 	Assignment (Sumti Untagged (QAtom Nothing [] sa)) | isAssignable sa -> 
 	    return ([],[],[Left sa])
 	Assignment t -> do
-	    mo <- ignoringArgs $ parseTerm t
-	    return ([],[], maybeToList $ Right <$> mo)
+	    ret <- ignoringArgs $ parseTerm t
+	    case ret of
+		Just (Right o) -> return ([],[], [Right o])
+		_ -> return ([],[],[])
     (rps',ips',as') <- parseRels rs
     return (rps++rps',ips++ips',as++as')
+    where
+	goiRels goi restrictive t = do
+	    ret <- ignoringArgs $ parseTerm t
+	    let ps = maybeToList $ case ret of
+		    Just (Right o) ->
+			let rel = case goi of
+				"pe" -> Brivla "srana"
+				"ne" -> Brivla "srana"
+				"po'u" -> Brivla "du"
+				"no'u" -> Brivla "du"
+				-- XXX: following are rather approximate... the
+				-- BPFK subordinators section suggests more
+				-- complicated expressions
+				"po'e" -> Tanru (\o -> Rel (Brivla "jinzi") [o])
+					    (Brivla "srana")
+				"po" -> Tanru (\o -> Rel (Brivla "steci") [o])
+					    (Brivla "srana")
+			in Just $ \x -> Rel rel [x,o]
+		    Just (Left (jbotag, mo)) -> Just $ \x -> Rel (TagRel jbotag) [fromMaybe ZoheTerm mo,x]
+		    _ -> Nothing
+	    return $ if restrictive then (ps,[],[]) else ([],ps,[])
 
 parseVariable :: PreProp r => SumtiAtom -> [JboPred] -> Maybe Quantifier -> ParseM r JboTerm
 parseVariable sa@(Variable n) rps mq = do

@@ -5,12 +5,9 @@ ko
 strict CLL mode?
 
 alternative tags mode, doing away with modals and non-logical sentence
-connectives in favour of extra WithEventAs and binary relations corresponding
-to tags (see notes/tags)?
+connectives in favour of extra WithEventAs and TagRels?
 
 option to render sumti (and tag, abstractor) connectives as quantifiers?
-
-pebai
 
 NAhE
 

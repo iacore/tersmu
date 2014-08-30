@@ -454,6 +454,7 @@ tanruUnit2 :: TanruUnit
     / q:number m:MOI -> {TUMoi q m}
     / ME s:sumti MEhU? -> {TUMe s}
     / a:NU ss:subsentence KEI? -> {TUAbstraction a ss}
+    / XOhI t:tag -> {TUXOhI t}
 
 linkargs :: {[Term]}
     = BE t:term ts:links? BEhO? -> {(t : (fromMaybe [] ts))}
@@ -906,6 +907,10 @@ VUhOmain :: String = "vu'o"
 --         subscripting operator 
 XI :: String = s:XImain Spacing -> s
 XImain :: String = "xi" 
+
+--	    experimental cmavo to extract a binary relation from a tag
+XOhI :: String = s:XOhImain Spacing -> s
+XOhImain :: String = "xo'i"
 
 --         hesitation 
 Y :: String = s:Ymain Spacing -> s

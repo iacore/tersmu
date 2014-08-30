@@ -180,6 +180,9 @@ instance JboShow JboRel where
 	(if jbo then unwords else concat) $
 	    g : if n==1 then [] else ["xi",jbonum n]
     logjboshow jbo (UnboundBribasti (TUBrivla s)) = return s
+    logjboshow jbo (TagRel tag) = do
+	tags <- logjboshow jbo tag
+	return $ if jbo then "xo'i " ++ tags else "{" ++ tags ++ "}"
     logjboshow _ (Brivla s) = return s
 
 instance JboShow SumtiAtom where
