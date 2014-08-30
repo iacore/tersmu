@@ -455,8 +455,16 @@ tanruUnit2 :: TanruUnit
     / q:number m:MOI -> {TUMoi q m}
     / ME s:sumti MEhU? -> {TUMe s}
     / n:NAhE tu:tanruUnit2 -> {TUSelbri3 $ ScalarNegatedSB n $ TanruUnit tu []}
-    / a:NU ss:subsentence KEI? -> {TUAbstraction a ss}
+    / a:abstractor ss:subsentence KEI? -> {TUAbstraction a ss}
     / XOhI t:tag -> {TUXOhI t}
+
+abstractor :: Abstractor
+    = n:NU nai:NAI? mca:(jj:joikJek a:abstractor -> {(jj,a)})?
+	-> {let a1 = (if isJust nai then NegatedAbstractor else id) $ NU n
+	    in case mca of
+		Nothing -> a1
+		Just (JJJek lcon,a2) -> LogConnectedAbstractor lcon a1 a2
+		Just (JJJoik joik,a2) -> JoiConnectedAbstractor joik a1 a2}
 
 linkargs :: {[Term]}
     = BE t:term ts:links? BEhO? -> {(t : (fromMaybe [] ts))}

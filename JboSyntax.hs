@@ -181,12 +181,21 @@ data TanruUnit = TUBrivla String
 		| TUGOhA String Int
 		| TUMe Sumti
 		| TUMoi Quantifier String
-		| TUAbstraction String Subsentence
+		| TUAbstraction Abstractor Subsentence
 	        | TUPermuted Int TanruUnit
 		| TUJai (Maybe Tag) TanruUnit
 		| TUXOhI Tag
 		| TUSelbri3 Selbri3
 	        deriving (Eq, Show, Ord)
+
+data Abstractor
+    = NU Cmavo
+    | NegatedAbstractor Abstractor
+    -- Note: tagged connectives aren't allowed with NU, which makes things simpler
+    -- (but less uniform...)
+    | LogConnectedAbstractor LogJboConnective Abstractor Abstractor
+    | JoiConnectedAbstractor Joik Abstractor Abstractor
+    deriving (Eq, Show, Ord)
 
 lerfuStringOfSelbri :: Selbri -> [Lerfu]
 lerfuStringOfSelbri (Negated sb) = lerfuStringOfSelbri sb
@@ -201,6 +210,6 @@ lerfuStringOfSelbri (Selbri2 sb2) = sb2tols sb2
 	sb3tols (TanruUnit tu _) = tutols tu
 	sbtols = lerfuStringOfSelbri
 	tutols (TUBrivla s) = take 1 s
-	tutols (TUAbstraction s _) = take 1 s
+	tutols (TUAbstraction (NU s) _) = take 1 s
 	tutols (TUSelbri3 sb3) = sb3tols sb3
 	tutols _ = []

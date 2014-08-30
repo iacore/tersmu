@@ -51,8 +51,6 @@ type JboConnective = AbsConnective JboTag
 
 type JboPred = JboTerm -> JboProp
 
-type Abstractor = String
-
 instance FOL.Term JboTerm where
     var n = BoundVar n
 

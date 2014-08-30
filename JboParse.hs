@@ -161,16 +161,22 @@ parseTU (TUMe s) = do
     o <- parseSumti s
     return $ jboRelToBridi $ Among o
 parseTU (TUMoi q m) = return $ jboRelToBridi $ Moi q m
+parseTU (TUAbstraction (NegatedAbstractor a) ss) =
+    mapProp Not >> parseTU (TUAbstraction a ss)
+parseTU (TUAbstraction (LogConnectedAbstractor lcon a1 a2) ss) =
+    doConnective False (JboConnLog Nothing lcon)
+	(parseTU $ TUAbstraction a1 ss)
+	(parseTU $ TUAbstraction a2 ss)
 parseTU (TUAbstraction a ss) =
     case
 	case a of
-	    "poi'i" ->
+	    NU "poi'i" ->
 		 -- poi'i: an experimental NU, which takes ke'a rather
 		 -- than ce'u; {ko'a poi'i ke'a broda} means
 		 -- {ko'a broda}. See http://www.lojban.org/tiki/poi'i
 		 Just RelVar
-	    "ka" -> Just LambdaVar
-	    "ni" -> Just LambdaVar
+	    NU "ka" -> Just LambdaVar
+	    NU "ni" -> Just LambdaVar
 	    _ -> Nothing
     of
 	Just rv -> do

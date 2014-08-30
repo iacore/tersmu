@@ -108,6 +108,22 @@ instance JboShow JboTagUnit where
 	ps <- logjboshow jbo p
 	return $ "fi'o " ++ ps ++ if jbo then " fe'u" else ""
 
+instance JboShow Abstractor where
+    logjboshow _ (NU n) = return n
+    logjboshow jbo (NegatedAbstractor a) = (++"nai") <$> logjboshow jbo a
+    logjboshow jbo (LogConnectedAbstractor con a1 a2) = do
+	[s1,s2] <- mapM (logjboshow jbo) [a1,a2]
+	conns <- logjboshowLogConn jbo "j" con
+	return $ if jbo
+	    then s1 ++ " " ++ conns ++ " " ++ s2
+	    else "({" ++ conns ++ "}(" ++ s1 ++ "," ++ s2 ++ "))"
+    logjboshow jbo (JoiConnectedAbstractor joik a1 a2) = do
+	[s1,s2] <- mapM (logjboshow jbo) [a1,a2]
+	conns <- logjboshow jbo joik
+	return $ if jbo
+	    then s1 ++ " " ++ conns ++ " " ++ s2
+	    else "({" ++ conns ++ "}(" ++ s1 ++ "," ++ s2 ++ "))"
+
 instance JboShow JboPred where
     logjboshow jbo p = logjboshowpred jbo (\n -> p (BoundVar n))
 
@@ -165,14 +181,16 @@ instance JboShow JboRel where
 	s <- logjboshow jbo q
 	return $ s ++ " " ++ m
     logjboshow jbo (AbsPred a p) =
-	do withShuntedLambda (\n ->
-	       do s <- logjboshow jbo (p (BoundVar n))
-		  return $ if jbo then a ++ " " ++ s ++ " kei" 
-				  else a ++ "[" ++ s ++ "]" )
-    logjboshow jbo (AbsProp a p) =
-	do s <- logjboshow jbo p
-	   return $ if jbo then a ++ " " ++ s ++ " kei"
-			   else a ++ "[" ++ s ++ "]"
+	do withShuntedLambda (\n -> do
+	    ps <- logjboshow jbo (p (BoundVar n))
+	    as <- logjboshow jbo a
+	    return $ if jbo then as ++ " " ++ ps ++ " kei" 
+		else as ++ "[" ++ ps ++ "]" )
+    logjboshow jbo (AbsProp a p) = do
+	ps <- logjboshow jbo p
+	as <- logjboshow jbo a
+	return $ if jbo then as ++ " " ++ ps ++ " kei" 
+		else as ++ "[" ++ ps ++ "]"
     logjboshow jbo (Among t) = do
 	s <- logjboshow jbo t
 	return $ if jbo then "me " ++ s ++ " me'u" else "Among[" ++ s ++ "]"
