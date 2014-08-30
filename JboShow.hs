@@ -194,6 +194,8 @@ instance JboShow SumtiAtom where
 	    Assignable n | n <= 5 -> "ko'" ++ vowelnum n
 	    Assignable n | n <= 10 -> "fo'" ++ vowelnum (n-5)
 	    Assignable n -> "ko'a xi " ++ jbonum n
+	    Ri 1 -> "ri"
+	    Ri n -> "ri" ++ jbonum n
 	    LerfuString s -> concat $ intersperse " " $
 		map (\c -> case c of
 		    _ | c `elem` "aoeui" -> (c:"bu")
