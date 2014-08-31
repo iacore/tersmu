@@ -107,6 +107,8 @@ instance JboShow JboTagUnit where
     logjboshow jbo (FIhO p) = do
 	ps <- logjboshow jbo p
 	return $ "fi'o " ++ ps ++ if jbo then " fe'u" else ""
+    logjboshow jbo KI = return "ki"
+    logjboshow jbo CUhE = return "cu'e(TODO!)"
 
 instance JboShow Abstractor where
     logjboshow _ (NU n) = return n

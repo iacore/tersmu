@@ -408,8 +408,15 @@ parseTagUnit (FAhA m c) = return $ FAhA m c
 parseTagUnit (TAhE_ZAhO f c) = return $ TAhE_ZAhO f c
 parseTagUnit (ROI f q) = ROI f <$> parseQuantifier q
 parseTagUnit (FIhO selbri) = FIhO <$> selbriToPred selbri
-parseTagUnit KI = error "TODO: ki"
-parseTagUnit CUhE = error "TODO: cu'e"
+-- XXX: for now at least, we just pass through ki as if it were a normal tag
+-- (this is what the BPFK section suggests at the time of writing:
+-- ki == fi'o manri, with all the complexity of CLL's ki presumably being
+-- considered merely usage conventions. I'm not very happy with this, but nor
+-- do I see a neat way to formalise those conventions, so this will have to do
+-- for now.
+parseTagUnit KI = return KI
+-- TODO: we should actually deal with cu'e, though
+parseTagUnit CUhE = return CUhE
 
 parseConnective :: PreProp r => Connective -> ParseM r JboConnective
 parseConnective (JboConnLog mtag lcon) = do

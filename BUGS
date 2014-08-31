@@ -35,11 +35,9 @@ Possibly bugs:
 
     We don't handle {soi}.
 
-Other deviations from CLL, not considered bugs, but which maybe ought to be
-optional:
-    {na broda} is equivalent to {naku broda}.
-
-    Consequently, {ja'a} has no effect.
+Other deviations from baseline, not considered bugs:
+    {na broda} is equivalent to {naku broda}; consequently, {ja'a} has no
+    logical effect. This is in line with the BPFK section "brivla negators".
 
     Quantifiers don't scope over (even connected) sentence boundaries.
 
