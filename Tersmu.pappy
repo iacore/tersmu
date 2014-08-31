@@ -27,24 +27,39 @@ textHead :: {()}
     = (i:I joikJek? BO? -> i / NIhO)* -> {()}
 
 frees :: {[Free]} = free+
--- XXX: we incorporate indicators into free
 free :: Free
-    = TO ps:paragraphs TOI? -> {Bracketed ps}
-    / SEI mts:(ts:terms CU? -> ts)? sb:selbri SEhU? -> {Discursive $ BridiTail3 sb $ fromMaybe [] mts}
-    / FUhE? i:indicator -> i
-indicator :: Free
-    = "xu":UI k:("kau":UI x:("xi":XI n:litnum -> n)? -> {fromMaybe 1 x})? -> {TruthQ k}
-    / i:(c:(UI/CAI) nai:NAI? -> { Indicator (isJust nai) c }
-    / c:(DAhO/FUhO) -> { Indicator False c }) !BU -> i
-    / cs:vocative n:name rels:maybeRelativeClauses DOhU? -> { Vocative cs $ Just (QAtom Nothing rels n) }
+    = "sei":SEI mts:(ts:terms CU? -> ts)? sb:selbri SEhU?
+	-> {Discursive $ BridiTail3 sb $ fromMaybe [] mts}
+    -- TODO: ti'o
+    -- TODO: soi
     / cs:vocative rels1:maybeRelativeClauses sb:selbri rels2:maybeRelativeClauses DOhU?
-	-> { Vocative cs $ Just (QAtom Nothing (rels1++rels2) (Description "le" Nothing Nothing sb [] [])) }
+	-> { Vocative cs $ Just (QAtom Nothing (rels1++rels2)
+	    (Description "le" Nothing Nothing sb [] [])) }
+    / cs:vocative n:name rels:maybeRelativeClauses DOhU?
+	-> { Vocative cs $ Just (QAtom Nothing rels n) }
     / cs:vocative ms:sumti? DOhU? -> { Vocative cs ms }
+    -- TODO: (number/lerfuString) MAI
+    / TO ps:paragraphs TOI? -> {Bracketed ps}
+    -- TODO: xiClause
+    -- XXX: we incorporate indicator into free:
+    / indicator
 
 vocative :: {[COI]}
     = cs:coi* DOI -> cs / coi+
 coi :: COI
     = c:COI mn:NAI? -> {COI c $ isJust mn}
+
+-- TODO: indicators = FUhE? indicator+
+
+indicator :: Indicator
+    = "xu":UI !BU k:("kau":UI !BU x:("xi":XI n:litnum -> n)? -> {fromMaybe 1 x})? -> {TruthQ k}
+    / i:(c:(UI/CAI) nai:NAI? !BU -> { Indicator (isJust nai) c }
+    / c:(DAhO/FUhO) !BU -> { Indicator False c }) !BU -> i
+
+-- TODO: xiClause = XI (number / lerfuString) BOI? / XI VOI mex VEhO?
+
+-- TODO: should handle (probably just strip) BAhE in preparsing
+-- TODO: similarly, should handle BU
 
 freeAnnotations :: {[FreeIndex]} = freeAnnotation*
 freeAnnotation :: FreeIndex
@@ -102,13 +117,8 @@ statement3 :: Statement1
     = s:sentence -> {StatementSentence s}
     / TUhE ss:text1 TUhU? -> {StatementStatements ss}
 
-asubsentence :: Subsentence
-    = Spacing? subs:subsentence !Char -> subs
-
-subsentence :: Subsentence
-    = fs:freeAnnotations s:sentence -> {Subsentence fs [] s}
-    / fs:freeAnnotations ps:prenex {Subsentence fs' ps' s}:subsentence ->
-	{ Subsentence (fs++fs') (ps++ps') s }
+-- TODO:
+-- fragment = prenex / terms VAU? / ek / gihek / quantifier / NA !JA / relativeClauses / links / linkargs
 
 prenex :: {[Term]} = ps:terms ZOhU -> ps
 
@@ -116,6 +126,49 @@ sentence :: {Sentence}
     = mts1:(ts:terms CU? -> ts)?
 	bt:bridiTail
 	-> { Sentence (fromMaybe [] mts1) bt }
+
+subsentence :: Subsentence
+    = fs:freeAnnotations s:sentence -> {Subsentence fs [] s}
+    / fs:freeAnnotations ps:prenex {Subsentence fs' ps' s}:subsentence ->
+	{ Subsentence (fs++fs') (ps++ps') s }
+
+bridiTail :: BridiTail
+    = bt1:bridiTail1 gihek:(lcon:gihek mtag:(tag)? KE bt2:bridiTail KEhE? tts:tailTerms ->
+	{(JboConnLog mtag lcon, bt2, tts)} )? -> {
+	    case gihek of
+		Nothing -> bt1
+		Just (con, bt2, tts) -> ConnectedBT con bt1 bt2 tts }
+
+bridiTail1 :: BridiTail
+    = bt:bridiTail2 giheks:_gihekbt*
+    -> { foldl (\bt1 -> \(con,bt2,tts) ->
+		    ConnectedBT con bt1 bt2 tts
+		) bt giheks }
+-- _gihekbt: helper for bridiTail1
+_gihekbt :: {(Connective, BridiTail, [Term])}
+    = lcon:gihek !(tag? BO -> {()}) !(tag? KE -> {()}) bt:bridiTail2 tts:tailTerms
+	-> {(JboConnLog Nothing lcon, bt, tts)}
+
+bridiTail2 :: BridiTail
+    = bt1:bridiTail3
+	gihek:(lcon:gihek mtag:(tag)? BO bt2:bridiTail2 tts:tailTerms
+	    -> {(JboConnLog mtag lcon,bt2,tts)})?
+	-> { case gihek of
+		Nothing -> bt1
+		Just (con, bt2, tts) -> ConnectedBT con bt1 bt2 tts }
+
+bridiTail3 :: BridiTail
+    = sb:selbri ts:tailTerms -> { BridiTail3 sb ts }
+    / gs:gekSentence -> { GekSentence gs }
+
+gekSentence :: GekSentence
+    = pcon:gek s1:subsentence b:gik s2:subsentence tts:tailTerms
+	-> { ConnectedGS (pcon b) s1 s2 tts }
+    / tag:tag? KE gs:gekSentence KEhE? -> gs -- TODO: handle tag
+    / NA gs:gekSentence -> {NegatedGS gs}
+
+tailTerms :: {[Term]}
+    = ts:terms? VAU? -> { fromMaybe [] ts }
 
 terms :: {[Term]} = terms1+
 terms1 :: Term 
@@ -131,6 +184,7 @@ term :: Term = s:sumti -> {Sumti Untagged s}
 	    / n:tagFA s:sumti -> {Sumti (FATagged n) s}
 	    / n:tagFA KU?  -> {BareFA $ Just n}
 	    / "fai":FA s:sumti -> {Sumti FAITagged s}
+	    -- TODO: fi'a
 	    / FA KU? -> {BareFA Nothing}
 	    / termset
 	    / NA KU -> {Negation}
@@ -139,24 +193,27 @@ termset :: Term
     = NUhI pcon:gek ts1:terms NUhU b:gik ts2:terms NUhU?
 	-> { ConnectedTerms True (pcon b) (Termset ts1) (Termset ts2) }
     / NUhI ts:terms NUhU? -> { Termset ts }
-    -- TODO: gek-termset
+    -- TODO: / gek-termset
+-- TODO: gek-termset <- gek terms-gik-terms
 
-sumti :: Sumti =
-    s:sumti1 rels:(VUhO rels:relativeClauses -> rels)?
+-- TODO: terms-gik-terms <- term (gik / terms-gik-terms) term
+
+sumti :: Sumti
+    = s:sumti1 rels:(VUhO rels:relativeClauses -> rels)?
 	-> { case rels of
 	    Nothing -> s
 	    Just rels -> appendRelsToSumti rels s }
 
+sumti1 :: Sumti
+    = s1:sumti2 eks:( jj:joikEk mtag:(tag)? KE s:sumti KEhE?
+	    -> {(jjJboCon mtag jj,s)} )?
+	-> { case eks of
+	    Nothing -> s1
+	    Just (con,s2) -> ConnectedSumti False con s1 s2 [] }
 
-sumti1 :: Sumti = s1:sumti2
-    eks:( jj:joikEk mtag:(tag)? KE s:sumti
-	(KEhE -> {()})? -> {(jjJboCon mtag jj,s)} )?
-    -> { case eks of
-	Nothing -> s1
-	Just (con,s2) -> ConnectedSumti False con s1 s2 [] }
-
-sumti2 :: Sumti = s:sumti3 ekss:(_eksumti)*
-    -> { foldl (\s1 -> \(con,s2) -> ConnectedSumti False con s1 s2 []) s ekss }
+sumti2 :: Sumti
+    = s:sumti3 ekss:(_eksumti)*
+	-> { foldl (\s1 -> \(con,s2) -> ConnectedSumti False con s1 s2 []) s ekss }
 -- _eksumti: helper for sumti2
 _eksumti :: {(Connective, Sumti)}
     = jj:joikEk s:sumti3 -> {(jjJboCon Nothing jj,s)}
@@ -168,58 +225,41 @@ sumti3 :: Sumti = s1:sumti4
 		Just (con,s2) -> ConnectedSumti False con s1 s2 [] }
 
 sumti4 :: Sumti = sumti5
-	/ pcon:gek s1:sumti b:gik s2:sumti4 -> { ConnectedSumti True (pcon b) s1 s2 [] }
+	/ pcon:gek s1:sumti b:gik s2:sumti4
+	    -> { ConnectedSumti True (pcon b) s1 s2 [] }
 
-sumti5 :: Sumti =
-	s:sumti6 !relativeClauses -> {QAtom Nothing [] s}
-	/ q:quantifier? s:sumti6 rels:maybeRelativeClauses
+sumti5 :: Sumti
+	= q:quantifier? s:sumti6 rels:maybeRelativeClauses
 	    -> {QAtom q rels s}
 	/ q:quantifier sb:selbri KU? rels:maybeRelativeClauses
 	    -> {QSelbri q rels sb}
 
-maybeRelativeClauses :: {[RelClause]}
-    = mrels:relativeClauses? -> {fromMaybe [] mrels}
-
-relativeClauses :: {[RelClause]}
-	= r:relativeClause rs:(ZIhE r:relativeClause -> r)*
-	    -> {(r:rs)}
-
-relativeClause :: RelClause
-	= "poi":NOI subs:subsentence KUhO? -> {Restrictive subs}
-	/ "noi":NOI subs:subsentence KUhO? -> {Incidental subs}
-	/ "goi":GOI t:term GEhU? -> {Assignment t}
-	/ "ne":GOI t:term GEhU? -> {IncidentalGOI "ne" t}
-	/ "no'u":GOI t:term GEhU? -> {IncidentalGOI "no'u" t}
-	/ "pe":GOI t:term GEhU? -> {RestrictiveGOI "pe" t}
-	/ "po'u":GOI t:term GEhU? -> {RestrictiveGOI "po'u" t}
-	/ "po":GOI t:term GEhU? -> {RestrictiveGOI "po" t}
-	/ "po'e":GOI t:term GEhU? -> {RestrictiveGOI "po'e" t}
-
 sumti6 :: SumtiAtom
-    = qual:(l:LAhE -> {LAhE l} / n:NAhE BO -> {NAhE_BO n}) rels:maybeRelativeClauses s:sumti LUhU?
+    = ZO s:Valsi -> {Word s}
+    / s:nonJboQuote -> {NonJboQuote s}
+    / vs:errorQuote -> {ErrorQuote vs}
+    / l:lerfuString !MOI BOI? -> {LerfuString l}
+    / LU t:text1 LIhU? -> {Quote t}
+    / qual:(l:LAhE -> {LAhE l} / n:NAhE BO -> {NAhE_BO n})
+	    rels:maybeRelativeClauses s:sumti LUhU?
 	-> {QualifiedSumti qual rels s}
-    / "la":LA n:name -> n
-    / "mi":KOhA -> {NonAnaphoricProsumti "mi"}
-    / "do":KOhA -> {NonAnaphoricProsumti "do"}
-    / "ko":KOhA -> {NonAnaphoricProsumti "ko"}
-    / "ti":KOhA -> {NonAnaphoricProsumti "ti"}
-    / "ta":KOhA -> {NonAnaphoricProsumti "ta"}
-    / "tu":KOhA -> {NonAnaphoricProsumti "tu"}
+    / k:KOhA &{k `elem` ["do","ko","do'o","mi","ma'a","mi'a","mi'o"]} -> {NonAnaphoricProsumti k}
+    / k:KOhA &{k `elem` ["ti","ta","tu"]} -> {NonAnaphoricProsumti k}
+    / k:KOhA &{k `elem` ["da'e","de'e","di'e","da'u","de'u","di'u","dei","do'i"]} -> {NonAnaphoricProsumti k}
     / n:variable mn:("xi":XI n:litnum -> n)? -> {Variable $ fromMaybe n mn}
     / "ke'a":KOhA mn:("xi":XI n:litnum -> n)? -> {RelVar $ fromMaybe 1 mn}
     / "ce'u":KOhA mn:("xi":XI n:litnum -> n)? -> {LambdaVar $ fromMaybe 1 mn}
     / "ri":KOhA mn:("xi":XI n:litnum -> n)? -> {Ri $ fromMaybe 1 mn}
+    -- TODO: ra, ru
     / n:assignable mn:("xi":XI n:litnum -> n)? -> {Assignable $ fromMaybe n mn}
     / n:mainBridiSumbasti mn:("xi":XI n:litnum -> n)? -> {MainBridiSumbasti $ fromMaybe n mn}
-    / l:lerfuString !MOI BOI? -> {LerfuString l}
     / "zo'e":KOhA -> {Zohe}
+    -- TODO: zi'o, zu'i
     / "ma":KOhA k:("kau":UI x:("xi":XI n:litnum -> n)? -> {fromMaybe 1 x})? -> {SumtiQ k}
+    / "la":LA n:name -> n
     / g:(LA/LE) {(is,q,sb,rels,irels)}:sumtiTail KU? ->
 	{Description g is q sb rels irels}
-    / LU t:text1 LIhU? -> {Quote t}
-    / ZO s:Valsi -> {Word s}
-    / s:nonJboQuote -> {NonJboQuote s}
-    / vs:errorQuote -> {ErrorQuote vs}
+    -- TODO: / liClause
 
 name :: SumtiAtom
     = rels:maybeRelativeClauses cs:CMENE+ -> {Name rels $ unwords cs}
@@ -256,6 +296,8 @@ nonJboNamed :: String = "la'o":ZOI s:nonJboText -> s
 errorQuote :: {[String]}
     = LOhU vs:((!LEhU v:Valsi -> v)*) LEhU -> vs
 
+-- TODO: liClause :: SumtiAtom = LI mex LOhO?
+
 sumtiTail :: {(Maybe Sumti, Maybe Quantifier, Selbri, [RelClause], [RelClause])}
     = s:sumti6 srels:maybeRelativeClauses {(q,sb,irels)}:sumtiTail1
 	-> {(Just (QAtom Nothing srels s),q,sb,[],irels)}
@@ -267,16 +309,176 @@ sumtiTail1 :: {(Maybe Quantifier, Selbri, [RelClause])}
 	-> {(Nothing,sb,rels)}
     / q:quantifier? sb:selbri rels:maybeRelativeClauses
 	-> {(q,sb,rels)}
+    -- TODO: / q:quantifier s:sumti -> ...
 
--- XXX: really ought to allow arbitrary PA
-lerfuString :: {[Lerfu]} = c:lerfu cs:(lerfu / n:digit -> {show n !! 0})*
-    -> {c:cs}
-lerfu :: Lerfu
-    = s:BY -> {if s=="y'y" then 'h' else s!!0}
-    / PAUSE? v:Vowel PAUSE? Spacing? BU -> {v}
+maybeRelativeClauses :: {[RelClause]}
+    = mrels:relativeClauses? -> {fromMaybe [] mrels}
 
-quantifier :: Quantifier = q:number !MOI BOI? -> q
+relativeClauses :: {[RelClause]}
+	= r:relativeClause rs:(ZIhE r:relativeClause -> r)*
+	    -> {(r:rs)}
 
+relativeClause :: RelClause
+	= "poi":NOI subs:subsentence KUhO? -> {Restrictive subs}
+	/ "noi":NOI subs:subsentence KUhO? -> {Incidental subs}
+	-- TODO: "voi":NOI
+	/ "goi":GOI t:term GEhU? -> {Assignment t}
+	/ "ne":GOI t:term GEhU? -> {IncidentalGOI "ne" t}
+	/ "no'u":GOI t:term GEhU? -> {IncidentalGOI "no'u" t}
+	/ "pe":GOI t:term GEhU? -> {RestrictiveGOI "pe" t}
+	/ "po'u":GOI t:term GEhU? -> {RestrictiveGOI "po'u" t}
+	/ "po":GOI t:term GEhU? -> {RestrictiveGOI "po" t}
+	/ "po'e":GOI t:term GEhU? -> {RestrictiveGOI "po'e" t}
+
+selbri :: Selbri
+    = tag:tag sb:selbri1 -> {TaggedSelbri tag sb}
+    / selbri1
+
+selbri1 :: Selbri
+    = "na":NA sb:selbri -> {Negated sb}
+    / ("ja'a":NA -> {})? sb:selbri2 -> {Selbri2 sb}
+
+selbri2 :: Selbri2
+    = sb:selbri3 CO sb':selbri2 -> {SBInverted sb sb'}
+    / sb:selbri3 -> {Selbri3 sb}
+
+selbri3 :: Selbri3
+    = sb:selbri3 sb':selbri4 -> {SBTanru sb sb'}
+    / selbri4
+
+selbri4 :: Selbri3
+    = sb:selbri5 jekss:(_jeksbs)*
+	-> { foldl (\sb1 -> \(con,sb2) -> ConnectedSB False con (sb3tosb sb1) sb2) sb jekss }
+-- _jeksbs: helper for selbri4
+_jeksbs :: {(Connective, Selbri3)}
+    = jj:joikJek sb:selbri5 -> {(jjJboCon Nothing jj,sb)}
+    / joik:joik mtag:tag? KE sb:selbri3 KEhE? -> {(JboConnJoik mtag joik,sb)}
+
+selbri5 :: Selbri3
+    = sb1:selbri6 jeksb:( jj:joikJek mtag:(tag)? BO sb:selbri5 -> {(jjJboCon mtag jj,sb)} )?
+	-> { case jeksb of
+	    Nothing -> sb1
+	    Just (con,sb2) -> ConnectedSB False con (sb3tosb sb1) sb2 }
+
+selbri6 :: Selbri3
+    = tu:tanruUnit BO sb:selbri6 -> {SBTanru tu sb}
+    / tanruUnit
+    / mn:NAhE? pcon:guhek sb1:selbri b:gik sb2:selbri6
+	-> { maybe id ScalarNegatedSB mn $
+	    ConnectedSB True (JboConnLog Nothing $ pcon b) sb1 sb2 }
+
+tanruUnit :: Selbri3
+    = tu:tanruUnit CEI tu':tanruUnit1 -> {BridiBinding tu tu'}
+    / tanruUnit1
+tanruUnit1 :: Selbri3
+    = tu:tanruUnit2 las:linkargs? -> {TanruUnit tu (fromMaybe [] las)}
+
+tanruUnit2 :: TanruUnit
+    -- TODO: zei
+    = bv:BRIVLA -> {TUBrivla bv}
+    -- TODO: don't just ignore RAhO
+    / g:GOhA mn:("xi":XI n:litnum -> n)? RAhO? -> {TUGOhA g $ fromMaybe 1 mn}
+    / KE sb:selbri3 KEhE? -> {TUSelbri3 sb}
+    -- TODO: ME (sumti / lerfuString) MEhU? MOI?
+    / ME s:sumti MEhU? -> {TUMe s}
+    -- TODO: (number / lerfuString) MOI
+    / q:number m:MOI -> {TUMoi q m}
+    -- TODO: NUhA mexOperator
+    / n:convSE tu:tanruUnit2 -> {TUPermuted n tu}
+    / JAI mt:tag? tu:tanruUnit2 -> {TUJai mt tu}
+    / n:NAhE tu:tanruUnit2 -> {TUSelbri3 $ ScalarNegatedSB n $ TanruUnit tu []}
+    / a:abstractor ss:subsentence KEI? -> {TUAbstraction a ss}
+    / XOhI t:tag -> {TUXOhI t}
+
+convSE :: Int
+    = SE XI n:litnum -> n
+    / "se":SE -> {2}
+    / "te":SE -> {3}
+    / "ve":SE -> {4}
+    / "xe":SE -> {5}
+
+abstractor :: Abstractor
+    = n:NU nai:NAI? mca:(jj:joikJek a:abstractor -> {(jj,a)})?
+	-> {let a1 = (if isJust nai then NegatedAbstractor else id) $ NU n
+	    in case mca of
+		Nothing -> a1
+		Just (JJJek lcon,a2) -> LogConnectedAbstractor lcon a1 a2
+		Just (JJJoik joik,a2) -> JoiConnectedAbstractor joik a1 a2}
+
+linkargs :: {[Term]}
+    = BE t:term ts:links? BEhO? -> {(t : (fromMaybe [] ts))}
+
+links :: {[Term]}
+    = BEI t:term ts:links? -> {(t : (fromMaybe [] ts))}
+
+quantifier :: Quantifier
+    = q:number !MOI BOI? -> q
+    -- TODO: / VEI mex VEhO?
+
+-- TODO: mekso
+--mex :: ??
+--    = mex1 (operator mex1)* / rpClause
+--
+--rpClause :: ??
+--    = FUhA rpExpression
+--
+--mex1 :: ??
+--    = mex2 (BIhE operator mex1)?
+--
+--mex2 :: ??
+--    = operand / mexForethought
+--
+--mexForethought :: ??
+--    = PEhO? operator foreOperands KUhE?
+--foreOperands :: ??
+--    = mex2+ 
+--
+--rpExpression :: ??
+--    = operand rpExpressionTail?
+--rpExpressionTail :: ??
+--    = rpExpression operator rpExpressionTail
+--
+--operator :: ??
+--    = operator0
+--
+--operator0 :: ??
+--    = operator1 (joikJek operator1 / joik tag? KE operator KEhE?)*
+--
+--operator1 :: ??
+--    = operator2
+--    / guhek operator1 gik operator2
+--    / operator2 joikJek tag? BO operator1
+--
+--operator2 :: ??
+--    = mexOperator
+--    / KE operator KEhE?
+--
+--mexOperator :: ??
+--    = SE mexOperator
+--    / NAhE mexOperator
+--    / MAhO mex TEhU?
+--    / NAhU selbri TEhU?
+--    / VUhU
+--
+--operand :: ??
+--    = operand1 (joikEk tag? KE operand KEhE?)?
+--
+--operand1 :: ??
+--    = operand2 (joikEk operand2)*
+--
+--operand2 :: ??
+--    = operand3 (joikEk tag? BO operand2)?
+--
+--operand3 :: ??
+--    = quantifier
+--    / lerfuString !MOI BOI?
+--    / NIhE selbri TEhU?
+--    / MOhE sumti TEhU?
+--    / JOhI mex2+ TEhU?
+--    / gek operand gik operand3
+--    / (LAhE / NAhE BO) operand LUhU?
+
+-- TODO: number = PA (PA / lerfuWord)*
 number :: Quantifier
     = "ro":PA -> Forall
     / "su'o":PA -> Exists
@@ -301,15 +503,18 @@ digit :: Int
     / "so":PA -> {9}
     / c:Char &{isDigit c} -> {digitToInt c}
 
+-- TODO: should be PA, not digit
+lerfuString :: {[Lerfu]}
+    = c:lerfuWord cs:(lerfuWord / n:digit -> {show n !! 0})*
+	-> {c:cs}
+lerfuWord :: Lerfu
+    = s:BY -> {if s=="y'y" then 'h' else s!!0}
+    / v:VowelValsi BU -> v
+    -- TODO: / LAU lerfuWord / TEI lerfuString FOI
+    -- TODO: Valsi BU
 
 ek :: LogJboConnective = ln:NA?
 	se:(SE)? conchar:ekA rn:NAI?
-    -> { LogJboConnective (isNothing ln) 
-		    (if (isJust se) && conchar=='u' then 'U' else conchar)
-		    (isNothing rn) }
-
-jek :: LogJboConnective = ln:NA?
-	se:(SE)? conchar:jekJA rn:NAI?
     -> { LogJboConnective (isNothing ln) 
 		    (if (isJust se) && conchar=='u' then 'U' else conchar)
 		    (isNothing rn) }
@@ -320,12 +525,33 @@ gihek :: LogJboConnective = ln:NA?
 		    (if (isJust se) && conchar=='u' then 'U' else conchar)
 		    (isNothing rn) }
 
+jek :: LogJboConnective = ln:NA?
+	se:(SE)? conchar:jekJA rn:NAI?
+    -> { LogJboConnective (isNothing ln) 
+		    (if (isJust se) && conchar=='u' then 'U' else conchar)
+		    (isNothing rn) }
+
+-- joiks entirely unparsed for now
+joik :: String
+    = se:SE? joi:JOI nai:NAI? -> { (fromMaybe "" se) ++ joi ++ (fromMaybe "" nai) }
+    / interval
+    / g1:GAhO i:interval g2:GAhO -> { g1 ++ i ++ g2 }
+interval :: String
+    = se:SE? bihi:BIhI nai:NAI? -> { (fromMaybe "" se) ++ bihi ++ (fromMaybe "" nai) }
+
+joikEk :: JekJoik
+    = jj:ek -> { JJJek jj }
+    / jj:joik -> { JJJoik jj }
+joikJek :: JekJoik
+    = jj:jek -> { JJJek jj }
+    / jj:joik -> { JJJoik jj }
+
 gek :: {Bool -> Connective}
     = se:(SE)? conchar:gekGA ln:NAI?
 	-> { JboConnLog Nothing . LogJboConnective (isNothing ln) 
 		    (if (isJust se) && conchar=='u' then 'U' else conchar) }
-    / tag:tag gik -> { \_ -> JboConnLog (Just tag) (LogJboConnective True 'e' True) }
     / joik:joik GI -> { \_ -> JboConnJoik Nothing joik } 
+    / tag:tag gik -> { \_ -> JboConnLog (Just tag) (LogJboConnective True 'e' True) }
 
 guhek :: {Bool -> LogJboConnective} = se:(SE)? conchar:guhekGUhA ln:NAI?
     -> { LogJboConnective (isNothing ln) 
@@ -337,7 +563,7 @@ ekA :: Char = "a":A -> {'a'}
     / "e":A -> {'e'}
     / "o":A -> {'o'}
     / "u":A -> {'u'}
-    -- / "ji":A
+    -- TODO: / "ji":A
 
 jekJA :: Char = "ja":JA -> {'a'}
     / "je":JA -> {'e'}
@@ -358,132 +584,6 @@ guhekGUhA :: Char = "gu'a":GUhA -> {'a'}
     / "gu'e":GUhA -> {'e'}
     / "gu'o":GUhA -> {'o'}
     / "gu'u":GUhA -> {'u'}
-
--- joiks entirely unparsed for now
-joik :: String
-    = se:SE? joi:JOI nai:NAI? -> { (fromMaybe "" se) ++ joi ++ (fromMaybe "" nai) }
-    / interval
-    / g1:GAhO i:interval g2:GAhO -> { g1 ++ i ++ g2 }
-interval :: String
-    = se:SE? bihi:BIhI nai:NAI? -> { (fromMaybe "" se) ++ bihi ++ (fromMaybe "" nai) }
-
-joikJek :: JekJoik
-    = jj:jek -> { JJJek jj }
-    / jj:joik -> { JJJoik jj }
-joikEk :: JekJoik
-    = jj:ek -> { JJJek jj }
-    / jj:joik -> { JJJoik jj }
-
-bridiTail :: BridiTail
-    = bt1:bridiTail1 gihek:(lcon:gihek mtag:(tag)? KE bt2:bridiTail KEhE? tts:tailTerms ->
-	{(JboConnLog mtag lcon, bt2, tts)} )?
-	    -> {
-		case gihek of Nothing -> bt1
-			      Just (con, bt2, tts) ->
-				  ConnectedBT con bt1 bt2 tts }
-
-bridiTail1 :: BridiTail
-    = bt:bridiTail2 giheks:_gihekbt*
-    -> { foldl (\bt1 -> \(con,bt2,tts) ->
-		    ConnectedBT con bt1 bt2 tts
-		) bt giheks }
--- _gihekbt: helper for bridiTail1
-_gihekbt :: {(Connective, BridiTail, [Term])}
-    = lcon:gihek !(tag? BO -> {()}) !(tag? KE -> {()}) bt:bridiTail2 tts:tailTerms -> {(JboConnLog Nothing lcon, bt, tts)}
-
-bridiTail2 :: BridiTail
-    = bt1:bridiTail3
-	gihek:(lcon:gihek mtag:(tag)? BO bt2:bridiTail2 tts:tailTerms -> {(JboConnLog mtag lcon,bt2,tts)})?
-	    -> {
-		case gihek of Nothing -> bt1
-			      Just (con, bt2, tts) ->
-				  ConnectedBT con bt1 bt2 tts }
-
-bridiTail3 :: BridiTail
-    = sb:selbri ts:tailTerms -> { BridiTail3 sb ts }
-    / gs:gekSentence -> { GekSentence gs }
-
-tailTerms :: {[Term]}
-    = ts:terms? VAU? -> { fromMaybe [] ts }
-
-selbri :: Selbri
-    = "na":NA sb:selbri -> {Negated sb}
-    / ("ja'a":NA -> {})? sb:selbri2 -> {Selbri2 sb}
-    / tag:tag sb:selbri -> {TaggedSelbri tag sb}
-
-selbri2 :: Selbri2
-    = sb:selbri3 CO sb':selbri2 -> {SBInverted sb sb'}
-    / sb:selbri3 -> {Selbri3 sb}
-
-selbri3 :: Selbri3
-    = sb:selbri3 sb':selbri4 -> {SBTanru sb sb'}
-    / selbri4
-
-selbri4 :: Selbri3
-    = sb:selbri5 jekss:(_jeksbs)*
-	-> { foldl (\sb1 -> \(con,sb2) -> ConnectedSB False con (sb3tosb sb1) sb2) sb jekss }
--- _jeksbs: helper for selbri4
-_jeksbs :: {(Connective, Selbri3)}
-    = jj:joikJek sb:selbri5 -> {(jjJboCon Nothing jj,sb)}
-
-selbri5 :: Selbri3
-    = sb1:selbri6 jeksb:( jj:joikJek mtag:(tag)? BO sb:selbri5 -> {(jjJboCon mtag jj,sb)} )?
-	-> { case jeksb of
-	    Nothing -> sb1
-	    Just (con,sb2) -> ConnectedSB False con (sb3tosb sb1) sb2 }
-
-selbri6 :: Selbri3
-    = tu:tanruUnit BO sb:selbri6 -> {SBTanru tu sb}
-    / tanruUnit
-    / mn:NAhE? pcon:guhek sb1:selbri b:gik sb2:selbri6
-	-> { maybe id ScalarNegatedSB mn $
-	    ConnectedSB True (JboConnLog Nothing $ pcon b) sb1 sb2 }
-
-tanruUnit :: Selbri3
-    = tu:tanruUnit CEI tu':tanruUnit1 -> {BridiBinding tu tu'}
-    / tanruUnit1
-tanruUnit1 :: Selbri3
-    = tu:tanruUnit2 las:linkargs? -> {TanruUnit tu (fromMaybe [] las)}
-
-tanruUnit2 :: TanruUnit
-    = bv:BRIVLA -> {TUBrivla bv}
-    -- TODO: zei
-    / KE sb:selbri3 KEhE? -> {TUSelbri3 sb}
-    / n:convSE tu:tanruUnit2 -> {TUPermuted n tu}
-    / JAI mt:tag? tu:tanruUnit2 -> {TUJai mt tu}
-    / g:GOhA mn:("xi":XI n:litnum -> n)? -> {TUGOhA g $ fromMaybe 1 mn}
-    / q:number m:MOI -> {TUMoi q m}
-    / ME s:sumti MEhU? -> {TUMe s}
-    / n:NAhE tu:tanruUnit2 -> {TUSelbri3 $ ScalarNegatedSB n $ TanruUnit tu []}
-    / a:abstractor ss:subsentence KEI? -> {TUAbstraction a ss}
-    / XOhI t:tag -> {TUXOhI t}
-
-abstractor :: Abstractor
-    = n:NU nai:NAI? mca:(jj:joikJek a:abstractor -> {(jj,a)})?
-	-> {let a1 = (if isJust nai then NegatedAbstractor else id) $ NU n
-	    in case mca of
-		Nothing -> a1
-		Just (JJJek lcon,a2) -> LogConnectedAbstractor lcon a1 a2
-		Just (JJJoik joik,a2) -> JoiConnectedAbstractor joik a1 a2}
-
-linkargs :: {[Term]}
-    = BE t:term ts:links? BEhO? -> {(t : (fromMaybe [] ts))}
-
-links :: {[Term]}
-    = BEI t:term ts:links? -> {(t : (fromMaybe [] ts))}
-
-gekSentence :: GekSentence
-    = pcon:gek s1:subsentence b:gik s2:subsentence tts:tailTerms
-	-> { ConnectedGS (pcon b) s1 s2 tts }
-	/ KE gs:gekSentence KEhE? -> gs
-	/ NA gs:gekSentence -> {NegatedGS gs}
-
-convSE :: Int
-    = SE XI n:litnum -> n
-    / "se":SE -> {2}
-    / "te":SE -> {3}
-    / "ve":SE -> {4}
-    / "xe":SE -> {5}
 
 tagFA :: Int
     = FA XI n:litnum -> n
@@ -516,11 +616,15 @@ tagUnit :: TagUnit
     / CUhE -> { CUhE }
     / KI -> { KI }
 
+
+----- Morphology
+
 LojbanLetter :: Char = Consonant / Vowel / OtherLetter
 nonConsonant :: Char = Vowel / OtherLetter
 
 -- InitialPair :: String = "bl" /  "br" /  "cf" /  "ck" /  "cl" /  "cm" /  "cn" /  "cp" /  "cr" /  "ct" /  "dj" /  "dr" /  "dz" /  "fl" /  "fr" /  "gl" /  "gr" /  "jb" /  "jd" /  "jg" /  "jm" /  "jv" /  "kl" /  "kr" /  "ml" /  "mr" /  "pl" /  "pr" /  "sf" /  "sk" /  "sl" /  "sm" /  "sn" /  "sp" /  "sr" /  "st" /  "tc" /  "tr" /  "ts" /  "vl" /  "vr" /  "xl" /  "xr" /  "zb" /  "zd" /  "zg" /  "zm" /  "zv"
 Vowel :: Char = c:Char &{c `elem` "aeiouy"} -> c
+VowelValsi :: Char = c:Vowel Spacing -> c
 Consonant :: Char = c:Char &{c `elem` "bcdfgjklmnprstvxz"} -> c
 OtherLetter :: Char = c:Char &{c `elem` "',"} -> c
 VowelNotY :: Char = c:Char &{c `elem` "aeiou"} -> c
@@ -554,8 +658,7 @@ BAI :: String = s:BAImain Spacing -> s
 BAImain :: String = "du'o" / "si'u" / "zau" / "ki'i" / "du'i" / "cu'u" / "tu'i" / "ti'u" / "di'o" / "ji'u" / "ri'a" / "ni'i" / "mu'i" / "ki'u" / "va'u" / "koi" / "ca'i" / "ta'i" / "pu'e" / "ja'i" / "kai" / "bai" / "fi'e" / "de'i" / "ci'o" / "mau" / "mu'u" / "ri'i" / "ra'i" / "ka'a" / "pa'u" / "pa'a" / "le'a" / "ku'u" / "tai" / "bau" / "ma'i" / "ci'e" / "fau" / "po'i" / "cau" / "ma'e" / "ci'u" / "ra'a" / "pu'a" / "li'e" / "la'u" / "ba'i" / "ka'i" / "sau" / "fa'e" / "be'i" / "ti'i" / "ja'e" / "ga'a" / "va'o" / "ji'o" / "me'a" / "do'e" / "ji'e" / "pi'o" / "gau" / "zu'e" / "me'e" / "rai" 
 --         next word intensifier 
 BAhE :: String = s:BAhEmain Spacing -> s
-BAhEmain :: String = "ba'e"
-	/ "za'e" 
+BAhEmain :: String = "ba'e" / "za'e" 
 --         sumti link to attach sumti to a selbri 
 BE :: String = s:BEmain Spacing -> s
 BEmain :: String = "be" 
@@ -570,9 +673,7 @@ BIhE :: String = s:BIhEmain Spacing -> s
 BIhEmain :: String = "bi'e" 
 --         interval component of JOI 
 BIhI :: String = s:BIhImain Spacing -> s
-BIhImain :: String = "mi'i"
-	/ "bi'o"
-	/ "bi'i" 
+BIhImain :: String = "mi'i" / "bi'o" / "bi'i" 
 --         joins two units with shortest scope 
 BO :: String = s:BOmain Spacing -> s
 BOmain :: String = "bo"
@@ -585,8 +686,8 @@ BUmain :: String = "bu"
 --         individual lerfu words 
 BY :: String = s:BYmain Spacing -> s
 BYmain :: String = "jo'o" / "ru'o" / "ge'o" / "je'o" / "lo'a" / "na'a" / "se'e" / "to'a" / "ga'e" / "y'y" / "by" / "cy" / "dy" / "fy" / "gy" / "jy" / "ky" / "ly" / "my" / "ny" / "py" / "ry" / "sy" / "ty" / "vy" / "xy" / "zy" 
-
 --         specifies actualitypotentiality of tense 
+
 CAhA :: String = s:CAhAmain Spacing -> s
 CAhAmain :: String = "ca'a" / "pu'i" / "nu'o" / "ka'e" 
 --         afterthought intensity marker 
@@ -598,24 +699,20 @@ CEImain :: String = "cei"
 --         afterthought term list connective 
 CEhE :: String = s:CEhEmain Spacing -> s
 CEhEmain :: String = "ce'e" 
---         names; require consonant end, then pause no
---                                    LA or DOI selma'o embedded, pause before if
---                                    vowel initial and preceded by a vowel 
 --         tanru inversion  
 CO :: String = s:COmain Spacing -> s
 COmain :: String = "co" 
+--         vocative marker permitted inside names; must always be followed by pause or DOI 
 COI :: String = s:COImain Spacing -> s
 COImain :: String = "ju'i" / "coi" / "fi'i" / "ta'a" / "mu'o" / "fe'o" / "co'o" / "pe'u" / "ke'o" / "nu'e" / "re'i" / "be'e" / "je'e" / "mi'e" / "ki'e" / "vi'o"
---         vocative marker permitted inside names; must
---                                    always be followed by pause or DOI 
 --         separator between head sumti and selbri 
 CU :: String = s:CUmain Spacing -> s
 CUmain :: String = "cu" 
 --         tensemodal question 
 CUhE :: String = s:CUhEmain Spacing -> s
 CUhEmain :: String = "cu'e" / "nau" 
-
 --         cancel anaphoracataphora assignments 
+
 DAhO :: String = s:DAhOmain Spacing -> s
 DAhOmain :: String = "da'o" 
 --         vocative marker 
@@ -624,17 +721,16 @@ DOImain :: String = "doi"
 --         terminator for DOI-marked vocatives 
 DOhU :: String = s:DOhUmain Spacing -> s
 DOhUmain :: String = "do'u" 
-
 --         modifier head generic case tag 
+
 FA :: String = s:FAmain Spacing -> s
 FAmain :: String =  "fai" / "fi'a" / "fa" / "fe" / "fi" / "fo" / "fu"
 --         superdirections in space 
 FAhA :: String = s:FAhAmain Spacing -> s
 FAhAmain :: String = "du'a" / "be'a" / "ne'u" / "vu'a" / "ga'u" / "ti'a" / "ni'a" / "ca'u" / "zu'a" / "ri'u" / "ru'u" / "re'o" / "te'e" / "bu'u" / "ne'a" / "pa'o" / "ne'i" / "to'o" / "zo'i" / "ze'o" / "zo'a" / "fa'a" 
+--         normally elided 'done pause' to indicate end of utterance string 
 FAhO :: String = s:FAhOmain Spacing -> s
 FAhOmain :: String = "fa'o"
---         normally elided 'done pause' to indicate end
---                                    of utterance string 
 --         space interval mod flag 
 FEhE :: String = s:FEhEmain Spacing -> s
 FEhEmain :: String = "fe'e" 
@@ -835,20 +931,17 @@ RAhO :: String = s:RAhOmain Spacing -> s
 RAhOmain :: String = "ra'o" 
 --         converts number to extensional tense 
 ROI :: String = s:ROImain Spacing -> s
-ROImain :: String = "re'u"
-	/ "roi" 
+ROImain :: String = "re'u" / "roi" 
 
+--         metalinguistic eraser to the beginning of the current utterance 
 SA :: String = s:SAmain Spacing -> s
 SAmain :: String = "sa"
---         metalinguistic eraser to the beginning of
---                                    the current utterance 
 --         conversions 
 SE :: String = s:SEmain Spacing -> s
 SEmain :: String = "se" / "te" / "ve" / "xe" 
 --         metalinguistic bridi insert marker 
 SEI :: String = s:SEImain Spacing -> s
-SEImain :: String = "sei"
-	/ "ti'o" 
+SEImain :: String = "sei" / "ti'o" 
 --         metalinguistic bridi end marker 
 SEhU :: String = s:SEhUmain Spacing -> s
 SEhUmain :: String = "se'u" 
@@ -909,16 +1002,14 @@ VEhAmain :: String = "ve'u" / "ve'a" / "ve'i" / "ve'e"
 --         space-time dimensionality marker 
 VIhA :: String = s:VIhAmain Spacing -> s
 VIhAmain :: String = "vi'i" / "vi'a" / "vi'u" / "vi'e" 
+--         glue between logically connected sumti and relative clauses 
 VUhO :: String = s:VUhOmain Spacing -> s
 VUhOmain :: String = "vu'o"
---         glue between logically connected sumti
---                                     and relative clauses 
 
 --         subscripting operator 
 XI :: String = s:XImain Spacing -> s
 XImain :: String = "xi" 
-
---	    experimental cmavo to extract a binary relation from a tag
+--	    EXPERIMENTAL cmavo to extract a binary relation from a tag
 XOhI :: String = s:XOhImain Spacing -> s
 XOhImain :: String = "xo'i"
 
