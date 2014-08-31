@@ -8,11 +8,10 @@ Bug traces:
     brode([DONKEY])
     lo XASLI zei da ku brode
 
+    > jai bai broda
+    broda( )
+
 Definite bugs:
-    ka can't handle multiple ce'u (should return a relation)
-
-    {pe bai ko'a} and its ilk aren't implemented properly.
-
     UI and other indicators are entirely ignored.
 
     {zoi} works only if the following word is {zoi} (or, arbitrarily, {gy}).
@@ -20,6 +19,8 @@ Definite bugs:
 Probably bugs:
     Seltau are considered to be unary predicates rather than higher arity
     relations.
+
+    {cei} only works as '=:'
 
 Possibly bugs:
     Quantifiers on bound variables rebind the variable. This is contrary to

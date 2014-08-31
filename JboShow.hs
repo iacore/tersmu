@@ -127,28 +127,27 @@ instance JboShow Abstractor where
 instance JboShow JboPred where
     logjboshow jbo p = logjboshowpred jbo (\n -> p (BoundVar n))
 
--- FIXME: bugs with interactions between actual ke'a and these fake ones
--- e.g. du da poi du be fa ke'a du
-logjboshowpred jbo p = withShuntedRelVar (\n ->
-   if not jbo
-     then logjboshow jbo (p n)
-     else case p n of
-	   Rel sb ts | isJust $ elemIndex (BoundVar n) ts ->
-	       do s <- logjboshow jbo sb
-		  let i = 1 + fromJust (elemIndex (BoundVar n) ts)
-		      ts' = takeWhile (/= ZoheTerm) $ tail $
-				case i of 1 -> ts
-					  _ -> swapFinite ts 0 (i-1)
-		      s' = case i of 1 -> s
-				     _ -> seToStr i ++ " " ++ s
-		  case ts' of
-		    [] -> return s'
-		    _ ->
-		      do tss <- sequence $ map (logjboshow jbo) ts'
-			 return $ s' ++ " be " ++
-			      concat (intersperse " bei " tss)
-	   _ -> do s <- logjboshow jbo (p n)
-		   return $ "poi'i " ++ s ++ " kei" )
+logjboshowpred jbo@False p =
+    withShuntedRelVar $ \n -> logjboshow jbo $ p n
+logjboshowpred jbo@True p = withNextVariable $ \v ->
+     case p v of
+	 Rel sb ts | isJust $ elemIndex (BoundVar v) ts -> do
+	     s <- logjboshow jbo sb
+	     let i = 1 + fromJust (elemIndex (BoundVar v) ts)
+		 ts' = tail $ case i of
+			 1 -> ts
+			 _ -> swapFinite ts 0 (i-1)
+		 s' = case i of
+			 1 -> s
+			 _ -> seToStr i ++ " " ++ s
+	     case ts' of
+		 [] -> return s'
+		 _ -> do
+		     tss <- sequence $ map (logjboshow jbo) ts'
+		     return $ s' ++ " be " ++ concat (intersperse " bei " tss)
+	 _ -> withShuntedRelVar $ \n -> do
+		 s <- logjboshow jbo (p n)
+		 return $ "poi'i " ++ s ++ " kei"
 
 instance JboShow JboRel where
     {-
