@@ -22,6 +22,7 @@ data JboTerm = BoundVar Int
 	     | JboQuote ParsedQuote
 	     | JboErrorQuote [String]
 	     | JboNonJboQuote String
+	     | TheMex Mex
 	     | Valsi String
 	     | ZoheTerm
 	     | JoikedTerms Joik JboTerm JboTerm
@@ -66,6 +67,7 @@ subTerm :: JboTerm -> JboTerm -> JboProp -> JboProp
 subTerm s t = terpProp
     (\r -> \ts -> Rel (subTermInRel r) $ map subTermInTerm ts)
     subTermInOp
+    subTermInMex
     where
     subTermInTerm (JoikedTerms joik t1 t2) = JoikedTerms joik (subTermInTerm t1) (subTermInTerm t2)
     subTermInTerm (QualifiedTerm qual t) = QualifiedTerm qual (subTermInTerm t)

@@ -63,9 +63,9 @@ data AbsTagUnit q fiho
     | CUhE
     | KI
 
-type Tag = AbsTag Quantifier Selbri
-type DecoratedTagUnit = DecoratedAbsTagUnit Quantifier Selbri
-type TagUnit = AbsTagUnit Quantifier Selbri
+type Tag = AbsTag Mex Selbri
+type DecoratedTagUnit = DecoratedAbsTagUnit Mex Selbri
+type TagUnit = AbsTagUnit Mex Selbri
 
 data AbsConnective tag
     = JboConnLog (Maybe tag) LogJboConnective
@@ -89,8 +89,8 @@ isTense (DecoratedTagUnits dtus) = or $ map isTenseDTU dtus
 type Cmavo = String
 
 data Sumti = ConnectedSumti Bool Connective Sumti Sumti [RelClause]
-	   | QAtom (Maybe Quantifier) [RelClause] SumtiAtom
-	   | QSelbri Quantifier [RelClause] Selbri
+	   | QAtom (Maybe Mex) [RelClause] SumtiAtom
+	   | QSelbri Mex [RelClause] Selbri
 	   deriving (Eq, Show, Ord)
 
 appendRelsToSumti newrels (ConnectedSumti fore con s1 s2 rels) =
@@ -113,7 +113,7 @@ data SumtiAtom = Name [RelClause] String
 	       | RelVar Int -- ke'a
 	       | LambdaVar Int -- ce'u
 	       | SelbriVar -- fake
-	       | Description Gadri (Maybe Sumti) (Maybe Quantifier) Selbri [RelClause] [RelClause]
+	       | Description Gadri (Maybe Sumti) (Maybe Mex) Selbri [RelClause] [RelClause]
 	       | Assignable Int -- ko'a
 	       | LerfuString [Lerfu]
 	       | Ri Int -- ri
@@ -180,7 +180,7 @@ sb3tosb = Selbri2 . Selbri3
 data TanruUnit = TUBrivla String
 		| TUGOhA String Int
 		| TUMe Sumti
-		| TUMoi Quantifier String
+		| TUMoi Mex String
 		| TUAbstraction Abstractor Subsentence
 	        | TUPermuted Int TanruUnit
 		| TUJai (Maybe Tag) TanruUnit
@@ -195,6 +195,30 @@ data Abstractor
     -- (but less uniform...)
     | LogConnectedAbstractor LogJboConnective Abstractor Abstractor
     | JoiConnectedAbstractor Joik Abstractor Abstractor
+    deriving (Eq, Show, Ord)
+
+data Mex
+    = Operation Operator [Mex]
+    | ConnectedMex Bool Connective Mex Mex
+    | QualifiedMex SumtiQualifier Mex
+    | MexInt Int
+    | MexNumeralString [Numeral]
+    | MexLerfuString [Lerfu]
+    | MexSelbri Selbri
+    | MexSumti Sumti
+    | MexArray [Mex]
+    deriving (Eq, Show, Ord)
+
+data Numeral = PA Cmavo | Lerfu Lerfu
+    deriving (Eq, Show, Ord)
+
+data Operator
+    = ConnectedOperator Bool Connective Operator Operator
+    | OpPermuted Int Operator
+    | OpScalarNegated NAhE Operator
+    | OpMex Mex
+    | OpSelbri Selbri
+    | OpVUhU Cmavo
     deriving (Eq, Show, Ord)
 
 lerfuStringOfSelbri :: Selbri -> [Lerfu]

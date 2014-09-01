@@ -1,11 +1,11 @@
 module FOL where 
 import Control.Monad.State
 
-data Prop r t c o
+data Prop r t c o q
     = Not    (Prop r t c o)
     | Connected Connective (Prop r t c o) (Prop r t c o)
     | NonLogConnected c (Prop r t c o) (Prop r t c o)
-    | Quantified Quantifier (Maybe (Int -> Prop r t c o)) (Int -> Prop r t c o)
+    | Quantified q (Maybe (Int -> Prop r t c o)) (Int -> Prop r t c o)
     | Modal o (Prop r t c o)
     | Rel    r [t]
     | Eet
@@ -34,15 +34,20 @@ class Term t where
 class Rel r where
     relstr :: r -> String
 
--- terpProp: lift an interpretation of atomic formulae and operators to an
--- interpretation of arbitrary formula
-terpProp :: (r1 -> [t1] -> Prop r2 t2 c o2) -> (o1 -> o2) -> Prop r1 t1 c o1 -> Prop r2 t2 c o2
-terpProp terpAtomic terpOp p = terpProp' p
+-- terpProp: lift an interpretation of atomic formulae, operators, and
+-- quantifiers to an interpretation of arbitrary formula
+terpProp ::
+    (r1 -> [t1] -> Prop r2 t2 c o2 q2)
+    -> (o1 -> o2)
+    -> (q1 -> q2)
+    -> Prop r1 t1 c o1 q1 -> Prop r2 t2 c o2 q2
+terpProp terpAtomic terpOp terpQ p = terpProp' p
     where terpProp' (Rel r ts) = terpAtomic r ts
 	  terpProp' (Quantified q r p) =
-	      Quantified q (case r of Nothing -> Nothing
-				      Just r' -> Just (\v -> terpProp' $ r' v))
-			   (\v -> terpProp' $ p v)
+	      Quantified (terpQ q) (case r of
+		  Nothing -> Nothing
+		  Just r' -> Just (\v -> terpProp' $ r' v))
+		      (\v -> terpProp' $ p v)
 	  terpProp' (Not p) = Not $ terpProp' p
 	  terpProp' (Connected c p1 p2) =
 	      Connected c (terpProp' p1) (terpProp' p2)

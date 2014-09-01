@@ -240,8 +240,7 @@ sumti6 :: SumtiAtom
     / vs:errorQuote -> {ErrorQuote vs}
     / l:lerfuString !MOI BOI? -> {LerfuString l}
     / LU t:text1 LIhU? -> {Quote t}
-    / qual:(l:LAhE -> {LAhE l} / n:NAhE BO -> {NAhE_BO n})
-	    rels:maybeRelativeClauses s:sumti LUhU?
+    / qual:qualifier rels:maybeRelativeClauses s:sumti LUhU?
 	-> {QualifiedSumti qual rels s}
     / k:KOhA &{k `elem` ["do","ko","do'o","mi","ma'a","mi'a","mi'o"]} -> {NonAnaphoricProsumti k}
     / k:KOhA &{k `elem` ["ti","ta","tu"]} -> {NonAnaphoricProsumti k}
@@ -259,7 +258,11 @@ sumti6 :: SumtiAtom
     / "la":LA n:name -> n
     / g:(LA/LE) {(is,q,sb,rels,irels)}:sumtiTail KU? ->
 	{Description g is q sb rels irels}
-    -- TODO: / liClause
+    / liClause
+
+qualifier :: SumtiQualifier
+    = l:LAhE -> {LAhE l}
+    / n:NAhE BO -> {NAhE_BO n}
 
 name :: SumtiAtom
     = rels:maybeRelativeClauses cs:CMENE+ -> {Name rels $ unwords cs}
@@ -296,7 +299,9 @@ nonJboNamed :: String = "la'o":ZOI s:nonJboText -> s
 errorQuote :: {[String]}
     = LOhU vs:((!LEhU v:Valsi -> v)*) LEhU -> vs
 
--- TODO: liClause :: SumtiAtom = LI mex LOhO?
+liClause :: SumtiAtom
+    = "li":LI m:mex LOhO? -> { MexValue m }
+    / "me'o":LI m:mex LOhO? -> { Mex m }
 
 sumtiTail :: {(Maybe Sumti, Maybe Quantifier, Selbri, [RelClause], [RelClause])}
     = s:sumti6 srels:maybeRelativeClauses {(q,sb,irels)}:sumtiTail1
@@ -355,10 +360,9 @@ _jeksbs :: {(Connective, Selbri3)}
     / joik:joik mtag:tag? KE sb:selbri3 KEhE? -> {(JboConnJoik mtag joik,sb)}
 
 selbri5 :: Selbri3
-    = sb1:selbri6 jeksb:( jj:joikJek mtag:(tag)? BO sb:selbri5 -> {(jjJboCon mtag jj,sb)} )?
-	-> { case jeksb of
-	    Nothing -> sb1
-	    Just (con,sb2) -> ConnectedSB False con (sb3tosb sb1) sb2 }
+    = sb1:selbri6 jj:joikJek mtag:(tag)? BO sb2:selbri5
+	-> { ConnectedSB False (jjJboCon mtag jj) (sb3tosb sb1) sb2 }
+    / selbri6
 
 selbri6 :: Selbri3
     = tu:tanruUnit BO sb:selbri6 -> {SBTanru tu sb}
@@ -411,78 +415,98 @@ linkargs :: {[Term]}
 links :: {[Term]}
     = BEI t:term ts:links? -> {(t : (fromMaybe [] ts))}
 
-quantifier :: Quantifier
+quantifier :: Mex
     = q:number !MOI BOI? -> q
-    -- TODO: / VEI mex VEhO?
+    / VEI m:mex VEhO? -> m
 
--- TODO: mekso
---mex :: ??
---    = mex1 (operator mex1)* / rpClause
---
---rpClause :: ??
---    = FUhA rpExpression
---
---mex1 :: ??
---    = mex2 (BIhE operator mex1)?
---
---mex2 :: ??
---    = operand / mexForethought
---
---mexForethought :: ??
---    = PEhO? operator foreOperands KUhE?
---foreOperands :: ??
---    = mex2+ 
---
---rpExpression :: ??
---    = operand rpExpressionTail?
---rpExpressionTail :: ??
---    = rpExpression operator rpExpressionTail
---
---operator :: ??
---    = operator0
---
---operator0 :: ??
---    = operator1 (joikJek operator1 / joik tag? KE operator KEhE?)*
---
---operator1 :: ??
---    = operator2
---    / guhek operator1 gik operator2
---    / operator2 joikJek tag? BO operator1
---
---operator2 :: ??
---    = mexOperator
---    / KE operator KEhE?
---
---mexOperator :: ??
---    = SE mexOperator
---    / NAhE mexOperator
---    / MAhO mex TEhU?
---    / NAhU selbri TEhU?
---    / VUhU
---
---operand :: ??
---    = operand1 (joikEk tag? KE operand KEhE?)?
---
---operand1 :: ??
---    = operand2 (joikEk operand2)*
---
---operand2 :: ??
---    = operand3 (joikEk tag? BO operand2)?
---
---operand3 :: ??
---    = quantifier
---    / lerfuString !MOI BOI?
---    / NIhE selbri TEhU?
---    / MOhE sumti TEhU?
---    / JOhI mex2+ TEhU?
---    / gek operand gik operand3
---    / (LAhE / NAhE BO) operand LUhU?
+mex :: Mex
+    = m:mex1 opts:optail*
+	-> {foldl (flip ($)) m opts}
+    / rpClause
+optail :: {Mex -> Mex}
+    = o:operator m:mex1 -> { \m1 -> Operation o [m1,m] }
 
--- TODO: number = PA (PA / lerfuWord)*
-number :: Quantifier
-    = "ro":PA -> Forall
-    / "su'o":PA -> Exists
-    / n:litnum -> {Exactly n}
+rpClause :: Mex
+    = FUhA e:rpExpression -> e
+
+mex1 :: Mex
+    = m:mex2 mopt:(BIhE opt:optail -> opt)?
+	-> {maybe m ($m) mopt}
+
+mex2 :: Mex
+    = operand
+    / mexForethought
+
+mexForethought :: Mex
+    = PEhO? op:operator os:foreOperands KUhE? -> {Operation op os}
+foreOperands :: {[Mex]}
+    = mex2+ 
+
+rpExpression :: Mex
+    = o:operand mt:rpExpressionTail -> { mt o }
+    / operand
+rpExpressionTail :: {Mex -> Mex}
+    = m:rpExpression opr:operator t:rpExpressionTail
+	-> { t . \m1 -> Operation opr [m1,m] }
+
+operator :: Operator
+    = op:operator1 jekss:_jekops*
+	-> { foldl (\op1 -> \(con,op2) -> ConnectedOperator False con op1 op2) op jekss }
+-- _jekops: helper for operator
+_jekops :: {(Connective, Operator)}
+    = jj:joikJek op:operator1 -> {(jjJboCon Nothing jj,op)}
+    / joik:joik mtag:tag? KE op:operator KEhE? -> {(JboConnJoik mtag joik,op)}
+
+operator1 :: Operator
+    = op1:operator2 jj:joikJek mtag:tag? BO op2:operator1
+	-> { ConnectedOperator False (jjJboCon mtag jj) op1 op2 }
+    / operator2
+    / pcon:guhek op1:operator1 b:gik op2:operator2
+	-> { ConnectedOperator True (JboConnLog Nothing $ pcon b) op1 op2 }
+
+operator2 :: Operator
+    = mexOperator
+    / KE op:operator KEhE? -> op
+
+mexOperator :: Operator
+    = c:convSE op:mexOperator -> { OpPermuted c op }
+    / n:NAhE op:mexOperator -> { OpScalarNegated n op } 
+    / MAhO m:mex TEhU? -> {OpMex m}
+    / NAhU s:selbri TEhU? -> {OpSelbri s}
+    / v:VUhU -> {OpVUhU v}
+
+operand :: Mex
+    = o1:operand1 jj:joikEk mtag:tag? KE o2:operand KEhE?
+	-> { ConnectedMex False (jjJboCon mtag jj) o1 o2 }
+    / operand1
+
+operand1 :: Mex
+    = o:operand2 jekss:_jekos*
+	-> {foldl (flip ($)) o jekss}
+_jekos :: {Mex -> Mex}
+    = jj:joikEk o2:operand2 -> { \o1 -> ConnectedMex False (jjJboCon Nothing jj) o1 o2 }
+
+operand2 :: Mex
+    = o1:operand3 jj:joikEk mtag:tag? BO o2:operand2
+	-> { ConnectedMex False (jjJboCon mtag jj) o1 o2 }
+    / operand3
+
+operand3 :: Mex
+    = quantifier
+    / ls:lerfuString !MOI BOI? -> {MexLerfuString ls}
+    / NIhE s:selbri TEhU? -> {MexSelbri s}
+    / MOhE s:sumti TEhU? -> {MexSumti s}
+    / JOhI ms:mex2+ TEhU? -> {MexArray ms}
+    / pcon:gek o1:operand b:gik o2:operand3 -> {ConnectedMex True (pcon b) o1 o2}
+    / qual:qualifier o:operand LUhU? -> {QualifiedMex qual o}
+
+number :: Mex
+    = n:litnum -> {MexInt n}
+    / p:PA t:numeral*
+	-> { MexNumeralString $ (PA p):t }
+numeral :: Numeral
+    = p:PA -> {PA p}
+    / l:lerfuWord -> {Lerfu l}
 
 litnum :: Int
     = ds:digit+ -> {
