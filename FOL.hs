@@ -2,17 +2,17 @@ module FOL where
 import Control.Monad.State
 
 data Prop r t c o q
-    = Not    (Prop r t c o)
-    | Connected Connective (Prop r t c o) (Prop r t c o)
-    | NonLogConnected c (Prop r t c o) (Prop r t c o)
-    | Quantified q (Maybe (Int -> Prop r t c o)) (Int -> Prop r t c o)
-    | Modal o (Prop r t c o)
+    = Not    (Prop r t c o q)
+    | Connected Connective (Prop r t c o q) (Prop r t c o q)
+    | NonLogConnected c (Prop r t c o q) (Prop r t c o q)
+    | Quantified q (Maybe (Int -> Prop r t c o q)) (Int -> Prop r t c o q)
+    | Modal o (Prop r t c o q)
     | Rel    r [t]
     | Eet
 
 data Connective = And | Or | Impl | Equiv
     deriving (Eq, Ord)
-data Quantifier = Exists | Forall | Exactly Int | Gadri String | QuestionQuantifier
+data LojQuantifier = Exists | Forall | Exactly Int
     deriving (Eq, Ord)
 
 instance Show Connective where
@@ -21,12 +21,10 @@ instance Show Connective where
     show Impl = "-->"
     show Equiv = "<->"
 
-instance Show Quantifier where
+instance Show LojQuantifier where
     show Exists = "EX"
     show Forall = "FA"
-    show (Gadri g) = "{"++g++"}"
     show (Exactly n) = "EQ(" ++ show n ++ ")"
-    show QuestionQuantifier = "?"
 
 class Term t where
     var :: Int -> t
@@ -56,7 +54,7 @@ terpProp terpAtomic terpOp terpQ p = terpProp' p
 	  terpProp' Eet = Eet
 	  terpProp' (Modal o p) = Modal (terpOp o) (terpProp' p)
 
-bigAnd :: [Prop r t c o] -> Prop r t c o
+bigAnd :: [Prop r t c o q] -> Prop r t c o q
 bigAnd ps = bigAnd' $ filter (\p -> case p of {Not Eet -> False; _ -> True}) ps
     where bigAnd' [] = Not Eet
 	  bigAnd' [p] = p

@@ -45,40 +45,40 @@ data Tagged = Untagged
 	 | FAITagged
 	 deriving (Eq, Show, Ord)
 
-data AbsTag q fiho
-    = DecoratedTagUnits [DecoratedAbsTagUnit q fiho]
-    | ConnectedTag (AbsConnective (AbsTag q fiho)) (AbsTag q fiho) (AbsTag q fiho)
-instance (Eq q, Eq fiho) => Eq (AbsTag q fiho)
-instance (Show q, Show fiho) => Show (AbsTag q fiho)
-instance (Ord q, Ord fiho) => Ord (AbsTag q fiho)
-data DecoratedAbsTagUnit q fiho = DecoratedTagUnit
-    {tagNahe::Maybe Cmavo, tagSE::Maybe Int, tagNAI::Bool, tagUnit::AbsTagUnit q fiho}
-data AbsTagUnit q fiho
+data AbsTag r t
+    = DecoratedTagUnits [DecoratedAbsTagUnit r t]
+    | ConnectedTag (AbsConnective r t) (AbsTag r t) (AbsTag r t)
+instance (Eq r, Eq t) => Eq (AbsTag r t)
+instance (Show r, Show t) => Show (AbsTag r t)
+instance (Ord r, Ord t) => Ord (AbsTag r t)
+data DecoratedAbsTagUnit r t = DecoratedTagUnit
+    {tagNahe::Maybe Cmavo, tagSE::Maybe Int, tagNAI::Bool, tagUnit::AbsTagUnit r t}
+data AbsTagUnit r t
     = TenseCmavo Cmavo
     | FAhA {fahaHasMohi::Bool, fahaCmavo::Cmavo}
-    | ROI {roiIsSpace::Bool, roiQuantifier::q}
+    | ROI {roiIsSpace::Bool, roiQuantifier::AbsMex r t}
     | TAhE_ZAhO {taheZoheIsSpace::Bool, taheZahoCmavo::Cmavo}
     | BAI Cmavo
-    | FIhO fiho
+    | FIhO r
     | CUhE
     | KI
 
-type Tag = AbsTag Mex Selbri
-type DecoratedTagUnit = DecoratedAbsTagUnit Mex Selbri
-type TagUnit = AbsTagUnit Mex Selbri
+type Tag = AbsTag Selbri Sumti
+type DecoratedTagUnit = DecoratedAbsTagUnit Selbri Sumti
+type TagUnit = AbsTagUnit Selbri Sumti
 
-data AbsConnective tag
-    = JboConnLog (Maybe tag) LogJboConnective
-    | JboConnJoik (Maybe tag) Joik
-type Connective = AbsConnective Tag
-instance (Eq tag) => Eq (AbsConnective tag)
-instance (Show tag) => Show (AbsConnective tag)
-instance (Ord tag) => Ord (AbsConnective tag)
+data AbsConnective r t
+    = JboConnLog (Maybe (AbsTag r t)) LogJboConnective
+    | JboConnJoik (Maybe (AbsTag r t)) Joik
+type Connective = AbsConnective Selbri Sumti
+instance (Eq r, Eq t) => Eq (AbsConnective r t)
+instance (Show r, Show t) => Show (AbsConnective r t)
+instance (Ord r, Ord t) => Ord (AbsConnective r t)
 
 type Joik = String
 
 -- XXX we arbitarily consider a mix of tense and "modal" to be a tense
-isTense :: AbsTag q fiho -> Bool
+isTense :: AbsTag r t -> Bool
 isTense (ConnectedTag _ t1 t2) = isTense t1 || isTense t2
 isTense (DecoratedTagUnits dtus) = or $ map isTenseDTU dtus
     where isTenseDTU (DecoratedTagUnit _ _ _ tu) = case tu of
@@ -122,6 +122,8 @@ data SumtiAtom = Name [RelClause] String
 	       | NonJboQuote String
 	       | ErrorQuote [String]
 	       | Word String
+	       | MexLi Mex -- li
+	       | MexMex Mex -- mo'e
 	       | Zohe -- zo'e
 	       | SumtiQ (Maybe Int) -- ma [kau]
 	       | QualifiedSumti SumtiQualifier [RelClause] Sumti
@@ -197,29 +199,37 @@ data Abstractor
     | JoiConnectedAbstractor Joik Abstractor Abstractor
     deriving (Eq, Show, Ord)
 
-data Mex
-    = Operation Operator [Mex]
-    | ConnectedMex Bool Connective Mex Mex
-    | QualifiedMex SumtiQualifier Mex
+data AbsMex r t
+    = Operation (AbsOperator r t) [AbsMex r t]
+    | ConnectedMex Bool (AbsConnective r t) (AbsMex r t) (AbsMex r t)
+    | QualifiedMex SumtiQualifier (AbsMex r t)
     | MexInt Int
     | MexNumeralString [Numeral]
     | MexLerfuString [Lerfu]
-    | MexSelbri Selbri
-    | MexSumti Sumti
-    | MexArray [Mex]
-    deriving (Eq, Show, Ord)
+    | MexSelbri r
+    | MexSumti t
+    | MexArray [AbsMex r t]
+instance (Eq r, Eq t) => Eq (AbsMex r t)
+instance (Show r, Show t) => Show (AbsMex r t)
+instance (Ord r, Ord t) => Ord (AbsMex r t)
+
+type Mex = AbsMex Selbri Sumti
 
 data Numeral = PA Cmavo | Lerfu Lerfu
     deriving (Eq, Show, Ord)
 
-data Operator
-    = ConnectedOperator Bool Connective Operator Operator
-    | OpPermuted Int Operator
-    | OpScalarNegated NAhE Operator
-    | OpMex Mex
-    | OpSelbri Selbri
+data AbsOperator r t
+    = ConnectedOperator Bool (AbsConnective r t) (AbsOperator r t) (AbsOperator r t)
+    | OpPermuted Int (AbsOperator r t)
+    | OpScalarNegated NAhE (AbsOperator r t)
+    | OpMex (AbsMex r t)
+    | OpSelbri r
     | OpVUhU Cmavo
-    deriving (Eq, Show, Ord)
+instance (Eq r, Eq t) => Eq (AbsOperator r t)
+instance (Show r, Show t) => Show (AbsOperator r t)
+instance (Ord r, Ord t) => Ord (AbsOperator r t)
+
+type Operator = AbsOperator Selbri Sumti
 
 lerfuStringOfSelbri :: Selbri -> [Lerfu]
 lerfuStringOfSelbri (Negated sb) = lerfuStringOfSelbri sb
@@ -237,3 +247,26 @@ lerfuStringOfSelbri (Selbri2 sb2) = sb2tols sb2
 	tutols (TUAbstraction (NU s) _) = take 1 s
 	tutols (TUSelbri3 sb3) = sb3tols sb3
 	tutols _ = []
+
+{-
+class Bifunctor p where
+    bimap :: (a -> b) -> (c -> d) -> p a c -> p b d
+instance Bifunctor AbsMex where
+    bimap fr ft = bimap' where
+	bimap' (Operation o ms) = Operation (bimap' o) (map bimap' ms)
+	bimap' (ConnectedMex f c m1 m2) = ConnectedMex f (bimap' c) (bimap' m1) (bimap' m2)
+	bimap' (QualifiedMex q m) = QualifiedMex q (bimap' m)
+	bimap' (MexArray ms) = MexArray $ map bimap' ms
+	bimap' (MexSelbri r) = MexSelbri $ fr r
+	bimap' (MexSumti t) = MexSumti $ ft t
+	bimap' x = x
+    
+instance Bifunctor AbsOperator where
+    bimap fr ft = bimap' where
+	bimap' (ConnectedOperator f c o1 o2) = ConnectedOperator f (bimap' c) (bimap' o1) (bimap' o2)
+	bimap' (OpPermuted s o) = OpPermuted s $ bimap' o
+	bimap' (OpScalarNegated n o) = OpScalarNegated n $ bimap' o
+	bimap' (OpMex m) = OpMex $ bimap' m
+	bimap' (OpSelbri r) = OpSelbri $ fr r
+	bimap' x = x
+-}

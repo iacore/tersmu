@@ -300,16 +300,16 @@ errorQuote :: {[String]}
     = LOhU vs:((!LEhU v:Valsi -> v)*) LEhU -> vs
 
 liClause :: SumtiAtom
-    = "li":LI m:mex LOhO? -> { MexValue m }
-    / "me'o":LI m:mex LOhO? -> { Mex m }
+    = "li":LI m:mex LOhO? -> { MexLi m }
+    / "me'o":LI m:mex LOhO? -> { MexMex m }
 
-sumtiTail :: {(Maybe Sumti, Maybe Quantifier, Selbri, [RelClause], [RelClause])}
+sumtiTail :: {(Maybe Sumti, Maybe Mex, Selbri, [RelClause], [RelClause])}
     = s:sumti6 srels:maybeRelativeClauses {(q,sb,irels)}:sumtiTail1
 	-> {(Just (QAtom Nothing srels s),q,sb,[],irels)}
     / rels:maybeRelativeClauses {(q,sb,irels)}:sumtiTail1
 	-> {(Nothing,q,sb,rels,irels)}
 
-sumtiTail1 :: {(Maybe Quantifier, Selbri, [RelClause])}
+sumtiTail1 :: {(Maybe Mex, Selbri, [RelClause])}
     = sb:selbri rels:maybeRelativeClauses
 	-> {(Nothing,sb,rels)}
     / q:quantifier? sb:selbri rels:maybeRelativeClauses
@@ -634,7 +634,7 @@ tagUnit :: TagUnit
     = s:(PU / ZI / ZEhA / VA / VEhA / VIhA / CAhA) -> {TenseCmavo s}
     / s:BAI -> {BAI s}
     / m:(MOhI)? f:FAhA -> { FAhA (isJust m) f }
-    / f:(FEhE)? q:number ROI -> { ROI (isJust f) q }
+    / f:(FEhE)? q:quantifier ROI -> { ROI (isJust f) q }
     / f:(FEhE)? s:(TAhE / ZAhO) -> { TAhE_ZAhO (isJust f) s }
     / FIhO s:selbri FEhU? -> { FIhO s }
     / CUhE -> { CUhE }

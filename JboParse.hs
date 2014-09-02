@@ -160,7 +160,9 @@ parseTU tu@(TUGOhA _ _) = getBribasti tu
 parseTU (TUMe s) = do
     o <- parseSumti s
     return $ jboRelToBridi $ Among o
-parseTU (TUMoi q m) = return $ jboRelToBridi $ Moi q m
+parseTU (TUMoi q m) = do
+    jq <- evalMex q
+    return $ jboRelToBridi $ Moi jq m
 parseTU (TUAbstraction (NegatedAbstractor a) ss) =
     mapProp Not >> parseTU (TUAbstraction a ss)
 parseTU (TUAbstraction (LogConnectedAbstractor lcon a1 a2) ss) =
@@ -254,20 +256,24 @@ parseSumti s = do
 	    return (o,ips,as)
 	(QAtom mq rels sa) -> case sa of
 	     Variable _ -> do
+		mjq <- traverse evalMex mq
 		(rps,ips,as) <- parseRels rels
 		o <- parseVariable sa rps mq
 		return (o,ips,as)
 	     _ -> do
+		 mjq <- traverse evalMex mq
 		 (o,(rps,ips,as)) <- parseSumtiAtom sa
 		 (rps',ips',as') <- parseRels rels
-		 o' <- case mq of
+		 o' <- case mjq of
 		   Nothing -> return o
-		   Just q -> quantify q $ andMPred $ (isAmong o):(rps++rps')
+		   Just jq -> do
+		    quantify jq $ andMPred $ (isAmong o):(rps++rps')
 		 return (o',ips++ips',as++as')
 	(QSelbri q rels sb) -> do
+	    jq <- evalMex q
 	    sr <- selbriToPred sb
 	    (rps,ips,as) <- parseRels rels
-	    o <- quantify q (andMPred $ sr:rps)
+	    o <- quantify jq (andMPred $ sr:rps)
 	    return (o,ips,as)
     o <- doIncidentals o ips
     o <- doAssigns o as
@@ -328,13 +334,14 @@ parseRels (r:rs) = do
 		    _ -> Nothing
 	    return $ if restrictive then (ps,[],[]) else ([],ps,[])
 
-parseVariable :: PreProp r => SumtiAtom -> [JboPred] -> Maybe Quantifier -> ParseM r JboTerm
+parseVariable :: PreProp r => SumtiAtom -> [JboPred] -> Maybe Mex -> ParseM r JboTerm
 parseVariable sa@(Variable n) rps mq = do
     x <- lookupVarBinding sa
     case (x,mq) of
 	 (Just o,Nothing) -> return o
 	 _ -> do
-	    o <- quantify (fromMaybe Exists mq) $ andMPred rps
+	    mjq <- traverse evalMex mq
+	    o <- quantify (fromMaybe (Quantifier Exists) mjq) $ andMPred rps
 	    setVarBinding sa o
 	    return o
 
@@ -353,13 +360,14 @@ parseSumtiAtom sa = do
     o <- case sa of
 	Description gadri mis miq sb _ irels -> do
 	    -- TODO: gadri other than {lo}
+	    mjq <- traverse evalMex miq
 	    sr <- selbriToPred sb
 	    (irps,iips,ias) <- parseRels $
 		irels ++ maybeToList ((\is ->
 		    IncidentalGOI "ne" (Sumti Untagged is)) <$> mis)
 	    let xorlo_ips = sr : 
-		    (case miq of
-			Just iq -> [(\o -> Rel (Moi iq "mei") [o])]
+		    (case mjq of
+			Just jq -> [(\o -> Rel (Moi jq "mei") [o])]
 			_ -> [])
 		    ++ iips
 	    o <- getFreshConstant
@@ -369,6 +377,8 @@ parseSumtiAtom sa = do
 	QualifiedSumti qual _ s -> do
 	    o <- parseSumti s
 	    return $ QualifiedTerm qual o
+	MexLi m -> Value <$> evalMex m
+	MexMex m -> return $ TheMex m
 	RelVar _ -> getVarBinding sa
 	LambdaVar _ -> getVarBinding sa
 	Ri _ -> getSumbasti sa
@@ -406,8 +416,8 @@ parseTagUnit (TenseCmavo c) = return $ TenseCmavo c
 parseTagUnit (BAI c) = return $ BAI c
 parseTagUnit (FAhA m c) = return $ FAhA m c
 parseTagUnit (TAhE_ZAhO f c) = return $ TAhE_ZAhO f c
-parseTagUnit (ROI f q) = ROI f <$> parseQuantifier q
-parseTagUnit (FIhO selbri) = FIhO <$> selbriToPred selbri
+parseTagUnit (ROI f q) = ROI f <$> parseMex q
+parseTagUnit (FIhO sb) = FIhO <$> selbriToPred sb
 -- XXX: for now at least, we just pass through ki as if it were a normal tag
 -- (this is what the BPFK section suggests at the time of writing:
 -- ki == fi'o manri, with all the complexity of CLL's ki presumably being
@@ -426,14 +436,39 @@ parseConnective (JboConnJoik mtag joik) = do
     mtag' <- traverse parseTag mtag
     return $ JboConnJoik mtag' joik
 
-parseQuantifier :: PreProp r => Quantifier -> ParseM r Quantifier
-parseQuantifier = return
+evalMex :: PreProp r => Mex -> ParseM r Value
+evalMex m = MexValue <$> parseMex m
 
-quantify :: PreProp r => Quantifier -> Maybe JboPred -> ParseM r JboTerm
-quantify q r = do
+parseMex :: PreProp r => Mex -> ParseM r JboMex
+parseMex (ConnectedMex fore con m1 m2) = do
+    doConnective fore con
+	(parseMex m1)
+	(parseMex m2)
+parseMex (Operation o ms) = Operation <$> parseOperator o <*> mapM parseMex ms
+parseMex (MexArray ms) = MexArray <$> mapM parseMex ms
+parseMex (QualifiedMex q m) = QualifiedMex q <$> parseMex m
+parseMex (MexSelbri sb) = MexSelbri <$> selbriToPred sb
+parseMex (MexSumti s) = MexSumti <$> parseSumti s
+parseMex (MexInt n) = return $ MexInt n
+parseMex (MexNumeralString ns) = return $ MexNumeralString ns
+parseMex (MexLerfuString ls) = return $ MexLerfuString ls
+
+parseOperator :: PreProp r => Operator -> ParseM r JboOperator
+parseOperator (ConnectedOperator fore con o1 o2) = do
+    doConnective fore con
+	(parseOperator o1)
+	(parseOperator o2)
+parseOperator (OpPermuted s o) = OpPermuted s <$> parseOperator o
+parseOperator (OpScalarNegated n o) = OpScalarNegated n <$> parseOperator o
+parseOperator (OpMex m) = OpMex <$> parseMex m
+parseOperator (OpSelbri sb) = OpSelbri <$> selbriToPred sb
+parseOperator (OpVUhU v) = return $ OpVUhU v
+
+quantify :: PreProp r => Value -> Maybe JboPred -> ParseM r JboTerm
+quantify jq r = do
     fresh <- getFreshVar
     mapProp $ \p ->
-	Quantified q (singpred <$> r) $
+	Quantified (ValueQuantifier jq) (singpred <$> r) $
 	    \v -> subTerm fresh (BoundVar v) p
     return fresh
     where
@@ -450,7 +485,7 @@ doTag (DecoratedTagUnits dtus) Nothing =
 	    doModal $ JboTagged (DecoratedTagUnits [dtu{tagNAI=False}]) Nothing
 doTag jtag mt = doModal $ JboTagged jtag mt
 
-doModal :: PreProp r => JboOperator -> ParseM r ()
+doModal :: PreProp r => JboModalOp -> ParseM r ()
 doModal op = mapProp (Modal op)
 
 doBareTag :: PreProp r => JboTag -> ParseM r ()
@@ -465,7 +500,7 @@ applySeltau seltauM tertau = do
     stpred <- parsedSelbriToPred seltauM
     return $ mapRelsInBridi (Tanru stpred) tertau
 mapRelsInBridi :: (JboRel -> JboRel) -> Bridi -> Bridi
-mapRelsInBridi f b = (terpProp (\r ts -> Rel (f r) ts) id) . b
+mapRelsInBridi f b = (terpProp (\r ts -> Rel (f r) ts) id id) . b
 
 selbriToPred :: Selbri -> ParseM r JboPred
 selbriToPred sb = parsedSelbriToPred $ parseSelbri sb
@@ -494,7 +529,7 @@ doConnective isForethought con m1 m2 = do
     (m1',m2') <- case mtag of
 	Nothing -> return $ (m1,m2)
 	Just tag -> do
-	    v <- quantify Exists Nothing
+	    v <- quantify (Quantifier Exists) Nothing
 	    if isForethought then do
 		    tag' <- parseTag tag
 		    return $ (doModal (WithEventAs v) >> m1

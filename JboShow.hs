@@ -55,11 +55,21 @@ withShuntedLambda f =
 instance JboShow String where
     logjboshow _ s = return s
 
-instance JboShow Quantifier where
+instance JboShow JboQuantifier where
+    logjboshow _ QuestionQuantifier = return "ma"
+    logjboshow jbo (ValueQuantifier v) = logjboshow jbo v
+instance JboShow LojQuantifier where
     jboshow Exists = return "su'o"
     jboshow Forall = return "ro"
     jboshow (Exactly n) = return $ show n
     logshow = return . show
+
+instance JboShow Value where
+    logjboshow jbo (Quantifier q) = logjboshow jbo q
+    logjboshow jbo (MexValue m) = logjboshow jbo m
+
+instance JboShow JboMex where
+    logjboshow _ m = return $ "[mex]"
 
 logjboshowLogConn _ prefix (LogJboConnective b c b') =
 	return $ (if not b then "na " else "") ++
