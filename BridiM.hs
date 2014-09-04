@@ -408,7 +408,7 @@ doIncidentals :: JboTerm -> [JboPred] -> ParseM r JboTerm
 doIncidentals o ips = case andMPred ips of
     Nothing -> return o
     Just pred -> do
-	let frees = freeVars $ pred o
+	let frees = nub $ freeVars $ pred o
 	    o' = case o of
 		Constant n params -> Constant n $ params ++ frees
 		_ -> o
