@@ -66,9 +66,10 @@ main = repl `catchIOError` (\e -> if isEOFError e then exitWith ExitSuccess
 						   exitFailure)
 
 morph,stripPunc,morphParse :: String -> String
-morph = morphParse . stripPunc
+morph = map toLower . morphParse . stripPunc
 stripPunc =
     -- TODO: shouldn't strip inside zoi quotes
     map $ \c -> if isAlphaNum c || isSpace c || c `elem` ",'" then c else ' '
 morphParse s = let Parsed words _ _ = morphologywords $ morphologyParse "words" $ s ++ " "
 	in unwords $ words
+    -- TODO: error on partial morphology parse
