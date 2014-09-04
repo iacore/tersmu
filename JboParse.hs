@@ -446,6 +446,7 @@ doTag (DecoratedTagUnits dtus) Nothing =
     -- and doesn't fit current sumtcita handling)
     mapM_ doDTU dtus where
 	doDTU dtu = do
+	    -- TODO FIXME: TAhE, ROI, ZAhE, and (in ZG) CAhA have scalar nai
 	    when (tagNAI dtu) $ mapProp Not
 	    doModal $ JboTagged (DecoratedTagUnits [dtu{tagNAI=False}]) Nothing
 doTag jtag mt = doModal $ JboTagged jtag mt
@@ -507,4 +508,4 @@ doConnective isForethought con m1 m2 = do
     mapParseM2 con' m1' m2'
 
 -- TODO
-warning = error
+warning _ = return ()

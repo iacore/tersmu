@@ -11,6 +11,11 @@ Bug traces:
     > jai bai broda
     broda( )
 
+    > da djuno lo nu de prami gi'e nelci vau da
+    FA x1. FA x2. nu[EX x3. (prami(x3,x2) /\ nelci(x3,x2))](f0(x2,x2))
+    EX x1. djuno(x1,f0(x1,x1))
+
+
 Definite bugs:
     UI and other indicators are entirely ignored.
 
@@ -21,6 +26,9 @@ Probably bugs:
     relations.
 
     {cei} only works as '=:'
+
+    {ka} doesn't interpret multiple {ce'u} as giving an n-ary relation, as
+    mandated by CLL:11.4.
 
 Possibly bugs:
     Quantifiers on bound variables rebind the variable. This is contrary to
