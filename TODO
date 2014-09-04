@@ -6,6 +6,8 @@ strict CLL mode?
 
 alternative tags mode, doing away with modals and non-logical sentence
 connectives in favour of extra WithEventAs and TagRels?
+    Nice idea, but I don't see how to handle complicated joik connected
+    tenses; see notes/reductions.
 
 option to render sumti (and tag, abstractor) connectives as quantifiers?
 
@@ -14,9 +16,13 @@ think about implicit zo'e
 bu'a
 
 mekso
+    implement xorxes' Intertal Grammar of Quantifiers
+	http://www.lojban.org/tiki/BPFK+Section:+Inexact+Numbers ?
 
 Pretty printing
 
 illocution: .ei, ko etc
+    note, for this we really do need to associate UI to sentences rather than
+    statements.
 
 Hold on to indicators?

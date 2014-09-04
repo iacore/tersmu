@@ -11,6 +11,7 @@ Bug traces:
     > jai bai broda
     broda( )
 
+
 Definite bugs:
     UI and other indicators are entirely ignored.
 
@@ -21,6 +22,9 @@ Probably bugs:
     relations.
 
     {cei} only works as '=:'
+
+    {ka} doesn't interpret multiple {ce'u} as giving an n-ary relation, as
+    mandated by CLL:11.4.
 
 Possibly bugs:
     Quantifiers on bound variables rebind the variable. This is contrary to
