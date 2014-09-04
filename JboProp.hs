@@ -83,51 +83,31 @@ instance Eq JboPred where { _ == _ = False }
 instance Show JboPred where { show _ = "[ \\_ -> ... ]" }
 instance Ord JboPred where { _ <= _ = False }
 
--- subTerm s t p: replace instances of s with t in p
-subTerm :: JboTerm -> JboTerm -> JboProp -> JboProp
-subTerm s t = terpProp
-    (\r -> \ts -> Rel (subTermInRel r) $ map subTermInTerm ts)
-    subTermInOp
-    subTermInMex
-    where
-    subTermInTerm (JoikedTerms joik t1 t2) = JoikedTerms joik (subTermInTerm t1) (subTermInTerm t2)
-    subTermInTerm (QualifiedTerm qual t) = QualifiedTerm qual (subTermInTerm t)
-    subTermInTerm (Constant n ts) = Constant n $ map subTermInTerm ts
-    subTermInTerm x = if x == s then t else x
-    subTermInRel (Tanru p r) = Tanru (subTermInPred p) (subTermInRel r)
-    subTermInRel (TanruConnective con p p') = TanruConnective (subTermInCon con) (subTermInPred p) (subTermInPred p')
-    subTermInRel (AbsPred a p) = AbsPred a (\o -> subTerm s t (p o))
-    subTermInRel (AbsProp a p) = AbsProp a (subTerm s t p)
-    subTermInRel (Among t) = Among $ subTermInTerm t
-    subTermInRel r = r
-    subTermInOp (JboTagged tag mt) =
-	JboTagged (subTermInTag tag) $ if mt == Just s then Just t else mt
-    subTermInOp (WithEventAs x) = WithEventAs $ subTermInTerm x
-    subTermInOp op = op
-    subTermInTag (ConnectedTag con tag1 tag2) =
-	ConnectedTag (subTermInCon con) (subTermInTag tag1) (subTermInTag tag2)
-    subTermInTag (DecoratedTagUnits dtus) = DecoratedTagUnits $ map subTermInDTU dtus
-    subTermInDTU (DecoratedTagUnit nahe se nai tu) = DecoratedTagUnit nahe se nai $ subTermInTagUnit tu
-    subTermInTagUnit (FIhO fiho) = FIhO $ subTermInPred fiho
-    subTermInTagUnit tu = tu
-    subTermInCon (JboConnLog (Just tag) lcon) = JboConnLog (Just $ subTermInTag tag) lcon
-    subTermInCon (JboConnJoik (Just tag) joik) = JboConnJoik (Just $ subTermInTag tag) joik
-    subTermInCon c = c
-    subTermInPred p = \x -> subTerm s t (p x)
-    subTermInMex = id -- TODO
-
--- TODO: would be neater to make a proper Traversable instance, such that
--- subTerm above could use it too - but I'm not sure how to handle quantifiers
 class Termful t where
-    --traverseTerms :: Applicative f => (JboTerm -> f JboTerm) -> t -> f t
+    -- XXX: you'd think there would be a neat common abstraction of
+    -- traverseTerms_ and subTerm, but I haven't found one
+    -- (we can't just define a Traversable instance, due to the use of
+    -- functions for quantifiers and JboPreds)
+
+    -- |traverseTerms_ (travTs_ for short): apply an applicative to the terms
     traverseTerms_,travTs_ :: Applicative f => (JboTerm -> f ()) -> t -> f ()
-    travTs_ = traverseTerms_
-    traverseTerms_ = travTs_
+    traverseTerms_ = travTs_ -- abbreviation
+    travTs_ _ _ = pure () -- default definition
 
     travtravTs_ :: (Termful t, Applicative f, Foldable fo) =>
 	(JboTerm -> f()) -> fo t -> f ()
-    travtravTs_ = traverse_ . traverseTerms_ 
-    --traverseTerms_ f = (\x -> ()) <$> traverseTerms (\t -> f t *> pure (Var 0))
+    travtravTs_ = traverse_ . traverseTerms_
+
+    -- | subTerm s t: substitute all instances of s for t
+    subTerm :: JboTerm -> JboTerm -> t -> t
+    subTerm _ _ = id
+
+{- correct, but useless due to overlapping instances
+instance (Termful t, Foldable fo, Functor fo) => Termful (fo t) where
+    traverseTerms_ = traverse_ . traverseTerms_
+    subTerm s t = fmap $ subTerm s t
+-}
+
 instance (Termful r, Termful c, Termful o, Termful q) => Termful (Prop r JboTerm c o q) where
     travTs_ f (Rel r ts) = travTs_ f r *> traverse_ f ts
     travTs_ f (Quantified q r p) =
@@ -139,13 +119,21 @@ instance (Termful r, Termful c, Termful o, Termful q) => Termful (Prop r JboTerm
     travTs_ f (NonLogConnected con p1 p2) = travTs_ f con *> travtravTs_ f [p1,p2]
     travTs_ f Eet = pure ()
     travTs_ f (Modal o p) = travTs_ f o *> travTs_ f p
-instance Termful FOL.Connective where travTs_ _ _ = pure ()
-instance Termful Joik where travTs_ _ _ = pure ()
+    subTerm s t = terpProp (\r -> \ts -> Rel (subTerm s t r) $ map (subTerm s t) ts) (subTerm s t) (subTerm s t)
+instance Termful JboTerm where
+    travTs_ f t = f t
+    subTerm s t (JoikedTerms joik t1 t2) = JoikedTerms joik (subTerm s t t1) (subTerm s t t2)
+    subTerm s t (QualifiedTerm qual t') = QualifiedTerm qual (subTerm s t t')
+    subTerm s t (Constant n ts) = Constant n $ map (subTerm s t) ts
+    subTerm s t (Value m) = Value $ subTerm s t m
+    subTerm s t x = if x == s then t else x
+instance Termful FOL.Connective
+instance Termful Joik
 instance Termful JboQuantifier where
     travTs_ f (LojQuantifier q) = travTs_ f q
     travTs_ f (MexQuantifier m) = travTs_ f m
     travTs_ _ _ = pure ()
-instance Termful LojQuantifier where travTs_ _ _ = pure ()
+instance Termful LojQuantifier
 instance Termful JboRel where
     travTs_ f (Tanru p r) = travTs_ f p *> travTs_ f r
     travTs_ f (TanruConnective con p1 p2) = travTs_ f con *> travtravTs_ f [p1,p2]
@@ -153,21 +141,43 @@ instance Termful JboRel where
     travTs_ f (AbsProp a p) = travTs_ f p
     travTs_ f (Among t) = f t
     travTs_ _ _ = pure ()
-instance Termful JboPred where travTs_ f p = travTs_ f $ p ZoheTerm
+    subTerm s t (Tanru p r) = Tanru (subTerm s t p) (subTerm s t r)
+    subTerm s t (TanruConnective con p p') = TanruConnective (subTerm s t con) (subTerm s t p) (subTerm s t p')
+    subTerm s t (AbsPred a p) = AbsPred a (\o -> subTerm s t (p o))
+    subTerm s t (AbsProp a p) = AbsProp a (subTerm s t p)
+    subTerm s t (Among t') = Among $ (subTerm s t) t'
+    subTerm s t r = r
+instance Termful JboPred where
+    travTs_ f p = travTs_ f $ p ZoheTerm
+    subTerm s t p = \x -> subTerm s t (p x)
 instance Termful JboModalOp where
     travTs_ f (JboTagged tag mt) = travTs_ f tag *> traverse_ f mt
     travTs_ f (WithEventAs x) = f x
+    subTerm s t (JboTagged tag mt) =
+	JboTagged (subTerm s t tag) $ fmap (subTerm s t) mt
+    subTerm s t (WithEventAs x) = WithEventAs $ subTerm s t x
+    subTerm s t op = op
 instance Termful JboTag where
     travTs_ f (ConnectedTag con tag1 tag2) = travTs_ f con *> travtravTs_ f [tag1,tag2]
     travTs_ f (DecoratedTagUnits dtus) = travtravTs_ f dtus
-instance Termful JboDecoratedTagUnit where travTs_ f (DecoratedTagUnit nahe se nai tu) = travTs_ f tu
+    subTerm s t (ConnectedTag con tag1 tag2) =
+	ConnectedTag (subTerm s t con) (subTerm s t tag1) (subTerm s t tag2)
+    subTerm s t (DecoratedTagUnits dtus) = DecoratedTagUnits $ map (subTerm s t) dtus
+instance Termful JboDecoratedTagUnit where
+    travTs_ f (DecoratedTagUnit nahe se nai tu) = travTs_ f tu
+    subTerm s t (DecoratedTagUnit nahe se nai tu) = DecoratedTagUnit nahe se nai $ subTerm s t tu
 instance Termful JboTagUnit where
     travTs_ f (FIhO fiho) = travTs_ f fiho
     travTs_ _ _ = pure ()
+    subTerm s t (FIhO fiho) = FIhO $ subTerm s t fiho
+    subTerm s t tu = tu
 instance Termful JboConnective where
     travTs_ f (JboConnLog (Just tag) _) = travTs_ f tag
     travTs_ f (JboConnJoik (Just tag) _) = travTs_ f tag
     travTs_ _ _ = pure ()
+    subTerm s t (JboConnLog (Just tag) lcon) = JboConnLog (Just $ subTerm s t tag) lcon
+    subTerm s t (JboConnJoik (Just tag) joik) = JboConnJoik (Just $ subTerm s t tag) joik
+    subTerm s t c = c
 instance Termful JboMex where
     travTs_ f (Operation op ms) = travTs_ f op *> travtravTs_ f ms
     travTs_ f (ConnectedMex _ con m1 m2) = travTs_ f con *> travtravTs_ f [m1,m2]
@@ -176,6 +186,13 @@ instance Termful JboMex where
     travTs_ f (MexSumti t) = f t
     travTs_ f (MexArray ms) = travtravTs_ f ms
     travTs_ _ _ = pure ()
+    subTerm s t (Operation op ms) = Operation (subTerm s t op) $ map (subTerm s t) ms
+    subTerm s t (ConnectedMex f con m1 m2) = ConnectedMex f (subTerm s t con) (subTerm s t m1) (subTerm s t m2)
+    subTerm s t (QualifiedMex q m) = QualifiedMex q $ subTerm s t m
+    subTerm s t (MexSelbri r) = MexSelbri $ subTerm s t r
+    subTerm s t (MexSumti t') = MexSumti $ subTerm s t t'
+    subTerm s t (MexArray ms) = MexArray $ map (subTerm s t) ms
+    subTerm s t m = m
 instance Termful JboOperator where
     travTs_ f (ConnectedOperator _ con op1 op2) = travTs_ f con *> travtravTs_ f [op1,op2]
     travTs_ f (OpPermuted _ op) = travTs_ f op
@@ -183,7 +200,12 @@ instance Termful JboOperator where
     travTs_ f (OpMex m) = travTs_ f m
     travTs_ f (OpSelbri r) = travTs_ f r
     travTs_ _ _ = pure ()
-
+    subTerm s t (ConnectedOperator f con op1 op2) = ConnectedOperator f (subTerm s t con) (subTerm s t op1) (subTerm s t op2)
+    subTerm s t (OpPermuted se op) = OpPermuted se $ subTerm s t op
+    subTerm s t (OpScalarNegated n op) = OpScalarNegated n $ subTerm s t op
+    subTerm s t (OpMex m) = OpMex $ subTerm s t m
+    subTerm s t (OpSelbri r) = OpSelbri $ subTerm s t r
+    subTerm s t op = op
 
 freeVars :: JboProp -> [JboTerm]
 freeVars p = execWriter $ collectFrees p where
