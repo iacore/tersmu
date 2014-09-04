@@ -38,10 +38,9 @@ free :: Free
     / cs:vocative n:name rels:maybeRelativeClauses DOhU?
 	-> { Vocative cs $ Just (QAtom Nothing rels n) }
     / cs:vocative ms:sumti? DOhU? -> { Vocative cs ms }
-    -- TODO: (number/lerfuString) MAI
+    / q:numberOrLerfuString MAI -> { MAI q }
     / TO ps:paragraphs TOI? -> {Bracketed ps}
-    -- TODO: xiClause
-    -- XXX: we incorporate indicator into free:
+    / q:xiClause -> {XI q}
     / indicator
 
 vocative :: {[COI]}
@@ -56,7 +55,9 @@ indicator :: Indicator
     / i:(c:(UI/CAI) nai:NAI? !BU -> { Indicator (isJust nai) c }
     / c:(DAhO/FUhO) !BU -> { Indicator False c }) !BU -> i
 
--- TODO: xiClause = XI (number / lerfuString) BOI? / XI VOI mex VEhO?
+xiClause :: Mex
+    = XI q:numberOrLerfuString BOI? -> q
+    / XI VEI q:mex VEhO? -> q
 
 -- TODO: should handle (probably just strip) BAhE in preparsing
 -- TODO: similarly, should handle BU
@@ -385,8 +386,7 @@ tanruUnit2 :: TanruUnit
     / KE sb:selbri3 KEhE? -> {TUSelbri3 sb}
     -- TODO: ME (sumti / lerfuString) MEhU? MOI?
     / ME s:sumti MEhU? -> {TUMe s}
-    -- TODO: (number / lerfuString) MOI
-    / q:number m:MOI -> {TUMoi q m}
+    / q:numberOrLerfuString m:MOI -> {TUMoi q m}
     -- TODO: NUhA mexOperator
     / n:convSE tu:tanruUnit2 -> {TUPermuted n tu}
     / JAI mt:tag? tu:tanruUnit2 -> {TUJai mt tu}
@@ -499,6 +499,10 @@ operand3 :: Mex
     / JOhI ms:mex2+ TEhU? -> {MexArray ms}
     / pcon:gek o1:operand b:gik o2:operand3 -> {ConnectedMex True (pcon b) o1 o2}
     / qual:qualifier o:operand LUhU? -> {QualifiedMex qual o}
+
+numberOrLerfuString :: Mex
+    = number
+    / ls:lerfuString -> {MexLerfuString ls}
 
 number :: Mex
     = n:litnum -> {MexInt n}

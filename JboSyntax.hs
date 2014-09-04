@@ -21,8 +21,10 @@ data Sentence = Sentence [Term] BridiTail
 data Free
     = Bracketed [Statement]
     | Discursive BridiTail
-    | Vocative [COI] (Maybe Sumti)
     | TruthQ (Maybe Int)
+    | Vocative [COI] (Maybe Sumti)
+    | MAI Mex
+    | XI Mex
     | Indicator {indicatorNai :: Bool, indicatorCmavo :: Cmavo}
     deriving (Eq, Show, Ord)
 
