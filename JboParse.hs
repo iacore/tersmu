@@ -161,9 +161,9 @@ parseTU tu@(TUGOhA _ _) = getBribasti tu
 parseTU (TUMe s) = do
     o <- parseSumti s
     return $ jboRelToBridi $ Among o
-parseTU (TUMoi q m) = do
-    jq <- evalMex q
-    return $ jboRelToBridi $ Moi jq m
+parseTU (TUMoi q moi) = do
+    m <- parseMex q
+    return $ jboRelToBridi $ Moi m moi
 parseTU (TUAbstraction (NegatedAbstractor a) ss) =
     mapProp Not >> parseTU (TUAbstraction a ss)
 parseTU (TUAbstraction (LogConnectedAbstractor lcon a1 a2) ss) =
@@ -257,24 +257,24 @@ parseSumti s = do
 	    return (o,ips,as)
 	(QAtom mq rels sa) -> case sa of
 	     Variable _ -> do
-		mjq <- traverse evalMex mq
+		mm <- traverse parseMex mq
 		(rps,ips,as) <- parseRels rels
-		o <- parseVariable sa rps mjq
+		o <- parseVariable sa rps mm
 		return (o,ips,as)
 	     _ -> do
-		 mjq <- traverse evalMex mq
+		 mm <- traverse parseMex mq
 		 (o,(rps,ips,as)) <- parseSumtiAtom sa
 		 (rps',ips',as') <- parseRels rels
-		 o' <- case mjq of
+		 o' <- case mm of
 		   Nothing -> return o
-		   Just jq -> do
-		    quantify jq $ andMPred $ (isAmong o):(rps++rps')
+		   Just m -> do
+		    quantify m $ andMPred $ (isAmong o):(rps++rps')
 		 return (o',ips++ips',as++as')
 	(QSelbri q rels sb) -> do
-	    jq <- evalMex q
+	    m <- parseMex q
 	    sr <- selbriToPred sb
 	    (rps,ips,as) <- parseRels rels
-	    o <- quantify jq (andMPred $ sr:rps)
+	    o <- quantify m (andMPred $ sr:rps)
 	    return (o,ips,as)
     o <- doIncidentals o ips
     o <- doAssigns o as
@@ -335,13 +335,13 @@ parseRels (r:rs) = do
 		    _ -> Nothing
 	    return $ if restrictive then (ps,[],[]) else ([],ps,[])
 
-parseVariable :: PreProp r => SumtiAtom -> [JboPred] -> Maybe Value -> ParseM r JboTerm
-parseVariable sa@(Variable n) rps mjq = do
+parseVariable :: PreProp r => SumtiAtom -> [JboPred] -> Maybe JboMex -> ParseM r JboTerm
+parseVariable sa@(Variable n) rps mm = do
     x <- lookupVarBinding sa
-    case (x,mjq) of
+    case (x,mm) of
 	 (Just o,Nothing) -> return o
 	 _ -> do
-	    o <- quantify (fromMaybe (Quantifier Exists) mjq) $ andMPred rps
+	    o <- quantify (fromMaybe mexExists mm) $ andMPred rps
 	    setVarBinding sa o
 	    return o
 
@@ -360,14 +360,14 @@ parseSumtiAtom sa = do
     o <- case sa of
 	Description gadri mis miq sb _ irels -> do
 	    -- TODO: gadri other than {lo}
-	    mjq <- traverse evalMex miq
+	    mm <- traverse parseMex miq
 	    sr <- selbriToPred sb
 	    (irps,iips,ias) <- parseRels $
 		irels ++ maybeToList ((\is ->
 		    IncidentalGOI "ne" (Sumti Untagged is)) <$> mis)
 	    let xorlo_ips = sr : 
-		    (case mjq of
-			Just jq -> [(\o -> Rel (Moi jq "mei") [o])]
+		    (case mm of
+			Just m -> [(\o -> Rel (Moi m "mei") [o])]
 			_ -> [])
 		    ++ iips
 	    o <- getFreshConstant
@@ -377,7 +377,7 @@ parseSumtiAtom sa = do
 	QualifiedSumti qual _ s -> do
 	    o <- parseSumti s
 	    return $ QualifiedTerm qual o
-	MexLi m -> Value <$> evalMex m
+	MexLi m -> Value <$> parseMex m
 	MexMex m -> return $ TheMex m
 	RelVar _ -> getVarBinding sa
 	LambdaVar _ -> getVarBinding sa
@@ -436,8 +436,15 @@ parseConnective (JboConnJoik mtag joik) = do
     mtag' <- traverse parseTag mtag
     return $ JboConnJoik mtag' joik
 
-evalMex :: PreProp r => Mex -> ParseM r Value
-evalMex m = MexValue <$> parseMex m
+mexExists = (MexNumeralString [PA "su'o"])
+mexForall = (MexNumeralString [PA "ro"])
+terpJboMexAsQuantifier :: JboMex -> JboQuantifier
+    -- TODO: implement xorxes' rules at
+    -- http://www.lojban.org/tiki/BPFK+Section%3A+Inexact+Numbers ?
+terpJboMexAsQuantifier m | m == mexForall = LojQuantifier Forall
+terpJboMexAsQuantifier m | m == mexExists = LojQuantifier Exists
+terpJboMexAsQuantifier (MexInt n) = LojQuantifier $ Exactly n
+terpJboMexAsQuantifier m = MexQuantifier m
 
 parseMex :: PreProp r => Mex -> ParseM r JboMex
 parseMex m = reduceMex <$> parseMex' m where
@@ -485,11 +492,11 @@ parseMex m = reduceMex <$> parseMex' m where
 	applyJboOperator op $ os++os'
     applyJboOperator op os = Operation op $ stripNulls os
 
-quantify :: PreProp r => Value -> Maybe JboPred -> ParseM r JboTerm
-quantify jq r = do
+quantify :: PreProp r => JboMex -> Maybe JboPred -> ParseM r JboTerm
+quantify m r = do
     fresh <- getFreshVar
     mapProp $ \p ->
-	Quantified (ValueQuantifier jq) (singpred <$> r) $
+	Quantified (terpJboMexAsQuantifier m) (singpred <$> r) $
 	    \v -> subTerm fresh (BoundVar v) p
     return fresh
     where
@@ -551,7 +558,7 @@ doConnective isForethought con m1 m2 = do
     (m1',m2') <- case mtag of
 	Nothing -> return $ (m1,m2)
 	Just tag -> do
-	    v <- quantify (Quantifier Exists) Nothing
+	    v <- quantify mexExists Nothing
 	    if isForethought then do
 		    tag' <- parseTag tag
 		    return $ (doModal (WithEventAs v) >> m1

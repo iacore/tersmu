@@ -57,16 +57,13 @@ instance JboShow String where
 
 instance JboShow JboQuantifier where
     logjboshow _ QuestionQuantifier = return "ma"
-    logjboshow jbo (ValueQuantifier v) = logjboshow jbo v
+    logjboshow jbo (LojQuantifier q) = logjboshow jbo q
+    logjboshow jbo (MexQuantifier m) = logjboshow jbo m
 instance JboShow LojQuantifier where
     jboshow Exists = return "su'o"
     jboshow Forall = return "ro"
-    jboshow (Exactly n) = return $ show n
+    jboshow (Exactly n) = return $ jbonum n
     logshow = return . show
-
-instance JboShow Value where
-    logjboshow jbo (Quantifier q) = logjboshow jbo q
-    logjboshow jbo (MexValue m) = logjboshow jbo m
 
 logjboshowlist :: JboShow a => Bool -> [a] -> Bindful SumtiAtom String
 logjboshowlist jbo as = do

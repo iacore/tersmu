@@ -411,7 +411,7 @@ doIncidentals o ips = case andMPred ips of
 	    o' = case o of
 		Constant n params -> Constant n $ params ++ frees
 		_ -> o
-	    p = foldr (\free p -> Quantified (ValueQuantifier (Quantifier Forall)) Nothing $
+	    p = foldr (\free p -> Quantified (LojQuantifier Forall) Nothing $
 		\v -> subTerm free (BoundVar v) p) (pred o') frees
 	addSideSentence p
 	return o'

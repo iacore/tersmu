@@ -23,7 +23,7 @@ data JboTerm = BoundVar Int
 	     | JboErrorQuote [String]
 	     | JboNonJboQuote String
 	     | TheMex Mex -- me'o
-	     | Value Value -- li
+	     | Value JboMex -- li
 	     | Valsi String
 	     | ZoheTerm
 	     | JoikedTerms Joik JboTerm JboTerm
@@ -35,7 +35,7 @@ data JboRel = Tanru JboPred JboRel
 	    | ScalarNegatedRel NAhE JboRel
 	    | AbsPred Abstractor JboPred
 	    | AbsProp Abstractor JboProp
-	    | Moi Value Cmavo
+	    | Moi JboMex Cmavo
 	    | Among JboTerm
 	    | Equal
 	    | UnboundBribasti TanruUnit
@@ -54,16 +54,12 @@ type JboConnective = AbsConnective JboPred JboTerm
 
 type JboPred = JboTerm -> JboProp
 
-data Value
-    = Quantifier LojQuantifier -- the easy cases with clear logical meanings
-    | MexValue JboMex -- everything else
-    deriving (Eq, Show, Ord)
-
 type JboMex = AbsMex JboPred JboTerm
 type JboOperator = AbsOperator JboPred JboTerm
 
 data JboQuantifier
-    = ValueQuantifier Value
+    = MexQuantifier JboMex
+    | LojQuantifier LojQuantifier
     | QuestionQuantifier
     deriving (Eq, Show, Ord)
 
@@ -146,8 +142,10 @@ instance (Termful r, Termful c, Termful o, Termful q) => Termful (Prop r JboTerm
 instance Termful FOL.Connective where travTs_ _ _ = pure ()
 instance Termful Joik where travTs_ _ _ = pure ()
 instance Termful JboQuantifier where
-    travTs_ f (ValueQuantifier v) = travTs_ f v
+    travTs_ f (LojQuantifier q) = travTs_ f q
+    travTs_ f (MexQuantifier m) = travTs_ f m
     travTs_ _ _ = pure ()
+instance Termful LojQuantifier where travTs_ _ _ = pure ()
 instance Termful JboRel where
     travTs_ f (Tanru p r) = travTs_ f p *> travTs_ f r
     travTs_ f (TanruConnective con p1 p2) = travTs_ f con *> travtravTs_ f [p1,p2]
@@ -170,9 +168,6 @@ instance Termful JboConnective where
     travTs_ f (JboConnLog (Just tag) _) = travTs_ f tag
     travTs_ f (JboConnJoik (Just tag) _) = travTs_ f tag
     travTs_ _ _ = pure ()
-instance Termful Value where
-    travTs_ f (Quantifier q) = pure ()
-    travTs_ f (MexValue m) = travTs_ f m
 instance Termful JboMex where
     travTs_ f (Operation op ms) = travTs_ f op *> travtravTs_ f ms
     travTs_ f (ConnectedMex _ con m1 m2) = travTs_ f con *> travtravTs_ f [m1,m2]
