@@ -68,8 +68,81 @@ instance JboShow Value where
     logjboshow jbo (Quantifier q) = logjboshow jbo q
     logjboshow jbo (MexValue m) = logjboshow jbo m
 
+logjboshowlist :: JboShow a => Bool -> [a] -> Bindful SumtiAtom String
+logjboshowlist jbo as = do
+    ass <- mapM (logjboshow jbo) as
+    return $ concat $ intersperse (if jbo then " " else ",") ass 
+
+instance JboShow Mex where
+    logjboshow _ m = return $ show m
 instance JboShow JboMex where
-    logjboshow _ m = return $ "[mex]"
+    logjboshow jbo (Operation op ms) = do
+	ops <- logjboshow jbo op
+	mss <- logjboshowlist jbo ms
+	return $ if jbo
+	    then "pe'o "++ops++" "++mss++" ku'e"
+	    else ops++"("++mss++")"
+    logjboshow jbo (ConnectedMex fore con m m') = do
+	[ms,ms'] <- mapM (logjboshow jbo) [m,m']
+	cs <- logjboshowConn jbo "." con
+	if jbo
+	    then return $ "vei " ++ ms ++" ve'o " ++ cs ++ " vei " ++ ms' ++ " ve'o"
+	    else return $ "(" ++ ms ++ ")" ++ cs ++ "(" ++ ms' ++ ")"
+    logjboshow jbo (QualifiedMex qual t) = do
+	ts <- logjboshow jbo t
+	let quals = case qual of {LAhE l -> l; NAhE_BO n -> n ++ " bo"}
+	return $ if jbo
+	    then quals ++ " " ++ ts ++ " lu'u"
+	    else "{" ++ quals ++ "}(" ++ ts ++ ")"
+    logjboshow jbo@True (MexInt n) = (++" boi") <$> logjboshow jbo n
+    logjboshow jbo@False (MexInt n) = logjboshow jbo n
+    logjboshow jbo@True (MexNumeralString ns) = (++" boi") <$> logjboshowlist jbo ns
+    logjboshow jbo@False (MexNumeralString ns) = ("("++) . (++")") <$> logjboshowlist jbo ns
+    logjboshow jbo@True (MexLerfuString ls) = (++" boi") <$> logjboshow jbo ls
+    logjboshow jbo@False (MexLerfuString ls) = ("("++) . (++")") <$> logjboshow jbo ls
+    -- TODO: is it ok to just use "[...]" for these (and also the ops below?)
+    logjboshow jbo@False (MexSelbri p) = ("["++) . (++"]") <$> logjboshow jbo p
+    logjboshow jbo@True (MexSelbri p) = ("ni'e "++) . (++" te'u") <$> logjboshow jbo p
+    logjboshow jbo@False (MexSumti t) = ("["++) . (++"]") <$> logjboshow jbo t
+    logjboshow jbo@True (MexSumti t) = ("mo'e "++) . (++" te'u") <$> logjboshow jbo t
+    logjboshow jbo@False (MexArray ms) = ("["++) . (++"]") <$> logjboshowlist jbo ms
+    logjboshow jbo@True (MexArray ms) = ("jo'i "++) . (++" te'u") <$> logjboshowlist jbo ms
+
+instance JboShow Numeral where
+    logjboshow True (PA pa) = return pa
+    logjboshow False (PA pa) = return $ "{" ++ pa ++ "}"
+    logjboshow jbo (NumeralLerfu l) = logjboshow jbo l
+
+instance JboShow [Lerfu] where
+    logjboshow jbo ls =
+	concat . (if jbo then intersperse " " else id) <$> mapM (logjboshow jbo) ls
+instance JboShow Lerfu where
+    logjboshow True (Lerfu c) = return $ case c of
+	_ | c `elem` "aoeui" -> (c:"bu")
+	'y' -> "y bu"
+	'h' -> "y'y"
+	_ | c `elem` ['0'..'9'] -> jbonum $ fromEnum c - fromEnum '0'
+	_ -> c:"y"
+    logjboshow False (Lerfu c) = return $ [c]
+
+instance JboShow JboOperator where
+    logjboshow jbo (ConnectedOperator _ con op op') = do
+	[ops,ops'] <- mapM (logjboshow jbo) [op,op']
+	cs <- logjboshowConn jbo "j" con
+	if jbo
+	    then return $ "ke " ++ ops ++ " ke'e " ++ cs ++ " ke " ++ ops' ++ " ke'e"
+	    else return $ "<" ++ ops ++ ">" ++ cs ++ "<" ++ ops' ++ ">"
+    logjboshow jbo (OpPermuted s o) =
+	((seToStr s ++ " ") ++) <$> logjboshow jbo o
+    logjboshow jbo (OpScalarNegated n op) = do
+	ops <- logjboshow jbo op
+	return $ if jbo then n ++ " " ++ ops else "{"++n++"}("++ops++")"
+    logjboshow jbo@False (OpMex m) = ("["++) . (++"]") <$> logjboshow jbo m
+    logjboshow jbo@True (OpMex m) = ("ma'o "++) . (++" te'u") <$> logjboshow jbo m
+    logjboshow jbo@False (OpSelbri s) = ("["++) . (++"]") <$> logjboshow jbo s
+    logjboshow jbo@True (OpSelbri s) = ("na'u "++) . (++" te'u") <$> logjboshow jbo s
+    logjboshow jbo@False (OpVUhU v) = ("{"++) . (++"}") <$> return v
+    logjboshow jbo@True (OpVUhU v) = return v
 
 logjboshowLogConn _ prefix (LogJboConnective b c b') =
 	return $ (if not b then "na " else "") ++
@@ -217,6 +290,7 @@ instance JboShow JboRel where
     logjboshow _ (Brivla s) = return s
 
 instance JboShow SumtiAtom where
+    logjboshow jbo (LerfuString s) = logjboshow jbo s
     logjboshow jbo v =
 	if jbo then return $ case v of
 	    Variable n | n <= 3 -> "d" ++ vowelnum n
@@ -230,13 +304,6 @@ instance JboShow SumtiAtom where
 	    Assignable n -> "ko'a xi " ++ jbonum n
 	    Ri 1 -> "ri"
 	    Ri n -> "ri" ++ jbonum n
-	    LerfuString s -> concat $ intersperse " " $
-		map (\c -> case c of
-		    _ | c `elem` "aoeui" -> (c:"bu")
-		    'y' -> "y bu"
-		    'h' -> "y'y"
-		    _ | c `elem` ['0'..'9'] -> jbonum $ fromEnum c - fromEnum '0'
-		    _ -> (c:"y")) s
 	    MainBridiSumbasti n | n <= 5 -> "vo'" ++ vowelnum n
 	    MainBridiSumbasti n -> "vo'a xi " ++ jbonum n
 	else case v of
@@ -244,7 +311,6 @@ instance JboShow SumtiAtom where
 	    RelVar 1 -> return $ "_"
 	    RelVar n -> return $ "_" ++ show n
 	    LambdaVar n -> return $ "\\" ++ show n
-	    LerfuString s -> return s
 	    v -> do
 		s <- logjboshow True v
 		return $ "{" ++ s ++ "}"
@@ -298,6 +364,10 @@ instance JboShow JboTerm where
 	return $ if jbo
 	    then quals ++ " " ++ ts ++ " lu'u"
 	    else "{" ++ quals ++ "}(" ++ ts ++ ")"
+    logjboshow True (Value m) = ("li "++) . (++" lo'o") <$> logjboshow True m
+    logjboshow False (Value m) = logjboshow False m
+    logjboshow True (TheMex m) = ("me'o "++) . (++" lo'o") <$> logjboshow True m
+    logjboshow False (TheMex m) = logjboshow False m
 	
 
 vowelnum 1 = "a"
@@ -322,6 +392,10 @@ seToStr 3 = "te"
 seToStr 4 = "ve"
 seToStr 5 = "xe"
 seToStr n = "se xi " ++ jbonum n
+
+instance JboShow Int where
+    logjboshow True n = return $ jbonum n
+    logjboshow False n = return $ show n
 
 instance JboShow JboProp
     where {logjboshow jbo p = (if jbo then unwords else concat)

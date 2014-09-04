@@ -48,11 +48,10 @@ data Tagged = Untagged
 data AbsTag r t
     = DecoratedTagUnits [DecoratedAbsTagUnit r t]
     | ConnectedTag (AbsConnective r t) (AbsTag r t) (AbsTag r t)
-instance (Eq r, Eq t) => Eq (AbsTag r t)
-instance (Show r, Show t) => Show (AbsTag r t)
-instance (Ord r, Ord t) => Ord (AbsTag r t)
+    deriving (Eq, Show, Ord)
 data DecoratedAbsTagUnit r t = DecoratedTagUnit
     {tagNahe::Maybe Cmavo, tagSE::Maybe Int, tagNAI::Bool, tagUnit::AbsTagUnit r t}
+    deriving (Eq, Show, Ord)
 data AbsTagUnit r t
     = TenseCmavo Cmavo
     | FAhA {fahaHasMohi::Bool, fahaCmavo::Cmavo}
@@ -62,6 +61,7 @@ data AbsTagUnit r t
     | FIhO r
     | CUhE
     | KI
+    deriving (Eq, Show, Ord)
 
 type Tag = AbsTag Selbri Sumti
 type DecoratedTagUnit = DecoratedAbsTagUnit Selbri Sumti
@@ -70,10 +70,8 @@ type TagUnit = AbsTagUnit Selbri Sumti
 data AbsConnective r t
     = JboConnLog (Maybe (AbsTag r t)) LogJboConnective
     | JboConnJoik (Maybe (AbsTag r t)) Joik
+    deriving (Eq, Show, Ord)
 type Connective = AbsConnective Selbri Sumti
-instance (Eq r, Eq t) => Eq (AbsConnective r t)
-instance (Show r, Show t) => Show (AbsConnective r t)
-instance (Ord r, Ord t) => Ord (AbsConnective r t)
 
 type Joik = String
 
@@ -128,7 +126,13 @@ data SumtiAtom = Name [RelClause] String
 	       | SumtiQ (Maybe Int) -- ma [kau]
 	       | QualifiedSumti SumtiQualifier [RelClause] Sumti
 	       deriving (Eq, Show, Ord)
-type Lerfu = Char
+
+-- TODO properly
+newtype Lerfu = Lerfu Char
+    deriving (Eq, Show, Ord)
+lerfuToChar :: Lerfu -> Maybe Char
+lerfuToChar (Lerfu c) = Just c
+
 type Gadri = String
 
 getsRi :: SumtiAtom -> Bool
@@ -209,13 +213,11 @@ data AbsMex r t
     | MexSelbri r
     | MexSumti t
     | MexArray [AbsMex r t]
-instance (Eq r, Eq t) => Eq (AbsMex r t)
-instance (Show r, Show t) => Show (AbsMex r t)
-instance (Ord r, Ord t) => Ord (AbsMex r t)
+    deriving (Eq, Show, Ord)
 
 type Mex = AbsMex Selbri Sumti
 
-data Numeral = PA Cmavo | Lerfu Lerfu
+data Numeral = PA Cmavo | NumeralLerfu Lerfu
     deriving (Eq, Show, Ord)
 
 data AbsOperator r t
@@ -225,9 +227,7 @@ data AbsOperator r t
     | OpMex (AbsMex r t)
     | OpSelbri r
     | OpVUhU Cmavo
-instance (Eq r, Eq t) => Eq (AbsOperator r t)
-instance (Show r, Show t) => Show (AbsOperator r t)
-instance (Ord r, Ord t) => Ord (AbsOperator r t)
+    deriving (Eq, Show, Ord)
 
 type Operator = AbsOperator Selbri Sumti
 
@@ -243,8 +243,8 @@ lerfuStringOfSelbri (Selbri2 sb2) = sb2tols sb2
 	sb3tols (BridiBinding sb3 _) = sb3tols sb3
 	sb3tols (TanruUnit tu _) = tutols tu
 	sbtols = lerfuStringOfSelbri
-	tutols (TUBrivla s) = take 1 s
-	tutols (TUAbstraction (NU s) _) = take 1 s
+	tutols (TUBrivla s) = map Lerfu $ take 1 s
+	tutols (TUAbstraction (NU s) _) = map Lerfu $ take 1 s
 	tutols (TUSelbri3 sb3) = sb3tols sb3
 	tutols _ = []
 

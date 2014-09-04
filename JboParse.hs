@@ -4,6 +4,7 @@ import FOL hiding (Term,Connective)
 import JboProp
 import JboSyntax
 import BridiM
+import Util
 
 import Data.Maybe
 import Data.Traversable (traverse)
@@ -258,7 +259,7 @@ parseSumti s = do
 	     Variable _ -> do
 		mjq <- traverse evalMex mq
 		(rps,ips,as) <- parseRels rels
-		o <- parseVariable sa rps mq
+		o <- parseVariable sa rps mjq
 		return (o,ips,as)
 	     _ -> do
 		 mjq <- traverse evalMex mq
@@ -334,13 +335,12 @@ parseRels (r:rs) = do
 		    _ -> Nothing
 	    return $ if restrictive then (ps,[],[]) else ([],ps,[])
 
-parseVariable :: PreProp r => SumtiAtom -> [JboPred] -> Maybe Mex -> ParseM r JboTerm
-parseVariable sa@(Variable n) rps mq = do
+parseVariable :: PreProp r => SumtiAtom -> [JboPred] -> Maybe Value -> ParseM r JboTerm
+parseVariable sa@(Variable n) rps mjq = do
     x <- lookupVarBinding sa
-    case (x,mq) of
+    case (x,mjq) of
 	 (Just o,Nothing) -> return o
 	 _ -> do
-	    mjq <- traverse evalMex mq
 	    o <- quantify (fromMaybe (Quantifier Exists) mjq) $ andMPred rps
 	    setVarBinding sa o
 	    return o
@@ -440,29 +440,50 @@ evalMex :: PreProp r => Mex -> ParseM r Value
 evalMex m = MexValue <$> parseMex m
 
 parseMex :: PreProp r => Mex -> ParseM r JboMex
-parseMex (ConnectedMex fore con m1 m2) = do
-    doConnective fore con
-	(parseMex m1)
-	(parseMex m2)
-parseMex (Operation o ms) = Operation <$> parseOperator o <*> mapM parseMex ms
-parseMex (MexArray ms) = MexArray <$> mapM parseMex ms
-parseMex (QualifiedMex q m) = QualifiedMex q <$> parseMex m
-parseMex (MexSelbri sb) = MexSelbri <$> selbriToPred sb
-parseMex (MexSumti s) = MexSumti <$> parseSumti s
-parseMex (MexInt n) = return $ MexInt n
-parseMex (MexNumeralString ns) = return $ MexNumeralString ns
-parseMex (MexLerfuString ls) = return $ MexLerfuString ls
-
-parseOperator :: PreProp r => Operator -> ParseM r JboOperator
-parseOperator (ConnectedOperator fore con o1 o2) = do
-    doConnective fore con
-	(parseOperator o1)
-	(parseOperator o2)
-parseOperator (OpPermuted s o) = OpPermuted s <$> parseOperator o
-parseOperator (OpScalarNegated n o) = OpScalarNegated n <$> parseOperator o
-parseOperator (OpMex m) = OpMex <$> parseMex m
-parseOperator (OpSelbri sb) = OpSelbri <$> selbriToPred sb
-parseOperator (OpVUhU v) = return $ OpVUhU v
+parseMex m = reduceMex <$> parseMex' m where
+    parseMex' (ConnectedMex fore con@(JboConnLog _ _) m1 m2) = do
+	doConnective fore con
+	    (parseMex' m1)
+	    (parseMex' m2)
+    parseMex' (ConnectedMex fore con@(JboConnJoik _ _) m1 m2) =
+	ConnectedMex fore <$> parseConnective con <*> parseMex' m1 <*> parseMex' m2
+    parseMex' (Operation op ms) = Operation <$> parseOperator op <*> mapM parseMex' ms
+    parseMex' (MexArray ms) = MexArray <$> mapM parseMex' ms
+    parseMex' (QualifiedMex q m) = QualifiedMex q <$> parseMex' m
+    parseMex' (MexSelbri sb) = MexSelbri <$> selbriToPred sb
+    parseMex' (MexSumti s) = MexSumti <$> parseSumti s
+    parseMex' (MexInt n) = return $ MexInt n
+    parseMex' (MexNumeralString ns) = return $ MexNumeralString ns
+    parseMex' (MexLerfuString ls) = return $ MexLerfuString ls
+    parseOperator :: PreProp r => Operator -> ParseM r JboOperator
+    parseOperator (ConnectedOperator fore con@(JboConnLog _ _) o1 o2) = do
+	doConnective fore con
+	    (parseOperator o1)
+	    (parseOperator o2)
+    parseOperator (ConnectedOperator fore con@(JboConnJoik _ _) o1 o2) =
+	ConnectedOperator fore <$> parseConnective con <*> parseOperator o1 <*> parseOperator o2
+    parseOperator (OpPermuted s o) = OpPermuted s <$> parseOperator o
+    parseOperator (OpScalarNegated n op) = OpScalarNegated n <$> parseOperator op
+    parseOperator (OpMex m) = OpMex <$> parseMex' m
+    parseOperator (OpSelbri sb) = OpSelbri <$> selbriToPred sb
+    parseOperator (OpVUhU v) = return $ OpVUhU v
+    reduceMex :: JboMex -> JboMex
+    reduceMex (Operation op ms) = applyJboOperator op ms
+    reduceMex m = m
+    nullMex = MexNumeralString [PA "tu'o"]
+    nullOp = OpVUhU "ge'a"
+    stripNulls :: [JboMex] -> [JboMex]
+    stripNulls (Operation nullop os:os') | nullop == nullOp =
+	stripNulls os ++ stripNulls os'
+    stripNulls (nullo:os) | nullo == nullMex = stripNulls os
+    stripNulls (o:os) = o : stripNulls os
+    stripNulls [] = []
+    applyJboOperator :: JboOperator -> [JboMex] -> JboMex
+    applyJboOperator (OpPermuted s op) os =
+	applyJboOperator op $ swapFiniteWithDefault nullMex (stripNulls os) 0 $ s-1
+    applyJboOperator nullop (Operation op os:os') | nullop == nullOp =
+	applyJboOperator op $ os++os'
+    applyJboOperator op os = Operation op $ stripNulls os
 
 quantify :: PreProp r => Value -> Maybe JboPred -> ParseM r JboTerm
 quantify jq r = do

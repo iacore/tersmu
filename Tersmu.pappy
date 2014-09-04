@@ -506,7 +506,7 @@ number :: Mex
 	-> { MexNumeralString $ (PA p):t }
 numeral :: Numeral
     = p:PA -> {PA p}
-    / l:lerfuWord -> {Lerfu l}
+    / l:lerfuWord -> {NumeralLerfu l}
 
 litnum :: Int
     = ds:digit+ -> {
@@ -529,11 +529,11 @@ digit :: Int
 
 -- TODO: should be PA, not digit
 lerfuString :: {[Lerfu]}
-    = c:lerfuWord cs:(lerfuWord / n:digit -> {show n !! 0})*
+    = c:lerfuWord cs:(lerfuWord / n:digit -> {Lerfu $ show n !! 0})*
 	-> {c:cs}
 lerfuWord :: Lerfu
-    = s:BY -> {if s=="y'y" then 'h' else s!!0}
-    / v:VowelValsi BU -> v
+    = s:BY -> {if s=="y'y" then Lerfu 'h' else Lerfu $ s!!0}
+    / v:VowelValsi BU -> { Lerfu v }
     -- TODO: / LAU lerfuWord / TEI lerfuString FOI
     -- TODO: Valsi BU
 
@@ -634,7 +634,7 @@ tagUnit :: TagUnit
     = s:(PU / ZI / ZEhA / VA / VEhA / VIhA / CAhA) -> {TenseCmavo s}
     / s:BAI -> {BAI s}
     / m:(MOhI)? f:FAhA -> { FAhA (isJust m) f }
-    / f:(FEhE)? q:quantifier ROI -> { ROI (isJust f) q }
+    / f:(FEhE)? q:number ROI -> { ROI (isJust f) q }
     / f:(FEhE)? s:(TAhE / ZAhO) -> { TAhE_ZAhO (isJust f) s }
     / FIhO s:selbri FEhU? -> { FIhO s }
     / CUhE -> { CUhE }

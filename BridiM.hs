@@ -259,8 +259,7 @@ argsToJboterms as = map (\n -> Map.findWithDefault ZoheTerm (NPos n) as) [1..max
     max = maximum $ 1:[n | NPos n <- Map.keys as]
 
 swapTerms :: [JboTerm] -> Int -> Int -> [JboTerm]
-swapTerms ts n m = take (max (max n m) (length ts)) $
-	swap (ts ++ (repeat ZoheTerm)) (n-1) (m-1)
+swapTerms ts n m = swapFiniteWithDefault ZoheTerm ts (n-1) (m-1)
 
 -- | addImplicit: adds a jboterm at first empty positional slot
 addImplicit :: PreProp r => JboTerm -> ParseM r ()
@@ -384,7 +383,7 @@ updateSumbastiWithSumtiAtom sa o = do
 	modifySumbastiBindings $ setShunting (\n -> Sumbasti False $ Ri n) o
     case sa of
 	Name _ s ->
-	    setSumbasti (Sumbasti False $ LerfuString $ take 1 s) o
+	    setSumbasti (Sumbasti False $ LerfuString $ map Lerfu $ take 1 s) o
 	Description _ _ _ sb _ _ ->
 	    let ls = lerfuStringOfSelbri sb
 	    in mapM_ (`setSumbasti` o) $
