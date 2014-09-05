@@ -123,10 +123,17 @@ statement3 :: Statement1
 
 prenex :: {[Term]} = ps:terms ZOhU -> ps
 
+-- XXX: slight modification of camxes here: we parse terms before a bridi tail
+-- lazily rather than greedily, so {pu broda gi'e brode} ends up as
+-- {(pu broda) gi'e brode} rather than {pu [ku] (broda gi'e brode)}. This
+-- seems to be a bug in camxes - it disagrees with the YACC parser.
+-- Thanks to menli for pointing out the bug.
 sentence :: {Sentence}
-    = mts1:(ts:terms CU? -> ts)?
-	bt:bridiTail
-	-> { Sentence (fromMaybe [] mts1) bt }
+    = bt:bridiTail -> { Sentence [] bt }
+    / {(ts,bt)}:termsAndTail -> {Sentence ts bt}
+termsAndTail :: {([Term],BridiTail)}
+    = CU? bt:bridiTail -> {([],bt)}
+    / t:terms1 {(ts,bt)}:termsAndTail -> {t:ts,bt}
 
 subsentence :: Subsentence
     = fs:freeAnnotations s:sentence -> {Subsentence fs [] s}
