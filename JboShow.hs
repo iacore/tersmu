@@ -322,7 +322,8 @@ instance JboShow SumtiAtom where
 	    Assignable n | n <= 10 -> "fo'" ++ vowelnum (n-5)
 	    Assignable n -> "ko'a xi " ++ jbonum n
 	    Ri 1 -> "ri"
-	    Ri n -> "ri" ++ jbonum n
+	    Ri n -> "ri xi " ++ jbonum n
+	    Ra r -> r
 	    MainBridiSumbasti n | n <= 5 -> "vo'" ++ vowelnum n
 	    MainBridiSumbasti n -> "vo'a xi " ++ jbonum n
 	else case v of

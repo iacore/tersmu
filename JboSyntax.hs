@@ -117,6 +117,7 @@ data SumtiAtom = Name [RelClause] String
 	       | Assignable Int -- ko'a
 	       | LerfuString [Lerfu]
 	       | Ri Int -- ri
+	       | Ra Cmavo -- ra/ru
 	       | MainBridiSumbasti Int -- vo'a
 	       | Quote [Statement]
 	       | NonJboQuote String

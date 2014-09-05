@@ -197,7 +197,6 @@ termset :: Term
     / pcon:gek ts1:term+ b:gik ts2:term+ &{length ts1 == length ts2}
 	-> { ConnectedTerms True (pcon b) (Termset ts1) (Termset ts2) }
 
-
 sumti :: Sumti
     = s:sumti1 rels:(VUhO rels:relativeClauses -> rels)?
 	-> { case rels of
@@ -249,11 +248,12 @@ sumti6 :: SumtiAtom
     / "ke'a":KOhA mn:("xi":XI n:litnum -> n)? -> {RelVar $ fromMaybe 1 mn}
     / "ce'u":KOhA mn:("xi":XI n:litnum -> n)? -> {LambdaVar $ fromMaybe 1 mn}
     / "ri":KOhA mn:("xi":XI n:litnum -> n)? -> {Ri $ fromMaybe 1 mn}
-    -- TODO: ra, ru
+    / "ra":KOhA -> {Ra "ra"}
+    / "ru":KOhA -> {Ra "ru"}
     / n:assignable mn:("xi":XI n:litnum -> n)? -> {Assignable $ fromMaybe n mn}
     / n:mainBridiSumbasti mn:("xi":XI n:litnum -> n)? -> {MainBridiSumbasti $ fromMaybe n mn}
     / "zo'e":KOhA -> {Zohe}
-    -- TODO: zi'o, zu'i
+    / k:KOhA &{k `elem` ["zi'o","zu'i"]} -> {NonAnaphoricProsumti k}
     / "ma":KOhA k:("kau":UI x:("xi":XI n:litnum -> n)? -> {fromMaybe 1 x})? -> {SumtiQ k}
     / "la":LA n:name -> n
     / g:(LA/LE) {(is,q,sb,rels,irels)}:sumtiTail KU? ->

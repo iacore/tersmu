@@ -387,6 +387,7 @@ parseSumtiAtom sa = do
 	RelVar _ -> getVarBinding sa
 	LambdaVar _ -> getVarBinding sa
 	Ri _ -> getSumbasti sa
+	Ra _ -> getSumbasti sa
 	Assignable _ -> getSumbasti sa
 	LerfuString _ -> getSumbasti sa
 	MainBridiSumbasti _ -> getSumbasti sa
