@@ -57,7 +57,7 @@ data DecoratedAbsTagUnit r t = DecoratedTagUnit
 data AbsTagUnit r t
     = TenseCmavo Cmavo
     | FAhA {fahaHasMohi::Bool, fahaCmavo::Cmavo}
-    | ROI {roiIsSpace::Bool, roiQuantifier::AbsMex r t}
+    | ROI {roiroi::Cmavo, roiIsSpace::Bool, roiQuantifier::AbsMex r t}
     | TAhE_ZAhO {taheZoheIsSpace::Bool, taheZahoCmavo::Cmavo}
     | BAI Cmavo
     | FIhO r

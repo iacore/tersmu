@@ -416,7 +416,7 @@ parseTagUnit (TenseCmavo c) = return $ TenseCmavo c
 parseTagUnit (BAI c) = return $ BAI c
 parseTagUnit (FAhA m c) = return $ FAhA m c
 parseTagUnit (TAhE_ZAhO f c) = return $ TAhE_ZAhO f c
-parseTagUnit (ROI f q) = ROI f <$> parseMex q
+parseTagUnit (ROI r f q) = ROI r f <$> parseMex q
 parseTagUnit (FIhO sb) = FIhO <$> selbriToPred sb
 -- XXX: for now at least, we just pass through ki as if it were a normal tag
 -- (this is what the BPFK section suggests at the time of writing:

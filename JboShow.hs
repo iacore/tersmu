@@ -52,6 +52,20 @@ withShuntedLambda f =
 				      _ -> s
        return r
 
+bracket :: Char -> String -> String
+bracket c =
+    let c' = case c of
+	    '(' -> ')'
+	    '[' -> ']'
+	    '{' -> '}'
+	    '<' -> '>'
+	    '"' -> '"'
+	    '\'' -> '\''
+    in (c:) . (++[c'])
+
+jbobracket :: String -> String -> String -> String
+jbobracket l r = ((l++" ")++) . (++(" "++r))
+
 instance JboShow String where
     logjboshow _ s = return s
 
@@ -94,16 +108,24 @@ instance JboShow JboMex where
     logjboshow jbo@True (MexInt n) = (++" boi") <$> logjboshow jbo n
     logjboshow jbo@False (MexInt n) = logjboshow jbo n
     logjboshow jbo@True (MexNumeralString ns) = (++" boi") <$> logjboshowlist jbo ns
-    logjboshow jbo@False (MexNumeralString ns) = ("("++) . (++")") <$> logjboshowlist jbo ns
+    logjboshow jbo@False (MexNumeralString ns) = bracket '(' <$> logjboshowlist True ns
     logjboshow jbo@True (MexLerfuString ls) = (++" boi") <$> logjboshow jbo ls
-    logjboshow jbo@False (MexLerfuString ls) = ("("++) . (++")") <$> logjboshow jbo ls
-    -- TODO: is it ok to just use "[...]" for these (and also the ops below?)
-    logjboshow jbo@False (MexSelbri p) = ("["++) . (++"]") <$> logjboshow jbo p
-    logjboshow jbo@True (MexSelbri p) = ("ni'e "++) . (++" te'u") <$> logjboshow jbo p
-    logjboshow jbo@False (MexSumti t) = ("["++) . (++"]") <$> logjboshow jbo t
-    logjboshow jbo@True (MexSumti t) = ("mo'e "++) . (++" te'u") <$> logjboshow jbo t
-    logjboshow jbo@False (MexArray ms) = ("["++) . (++"]") <$> logjboshowlist jbo ms
-    logjboshow jbo@True (MexArray ms) = ("jo'i "++) . (++" te'u") <$> logjboshowlist jbo ms
+    logjboshow jbo@False (MexLerfuString ls) = bracket '(' <$> logjboshow True ls
+    logjboshow jbo@False (MexSelbri p) = bracket '[' <$> logjboshow jbo p
+    logjboshow jbo@True (MexSelbri p) = jbobracket "ni'e" "te'u" <$> logjboshow jbo p
+    logjboshow jbo@False (MexSumti t) = bracket '[' <$> logjboshow jbo t
+    logjboshow jbo@True (MexSumti t) = jbobracket "mo'e" "te'u" <$> logjboshow jbo t
+    logjboshow jbo@False (MexArray ms) = bracket '[' <$> logjboshowlist jbo ms
+    logjboshow jbo@True (MexArray ms) = jbobracket "jo'i" "te'u" <$> logjboshowlist jbo ms
+
+-- |logjboshownumber: for cases when we shouldn't append a {boi} (number and
+-- numberOrLerfuString productions)
+logjboshownumber :: Bool -> JboMex -> Bindful SumtiAtom String
+logjboshownumber jbo (MexInt n) = logjboshow jbo n
+logjboshownumber jbo@True (MexNumeralString ns) = logjboshowlist jbo ns
+logjboshownumber jbo@False (MexNumeralString ns) = bracket '(' <$> logjboshowlist True ns
+logjboshownumber jbo@True (MexLerfuString ls) = logjboshow jbo ls
+logjboshownumber jbo@False (MexLerfuString ls) = bracket '(' <$> logjboshow True ls
 
 instance JboShow Numeral where
     logjboshow True (PA pa) = return pa
@@ -134,11 +156,11 @@ instance JboShow JboOperator where
     logjboshow jbo (OpScalarNegated n op) = do
 	ops <- logjboshow jbo op
 	return $ if jbo then n ++ " " ++ ops else "{"++n++"}("++ops++")"
-    logjboshow jbo@False (OpMex m) = ("["++) . (++"]") <$> logjboshow jbo m
-    logjboshow jbo@True (OpMex m) = ("ma'o "++) . (++" te'u") <$> logjboshow jbo m
-    logjboshow jbo@False (OpSelbri s) = ("["++) . (++"]") <$> logjboshow jbo s
-    logjboshow jbo@True (OpSelbri s) = ("na'u "++) . (++" te'u") <$> logjboshow jbo s
-    logjboshow jbo@False (OpVUhU v) = ("{"++) . (++"}") <$> return v
+    logjboshow jbo@False (OpMex m) = bracket '[' <$> logjboshow jbo m
+    logjboshow jbo@True (OpMex m) = jbobracket "ma'o" "te'u" <$> logjboshow jbo m
+    logjboshow jbo@False (OpSelbri s) = bracket '[' <$> logjboshow jbo s
+    logjboshow jbo@True (OpSelbri s) = jbobracket "na'u" "te'u" <$> logjboshow jbo s
+    logjboshow jbo@False (OpVUhU v) = bracket '{' <$> return v
     logjboshow jbo@True (OpVUhU v) = return v
 
 logjboshowLogConn _ prefix (LogJboConnective b c b') =
@@ -178,10 +200,10 @@ instance JboShow JboTagUnit where
     logjboshow jbo (BAI s) = return s
     logjboshow jbo (FAhA mohi s) = return $
 	(if mohi then "mo'i " else "") ++ s
-    logjboshow jbo (ROI fehe q) = do
-	qs <- logjboshow jbo q
+    logjboshow jbo (ROI r fehe q) = do
+	qs <- logjboshownumber jbo q
 	return $ 
-	    (if fehe then "fe'e " else "") ++ qs ++ " roi"
+	    (if fehe then "fe'e " else "") ++ qs ++ " " ++ r
     logjboshow jbo (TAhE_ZAhO fehe s) = return $
 	(if fehe then "fe'e " else "") ++ s
     logjboshow jbo (FIhO p) = do
@@ -259,7 +281,7 @@ instance JboShow JboRel where
 	rs <- logjboshow jbo r
 	return $ if jbo then n ++ " " ++ rs else "{"++n++"}("++rs++")"
     logjboshow jbo (Moi q m) = do
-	s <- logjboshow jbo q
+	s <- logjboshownumber jbo q
 	return $ s ++ " " ++ m
     logjboshow jbo (AbsPred a p) =
 	do withShuntedLambda (\n -> do
@@ -326,7 +348,7 @@ instance JboShow JboTerm where
 	    else "f" ++ show n ++ "(" ++
 		(concat . intersperse "," $ ss) ++ ")"
     logjboshow True (Named s) = return $ "la " ++ s ++ "."
-    logjboshow False (Named s) = return s
+    logjboshow False (Named s) = return $ bracket '"' s
     logjboshow jbo (JboQuote (ParsedQuote ps)) = do
 	pss <- logjboshow jbo ps
 	return $
@@ -334,18 +356,18 @@ instance JboShow JboTerm where
 	    pss ++
 	    (if jbo then " li'u" else " >>")
     logjboshow jbo (JboErrorQuote vs) = return $
-	(if jbo then "lo'u " else "{ ") ++
+	(if jbo then "lo'u " else "<{< ") ++
 	unwords vs ++
-	(if jbo then " le'u" else " }")
+	(if jbo then " le'u" else " >}>")
     logjboshow jbo (JboNonJboQuote s) = return $
 	let zoik = head
 		[ zoik
 		| n <- [0..]
 		, let zoik = "zoi" ++ if n > 0 then ("k"++) $ concat $ replicate (n-1) "yk" else ""
 		, not $ isInfixOf zoik s ]
-	in (if jbo then "zoi " ++ zoik ++ " " else "<< ") ++
+	in (if jbo then "zoi " ++ zoik ++ " " else "<[< ") ++
 	    s ++
-	    (if jbo then " " ++ zoik else " >>")
+	    (if jbo then " " ++ zoik else " >]>")
     logjboshow True (Valsi s) = return $ "zo " ++ s
     logjboshow False (Valsi s) = return $ "{" ++ s ++ "}"
     logjboshow jbo (UnboundSumbasti sa) = logjboshow jbo sa
@@ -364,7 +386,7 @@ instance JboShow JboTerm where
     logjboshow True (Value m) = ("li "++) . (++" lo'o") <$> logjboshow True m
     logjboshow False (Value m) = logjboshow False m
     logjboshow True (TheMex m) = ("me'o "++) . (++" lo'o") <$> logjboshow True m
-    logjboshow False (TheMex m) = logjboshow False m
+    logjboshow False (TheMex m) = bracket '[' . ("MEX: "++) <$> logjboshow False m
 	
 
 vowelnum 1 = "a"

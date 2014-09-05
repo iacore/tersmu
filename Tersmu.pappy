@@ -638,7 +638,7 @@ tagUnit :: TagUnit
     = s:(PU / ZI / ZEhA / VA / VEhA / VIhA / CAhA) -> {TenseCmavo s}
     / s:BAI -> {BAI s}
     / m:(MOhI)? f:FAhA -> { FAhA (isJust m) f }
-    / f:(FEhE)? q:number ROI -> { ROI (isJust f) q }
+    / f:(FEhE)? q:number r:ROI -> { ROI r (isJust f) q }
     / f:(FEhE)? s:(TAhE / ZAhO) -> { TAhE_ZAhO (isJust f) s }
     / FIhO s:selbri FEhU? -> { FIhO s }
     / CUhE -> { CUhE }
