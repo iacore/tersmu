@@ -194,10 +194,9 @@ termset :: Term
     = NUhI pcon:gek ts1:terms NUhU b:gik ts2:terms NUhU?
 	-> { ConnectedTerms True (pcon b) (Termset ts1) (Termset ts2) }
     / NUhI ts:terms NUhU? -> { Termset ts }
-    -- TODO: / gek-termset
--- TODO: gek-termset <- gek terms-gik-terms
+    / pcon:gek ts1:term+ b:gik ts2:term+ &{length ts1 == length ts2}
+	-> { ConnectedTerms True (pcon b) (Termset ts1) (Termset ts2) }
 
--- TODO: terms-gik-terms <- term (gik / terms-gik-terms) term
 
 sumti :: Sumti
     = s:sumti1 rels:(VUhO rels:relativeClauses -> rels)?
