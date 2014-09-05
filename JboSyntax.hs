@@ -161,6 +161,7 @@ data BridiTail = ConnectedBT Connective BridiTail BridiTail [Term]
 	       deriving (Eq, Show, Ord)
 
 data GekSentence = ConnectedGS Connective Subsentence Subsentence [Term]
+		 | TaggedGS Tag GekSentence
 		 | NegatedGS GekSentence
 		 deriving (Eq, Show, Ord)
 

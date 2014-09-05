@@ -165,7 +165,7 @@ bridiTail3 :: BridiTail
 gekSentence :: GekSentence
     = pcon:gek s1:subsentence b:gik s2:subsentence tts:tailTerms
 	-> { ConnectedGS (pcon b) s1 s2 tts }
-    / tag:tag? KE gs:gekSentence KEhE? -> gs -- TODO: handle tag
+    / mtag:tag? KE gs:gekSentence KEhE? -> { maybe gs (flip TaggedGS gs) mtag }
     / NA gs:gekSentence -> {NegatedGS gs}
 
 tailTerms :: {[Term]}

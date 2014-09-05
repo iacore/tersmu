@@ -83,6 +83,11 @@ parseBTail (GekSentence (ConnectedGS con ss1 ss2 tts)) =
 parseBTail (GekSentence (NegatedGS gs)) =
     mapProp Not >> parseBTail (GekSentence gs)
 
+parseBTail (GekSentence (TaggedGS tag gs)) = do
+    tag' <- parseTag tag
+    doBareTag tag'
+    parseBTail (GekSentence gs)
+
 parseBTail (ConnectedBT con bt1 bt2 tts) =
     parseBTail (GekSentence (ConnectedGS con
 	(Subsentence [] [] (Sentence [] bt1))
