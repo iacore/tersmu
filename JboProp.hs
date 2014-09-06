@@ -39,6 +39,7 @@ data JboRel = Tanru JboPred JboRel
 	    | Among JboTerm
 	    | Equal
 	    | UnboundBribasti TanruUnit
+	    | OperatorRel JboOperator
 	    | TagRel JboTag -- xo'i
 	    | Brivla String
     deriving (Eq, Show, Ord)

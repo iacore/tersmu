@@ -393,7 +393,7 @@ tanruUnit2 :: TanruUnit
     / ME s:(sumti / ls:lerfuString -> {QAtom Nothing [] $ LerfuString ls}) MEhU? mmoi:MOI?
 	-> {maybe (TUMe s) (TUMoi s) mmoi}
     / q:numberOrLerfuString moi:MOI -> {TUMoi (QAtom Nothing [] $ MexLi q) moi}
-    -- TODO: NUhA mexOperator
+    / NUhA op:mexOperator -> {TUOperator op}
     / n:convSE tu:tanruUnit2 -> {TUPermuted n tu}
     / JAI mt:tag? tu:tanruUnit2 -> {TUJai mt tu}
     / n:NAhE tu:tanruUnit2 -> {TUSelbri3 $ ScalarNegatedSB n $ TanruUnit tu []}

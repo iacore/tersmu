@@ -199,6 +199,8 @@ parseTU (TUJai (Just tag) tu) = do
     (.swapArgs (NPos 1) JaiPos) . withJaiAsTag tag' <$> parseTU tu
 parseTU (TUJai Nothing tu) =
     (.swapArgs (NPos 1) JaiPos) . withJaiAsRaising <$> parseTU tu
+parseTU (TUOperator op) = do
+    jboRelToBridi . OperatorRel <$> parseOperator op
 parseTU (TUXOhI tag) = do
     -- xo'i: experimental cmavo which extracts the underlying binary relation
     -- from a tag; essentially an inverse to fi'o. Proposed by selpa'i.
@@ -454,34 +456,8 @@ terpJboMexAsQuantifier m | m == mexExists = LojQuantifier Exists
 terpJboMexAsQuantifier (MexInt n) = LojQuantifier $ Exactly n
 terpJboMexAsQuantifier m = MexQuantifier m
 
-parseMex :: PreProp r => Mex -> ParseM r JboMex
-parseMex m = reduceMex <$> parseMex' m where
-    parseMex' (ConnectedMex fore con@(JboConnLog _ _) m1 m2) = do
-	doConnective fore con
-	    (parseMex' m1)
-	    (parseMex' m2)
-    parseMex' (ConnectedMex fore con@(JboConnJoik _ _) m1 m2) =
-	ConnectedMex fore <$> parseConnective con <*> parseMex' m1 <*> parseMex' m2
-    parseMex' (Operation op ms) = Operation <$> parseOperator op <*> mapM parseMex' ms
-    parseMex' (MexArray ms) = MexArray <$> mapM parseMex' ms
-    parseMex' (QualifiedMex q m) = QualifiedMex q <$> parseMex' m
-    parseMex' (MexSelbri sb) = MexSelbri <$> selbriToPred sb
-    parseMex' (MexSumti s) = MexSumti <$> parseSumti s
-    parseMex' (MexInt n) = return $ MexInt n
-    parseMex' (MexNumeralString ns) = return $ MexNumeralString ns
-    parseMex' (MexLerfuString ls) = return $ MexLerfuString ls
-    parseOperator :: PreProp r => Operator -> ParseM r JboOperator
-    parseOperator (ConnectedOperator fore con@(JboConnLog _ _) o1 o2) = do
-	doConnective fore con
-	    (parseOperator o1)
-	    (parseOperator o2)
-    parseOperator (ConnectedOperator fore con@(JboConnJoik _ _) o1 o2) =
-	ConnectedOperator fore <$> parseConnective con <*> parseOperator o1 <*> parseOperator o2
-    parseOperator (OpPermuted s o) = OpPermuted s <$> parseOperator o
-    parseOperator (OpScalarNegated n op) = OpScalarNegated n <$> parseOperator op
-    parseOperator (OpMex m) = OpMex <$> parseMex' m
-    parseOperator (OpSelbri sb) = OpSelbri <$> selbriToPred sb
-    parseOperator (OpVUhU v) = return $ OpVUhU v
+parseMex,_parseMex :: PreProp r => Mex -> ParseM r JboMex
+parseMex m = reduceMex <$> _parseMex m where
     reduceMex :: JboMex -> JboMex
     reduceMex (Operation op ms) = applyJboOperator op ms
     reduceMex m = m
@@ -499,6 +475,32 @@ parseMex m = reduceMex <$> parseMex' m where
     applyJboOperator nullop (Operation op os:os') | nullop == nullOp =
 	applyJboOperator op $ os++os'
     applyJboOperator op os = Operation op $ stripNulls os
+_parseMex (ConnectedMex fore con@(JboConnLog _ _) m1 m2) = do
+    doConnective fore con
+	(_parseMex m1)
+	(_parseMex m2)
+_parseMex (ConnectedMex fore con@(JboConnJoik _ _) m1 m2) =
+    ConnectedMex fore <$> parseConnective con <*> _parseMex m1 <*> _parseMex m2
+_parseMex (Operation op ms) = Operation <$> parseOperator op <*> mapM _parseMex ms
+_parseMex (MexArray ms) = MexArray <$> mapM _parseMex ms
+_parseMex (QualifiedMex q m) = QualifiedMex q <$> _parseMex m
+_parseMex (MexSelbri sb) = MexSelbri <$> selbriToPred sb
+_parseMex (MexSumti s) = MexSumti <$> parseSumti s
+_parseMex (MexInt n) = return $ MexInt n
+_parseMex (MexNumeralString ns) = return $ MexNumeralString ns
+_parseMex (MexLerfuString ls) = return $ MexLerfuString ls
+parseOperator :: PreProp r => Operator -> ParseM r JboOperator
+parseOperator (ConnectedOperator fore con@(JboConnLog _ _) o1 o2) = do
+    doConnective fore con
+	(parseOperator o1)
+	(parseOperator o2)
+parseOperator (ConnectedOperator fore con@(JboConnJoik _ _) o1 o2) =
+    ConnectedOperator fore <$> parseConnective con <*> parseOperator o1 <*> parseOperator o2
+parseOperator (OpPermuted s o) = OpPermuted s <$> parseOperator o
+parseOperator (OpScalarNegated n op) = OpScalarNegated n <$> parseOperator op
+parseOperator (OpMex m) = OpMex <$> _parseMex m
+parseOperator (OpSelbri sb) = OpSelbri <$> selbriToPred sb
+parseOperator (OpVUhU v) = return $ OpVUhU v
 
 quantify :: PreProp r => JboMex -> Maybe JboPred -> ParseM r JboTerm
 quantify m r = do
