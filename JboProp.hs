@@ -35,7 +35,7 @@ data JboRel = Tanru JboPred JboRel
 	    | ScalarNegatedRel NAhE JboRel
 	    | AbsPred Abstractor JboPred
 	    | AbsProp Abstractor JboProp
-	    | Moi JboMex Cmavo
+	    | Moi JboTerm Cmavo
 	    | Among JboTerm
 	    | Equal
 	    | UnboundBribasti TanruUnit
@@ -140,12 +140,14 @@ instance Termful JboRel where
     travTs_ f (AbsPred a p) = travTs_ f p
     travTs_ f (AbsProp a p) = travTs_ f p
     travTs_ f (Among t) = f t
+    travTs_ f (Moi t _) = f t
     travTs_ _ _ = pure ()
     subTerm s t (Tanru p r) = Tanru (subTerm s t p) (subTerm s t r)
     subTerm s t (TanruConnective con p p') = TanruConnective (subTerm s t con) (subTerm s t p) (subTerm s t p')
     subTerm s t (AbsPred a p) = AbsPred a (\o -> subTerm s t (p o))
     subTerm s t (AbsProp a p) = AbsProp a (subTerm s t p)
     subTerm s t (Among t') = Among $ (subTerm s t) t'
+    subTerm s t (Moi t' m) = Moi ((subTerm s t) t') m
     subTerm s t r = r
 instance Termful JboPred where
     travTs_ f p = travTs_ f $ p ZoheTerm

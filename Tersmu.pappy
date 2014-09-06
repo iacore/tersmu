@@ -390,9 +390,9 @@ tanruUnit2 :: TanruUnit
     -- TODO: don't just ignore RAhO
     / g:GOhA mn:("xi":XI n:litnum -> n)? RAhO? -> {TUGOhA g $ fromMaybe 1 mn}
     / KE sb:selbri3 KEhE? -> {TUSelbri3 sb}
-    -- TODO: ME (sumti / lerfuString) MEhU? MOI?
-    / ME s:sumti MEhU? -> {TUMe s}
-    / q:numberOrLerfuString m:MOI -> {TUMoi q m}
+    / ME s:(sumti / ls:lerfuString -> {QAtom Nothing [] $ LerfuString ls}) MEhU? mmoi:MOI?
+	-> {maybe (TUMe s) (TUMoi s) mmoi}
+    / q:numberOrLerfuString moi:MOI -> {TUMoi (QAtom Nothing [] $ MexLi q) moi}
     -- TODO: NUhA mexOperator
     / n:convSE tu:tanruUnit2 -> {TUPermuted n tu}
     / JAI mt:tag? tu:tanruUnit2 -> {TUJai mt tu}

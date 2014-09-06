@@ -166,9 +166,9 @@ parseTU tu@(TUGOhA _ _) = getBribasti tu
 parseTU (TUMe s) = do
     o <- parseSumti s
     return $ jboRelToBridi $ Among o
-parseTU (TUMoi q moi) = do
-    m <- parseMex q
-    return $ jboRelToBridi $ Moi m moi
+parseTU (TUMoi s moi) = do
+    o <- parseSumti s
+    return $ jboRelToBridi $ Moi o moi
 parseTU (TUAbstraction (NegatedAbstractor a) ss) =
     mapProp Not >> parseTU (TUAbstraction a ss)
 parseTU (TUAbstraction (LogConnectedAbstractor lcon a1 a2) ss) =
@@ -368,13 +368,13 @@ parseSumtiAtom sa = do
 	    mm <- traverse parseMex miq
 	    sr <- case ssb of
 		Left sb -> selbriToPred sb
-		Right s -> parseSumti s >>= \so -> return $ \o -> Rel (Among so) [o]
+		Right s -> isAmong <$> parseSumti s
 	    (irps,iips,ias) <- parseRels $
 		irels ++ maybeToList ((\is ->
 		    IncidentalGOI "ne" (Sumti Untagged is)) <$> mis)
 	    let xorlo_ips = sr : 
 		    (case mm of
-			Just m -> [(\o -> Rel (Moi m "mei") [o])]
+			Just m -> [(\o -> Rel (Moi (Value m) "mei") [o])]
 			_ -> [])
 		    ++ iips
 	    o <- getFreshConstant

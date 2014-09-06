@@ -121,6 +121,7 @@ instance JboShow JboMex where
 -- |logjboshownumber: for cases when we shouldn't append a {boi} (number and
 -- numberOrLerfuString productions)
 logjboshownumber :: Bool -> JboMex -> Bindful SumtiAtom String
+logjboshownumber _ m | not (mexIsNumberOrLS m) = error "[BUG: Full mex in ljsn]"
 logjboshownumber jbo (MexInt n) = logjboshow jbo n
 logjboshownumber jbo@True (MexNumeralString ns) = logjboshowlist jbo ns
 logjboshownumber jbo@False (MexNumeralString ns) = bracket '(' <$> logjboshowlist True ns
@@ -280,9 +281,13 @@ instance JboShow JboRel where
     logjboshow jbo (ScalarNegatedRel n r) = do
 	rs <- logjboshow jbo r
 	return $ if jbo then n ++ " " ++ rs else "{"++n++"}("++rs++")"
-    logjboshow jbo (Moi q m) = do
+    logjboshow jbo (Moi (Value q) m) | mexIsNumberOrLS q = do
 	s <- logjboshownumber jbo q
 	return $ s ++ " " ++ m
+    logjboshow jbo (Moi t m) = do
+	ts <- logjboshow jbo t
+	return $ if jbo then "me " ++ ts ++ " me'u " ++ m
+	    else bracket '[' ts ++ " " ++ m
     logjboshow jbo (AbsPred a p) =
 	do withShuntedLambda (\n -> do
 	    ps <- logjboshow jbo (p (BoundVar n))

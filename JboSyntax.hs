@@ -190,7 +190,7 @@ sb3tosb = Selbri2 . Selbri3
 data TanruUnit = TUBrivla String
 		| TUGOhA String Int
 		| TUMe Sumti
-		| TUMoi Mex String
+		| TUMoi Sumti String
 		| TUAbstraction Abstractor Subsentence
 	        | TUPermuted Int TanruUnit
 		| TUJai (Maybe Tag) TanruUnit
@@ -220,6 +220,11 @@ data AbsMex r t
     deriving (Eq, Show, Ord)
 
 type Mex = AbsMex Selbri Sumti
+
+mexIsNumberOrLS (MexInt _) = True
+mexIsNumberOrLS (MexNumeralString _) = True
+mexIsNumberOrLS (MexLerfuString _) = True
+mexIsNumberOrLS _ = False
 
 data Numeral = PA Cmavo | NumeralLerfu Lerfu
     deriving (Eq, Show, Ord)
