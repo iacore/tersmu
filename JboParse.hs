@@ -363,10 +363,12 @@ parseSumtiAtom sa = do
 	    parseRels rels
 	_ -> return ([],[],[])
     o <- case sa of
-	Description gadri mis miq sb _ irels -> do
+	Description gadri mis miq ssb _ irels -> do
 	    -- TODO: gadri other than {lo}
 	    mm <- traverse parseMex miq
-	    sr <- selbriToPred sb
+	    sr <- case ssb of
+		Left sb -> selbriToPred sb
+		Right s -> parseSumti s >>= \so -> return $ \o -> Rel (Among so) [o]
 	    (irps,iips,ias) <- parseRels $
 		irels ++ maybeToList ((\is ->
 		    IncidentalGOI "ne" (Sumti Untagged is)) <$> mis)

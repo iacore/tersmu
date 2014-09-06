@@ -384,7 +384,7 @@ updateSumbastiWithSumtiAtom sa o = do
     case sa of
 	Name _ s ->
 	    setSumbasti (Sumbasti False $ LerfuString $ map Lerfu $ take 1 s) o
-	Description _ _ _ sb _ _ ->
+	Description _ _ _ (Left sb) _ _ ->
 	    let ls = lerfuStringOfSelbri sb
 	    in mapM_ (`setSumbasti` o) $
 		map (Sumbasti False . LerfuString) [ls, take 1 ls]

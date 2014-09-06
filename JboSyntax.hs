@@ -113,7 +113,7 @@ data SumtiAtom = Name [RelClause] String
 	       | RelVar Int -- ke'a
 	       | LambdaVar Int -- ce'u
 	       | SelbriVar -- fake
-	       | Description Gadri (Maybe Sumti) (Maybe Mex) Selbri [RelClause] [RelClause]
+	       | Description Gadri (Maybe Sumti) (Maybe Mex) (Either Selbri Sumti) [RelClause] [RelClause]
 	       | Assignable Int -- ko'a
 	       | LerfuString [Lerfu]
 	       | Ri Int -- ri

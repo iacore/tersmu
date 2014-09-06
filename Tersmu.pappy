@@ -34,7 +34,7 @@ free :: Free
     -- TODO: soi
     / cs:vocative rels1:maybeRelativeClauses sb:selbri rels2:maybeRelativeClauses DOhU?
 	-> { Vocative cs $ Just (QAtom Nothing (rels1++rels2)
-	    (Description "le" Nothing Nothing sb [] [])) }
+	    (Description "le" Nothing Nothing (Left sb) [] [])) }
     / cs:vocative n:name rels:maybeRelativeClauses DOhU?
 	-> { Vocative cs $ Just (QAtom Nothing rels n) }
     / cs:vocative ms:sumti? DOhU? -> { Vocative cs ms }
@@ -263,8 +263,8 @@ sumti6 :: SumtiAtom
     / k:KOhA &{k `elem` ["zi'o","zu'i"]} -> {NonAnaphoricProsumti k}
     / "ma":KOhA k:("kau":UI x:("xi":XI n:litnum -> n)? -> {fromMaybe 1 x})? -> {SumtiQ k}
     / "la":LA n:name -> n
-    / g:(LA/LE) {(is,q,sb,rels,irels)}:sumtiTail KU? ->
-	{Description g is q sb rels irels}
+    / g:(LA/LE) {(is,q,ssb,rels,irels)}:sumtiTail KU? ->
+	{Description g is q ssb rels irels}
     / liClause
 
 qualifier :: SumtiQualifier
@@ -310,18 +310,18 @@ liClause :: SumtiAtom
     = "li":LI m:mex LOhO? -> { MexLi m }
     / "me'o":LI m:mex LOhO? -> { MexMex m }
 
-sumtiTail :: {(Maybe Sumti, Maybe Mex, Selbri, [RelClause], [RelClause])}
-    = s:sumti6 srels:maybeRelativeClauses {(q,sb,irels)}:sumtiTail1
-	-> {(Just (QAtom Nothing srels s),q,sb,[],irels)}
-    / rels:maybeRelativeClauses {(q,sb,irels)}:sumtiTail1
-	-> {(Nothing,q,sb,rels,irels)}
+sumtiTail :: {(Maybe Sumti, Maybe Mex, Either Selbri Sumti, [RelClause], [RelClause])}
+    = s:sumti6 srels:maybeRelativeClauses {(q,ssb,irels)}:sumtiTail1
+	-> {(Just (QAtom Nothing srels s),q,ssb,[],irels)}
+    / rels:maybeRelativeClauses {(q,ssb,irels)}:sumtiTail1
+	-> {(Nothing,q,ssb,rels,irels)}
 
-sumtiTail1 :: {(Maybe Mex, Selbri, [RelClause])}
+sumtiTail1 :: {(Maybe Mex, Either Selbri Sumti, [RelClause])}
     = sb:selbri rels:maybeRelativeClauses
-	-> {(Nothing,sb,rels)}
-    / q:quantifier? sb:selbri rels:maybeRelativeClauses
-	-> {(q,sb,rels)}
-    -- TODO: / q:quantifier s:sumti -> ...
+	-> {(Nothing,Left sb,rels)}
+    / mq:quantifier? sb:selbri rels:maybeRelativeClauses
+	-> {(mq,Left sb,rels)}
+    / q:quantifier s:sumti -> {(Just q,Right s,[])}
 
 maybeRelativeClauses :: {[RelClause]}
     = mrels:relativeClauses? -> {fromMaybe [] mrels}
