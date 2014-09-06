@@ -240,7 +240,7 @@ parseTerm t = case t of
 
 parseSumti :: PreProp r => Sumti -> ParseM r JboTerm
 parseSumti s = do
-    (o,ips,as) <- case s of
+    (o,jrels) <- case s of
 	(ConnectedSumti fore con s1 s2 rels) -> do
 	    o <- case con of
 		JboConnLog _ lcon -> do
@@ -260,31 +260,32 @@ parseSumti s = do
 			"Ignoring tag on non-logically connected sumti"
 		    [o1,o2] <- mapM parseSumti [s1,s2]
 		    return $ JoikedTerms joik o1 o2
-	    (_,ips,as) <- parseRels rels
-	    return (o,ips,as)
+	    jrels <- parseRels rels
+	    return (o,jrels)
 	(QAtom mq rels sa) -> case sa of
 	     Variable _ -> do
 		mm <- traverse parseMex mq
-		(rps,ips,as) <- parseRels rels
+		(rps,jrels) <- stripForeRestrictives <$> parseRels rels
 		o <- parseVariable sa rps mm
-		return (o,ips,as)
+		return (o,jrels)
 	     _ -> do
 		 mm <- traverse parseMex mq
-		 (o,(rps,ips,as)) <- parseSumtiAtom sa
-		 (rps',ips',as') <- parseRels rels
-		 o' <- case mm of
-		   Nothing -> return o
-		   Just m -> do
-		    quantify m $ andMPred $ (isAmong o):(rps++rps')
-		 return (o',ips++ips',as++as')
+		 (o,ijrels) <- parseSumtiAtom sa
+		 jrels <- (ijrels++) <$> parseRels rels
+		 (o,jrels) <- case mm of
+		     Nothing -> return (o,jrels)
+		     Just m -> do
+			let (rps,jrels') = stripForeRestrictives jrels
+			o' <- quantify m $ andMPred $ (isAmong o):rps
+			return (o',jrels')
+		 return (o,jrels)
 	(QSelbri q rels sb) -> do
 	    m <- parseMex q
 	    sr <- selbriToPred sb
-	    (rps,ips,as) <- parseRels rels
+	    (rps,jrels) <- stripForeRestrictives <$> parseRels rels
 	    o <- quantify m (andMPred $ sr:rps)
-	    return (o,ips,as)
-    o <- doIncidentals o ips
-    o <- doAssigns o as
+	    return (o,jrels)
+    o <- foldM doRel o jrels
     -- |TODO: make this an option?
     -- o <- bindUnbound o
     updateReferenced o
@@ -298,49 +299,65 @@ parseSumti s = do
 	    doAssigns o [Right o']
 	    return o'
 
-type ParsedRels = ([JboPred],[JboPred],[Either SumtiAtom JboTerm])
-parseRels :: PreProp r => [RelClause] -> ParseM r ParsedRels
-parseRels [] = return ([],[],[])
-parseRels (r:rs) = do
-    (rps,ips,as) <- case r of
-	Restrictive ss -> do
-	    rp <- subsentToPred ss RelVar
-	    return ([rp],[],[])
-	Incidental ss -> do
-	    ip <- subsentToPred ss RelVar >>= doQuestionsPred True
-	    return ([],[ip],[])
-	RestrictiveGOI goi t -> goiRels goi True t
-	IncidentalGOI goi t -> goiRels goi False t
-	Assignment (Sumti Untagged (QAtom Nothing [] sa)) | isAssignable sa -> 
-	    return ([],[],[Left sa])
-	Assignment t -> do
-	    ret <- ignoringArgs $ parseTerm t
-	    case ret of
-		Just (Right o) -> return ([],[], [Right o])
-		_ -> return ([],[],[])
-    (rps',ips',as') <- parseRels rs
-    return (rps++rps',ips++ips',as++as')
+data JboRelClause
+    = JRRestrictive {jrrPred::JboPred}
+    | JRIncidental {jriPred::JboPred}
+    | JRAssign (Either SumtiAtom JboTerm)
+
+parseRels :: PreProp r => [RelClause] -> ParseM r [JboRelClause]
+parseRels rels = concat . map maybeToList <$> mapM parseRel rels where
+    parseRel (Restrictive ss) = Just . JRRestrictive <$> subsentToPred ss RelVar
+    parseRel (Incidental ss) = 
+	(Just . JRIncidental <$>) $ subsentToPred ss RelVar >>= doQuestionsPred True
+    parseRel (RestrictiveGOI goi t) = goiRel goi JRRestrictive t
+    parseRel (IncidentalGOI goi t) = goiRel goi JRIncidental t
+    parseRel (Assignment (Sumti Untagged (QAtom Nothing [] sa))) | isAssignable sa = 
+	return $ Just . JRAssign $ Left sa
+    parseRel (Assignment t) = do
+	ret <- ignoringArgs $ parseTerm t
+	case ret of
+	    Just (Right o) -> return $ Just . JRAssign $ Right o
+	    _ -> return Nothing
+    goiRel goi jr t = do
+	ret <- ignoringArgs $ parseTerm t
+	return $ jr <$> case ret of
+	    Just (Right o) ->
+		let rel = case goi of
+			"pe" -> Brivla "srana"
+			"ne" -> Brivla "srana"
+			"po'u" -> Equal
+			"no'u" -> Equal
+			-- XXX: following are rather approximate... the
+			-- BPFK subordinators section suggests more
+			-- complicated expressions
+			"po'e" -> Tanru (\o -> Rel (Brivla "jinzi") [o])
+				    (Brivla "srana")
+			"po" -> Tanru (\o -> Rel (Brivla "steci") [o])
+				    (Brivla "srana")
+		in Just $ \x -> Rel rel [x,o]
+	    Just (Left (jbotag, mo)) -> Just $ \x -> Rel (TagRel jbotag) [fromMaybe ZoheTerm mo,x]
+	    _ -> Nothing
+stripForeRestrictives :: [JboRelClause] -> ([JboPred],[JboRelClause])
+stripForeRestrictives rels = let (rrs,rels') = break (not . jrIsRes) rels in (map jrrPred rrs,rels')
     where
-	goiRels goi restrictive t = do
-	    ret <- ignoringArgs $ parseTerm t
-	    let ps = maybeToList $ case ret of
-		    Just (Right o) ->
-			let rel = case goi of
-				"pe" -> Brivla "srana"
-				"ne" -> Brivla "srana"
-				"po'u" -> Equal
-				"no'u" -> Equal
-				-- XXX: following are rather approximate... the
-				-- BPFK subordinators section suggests more
-				-- complicated expressions
-				"po'e" -> Tanru (\o -> Rel (Brivla "jinzi") [o])
-					    (Brivla "srana")
-				"po" -> Tanru (\o -> Rel (Brivla "steci") [o])
-					    (Brivla "srana")
-			in Just $ \x -> Rel rel [x,o]
-		    Just (Left (jbotag, mo)) -> Just $ \x -> Rel (TagRel jbotag) [fromMaybe ZoheTerm mo,x]
-		    _ -> Nothing
-	    return $ if restrictive then (ps,[],[]) else ([],ps,[])
+	jrIsRes (JRRestrictive _) = True
+	jrIsRes _ = False
+segregateRels :: [JboRelClause] -> ([JboPred],[JboPred],[Either SumtiAtom JboTerm])
+segregateRels (r:rs) = let (rrs,irs,as) = segregateRels rs in case r of
+	JRRestrictive p -> (p:rrs,irs,as)
+	JRIncidental p ->  (rrs,p:irs,as)
+	JRAssign a ->  (rrs,irs,a:as)
+segregateRels [] = ([],[],[])
+
+doRel :: PreProp r => JboTerm -> JboRelClause -> ParseM r JboTerm
+doRel o (JRIncidental p) = doIncidental o p
+doRel o (JRRestrictive p) = do
+    -- XXX: ko'a poi broda -> zo'e noi me ko'a gi'e broda
+    -- TODO: consider alternative semantics (Chierchia's iota?)
+    o' <- getFreshConstant
+    o' <- doIncidentals o' $ [p,isAmong o]
+    return o'
+doRel o (JRAssign a) = doAssign o a
 
 parseVariable :: PreProp r => SumtiAtom -> [JboPred] -> Maybe JboMex -> ParseM r JboTerm
 parseVariable sa@(Variable n) rps mm = do
@@ -352,18 +369,18 @@ parseVariable sa@(Variable n) rps mm = do
 	    setVarBinding sa o
 	    return o
 
-parseSumtiAtom :: PreProp r => SumtiAtom -> ParseM r (JboTerm, ParsedRels)
+parseSumtiAtom :: PreProp r => SumtiAtom -> ParseM r (JboTerm, [JboRelClause])
 parseSumtiAtom sa = do
-    (rps,ips,as) <- case sa of
+    jrels <- case sa of
 	Description _ _ _ _ rels _ -> parseRels rels
 	QualifiedSumti _ rels _ -> parseRels rels
-	Name rels _ ->
+	Name _ rels _ ->
 	    -- XXX: this construction, LA relativeClauses CMENE, appears not
 	    -- to be mentioned in CLL; an alternative plausible semantics
 	    -- would be that the relative clauses become "part of the name",
 	    -- as with inner relative clauses in LA description sumti.
 	    parseRels rels
-	_ -> return ([],[],[])
+	_ -> return []
     o <- case sa of
 	Description gadri mis miq ssb _ irels -> do
 	    -- TODO: gadri other than {lo}
@@ -371,14 +388,14 @@ parseSumtiAtom sa = do
 	    sr <- case ssb of
 		Left sb -> selbriToPred sb
 		Right s -> isAmong <$> parseSumti s
-	    (irps,iips,ias) <- parseRels $
+	    (irps,iips,ias) <- (segregateRels <$>) $ parseRels $
 		irels ++ maybeToList ((\is ->
 		    IncidentalGOI "ne" (Sumti Untagged is)) <$> mis)
 	    let xorlo_ips = sr : 
 		    (case mm of
 			Just m -> [(\o -> Rel (Moi (Value m) "mei") [o])]
 			_ -> [])
-		    ++ iips
+		    ++ irps ++ iips
 	    o <- getFreshConstant
 	    o <- doIncidentals o xorlo_ips
 	    doAssigns o ias
@@ -399,7 +416,7 @@ parseSumtiAtom sa = do
 	Zohe -> getFreshConstant
 	-- TODO: following ought all to give fresh constants, really
 	NonAnaphoricProsumti ps -> return $ NonAnaph ps
-	Name _ s -> return $ Named s
+	Name _ _ s -> return $ Named s -- TODO: handle gadri
 	Quote sts ->
 	    -- TODO: quotes shouldn't have access to higher level bindings
 	    -- TODO: should probably return the unparsed text as well?
@@ -409,7 +426,7 @@ parseSumtiAtom sa = do
 	NonJboQuote s -> return $ JboNonJboQuote s
 	Word s -> return $ Valsi s
     updateSumbastiWithSumtiAtom sa o
-    return (o,(rps,ips,as))
+    return (o,jrels)
 
 parseTag :: PreProp r => Tag -> ParseM r JboTag
 parseTag (ConnectedTag con@(JboConnLog _ _) tag1 tag2) = do

@@ -36,7 +36,7 @@ free :: Free
 	-> { Vocative cs $ Just (QAtom Nothing (rels1++rels2)
 	    (Description "le" Nothing Nothing (Left sb) [] [])) }
     / cs:vocative n:name rels:maybeRelativeClauses DOhU?
-	-> { Vocative cs $ Just (QAtom Nothing rels n) }
+	-> { Vocative cs $ Just (QAtom Nothing rels (n "la")) }
     / cs:vocative ms:sumti? DOhU? -> { Vocative cs ms }
     / q:numberOrLerfuString MAI -> { MAI q }
     / TO ps:paragraphs TOI? -> {Bracketed ps}
@@ -262,7 +262,7 @@ sumti6 :: SumtiAtom
     / "zo'e":KOhA -> {Zohe}
     / k:KOhA &{k `elem` ["zi'o","zu'i"]} -> {NonAnaphoricProsumti k}
     / "ma":KOhA k:("kau":UI x:("xi":XI n:litnum -> n)? -> {fromMaybe 1 x})? -> {SumtiQ k}
-    / "la":LA n:name -> n
+    / g:LA n:name -> {n g}
     / g:(LA/LE) {(is,q,ssb,rels,irels)}:sumtiTail KU? ->
 	{Description g is q ssb rels irels}
     / liClause
@@ -271,8 +271,8 @@ qualifier :: SumtiQualifier
     = l:LAhE -> {LAhE l}
     / n:NAhE BO -> {NAhE_BO n}
 
-name :: SumtiAtom
-    = rels:maybeRelativeClauses cs:CMENE+ -> {Name rels $ unwords cs}
+name :: {Gadri -> SumtiAtom}
+    = rels:maybeRelativeClauses cs:CMENE+ -> {\g -> Name g rels $ unwords cs}
 
 variable :: Int
     = "da":KOhA -> {1}

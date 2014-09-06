@@ -382,7 +382,7 @@ updateSumbastiWithSumtiAtom sa o = do
     when (getsRi sa) $
 	modifySumbastiBindings $ setShunting (\n -> Sumbasti False $ Ri n) o
     case sa of
-	Name _ s ->
+	Name _ _ s ->
 	    setSumbasti (Sumbasti False $ LerfuString $ map Lerfu $ take 1 s) o
 	Description _ _ _ (Left sb) _ _ ->
 	    let ls = lerfuStringOfSelbri sb
@@ -395,13 +395,12 @@ updateReferenced (Var n) = setReferenced n
 updateReferenced _ = return ()
 
 doAssigns :: JboTerm -> [Either SumtiAtom JboTerm] -> ParseM r JboTerm
-doAssigns o as = case o of
-    UnboundSumbasti a | isAssignable a -> assignRight o a $ rights as
-    _ -> mapM_ (`setSumbasti` o) (map (Sumbasti True) $ lefts as) >> return o
-    where
-	assignRight o a [] = return o
-	assignRight o a ras = let ra = last ras
-	    in setSumbasti (Sumbasti True a) ra >> return ra
+doAssigns = foldM doAssign
+doAssign :: JboTerm -> Either SumtiAtom JboTerm -> ParseM r JboTerm
+doAssign (UnboundSumbasti a) (Right assto) | isAssignable a =
+    setSumbasti (Sumbasti True a) assto >> return assto
+doAssign o (Left ass) = setSumbasti (Sumbasti True ass) o >> return o
+doAssign o _ = return o
 
 doIncidentals :: JboTerm -> [JboPred] -> ParseM r JboTerm
 doIncidentals o ips = case andMPred ips of
@@ -415,3 +414,4 @@ doIncidentals o ips = case andMPred ips of
 		\v -> subTerm free (BoundVar v) p) (pred o') frees
 	addSideSentence p
 	return o'
+doIncidental o ip = doIncidentals o [ip]

@@ -114,7 +114,7 @@ data RelClause = Restrictive Subsentence  -- poi
 	       | IncidentalGOI String Term  -- ne etc.
 	       deriving (Eq, Show, Ord)
 
-data SumtiAtom = Name [RelClause] String
+data SumtiAtom = Name Gadri [RelClause] String
 	       | Variable Int -- da
 	       | NonAnaphoricProsumti String -- mi
 	       | RelVar Int -- ke'a
@@ -157,7 +157,7 @@ getsRi _ = True
 isAssignable :: SumtiAtom -> Bool
 isAssignable (Assignable _) = True
 isAssignable (LerfuString _) = True
-isAssignable (Name _ _) = True
+isAssignable (Name _ _ _) = True
 isAssignable _ = False
 
 data SumtiQualifier = LAhE String | NAhE_BO String
