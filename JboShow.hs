@@ -61,7 +61,10 @@ bracket c =
 	    '<' -> '>'
 	    '"' -> '"'
 	    '\'' -> '\''
+	    ' ' -> ' '
     in (c:) . (++[c'])
+brackets :: String -> String -> String
+brackets bs s = foldr bracket s bs
 
 jbobracket :: String -> String -> String -> String
 jbobracket l r = ((l++" ")++) . (++(" "++r))
@@ -301,7 +304,7 @@ instance JboShow JboRel where
 		else as ++ "[" ++ ps ++ "]"
     logjboshow jbo (Among t) = do
 	s <- logjboshow jbo t
-	return $ if jbo then "me " ++ s ++ " me'u" else "Among[" ++ s ++ "]"
+	return $ if jbo then "me " ++ s ++ " me'u" else bracket '(' s ++ " >= "
     logjboshow jbo Equal =
 	return $ if jbo then "du" else "="
     logjboshow jbo (UnboundBribasti (TUGOhA g n)) = return $
@@ -357,16 +360,10 @@ instance JboShow JboTerm where
 		(concat . intersperse "," $ ss) ++ ")"
     logjboshow True (Named s) = return $ "la " ++ s ++ "."
     logjboshow False (Named s) = return $ bracket '"' s
-    logjboshow jbo (JboQuote (ParsedQuote ps)) = do
-	pss <- logjboshow jbo ps
-	return $
-	    (if jbo then "lu " else "<< ") ++
-	    pss ++
-	    (if jbo then " li'u" else " >>")
+    logjboshow jbo (JboQuote (ParsedQuote ps)) =
+	(if jbo then jbobracket "lu" "li'u" else brackets "<< ") <$> logjboshow jbo ps
     logjboshow jbo (JboErrorQuote vs) = return $
-	(if jbo then "lo'u " else "<{< ") ++
-	unwords vs ++
-	(if jbo then " le'u" else " >}>")
+	(if jbo then jbobracket "lo'u" "le'u" else brackets "<{< ") $ unwords vs
     logjboshow jbo (JboNonJboQuote s) = return $
 	let zoik = head
 		[ zoik

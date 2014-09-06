@@ -328,8 +328,8 @@ parseRels (r:rs) = do
 			let rel = case goi of
 				"pe" -> Brivla "srana"
 				"ne" -> Brivla "srana"
-				"po'u" -> Brivla "du"
-				"no'u" -> Brivla "du"
+				"po'u" -> Equal
+				"no'u" -> Equal
 				-- XXX: following are rather approximate... the
 				-- BPFK subordinators section suggests more
 				-- complicated expressions

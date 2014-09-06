@@ -218,6 +218,7 @@ freeVars p = execWriter $ collectFrees p where
 	collectFreesInTerm (JoikedTerms joik t1 t2) = collectFreesInTerm t1 *> collectFreesInTerm t2
 	collectFreesInTerm (QualifiedTerm qual t) = collectFreesInTerm t
 	collectFreesInTerm (Constant _ ts) = traverse_ collectFreesInTerm ts
+	collectFreesInTerm (Value m) = traverseTerms_ collectFreesInTerm m
 	collectFreesInTerm _ = pure ()
 
 connToFOL :: LogJboConnective -> JboProp -> JboProp -> JboProp
