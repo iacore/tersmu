@@ -378,6 +378,10 @@ instance JboShow JboTerm where
     logjboshow False (Valsi s) = return $ "{" ++ s ++ "}"
     logjboshow jbo (UnboundSumbasti sa) = logjboshow jbo sa
     logjboshow _ (NonAnaph s) = return s
+    logjboshow jbo (Described g p) =
+	(if jbo then jbobracket ('l':g:"") "ku"
+		else bracket '[' . ((if g=='a' then "Name: " else "Desc: ")++))
+	    <$> logjboshow jbo p
     logjboshow jbo (JoikedTerms joik t1 t2) = do
 	[ts1,ts2] <- mapM (logjboshow jbo) [t1,t2]
 	joiks <- logjboshow jbo joik

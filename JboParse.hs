@@ -372,7 +372,7 @@ parseVariable sa@(Variable n) rps mm = do
 parseSumtiAtom :: PreProp r => SumtiAtom -> ParseM r (JboTerm, [JboRelClause])
 parseSumtiAtom sa = do
     jrels <- case sa of
-	Description _ _ _ _ rels _ -> parseRels rels
+	Description gadri _ _ _ rels _ -> if gadri!!1 == 'a' then return [] else parseRels rels
 	QualifiedSumti _ rels _ -> parseRels rels
 	Name _ rels _ ->
 	    -- XXX: this construction, LA relativeClauses CMENE, appears not
@@ -382,22 +382,27 @@ parseSumtiAtom sa = do
 	    parseRels rels
 	_ -> return []
     o <- case sa of
-	Description gadri mis miq ssb _ irels -> do
-	    -- TODO: gadri other than {lo}
+	Description gadri mis miq ssb rels irels -> do
+	    extrairels <- if gadri!!1 == 'a' then parseRels rels else return []
 	    mm <- traverse parseMex miq
 	    sr <- case ssb of
 		Left sb -> selbriToPred sb
 		Right s -> isAmong <$> parseSumti s
-	    (irps,iips,ias) <- (segregateRels <$>) $ parseRels $
+	    (irps,iips,ias) <- (segregateRels . (extrairels++) <$>) $ parseRels $
 		irels ++ maybeToList ((\is ->
 		    IncidentalGOI "ne" (Sumti Untagged is)) <$> mis)
-	    let xorlo_ips = sr : 
+	    let xorlo_ps = sr : 
 		    (case mm of
 			Just m -> [(\o -> Rel (Moi (Value m) "mei") [o])]
 			_ -> [])
-		    ++ irps ++ iips
-	    o <- getFreshConstant
-	    o <- doIncidentals o xorlo_ips
+	    o <- case gadri!!1 of
+		'o' -> do
+		    o <- getFreshConstant
+		    doIncidentals o $ xorlo_ps ++ irps ++ iips
+		c | c `elem` "ae" -> do
+		    let o = Described c $ andPred $ xorlo_ps ++ irps
+		    doIncidentals o iips
+		_ -> error "You call that a gadri?"
 	    doAssigns o ias
 	    return o
 	QualifiedSumti qual _ s -> do
@@ -425,6 +430,17 @@ parseSumtiAtom sa = do
 	ErrorQuote vs -> return $ JboErrorQuote vs
 	NonJboQuote s -> return $ JboNonJboQuote s
 	Word s -> return $ Valsi s
+    let gadri = case sa of
+	    Description gadri _ _ _ _ _ -> Just gadri
+	    Name gadri _ _ -> Just gadri
+	    _ -> Nothing
+    o <- case drop 2 <$> gadri of
+	Just s | s `elem` ["i","'i"] -> do -- lai/lei/loi/la'i/le'i/lo'i
+	    o' <- getFreshConstant
+	    let collector = Brivla $ if s == "i" then "gunma" else "selcmi"
+	    doIncidental o' $ \x -> Rel collector [x,o]
+	    return o'
+	_ -> return o
     updateSumbastiWithSumtiAtom sa o
     return (o,jrels)
 
