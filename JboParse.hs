@@ -423,6 +423,7 @@ parseTag (DecoratedTagUnits dtus) = (DecoratedTagUnits <$>) $
 	DecoratedTagUnit nahe se nai <$> parseTagUnit u
 parseTagUnit :: PreProp r => TagUnit -> ParseM r JboTagUnit
 parseTagUnit (TenseCmavo c) = return $ TenseCmavo c
+parseTagUnit (CAhA c) = return $ CAhA c
 parseTagUnit (BAI c) = return $ BAI c
 parseTagUnit (FAhA m c) = return $ FAhA m c
 parseTagUnit (TAhE_ZAhO f c) = return $ TAhE_ZAhO f c
@@ -519,9 +520,9 @@ doTag (DecoratedTagUnits dtus) Nothing =
     -- and doesn't fit current sumtcita handling)
     mapM_ doDTU dtus where
 	doDTU dtu = do
-	    -- TODO FIXME: TAhE, ROI, ZAhE, and (in ZG) CAhA have scalar nai
-	    when (tagNAI dtu) $ mapProp Not
-	    doModal $ JboTagged (DecoratedTagUnits [dtu{tagNAI=False}]) Nothing
+	    let scalar = tagNaiIsScalar $ tagUnit dtu
+	    when (tagNAI dtu && not scalar) $ mapProp Not
+	    doModal $ JboTagged (DecoratedTagUnits [dtu{tagNAI=(tagNAI dtu && scalar)}]) Nothing
 doTag jtag mt = doModal $ JboTagged jtag mt
 
 doModal :: PreProp r => JboModalOp -> ParseM r ()

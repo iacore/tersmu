@@ -641,7 +641,8 @@ decoratedTagUnit :: DecoratedTagUnit
     = nahe:(NAhE)? se:(convSE)? tu:tagUnit nai:(NAI)? ->
 	{ DecoratedTagUnit nahe se (isJust nai) tu }
 tagUnit :: TagUnit
-    = s:(PU / ZI / ZEhA / VA / VEhA / VIhA / CAhA) -> {TenseCmavo s}
+    = s:(PU / ZI / ZEhA / VA / VEhA / VIhA) -> {TenseCmavo s}
+    / s:CAhA -> {CAhA s}
     / s:BAI -> {BAI s}
     / m:(MOhI)? f:FAhA -> { FAhA (isJust m) f }
     / f:(FEhE)? q:number r:ROI -> { ROI r (isJust f) q }

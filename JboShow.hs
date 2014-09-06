@@ -201,6 +201,7 @@ instance JboShow JboTag where
 		++ if nai then " nai" else ""
 instance JboShow JboTagUnit where
     logjboshow jbo (TenseCmavo s) = return s
+    logjboshow jbo (CAhA s) = return s
     logjboshow jbo (BAI s) = return s
     logjboshow jbo (FAhA mohi s) = return $
 	(if mohi then "mo'i " else "") ++ s

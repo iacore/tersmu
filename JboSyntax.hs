@@ -56,6 +56,7 @@ data DecoratedAbsTagUnit r t = DecoratedTagUnit
     deriving (Eq, Show, Ord)
 data AbsTagUnit r t
     = TenseCmavo Cmavo
+    | CAhA Cmavo
     | FAhA {fahaHasMohi::Bool, fahaCmavo::Cmavo}
     | ROI {roiroi::Cmavo, roiIsSpace::Bool, roiQuantifier::AbsMex r t}
     | TAhE_ZAhO {taheZoheIsSpace::Bool, taheZahoCmavo::Cmavo}
@@ -64,6 +65,12 @@ data AbsTagUnit r t
     | CUhE
     | KI
     deriving (Eq, Show, Ord)
+
+tagNaiIsScalar :: AbsTagUnit r t -> Bool
+tagNaiIsScalar (ROI _ _ _) = True
+tagNaiIsScalar (TAhE_ZAhO _ _) = True
+tagNaiIsScalar (CAhA _) = True
+tagNaiIsScalar _ = False
 
 type Tag = AbsTag Selbri Sumti
 type DecoratedTagUnit = DecoratedAbsTagUnit Selbri Sumti
