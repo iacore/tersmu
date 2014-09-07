@@ -29,7 +29,7 @@ data ParseState = ParseState
     , referencedVars::Set Int
     , questions::[Question]
     , freeDict::Map Int Free
-    , sideSentences::[JboProp]
+    , sideTexticules::[Texticule]
     }
 nullParseState = ParseState Map.empty Map.empty 0 0 Set.empty [] Map.empty []
 type ParseStateT = StateT ParseState
@@ -166,14 +166,14 @@ getBribastiBinding bs bb =
 	    _ -> UnboundBribasti bb
 
 
-addSideSentence :: ParseStateful m => JboProp -> m ()
-addSideSentence p =
-    modifyParseState $ \pst -> pst{sideSentences=p:sideSentences pst}
+addSideTexticule :: ParseStateful m => Texticule -> m ()
+addSideTexticule side =
+    modifyParseState $ \pst -> pst{sideTexticules=side:sideTexticules pst}
 
-takeSideSentence :: ParseStateful m => m [JboProp]
-takeSideSentence =
-    (sideSentences <$> getParseState)
-	<* (modifyParseState $ \pst -> pst{sideSentences=[]})
+takeSideTexticules :: ParseStateful m => m [Texticule]
+takeSideTexticules =
+    (sideTexticules <$> getParseState)
+	<* (modifyParseState $ \pst -> pst{sideTexticules=[]})
 
 
 addSumtiQuestion :: ParseStateful m => Maybe Int -> m JboTerm
@@ -322,6 +322,11 @@ instance PreProp Bridi where
     liftToProp = liftA
     liftToProp2 = liftA2
     dummyPreProp = \_ -> Eet
+instance PreProp JboFragment where
+    -- null instance
+    liftToProp = \_ -> id
+    liftToProp2 = \_ -> \_ -> id
+    dummyPreProp = JboFragTerms []
 
 mapProp :: (PreProp r) => (JboProp -> JboProp) -> ParseM r ()
 mapProp f = lift $ ContT $ \k -> (liftToProp f) <$> k ()
@@ -412,6 +417,6 @@ doIncidentals o ips = case andMPred ips of
 		_ -> o
 	    p = foldr (\free p -> Quantified (LojQuantifier Forall) Nothing $
 		\v -> subTerm free (BoundVar v) p) (pred o') frees
-	addSideSentence p
+	addSideTexticule $ TexticuleProp p
 	return o'
 doIncidental o ip = doIncidentals o [ip]

@@ -17,7 +17,7 @@ jjJboCon mtag (JJJek lcon) = JboConnLog mtag lcon
 jjJboCon mtag (JJJoik joik) = JboConnJoik mtag joik
 }
 
-top atext1,frees,textHead,wholeStatement,lastStatementOrSubsentence
+top text,frees,terminatedText,textHead,wholeStatement,lastStatementOrSubsentence
 
 ----- auxiliary productions used in preparsing:
 wholeStatement :: Statement
@@ -25,6 +25,9 @@ wholeStatement :: Statement
 
 textHead :: {()}
     = (i:I joikJek? BO? -> i / NIhO)* -> {()}
+
+terminatedText :: Text
+    = t:text Spacing? "%%%END%%%" -> t
 
 frees :: {[Free]} = free+
 free :: Free
@@ -39,7 +42,7 @@ free :: Free
 	-> { Vocative cs $ Just (QAtom Nothing rels (n "la")) }
     / cs:vocative ms:sumti? DOhU? -> { Vocative cs ms }
     / q:numberOrLerfuString MAI -> { MAI q }
-    / TO ps:paragraphs TOI? -> {Bracketed ps}
+    / TO t:text TOI? -> {Bracketed t}
     / q:xiClause -> {XI q}
     / indicator
 
@@ -50,10 +53,10 @@ coi :: COI
 
 -- TODO: indicators = FUhE? indicator+
 
-indicator :: Indicator
+indicator :: Free
     = "xu":UI !BU k:("kau":UI !BU x:("xi":XI n:litnum -> n)? -> {fromMaybe 1 x})? -> {TruthQ k}
-    / i:(c:(UI/CAI) nai:NAI? !BU -> { Indicator (isJust nai) c }
-    / c:(DAhO/FUhO) !BU -> { Indicator False c }) !BU -> i
+    / c:(UI/CAI) nai:NAI? !BU -> { Indicator (isJust nai) c }
+    / c:(DAhO/FUhO) !BU -> { Indicator False c }
 
 xiClause :: Mex
     = XI q:numberOrLerfuString BOI? -> q
@@ -80,20 +83,36 @@ startStOrSubs :: String
     = n:NU NAI? -> n / NOI / TO / i:I !(joikJek -> {""} / BO) -> i / NIhO
 
 ----- main grammar:
-atext1 :: {[Statement]}
-    = Spacing? ss:text1 !Char -> ss
+text :: Text
+    = ns:NAI* fs:textPart2 mjjfrag:(!text1 jjfrag:joikJek -> jjfrag)? mps:text1? FAhO?
+	-> {Text (not $ null ns) fs $
+	    maybe [] (\jjfrag -> [[Left $ FragCon $ jjJboCon Nothing jjfrag]]) mjjfrag ++
+	    fromMaybe [] mps}
 
-text1 :: {[Statement]}
-    = ((I jj:joikJek? BO? -> jj)+ -> {()} / NIhO+ -> {()})?
-	ssm:(paragraphs)? -> {fromMaybe [] ssm}
+textPart2 :: {[Free]}
+    = cs:CMENE+ -> { [Vocative [] $ Just $ QAtom Nothing [] $ Name "la" [] $ unwords cs] }
+    / indicator*
 
-paragraphs :: {[Statement]}
-    = ss:paragraph ssm:(NIhO+ ss':paragraphs -> ss')?
-	-> {ss ++ fromMaybe [] ssm}
+text1 :: {[Paragraph]}
+    = I mjj:joikJek? mmtag:(mtag:tag? BO -> mtag)? mt:text1?
+	-- CLL says we can answer a question with an ijek - this appears to
+	-- how...
+	-> {if isNothing mt && isNothing mmtag && isJust mjj
+		then [[Left $ FragCon $ jjJboCon Nothing $ fromJust mjj]]
+		else fromMaybe [] mt}
+    / NIhO+ mps:paragraphs? -> {fromMaybe [] mps}
+    / paragraphs
 
-paragraph :: {[Statement]}
-    = s:statement ss:(I s:statement -> s)*
-	-> {(s:ss)}
+paragraphs :: {[Paragraph]}
+    = p:paragraph mps:(NIhO+ ps:paragraphs -> ps)? -> {p : fromMaybe [] mps}
+
+paragraph :: Paragraph
+    = sf:statementOrFragment msfs:(I !jek !joik !joikJek msf:statementOrFragment? -> msf)*
+	-> {(sf:) $ concat $ map maybeToList msfs}
+
+statementOrFragment :: {Either Fragment Statement}
+    = s:statement -> {Right s}
+    / freeAnnotations f:fragment -> {Left f}
 
 statement :: Statement
     = fs:freeAnnotations s:statement1 -> {Statement fs [] s}
@@ -116,10 +135,18 @@ statement2 :: Statement1
 
 statement3 :: Statement1
     = s:sentence -> {StatementSentence s}
-    / TUhE ss:text1 TUhU? -> {StatementStatements ss}
+    / TUhE ps:text1 TUhU? -> {StatementParas ps}
 
--- TODO:
--- fragment = prenex / terms VAU? / ek / gihek / quantifier / NA !JA / relativeClauses / links / linkargs
+fragment :: Fragment
+    = p:prenex -> {FragPrenex p}
+    / ts:terms VAU? -> {FragTerms ts}
+    / c:ek -> {FragCon $ JboConnLog Nothing c}
+    / c:gihek -> {FragCon $ JboConnLog Nothing c}
+    / m:quantifier -> {FragQuantifier m}
+    / n:NA !JA -> {FragNA n}
+    / rels:relativeClauses -> {FragRels rels}
+    / ts:links -> {FragLinks ts}
+    / ts:linkargs -> {FragLinks ts}
 
 prenex :: {[Term]} = ps:terms ZOhU -> ps
 
@@ -245,7 +272,7 @@ sumti6 :: SumtiAtom
     / s:nonJboQuote -> {NonJboQuote s}
     / vs:errorQuote -> {ErrorQuote vs}
     / l:lerfuString !MOI BOI? -> {LerfuString l}
-    / LU t:text1 LIhU? -> {Quote t}
+    / LU t:text LIhU? -> {Quote t}
     / qual:qualifier rels:maybeRelativeClauses s:sumti LUhU?
 	-> {QualifiedSumti qual rels s}
     / k:KOhA &{k `elem` ["do","ko","do'o","mi","ma'a","mi'a","mi'o"]} -> {NonAnaphoricProsumti k}

@@ -1,6 +1,21 @@
 module JboSyntax where
 import FOL hiding (Term, Connective)
 -- Abstract syntax:
+
+data Text = Text {vaguelyNegatedText::Bool, textFrees::[Free], textParas::[Paragraph]}
+    deriving (Eq, Show, Ord)
+type Paragraph = [Either Fragment Statement]
+
+data Fragment
+    = FragPrenex [Term]
+    | FragTerms [Term]
+    | FragCon Connective
+    | FragQuantifier Mex
+    | FragNA Cmavo
+    | FragRels [RelClause]
+    | FragLinks [Term]
+    deriving (Eq, Show, Ord)
+
 data Statement = Statement [FreeIndex] [Term] Statement1
     deriving (Eq, Show, Ord)
 
@@ -9,7 +24,7 @@ data LogJboConnective = LogJboConnective Bool Char Bool
 
 data Statement1 = ConnectedStatement Connective Statement1 Statement1
 		| StatementSentence Sentence
-		| StatementStatements [Statement]
+		| StatementParas [Paragraph]
 		deriving (Eq, Show, Ord)
 
 data Subsentence = Subsentence [FreeIndex] [Term] Sentence
@@ -19,7 +34,7 @@ data Sentence = Sentence [Term] BridiTail
     deriving (Eq, Show, Ord)
 
 data Free
-    = Bracketed [Statement]
+    = Bracketed Text
     | Discursive BridiTail
     | TruthQ (Maybe Int)
     | Vocative [COI] (Maybe Sumti)
@@ -126,7 +141,7 @@ data SumtiAtom = Name Gadri [RelClause] String
 	       | Ri Int -- ri
 	       | Ra Cmavo -- ra/ru
 	       | MainBridiSumbasti Int -- vo'a
-	       | Quote [Statement]
+	       | Quote Text
 	       | NonJboQuote String
 	       | ErrorQuote [String]
 	       | Word String

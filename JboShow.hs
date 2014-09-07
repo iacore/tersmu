@@ -509,6 +509,15 @@ instance JboShow JboProp
 	  logjboshow' False ps Eet = return ["_|_ (BUG)"]
 	  }
 
-instance JboShow [JboProp] where
-    jboshow ps = concat . intersperse "\n.i " <$> mapM jboshow ps
-    logshow ps = concat . intersperse "\n" <$> mapM logshow ps
+instance JboShow Texticule where
+    logjboshow jbo (TexticuleFrag f) = logjboshow jbo f
+    logjboshow jbo (TexticuleProp p) = logjboshow jbo p
+instance JboShow JboFragment where
+    logjboshow jbo (JboFragTerms ts) =
+	(if not jbo then bracket '[' . ("Fragment: "++) else id) <$>
+	    logjboshowlist jbo ts
+    logjboshow jbo _ = return $ if jbo then "li'o" else "[Fragment]"
+
+instance JboShow JboText where
+    jboshow fps = concat . intersperse "\n.i " <$> mapM jboshow fps
+    logshow fps = concat . intersperse "\n" <$> mapM logshow fps

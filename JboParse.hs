@@ -7,31 +7,41 @@ import BridiM
 import Util
 
 import Data.Maybe
+import Data.Either
 import Data.Traversable (traverse)
 import Control.Monad
 import Control.Applicative
 import Data.List
 
-evalText :: [Statement] -> [JboProp]
-evalText ss =
-    evalParseStateM $ concat <$> mapM evalStatement ss
+evalText :: Text -> ParseStateM JboText
+evalText (Text nai frees paras) = do
+	mapM_ evalFree frees -- vocatives and indicators - ignored currently
+	concat <$> mapM evalFragOrStatement (concat paras)
+    where
+	evalFragOrStatement (Left frag) = (\x->[x]) . TexticuleFrag <$> parseFrag frag
+	evalFragOrStatement (Right st) = map TexticuleProp <$> evalStatement st
+
+-- XXX: we don't handle fragments properly at all currently
+-- (to be done as part of any eventual question-and-answer handling)
+parseFrag :: Fragment -> ParseStateM JboFragment
+parseFrag (FragTerms ts) = evalParseM $ JboFragTerms <$> parseTerms ts
+parseFrag f = return $ JboFragUnparsed f
 
 evalStatement :: Statement -> ParseStateM [JboProp]
 evalStatement s = do
     p <- evalParseM (parseStatement s) >>= doQuestions True
-    ps <- takeSideSentence
+    ps <- propTexticules <$> takeSideTexticules
     return $ ps ++ [p]
 
 data FreeReturn
-    = FRSides [JboProp]
+    = FRSides JboText
     | FRTruthQ (Maybe Int)
     | FRIgnored
 evalFree :: Free -> ParseStateM FreeReturn
 evalFree (Discursive bt) =
-    (FRSides . (\p -> [p]) <$>) $ evalParseM $
+    (FRSides . (\p -> [TexticuleProp p]) <$>) $ evalParseM $
 	($nullArgs) <$> partiallyRunBridiM (parseBTail bt)
-evalFree (Bracketed sts) =
-    FRSides . concat <$> mapM evalStatement sts
+evalFree (Bracketed text) = FRSides <$> evalText text
 evalFree (TruthQ kau) = return $ FRTruthQ kau
 evalFree _ = return FRIgnored
 
@@ -42,7 +52,7 @@ doFree fi = do
     f <- lookupFree fi
     fr <- liftParseStateMToParseM $ evalFree f
     case fr of
-	FRSides ps -> mapM_ addSideSentence ps
+	FRSides jt -> mapM_ addSideTexticule jt
 	FRTruthQ kau -> addQuestion $ Question kau QTruth
 	FRIgnored -> return ()
 
@@ -58,8 +68,9 @@ parseStatement (Statement fs ps s) = do
 parseStatement1 :: Statement1 -> JboPropM JboProp
 parseStatement1 (ConnectedStatement con s1 s2) =
     doConnective False con (parseStatement1 s1) (parseStatement1 s2)
-parseStatement1 (StatementStatements ss) =
-    parseStatements ss
+parseStatement1 (StatementParas ps) =
+    -- TODO: ought to parse fragments here (if only to pick up assigns etc)
+    parseStatements $ rights $ concat ps
 parseStatement1 (StatementSentence s) = do
     b <- partiallyRunBridiM $ parseSentence s
     modifyBribastiBindings $ setShunting (TUGOhA "go'i") b
@@ -210,12 +221,13 @@ parseTU (TUXOhI tag) = do
 parseTU (TUSelbri3 sb) = parseSelbri3 sb
 
 
-parseTerms :: PreProp r => [Term] -> ParseM r ()
-parseTerms = mapM_ (\t -> do
+parseTerms :: PreProp r => [Term] -> ParseM r [JboTerm]
+parseTerms ts = concat <$> flip mapM ts (\t -> do
 	ret <- parseTerm t
 	case ret of
-	    Just (Left (jbotag,mo)) -> doTag jbotag mo
-	    _ -> return ())
+	    Just (Left (jbotag,mo)) -> doTag jbotag mo >> return []
+	    Just (Right o) -> return [o]
+	    _ -> return [])
 
 parseTerm :: PreProp r => Term -> ParseM r (Maybe (Either (JboTag, Maybe JboTerm) JboTerm))
 parseTerm t = case t of
@@ -422,11 +434,9 @@ parseSumtiAtom sa = do
 	-- TODO: following ought all to give fresh constants, really
 	NonAnaphoricProsumti ps -> return $ NonAnaph ps
 	Name _ _ s -> return $ Named s -- TODO: handle gadri
-	Quote sts ->
-	    -- TODO: quotes shouldn't have access to higher level bindings
+	Quote text ->
 	    -- TODO: should probably return the unparsed text as well?
-	    JboQuote . ParsedQuote . concat <$>
-		(liftParseStateMToParseM $ mapM evalStatement sts)
+	    return $ JboQuote . ParsedQuote . evalParseStateM . evalText $ text
 	ErrorQuote vs -> return $ JboErrorQuote vs
 	NonJboQuote s -> return $ JboNonJboQuote s
 	Word s -> return $ Valsi s

@@ -68,9 +68,24 @@ data JboQuantifier
 instance FOL.Term JboTerm where
     var n = BoundVar n
 
+data JboFragment
+    = JboFragTerms [JboTerm]
+    | JboFragUnparsed Fragment
+    deriving (Eq, Show, Ord)
+
+type JboText = [Texticule]
+data Texticule
+    = TexticuleFrag JboFragment
+    | TexticuleProp JboProp
+    deriving (Eq, Show, Ord)
+propTexticules :: [Texticule] -> [JboProp]
+propTexticules [] = []
+propTexticules (TexticuleProp p:ts) = p:propTexticules ts
+propTexticules (_:ts) = propTexticules ts
+
 -- |ParsedQuote: using this newtype so we can provide dummy instances for use
 -- in derived instances for JboTerm
-newtype ParsedQuote = ParsedQuote [JboProp]
+newtype ParsedQuote = ParsedQuote JboText
 instance Eq ParsedQuote where x == y = False
 instance Show ParsedQuote where show q = "<< ... >>"
 instance Ord ParsedQuote where x <= y = False
