@@ -14,8 +14,9 @@ import Control.Applicative
 import Data.List
 
 evalText :: Text -> ParseStateM JboText
-evalText (Text nai frees paras) = do
+evalText (Text fas nai frees paras) = do
 	mapM_ evalFree frees -- vocatives and indicators - ignored currently
+	doFrees fas
 	concat <$> mapM evalFragOrStatement (concat paras)
     where
 	evalFragOrStatement (Left frag) = (\x->[x]) . TexticuleFrag <$> parseFrag frag
@@ -45,12 +46,12 @@ evalFree (Bracketed text) = FRSides <$> evalText text
 evalFree (TruthQ kau) = return $ FRTruthQ kau
 evalFree _ = return FRIgnored
 
-doFrees :: [FreeIndex] -> ParseM r ()
+doFrees :: [FreeIndex] -> ParseStateM ()
 doFrees = mapM_ doFree
-doFree :: FreeIndex -> ParseM r ()
+doFree :: FreeIndex -> ParseStateM ()
 doFree fi = do
     f <- lookupFree fi
-    fr <- liftParseStateMToParseM $ evalFree f
+    fr <- evalFree f
     case fr of
 	FRSides jt -> mapM_ addSideTexticule jt
 	FRTruthQ kau -> addQuestion $ Question kau QTruth
@@ -61,7 +62,7 @@ parseStatements ss = bigAnd <$> mapM parseStatement ss
 
 parseStatement :: Statement -> JboPropM JboProp
 parseStatement (Statement fs ps s) = do
-    doFrees fs
+    liftParseStateMToParseM $ doFrees fs
     ignoringArgs $ parseTerms ps
     parseStatement1 s
 
@@ -78,7 +79,7 @@ parseStatement1 (StatementSentence s) = do
 
 parseSubsentence :: Subsentence -> BridiM Bridi
 parseSubsentence (Subsentence fs ps s) = do
-    doFrees fs
+    liftParseStateMToParseM $ doFrees fs
     ignoringArgs $ parseTerms ps
     parseSentence s
 

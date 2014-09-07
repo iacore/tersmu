@@ -2,7 +2,8 @@ module JboSyntax where
 import FOL hiding (Term, Connective)
 -- Abstract syntax:
 
-data Text = Text {vaguelyNegatedText::Bool, textFrees::[Free], textParas::[Paragraph]}
+data Text = Text {textFAs::[FreeIndex], vaguelyNegatedText::Bool,
+	textFrees::[Free], textParas::[Paragraph]}
     deriving (Eq, Show, Ord)
 type Paragraph = [Either Fragment Statement]
 

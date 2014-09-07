@@ -6,9 +6,11 @@ import JboSyntax
 import Pos
 
 import Control.Applicative
+import Debug.Trace
+traceIt x = traceShow x x
 
 parseText :: String -> Either Int ((Text,[Free]),String)
-parseText str = stripFrees (tersmuterminatedText . tersmuParse "terminatedText") $ str ++ " %%%END%%%"
+parseText str = traceIt $ stripFrees (tersmuterminatedText . tersmuParse "terminatedText") $ str ++ " %%%END%%%"
 
 -- |parseTextSplitting: split text into statements, strip indicators&free from each,
 -- and parse the stripped statements. Unused.
@@ -37,43 +39,68 @@ afterPos p s = drop (posCol p - 1) s
 -- need to back up to find the number...
 -- More generally, moving our frees like this means that anaphora within them
 -- don't resolve correctly.
--- TODO: Would it be enough to move it back to the end of the last sumti, by
--- allowing free annotations there and inching our annotations back until we
--- get a parse?
--- FIXME: I seem to have broken frees within frees, not sure how or when...
+-- TODO: Would it be enough to move it back to the end of the last sumti or
+-- bridi, by allowing free annotations there and inching our annotations back
+-- until we get a parse?
+-- FIXME: currently we reparse from the head many times while sorting out
+-- frees, which is hideously inefficient.
+-- FIXME/ARGH: Ugh, no, this approach is fundamentally flawed - consider e.g.
+--  to broda bai lo nu ui brode toi
+-- where the inner text succeeds parsing up to "bai", and we have no way of
+-- telling that it stopped prematurely because of a later free.
+-- So we'll need to do some backtracking.
+-- Trying to put the free annotation after the last completed term/selbri as
+-- mentioned above is, thinking about, even more of a nightmare - since,
+-- again, a term might finish parsing prematurely due to further unstripped
+-- frees.
+-- CONCLUSION: we should DROP this hacky approach, and instead use a proper
+-- syntactic parser (camxes) which handles frees in the correct way, and
+-- manipulate that parse tree to get it of the form we want.
 stripFrees :: (String -> Result TersmuDerivs a)
     -> String -> Either Int ((a,[Free]),String)
-stripFrees = stripFrees' False [] 0 where
-    stripFrees' :: Bool -> [Free] -> Int -> (String -> Result TersmuDerivs a)
-	-> String -> Either Int ((a,[Free]),String)
-    stripFrees' inFree frees countFrom parse str = case parse str of
-	Parsed a d _ -> Right ((a,frees), afterPos (dvPos d) str)
-	NoParse e ->
-	    let ep = errorPoint e
-	    in if inFree && ep == 0
+stripFrees parse s = fmap (\((a,_,fs),s)->((a,fs),s)) $ stripFrees' False [] [] 0 parse s where
+    stripFrees' :: Bool -> [Free] -> [Free] -> Int -> (String -> Result TersmuDerivs a)
+	-> String -> Either Int ((a,[Free],[Free]),String)
+    stripFrees' inFree unnoted noted countFrom parse str =
+	traceShow str $
+	let (parsed,pos) = case parse str of
+		Parsed a d _ -> (Just a, parsedPoint d)
+		NoParse e -> (Nothing, errorPoint e)
+	    -- Parsed _ d' _ = parseAnnotations $ drop pos1 str
+	    -- pos = pos1 + parsedPoint d'
+	in if inFree && pos == 0
 	    then Left 0
-	    else let (head,tail) = splitAt ep str in
-	    case stripFrees' True [] (countFrom + length frees) (tersmufrees . tersmuParse "frees") tail of
-		Left n -> Left $ ep + n
-		Right ((newfrees,subfrees),tail') ->
-		    let (head',offset) = addAnnotations head
-			    $ map (+(countFrom + length subfrees))
-				[0..length newfrees - 1]
-		    in mapError (+((length tail - length tail')-offset)) $ stripFrees' inFree
-			(frees++subfrees++newfrees)
-			(countFrom + length subfrees + length newfrees)
-			parse $ head'++tail'
-    errorPoint :: ParseError -> Int
+	    else let (head,tail) = traceIt $ splitAt pos str in
+	    case traceIt $ stripFrees' True [] [] (countFrom + length noted) parseFree tail of
+		Left 0 -> case parsed of
+		    Just a -> Right ((a,unnoted,noted), tail)
+		    Nothing -> Left pos
+		Left n -> Left $ pos + n
+		Right ((newfree,subUnnoted,subNoted),tail') ->
+		    let (head',offset,newUnnoted,newNoted) = case traceIt $ addAnnotations inFree head
+				$ map (+(countFrom + length subNoted))
+				    [0..length subUnnoted] of
+			    Just (head'', offset') -> (head'', offset', [], subNoted++subUnnoted++[newfree]) 
+			    Nothing -> (head, 0, subUnnoted++[newfree], subNoted)
+			unnoted' = unnoted ++ newUnnoted
+			noted' = noted ++ newNoted
+			countFrom' = countFrom + length newNoted
+		    in mapError (+((length tail - length tail')-offset)) $
+			stripFrees' inFree unnoted' noted' countFrom' parse $ head'++tail'
     errorPoint e = posCol (errorPos e) - 1
+    parsedPoint d = posCol (dvPos d) - 1
+    parseAnnotations = tersmufreeAnnotations . tersmuParse "freeAnnotations"
+    parseFree = tersmufree . tersmuParse "free"
     mapError :: (e -> e) -> Either e a -> Either e a
     mapError f (Left e) = Left $ f e
     mapError _ (Right x) = Right x
-    addAnnotations :: String -> [Int] -> (String,Int)
-    addAnnotations s ns =
+    addAnnotations :: Bool -> String -> [Int] -> Maybe (String,Int)
+    addAnnotations inFree s ns =
 	let Parsed _ d _ = tersmulastStatementOrSubsentence . tersmuParse "lastStatementOrSubsentence" $ s
 	    (head,tail) = splitAt (posCol (dvPos d) - 1) s
 	    annotations = concat ["^" ++ show n ++ " " | n <- ns]
-	in (head ++ annotations ++ tail, length annotations)
+	in if inFree && null head then Nothing
+	    else Just (head ++ annotations ++ tail, length annotations)
 
 {-
 -- Direct parsing without any preprocessing - currently unused

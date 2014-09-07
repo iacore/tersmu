@@ -17,7 +17,7 @@ jjJboCon mtag (JJJek lcon) = JboConnLog mtag lcon
 jjJboCon mtag (JJJoik joik) = JboConnJoik mtag joik
 }
 
-top text,frees,terminatedText,textHead,wholeStatement,lastStatementOrSubsentence
+top text,frees,terminatedText,textHead,wholeStatement,lastStatementOrSubsentence,freeAnnotations
 
 ----- auxiliary productions used in preparsing:
 wholeStatement :: Statement
@@ -84,8 +84,8 @@ startStOrSubs :: String
 
 ----- main grammar:
 text :: Text
-    = ns:NAI* fs:textPart2 mjjfrag:(!text1 jjfrag:joikJek -> jjfrag)? mps:text1? FAhO?
-	-> {Text (not $ null ns) fs $
+    = fas:freeAnnotations ns:NAI* fs:textPart2 mjjfrag:(!text1 jjfrag:joikJek -> jjfrag)? mps:text1? FAhO?
+	-> {Text fas (not $ null ns) fs $
 	    maybe [] (\jjfrag -> [[Left $ FragCon $ jjJboCon Nothing jjfrag]]) mjjfrag ++
 	    fromMaybe [] mps}
 
