@@ -15,7 +15,7 @@ Bug traces:
 Definite bugs:
     {zoi} works only if the following word is {zoi} (or, arbitrarily, {gy}).
 
-    MAI isn't handled, and leads to a parse error.
+    Occasional misparsings with MAI, e.g. on {za'u re'u re mai broda}.
 
 Probably bugs:
     Seltau are considered to be unary predicates rather than higher arity
@@ -25,9 +25,6 @@ Probably bugs:
 
     {ka} doesn't interpret multiple {ce'u} as giving an n-ary relation, as
     mandated by CLL:11.4.
-
-    Frees are moved backwards before being parsed, so e.g. using {ri} in one
-    may have unexpected effects.
 
 Possibly bugs:
     Quantifiers on bound variables rebind the variable. This is contrary to

@@ -15,9 +15,12 @@ data JekJoik = JJJek LogJboConnective | JJJoik Joik
 jjJboCon :: (Maybe Tag) -> JekJoik -> Connective
 jjJboCon mtag (JJJek lcon) = JboConnLog mtag lcon
 jjJboCon mtag (JJJoik joik) = JboConnJoik mtag joik
+
+freelessTerm :: Term' -> Term
+freelessTerm t' = Term [] $ Just t'
 }
 
-top text,frees,terminatedText,textHead,wholeStatement,lastStatementOrSubsentence,freeAnnotations
+top text,free,terminatedText,textHead,wholeStatement,lastStatementOrSubsentence,freeAnnotations
 
 ----- auxiliary productions used in preparsing:
 wholeStatement :: Statement
@@ -29,7 +32,6 @@ textHead :: {()}
 terminatedText :: Text
     = t:text Spacing? "%%%END%%%" -> t
 
-frees :: {[Free]} = free+
 free :: Free
     = "sei":SEI mts:(ts:terms CU? -> ts)? sb:selbri SEhU?
 	-> {Discursive $ BridiTail3 sb $ fromMaybe [] mts}
@@ -84,8 +86,8 @@ startStOrSubs :: String
 
 ----- main grammar:
 text :: Text
-    = fas:freeAnnotations ns:NAI* fs:textPart2 mjjfrag:(!text1 jjfrag:joikJek -> jjfrag)? mps:text1? FAhO?
-	-> {Text fas (not $ null ns) fs $
+    = fs1:free* ns:NAI* fs2:textPart2 mjjfrag:(!text1 jjfrag:joikJek -> jjfrag)? mps:text1? FAhO?
+	-> {Text (fs1++fs2) (not $ null ns) $
 	    maybe [] (\jjfrag -> [[Left $ FragCon $ jjJboCon Nothing jjfrag]]) mjjfrag ++
 	    fromMaybe [] mps}
 
@@ -112,11 +114,11 @@ paragraph :: Paragraph
 
 statementOrFragment :: {Either Fragment Statement}
     = s:statement -> {Right s}
-    / freeAnnotations f:fragment -> {Left f}
+    / free* f:fragment -> {Left f}
 
 statement :: Statement
-    = fs:freeAnnotations s:statement1 -> {Statement fs [] s}
-    / fs:freeAnnotations ps:prenex {Statement fs' ps' s}:statement ->
+    = fs:free* s:statement1 -> {Statement fs [] s}
+    / fs:free* ps:prenex {Statement fs' ps' s}:statement ->
 	{Statement (fs++fs') (ps++ps') s}
 
 statement1 :: Statement1
@@ -134,7 +136,7 @@ statement2 :: Statement1
 	    Just (con,s2) -> ConnectedStatement con s1 s2 }
 
 statement3 :: Statement1
-    = s:sentence -> {StatementSentence s}
+    = fs:free* s:sentence -> {StatementSentence fs s}
     / TUhE ps:text1 TUhU? -> {StatementParas ps}
 
 fragment :: Fragment
@@ -163,8 +165,8 @@ termsAndTail :: {([Term],BridiTail)}
     / t:terms1 {(ts,bt)}:termsAndTail -> {t:ts,bt}
 
 subsentence :: Subsentence
-    = fs:freeAnnotations s:sentence -> {Subsentence fs [] s}
-    / fs:freeAnnotations ps:prenex {Subsentence fs' ps' s}:subsentence ->
+    = fs:free* s:sentence -> {Subsentence fs [] s}
+    / fs:free* ps:prenex {Subsentence fs' ps' s}:subsentence ->
 	{ Subsentence (fs++fs') (ps++ps') s }
 
 bridiTail :: BridiTail
@@ -203,33 +205,39 @@ gekSentence :: GekSentence
     / NA gs:gekSentence -> {NegatedGS gs}
 
 tailTerms :: {[Term]}
-    = ts:terms? VAU? -> { fromMaybe [] ts }
+    = ts:termsStar VAU? -> ts
 
-terms :: {[Term]} = terms1+
+termsStar :: {[Term]}
+    = (terms1 / fs:free+ -> {Term fs Nothing})*
+terms :: {[Term]}
+    = terms1+
 terms1 :: Term 
-    = ts1:terms2 PEhE jj:joikJek ts2:terms2 -> { ConnectedTerms False (jjJboCon Nothing jj) ts1 ts2 }
+    = ts1:terms2 PEhE jj:joikJek ts2:terms2 -> { freelessTerm $ ConnectedTerms False (jjJboCon Nothing jj) ts1 ts2 }
     / terms2
 terms2 :: Term
-    = t:term ts:(CEhE t:terms2 -> t)+ -> { Termset (t:ts) }
+    = t:term ts:(CEhE t:terms2 -> t)+ -> { freelessTerm $ Termset (t:ts) }
     / term
 
-term :: Term = s:sumti -> {Sumti Untagged s}
-	    / !gek tag:tag s:sumti -> {Sumti (Tagged tag) s}
-	    / !gek tag:tag KU? -> {BareTag tag}
-	    / n:tagFA s:sumti -> {Sumti (FATagged n) s}
-	    / n:tagFA KU?  -> {BareFA $ Just n}
-	    / "fai":FA s:sumti -> {Sumti FAITagged s}
-	    -- TODO: fi'a
-	    / FA KU? -> {BareFA Nothing}
-	    / termset
-	    / NA KU -> {Negation}
+term :: Term
+    = t:term' fs:free* -> {Term fs $ Just t}
+term' :: Term'
+    = s:sumti -> {Sumti Untagged s}
+    / !gek tag:tag s:sumti -> {Sumti (Tagged tag) s}
+    / !gek tag:tag !free KU? -> {BareTag tag}
+    / n:tagFA s:sumti -> {Sumti (FATagged n) s}
+    / n:tagFA !free KU?  -> {BareFA $ Just n}
+    / "fai":FA s:sumti -> {Sumti FAITagged s}
+    -- TODO: fi'a
+    / FA !free KU? -> {BareFA Nothing}
+    / termset
+    / NA KU -> {Negation}
 
-termset :: Term
+termset :: Term'
     = NUhI pcon:gek ts1:terms NUhU b:gik ts2:terms NUhU?
-	-> { ConnectedTerms True (pcon b) (Termset ts1) (Termset ts2) }
+	-> { ConnectedTerms True (pcon b) (freelessTerm $ Termset ts1) (freelessTerm $ Termset ts2) }
     / NUhI ts:terms NUhU? -> { Termset ts }
     / pcon:gek ts1:term+ b:gik ts2:term+ &{length ts1 == length ts2}
-	-> { ConnectedTerms True (pcon b) (Termset ts1) (Termset ts2) }
+	-> { ConnectedTerms True (pcon b) (freelessTerm $ Termset ts1) (freelessTerm $ Termset ts2) }
 
 sumti :: Sumti
     = s:sumti1 rels:(VUhO rels:relativeClauses -> rels)?

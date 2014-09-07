@@ -14,9 +14,8 @@ import Control.Applicative
 import Data.List
 
 evalText :: Text -> ParseStateM JboText
-evalText (Text fas nai frees paras) = do
-	mapM_ evalFree frees -- vocatives and indicators - ignored currently
-	doFrees fas
+evalText (Text fs nai paras) = do
+	doFrees fs
 	concat <$> mapM evalFragOrStatement (concat paras)
     where
 	evalFragOrStatement (Left frag) = (\x->[x]) . TexticuleFrag <$> parseFrag frag
@@ -46,11 +45,12 @@ evalFree (Bracketed text) = FRSides <$> evalText text
 evalFree (TruthQ kau) = return $ FRTruthQ kau
 evalFree _ = return FRIgnored
 
-doFrees :: [FreeIndex] -> ParseStateM ()
+doFrees :: [Free] -> ParseStateM ()
 doFrees = mapM_ doFree
-doFree :: FreeIndex -> ParseStateM ()
-doFree fi = do
-    f <- lookupFree fi
+doFreesInParseM :: [Free] -> ParseM r ()
+doFreesInParseM = liftParseStateMToParseM . doFrees
+doFree :: Free -> ParseStateM ()
+doFree f = do
     fr <- evalFree f
     case fr of
 	FRSides jt -> mapM_ addSideTexticule jt
@@ -62,7 +62,7 @@ parseStatements ss = bigAnd <$> mapM parseStatement ss
 
 parseStatement :: Statement -> JboPropM JboProp
 parseStatement (Statement fs ps s) = do
-    liftParseStateMToParseM $ doFrees fs
+    doFreesInParseM fs
     ignoringArgs $ parseTerms ps
     parseStatement1 s
 
@@ -72,14 +72,15 @@ parseStatement1 (ConnectedStatement con s1 s2) =
 parseStatement1 (StatementParas ps) =
     -- TODO: ought to parse fragments here (if only to pick up assigns etc)
     parseStatements $ rights $ concat ps
-parseStatement1 (StatementSentence s) = do
+parseStatement1 (StatementSentence fs s) = do
+    doFreesInParseM fs
     b <- partiallyRunBridiM $ parseSentence s
     modifyBribastiBindings $ setShunting (TUGOhA "go'i") b
     return $ b nullArgs
 
 parseSubsentence :: Subsentence -> BridiM Bridi
 parseSubsentence (Subsentence fs ps s) = do
-    liftParseStateMToParseM $ doFrees fs
+    doFreesInParseM fs
     ignoringArgs $ parseTerms ps
     parseSentence s
 
@@ -231,7 +232,9 @@ parseTerms ts = concat <$> flip mapM ts (\t -> do
 	    _ -> return [])
 
 parseTerm :: PreProp r => Term -> ParseM r (Maybe (Either (JboTag, Maybe JboTerm) JboTerm))
-parseTerm t = case t of
+parseTerm (Term fs mt) = 
+    join <$> traverse parseTerm' mt <* doFreesInParseM fs
+parseTerm' t = case t of
     Termset ts -> mapM_ parseTerm ts >> return Nothing
     ConnectedTerms fore con t1 t2 -> do
 	doConnective fore con
@@ -324,7 +327,7 @@ parseRels rels = concat . map maybeToList <$> mapM parseRel rels where
 	(Just . JRIncidental <$>) $ subsentToPred ss RelVar >>= doQuestionsPred True
     parseRel (RestrictiveGOI goi t) = goiRel goi JRRestrictive t
     parseRel (IncidentalGOI goi t) = goiRel goi JRIncidental t
-    parseRel (Assignment (Sumti Untagged (QAtom Nothing [] sa))) | isAssignable sa = 
+    parseRel (Assignment (Term [] (Just (Sumti Untagged (QAtom Nothing [] sa))))) | isAssignable sa = 
 	return $ Just . JRAssign $ Left sa
     parseRel (Assignment t) = do
 	ret <- ignoringArgs $ parseTerm t
@@ -403,7 +406,7 @@ parseSumtiAtom sa = do
 		Right s -> isAmong <$> parseSumti s
 	    (irps,iips,ias) <- (segregateRels . (extrairels++) <$>) $ parseRels $
 		irels ++ maybeToList ((\is ->
-		    IncidentalGOI "ne" (Sumti Untagged is)) <$> mis)
+		    IncidentalGOI "ne" (Term [] $ Just $ Sumti Untagged is)) <$> mis)
 	    let xorlo_ps = sr : 
 		    (case mm of
 			Just m -> [(\o -> Rel (Moi (Value m) "mei") [o])]

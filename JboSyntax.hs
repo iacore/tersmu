@@ -2,8 +2,8 @@ module JboSyntax where
 import FOL hiding (Term, Connective)
 -- Abstract syntax:
 
-data Text = Text {textFAs::[FreeIndex], vaguelyNegatedText::Bool,
-	textFrees::[Free], textParas::[Paragraph]}
+data Text = Text {textFrees::[Free], vaguelyNegatedText::Bool,
+	textParas::[Paragraph]}
     deriving (Eq, Show, Ord)
 type Paragraph = [Either Fragment Statement]
 
@@ -17,18 +17,18 @@ data Fragment
     | FragLinks [Term]
     deriving (Eq, Show, Ord)
 
-data Statement = Statement [FreeIndex] [Term] Statement1
+data Statement = Statement [Free] [Term] Statement1
     deriving (Eq, Show, Ord)
 
 data LogJboConnective = LogJboConnective Bool Char Bool
 		deriving (Eq, Show, Ord)
 
 data Statement1 = ConnectedStatement Connective Statement1 Statement1
-		| StatementSentence Sentence
+		| StatementSentence [Free] Sentence
 		| StatementParas [Paragraph]
 		deriving (Eq, Show, Ord)
 
-data Subsentence = Subsentence [FreeIndex] [Term] Sentence
+data Subsentence = Subsentence [Free] [Term] Sentence
     deriving (Eq, Show, Ord)
 
 data Sentence = Sentence [Term] BridiTail
@@ -49,13 +49,16 @@ data COI = COI {coiCOI::String, coiNAI::Bool}
 
 type FreeIndex = Int
 
-data Term = Sumti Tagged Sumti
-	  | Negation
-	  | Termset [Term]
-	  | ConnectedTerms Bool Connective Term Term
-	  | BareTag Tag
-	  | BareFA (Maybe Int)
-	  deriving (Eq, Show, Ord)
+data Term = Term [Free] (Maybe Term')
+    deriving (Eq, Show, Ord)
+data Term'
+    = Sumti Tagged Sumti
+    | Negation
+    | Termset [Term]
+    | ConnectedTerms Bool Connective Term Term
+    | BareTag Tag
+    | BareFA (Maybe Int)
+    deriving (Eq, Show, Ord)
 
 data Tagged = Untagged
 	 | Tagged Tag

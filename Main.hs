@@ -36,16 +36,13 @@ repl = do
             evalParseStateT $ showParsedText text $ parseText text
     repl
 
-showParsedText :: String -> Either Int ((Text,[Free]),String) -> ParseStateT IO ()
-showParsedText s (Right ((text,fs),leftover)) = do
-    setFrees fs
+showParsedText :: String -> Either Int Text -> ParseStateT IO ()
+showParsedText s (Right text) = do
     jboText <- mapStateT (return.runIdentity) $ JboParse.evalText text
     when (not $ null jboText) $ do
         let logstr = evalBindful $ logshow jboText
             jbostr = evalBindful $ jboshow jboText
         liftIO $ putStr $ "\n" ++ logstr ++ "\n\n" ++ jbostr ++ "\n\n"
-    when (not $ null leftover) $
-        liftIO $ putStrLn $ "Unparsed: "++leftover
 showParsedText s (Left pos) = highlightError pos s "Parse error"
 
 highlightError pos s errstr = let context = 40 in
