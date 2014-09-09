@@ -323,6 +323,7 @@ data JboRelClause
 parseRels :: PreProp r => [RelClause] -> ParseM r [JboRelClause]
 parseRels rels = concat . map maybeToList <$> mapM parseRel rels where
     parseRel (Restrictive ss) = Just . JRRestrictive <$> subsentToPred ss RelVar
+    parseRel (Descriptive ss) = Just . JRRestrictive <$> nonveridicialPred <$> subsentToPred ss RelVar
     parseRel (Incidental ss) = 
 	(Just . JRIncidental <$>) $ subsentToPred ss RelVar >>= doQuestionsPred True
     parseRel (RestrictiveGOI goi t) = goiRel goi JRRestrictive t
@@ -415,9 +416,10 @@ parseSumtiAtom sa = do
 		'o' -> do
 		    o <- getFreshConstant
 		    doIncidentals o $ xorlo_ps ++ irps ++ iips
-		c | c `elem` "ae" -> do
-		    let o = Described c $ andPred $ xorlo_ps ++ irps
-		    doIncidentals o iips
+		'e' -> do
+		    o <- getFreshConstant
+		    doIncidental o $ nonveridicialPred $ andPred $ xorlo_ps ++ irps ++ iips
+		'a' -> return $ PredNamed $ andPred $ xorlo_ps ++ irps ++ iips
 		_ -> error "You call that a gadri?"
 	    doAssigns o ias
 	    return o
@@ -572,11 +574,14 @@ doTag (DecoratedTagUnits dtus) Nothing =
 	    doModal $ JboTagged (DecoratedTagUnits [dtu{tagNAI=(tagNAI dtu && scalar)}]) Nothing
 doTag jtag mt = doModal $ JboTagged jtag mt
 
+doBareTag :: PreProp r => JboTag -> ParseM r ()
+doBareTag tag = doTag tag Nothing
+
 doModal :: PreProp r => JboModalOp -> ParseM r ()
 doModal op = mapProp (Modal op)
 
-doBareTag :: PreProp r => JboTag -> ParseM r ()
-doBareTag tag = doTag tag Nothing
+nonveridicialPred :: JboPred -> JboPred
+nonveridicialPred p t = Modal NonVeridicial $ p t
 
 -- |applySeltau: operate on a Bridi with a seltau by tanruising every JboRel
 -- in the JboProp.

@@ -54,15 +54,16 @@ withShuntedLambda f =
 
 bracket :: Char -> String -> String
 bracket c =
-    let c' = case c of
-	    '(' -> ')'
-	    '[' -> ']'
-	    '{' -> '}'
-	    '<' -> '>'
-	    '"' -> '"'
-	    '\'' -> '\''
-	    ' ' -> ' '
-    in (c:) . (++[c'])
+    let end = case c of
+	    '(' -> ")"
+	    '[' -> "]"
+	    '{' -> "}"
+	    '<' -> ">"
+	    '"' -> "\""
+	    '\'' -> "\'"
+	    ' ' -> " "
+	    _ -> ""
+    in (c:) . (++end)
 brackets :: String -> String -> String
 brackets bs s = foldr bracket s bs
 
@@ -361,6 +362,8 @@ instance JboShow JboTerm where
 		(concat . intersperse "," $ ss) ++ ")"
     logjboshow True (Named s) = return $ "la " ++ s ++ "."
     logjboshow False (Named s) = return $ bracket '"' s
+    logjboshow jbo (PredNamed p) = (if jbo then jbobracket "la poi" "ku'o ku"
+	else brackets "[Name: ") <$> logjboshow jbo p
     logjboshow jbo (JboQuote (ParsedQuote ps)) =
 	(if jbo then jbobracket "lu" "li'u" else brackets "<< ") <$> logjboshow jbo ps
     logjboshow jbo (JboErrorQuote vs) = return $
@@ -378,10 +381,6 @@ instance JboShow JboTerm where
     logjboshow False (Valsi s) = return $ "{" ++ s ++ "}"
     logjboshow jbo (UnboundSumbasti sa) = logjboshow jbo sa
     logjboshow _ (NonAnaph s) = return s
-    logjboshow jbo (Described g p) =
-	(if jbo then jbobracket ('l':g:"") "ku"
-		else bracket '[' . ((if g=='a' then "Name: " else "Desc: ")++))
-	    <$> logjboshow jbo p
     logjboshow jbo (JoikedTerms joik t1 t2) = do
 	[ts1,ts2] <- mapM (logjboshow jbo) [t1,t2]
 	joiks <- logjboshow jbo joik
@@ -466,8 +465,11 @@ instance JboShow JboProp
 	    tags <- logjboshow jbo tag
 	    mtl <- maybeToList <$> traverse (logjboshow jbo) mt
 	    logjboshow' jbo (ps ++ if jbo
-		then [tags] ++ mtl ++ ["ku"]
+		then [tags] ++ take 1 (mtl ++ ["ku"])
 		else ["(",tags,")","("] ++ mtl ++ ["). "]) p
+	  logjboshow' jbo ps (Modal NonVeridicial p) =
+	    logjboshow' jbo (ps ++ if jbo then ["ju'a","nai"] -- rather approximate...
+		else ["non-veridicial: "]) p
 	  logjboshow' jbo ps p | ps /= [] =
 	      do ss <- logjboshow' jbo [] p
 	         return $ ps ++ [if jbo then "zo'u" else ""] ++ ss

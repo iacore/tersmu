@@ -17,6 +17,7 @@ data JboTerm = BoundVar Int
 	     | Var Int
 	     | Constant Int [JboTerm]
 	     | Named String
+	     | PredNamed JboPred
 	     | NonAnaph String
 	     | UnboundSumbasti SumtiAtom
 	     | JboQuote ParsedQuote
@@ -26,7 +27,6 @@ data JboTerm = BoundVar Int
 	     | Value JboMex -- li
 	     | Valsi String
 	     | ZoheTerm
-	     | Described Char JboPred -- le, la, voi
 	     | JoikedTerms Joik JboTerm JboTerm
 	     | QualifiedTerm SumtiQualifier JboTerm
 	     deriving (Eq, Show, Ord)
@@ -49,6 +49,7 @@ data JboModalOp
     = JboTagged JboTag (Maybe JboTerm)
     | QTruthModal
     | WithEventAs JboTerm
+    | NonVeridicial
 type JboTag = AbsTag JboPred JboTerm
 type JboDecoratedTagUnit = DecoratedAbsTagUnit JboPred JboTerm
 type JboTagUnit = AbsTagUnit JboPred JboTerm
@@ -143,7 +144,7 @@ instance Termful JboTerm where
     subTerm s t (QualifiedTerm qual t') = QualifiedTerm qual (subTerm s t t')
     subTerm s t (Constant n ts) = Constant n $ map (subTerm s t) ts
     subTerm s t (Value m) = Value $ subTerm s t m
-    subTerm s t (Described g p) = Described g $ subTerm s t p
+    subTerm s t (PredNamed p) = PredNamed $ subTerm s t p
     subTerm s t x = if x == s then t else x
 instance Termful FOL.Connective
 instance Termful Joik
@@ -173,6 +174,7 @@ instance Termful JboPred where
 instance Termful JboModalOp where
     travTs_ f (JboTagged tag mt) = travTs_ f tag *> traverse_ f mt
     travTs_ f (WithEventAs x) = f x
+    travTs_ f _ = pure ()
     subTerm s t (JboTagged tag mt) =
 	JboTagged (subTerm s t tag) $ fmap (subTerm s t) mt
     subTerm s t (WithEventAs x) = WithEventAs $ subTerm s t x
@@ -236,7 +238,7 @@ freeVars p = execWriter $ collectFrees p where
 	collectFreesInTerm (QualifiedTerm qual t) = collectFreesInTerm t
 	collectFreesInTerm (Constant _ ts) = traverse_ collectFreesInTerm ts
 	collectFreesInTerm (Value m) = traverseTerms_ collectFreesInTerm m
-	collectFreesInTerm (Described _ p) = traverseTerms_ collectFreesInTerm p
+	collectFreesInTerm (PredNamed p) = traverseTerms_ collectFreesInTerm p
 	collectFreesInTerm _ = pure ()
 
 connToFOL :: LogJboConnective -> JboProp -> JboProp -> JboProp

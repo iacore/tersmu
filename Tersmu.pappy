@@ -368,7 +368,7 @@ relativeClauses :: {[RelClause]}
 relativeClause :: RelClause
 	= "poi":NOI subs:subsentence KUhO? -> {Restrictive subs}
 	/ "noi":NOI subs:subsentence KUhO? -> {Incidental subs}
-	-- TODO: "voi":NOI
+	/ "voi":NOI subs:subsentence KUhO? -> {Descriptive subs}
 	/ "goi":GOI t:term GEhU? -> {Assignment t}
 	/ "ne":GOI t:term GEhU? -> {IncidentalGOI "ne" t}
 	/ "no'u":GOI t:term GEhU? -> {IncidentalGOI "no'u" t}
@@ -901,7 +901,7 @@ LAhE :: String = s:LAhEmain Spacing -> s
 LAhEmain :: String = "tu'a" / "lu'a" / "lu'o" / "la'e" / "vu'i" / "lu'i" / "lu'e" 
 --         sumti descriptors 
 LE :: String = s:LEmain Spacing -> s
-LEmain :: String =  "le'i" / "lo'i" / "le'e" / "lo'e" / "le" / "lei" / "loi" / "lo"
+LEmain :: String =  "le'i" / "lo'i" / "le'e" / "lo'e" / "lei" / "loi" / "le" / "lo"
 --         possibly ungrammatical text right quote 
 LEhU :: String = s:LEhUmain Spacing -> s
 LEhUmain :: String = "le'u" 

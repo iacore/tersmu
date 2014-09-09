@@ -128,6 +128,7 @@ appendRelsToSumti newrels (QSelbri q rels s) =
 
 data RelClause = Restrictive Subsentence  -- poi
 	       | Incidental Subsentence  -- noi
+	       | Descriptive Subsentence -- voi
 	       | Assignment Term  -- goi
 	       | RestrictiveGOI String Term  -- pe etc.
 	       | IncidentalGOI String Term  -- ne etc.

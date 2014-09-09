@@ -13,13 +13,15 @@ connectives in favour of extra WithEventAs and TagRels?
 
 option to render sumti (and tag, abstractor) connectives as quantifiers?
 
-think about implicit zo'e
+Don't use zo'e in lojban form
 
 bu'a
 
 mekso
     implement xorxes' Intertal Grammar of Quantifiers
 	http://www.lojban.org/tiki/BPFK+Section:+Inexact+Numbers ?
+
+irc mode (just put output through a "\n -> ;" substitution?)
 
 Pretty printing
 
