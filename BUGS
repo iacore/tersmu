@@ -17,6 +17,8 @@ Definite bugs:
 
     Occasional misparsings with MAI, e.g. on {za'u re'u re mai broda}.
 
+    {bu'a} quantification isn't handled.
+
 Probably bugs:
     Seltau are considered to be unary predicates rather than higher arity
     relations.

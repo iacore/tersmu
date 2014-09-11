@@ -288,6 +288,9 @@ parseSumti s = do
 		 jrels <- (ijrels++) <$> parseRels rels
 		 (o,jrels) <- case mm of
 		     Nothing -> return (o,jrels)
+		     Just m | m == nullMex ->
+			-- tu'o as a sumti quantifier acts like no quantifier
+			return (o,jrels)
 		     Just m -> do
 			let (rps,jrels') = stripForeRestrictives jrels
 			o' <- quantify m $ andMPred $ (isAmong o):rps
@@ -504,13 +507,13 @@ terpJboMexAsQuantifier m | m == mexExists = LojQuantifier Exists
 terpJboMexAsQuantifier (MexInt n) = LojQuantifier $ Exactly n
 terpJboMexAsQuantifier m = MexQuantifier m
 
+nullMex = MexNumeralString [PA "tu'o"]
+nullOp = OpVUhU "ge'a"
 parseMex,_parseMex :: PreProp r => Mex -> ParseM r JboMex
 parseMex m = reduceMex <$> _parseMex m where
     reduceMex :: JboMex -> JboMex
     reduceMex (Operation op ms) = applyJboOperator op ms
     reduceMex m = m
-    nullMex = MexNumeralString [PA "tu'o"]
-    nullOp = OpVUhU "ge'a"
     stripNulls :: [JboMex] -> [JboMex]
     stripNulls (Operation nullop os:os') | nullop == nullOp =
 	stripNulls os ++ stripNulls os'

@@ -15,14 +15,12 @@ option to render sumti (and tag, abstractor) connectives as quantifiers?
 
 Don't use zo'e in lojban form
 
-bu'a
-
 mekso
-    implement xorxes' Intertal Grammar of Quantifiers
+    implement xorxes' Internal Grammar of Quantifiers
 	http://www.lojban.org/tiki/BPFK+Section:+Inexact+Numbers ?
 
 irc mode (just put output through a "\n -> ;" substitution?)
 
 Pretty printing
 
-illocution: .ei, ko etc
+illocution: ko etc
