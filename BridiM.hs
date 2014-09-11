@@ -25,13 +25,14 @@ data ParseState = ParseState
     { sumbastiBindings::SumbastiBindings
     , bribastiBindings::BribastiBindings
     , nextFreshVar::Int
+    , variableDomains :: Map Int VariableDomain
     , nextFreshConstant::Int
     , referencedVars::Set Int
     , questions::[Question]
     , freeDict::Map Int Free
     , sideTexticules::[Texticule]
     }
-nullParseState = ParseState Map.empty Map.empty 0 0 Set.empty [] Map.empty []
+nullParseState = ParseState Map.empty Map.empty 0 Map.empty 0 Set.empty [] Map.empty []
 type ParseStateT = StateT ParseState
 type ParseStateM = ParseStateT Identity
 
@@ -70,6 +71,9 @@ data QInfo
     = QTruth
     | QSumti JboTerm
 
+data VariableDomain = UnrestrictedDomain | FiniteDomain [JboTerm] | PredDomain JboPred
+    deriving (Eq, Show, Ord)
+
 class (Monad m,Applicative m) => ParseStateful m where
     getParseState :: m ParseState
     putParseState :: ParseState -> m ()
@@ -102,6 +106,16 @@ class (Monad m,Applicative m) => ParseStateful m where
     getNextFreshVar = nextFreshVar <$> getParseState
     putNextFreshVar :: Int -> m ()
     putNextFreshVar n = modifyParseState $ \ps -> ps{nextFreshVar=n}
+    modifyDomains :: (Map Int VariableDomain -> Map Int VariableDomain) -> m ()
+    modifyDomains f = modifyParseState $ \ps -> ps{variableDomains = f $ variableDomains ps}
+    setDomain :: JboTerm -> VariableDomain -> m ()
+    setDomain (Var n) dom = modifyDomains $ Map.insert n dom
+    setDomain _ _ = return ()
+    getDomain :: JboTerm -> m VariableDomain
+    getDomain (Var n) = Map.findWithDefault UnrestrictedDomain n . variableDomains <$> getParseState
+    getDomain _ = return UnrestrictedDomain
+    modifyDomain :: JboTerm -> (VariableDomain -> VariableDomain) -> m ()
+    modifyDomain (Var n) f = modifyDomains $ Map.adjust f n
     getNextFreshConstant :: m Int
     getNextFreshConstant = nextFreshConstant <$> getParseState
     putNextFreshConstant :: Int -> m ()
@@ -111,13 +125,14 @@ class (Monad m,Applicative m) => ParseStateful m where
     putReferenced :: Set Int -> m ()
     putReferenced rv = modifyParseState $ \ps -> ps{referencedVars=rv}
 
-    getFreshVar :: m JboTerm
+    getFreshVar :: VariableDomain -> m JboTerm
     -- note: crucial that we don't reuse variables, so we can catch "donkey
     -- sentences" which involve scope-breaking sumbasti references to unbound
     -- variables (e.g. {ro tercange poi ponse su'o xasli cu darxi ri}).
-    getFreshVar = do
+    getFreshVar dom = do
 	n <- getNextFreshVar
 	putNextFreshVar $ n+1
+	setDomain (Var n) dom
 	return $ Var n
     getFreshConstant :: m JboTerm
     getFreshConstant = do
@@ -178,7 +193,7 @@ takeSideTexticules =
 
 addSumtiQuestion :: ParseStateful m => Maybe Int -> m JboTerm
 addSumtiQuestion kau = do
-    o <- getFreshVar
+    o <- getFreshVar UnrestrictedDomain
     addQuestion $ Question kau $ QSumti o
     return o
 doQuestions :: ParseStateful m => Bool -> JboProp -> m JboProp
@@ -411,12 +426,30 @@ doIncidentals :: JboTerm -> [JboPred] -> ParseM r JboTerm
 doIncidentals o ips = case andMPred ips of
     Nothing -> return o
     Just pred -> do
-	let frees = nub $ freeVars $ pred o
-	    o' = case o of
-		Constant n params -> Constant n $ params ++ frees
-		_ -> o
-	    p = foldr (\free p -> Quantified (LojQuantifier Forall) Nothing $
-		\v -> subTerm free (BoundVar v) p) (pred o') frees
-	addSideTexticule $ TexticuleProp p
+	(pred',o') <- quantifyOutFrees True pred o
+	addSideTexticule $ TexticuleProp $ pred' o'
 	return o'
+    where
+	quantifyOutFrees addParams pred o =
+	    let frees = nub $ freeVars $ pred o
+	    in if null frees
+		then return (pred,o)
+		else do
+		    let o' = case (addParams,o) of
+			    (True,Constant n params) ->
+				Constant n $ reverse frees ++ params
+			    _ -> o
+		    pred' <- foldM quantifyOutFree pred frees
+		    quantifyOutFrees False pred' o'
+	quantifyOutFree pred free = do
+	    dom <- getDomain free
+	    return $ \x -> Quantified (LojQuantifier Forall)
+		(jboPredToLojPred <$> restrOfDom dom)
+		$ \v -> subTerm free (BoundVar v) $ pred x
+	restrOfDom UnrestrictedDomain = Nothing
+	restrOfDom (PredDomain p) = Just p
+	restrOfDom (FiniteDomain []) = Nothing
+	restrOfDom (FiniteDomain (o:os)) = Just
+	    (\x -> foldr (Connected Or) (Rel Equal [x,o]) [Rel Equal [x,o'] | o' <- os])
+
 doIncidental o ip = doIncidentals o [ip]

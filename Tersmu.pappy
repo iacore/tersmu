@@ -210,7 +210,7 @@ tailTerms :: {[Term]}
 termsStar :: {[Term]}
     = (terms1 / fs:free+ -> {Term fs Nothing})*
 terms :: {[Term]}
-    = terms1+
+    = fs:free* ts:terms1+ -> { (if not $ null fs then (Term fs Nothing:) else id) ts }
 terms1 :: Term 
     = ts1:terms2 PEhE jj:joikJek ts2:terms2 -> { freelessTerm $ ConnectedTerms False (jjJboCon Nothing jj) ts1 ts2 }
     / terms2

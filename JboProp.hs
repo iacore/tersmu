@@ -47,8 +47,8 @@ data JboRel = Tanru JboPred JboRel
 
 data JboModalOp
     = JboTagged JboTag (Maybe JboTerm)
-    | QTruthModal
     | WithEventAs JboTerm
+    | QTruthModal
     | NonVeridicial
 type JboTag = AbsTag JboPred JboTerm
 type JboDecoratedTagUnit = DecoratedAbsTagUnit JboPred JboTerm
@@ -56,6 +56,9 @@ type JboTagUnit = AbsTagUnit JboPred JboTerm
 type JboConnective = AbsConnective JboPred JboTerm
 
 type JboPred = JboTerm -> JboProp
+
+jboPredToLojPred :: JboPred -> (Int -> JboProp)
+jboPredToLojPred r = \v -> r (BoundVar v)
 
 type JboMex = AbsMex JboPred JboTerm
 type JboOperator = AbsOperator JboPred JboTerm

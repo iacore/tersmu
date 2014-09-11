@@ -1,8 +1,8 @@
-Rest of the question words.
+irrealis UI - allow a free as a selbri tcita, then current free handling
+should get the scope right, and we can consider them as modal operators?
 
-ma poi broda? And rethink scope - ro verba prami ma?
-
-strict CLL mode?
+Rethink questions and illocution. If scope-invariant, does it make sense to
+treat questions as modal operators?
 
 use to...toi in lojban for sides?
 
@@ -26,7 +26,3 @@ irc mode (just put output through a "\n -> ;" substitution?)
 Pretty printing
 
 illocution: .ei, ko etc
-    note, for this we really do need to associate UI to sentences rather than
-    statements.
-
-Hold on to indicators?

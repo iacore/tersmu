@@ -362,7 +362,7 @@ instance JboShow JboTerm where
 		(concat . intersperse "," $ ss) ++ ")"
     logjboshow True (Named s) = return $ "la " ++ s ++ "."
     logjboshow False (Named s) = return $ bracket '"' s
-    logjboshow jbo (PredNamed p) = (if jbo then jbobracket "la poi" "ku'o ku"
+    logjboshow jbo (PredNamed p) = (if jbo then jbobracket "la poi'i" "ku'o ku"
 	else brackets "[Name: ") <$> logjboshow jbo p
     logjboshow jbo (JboQuote (ParsedQuote ps)) =
 	(if jbo then jbobracket "lu" "li'u" else brackets "<< ") <$> logjboshow jbo ps
@@ -468,7 +468,8 @@ instance JboShow JboProp
 		then [tags] ++ take 1 (mtl ++ ["ku"])
 		else ["(",tags,")","("] ++ mtl ++ ["). "]) p
 	  logjboshow' jbo ps (Modal NonVeridicial p) =
-	    logjboshow' jbo (ps ++ if jbo then ["ju'a","nai"] -- rather approximate...
+	    logjboshow' jbo (ps ++ if jbo
+		then ["ju'a","nai"] -- XXX: not clear this really works...
 		else ["non-veridicial: "]) p
 	  logjboshow' jbo ps p | ps /= [] =
 	      do ss <- logjboshow' jbo [] p

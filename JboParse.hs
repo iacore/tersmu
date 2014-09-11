@@ -260,16 +260,14 @@ parseSumti s = do
 	(ConnectedSumti fore con s1 s2 rels) -> do
 	    o <- case con of
 		JboConnLog _ lcon -> do
-		    o <- getFreshVar
-		    {-
-		    mapProp $ \p ->
-			connToFOL lcon
-			(subTerm o o1 p)
-			(subTerm o o2 p)
-		    -}
+		    o <- getFreshVar $ UnrestrictedDomain
 		    doConnective fore con 
-			(do {o1 <- parseSumti s1; mapProp $ \p -> subTerm o o1 p})
-			(do {o2 <- parseSumti s2; mapProp $ \p -> subTerm o o2 p})
+			(do o1 <- parseSumti s1
+			    mapProp $ \p -> subTerm o o1 p
+			    setDomain o $ FiniteDomain [o1])
+			(do o2 <- parseSumti s2
+			    mapProp $ \p -> subTerm o o2 p
+			    modifyDomain o $ \(FiniteDomain [o1]) -> FiniteDomain [o1,o2])
 		    return o
 		JboConnJoik mtag joik -> do
 		    when (isJust mtag) $ warning
@@ -554,13 +552,11 @@ parseOperator (OpVUhU v) = return $ OpVUhU v
 
 quantify :: PreProp r => JboMex -> Maybe JboPred -> ParseM r JboTerm
 quantify m r = do
-    fresh <- getFreshVar
+    fresh <- getFreshVar $ maybe UnrestrictedDomain PredDomain r
     mapProp $ \p ->
-	Quantified (terpJboMexAsQuantifier m) (singpred <$> r) $
+	Quantified (terpJboMexAsQuantifier m) (jboPredToLojPred <$> r) $
 	    \v -> subTerm fresh (BoundVar v) p
     return fresh
-    where
-	singpred r = \v -> r (BoundVar v)
 
 doTag :: PreProp r => JboTag -> Maybe JboTerm -> ParseM r ()
 doTag (DecoratedTagUnits dtus) Nothing =
@@ -598,13 +594,13 @@ selbriToPred :: Selbri -> ParseM r JboPred
 selbriToPred sb = parsedSelbriToPred $ parseSelbri sb
 parsedSelbriToPred :: BridiM Bridi -> ParseM r JboPred
 parsedSelbriToPred m = do
-    fresh <- getFreshVar
+    fresh <- getFreshVar UnrestrictedDomain
     p <- runSubBridiM $ m <* addImplicit fresh
     return $ \o -> subTerm fresh o p 
 
 subsentToPred :: Subsentence -> (Int -> SumtiAtom) -> ParseM r JboPred
 subsentToPred ss rv = do
-    fresh@(Var n) <- getFreshVar
+    fresh@(Var n) <- getFreshVar UnrestrictedDomain
     p <- runSubBridiM $ do
 	modifyVarBindings $ setShunting rv fresh
 	p <- parseSubsentence ss
