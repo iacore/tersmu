@@ -65,7 +65,6 @@ xiClause :: Mex
     / XI VEI q:mex VEhO? -> q
 
 -- TODO: should handle (probably just strip) BAhE in preparsing
--- TODO: similarly, should handle BU
 
 freeAnnotations :: {[FreeIndex]} = freeAnnotation*
 freeAnnotation :: FreeIndex

@@ -1,5 +1,6 @@
 module JboSyntax where
 import FOL hiding (Term, Connective)
+import Control.Applicative
 -- Abstract syntax:
 
 data Text = Text {textFrees::[Free], vaguelyNegatedText::Bool,
@@ -270,22 +271,27 @@ data AbsOperator r t
 
 type Operator = AbsOperator Selbri Sumti
 
-lerfuStringOfSelbri :: Selbri -> [Lerfu]
-lerfuStringOfSelbri (Negated sb) = lerfuStringOfSelbri sb
-lerfuStringOfSelbri (TaggedSelbri _ sb) = lerfuStringOfSelbri sb
-lerfuStringOfSelbri (Selbri2 sb2) = sb2tols sb2
+lerfuStringsOfSelbri :: Selbri -> [[Lerfu]]
+lerfuStringsOfSelbri (Negated sb) = lerfuStringsOfSelbri sb
+lerfuStringsOfSelbri (TaggedSelbri _ sb) = lerfuStringsOfSelbri sb
+lerfuStringsOfSelbri (Selbri2 sb2) = do
+	s <- sb2tols sb2
+	[s, take 1 s]
     where
-	sb2tols (SBInverted sb3 sb2) = sb3tols sb3 ++ sb2tols sb2
+	sb2tols (SBInverted sb3 sb2) = (++) <$> sb3tols sb3 <*> sb2tols sb2
 	sb2tols (Selbri3 sb3) = sb3tols sb3
-	sb3tols (SBTanru sb sb') = sb3tols sb ++ sb3tols sb'
-	sb3tols (ConnectedSB _ _ sb sb3) = sbtols sb ++ sb3tols sb3
+	sb3tols (SBTanru sb sb') = (++) <$> sb3tols sb <*> sb3tols sb'
+	sb3tols (ConnectedSB _ _ sb sb3) = (++) <$> sbtols sb <*> sb3tols sb3
 	sb3tols (BridiBinding sb3 _) = sb3tols sb3
 	sb3tols (TanruUnit tu _) = tutols tu
-	sbtols = lerfuStringOfSelbri
-	tutols (TUBrivla s) = map Lerfu $ take 1 s
-	tutols (TUAbstraction (NU s) _) = map Lerfu $ take 1 s
+	sbtols = lerfuStringsOfSelbri
+	tutols (TUBrivla s) = return $ map LerfuChar $ take 1 s
+	tutols (TUAbstraction (NU s) _) =
+	    -- Allow {nu bu} etc as abstraction anaphora.
+	    -- Suggested by Michael Turniansky.
+	    [map LerfuChar $ take 1 s, [LerfuValsi s]]
 	tutols (TUSelbri3 sb3) = sb3tols sb3
-	tutols _ = []
+	tutols _ = return $ []
 
 {-
 class Bifunctor p where

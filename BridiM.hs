@@ -405,9 +405,9 @@ updateSumbastiWithSumtiAtom sa o = do
 	Name _ _ s ->
 	    setSumbasti (Sumbasti False $ LerfuString $ map LerfuChar $ take 1 s) o
 	Description _ _ _ (Left sb) _ _ ->
-	    let ls = lerfuStringOfSelbri sb
+	    let ls = lerfuStringsOfSelbri sb
 	    in mapM_ (`setSumbasti` o) $
-		map (Sumbasti False . LerfuString) [ls, take 1 ls]
+		map (Sumbasti False . LerfuString) ls
 	_ -> return ()
 
 updateReferenced :: JboTerm -> ParseM r ()
