@@ -558,7 +558,6 @@ litnum :: Int
 	let calc [] = 0
 	    calc (d:ds) = (10*calc ds) + d
         in calc (reverse ds)}
-
 digit :: Int
     = "no":PA -> {0}
     / "pa":PA -> {1}
@@ -572,15 +571,18 @@ digit :: Int
     / "so":PA -> {9}
     / c:Char &{isDigit c} -> {digitToInt c}
 
--- TODO: should be PA, not digit
 lerfuString :: {[Lerfu]}
-    = c:lerfuWord cs:(lerfuWord / n:digit -> {Lerfu $ show n !! 0})*
+    = c:lerfuWord cs:(lerfuWord
+	    / d:digit -> {LerfuChar $ head $ show d}
+	    / p:PA -> {LerfuPA p})*
 	-> {c:cs}
+
 lerfuWord :: Lerfu
-    = s:BY -> {if s=="y'y" then Lerfu 'h' else Lerfu $ s!!0}
-    / v:VowelValsi BU -> { Lerfu v }
-    -- TODO: / LAU lerfuWord / TEI lerfuString FOI
-    -- TODO: Valsi BU
+    = s:BY -> {if s=="y'y" then LerfuChar 'h' else LerfuChar $ s!!0}
+    / v:VowelValsi BU -> { LerfuChar v }
+    / v:Valsi BU -> { LerfuValsi v }
+    / lau:LAU l:lerfuWord -> { LerfuShifted lau l }
+    / TEI ls:lerfuString FOI -> { LerfuComposite ls }
 
 ek :: LogJboConnective = ln:NA?
 	se:(SE)? conchar:ekA rn:NAI?

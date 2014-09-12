@@ -403,7 +403,7 @@ updateSumbastiWithSumtiAtom sa o = do
 	modifySumbastiBindings $ setShunting (\n -> Sumbasti False $ Ri n) o
     case sa of
 	Name _ _ s ->
-	    setSumbasti (Sumbasti False $ LerfuString $ map Lerfu $ take 1 s) o
+	    setSumbasti (Sumbasti False $ LerfuString $ map LerfuChar $ take 1 s) o
 	Description _ _ _ (Left sb) _ _ ->
 	    let ls = lerfuStringOfSelbri sb
 	    in mapM_ (`setSumbasti` o) $

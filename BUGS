@@ -1,5 +1,5 @@
-All known divergence from CLL prescription, or from plausible interpretations
-thereof, is noted here.
+All known divergence from baseline (CLL+xorlo), or from plausible
+interpretations thereof, is noted here.
 
 Bug traces:
     > broda joi brode cei brodi .i brodi
@@ -28,21 +28,21 @@ Probably bugs:
     {ka} doesn't interpret multiple {ce'u} as giving an n-ary relation, as
     mandated by CLL:11.4.
 
-Possibly bugs:
-    Quantifiers on bound variables rebind the variable. This is contrary to
-    CLL:16.14.1-2, but I don't see how to make sense of what's specified
-    there.
-
-    Termset quantification: CLL:16.7.5 has quantifiers in the same termset
-    having "equal scope", but I don't understand what this means.
+    We parse the name in "LA sumtiTail", whereas arguably we should just use
+    the text.
 
     We don't handle {nei} or {no'a}, which have murky and self-referential
     semantics.
 
     We don't handle {soi}.
 
-    We parse the name in "LA sumtiTail", whereas arguably we should just use
-    the text.
+Possibly bugs:
+    Quantifiers on bound variables rebind the variable. This is contrary to
+    CLL:16.14.1-2, but I don't see how to make sense of what's specified
+    there.
+
+    Termset quantification: CLL:16.7.5 has quantifiers in the same termset
+    having "equal scope", but I don't see what this could mean.
 
 Other deviations from baseline, not considered bugs:
     {na broda} is equivalent to {naku broda}; consequently, {ja'a} has no

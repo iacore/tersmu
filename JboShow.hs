@@ -141,14 +141,21 @@ instance JboShow [Lerfu] where
     logjboshow jbo ls =
 	concat . (if jbo then intersperse " " else id) <$> mapM (logjboshow jbo) ls
 instance JboShow Lerfu where
-    logjboshow True (Lerfu c) = return $ case c of
+    logjboshow True (LerfuChar c) = return $ case c of
 	_ | c `elem` "aoeui" -> (c:"bu")
 	'y' -> "y bu"
 	'h' -> "y'y"
 	_ | c `elem` ['0'..'9'] -> jbonum $ fromEnum c - fromEnum '0'
 	_ -> c:"y"
-    logjboshow False (Lerfu c) = return $ [c]
-
+    logjboshow False (LerfuChar c) = return $ [c]
+    logjboshow jbo (LerfuPA p) = return $ (if jbo then id else bracket '{') p
+    logjboshow jbo (LerfuValsi v) = return $ (if jbo then id else bracket '{') v
+    logjboshow jbo (LerfuShifted lau l) =
+	(if jbo then ((lau++" ")++) else ((bracket '{' lau)++) . bracket '(') <$> 
+	    logjboshow jbo l
+    logjboshow jbo (LerfuComposite ls) =
+	(if jbo then jbobracket "tei" "foi" else bracket '[') <$>
+	    logjboshowlist jbo ls
 instance JboShow JboOperator where
     logjboshow jbo (ConnectedOperator _ con op op') = do
 	[ops,ops'] <- mapM (logjboshow jbo) [op,op']

@@ -157,11 +157,13 @@ data SumtiAtom = Name Gadri [RelClause] String
 	       | QualifiedSumti SumtiQualifier [RelClause] Sumti
 	       deriving (Eq, Show, Ord)
 
--- TODO properly
-newtype Lerfu = Lerfu Char
+data Lerfu
+    = LerfuChar Char
+    | LerfuPA Cmavo
+    | LerfuValsi String
+    | LerfuShifted Cmavo Lerfu
+    | LerfuComposite [Lerfu]
     deriving (Eq, Show, Ord)
-lerfuToChar :: Lerfu -> Maybe Char
-lerfuToChar (Lerfu c) = Just c
 
 type Gadri = String
 
