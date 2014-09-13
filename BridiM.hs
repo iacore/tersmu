@@ -270,11 +270,11 @@ ignoringArgs m = do
     m <* putArglist al
 
 argsToJboterms :: Args -> [JboTerm]
-argsToJboterms as = map (\n -> Map.findWithDefault ZoheTerm (NPos n) as) [1..max] where
+argsToJboterms as = map (\n -> Map.findWithDefault Unfilled (NPos n) as) [1..max] where
     max = maximum $ 1:[n | NPos n <- Map.keys as]
 
 swapTerms :: [JboTerm] -> Int -> Int -> [JboTerm]
-swapTerms ts n m = swapFiniteWithDefault ZoheTerm ts (n-1) (m-1)
+swapTerms ts n m = swapFiniteWithDefault Unfilled ts (n-1) (m-1)
 
 -- | addImplicit: adds a jboterm at first empty positional slot
 addImplicit :: PreProp r => JboTerm -> ParseM r ()

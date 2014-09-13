@@ -354,8 +354,8 @@ instance JboShow SumtiAtom where
 		s <- logjboshow True v
 		return $ "{" ++ s ++ "}"
 instance JboShow JboTerm where
-    logjboshow False (ZoheTerm) = return " "
-    logjboshow True (ZoheTerm) = return "zo'e"
+    logjboshow False (Unfilled) = return " "
+    logjboshow True (Unfilled) = return "BUG"
     logjboshow jbo (BoundVar n) = binding n >>= logjboshow jbo
     logjboshow jbo (Var n) = return $ if jbo then "lo XASLI zei da ku" else "[DONKEY]"
     logjboshow True (Constant n []) = return $ "cy " ++ jbonum n
@@ -428,6 +428,13 @@ seToStr 4 = "ve"
 seToStr 5 = "xe"
 seToStr n = "se xi " ++ jbonum n
 
+faToStr 1 = "fa"
+faToStr 2 = "fe"
+faToStr 3 = "fi"
+faToStr 4 = "fo"
+faToStr 5 = "fu"
+faToStr n = "fa xi " ++ jbonum n
+
 instance JboShow Int where
     logjboshow True n = return $ jbonum n
     logjboshow False n = return $ show n
@@ -481,9 +488,9 @@ instance JboShow JboProp
 	  logjboshow' jbo ps p | ps /= [] =
 	      do ss <- logjboshow' jbo [] p
 	         return $ ps ++ [if jbo then "zo'u" else ""] ++ ss
-	  logjboshow' jbo ps (Connected c p1 p2) =
-	      do ss1 <- logjboshow' jbo ps p1
-	         ss2 <- logjboshow' jbo ps p2
+	  logjboshow' jbo [] (Connected c p1 p2) =
+	      do ss1 <- logjboshow' jbo [] p1
+	         ss2 <- logjboshow' jbo [] p2
 	         return $ if jbo then case c of And -> ["ge"]
 					        Or -> ["ga"]
 					        Impl -> ["ga", "nai"]
@@ -491,32 +498,38 @@ instance JboShow JboProp
 	      			++ ss1 ++ ["gi"] ++ ss2
 	      		   else ["("] ++ ss1 ++
 	      		        [" "++show c++" "] ++ ss2 ++ [")"]
-	  logjboshow' jbo ps (NonLogConnected joik p1 p2) =
-	      do ss1 <- logjboshow' jbo ps p1
-	         ss2 <- logjboshow' jbo ps p2
+	  logjboshow' jbo [] (NonLogConnected joik p1 p2) =
+	      do ss1 <- logjboshow' jbo [] p1
+	         ss2 <- logjboshow' jbo [] p2
 		 joiks <- logjboshow jbo joik
 	         return $ if jbo then [joik,"gi"]
 	      			++ ss1 ++ ["gi"] ++ ss2
 	      		   else ["("] ++ ss1 ++
 	      		        [" {"++joik++"} "] ++ ss2 ++ [")"]
-	  logjboshow' jbo ps (Not p) =
-	      do ss <- logjboshow' jbo ps p
+	  logjboshow' jbo [] (Not p) =
+	      do ss <- logjboshow' jbo [] p
 	         return $ (if jbo then ["na","ku"] else ["!"]) ++ ss
-	  logjboshow' jbo@True ps (Rel r []) =
+	  logjboshow' jbo@True [] (Rel r []) =
 	      do s <- jboshow r
 	         return [s]
-	  logjboshow' True ps (Rel r (x1:xs)) =
-	      do s1 <- jboshow x1
-	         s2 <- jboshow r
+	  logjboshow' True [] (Rel r (x1:xs)) =
+	      do fore <- if x1 == Unfilled then return []
+		    else (\x->[x]) <$> jboshow x1
+	         rs <- jboshow r
 	         ss <- mapM jboshow xs
-	         return $ [s1,s2] ++ ss
-	  logjboshow' False ps (Rel r ts) =
+	         return $ fore ++ [rs] ++ concat [
+		    (if skipped then [faToStr n] else []) ++ [s]
+		    | (s,x,lastx,n) <- zip4 ss xs (Nothing:map Just xs) [2..]
+		    , x /= Unfilled
+		    , let skipped = lastx == Just Unfilled
+		    ]
+	  logjboshow' False [] (Rel r ts) =
 	      do s <- logshow r
 		 tss <- mapM logshow ts
 	         return $
 	             [s ++ "(" ++ (intercalate "," tss) ++ ")"]
-	  logjboshow' True ps Eet = return ["jitfa to SPOFU toi"]
-	  logjboshow' False ps Eet = return ["_|_ (BUG)"]
+	  logjboshow' True [] Eet = return ["jitfa to SPOFU toi"]
+	  logjboshow' False [] Eet = return ["_|_ (BUG)"]
 	  }
 
 instance JboShow Texticule where

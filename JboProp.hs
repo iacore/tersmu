@@ -26,7 +26,7 @@ data JboTerm = BoundVar Int
 	     | TheMex Mex -- me'o
 	     | Value JboMex -- li
 	     | Valsi String
-	     | ZoheTerm
+	     | Unfilled
 	     | JoikedTerms Joik JboTerm JboTerm
 	     | QualifiedTerm SumtiQualifier JboTerm
 	     deriving (Eq, Show, Ord)
@@ -172,7 +172,7 @@ instance Termful JboRel where
     subTerm s t (Moi t' m) = Moi ((subTerm s t) t') m
     subTerm s t r = r
 instance Termful JboPred where
-    travTs_ f p = travTs_ f $ p ZoheTerm
+    travTs_ f p = travTs_ f $ p Unfilled
     subTerm s t p = \x -> subTerm s t (p x)
 instance Termful JboModalOp where
     travTs_ f (JboTagged tag mt) = travTs_ f tag *> traverse_ f mt

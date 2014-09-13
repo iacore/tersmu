@@ -354,7 +354,7 @@ parseRels rels = concat . map maybeToList <$> mapM parseRel rels where
 			"po" -> Tanru (\o -> Rel (Brivla "steci") [o])
 				    (Brivla "srana")
 		in Just $ \x -> Rel rel [x,o]
-	    Just (Left (jbotag, mo)) -> Just $ \x -> Rel (TagRel jbotag) [fromMaybe ZoheTerm mo,x]
+	    Just (Left (jbotag, mo)) -> Just $ \x -> Rel (TagRel jbotag) [fromMaybe Unfilled mo,x]
 	    _ -> Nothing
 stripForeRestrictives :: [JboRelClause] -> ([JboPred],[JboRelClause])
 stripForeRestrictives rels = let (rrs,rels') = break (not . jrIsRes) rels in (map jrrPred rrs,rels')
