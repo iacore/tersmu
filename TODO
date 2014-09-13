@@ -1,12 +1,12 @@
-rename things; try to make JboParse.hs readable.
-
-irrealis UI - allow a free as a selbri tcita, then current free handling
-should get the scope right, and we can consider them as modal operators?
+Use Bridi rather than JboPred where appropriate
 
 Rethink questions and illocution. If scope-invariant, does it make sense to
-treat questions as modal operators?
+treat questions as modal operators? Handle remaining question words, in any
+case (connectives, fa'i, xo, pei, probably others (CLL has a list))
 
 use to...toi in lojban for sides?
+
+rename things; try to make JboParse.hs readable.
 
 alternative tags mode, doing away with modals and non-logical sentence
 connectives in favour of extra WithEventAs and TagRels?
@@ -15,14 +15,11 @@ connectives in favour of extra WithEventAs and TagRels?
 
 option to render sumti (and tag, abstractor) connectives as quantifiers?
 
-Don't use zo'e in lojban form
-
-mekso
-    implement xorxes' Internal Grammar of Quantifiers
-	http://www.lojban.org/tiki/BPFK+Section:+Inexact+Numbers ?
-
 irc mode (just put output through a "\n -> ;" substitution?)
 
 Pretty printing
 
 illocution: ko etc
+
+irrealis UI - allow a free as a selbri tcita, then current free handling
+should get the scope right, and we can consider them as modal operators?
