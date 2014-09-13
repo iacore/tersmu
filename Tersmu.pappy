@@ -33,19 +33,19 @@ terminatedText :: Text
     = t:text Spacing? "%%%END%%%" -> t
 
 free :: Free
-    = "sei":SEI mts:(ts:terms CU? -> ts)? sb:selbri SEhU?
+    = "sei":SEI !BU mts:(ts:terms CU? -> ts)? sb:selbri SEhU?
 	-> {Discursive $ BridiTail3 sb $ fromMaybe [] mts}
-    / "ti'o":SEI mts:(ts:terms CU? -> ts)? sb:selbri SEhU?
+    / "ti'o":SEI !BU mts:(ts:terms CU? -> ts)? sb:selbri SEhU?
 	-> {MexPrecedence $ BridiTail3 sb $ fromMaybe [] mts}
-    / SOI s:sumti ms:sumti? SEhU? -> { SOI s ms }
-    / cs:vocative rels1:maybeRelativeClauses sb:selbri rels2:maybeRelativeClauses DOhU?
+    / SOI !BU s:sumti ms:sumti? SEhU? -> { SOI s ms }
+    / cs:vocative !BU rels1:maybeRelativeClauses sb:selbri rels2:maybeRelativeClauses DOhU?
 	-> { Vocative cs $ Just (QAtom Nothing (rels1++rels2)
 	    (Description "le" Nothing Nothing (Left sb) [] [])) }
-    / cs:vocative n:name rels:maybeRelativeClauses DOhU?
+    / cs:vocative !BU n:name rels:maybeRelativeClauses DOhU?
 	-> { Vocative cs $ Just (QAtom Nothing rels (n "la")) }
-    / cs:vocative ms:sumti? DOhU? -> { Vocative cs ms }
+    / cs:vocative !BU ms:sumti? DOhU? -> { Vocative cs ms }
     / q:numberOrLerfuString MAI -> { MAI q }
-    / TO t:text TOI? -> {Bracketed t}
+    / TO !BU t:text TOI? -> {Bracketed t}
     / q:xiClause -> {XI q}
     / indicator
 
@@ -62,8 +62,8 @@ indicator :: Free
     / c:(DAhO/FUhO) !BU -> { Indicator False c }
 
 xiClause :: Mex
-    = XI q:numberOrLerfuString BOI? -> q
-    / XI VEI q:mex VEhO? -> q
+    = XI !BU q:numberOrLerfuString BOI? -> q
+    / XI !BU VEI q:mex VEhO? -> q
 
 freeAnnotations :: {[FreeIndex]} = freeAnnotation*
 freeAnnotation :: FreeIndex
