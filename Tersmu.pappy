@@ -65,8 +65,6 @@ xiClause :: Mex
     = XI q:numberOrLerfuString BOI? -> q
     / XI VEI q:mex VEhO? -> q
 
--- TODO: should handle (probably just strip) BAhE in preparsing
-
 freeAnnotations :: {[FreeIndex]} = freeAnnotation*
 freeAnnotation :: FreeIndex
     = '^' n:litnum ' ' -> n
