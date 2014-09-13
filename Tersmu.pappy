@@ -235,8 +235,11 @@ termset :: Term'
     = NUhI pcon:gek ts1:terms NUhU b:gik ts2:terms NUhU?
 	-> { ConnectedTerms True (pcon b) (freelessTerm $ Termset ts1) (freelessTerm $ Termset ts2) }
     / NUhI ts:terms NUhU? -> { Termset ts }
-    / pcon:gek ts1:term+ b:gik ts2:term+ &{length ts1 == length ts2}
+    / pcon:gek {(ts1,b,ts2)}:termsGikTerms
 	-> { ConnectedTerms True (pcon b) (freelessTerm $ Termset ts1) (freelessTerm $ Termset ts2) }
+termsGikTerms :: {([Term],Bool,[Term])}
+    = t1:term {(ts1,b,ts2)}:( b:gik -> {([],b,[])} / termsGikTerms ) t2:term
+	-> {(t1:ts1,b,ts2++[t2])}
 
 sumti :: Sumti
     = s:sumti1 rels:(VUhO rels:relativeClauses -> rels)?
