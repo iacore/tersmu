@@ -11,6 +11,9 @@ Bug traces:
     > jai bai broda
     broda( )
 
+    > doi ui ko'a
+    [Fragment: {ko'a}]
+
 
 Definite bugs:
     {zoi} works only if the following word is {zoi} (or, arbitrarily, {gy}).
@@ -25,9 +28,6 @@ Definite bugs:
     correctly.
 
 Probably bugs:
-    Seltau are considered to be unary predicates rather than higher arity
-    relations.
-
     {cei} only works as '=:'
 
     {ka} doesn't interpret multiple {ce'u} as giving an n-ary relation, as

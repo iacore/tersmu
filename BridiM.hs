@@ -218,7 +218,7 @@ deKau top = do
 
 data Arglist = Arglist {args :: Args, position::Int}
 type Args = Map ArgPos JboTerm
-data ArgPos = NPos Int | JaiPos
+data ArgPos = NPos Int | JaiPos | UnfilledPos Int
     deriving (Eq, Show, Ord)
 class (Monad m,Applicative m) => Arglistful m where
     getArglist :: m Arglist
@@ -270,8 +270,21 @@ ignoringArgs m = do
     m <* putArglist al
 
 argsToJboterms :: Args -> [JboTerm]
-argsToJboterms as = map (\n -> Map.findWithDefault Unfilled (NPos n) as) [1..max] where
-    max = maximum $ 1:[n | NPos n <- Map.keys as]
+argsToJboterms as = let as' = insertImplicits as
+    in map (\n -> Map.findWithDefault Unfilled (NPos n) as') [1..max as']
+    where
+	max as = maximum $ 1:[n | NPos n <- Map.keys as]
+	insertImplicits as = foldl insertImplicit as
+	    [o | (UnfilledPos _, o) <- Map.assocs as]
+	insertImplicit as o = 
+	    let gap = head $ [1..] \\ [n | NPos n <- Map.keys $ as]
+	    in Map.insert (NPos gap) o $ as
+
+bridiToJboVPred :: Bridi -> JboVPred
+bridiToJboVPred b os =
+    b $ Map.fromList [(UnfilledPos n,o) | (n,o) <- zip [0..] os]
+bridiToJboPred :: Bridi -> JboPred
+bridiToJboPred b = vPredToPred $ bridiToJboVPred b
 
 swapTerms :: [JboTerm] -> Int -> Int -> [JboTerm]
 swapTerms ts n m = swapFiniteWithDefault Unfilled ts (n-1) (m-1)
@@ -377,7 +390,10 @@ resolveBridi :: (Bridi,BridiParseState) -> JboProp
 resolveBridi (b,s) = partiallyResolveBridi (b,s) nullArgs
 
 runSubBridiM :: BridiM Bridi -> ParseM r JboProp
-runSubBridiM m = (($nullArgs) <$>)$ partiallyRunBridiM $ do
+runSubBridiM m = ($nullArgs) <$> partiallyRunSubBridiM m
+
+partiallyRunSubBridiM :: BridiM Bridi -> ParseM r Bridi
+partiallyRunSubBridiM m = partiallyRunBridiM $ do
     modify $ \s -> s{isSubBridi=True}
     putArglist nullArglist
     m

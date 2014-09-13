@@ -150,13 +150,13 @@ parseSelbri3 (SBTanru sb sb') = do
 parseSelbri3 (ConnectedSB fore con sb sb') = do
     (con',p,p') <- if fore then do
 	    con' <- parseConnective con
-	    p <- selbriToPred sb
-	    p' <- selbriToPred $ sb3tosb sb'
+	    p <- selbriToVPred sb
+	    p' <- selbriToVPred $ sb3tosb sb'
 	    return (con',p,p')
 	else do
-	    p <- selbriToPred sb
+	    p <- selbriToVPred sb
 	    con' <- parseConnective con
-	    p' <- selbriToPred $ sb3tosb sb'
+	    p' <- selbriToVPred $ sb3tosb sb'
 	    return (con',p,p')
     return $ jboRelToBridi $ TanruConnective con' p p'
 parseSelbri3 (ScalarNegatedSB nahe sb) =
@@ -349,9 +349,9 @@ parseRels rels = concat . map maybeToList <$> mapM parseRel rels where
 			-- XXX: following are rather approximate... the
 			-- BPFK subordinators section suggests more
 			-- complicated expressions
-			"po'e" -> Tanru (\o -> Rel (Brivla "jinzi") [o])
+			"po'e" -> Tanru (\os -> Rel (Brivla "jinzi") os)
 				    (Brivla "srana")
-			"po" -> Tanru (\o -> Rel (Brivla "steci") [o])
+			"po" -> Tanru (\os -> Rel (Brivla "steci") os)
 				    (Brivla "srana")
 		in Just $ \x -> Rel rel [x,o]
 	    Just (Left (jbotag, mo)) -> Just $ \x -> Rel (TagRel jbotag) [fromMaybe Unfilled mo,x]
@@ -479,7 +479,7 @@ parseTagUnit (BAI c) = return $ BAI c
 parseTagUnit (FAhA m c) = return $ FAhA m c
 parseTagUnit (TAhE_ZAhO f c) = return $ TAhE_ZAhO f c
 parseTagUnit (ROI r f q) = ROI r f <$> parseMex q
-parseTagUnit (FIhO sb) = FIhO <$> selbriToPred sb
+parseTagUnit (FIhO sb) = FIhO <$> selbriToVPred sb
 -- XXX: for now at least, we just pass through ki as if it were a normal tag
 -- (this is what the BPFK section suggests at the time of writing:
 -- ki == fi'o manri, with all the complexity of CLL's ki presumably being
@@ -536,7 +536,7 @@ _parseMex (ConnectedMex fore con@(JboConnJoik _ _) m1 m2) =
 _parseMex (Operation op ms) = Operation <$> parseOperator op <*> mapM _parseMex ms
 _parseMex (MexArray ms) = MexArray <$> mapM _parseMex ms
 _parseMex (QualifiedMex q m) = QualifiedMex q <$> _parseMex m
-_parseMex (MexSelbri sb) = MexSelbri <$> selbriToPred sb
+_parseMex (MexSelbri sb) = MexSelbri <$> selbriToVPred sb
 _parseMex (MexSumti s) = MexSumti <$> parseSumti s
 _parseMex (MexInt n) = return $ MexInt n
 _parseMex (MexNumeralString ns) = return $ MexNumeralString ns
@@ -551,7 +551,7 @@ parseOperator (ConnectedOperator fore con@(JboConnJoik _ _) o1 o2) =
 parseOperator (OpPermuted s o) = OpPermuted s <$> parseOperator o
 parseOperator (OpScalarNegated n op) = OpScalarNegated n <$> parseOperator op
 parseOperator (OpMex m) = OpMex <$> _parseMex m
-parseOperator (OpSelbri sb) = OpSelbri <$> selbriToPred sb
+parseOperator (OpSelbri sb) = OpSelbri <$> selbriToVPred sb
 parseOperator (OpVUhU v) = return $ OpVUhU v
 
 quantify :: PreProp r => JboMex -> Maybe JboPred -> ParseM r JboTerm
@@ -589,28 +589,28 @@ nonveridicialPred p t = Modal NonVeridicial $ p t
 -- {broda gi'e brode .i brodi go'i}, but not clear what is correct.
 applySeltau :: BridiM Bridi -> Bridi -> BridiM Bridi
 applySeltau seltauM tertau = do
-    stpred <- parsedSelbriToPred seltauM
+    stpred <- parsedSelbriToVPred seltauM
     return $ mapRelsInBridi (Tanru stpred) tertau
 mapRelsInBridi :: (JboRel -> JboRel) -> Bridi -> Bridi
 mapRelsInBridi f b = (terpProp (\r ts -> Rel (f r) ts) id id) . b
 
-selbriToPred :: Selbri -> ParseM r JboPred
-selbriToPred sb = parsedSelbriToPred $ parseSelbri sb
-parsedSelbriToPred :: BridiM Bridi -> ParseM r JboPred
-parsedSelbriToPred m = do
+selbriToVPred :: Selbri -> ParseM r JboVPred
+selbriToVPred sb = parsedSelbriToVPred $ parseSelbri sb
+parsedSelbriToVPred :: BridiM Bridi -> ParseM r JboVPred
+parsedSelbriToVPred m = do
     fresh <- getFreshVar UnrestrictedDomain
-    p <- runSubBridiM $ m <* addImplicit fresh
-    return $ \o -> subTerm fresh o p 
+    bridiToJboVPred <$> partiallyRunSubBridiM m
+
+selbriToPred sb = vPredToPred <$> selbriToVPred sb
 
 subsentToPred :: Subsentence -> (Int -> SumtiAtom) -> ParseM r JboPred
 subsentToPred ss rv = do
     fresh@(Var n) <- getFreshVar UnrestrictedDomain
-    p <- runSubBridiM $ do
+    b <- partiallyRunSubBridiM $ do
 	modifyVarBindings $ setShunting rv fresh
-	p <- parseSubsentence ss
-	reffed <- referenced n
-	when (not reffed) $ addImplicit fresh
-	return p
+	parseSubsentence ss
+    reffed <- referenced n
+    let p = bridiToJboVPred b $ if reffed then [] else [fresh]
     return $ \o -> subTerm fresh o p
 
 doConnective :: PreProp r => Bool -> Connective -> ParseM r a -> ParseM r a -> ParseM r a

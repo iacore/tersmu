@@ -31,8 +31,8 @@ data JboTerm = BoundVar Int
 	     | QualifiedTerm SumtiQualifier JboTerm
 	     deriving (Eq, Show, Ord)
 
-data JboRel = Tanru JboPred JboRel
-	    | TanruConnective JboConnective JboPred JboPred
+data JboRel = Tanru JboVPred JboRel
+	    | TanruConnective JboConnective JboVPred JboVPred
 	    | ScalarNegatedRel NAhE JboRel
 	    | AbsPred Abstractor JboPred
 	    | AbsProp Abstractor JboProp
@@ -50,18 +50,21 @@ data JboModalOp
     | WithEventAs JboTerm
     | QTruthModal
     | NonVeridicial
-type JboTag = AbsTag JboPred JboTerm
-type JboDecoratedTagUnit = DecoratedAbsTagUnit JboPred JboTerm
-type JboTagUnit = AbsTagUnit JboPred JboTerm
-type JboConnective = AbsConnective JboPred JboTerm
+type JboTag = AbsTag JboVPred JboTerm
+type JboDecoratedTagUnit = DecoratedAbsTagUnit JboVPred JboTerm
+type JboTagUnit = AbsTagUnit JboVPred JboTerm
+type JboConnective = AbsConnective JboVPred JboTerm
 
+-- variadic and unary predicates
+type JboVPred = [JboTerm] -> JboProp
 type JboPred = JboTerm -> JboProp
+vPredToPred vp o = vp [o]
 
 jboPredToLojPred :: JboPred -> (Int -> JboProp)
 jboPredToLojPred r = \v -> r (BoundVar v)
 
-type JboMex = AbsMex JboPred JboTerm
-type JboOperator = AbsOperator JboPred JboTerm
+type JboMex = AbsMex JboVPred JboTerm
+type JboOperator = AbsOperator JboVPred JboTerm
 
 data JboQuantifier
     = MexQuantifier JboMex
@@ -103,6 +106,9 @@ instance Ord JboProp where { _ <= _ = False }
 instance Eq JboPred where { _ == _ = False }
 instance Show JboPred where { show _ = "[ \\_ -> ... ]" }
 instance Ord JboPred where { _ <= _ = False }
+instance Eq JboVPred where { _ == _ = False }
+instance Show JboVPred where { show _ = "[ \\[_] -> ... ]" }
+instance Ord JboVPred where { _ <= _ = False }
 
 class Termful t where
     -- XXX: you'd think there would be a neat common abstraction of
@@ -174,6 +180,9 @@ instance Termful JboRel where
 instance Termful JboPred where
     travTs_ f p = travTs_ f $ p Unfilled
     subTerm s t p = \x -> subTerm s t (p x)
+instance Termful JboVPred where
+    travTs_ f p = travTs_ f $ p []
+    subTerm s t p = \xs -> subTerm s t (p xs)
 instance Termful JboModalOp where
     travTs_ f (JboTagged tag mt) = travTs_ f tag *> traverse_ f mt
     travTs_ f (WithEventAs x) = f x

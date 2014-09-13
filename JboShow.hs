@@ -243,6 +243,10 @@ instance JboShow Abstractor where
 
 instance JboShow JboPred where
     logjboshow jbo p = logjboshowpred jbo (\n -> p (BoundVar n))
+instance JboShow JboVPred where
+    -- XXX: not knowing its arity, we can't actually show a vpred...
+    -- so we just show the unary pred instead.
+    logjboshow jbo vp = logjboshow jbo $ vPredToPred vp
 
 logjboshowpred jbo@False p =
     withShuntedRelVar $ \n -> logjboshow jbo $ p n
