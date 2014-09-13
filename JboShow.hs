@@ -86,7 +86,7 @@ instance JboShow LojQuantifier where
 logjboshowlist :: JboShow a => Bool -> [a] -> Bindful SumtiAtom String
 logjboshowlist jbo as = do
     ass <- mapM (logjboshow jbo) as
-    return $ concat $ intersperse (if jbo then " " else ",") ass 
+    return $ intercalate (if jbo then " " else ",") ass 
 
 instance JboShow Mex where
     logjboshow _ m = return $ show m
@@ -139,7 +139,7 @@ instance JboShow Numeral where
 
 instance JboShow [Lerfu] where
     logjboshow jbo ls =
-	concat . (if jbo then intersperse " " else id) <$> mapM (logjboshow jbo) ls
+	intercalate (if jbo then " " else "") <$> mapM (logjboshow jbo) ls
 instance JboShow Lerfu where
     logjboshow True (LerfuChar c) = return $ case c of
 	_ | c `elem` "aoeui" -> (c:"bu")
@@ -200,7 +200,7 @@ instance JboShow JboTag where
 	    then s1 ++ " " ++ conns ++ " " ++ s2
 	    else conns ++ "(" ++ s1 ++ "," ++ s2 ++ ")"
     logjboshow jbo (DecoratedTagUnits dtus) =
-	(concat.intersperse " " <$>) $ (`mapM` dtus)
+	(intercalate " " <$>) $ (`mapM` dtus)
 	$ \(DecoratedTagUnit nahe se nai tu) -> do
 	    tus <- logjboshow jbo tu
 	    return $ maybe "" (++" ") nahe
@@ -261,7 +261,7 @@ logjboshowpred jbo@True p = withNextVariable $ \v ->
 		 [] -> return s'
 		 _ -> do
 		     tss <- sequence $ map (logjboshow jbo) ts'
-		     return $ s' ++ " be " ++ concat (intersperse " bei " tss)
+		     return $ s' ++ " be " ++ intercalate " bei " tss
 	 _ -> withShuntedRelVar $ \n -> do
 		 s <- logjboshow jbo (p n)
 		 return $ "poi'i " ++ s ++ " kei"
@@ -364,9 +364,9 @@ instance JboShow JboTerm where
 	ss <- mapM (logjboshow jbo) ts
 	return $ if jbo
 	    then "li ma'o fy" ++ jbonum n ++ " " ++
-		(concat . intersperse " " $ (map ("mo'e "++) ss)) ++ " lo'o"
+		(intercalate " " $ map ("mo'e "++) ss) ++ " lo'o"
 	    else "f" ++ show n ++ "(" ++
-		(concat . intersperse "," $ ss) ++ ")"
+		(intercalate "," ss) ++ ")"
     logjboshow True (Named s) = return $ "la " ++ s ++ "."
     logjboshow False (Named s) = return $ bracket '"' s
     logjboshow jbo (PredNamed p) = (if jbo then jbobracket "la poi'i" "ku'o ku"
@@ -514,7 +514,7 @@ instance JboShow JboProp
 	      do s <- logshow r
 		 tss <- mapM logshow ts
 	         return $
-	             [s ++ "(" ++ (concat $ intersperse "," tss) ++ ")"]
+	             [s ++ "(" ++ (intercalate "," tss) ++ ")"]
 	  logjboshow' True ps Eet = return ["jitfa to SPOFU toi"]
 	  logjboshow' False ps Eet = return ["_|_ (BUG)"]
 	  }
@@ -529,5 +529,5 @@ instance JboShow JboFragment where
     logjboshow jbo _ = return $ if jbo then "li'o" else "[Fragment]"
 
 instance JboShow JboText where
-    jboshow fps = concat . intersperse "\n.i " <$> mapM jboshow fps
-    logshow fps = concat . intersperse "\n" <$> mapM logshow fps
+    jboshow fps = intercalate "\n.i " <$> mapM jboshow fps
+    logshow fps = intercalate "\n" <$> mapM logshow fps

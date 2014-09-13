@@ -42,6 +42,8 @@ data Free
     | Vocative [COI] (Maybe Sumti)
     | MAI Mex
     | XI Mex
+    | MexPrecedence BridiTail
+    | SOI Sumti (Maybe Sumti)
     | Indicator {indicatorNai :: Bool, indicatorCmavo :: Cmavo}
     deriving (Eq, Show, Ord)
 
@@ -217,17 +219,19 @@ type NAhE = Cmavo
 sb3tosb :: Selbri3 -> Selbri
 sb3tosb = Selbri2 . Selbri3
 
-data TanruUnit = TUBrivla String
-		| TUGOhA String Int
-		| TUMe Sumti
-		| TUMoi Sumti String
-		| TUAbstraction Abstractor Subsentence
-	        | TUPermuted Int TanruUnit
-		| TUJai (Maybe Tag) TanruUnit
-		| TUOperator Operator
-		| TUXOhI Tag
-		| TUSelbri3 Selbri3
-	        deriving (Eq, Show, Ord)
+data TanruUnit
+    = TUBrivla String
+    | TUZei [String]
+    | TUGOhA String Int
+    | TUMe Sumti
+    | TUMoi Sumti String
+    | TUAbstraction Abstractor Subsentence
+    | TUPermuted Int TanruUnit
+    | TUJai (Maybe Tag) TanruUnit
+    | TUOperator Operator
+    | TUXOhI Tag
+    | TUSelbri3 Selbri3
+    deriving (Eq, Show, Ord)
 
 data Abstractor
     = NU Cmavo
@@ -285,11 +289,13 @@ lerfuStringsOfSelbri (Selbri2 sb2) = do
 	sb3tols (BridiBinding sb3 _) = sb3tols sb3
 	sb3tols (TanruUnit tu _) = tutols tu
 	sbtols = lerfuStringsOfSelbri
-	tutols (TUBrivla s) = return $ map LerfuChar $ take 1 s
+	tutols (TUBrivla s) = return $ [LerfuChar $ head s]
+	tutols (TUZei vs) = [map (LerfuChar . head) $ vs
+	    , [LerfuChar . head . head $ vs]]
 	tutols (TUAbstraction (NU s) _) =
 	    -- Allow {nu bu} etc as abstraction anaphora.
 	    -- Suggested by Michael Turniansky.
-	    [map LerfuChar $ take 1 s, [LerfuValsi s]]
+	    [[LerfuChar $ head s], [LerfuValsi s]]
 	tutols (TUSelbri3 sb3) = sb3tols sb3
 	tutols _ = return $ []
 

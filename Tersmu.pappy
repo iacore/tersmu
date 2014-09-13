@@ -35,8 +35,9 @@ terminatedText :: Text
 free :: Free
     = "sei":SEI mts:(ts:terms CU? -> ts)? sb:selbri SEhU?
 	-> {Discursive $ BridiTail3 sb $ fromMaybe [] mts}
-    -- TODO: ti'o
-    -- TODO: soi
+    / "ti'o":SEI mts:(ts:terms CU? -> ts)? sb:selbri SEhU?
+	-> {MexPrecedence $ BridiTail3 sb $ fromMaybe [] mts}
+    / SOI s:sumti ms:sumti? SEhU? -> { SOI s ms }
     / cs:vocative rels1:maybeRelativeClauses sb:selbri rels2:maybeRelativeClauses DOhU?
 	-> { Vocative cs $ Just (QAtom Nothing (rels1++rels2)
 	    (Description "le" Nothing Nothing (Left sb) [] [])) }
@@ -72,11 +73,12 @@ freeAnnotation :: FreeIndex
 
 -- |lastStatementOrSubsentence parses up to and including the start of the
 -- last statement or subsentence, being where we should put any frees.
+-- Currently unused.
 lastStatementOrSubsentence :: {()}
     = nextStatementOrSubsentence* -> {()}
 nextStatementOrSubsentence :: {()}
     = (quoteETC / !startStOrSubs Valsi -> {()})* startStOrSubs -> {()}
--- TODO: probably this doesn't deal properly with all magic word interactions
+-- XXX: probably this doesn't deal properly with all magic word interactions
 quoteETC :: {()}
     = nonJboQuote -> {()} / errorQuote -> {()} / ZO Valsi -> {()} / Valsi BU -> {()}
 	    / Valsi ZEI -> {()}
@@ -419,9 +421,9 @@ tanruUnit1 :: Selbri3
     = tu:tanruUnit2 las:linkargs? -> {TanruUnit tu (fromMaybe [] las)}
 
 tanruUnit2 :: TanruUnit
-    -- TODO: zei
-    = bv:BRIVLA -> {TUBrivla bv}
-    -- TODO: don't just ignore RAhO
+    -- XXX: probably this ZEI handling interacts badly with other magic words?
+    = v:Valsi vs:(ZEI v:Valsi -> v)+ -> {TUZei $ v:vs}
+    / bv:BRIVLA -> {TUBrivla bv}
     / g:GOhA mn:("xi":XI n:litnum -> n)? RAhO? -> {TUGOhA g $ fromMaybe 1 mn}
     / KE sb:selbri3 KEhE? -> {TUSelbri3 sb}
     / ME s:(sumti / ls:lerfuString -> {QAtom Nothing [] $ LerfuString ls}) MEhU? mmoi:MOI?

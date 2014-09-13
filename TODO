@@ -1,6 +1,4 @@
-Lerfu
-
-rename things, try to make JboParse.hs readable.
+rename things; try to make JboParse.hs readable.
 
 irrealis UI - allow a free as a selbri tcita, then current free handling
 should get the scope right, and we can consider them as modal operators?

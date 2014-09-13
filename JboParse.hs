@@ -173,7 +173,8 @@ parseSelbri3 (BridiBinding tu tu') = do
     parseSelbri3 tu
 
 parseTU :: TanruUnit -> BridiM Bridi
-parseTU (TUBrivla bv) = getBribasti $ TUBrivla bv
+parseTU tu@(TUBrivla bv) = getBribasti tu
+parseTU (TUZei vs) = return . jboRelToBridi . Brivla $ intercalate "-zei-" vs
 parseTU (TUGOhA "du" _) = return $ jboRelToBridi Equal
 parseTU tu@(TUGOhA _ _) = getBribasti tu
 parseTU (TUMe s) = do

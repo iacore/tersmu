@@ -19,6 +19,11 @@ Definite bugs:
 
     {bu'a} quantification isn't handled.
 
+    {ra'o} is ignored.
+
+    No serious effort has been made to handle magic word interactions
+    correctly.
+
 Probably bugs:
     Seltau are considered to be unary predicates rather than higher arity
     relations.
