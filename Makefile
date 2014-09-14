@@ -1,6 +1,9 @@
 tersmu: *.hs Pappy
 	ghc -o tersmu -iPappy -XMultiParamTypeClasses -XFunctionalDependencies \
 	    -XTypeSynonymInstances -XFlexibleInstances --make Main
+tersmuBot: *.hs Pappy
+	ghc -o tersmuBot -iPappy -XMultiParamTypeClasses -XFunctionalDependencies \
+	    -XTypeSynonymInstances -XFlexibleInstances --make tersmuBot.hs
 Pappy:
 	mkdir Pappy
 	cd Pappy && \
