@@ -29,10 +29,11 @@ data ParseState = ParseState
     , nextFreshConstant::Int
     , referencedVars::Set Int
     , questions::[Question]
+    , lambdas::Map LambdaPos Int
     , freeDict::Map Int Free
     , sideTexticules::[Texticule]
     }
-nullParseState = ParseState Map.empty Map.empty 0 Map.empty 0 Set.empty [] Map.empty []
+nullParseState = ParseState Map.empty Map.empty 0 Map.empty 0 Set.empty [] Map.empty Map.empty []
 type ParseStateT = StateT ParseState
 type ParseStateM = ParseStateT Identity
 
@@ -70,6 +71,9 @@ data Question = Question {qKauDepth :: Maybe Int, qInfo::QInfo}
 data QInfo
     = QTruth
     | QSumti JboTerm
+
+data LambdaPos = LambdaPos {lambdaLevel :: Int, lambdaNum :: Int}
+    deriving (Eq, Show, Ord)
 
 data VariableDomain = UnrestrictedDomain | FiniteDomain [JboTerm] | PredDomain JboPred
     deriving (Eq, Show, Ord)
@@ -147,6 +151,28 @@ class (Monad m,Applicative m) => ParseStateful m where
     addQuestion :: Question -> m ()
     addQuestion b = modifyParseState $ \ps -> ps{questions=b:questions ps}
 
+    putLambda :: Maybe Int -> Maybe Int -> m JboTerm
+    putLambda mlev mnum = do
+	ls <- lambdas <$> getParseState
+	let lev = fromMaybe 1 mlev
+	    next = maximum (0:[ n | LambdaPos l n <- Map.keys ls, l==lev ]) + 1
+	    num = fromMaybe next mnum
+	    pos = LambdaPos lev num
+	    mn = Map.lookup pos ls
+	case mn of
+	    Just n -> return $ Var n
+	    Nothing -> do
+		fresh@(Var n) <- getFreshVar UnrestrictedDomain
+		modifyLambdas $ Map.insert pos n
+		return fresh
+    modifyLambdas :: (Map LambdaPos Int -> Map LambdaPos Int) -> m ()
+    modifyLambdas f = modifyParseState $ \ps ->
+		ps{lambdas = f $ lambdas ps}
+    shuntLambdas :: Int -> m ()
+    shuntLambdas d = modifyLambdas $
+	Map.filterWithKey (\(LambdaPos l _) _ -> l > 0)
+	. Map.mapKeys (\(LambdaPos l n) -> LambdaPos (l+d) n)
+
     putFreeDict :: Map Int Free -> m ()
     putFreeDict d = modifyParseState $ \ps -> ps{freeDict = d}
     setFrees :: [Free] -> m ()
@@ -196,16 +222,14 @@ addSumtiQuestion kau = do
     o <- getFreshVar UnrestrictedDomain
     addQuestion $ Question kau $ QSumti o
     return o
-doQuestions :: ParseStateful m => Bool -> JboProp -> m JboProp
+doQuestions :: (ParseStateful m, PreProp p) => Bool -> p -> m p
 doQuestions top p =
     foldr doQInfo p <$> deKau top
-doQuestionsPred :: ParseStateful m => Bool -> JboPred -> m JboPred
-doQuestionsPred top p =
-    deKau top >>= \qs -> return $ \o -> foldr doQInfo (p o) qs
-doQInfo :: QInfo -> JboProp -> JboProp
-doQInfo (QSumti qv) p = Quantified QuestionQuantifier Nothing $
+doQInfo :: PreProp p => QInfo -> p -> p
+doQInfo (QSumti qv) = liftToProp $ \p ->
+    Quantified QuestionQuantifier Nothing $
 	\v -> subTerm qv (BoundVar v) p
-doQInfo QTruth p = Modal QTruthModal p
+doQInfo QTruth = liftToProp $ Modal QTruthModal
 deKau :: ParseStateful m => Bool -> m [QInfo]
 deKau top = do
     qs <- questions <$> getParseState
@@ -215,6 +239,16 @@ deKau top = do
 	(outqs,qs') = partitionEithers $ map deKauq qs
     modifyParseState $ \ps -> ps{questions = qs'}
     return $ map qInfo outqs
+
+doLambdas :: JboVPred -> ParseM r JboNPred
+doLambdas vpred = do
+    ls <- lambdas <$> getParseState
+    let arity = maximum $ 1:[n | LambdaPos 1 n <- Map.keys ls]
+	apply vpred (n,o) = case Map.lookup (LambdaPos 1 n) ls of
+	    Nothing -> \os -> vpred $ o:os
+	    Just v -> \os -> subTerm (Var v) o $ vpred os
+    shuntLambdas (-1)
+    return $ JboNPred arity $ \os -> foldl apply vpred (zip [1..] os) []
 
 data Arglist = Arglist {args :: Args, position::Int}
 type Args = Map ArgPos JboTerm
@@ -289,13 +323,6 @@ bridiToJboPred b = vPredToPred $ bridiToJboVPred b
 swapTerms :: [JboTerm] -> Int -> Int -> [JboTerm]
 swapTerms ts n m = swapFiniteWithDefault Unfilled ts (n-1) (m-1)
 
--- | addImplicit: adds a jboterm at first empty positional slot
-addImplicit :: PreProp r => JboTerm -> ParseM r ()
-addImplicit o = do
-    al <- getArglist
-    let gap = head $ [1..] \\ [n | NPos n <- Map.keys $ args al]
-    putArglist $ al{args=(Map.insert (NPos gap) o $ args al)}
-
 data Arg = Arg Tagged JboTerm
 addArg :: PreProp r => Arg -> ParseM r ()
 addArg (Arg FAITagged o) = modifyArglist $ addFaiToArglist o
@@ -322,7 +349,11 @@ class (Monad m,Applicative m) => VarBindful m where
     lookupVarBinding :: SumtiAtom -> m (Maybe JboTerm)
     lookupVarBinding a = Map.lookup a <$> getVarBindings 
     getVarBinding :: SumtiAtom -> m JboTerm
-    getVarBinding a = fromJust <$> lookupVarBinding a
+    getVarBinding a = do
+	mv <- lookupVarBinding a
+	case mv of
+	    Just v -> return v
+	    Nothing -> error $ "Unbound variable " ++ show a
 instance VarBindful (ParseM r) where
     getVarBindings = varBindings <$> get
     putVarBindings vbs = modify $ \s -> s{varBindings=vbs}
@@ -346,7 +377,7 @@ instance PreProp JboProp where
     liftToProp = id
     liftToProp2 = id
     dummyPreProp = Eet
-instance PreProp Bridi where
+instance PreProp (a -> JboProp) where
     liftToProp = liftA
     liftToProp2 = liftA2
     dummyPreProp = \_ -> Eet

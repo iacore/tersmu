@@ -290,7 +290,7 @@ sumti6 :: SumtiAtom
     / k:KOhA &{k `elem` ["da'e","de'e","di'e","da'u","de'u","di'u","dei","do'i"]} -> {NonAnaphoricProsumti k}
     / n:variable mn:("xi":XI n:litnum -> n)? -> {Variable $ fromMaybe n mn}
     / "ke'a":KOhA mn:("xi":XI n:litnum -> n)? -> {RelVar $ fromMaybe 1 mn}
-    / "ce'u":KOhA mn:("xi":XI n:litnum -> n)? -> {LambdaVar $ fromMaybe 1 mn}
+    / "ce'u":KOhA ml:("xi":XI n:litnum -> n)? mn:("xi":XI n:litnum -> n)? -> {LambdaVar ml mn}
     / "ri":KOhA mn:("xi":XI n:litnum -> n)? -> {Ri $ fromMaybe 1 mn}
     / "ra":KOhA -> {Ra "ra"}
     / "ru":KOhA -> {Ra "ru"}

@@ -44,13 +44,16 @@ withShuntedRelVar f =
        twiddleBound $ \s -> case s of RelVar n -> RelVar $ n-1
 				      _ -> s
        return r
-withShuntedLambda f =
-    do twiddleBound $ \s -> case s of LambdaVar n -> LambdaVar $ n+1
-				      _ -> s
-       r <- withBinding (LambdaVar 1) f
-       twiddleBound $ \s -> case s of LambdaVar n -> LambdaVar $ n-1
-				      _ -> s
-       return r
+withShuntedLambdas arity f = do
+    twiddleBound $ \s -> case s of
+	LambdaVar (Just l) (Just n) -> LambdaVar (Just $ l+1) (Just n)
+	_ -> s
+    r <- ($[]) $ foldl (\h b -> \ns -> b $ \n -> h $ n:ns)
+	f [withBinding (LambdaVar (Just 1) (Just n)) | n <- [1..arity]]
+    twiddleBound $ \s -> case s of
+	LambdaVar (Just l) (Just n) -> LambdaVar (Just $ l-1) (Just n)
+	_ -> s
+    return r
 
 bracket :: Char -> String -> String
 bracket c =
@@ -304,9 +307,9 @@ instance JboShow JboRel where
 	ts <- logjboshow jbo t
 	return $ if jbo then "me " ++ ts ++ " me'u " ++ m
 	    else bracket '[' ts ++ " " ++ m
-    logjboshow jbo (AbsPred a p) =
-	do withShuntedLambda (\n -> do
-	    ps <- logjboshow jbo (p (BoundVar n))
+    logjboshow jbo (AbsPred a (JboNPred arity p)) =
+	do withShuntedLambdas arity (\ns -> do
+	    ps <- logjboshow jbo (p (map BoundVar ns))
 	    as <- logjboshow jbo a
 	    return $ if jbo then as ++ " " ++ ps ++ " kei" 
 		else as ++ "[" ++ ps ++ "]" )
@@ -339,8 +342,10 @@ instance JboShow SumtiAtom where
 	    Variable n -> "da xi " ++ jbonum n
 	    RelVar 1 -> "ke'a"
 	    RelVar n -> "ke'a xi " ++ jbonum n
-	    LambdaVar 1 -> "ce'u"
-	    LambdaVar n -> "ce'u xi " ++ jbonum n
+	    LambdaVar (Just 1) (Just 1) -> "ce'u"
+	    LambdaVar (Just l) (Just 1) -> "ce'u xi " ++ jbonum l
+	    LambdaVar (Just l) (Just n) ->
+		"ce'u xi " ++ jbonum l ++ " xi " ++ jbonum n
 	    Assignable n | n <= 5 -> "ko'" ++ vowelnum n
 	    Assignable n | n <= 10 -> "fo'" ++ vowelnum (n-5)
 	    Assignable n -> "ko'a xi " ++ jbonum n
@@ -353,7 +358,9 @@ instance JboShow SumtiAtom where
 	    Variable n -> return $ "x" ++ show n
 	    RelVar 1 -> return $ "_"
 	    RelVar n -> return $ "_" ++ show n
-	    LambdaVar n -> return $ "\\" ++ show n
+	    LambdaVar (Just 1) (Just n) -> return $ "\\" ++ show n
+	    LambdaVar (Just l) (Just n) ->
+		return $ "\\" ++ bracket '(' (show l ++ "," ++ show n)
 	    v -> do
 		s <- logjboshow True v
 		return $ "{" ++ s ++ "}"

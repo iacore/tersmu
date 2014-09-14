@@ -196,15 +196,20 @@ parseTU (TUAbstraction a ss) =
 		 -- poi'i: an experimental NU, which takes ke'a rather
 		 -- than ce'u; {ko'a poi'i ke'a broda} means
 		 -- {ko'a broda}. See http://www.lojban.org/tiki/poi'i
-		 Just RelVar
-	    NU "ka" -> Just LambdaVar
-	    NU "ni" -> Just LambdaVar
+		 Just "relvar"
+	    NU "ka" -> Just "lambda"
+	    NU "ni" -> Just "lambda"
 	    _ -> Nothing
     of
-	Just rv -> do
-	    pred <- subsentToPred ss rv >>= doQuestionsPred False
-	    return $ jboRelToBridi $ AbsPred a pred
-	Nothing -> jboRelToBridi . AbsProp a <$>
+	Just "lambda" -> do
+	    vpred <- (bridiToJboVPred<$>) $ partiallyRunSubBridiM $ do
+		shuntLambdas 1
+		parseSubsentence ss >>= doQuestions False
+	    jboRelToBridi . AbsPred a <$> doLambdas vpred
+	Just "relvar" -> do
+	    pred <- subsentToPred ss >>= doQuestions False
+	    return $ jboRelToBridi $ AbsPred a $ predToNPred pred
+	_ -> jboRelToBridi . AbsProp a <$>
 	    (runSubBridiM (parseSubsentence ss) >>= doQuestions False)
 parseTU (TUPermuted n tu) =
     (.swapArgs (NPos 1) (NPos n)) <$> parseTU tu
@@ -324,10 +329,10 @@ data JboRelClause
 
 parseRels :: PreProp r => [RelClause] -> ParseM r [JboRelClause]
 parseRels rels = concat . map maybeToList <$> mapM parseRel rels where
-    parseRel (Restrictive ss) = Just . JRRestrictive <$> subsentToPred ss RelVar
-    parseRel (Descriptive ss) = Just . JRRestrictive <$> nonveridicialPred <$> subsentToPred ss RelVar
+    parseRel (Restrictive ss) = Just . JRRestrictive <$> subsentToPred ss
+    parseRel (Descriptive ss) = Just . JRRestrictive <$> nonveridicialPred <$> subsentToPred ss
     parseRel (Incidental ss) = 
-	(Just . JRIncidental <$>) $ subsentToPred ss RelVar >>= doQuestionsPred True
+	(Just . JRIncidental <$>) $ subsentToPred ss >>= doQuestions True
     parseRel (RestrictiveGOI goi t) = goiRel goi JRRestrictive t
     parseRel (IncidentalGOI goi t) = goiRel goi JRIncidental t
     parseRel (Assignment (Term [] (Just (Sumti Untagged (QAtom Nothing [] sa))))) | isAssignable sa = 
@@ -430,8 +435,9 @@ parseSumtiAtom sa = do
 	    return $ QualifiedTerm qual o
 	MexLi m -> Value <$> parseMex m
 	MexMex m -> return $ TheMex m
+	-- FIXME: RelVar crashes the program if unbound!
 	RelVar _ -> getVarBinding sa
-	LambdaVar _ -> getVarBinding sa
+	LambdaVar l n -> putLambda l n
 	Ri _ -> getSumbasti sa
 	Ra _ -> getSumbasti sa
 	Assignable _ -> getSumbasti sa
@@ -603,11 +609,11 @@ parsedSelbriToVPred m = do
 
 selbriToPred sb = vPredToPred <$> selbriToVPred sb
 
-subsentToPred :: Subsentence -> (Int -> SumtiAtom) -> ParseM r JboPred
-subsentToPred ss rv = do
+subsentToPred :: Subsentence -> ParseM r JboPred
+subsentToPred ss = do
     fresh@(Var n) <- getFreshVar UnrestrictedDomain
     b <- partiallyRunSubBridiM $ do
-	modifyVarBindings $ setShunting rv fresh
+	modifyVarBindings $ setShunting RelVar fresh
 	parseSubsentence ss
     reffed <- referenced n
     let p = bridiToJboVPred b $ if reffed then [] else [fresh]

@@ -30,9 +30,6 @@ Definite bugs:
 Probably bugs:
     {cei} only works as '=:'
 
-    {ka} doesn't interpret multiple {ce'u} as giving an n-ary relation, as
-    mandated by CLL:11.4.
-
     We parse the name in "LA sumtiTail", whereas arguably we should just use
     the text.
 
