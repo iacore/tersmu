@@ -16,10 +16,12 @@ import Data.List
 evalText :: Text -> ParseStateM JboText
 evalText (Text fs nai paras) = do
 	doFrees fs
-	concat <$> mapM evalFragOrStatement (concat paras)
+	jt <- mapM evalFragOrStatement (concat paras)
+	ps <- propTexticules <$> takeSideTexticules
+	return $ map TexticuleProp ps ++ jt
     where
-	evalFragOrStatement (Left frag) = (\x->[x]) . TexticuleFrag <$> parseFrag frag
-	evalFragOrStatement (Right st) = map TexticuleProp <$> evalStatement st
+	evalFragOrStatement (Left frag) = TexticuleFrag <$> parseFrag frag
+	evalFragOrStatement (Right st) = TexticuleProp <$> evalStatement st
 
 -- XXX: we don't handle fragments properly at all currently
 -- (to be done as part of any eventual question-and-answer handling)
@@ -27,11 +29,8 @@ parseFrag :: Fragment -> ParseStateM JboFragment
 parseFrag (FragTerms ts) = evalParseM $ JboFragTerms <$> parseTerms ts
 parseFrag f = return $ JboFragUnparsed f
 
-evalStatement :: Statement -> ParseStateM [JboProp]
-evalStatement s = do
-    p <- evalParseM (parseStatement s) >>= doQuestions True
-    ps <- propTexticules <$> takeSideTexticules
-    return $ ps ++ [p]
+evalStatement :: Statement -> ParseStateM JboProp
+evalStatement s = evalParseM (parseStatement s) >>= doQuestions True
 
 data FreeReturn
     = FRSides JboText
