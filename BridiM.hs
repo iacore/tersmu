@@ -281,7 +281,12 @@ nullArgs = Map.empty
 nullArglist = Arglist nullArgs 1
 
 joinArgs :: Args -> Args -> Args
-joinArgs = Map.union
+joinArgs new old = Map.union new $ oldWithImplicits where
+    oldWithImplicits = foldl insertImplicit old
+	[o | (UnfilledPos _, o) <- Map.assocs new]
+    insertImplicit as o = 
+	let gap = head $ [1..] \\ [n | NPos n <- Map.keys $ as]
+	in Map.insert (NPos gap) o $ as
 
 swapArgs :: ArgPos -> ArgPos -> Args -> Args
 swapArgs p1 p2 = Map.mapKeys (\p -> if p == p1 then p2 else if p == p2 then p1 else p)
@@ -304,15 +309,10 @@ ignoringArgs m = do
     m <* putArglist al
 
 argsToJboterms :: Args -> [JboTerm]
-argsToJboterms as = let as' = insertImplicits as
-    in map (\n -> Map.findWithDefault Unfilled (NPos n) as') [1..max as']
+argsToJboterms as =
+    map (\n -> Map.findWithDefault Unfilled (NPos n) as) [1..max as]
     where
 	max as = maximum $ 1:[n | NPos n <- Map.keys as]
-	insertImplicits as = foldl insertImplicit as
-	    [o | (UnfilledPos _, o) <- Map.assocs as]
-	insertImplicit as o = 
-	    let gap = head $ [1..] \\ [n | NPos n <- Map.keys $ as]
-	    in Map.insert (NPos gap) o $ as
 
 bridiToJboVPred :: Bridi -> JboVPred
 bridiToJboVPred b os =

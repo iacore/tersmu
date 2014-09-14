@@ -4,6 +4,8 @@ Rethink questions and illocution. If scope-invariant, does it make sense to
 treat questions as modal operators? Handle remaining question words, in any
 case (connectives, fa'i, xo, pei, probably others (CLL has a list))
 
+ma poi broda -> ma x1:broda(_) ?
+
 use to...toi in lojban for sides?
 
 rename things; try to make JboParse.hs readable.
