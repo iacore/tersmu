@@ -48,6 +48,10 @@ free :: Free
     / TO !BU t:text TOI? -> {Bracketed t}
     / q:xiClause -> {XI q}
     / indicator
+    -- XXX following aren't frees, but pretending they are lets our preparsing
+    -- mechanism strip them out
+    / BAhE -> {NullFree}
+    / Y !BU -> {NullFree}
 
 vocative :: {[COI]}
     = cs:coi* DOI -> cs / coi+

@@ -49,7 +49,7 @@ data JboModalOp
     = JboTagged JboTag (Maybe JboTerm)
     | WithEventAs JboTerm
     | QTruthModal
-    | NonVeridicial
+    | NonVeridical
 type JboTag = AbsTag JboVPred JboTerm
 type JboDecoratedTagUnit = DecoratedAbsTagUnit JboVPred JboTerm
 type JboTagUnit = AbsTagUnit JboVPred JboTerm

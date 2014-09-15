@@ -492,10 +492,9 @@ instance JboShow JboProp
 	    logjboshow' jbo (ps ++ if jbo
 		then [tags] ++ take 1 (mtl ++ ["ku"])
 		else ["(",tags,")","("] ++ mtl ++ ["). "]) p
-	  logjboshow' jbo ps (Modal NonVeridicial p) =
-	    logjboshow' jbo (ps ++ if jbo
-		then ["ju'a","nai"] -- XXX: not clear this really works...
-		else ["non-veridicial: "]) p
+	  logjboshow' jbo ps (Modal NonVeridical p) =
+	    (if jbo then ("ju'a nai":) else ("non-veridical: ":)) <$>
+		logjboshow' jbo ps p
 	  logjboshow' jbo ps p | ps /= [] =
 	      do ss <- logjboshow' jbo [] p
 	         return $ ps ++ [if jbo then "zo'u" else ""] ++ ss

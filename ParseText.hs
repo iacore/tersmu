@@ -10,10 +10,7 @@ import Control.Applicative
 -- traceIt x = traceShow x x
 
 parseText :: String -> Either Int Text
-parseText str = nudgeFrees (tersmuterminatedText . tersmuParse "terminatedText") $ stripBAhE str ++ " %%%END%%%"
-
-stripBAhE :: String -> String
-stripBAhE = unwords . filter (`notElem` ["ba'e","za'e"]) . words
+parseText str = nudgeFrees (tersmuterminatedText . tersmuParse "terminatedText") $ str ++ " %%%END%%%"
 
 afterPos :: Pos -> String -> String
 afterPos p s = drop (posCol p - 1) s

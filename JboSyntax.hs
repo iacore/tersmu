@@ -45,6 +45,7 @@ data Free
     | MexPrecedence BridiTail
     | SOI Sumti (Maybe Sumti)
     | Indicator {indicatorNai :: Bool, indicatorCmavo :: Cmavo}
+    | NullFree
     deriving (Eq, Show, Ord)
 
 data COI = COI {coiCOI::String, coiNAI::Bool}

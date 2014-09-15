@@ -150,6 +150,9 @@ class (Monad m,Applicative m) => ParseStateful m where
 
     addQuestion :: Question -> m ()
     addQuestion b = modifyParseState $ \ps -> ps{questions=b:questions ps}
+    modifyQuestions :: ([Question] -> [Question]) -> m ()
+    modifyQuestions f = modifyParseState $ \ps ->
+		ps{questions = f $ questions ps}
 
     putLambda :: Maybe Int -> Maybe Int -> m JboTerm
     putLambda mlev mnum = do
@@ -222,11 +225,19 @@ addSumtiQuestion kau = do
     o <- getFreshVar UnrestrictedDomain
     addQuestion $ Question kau $ QSumti o
     return o
+withQuestions :: (ParseStateful m, PreProp p) => Bool -> m p -> m p
+withQuestions top m = do
+    -- XXX: using ParseState for this is a bit of a hack, really, but I'd
+    -- rather not add another layer to the monad stack.
+    qs <- questions <$> getParseState
+    modifyQuestions $ const []
+    (doQuestions top =<< m) <* (modifyQuestions (qs++))
 doQuestions :: (ParseStateful m, PreProp p) => Bool -> p -> m p
 doQuestions top p =
-    foldr doQInfo p <$> deKau top
+    foldl (flip doQInfo) p <$> deKau top
 doQInfo :: PreProp p => QInfo -> p -> p
 doQInfo (QSumti qv) = liftToProp $ \p ->
+    -- TODO: really, this ought to use a plural variable
     Quantified QuestionQuantifier Nothing $
 	\v -> subTerm qv (BoundVar v) p
 doQInfo QTruth = liftToProp $ Modal QTruthModal
@@ -237,7 +248,7 @@ deKau top = do
 		then Left q
 		else Right q {qKauDepth = (+(-1))<$>qKauDepth q}
 	(outqs,qs') = partitionEithers $ map deKauq qs
-    modifyParseState $ \ps -> ps{questions = qs'}
+    modifyQuestions $ const qs'
     return $ map qInfo outqs
 
 doLambdas :: JboVPred -> ParseM r JboNPred
@@ -381,6 +392,10 @@ instance PreProp (a -> JboProp) where
     liftToProp = liftA
     liftToProp2 = liftA2
     dummyPreProp = \_ -> Eet
+instance PreProp p => PreProp (Maybe p) where
+    liftToProp = liftA . liftToProp
+    liftToProp2 = liftA2 . liftToProp2
+    dummyPreProp = Nothing
 instance PreProp JboFragment where
     -- null instance
     liftToProp = \_ -> id

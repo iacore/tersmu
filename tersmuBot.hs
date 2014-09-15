@@ -9,7 +9,8 @@ import System.Exit
 
 import TersmuIRC
  
-server = "irc.freenode.org"
+server = "morgan.freenode.net"
+--server = "irc.freenode.org"
 port   = 6667
 chan   = "#lojban"
 nick   = "tersmus"
@@ -31,8 +32,8 @@ listen :: Handle -> IO ()
 listen h = forever $ do
     t <- hGetLine h
     let s = init t
-    if ping s then pong s else eval $ drop 1 s
     putStrLn s
+    if ping s then pong s else eval $ drop 1 s
   where
     forever a = a >> forever a
  

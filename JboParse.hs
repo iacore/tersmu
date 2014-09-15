@@ -15,13 +15,14 @@ import Data.List
 
 evalText :: Text -> ParseStateM JboText
 evalText (Text fs nai paras) = do
-	doFrees fs
-	jt <- mapM evalFragOrStatement (concat paras)
+	jt <- mapM evalFragOrStatement $ zip (concat paras) $ fs:repeat []
 	ps <- propTexticules <$> takeSideTexticules
 	return $ map TexticuleProp ps ++ jt
     where
-	evalFragOrStatement (Left frag) = TexticuleFrag <$> parseFrag frag
-	evalFragOrStatement (Right st) = TexticuleProp <$> evalStatement st
+	evalFragOrStatement ((Left frag),fs) = (TexticuleFrag <$>) $
+	    doFrees fs >> parseFrag frag
+	evalFragOrStatement ((Right st),fs) = (TexticuleProp <$>) $
+	    withQuestions True $ doFrees fs >> evalStatement st
 
 -- XXX: we don't handle fragments properly at all currently
 -- (to be done as part of any eventual question-and-answer handling)
@@ -30,7 +31,7 @@ parseFrag (FragTerms ts) = evalParseM $ JboFragTerms <$> parseTerms ts
 parseFrag f = return $ JboFragUnparsed f
 
 evalStatement :: Statement -> ParseStateM JboProp
-evalStatement s = evalParseM (parseStatement s) >>= doQuestions True
+evalStatement s = evalParseM (parseStatement s)
 
 data FreeReturn
     = FRSides JboText
@@ -203,13 +204,13 @@ parseTU (TUAbstraction a ss) =
 	Just "lambda" -> do
 	    vpred <- (bridiToJboVPred<$>) $ partiallyRunSubBridiM $ do
 		shuntLambdas 1
-		parseSubsentence ss >>= doQuestions False
+		withQuestions False $ parseSubsentence ss
 	    jboRelToBridi . AbsPred a <$> doLambdas vpred
 	Just "relvar" -> do
-	    pred <- subsentToPred ss >>= doQuestions False
+	    pred <- withQuestions False $ subsentToPred ss
 	    return $ jboRelToBridi $ AbsPred a $ predToNPred pred
 	_ -> jboRelToBridi . AbsProp a <$>
-	    (runSubBridiM (parseSubsentence ss) >>= doQuestions False)
+	    (runSubBridiM (withQuestions False $ parseSubsentence ss))
 parseTU (TUPermuted n tu) =
     (.swapArgs (NPos 1) (NPos n)) <$> parseTU tu
 parseTU (TUJai (Just tag) tu) = do
@@ -331,7 +332,7 @@ parseRels rels = concat . map maybeToList <$> mapM parseRel rels where
     parseRel (Restrictive ss) = Just . JRRestrictive <$> subsentToPred ss
     parseRel (Descriptive ss) = Just . JRRestrictive <$> nonveridicialPred <$> subsentToPred ss
     parseRel (Incidental ss) = 
-	(Just . JRIncidental <$>) $ subsentToPred ss >>= doQuestions True
+	(Just . JRIncidental <$>) $ withQuestions True $ subsentToPred ss
     parseRel (RestrictiveGOI goi t) = goiRel goi JRRestrictive t
     parseRel (IncidentalGOI goi t) = goiRel goi JRIncidental t
     parseRel (Assignment (Term [] (Just (Sumti Untagged (QAtom Nothing [] sa))))) | isAssignable sa = 
@@ -407,17 +408,16 @@ parseSumtiAtom sa = do
     o <- case sa of
 	Description gadri mis miq ssb rels irels -> do
 	    extrairels <- if gadri!!1 == 'a' then parseRels rels else return []
-	    mm <- traverse parseMex miq
-	    sr <- case ssb of
+	    let valueToMeiPred m = \o -> Rel (Moi (Value m) "mei") [o]
+	    mmr <- withQuestions True $
+		    (valueToMeiPred<$>) <$> traverse parseMex miq
+	    sr <- withQuestions True $ case ssb of
 		Left sb -> selbriToPred sb
 		Right s -> isAmong <$> parseSumti s
 	    (irps,iips,ias) <- (segregateRels . (extrairels++) <$>) $ parseRels $
 		irels ++ maybeToList ((\is ->
 		    IncidentalGOI "ne" (Term [] $ Just $ Sumti Untagged is)) <$> mis)
-	    let xorlo_ps = sr : 
-		    (case mm of
-			Just m -> [(\o -> Rel (Moi (Value m) "mei") [o])]
-			_ -> [])
+	    let xorlo_ps = sr : maybeToList mmr
 	    o <- case gadri!!1 of
 		'o' -> do
 		    o <- getFreshConstant
@@ -586,7 +586,7 @@ doModal :: PreProp r => JboModalOp -> ParseM r ()
 doModal op = mapProp (Modal op)
 
 nonveridicialPred :: JboPred -> JboPred
-nonveridicialPred p t = Modal NonVeridicial $ p t
+nonveridicialPred p t = Modal NonVeridical $ p t
 
 -- |applySeltau: operate on a Bridi with a seltau by tanruising every JboRel
 -- in the JboProp.
