@@ -1,9 +1,5 @@
 Support {sei sa'a} and {to'i}?
 
-Rethink questions and illocution. If scope-invariant, does it make sense to
-treat questions as modal operators? Handle remaining question words, in any
-case (mo, xo, ji, cu'e, fi'a)
-
 use to...toi in lojban for sides?
 
 rename things; try to make JboParse.hs readable.

@@ -13,6 +13,7 @@ import Data.Char (isSpace, isDigit, digitToInt)
 
 data JekJoik = JJJek LogJboConnective | JJJoik Joik
 jjJboCon :: (Maybe Tag) -> JekJoik -> Connective
+jjJboCon mtag (JJJek (LogJboConnective _ 'i' _)) = JboConnJoik mtag "??"
 jjJboCon mtag (JJJek lcon) = JboConnLog mtag lcon
 jjJboCon mtag (JJJoik joik) = JboConnJoik mtag joik
 
@@ -636,27 +637,31 @@ ekA :: Char = "a":A -> {'a'}
     / "e":A -> {'e'}
     / "o":A -> {'o'}
     / "u":A -> {'u'}
-    -- TODO: / "ji":A
+    / "ji":A -> {'i'}
 
 jekJA :: Char = "ja":JA -> {'a'}
     / "je":JA -> {'e'}
     / "jo":JA -> {'o'}
     / "ju":JA -> {'u'}
+    / "je'i":JA -> {'i'}
 
 gihekGIhA :: Char = "gi'a":GIhA -> {'a'}
     / "gi'e":GIhA -> {'e'}
     / "gi'o":GIhA -> {'o'}
     / "gi'u":GIhA -> {'u'}
+    / "gi'i":GIhA -> {'i'}
 
 gekGA :: Char = "ga":GA -> {'a'}
     / "ge":GA -> {'e'}
     / "go":GA -> {'o'}
     / "gu":GA -> {'u'}
+    / "ge'i":GA -> {'i'}
 
 guhekGUhA :: Char = "gu'a":GUhA -> {'a'}
     / "gu'e":GUhA -> {'e'}
     / "gu'o":GUhA -> {'o'}
     / "gu'u":GUhA -> {'u'}
+    / "gu'i":GUhA -> {'i'}
 
 tagFA :: Int
     = FA XI n:litnum -> n
@@ -829,7 +834,7 @@ FUhOmain :: String = "fu'o"
 
 --         geks; forethought logical connectives 
 GA :: String = s:GAmain Spacing -> s
-GAmain :: String = "ge" / "ge'i" / "go" / "ga" / "gu" 
+GAmain :: String = "ge'i" / "ge" / "go" / "ga" / "gu" 
 --         openclosed interval markers for BIhI 
 GAhO :: String = s:GAhOmain Spacing -> s
 GAhOmain :: String = "ke'i" / "ga'o" 

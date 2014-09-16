@@ -17,15 +17,16 @@ Bug traces:
 
 
 Definite bugs:
-    {zoi} works only if the following word is {zoi} (or, arbitrarily, {gy}).
-
-    Occasional misparsings with MAI, e.g. on {za'u re'u re mai broda}.
+    Question words other than {xu} and {ma} are not handled properly;
+    {kau} works only after {xu} or {ma}.
 
     {bu'a} quantification isn't handled.
 
     {ra'o} is ignored.
 
-    {kau} works only after a question word.
+    {zoi} works only if the following word is {zoi} (or, arbitrarily, {gy}).
+
+    Occasional misparsings with MAI, e.g. on {za'u re'u re mai broda}.
 
     No serious effort has been made to handle magic word interactions
     correctly.

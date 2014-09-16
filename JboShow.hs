@@ -191,14 +191,18 @@ logjboshowConn True prefix (JboConnLog mtag lcon) = do
     mtags <- maybe "" ((" "++).(++" bo")) <$> traverse (logjboshow True) mtag
     return $ lc ++ mtags
 logjboshowConn True prefix (JboConnJoik mtag joik) = do
-    jois <- logjboshow True joik
+    let jois = if joik == "??" then case prefix of
+		"." -> "ji"
+		"j" -> "je'i"
+		_ -> "BUG"
+	    else joik
     mtags <- maybe "" ((" "++).(++" bo")) <$> traverse (logjboshow True) mtag
     return $ jois ++ mtags
 
 instance JboShow JboTag where
     logjboshow jbo (ConnectedTag con tag1 tag2) = do
 	[s1,s2] <- mapM (logjboshow jbo) [tag1,tag2]
-	conns <- logjboshowConn jbo "." con
+	conns <- logjboshowConn jbo "j" con
 	return $ if jbo
 	    then s1 ++ " " ++ conns ++ " " ++ s2
 	    else conns ++ "(" ++ s1 ++ "," ++ s2 ++ ")"
@@ -226,7 +230,7 @@ instance JboShow JboTagUnit where
 	ps <- logjboshow jbo p
 	return $ "fi'o " ++ ps ++ if jbo then " fe'u" else ""
     logjboshow jbo KI = return "ki"
-    logjboshow jbo CUhE = return "cu'e(TODO!)"
+    logjboshow jbo CUhE = return "cu'e"
 
 instance JboShow Abstractor where
     logjboshow _ (NU n) = return n
