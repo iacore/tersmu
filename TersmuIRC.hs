@@ -3,13 +3,11 @@ module TersmuIRC (onelineParse) where
 import ParseText (parseText)
 import JboParse (evalText, evalStatement)
 import JboSyntax
-import BridiM (ParseStateM, evalParseStateM, setFrees)
+import BridiM (ParseStateM, evalParseStateM)
 import JboShow
 import FOL
 import Bindful
-import Morphology
-import Parse
-import Pos
+import Morph
 
 import Control.Monad.State
 import Control.Monad.Identity
@@ -38,17 +36,3 @@ onelinify :: Bool -> String -> String
 onelinify jbo "" = ""
 onelinify jbo ('\n':cs) = (if jbo then " " else ";  ") ++ onelinify jbo cs
 onelinify jbo (c:cs) = c:onelinify jbo cs
-
-stripPunc :: String -> String
-stripPunc =
-    -- TODO: shouldn't strip inside zoi quotes
-    -- (but shouldn't allow "%%%END%%%" in them either...)
-    map $ \c -> if isAlphaNum c || isSpace c || c `elem` ",'" then c else ' '
-
-morph :: String -> Either Int String
-morph s = let
-        Parsed words d _ = morphologywords $ morphologyParse "words" $ stripPunc s ++ " "
-        p = posCol (dvPos d) - 1
-    in if p < length s
-        then Left p
-        else Right $ map toLower $ unwords $ words

@@ -7,9 +7,7 @@ import BridiM (ParseStateT, evalParseStateT)
 import JboShow
 import FOL
 import Bindful
-import Morphology
-import Parse
-import Pos
+import Morph
 
 import Control.Monad.State
 import Control.Monad.Identity
@@ -56,17 +54,3 @@ main :: IO ()
 main = repl `catchIOError` (\e -> if isEOFError e then exitWith ExitSuccess
 					   else do putStr $ show e
 						   exitFailure)
-
-stripPunc :: String -> String
-stripPunc =
-    -- TODO: shouldn't strip inside zoi quotes
-    -- (but shouldn't allow "%%%END%%%" in them either...)
-    map $ \c -> if isAlphaNum c || isSpace c || c `elem` ",'" then c else ' '
-
-morph :: String -> Either Int String
-morph s = let
-        Parsed words d _ = morphologywords $ morphologyParse "words" $ stripPunc s ++ " "
-        p = posCol (dvPos d) - 1
-    in if p < length s
-        then Left p
-        else Right $ map toLower $ unwords $ words
