@@ -20,7 +20,7 @@ freelessTerm :: Term' -> Term
 freelessTerm t' = Term [] $ Just t'
 }
 
-top text,free,terminatedText,textHead,wholeStatement,lastStatementOrSubsentence,freeAnnotations
+top text,free,terminatedText,textHead,wholeStatement,lastStatementOrSubsentence
 
 ----- auxiliary productions used in preparsing:
 wholeStatement :: Statement
@@ -69,23 +69,19 @@ xiClause :: Mex
     = XI !BU q:numberOrLerfuString BOI? -> q
     / XI !BU VEI q:mex VEhO? -> q
 
-freeAnnotations :: {[FreeIndex]} = freeAnnotation*
-freeAnnotation :: FreeIndex
-    = '^' n:litnum ' ' -> n
-
 -- |lastStatementOrSubsentence parses up to and including the start of the
 -- last statement or subsentence, being where we should put any frees.
 -- Currently unused.
-lastStatementOrSubsentence :: {()}
-    = nextStatementOrSubsentence* -> {()}
-nextStatementOrSubsentence :: {()}
-    = (quoteETC / !startStOrSubs Valsi -> {()})* startStOrSubs -> {()}
--- XXX: probably this doesn't deal properly with all magic word interactions
-quoteETC :: {()}
-    = nonJboQuote -> {()} / errorQuote -> {()} / ZO Valsi -> {()} / Valsi BU -> {()}
-	    / Valsi ZEI -> {()}
-startStOrSubs :: String
-    = n:NU NAI? -> n / NOI / TO / i:I !(joikJek -> {""} / BO) -> i / NIhO
+--lastStatementOrSubsentence :: {()}
+--    = nextStatementOrSubsentence* -> {()}
+--nextStatementOrSubsentence :: {()}
+--    = (quoteETC / !startStOrSubs Valsi -> {()})* startStOrSubs -> {()}
+---- XXX: probably this doesn't deal properly with all magic word interactions
+--quoteETC :: {()}
+--    = nonJboQuote -> {()} / errorQuote -> {()} / ZO Valsi -> {()} / Valsi BU -> {()}
+--	    / Valsi ZEI -> {()}
+--startStOrSubs :: String
+--    = n:NU NAI? -> n / NOI / TO / i:I !(joikJek -> {""} / BO) -> i / NIhO
 
 ----- main grammar:
 text :: Text

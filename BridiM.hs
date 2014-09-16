@@ -30,10 +30,9 @@ data ParseState = ParseState
     , referencedVars::Set Int
     , questions::[Question]
     , lambdas::Map LambdaPos Int
-    , freeDict::Map Int Free
     , sideTexticules::[Texticule]
     }
-nullParseState = ParseState Map.empty Map.empty 0 Map.empty 0 Set.empty [] Map.empty Map.empty []
+nullParseState = ParseState Map.empty Map.empty 0 Map.empty 0 Set.empty [] Map.empty []
 type ParseStateT = StateT ParseState
 type ParseStateM = ParseStateT Identity
 
@@ -176,16 +175,6 @@ class (Monad m,Applicative m) => ParseStateful m where
 	Map.filterWithKey (\(LambdaPos l _) _ -> l > 0)
 	. Map.mapKeys (\(LambdaPos l n) -> LambdaPos (l+d) n)
 
-    putFreeDict :: Map Int Free -> m ()
-    putFreeDict d = modifyParseState $ \ps -> ps{freeDict = d}
-    setFrees :: [Free] -> m ()
-    setFrees fs = putFreeDict $ Map.fromList $ zip [0..] fs
-    lookupFree :: Int -> m Free
-    lookupFree n = do
-	d <- freeDict <$> getParseState
-	case Map.lookup n d of
-	    Just f -> return f
-	    Nothing -> error "No such free!"
 instance (Monad m,Functor m) => ParseStateful (ParseStateT m) where
     getParseState = get
     putParseState = put

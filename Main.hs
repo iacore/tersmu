@@ -3,7 +3,7 @@ module Main where
 import ParseText (parseText)
 import JboParse (evalText, evalStatement)
 import JboSyntax
-import BridiM (ParseStateT, evalParseStateT, setFrees)
+import BridiM (ParseStateT, evalParseStateT)
 import JboShow
 import FOL
 import Bindful

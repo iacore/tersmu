@@ -1,4 +1,4 @@
-Support {sei sa'a}?
+Support {sei sa'a} and {to'i}?
 
 Rethink questions and illocution. If scope-invariant, does it make sense to
 treat questions as modal operators? Handle remaining question words, in any
@@ -14,8 +14,6 @@ connectives in favour of extra WithEventAs and TagRels?
     tenses; see notes/reductions.
 
 option to render sumti (and tag, abstractor) connectives as quantifiers?
-
-irc mode (just put output through a "\n -> ;" substitution?)
 
 Pretty printing
 
