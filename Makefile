@@ -8,16 +8,16 @@ tersmuBot: *.hs Tersmu.hs Morphology.hs Pappy/Parse.hs
 	killall tersmuBot || true
 	ghc -o tersmuBot -iPappy -XMultiParamTypeClasses -XFunctionalDependencies \
 	    -XTypeSynonymInstances -XFlexibleInstances --make tersmuBot.hs
-${PAPPY}
+${PAPPY}:
 	# get my patched version of Chris Done's version of Bryan Ford's pappy
 	darcs clone http://mbays.freeshell.org/pappy
 Pappy:
 	mkdir Pappy
 Pappy/Parse.hs: Pappy
 	${PAPPY} --write-files
-Tersmu.hs: Tersmu.pappy
+Tersmu.hs: Tersmu.pappy ${PAPPY}
 	${PAPPY} ${PAPPYOPTS} Tersmu.pappy
-Morphology.hs: Morphology.pappy
+Morphology.hs: Morphology.pappy ${PAPPY}
 	${PAPPY} ${PAPPYOPTS} Morphology.pappy
 test: tersmu
 	rlwrap ./tersmu
