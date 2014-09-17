@@ -15,7 +15,7 @@ ${PAPPY}:
 Pappy:
 	mkdir Pappy
 Pappy/Parse.hs: Pappy
-	${PAPPY} --write-files
+	${PAPPY} --2010 --write-files
 Tersmu.hs: Tersmu.pappy ${PAPPY}
 	${PAPPY} ${PAPPYOPTS} Tersmu.pappy
 Morphology.hs: Morphology.pappy ${PAPPY}
