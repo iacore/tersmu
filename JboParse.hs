@@ -168,13 +168,16 @@ parseSelbri3 (ScalarNegatedSB nahe sb) =
 parseSelbri3 (TanruUnit tu2 las) =
     advanceArgPosToBridi >> parseTU tu2 <* parseTerms las
 parseSelbri3 (BridiBinding tu tu') = do
-    case tu' of
-	TanruUnit (TUBrivla bv) [] ->
-	    if bv `elem` map (\v -> "brod" ++ [v]) "aeiou"
-		then setBribastiToCurrent $ TUBrivla bv
-		else return ()
-	_ -> return ()
-    parseSelbri3 tu
+    assigned' <- tryAssign tu'
+    assigned <- if assigned' then return False else tryAssign tu
+    if assigned then parseSelbri3 tu'
+	else if assigned' then parseSelbri3 tu
+	    else parseSelbri3 tu <* parseSelbri3 tu'
+    where
+	tryAssign (TanruUnit (TUBrivla bv) []) |
+		bv `elem` map (\v -> "brod" ++ [v]) "aeiou"
+	    = setBribastiToCurrent (TUBrivla bv) >> return True
+	tryAssign _ = return False
 
 parseTU :: TanruUnit -> BridiM Bridi
 parseTU tu@(TUBrivla bv) = getBribasti tu

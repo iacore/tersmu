@@ -32,8 +32,6 @@ Definite bugs:
     correctly.
 
 Probably bugs:
-    {cei} only works as '=:'
-
     We parse the name in "LA sumtiTail", whereas arguably we should just use
     the text.
 
