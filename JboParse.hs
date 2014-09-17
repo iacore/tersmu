@@ -69,9 +69,13 @@ parseStatement (Statement fs ps s) = do
 parseStatement1 :: Statement1 -> JboPropM JboProp
 parseStatement1 (ConnectedStatement con s1 s2) =
     doConnective False con (parseStatement1 s1) (parseStatement1 s2)
-parseStatement1 (StatementParas ps) =
-    -- TODO: ought to parse fragments here (if only to pick up assigns etc)
-    parseStatements $ rights $ concat ps
+parseStatement1 (StatementParas ts) = do
+    pts <- mapM parseTexticule $ concat ts
+    -- we parse any fragment, so as to get assigns, but ditch the result.
+    return $ bigAnd $ rights pts
+    where
+	parseTexticule (Left frag) = liftParseStateMToParseM $ Left <$> parseFrag frag
+	parseTexticule (Right st) = Right <$> parseStatement st
 parseStatement1 (StatementSentence fs s) = do
     doFreesInParseM fs
     b <- partiallyRunBridiM $ parseSentence s
