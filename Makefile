@@ -1,8 +1,8 @@
 all: tersmu tersmuBot
-tersmu: *.hs Pappy
+tersmu: *.hs Tersmu.hs Morphology.hs Pappy
 	ghc -o tersmu -iPappy -XMultiParamTypeClasses -XFunctionalDependencies \
 	    -XTypeSynonymInstances -XFlexibleInstances --make Main
-tersmuBot: *.hs Pappy
+tersmuBot: *.hs Tersmu.hs Morphology.hs Pappy
 	killall tersmuBot || true
 	ghc -o tersmuBot -iPappy -XMultiParamTypeClasses -XFunctionalDependencies \
 	    -XTypeSynonymInstances -XFlexibleInstances --make tersmuBot.hs
