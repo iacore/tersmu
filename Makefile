@@ -11,6 +11,7 @@ tersmuBot: *.hs Tersmu.hs Morphology.hs Pappy/Parse.hs
 ${PAPPY}:
 	# get my patched version of Chris Done's version of Bryan Ford's pappy
 	darcs clone http://mbays.freeshell.org/pappy
+	cd pappy/pappy && make
 Pappy:
 	mkdir Pappy
 Pappy/Parse.hs: Pappy
