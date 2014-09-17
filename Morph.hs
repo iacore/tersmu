@@ -1,8 +1,8 @@
 module Morph (morph) where
 import Morphology
+import Pappy.Pos
+import Pappy.Parse
 import Data.Char
-import Parse
-import Pos
 
 morph :: String -> Either Int String
 morph s = let

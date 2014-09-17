@@ -1,24 +1,23 @@
+PAPPY=pappy/pappy/pappy
+PAPPYOPTS=--2010 -e --monad
 all: tersmu tersmuBot
-tersmu: *.hs Tersmu.hs Morphology.hs Pappy
+tersmu: *.hs Tersmu.hs Morphology.hs Pappy/Parse.hs
 	ghc -o tersmu -iPappy -XMultiParamTypeClasses -XFunctionalDependencies \
 	    -XTypeSynonymInstances -XFlexibleInstances --make Main
-tersmuBot: *.hs Tersmu.hs Morphology.hs Pappy
+tersmuBot: *.hs Tersmu.hs Morphology.hs Pappy/Parse.hs
 	killall tersmuBot || true
 	ghc -o tersmuBot -iPappy -XMultiParamTypeClasses -XFunctionalDependencies \
 	    -XTypeSynonymInstances -XFlexibleInstances --make tersmuBot.hs
+${PAPPY}
+	# get my patched version of Chris Done's version of Bryan Ford's pappy
+	darcs clone http://mbays.freeshell.org/pappy
 Pappy:
 	mkdir Pappy
-	cd Pappy && \
-	wget http://pdos.csail.mit.edu/~baford/packrat/thesis/pappy.tgz && \
-	tar -xzf pappy.tgz && \
-	rm pappy.tgz && \
-	patch < ../Pappy.patch
-Pappy/pappy: Pappy
-	cd Pappy && \
-	ghc --make -package haskell98 -hide-package base -o pappy Main.hs
-Tersmu.hs: Tersmu.pappy Pappy/pappy
-	time Pappy/pappy Tersmu.pappy
-Morphology.hs: Morphology.pappy Pappy/pappy
-	time Pappy/pappy Morphology.pappy
+Pappy/Parse.hs: Pappy
+	${PAPPY} --write-files
+Tersmu.hs: Tersmu.pappy
+	${PAPPY} ${PAPPYOPTS} Tersmu.pappy
+Morphology.hs: Morphology.pappy
+	${PAPPY} ${PAPPYOPTS} Morphology.pappy
 test: tersmu
 	rlwrap ./tersmu

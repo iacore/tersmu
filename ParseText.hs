@@ -1,9 +1,9 @@
 module ParseText (parseText) where
 
 import Tersmu
-import Parse
+import Pappy.Pos
+import Pappy.Parse
 import JboSyntax
-import Pos
 
 import Control.Applicative
 -- import Debug.Trace
