@@ -1,21 +1,6 @@
 All known divergence from baseline (CLL+xorlo), or from plausible
 interpretations thereof, is noted here.
 
-Bug traces:
-    > broda joi brode cei brodi .i brodi
-    <broda(_)>{joi}<brode(_)>( )
-    zo'e ke broda ke'e joi ke brode ke'e
-    brode([DONKEY])
-    lo XASLI zei da ku brode
-
-    > jai bai broda
-    broda( )
-
-    > doi ui ko'a
-    [Fragment: {ko'a}]
-
-
-
 Definite bugs:
     Question words other than {xu} and {ma} are not handled properly;
     {kau} works only after {xu} or {ma}.
@@ -29,30 +14,28 @@ Definite bugs:
     Occasional misparsings with MAI, e.g. on {za'u re'u re mai broda}.
 
     No serious effort has been made to handle magic word interactions
-    correctly.
+    correctly; e.g., {lo'u li'u le'u bu} doesn't work correctly.
 
 Probably bugs:
     We parse the name in "LA sumtiTail", whereas arguably we should just use
-    the text.
+    the text. Similarly, we don't keep hold of the raw text of a lu-quote.
 
     We don't handle {nei} or {no'a}, which have murky and self-referential
     semantics.
 
     We don't handle {soi}.
 
-Possibly bugs:
-    Quantifiers on bound variables rebind the variable. This is contrary to
-    CLL:16.14.1-2, but I don't see how to make sense of what's specified
-    there.
-
-    Termset quantification: CLL:16.7.5 has quantifiers in the same termset
-    having "equal scope", but I don't see what this could mean.
-
 Other deviations from baseline, not considered bugs:
     {na broda} is equivalent to {naku broda}; consequently, {ja'a} has no
     logical effect. This is in line with the BPFK section "brivla negators".
 
-    Quantifiers don't scope over (even connected) sentence boundaries.
+    Quantifiers don't scope over (even connected) sentence boundaries, unless
+    prenexed.
+
+    We consider {PA da} to introduce a quantifier in the usual logical sense,
+    so ignore CLL's rules on rebinding bound variables (CLL:16.14) and
+    simultaneous quantification in termsets (CLL:16.7) which conflict with
+    this.
 
     Some constructs are accepted which the official grammar rejects; e.g. the
     tag grammar we use is essentially that of xorxes' zasni gerna.

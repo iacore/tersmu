@@ -268,9 +268,9 @@ jboRelToBridi :: JboRel -> Bridi
 jboRelToBridi rel = \as -> Rel rel (argsToJboterms as)
 
 withJaiAsTag :: JboTag -> Bridi -> Bridi
-withJaiAsTag jtag b = \as -> case Map.lookup JaiPos as of
-    Nothing -> b as
-    Just a -> Modal (JboTagged jtag $ Just a) $ b (Map.delete JaiPos as)
+withJaiAsTag jtag b = \as ->
+    Modal (JboTagged jtag $ Map.lookup JaiPos as) $
+	b (Map.delete JaiPos as)
 
 withJaiAsRaising :: Bridi -> Bridi
 withJaiAsRaising b = \as -> case Map.lookup JaiPos as of

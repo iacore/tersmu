@@ -29,7 +29,8 @@ afterPos p s = drop (posCol p - 1) s
 --
 -- XXX: possible source of parse bugs: misplaced free can interrupt crucial
 -- greed. e.g. "tag sumti / tag KU?" acts buggily on "vi ue ta",
--- and has to be "tag sumti / tag !free KU".
+-- and has to be "tag sumti / tag !free KU". I think I've got all those now,
+-- but may be wrong.
 --
 -- TODO: optimise; currently we're doing string manipulation with String,
 -- which is a bad idea, and more to the point we're reparsing the whole text

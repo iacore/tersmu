@@ -44,7 +44,7 @@ free :: Free
 	    (Description "le" Nothing Nothing (Left sb) [] [])) }
     / cs:vocative !BU n:name rels:maybeRelativeClauses DOhU?
 	-> { Vocative cs $ Just (QAtom Nothing rels (n "la")) }
-    / cs:vocative !BU ms:sumti? DOhU? -> { Vocative cs ms }
+    / cs:vocative !BU !free ms:sumti? DOhU? -> { Vocative cs ms }
     / q:numberOrLerfuString MAI -> { MAI q }
     / TO !BU t:text TOI? -> {Bracketed t}
     / q:xiClause -> {XI q}
@@ -235,7 +235,7 @@ term' :: Term'
 termset :: Term'
     = NUhI pcon:gek ts1:terms NUhU b:gik ts2:terms NUhU?
 	-> { ConnectedTerms True (pcon b) (freelessTerm $ Termset ts1) (freelessTerm $ Termset ts2) }
-    / NUhI ts:terms NUhU? -> { Termset ts }
+    / NUhI !free ts:terms NUhU? -> { Termset ts }
     / pcon:gek {(ts1,b,ts2)}:termsGikTerms
 	-> { ConnectedTerms True (pcon b) (freelessTerm $ Termset ts1) (freelessTerm $ Termset ts2) }
 termsGikTerms :: {([Term],Bool,[Term])}
@@ -275,7 +275,7 @@ sumti4 :: Sumti = sumti5
 sumti5 :: Sumti
 	= q:quantifier? s:sumti6 rels:maybeRelativeClauses
 	    -> {QAtom q rels s}
-	/ q:quantifier sb:selbri KU? rels:maybeRelativeClauses
+	/ q:quantifier !free sb:selbri KU? rels:maybeRelativeClauses
 	    -> {QSelbri q rels sb}
 
 sumti6 :: SumtiAtom
@@ -359,7 +359,7 @@ sumtiTail1 :: {(Maybe Mex, Either Selbri Sumti, [RelClause])}
 	-> {(Nothing,Left sb,rels)}
     / mq:quantifier? sb:selbri rels:maybeRelativeClauses
 	-> {(mq,Left sb,rels)}
-    / q:quantifier s:sumti -> {(Just q,Right s,[])}
+    / q:quantifier !free s:sumti -> {(Just q,Right s,[])}
 
 maybeRelativeClauses :: {[RelClause]}
     = mrels:relativeClauses? -> {fromMaybe [] mrels}
@@ -390,7 +390,7 @@ selbri1 :: Selbri
 
 selbri2 :: Selbri2
     = sb:selbri3 CO sb':selbri2 -> {SBInverted sb sb'}
-    / sb:selbri3 -> {Selbri3 sb}
+    / sb:selbri3 !free -> {Selbri3 sb}
 
 selbri3 :: Selbri3
     = sb:selbri3 sb':selbri4 -> {SBTanru sb sb'}
@@ -407,11 +407,11 @@ _jeksbs :: {(Connective, Selbri3)}
 selbri5 :: Selbri3
     = sb1:selbri6 jj:joikJek mtag:(tag)? BO sb2:selbri5
 	-> { ConnectedSB False (jjJboCon mtag jj) (sb3tosb sb1) sb2 }
-    / selbri6
+    / s:selbri6 !free -> s
 
 selbri6 :: Selbri3
     = tu:tanruUnit BO sb:selbri6 -> {SBTanru tu sb}
-    / tanruUnit
+    / tu:tanruUnit !free -> tu
     / mn:NAhE? pcon:guhek sb1:selbri b:gik sb2:selbri6
 	-> { maybe id ScalarNegatedSB mn $
 	    ConnectedSB True (JboConnLog Nothing $ pcon b) sb1 sb2 }
@@ -488,7 +488,7 @@ foreOperands :: {[Mex]}
 
 rpExpression :: Mex
     = o:operand mt:rpExpressionTail -> { mt o }
-    / operand
+    / o:operand !free -> o
 rpExpressionTail :: {Mex -> Mex}
     = m:rpExpression opr:operator t:rpExpressionTail
 	-> { t . \m1 -> Operation opr [m1,m] }
@@ -504,7 +504,7 @@ _jekops :: {(Connective, Operator)}
 operator1 :: Operator
     = op1:operator2 jj:joikJek mtag:tag? BO op2:operator1
 	-> { ConnectedOperator False (jjJboCon mtag jj) op1 op2 }
-    / operator2
+    / op:operator2 !free -> op
     / pcon:guhek op1:operator1 b:gik op2:operator2
 	-> { ConnectedOperator True (JboConnLog Nothing $ pcon b) op1 op2 }
 
@@ -522,7 +522,7 @@ mexOperator :: Operator
 operand :: Mex
     = o1:operand1 jj:joikEk mtag:tag? KE o2:operand KEhE?
 	-> { ConnectedMex False (jjJboCon mtag jj) o1 o2 }
-    / operand1
+    / op:operand1 !free -> op
 
 operand1 :: Mex
     = o:operand2 jekss:_jekos*
@@ -533,7 +533,7 @@ _jekos :: {Mex -> Mex}
 operand2 :: Mex
     = o1:operand3 jj:joikEk mtag:tag? BO o2:operand2
 	-> { ConnectedMex False (jjJboCon mtag jj) o1 o2 }
-    / operand3
+    / o:operand3 !free -> o
 
 operand3 :: Mex
     = quantifier
