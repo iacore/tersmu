@@ -69,7 +69,8 @@ parseStatement (Statement fs ps s) = do
 parseStatement1 :: Statement1 -> JboPropM JboProp
 parseStatement1 (ConnectedStatement con s1 s2) =
     doConnective False con (parseStatement1 s1) (parseStatement1 s2)
-parseStatement1 (StatementParas ts) = do
+parseStatement1 (StatementParas mtag ts) = do
+    traverse ((flip doTag Nothing =<<) . parseTag) mtag
     pts <- mapM parseTexticule $ concat ts
     -- we parse any fragment, so as to get assigns, but ditch the result.
     return $ bigAnd $ rights pts

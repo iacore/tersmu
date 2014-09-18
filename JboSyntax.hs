@@ -26,7 +26,7 @@ data LogJboConnective = LogJboConnective Bool Char Bool
 
 data Statement1 = ConnectedStatement Connective Statement1 Statement1
 		| StatementSentence [Free] Sentence
-		| StatementParas [Paragraph]
+		| StatementParas (Maybe Tag) [Paragraph]
 		deriving (Eq, Show, Ord)
 
 data Subsentence = Subsentence [Free] [Term] Sentence

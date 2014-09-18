@@ -137,7 +137,7 @@ statement2 :: Statement1
 
 statement3 :: Statement1
     = fs:free* s:sentence -> {StatementSentence fs s}
-    / TUhE ps:text1 TUhU? -> {StatementParas ps}
+    / mtag:tag? TUhE ps:text1 TUhU? -> {StatementParas mtag ps}
 
 fragment :: Fragment
     = p:prenex -> {FragPrenex p}
