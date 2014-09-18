@@ -1,0 +1,284 @@
+> .i.ai.i.ai.o
+Parse error:
+	{i ai i ai o}
+	      ^
+
+-----
+> .i,ai,i,ai,on.
+Morphology error:
+	{.i,ai,i,ai,on.}
+	  ^
+
+-----
+> .i,iai,ii,iai,ion.
+Morphology error:
+	{.i,iai,ii,iai,ion.}
+	  ^
+
+-----
+> .i'ai'i'ai'on.
+-----
+> brlgan.
+-----
+> meiin.
+-----
+> mei,in.
+-----
+> me,iin.
+-----
+> djeimyz.
+-----
+> vrusi
+
+vrusi( )
+
+vrusi
+
+-----
+> .AMsterdam.
+-----
+> klama
+
+klama( )
+
+klama
+
+-----
+> xapcke
+
+xapcke( )
+
+xapcke
+
+-----
+> ponyni'u
+
+ponyni'u( )
+
+ponyni'u
+
+-----
+> bongynanba
+
+bongynanba( )
+
+bongynanba
+
+-----
+> bongnanba
+
+bongnanba( )
+
+bongnanba
+
+-----
+> pujenaicajeba
+
+[Fragment: ]
+
+
+
+-----
+> pu,je,nai,ca,je,ba
+
+[Fragment: ]
+
+
+
+-----
+> ninmu
+
+ninmu( )
+
+ninmu
+
+-----
+> nin,mu
+
+ninmu( )
+
+ninmu
+
+-----
+> fitpri
+
+fitpri( )
+
+fitpri
+
+-----
+> fit,pri
+
+fitpri( )
+
+fitpri
+
+-----
+> sairgoi
+
+sairgoi( )
+
+sairgoi
+
+-----
+> sair,goi
+
+sairgoi( )
+
+sairgoi
+
+-----
+> sai,r,goi
+
+sairgoi( )
+
+sairgoi
+
+-----
+> klezba
+
+klezba( )
+
+klezba
+
+-----
+> klez,ba
+
+klezba( )
+
+klezba
+
+-----
+> kle,zba
+
+klezba( )
+
+klezba
+
+-----
+> dikyjvo
+
+dikyjvo( )
+
+dikyjvo
+
+-----
+> DI,ky,jvo
+
+dikyjvo( )
+
+dikyjvo
+
+-----
+> .armstrong.
+-----
+> .ARM,strong.
+-----
+> .ARMstron.
+-----
+> bisydja
+
+bisydja( )
+
+bisydja
+
+-----
+> BI,sy,dja
+
+bisydja( )
+
+bisydja
+
+-----
+> BI,syd,ja
+
+bisydja( )
+
+bisydja
+
+-----
+> da'udja
+
+da'udja( )
+
+da'udja
+
+-----
+> da'UD,ja
+
+da'udja( )
+
+da'udja
+
+-----
+> da'U,dja
+
+da'udja( )
+
+da'udja
+
+-----
+> e'u bridi
+
+bridi( )
+
+bridi
+
+-----
+> e'u BRI,di
+
+bridi( )
+
+bridi
+
+-----
+> E'u BRI,di
+
+bridi( )
+
+bridi
+
+-----
+> e'U.BRI,di
+
+bridi( )
+
+bridi
+
+-----
+> le re nobli prenu
+
+non-veridical: (<nobli(_)><prenu>(c0) /\ 2 mei(c0))
+[Fragment: c0]
+
+ju'a nai ge cy no ke nobli prenu ke'e gi cy no re mei
+.i cy no
+
+-----
+> le re NObli PREnu
+
+non-veridical: (<nobli(_)><prenu>(c0) /\ 2 mei(c0))
+[Fragment: c0]
+
+ju'a nai ge cy no ke nobli prenu ke'e gi cy no re mei
+.i cy no
+
+-----
+> le re no bliprenu
+
+non-veridical: (bliprenu(c0) /\ 20 mei(c0))
+[Fragment: c0]
+
+ju'a nai ge cy no bliprenu gi cy no reno mei
+.i cy no
+
+-----
+> le re no bliPREnu
+
+non-veridical: (bliprenu(c0) /\ 20 mei(c0))
+[Fragment: c0]
+
+ju'a nai ge cy no bliprenu gi cy no reno mei
+.i cy no
+
+-----

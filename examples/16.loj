@@ -1,0 +1,736 @@
+> mi viska le nanmu
+
+non-veridical: nanmu(c0)
+viska(mi,c0)
+
+ju'a nai cy no nanmu
+.i mi viska cy no
+
+-----
+> [zo'e] viska mi
+
+viska(c0,mi)
+
+cy no viska mi
+
+-----
+> da zo'u da viska mi
+
+EX x1. viska(x1,mi)
+
+su'o da zo'u da viska mi
+
+-----
+> da de zo'u da prami de
+
+EX x1. EX x2. prami(x1,x2)
+
+su'o da su'o de zo'u da prami de
+
+-----
+> da zo'u da prami da
+
+EX x1. prami(x1,x1)
+
+su'o da zo'u da prami da
+
+-----
+> de zo'u de prami de
+
+EX x1. prami(x1,x1)
+
+su'o da zo'u da prami da
+
+-----
+> da zo'u le da gerku cu viska mi
+
+non-veridical: FA x1. (gerku(f0(x1)) /\ srana(f0(x1),x1))
+EX x1. viska(f0(x1),mi)
+
+ju'a nai ro da zo'u ge li ma'o fyno mo'e da lo'o gerku gi li ma'o fyno mo'e da lo'o srana da
+.i su'o da zo'u li ma'o fyno mo'e da lo'o viska mi
+
+-----
+> da zo'u la ralf. gerku
+
+EX x1. gerku("ralf")
+
+su'o da zo'u la ralf. gerku
+
+-----
+> ro da zo'u da viska mi
+
+FA x1. viska(x1,mi)
+
+ro da zo'u da viska mi
+
+-----
+> ro da ro de zo'u da prami de
+
+FA x1. FA x2. prami(x1,x2)
+
+ro da ro de zo'u da prami de
+
+-----
+> ro da de zo'u da viska de
+
+FA x1. EX x2. viska(x1,x2)
+
+ro da su'o de zo'u da viska de
+
+-----
+> da ro de zo'u da viska de
+
+EX x1. FA x2. viska(x1,x2)
+
+su'o da ro de zo'u da viska de
+
+-----
+> da zo'u da viska la djim.
+
+EX x1. viska(x1,"djim")
+
+su'o da zo'u da viska la djim.
+
+-----
+> da poi prenu zo'u da viska la djim.
+
+EX x1:(prenu(_)). viska(x1,"djim")
+
+su'o da poi ke'a prenu ku'o zo'u da viska la djim.
+
+-----
+> ro da zo'u da vasxu
+
+FA x1. vasxu(x1)
+
+ro da zo'u da vasxu
+
+-----
+> ro da poi gerku zo'u da vasxu
+
+FA x1:(gerku(_)). vasxu(x1)
+
+ro da poi ke'a gerku ku'o zo'u da vasxu
+
+-----
+> da poi gerku zo'u da vasxu
+
+EX x1:(gerku(_)). vasxu(x1)
+
+su'o da poi ke'a gerku ku'o zo'u da vasxu
+
+-----
+> da viska mi
+
+EX x1. viska(x1,mi)
+
+su'o da zo'u da viska mi
+
+-----
+> ro da poi gerku cu vasxu
+
+FA x1:(gerku(_)). vasxu(x1)
+
+ro da poi ke'a gerku ku'o zo'u da vasxu
+
+-----
+> ro da poi prenu ku'o de poi gerku ku'o zo'u de batci da
+
+FA x1:(prenu(_)). EX x2:(gerku(_)). batci(x2,x1)
+
+ro da poi ke'a prenu ku'o su'o de poi ke'a gerku ku'o zo'u de batci da
+
+-----
+> de poi gerku cu batci ro da poi prenu
+
+EX x1:(gerku(_)). FA x2:(prenu(_)). batci(x1,x2)
+
+su'o da poi ke'a gerku ku'o ro de poi ke'a prenu ku'o zo'u da batci de
+
+-----
+> ro da poi prenu cu se batci de poi gerku
+
+FA x1:(prenu(_)). EX x2:(gerku(_)). batci(x2,x1)
+
+ro da poi ke'a prenu ku'o su'o de poi ke'a gerku ku'o zo'u de batci da
+
+-----
+> di poi prenu zo'u ti xarci di di
+
+EX x1:(prenu(_)). xarci(ti,x1,x1)
+
+su'o da poi ke'a prenu ku'o zo'u ti xarci da da
+
+-----
+> ti xarci di poi prenu ku'o di
+
+EX x1:(prenu(_)). xarci(ti,x1,x1)
+
+su'o da poi ke'a prenu ku'o zo'u ti xarci da da
+
+-----
+> su'o da zo'u da viska mi
+
+EX x1. viska(x1,mi)
+
+su'o da zo'u da viska mi
+
+-----
+> re da zo'u da viska mi
+
+EQ(2) x1. viska(x1,mi)
+
+re da zo'u da viska mi
+
+-----
+> su'ore da zo'u da viska mi
+
+(su'o re) x1. viska(x1,mi)
+
+su'o re boi da zo'u da viska mi
+
+-----
+> re da viska mi
+
+EQ(2) x1. viska(x1,mi)
+
+re da zo'u da viska mi
+
+-----
+> su'ore da viska mi
+
+(su'o re) x1. viska(x1,mi)
+
+su'o re boi da zo'u da viska mi
+
+-----
+> re prenu cu viska mi
+
+EQ(2) x1:(prenu(_)). viska(x1,mi)
+
+re da poi ke'a prenu ku'o zo'u da viska mi
+
+-----
+> re da poi prenu cu viska mi
+
+EQ(2) x1:(prenu(_)). viska(x1,mi)
+
+re da poi ke'a prenu ku'o zo'u da viska mi
+
+-----
+> re da poi prenu zo'u da viska mi
+
+EQ(2) x1:(prenu(_)). viska(x1,mi)
+
+re da poi ke'a prenu ku'o zo'u da viska mi
+
+-----
+> ci gerku cu batci re nanmu
+
+EQ(3) x1:(gerku(_)). EQ(2) x2:(nanmu(_)). batci(x1,x2)
+
+ci da poi ke'a gerku ku'o re de poi ke'a nanmu ku'o zo'u da batci de
+
+-----
+> ci da poi gerku cu batci re de poi nanmu
+
+EQ(3) x1:(gerku(_)). EQ(2) x2:(nanmu(_)). batci(x1,x2)
+
+ci da poi ke'a gerku ku'o re de poi ke'a nanmu ku'o zo'u da batci de
+
+-----
+> ci da poi gerku ku'o re de poi nanmu zo'u da batci de
+
+EQ(3) x1:(gerku(_)). EQ(2) x2:(nanmu(_)). batci(x1,x2)
+
+ci da poi ke'a gerku ku'o re de poi ke'a nanmu ku'o zo'u da batci de
+
+-----
+> re de poi nanmu ku'o ci da poi gerku zo'u da batci de
+
+EQ(2) x1:(nanmu(_)). EQ(3) x2:(gerku(_)). batci(x2,x1)
+
+re da poi ke'a nanmu ku'o ci de poi ke'a gerku ku'o zo'u de batci da
+
+-----
+> ci gerku ce'e re nanmu cu batci
+
+EQ(3) x1:(gerku(_)). EQ(2) x2:(nanmu(_)). batci(x1,x2)
+
+ci da poi ke'a gerku ku'o re de poi ke'a nanmu ku'o zo'u da batci de
+
+-----
+> nu'i ci gerku re nanmu [nu'u] cu batci
+
+EQ(3) x1:(gerku(_)). EQ(2) x2:(nanmu(_)). batci(x1,x2)
+
+ci da poi ke'a gerku ku'o re de poi ke'a nanmu ku'o zo'u da batci de
+
+-----
+> [ro] le ci gerku cu batci [ro] le re nanmu
+
+non-veridical: (nanmu(c1) /\ 2 mei(c1))
+non-veridical: (gerku(c0) /\ 3 mei(c0))
+FA x1:((c0) >= (_)). FA x2:((c1) >= (_)). batci(x1,x2)
+
+ju'a nai ge cy pa nanmu gi cy pa re mei
+.i ju'a nai ge cy no gerku gi cy no ci mei
+.i ro da poi ke'a me cy no me'u ku'o ro de poi ke'a me cy pa me'u ku'o zo'u da batci de
+
+-----
+> ro da poi klama le zarci cu cadzu le foldi
+
+non-veridical: foldi(c1)
+non-veridical: zarci(c0)
+FA x1:(klama(_,c0)). cadzu(x1,c1)
+
+ju'a nai cy pa foldi
+.i ju'a nai cy no zarci
+.i ro da poi ke'a klama cy no ku'o zo'u da cadzu cy pa
+
+-----
+> ro da zo'u da go klama le zarci gi cadzu le foldi
+
+non-veridical: foldi(c1)
+non-veridical: zarci(c0)
+FA x1. (klama(x1,c0) <-> cadzu(x1,c1))
+
+ju'a nai cy pa foldi
+.i ju'a nai cy no zarci
+.i ro da zo'u go da klama cy no gi da cadzu cy pa
+
+-----
+> mi nitcu da poi tanxe gi'e bramau ti
+
+EX x1:((tanxe(_) /\ bramau(_,ti))). nitcu(mi,x1)
+
+su'o da poi ge ke'a tanxe gi ke'a bramau ti ku'o zo'u mi nitcu da
+
+-----
+> da poi tanxe gi'e bramau ti zo'u mi nitcu da
+
+EX x1:((tanxe(_) /\ bramau(_,ti))). nitcu(mi,x1)
+
+su'o da poi ge ke'a tanxe gi ke'a bramau ti ku'o zo'u mi nitcu da
+
+-----
+> mi nitcu lo nu mi ponse lo tanxe poi bramau ti
+
+nu[ponse(mi,c0)](c1)
+(tanxe(c0) /\ bramau(c0,ti))
+nitcu(mi,c1)
+
+cy pa nu mi ponse cy no kei
+.i ge cy no tanxe gi cy no bramau ti
+.i mi nitcu cy pa
+
+-----
+> mi nitcu lo nu da zo'u da se ponse mi gi'e tanxe gi'e bramau ti
+
+nu[EX x1. ((ponse(mi,x1) /\ tanxe(x1)) /\ bramau(x1,ti))](c0)
+nitcu(mi,c0)
+
+cy no nu su'o da zo'u ge ge mi ponse da gi da tanxe gi da bramau ti kei
+.i mi nitcu cy no
+
+-----
+> da poi tanxe gi'e bramau ti zo'u mi nitcu le nu mi ponse da
+
+non-veridical: FA x1:((tanxe(_) /\ bramau(_,ti))). nu[ponse(mi,x1)](f0(x1))
+EX x1:((tanxe(_) /\ bramau(_,ti))). nitcu(mi,f0(x1))
+
+ju'a nai ro da poi ge ke'a tanxe gi ke'a bramau ti ku'o zo'u li ma'o fyno mo'e da lo'o nu mi ponse da kei
+.i su'o da poi ge ke'a tanxe gi ke'a bramau ti ku'o zo'u mi nitcu li ma'o fyno mo'e da lo'o
+
+-----
+> mi na klama le zarci
+
+non-veridical: zarci(c0)
+!klama(mi,c0)
+
+ju'a nai cy no zarci
+.i na ku mi klama cy no
+
+-----
+> naku zo'u la djan. klama
+
+!klama("djan")
+
+na ku la djan. klama
+
+-----
+> naku de zo'u de zutse
+
+!EX x1. zutse(x1)
+
+na ku su'o da zo'u da zutse
+
+-----
+> su'ode naku zo'u de zutse
+
+EX x1. !zutse(x1)
+
+su'o da zo'u na ku da zutse
+
+-----
+> roda su'ode zo'u da prami de
+
+FA x1. EX x2. prami(x1,x2)
+
+ro da su'o de zo'u da prami de
+
+-----
+> su'ode roda zo'u da prami de
+
+EX x1. FA x2. prami(x2,x1)
+
+su'o da ro de zo'u de prami da
+
+-----
+> naku roda su'ode zo'u da prami de
+
+!FA x1. EX x2. prami(x1,x2)
+
+na ku ro da su'o de zo'u da prami de
+
+-----
+> naku su'ode roda zo'u da prami de
+
+!EX x1. FA x2. prami(x2,x1)
+
+na ku su'o da ro de zo'u de prami da
+
+-----
+> su'oda naku su'ode zo'u da prami de
+
+EX x1. !EX x2. prami(x1,x2)
+
+su'o da zo'u na ku su'o de zo'u da prami de
+
+-----
+> rode naku roda zo'u da prami de
+
+FA x1. !FA x2. prami(x2,x1)
+
+ro da zo'u na ku ro de zo'u de prami da
+
+-----
+> su'oda rode naku zo'u da prami de
+
+EX x1. FA x2. !prami(x1,x2)
+
+su'o da ro de zo'u na ku da prami de
+
+-----
+> rode su'oda naku zo'u da prami de
+
+FA x1. EX x2. !prami(x2,x1)
+
+ro da su'o de zo'u na ku de prami da
+
+-----
+> noda rode zo'u da prami de
+
+EQ(0) x1. FA x2. prami(x1,x2)
+
+no da ro de zo'u da prami de
+
+-----
+> naku noda rode zo'u da prami de
+
+!EQ(0) x1. FA x2. prami(x1,x2)
+
+na ku no da ro de zo'u da prami de
+
+-----
+> naku naku su'oda rode zo'u da prami de
+
+!!EX x1. FA x2. prami(x1,x2)
+
+na ku na ku su'o da ro de zo'u da prami de
+
+-----
+> su'oda rode zo'u da prami de
+
+EX x1. FA x2. prami(x1,x2)
+
+su'o da ro de zo'u da prami de
+
+-----
+> mi .e do klama ti
+
+(klama(mi,ti) /\ klama(do,ti))
+
+ge mi klama ti gi do klama ti
+
+-----
+> mi klama ti .ije do klama ti
+
+(klama(mi,ti) /\ klama(do,ti))
+
+ge mi klama ti gi do klama ti
+
+-----
+> mi .enai do prami roda
+
+(FA x1. prami(mi,x1) /\ !FA x1. prami(do,x1))
+
+ge ro da zo'u mi prami da gi na ku ro da zo'u do prami da
+
+-----
+> mi prami roda .ijenai do prami roda
+
+(FA x1. prami(mi,x1) /\ !FA x1. prami(do,x1))
+
+ge ro da zo'u mi prami da gi na ku ro da zo'u do prami da
+
+-----
+> roda zo'u mi prami da .ije naku zo'u do prami da
+Parse error:
+	{ro da zo'u mi prami da i je na ku zo'u do prami da}
+	                                   ^
+
+-----
+> su'oda zo'u mi prami da .ije naku zo'u do prami da
+Parse error:
+	{su'o da zo'u mi prami da i je na ku zo'u do prami da}
+	                                     ^
+
+-----
+> Some children do not go to school.
+Morphology error:
+	{Some children do not go to school.}
+	      ^
+
+-----
+> su'oda poi verba na klama su'ode poi ckule
+
+EX x1:(verba(_)). !EX x2:(ckule(_)). klama(x1,x2)
+
+su'o da poi ke'a verba ku'o zo'u na ku su'o de poi ke'a ckule ku'o zo'u da klama de
+
+-----
+> naku zo'u su'oda poi verba cu klama su'ode poi ckule
+
+!EX x1:(verba(_)). EX x2:(ckule(_)). klama(x1,x2)
+
+na ku su'o da poi ke'a verba ku'o su'o de poi ke'a ckule ku'o zo'u da klama de
+
+-----
+> su'oda poi verba naku klama su'ode poi ckule
+
+EX x1:(!verba(_)). EX x2:(ckule(_)). klama(x1,x2)
+
+su'o da poi na ku ke'a verba ku'o su'o de poi ke'a ckule ku'o zo'u da klama de
+
+-----
+> su'oda poi verba cu klama rode poi ckule naku
+
+EX x1:(verba(_)). FA x2:(!ckule(_)). klama(x1,x2)
+
+su'o da poi ke'a verba ku'o ro de poi na ku ke'a ckule ku'o zo'u da klama de
+
+-----
+> su'oda poi verba cu klama naku su'ode poi ckule
+
+EX x1:(verba(_)). !EX x2:(ckule(_)). klama(x1,x2)
+
+su'o da poi ke'a verba ku'o zo'u na ku su'o de poi ke'a ckule ku'o zo'u da klama de
+
+-----
+> naku roda poi verba cu klama su'ode poi ckule
+
+!FA x1:(verba(_)). EX x2:(ckule(_)). klama(x1,x2)
+
+na ku ro da poi ke'a verba ku'o su'o de poi ke'a ckule ku'o zo'u da klama de
+
+-----
+> su'ode poi ckule ku'o naku se klama roda poi verba
+
+EX x1:(ckule(_)). !FA x2:(verba(_)). klama(x2,x1)
+
+su'o da poi ke'a ckule ku'o zo'u na ku ro de poi ke'a verba ku'o zo'u de klama da
+
+-----
+> su'o verba naku klama su'o ckule
+
+EX x1:(verba(_)). !EX x2:(ckule(_)). klama(x1,x2)
+
+su'o da poi ke'a verba ku'o zo'u na ku su'o de poi ke'a ckule ku'o zo'u da klama de
+
+-----
+> su'oda poi verba ku'o naku su'ode poi ckule zo'u da klama de
+
+EX x1:(verba(_)). !EX x2:(ckule(_)). klama(x1,x2)
+
+su'o da poi ke'a verba ku'o zo'u na ku su'o de poi ke'a ckule ku'o zo'u da klama de
+
+-----
+> naku roda poi verba su'ode poi ckule zo'u da klama de
+
+!FA x1:(EX x2:(ckule(_)). verba(_,x2)). EX x2. klama(x1,x2)
+
+na ku ro da poi su'o de poi ke'a ckule ku'o zo'u ke'a verba de ku'o su'o de zo'u da klama de
+
+-----
+> naku zo'u roda poi verba cu klama su'ode poi ckule
+
+!FA x1:(verba(_)). EX x2:(ckule(_)). klama(x1,x2)
+
+na ku ro da poi ke'a verba ku'o su'o de poi ke'a ckule ku'o zo'u da klama de
+
+-----
+> ro verba cu na klama su'o ckule
+
+FA x1:(verba(_)). !EX x2:(ckule(_)). klama(x1,x2)
+
+ro da poi ke'a verba ku'o zo'u na ku su'o de poi ke'a ckule ku'o zo'u da klama de
+
+-----
+> roda poi verba su'ode poi ckule zo'u de na se klama da
+
+FA x1:(EX x2:(ckule(_)). verba(_,x2)). EX x2. !klama(x1,x2)
+
+ro da poi su'o de poi ke'a ckule ku'o zo'u ke'a verba de ku'o su'o de zo'u na ku da klama de
+
+-----
+> mi naku naku le zarci cu klama
+
+non-veridical: zarci(c0)
+!!klama(mi,c0)
+
+ju'a nai cy no zarci
+.i na ku na ku mi klama cy no
+
+-----
+> la djan. na klama ga la paris. gi la rom.
+
+!(klama("djan","paris") \/ klama("djan","rom"))
+
+na ku ga la djan. klama la paris. gi la djan. klama la rom.
+
+-----
+> naku zo'u la djan. klama ga la paris. gi la rom.
+
+!(klama("djan","paris") \/ klama("djan","rom"))
+
+na ku ga la djan. klama la paris. gi la djan. klama la rom.
+
+-----
+> ge la djan. la paris. na klama gi la djan. la rom. na klama
+
+(!klama("djan","paris") /\ !klama("djan","rom"))
+
+ge na ku la djan. klama la paris. gi na ku la djan. klama la rom.
+
+-----
+> la djein. le zarci na ge dzukla gi bajrykla
+
+non-veridical: zarci(c0)
+!(dzukla("djein",c0) /\ bajrykla("djein",c0))
+
+ju'a nai cy no zarci
+.i na ku ge la djein. dzukla cy no gi la djein. bajrykla cy no
+
+-----
+> la djein. le zarci ganai dzukla ginai bajrykla
+
+non-veridical: zarci(c0)
+(bajrykla("djein",c0) --> !dzukla("djein",c0))
+
+ju'a nai cy no zarci
+.i ga nai la djein. bajrykla cy no gi na ku la djein. dzukla cy no
+
+-----
+> naku zo'u la djein. le zarci ge dzukla gi bajrykla
+
+non-veridical: zarci(c0)
+!(dzukla("djein",c0) /\ bajrykla("djein",c0))
+
+ju'a nai cy no zarci
+.i na ku ge la djein. dzukla cy no gi la djein. bajrykla cy no
+
+-----
+> naku zo'u ge la djein. le zarci cu dzukla gi la djein. le zarci cu bajrykla
+
+non-veridical: zarci(c1)
+non-veridical: zarci(c0)
+!(dzukla("djein",c0) /\ bajrykla("djein",c1))
+
+ju'a nai cy pa zarci
+.i ju'a nai cy no zarci
+.i na ku ge la djein. dzukla cy no gi la djein. bajrykla cy pa
+
+-----
+> ga la djein. le zarci na dzukla gi la djein. le zarci na bajrykla
+
+non-veridical: zarci(c1)
+non-veridical: zarci(c0)
+(!dzukla("djein",c0) \/ !bajrykla("djein",c1))
+
+ju'a nai cy pa zarci
+.i ju'a nai cy no zarci
+.i ga na ku la djein. dzukla cy no gi na ku la djein. bajrykla cy pa
+
+-----
+> ganai la djein. le zarci cu dzukla ginai la djein. le zarci cu bajrykla
+
+non-veridical: zarci(c1)
+non-veridical: zarci(c0)
+(bajrykla("djein",c1) --> !dzukla("djein",c0))
+
+ju'a nai cy pa zarci
+.i ju'a nai cy no zarci
+.i ga nai la djein. bajrykla cy pa gi na ku la djein. dzukla cy no
+
+-----
+> ga la paris. gi la rom. naku se klama la djan.
+
+(!klama("djan","paris") \/ !klama("djan","rom"))
+
+ga na ku la djan. klama la paris. gi na ku la djan. klama la rom.
+
+-----
+> la djan. naku klama ge la paris. gi la rom.
+
+!(klama("djan","paris") /\ klama("djan","rom"))
+
+na ku ge la djan. klama la paris. gi la djan. klama la rom.
+
+-----
+> su'o bu'a zo'u la djim. bu'a la djan.
+
+EX x1:(bu'a(_)). bu'a("djim","djan")
+
+su'o da poi ke'a bu'a ku'o zo'u la djim. bu'a la djan.
+
+-----
+> la djim. bu'a la djan.
+
+bu'a("djim","djan")
+
+la djim. bu'a la djan.
+
+-----
+> ro bu'a zo'u la djim. bu'a la djan.
+
+FA x1:(bu'a(_)). bu'a("djim","djan")
+
+ro da poi ke'a bu'a ku'o zo'u la djim. bu'a la djan.
+
+-----
+> ci da poi mlatu cu blabi .ije re da cu barda
+
+(EQ(3) x1:(mlatu(_)). blabi(x1) /\ EQ(2) x1. barda(x1))
+
+ge ci da poi ke'a mlatu ku'o zo'u da blabi gi re da zo'u da barda
+
+-----
+> ci da poi prenu cu se ralju pa da
+
+EQ(3) x1:(prenu(_)). EQ(1) x2. ralju(x2,x1)
+
+ci da poi ke'a prenu ku'o pa de zo'u de ralju da
+
+-----

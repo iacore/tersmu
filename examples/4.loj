@@ -1,0 +1,584 @@
+> .iseci'i
+Parse error:
+	{i se ci'i}
+	      ^
+
+-----
+> .i se ci'i
+Parse error:
+	{i se ci'i}
+	      ^
+
+-----
+> punaijecanai
+
+[Fragment: ]
+
+
+
+-----
+> pu nai je ca nai
+
+[Fragment: ]
+
+
+
+-----
+> ki'e.u'e
+-----
+> ki'e .u'e
+-----
+> ki'e'u'e
+Parse error:
+	{ki'e'u'e}
+	 ^
+
+-----
+> cy.ibu.abu
+
+[Fragment: cia]
+
+cy ibu abu
+
+-----
+> cy. .ibu .abu
+
+[Fragment: cia]
+
+cy ibu abu
+
+-----
+> .e'o ko ko kurji
+
+kurji(ko,ko)
+
+ko kurji ko
+
+-----
+> .E'o ko ko KURji
+
+kurji(ko,ko)
+
+ko kurji ko
+
+-----
+> le re nanmu
+
+non-veridical: (nanmu(c0) /\ 2 mei(c0))
+[Fragment: c0]
+
+ju'a nai ge cy no nanmu gi cy no re mei
+.i cy no
+
+-----
+> le RE. NANmu
+
+non-veridical: (nanmu(c0) /\ 2 mei(c0))
+[Fragment: c0]
+
+ju'a nai ge cy no nanmu gi cy no re mei
+.i cy no
+
+-----
+> LE re NANmu
+
+non-veridical: (nanmu(c0) /\ 2 mei(c0))
+[Fragment: c0]
+
+ju'a nai ge cy no nanmu gi cy no re mei
+.i cy no
+
+-----
+> le re NANmu
+
+non-veridical: (nanmu(c0) /\ 2 mei(c0))
+[Fragment: c0]
+
+ju'a nai ge cy no nanmu gi cy no re mei
+.i cy no
+
+-----
+> creka
+
+creka( )
+
+creka
+
+-----
+> lijda
+
+lijda( )
+
+lijda
+
+-----
+> blanu
+
+blanu( )
+
+blanu
+
+-----
+> mamta
+
+mamta( )
+
+mamta
+
+-----
+> cukta
+
+cukta( )
+
+cukta
+
+-----
+> patfu
+
+patfu( )
+
+patfu
+
+-----
+> nanmu
+
+nanmu( )
+
+nanmu
+
+-----
+> ninmu
+
+ninmu( )
+
+ninmu
+
+-----
+> skami pilno
+
+<skami(_)><pilno>( )
+
+ke skami pilno ke'e
+
+-----
+> barda bloti
+
+<barda(_)><bloti>( )
+
+ke barda bloti ke'e
+
+-----
+> patfu mamta
+
+<patfu(_)><mamta>( )
+
+ke patfu mamta ke'e
+
+-----
+> mamta patfu
+
+<mamta(_)><patfu>( )
+
+ke mamta patfu ke'e
+
+-----
+> sampli
+
+sampli( )
+
+sampli
+
+-----
+> bralo'i
+
+bralo'i( )
+
+bralo'i
+
+-----
+> mampa'u
+
+mampa'u( )
+
+mampa'u
+
+-----
+> soirsai
+
+soirsai( )
+
+soirsai
+
+-----
+> mamtypatfu
+
+mamtypatfu( )
+
+mamtypatfu
+
+-----
+> lerfyliste
+
+lerfyliste( )
+
+lerfyliste
+
+-----
+> nancyprali
+
+nancyprali( )
+
+nancyprali
+
+-----
+> prunyplipe
+
+prunyplipe( )
+
+prunyplipe
+
+-----
+> vancysanmi
+
+vancysanmi( )
+
+vancysanmi
+
+-----
+> cumfri
+
+cumfri( )
+
+cumfri
+
+-----
+> klezba
+
+klezba( )
+
+klezba
+
+-----
+> kixta'a
+
+kixta'a( )
+
+kixta'a
+
+-----
+> sniju'o
+
+sniju'o( )
+
+sniju'o
+
+-----
+> mampa'u
+
+mampa'u( )
+
+mampa'u
+
+-----
+> lerste
+
+lerste( )
+
+lerste
+
+-----
+> bridi zei valsi
+
+bridi-zei-valsi( )
+
+bridi-zei-valsi
+
+-----
+> xy. zei kantu
+
+xy-zei-kantu( )
+
+xy-zei-kantu
+
+-----
+> kulnr,farsi zei lolgai
+
+kulnrfarsi-zei-lolgai( )
+
+kulnrfarsi-zei-lolgai
+
+-----
+> na'e zei .a zei na'e zei by. livgyterbilma
+
+<na'e-zei-a-zei-na'e-zei-by(_)><livgyterbilma>( )
+
+ke na'e-zei-a-zei-na'e-zei-by livgyterbilma ke'e
+
+-----
+> .cerman. zei jamkarce
+Parse error:
+	{cerman zei jamkarce}
+	        ^
+
+-----
+> na'e zei .a zei na'e zei by. zei livgyterbilma
+
+na'e-zei-a-zei-na'e-zei-by-zei-livgyterbilma( )
+
+na'e-zei-a-zei-na'e-zei-by-zei-livgyterbilma
+
+-----
+> me la'o ly. spaghetti .ly.
+Morphology error:
+	{me la'o ly. spaghetti .ly.}
+	             ^
+
+-----
+> me la spagetis.
+
+("spagetis") >= ( )
+
+me la spagetis. me'u
+
+-----
+> spageti Lojbanize
+
+jbanize(c0)
+spageti( ,c0)
+
+cy no jbanize
+.i spageti cy no
+
+-----
+> cidj,r,spageti prefix long rafsi
+Parse error:
+	{cidjrspageti prefix long rafsi}
+	              ^
+
+-----
+> dja,r,spageti prefix short rafsi
+Morphology error:
+	{dja,r,spageti prefix short rafsi}
+	                      ^
+
+-----
+> acer Lojbanize
+
+jbanize(c0)
+[Fragment: c0]
+
+cy no jbanize
+.i cy no
+
+-----
+> xaceru add initial consonant and final vowel
+Morphology error:
+	{xaceru add initial consonant and final vowel}
+	        ^
+
+-----
+> tric,r,xaceru prefix rafsi
+Parse error:
+	{tricrxaceru prefix rafsi}
+	             ^
+
+-----
+> ric,r,xaceru prefix short rafsi
+Morphology error:
+	{ric,r,xaceru prefix short rafsi}
+	                     ^
+
+-----
+> bri Lojbanize
+Morphology error:
+	{bri Lojbanize}
+	 ^
+
+-----
+> cirl,r,bri prefix rafsi
+Parse error:
+	{cirlrbri prefix rafsi}
+	          ^
+
+-----
+> kobra Lojbanize
+
+jbanize(c0)
+kobra( ,c0)
+
+cy no jbanize
+.i kobra cy no
+
+-----
+> sinc,r,kobra prefix rafsi
+Parse error:
+	{sincrkobra prefix rafsi}
+	            ^
+
+-----
+> kuark Lojbanize
+
+jbanize(c0)
+[Fragment: c0]
+
+cy no jbanize
+.i cy no
+
+-----
+> kuarka add final vowel
+Morphology error:
+	{kuarka add final vowel}
+	        ^
+
+-----
+> sask,r,kuarka prefix rafsi
+Parse error:
+	{saskrkuarka prefix rafsi}
+	             ^
+
+-----
+> djamo Lojbanize
+
+jbanize(c0)
+djamo( ,c0)
+
+cy no jbanize
+.i djamo cy no
+
+-----
+> lerf,r,djamo prefix rafsi
+Parse error:
+	{lerfrdjamo prefix rafsi}
+	            ^
+
+-----
+> ler,l,djamo prefix rafsi
+Parse error:
+	{lerldjamo prefix rafsi}
+	           ^
+
+-----
+> bang,r,blgaria
+
+bangrblgaria( )
+
+bangrblgaria
+
+-----
+> kuln,r,blgaria
+
+kulnrblgaria( )
+
+kulnrblgaria
+
+-----
+> gugd,r,blgaria
+
+gugdrblgaria( )
+
+gugdrblgaria
+
+-----
+> bang,r,kore,a
+Morphology error:
+	{bang,r,kore,a}
+	 ^
+
+-----
+> kuln,r,kore,a
+Morphology error:
+	{kuln,r,kore,a}
+	 ^
+
+-----
+> djim.
+-----
+> djein.
+-----
+> .arnold.
+-----
+> pit.
+-----
+> katrinas.
+-----
+> kat,r,in.
+-----
+> katis.
+-----
+> keit.
+-----
+> djan. braun.
+-----
+> djanbraun.
+-----
+> NEderlants.
+Morphology error:
+	{NEderlants.}
+	 ^
+
+-----
+> NEder lants.
+Morphology error:
+	{NEder lants.}
+	       ^
+
+-----
+> NEder
+-----
+> pav.
+-----
+> sol.
+-----
+> ralj.
+-----
+> nol.
+-----
+> zbasai
+
+zbasai( )
+
+zbasai
+
+-----
+> nunynau
+
+nunynau( )
+
+nunynau
+
+-----
+> sairzbata'u
+
+sairzbata'u( )
+
+sairzbata'u
+
+-----
+> zbazbasysarji
+
+zbazbasysarji( )
+
+zbazbasysarji
+
+-----
+> tci'ile
+
+tci'ile( )
+
+tci'ile
+
+-----
+> tci'ile ke canre tutra
+
+<tci'ile(_)><<canre(_)><tutra>>( )
+
+ke tci'ile ke canre tutra ke'e ke'e
+
+-----
+> tci'ilykemcantutra
+
+tci'ilykemcantutra( )
+
+tci'ilykemcantutra
+
+-----

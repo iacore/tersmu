@@ -1,0 +1,818 @@
+> mi klama le zarci
+
+non-veridical: zarci(c0)
+klama(mi,c0)
+
+ju'a nai cy no zarci
+.i mi klama cy no
+
+-----
+> e'osai ko sarji la lojban.
+
+sarji(ko,"lojban")
+
+ko sarji la lojban.
+
+-----
+> mi cusku lu e'osai li'u le tcidu
+
+non-veridical: tcidu(c0)
+cusku(mi,<<  >>,c0)
+
+ju'a nai cy no tcidu
+.i mi cusku lu  li'u cy no
+
+-----
+> ti mitre li ci
+
+mitre(ti,3)
+
+ti mitre li ci boi lo'o
+
+-----
+> le zarci
+
+non-veridical: zarci(c0)
+[Fragment: c0]
+
+ju'a nai cy no zarci
+.i cy no
+
+-----
+> le zarci cu barda
+
+non-veridical: zarci(c0)
+barda(c0)
+
+ju'a nai cy no zarci
+.i cy no barda
+
+-----
+> le nanmu cu ninmu
+
+non-veridical: nanmu(c0)
+ninmu(c0)
+
+ju'a nai cy no nanmu
+.i cy no ninmu
+
+-----
+> lo zarci
+
+zarci(c0)
+[Fragment: c0]
+
+cy no zarci
+.i cy no
+
+-----
+> lo nanmu cu ninmu
+
+nanmu(c0)
+ninmu(c0)
+
+cy no nanmu
+.i cy no ninmu
+
+-----
+> la cribe pu finti le lisri
+
+non-veridical: lisri(c0)
+(pu)(). finti([Name: cribe(_) ],c0)
+
+ju'a nai cy no lisri
+.i pu ku zo'u la poi'i cribe ku'o ku finti cy no
+
+-----
+> la stace pu citka lo cirla
+
+cirla(c0)
+(pu)(). citka([Name: stace(_) ],c0)
+
+cy no cirla
+.i pu ku zo'u la poi'i stace ku'o ku citka cy no
+
+-----
+> le cribe pu finti le lisri
+
+non-veridical: lisri(c1)
+non-veridical: cribe(c0)
+(pu)(). finti(c0,c1)
+
+ju'a nai cy pa lisri
+.i ju'a nai cy no cribe
+.i pu ku zo'u cy no finti cy pa
+
+-----
+> lo cribe pu finti le lisri
+
+non-veridical: lisri(c1)
+cribe(c0)
+(pu)(). finti(c0,c1)
+
+ju'a nai cy pa lisri
+.i cy no cribe
+.i pu ku zo'u cy no finti cy pa
+
+-----
+> le remna pu finti le lisri
+
+non-veridical: lisri(c1)
+non-veridical: remna(c0)
+(pu)(). finti(c0,c1)
+
+ju'a nai cy pa lisri
+.i ju'a nai cy no remna
+.i pu ku zo'u cy no finti cy pa
+
+-----
+> lo remna pu finti le lisri
+
+non-veridical: lisri(c1)
+remna(c0)
+(pu)(). finti(c0,c1)
+
+ju'a nai cy pa lisri
+.i cy no remna
+.i pu ku zo'u cy no finti cy pa
+
+-----
+> le prenu cu bevri le pipno
+
+non-veridical: pipno(c1)
+non-veridical: prenu(c0)
+bevri(c0,c1)
+
+ju'a nai cy pa pipno
+.i ju'a nai cy no prenu
+.i cy no bevri cy pa
+
+-----
+> lei prenu cu bevri le pipno
+
+non-veridical: pipno(c2)
+gunma(c1,c0)
+non-veridical: prenu(c0)
+bevri(c1,c2)
+
+ju'a nai cy re pipno
+.i cy pa gunma cy no
+.i ju'a nai cy no prenu
+.i cy pa bevri cy re
+
+-----
+> loi cinfo cu xabju le fi'ortu'a
+
+non-veridical: fi'ortu'a(c2)
+gunma(c1,c0)
+cinfo(c0)
+xabju(c1,c2)
+
+ju'a nai cy re fi'ortu'a
+.i cy pa gunma cy no
+.i cy no cinfo
+.i cy pa xabju cy re
+
+-----
+> loi glipre cu xabju le fi'ortu'a
+
+non-veridical: fi'ortu'a(c2)
+gunma(c1,c0)
+glipre(c0)
+xabju(c1,c2)
+
+ju'a nai cy re fi'ortu'a
+.i cy pa gunma cy no
+.i cy no glipre
+.i cy pa xabju cy re
+
+-----
+> loi matne cu ranti
+
+gunma(c1,c0)
+matne(c0)
+ranti(c1)
+
+cy pa gunma cy no
+.i cy no matne
+.i cy pa ranti
+
+-----
+> lai cribe pu finti le vi cukta
+
+non-veridical: (vi)(). cukta(c1)
+gunma(c0,[Name: cribe(_) ])
+(pu)(). finti(c0,c1)
+
+ju'a nai vi ku zo'u cy pa cukta
+.i cy no gunma la poi'i cribe ku'o ku
+.i pu ku zo'u cy no finti cy pa
+
+-----
+> lo ratcu cu bunre
+
+ratcu(c0)
+bunre(c0)
+
+cy no ratcu
+.i cy no bunre
+
+-----
+> loi ratcu cu cmalu
+
+gunma(c1,c0)
+ratcu(c0)
+cmalu(c1)
+
+cy pa gunma cy no
+.i cy no ratcu
+.i cy pa cmalu
+
+-----
+> lo'i ratcu cu barda
+
+selcmi(c1,c0)
+ratcu(c0)
+barda(c1)
+
+cy pa selcmi cy no
+.i cy no ratcu
+.i cy pa barda
+
+-----
+> mi fadni zo'e lo'i lobypli
+
+selcmi(c2,c1)
+lobypli(c1)
+fadni(mi,c0,c2)
+
+cy re selcmi cy pa
+.i cy pa lobypli
+.i mi fadni cy no cy re
+
+-----
+> lo'e cinfo cu xabju le fi'ortu'a
+
+non-veridical: fi'ortu'a(c1)
+cinfo(c0)
+xabju(c0,c1)
+
+ju'a nai cy pa fi'ortu'a
+.i cy no cinfo
+.i cy no xabju cy pa
+
+-----
+> lo'e glipre cu xabju le fi'ortu'a na.e le gligugde
+
+non-veridical: gligugde(c2)
+non-veridical: fi'ortu'a(c1)
+glipre(c0)
+(!xabju(c0,c1) /\ xabju(c0,c2))
+
+ju'a nai cy re gligugde
+.i ju'a nai cy pa fi'ortu'a
+.i cy no glipre
+.i ge na ku cy no xabju cy pa gi cy no xabju cy re
+
+-----
+> le'e xelso merko cu gusta ponse
+
+non-veridical: <xelso(_)><merko>(c0)
+<gusta(_)><ponse>(c0)
+
+ju'a nai cy no ke xelso merko ke'e
+.i cy no ke gusta ponse ke'e
+
+-----
+> le'e skina cu se finti ne'i la xali,uyd.
+
+non-veridical: skina(c0)
+(ne'i)("xaliuyd"). finti( ,c0)
+
+ju'a nai cy no skina
+.i ne'i la xaliuyd. zo'u finti cy no
+
+-----
+> do cadzu le bisli
+
+non-veridical: bisli(c0)
+cadzu(do,c0)
+
+ju'a nai cy no bisli
+.i do cadzu cy no
+
+-----
+> re do cadzu le bisli
+
+non-veridical: bisli(c0)
+EQ(2) x1:((do) >= (_)). cadzu(x1,c0)
+
+ju'a nai cy no bisli
+.i re da poi ke'a me do me'u ku'o zo'u da cadzu cy no
+
+-----
+> mi ponse su'o ci cutci
+
+(su'o ci) x1:(cutci(_)). ponse(mi,x1)
+
+su'o ci boi da poi ke'a cutci ku'o zo'u mi ponse da
+
+-----
+> ro do cadzu le bisli
+
+non-veridical: bisli(c0)
+FA x1:((do) >= (_)). cadzu(x1,c0)
+
+ju'a nai cy no bisli
+.i ro da poi ke'a me do me'u ku'o zo'u da cadzu cy no
+
+-----
+> mi cusku lu do cadzu le bisli li'u
+
+cusku(mi,<< non-veridical: bisli(c0)
+cadzu(do,c0) >>)
+
+mi cusku lu ju'a nai cy no bisli
+.i do cadzu cy no li'u
+
+-----
+> mi cusku ro lu do cadzu le bisli li'u
+
+FA x1:((<< non-veridical: bisli(c0)
+cadzu(do,c0) >>) >= (_)). cusku(mi,x1)
+
+ro da poi ke'a me lu ju'a nai cy no bisli
+.i do cadzu cy no li'u me'u ku'o zo'u mi cusku da
+
+-----
+> mi cusku su'o lu do cadzu le bisli li'u
+
+EX x1:((<< non-veridical: bisli(c0)
+cadzu(do,c0) >>) >= (_)). cusku(mi,x1)
+
+su'o da poi ke'a me lu ju'a nai cy no bisli
+.i do cadzu cy no li'u me'u ku'o zo'u mi cusku da
+
+-----
+> mi cusku re lu do cadzu le bisli li'u
+
+EQ(2) x1:((<< non-veridical: bisli(c0)
+cadzu(do,c0) >>) >= (_)). cusku(mi,x1)
+
+re da poi ke'a me lu ju'a nai cy no bisli
+.i do cadzu cy no li'u me'u ku'o zo'u mi cusku da
+
+-----
+> re le gerku cu blabi
+
+non-veridical: gerku(c0)
+EQ(2) x1:((c0) >= (_)). blabi(x1)
+
+ju'a nai cy no gerku
+.i re da poi ke'a me cy no me'u ku'o zo'u da blabi
+
+-----
+> re le ci gerku cu blabi
+
+non-veridical: (gerku(c0) /\ 3 mei(c0))
+EQ(2) x1:((c0) >= (_)). blabi(x1)
+
+ju'a nai ge cy no gerku gi cy no ci mei
+.i re da poi ke'a me cy no me'u ku'o zo'u da blabi
+
+-----
+> le ci gerku cu blabi
+
+non-veridical: (gerku(c0) /\ 3 mei(c0))
+blabi(c0)
+
+ju'a nai ge cy no gerku gi cy no ci mei
+.i cy no blabi
+
+-----
+> [ro] le ci gerku cu blabi
+
+non-veridical: (gerku(c0) /\ 3 mei(c0))
+FA x1:((c0) >= (_)). blabi(x1)
+
+ju'a nai ge cy no gerku gi cy no ci mei
+.i ro da poi ke'a me cy no me'u ku'o zo'u da blabi
+
+-----
+> ci lo [ro] gerku cu blabi
+
+(gerku(c0) /\ (ro) mei(c0))
+EQ(3) x1:((c0) >= (_)). blabi(x1)
+
+ge cy no gerku gi cy no ro mei
+.i ci da poi ke'a me cy no me'u ku'o zo'u da blabi
+
+-----
+> [so'o] lo ci gerku cu blabi
+
+(gerku(c0) /\ 3 mei(c0))
+(so'o) x1:((c0) >= (_)). blabi(x1)
+
+ge cy no gerku gi cy no ci mei
+.i so'o boi da poi ke'a me cy no me'u ku'o zo'u da blabi
+
+-----
+> ci gerku [ku] cu blabi
+
+EQ(3) x1:(gerku(_)). blabi(x1)
+
+ci da poi ke'a gerku ku'o zo'u da blabi
+
+-----
+> mi ponse su'o ci lo cutci
+
+cutci(c0)
+(su'o ci) x1:((c0) >= (_)). ponse(mi,x1)
+
+cy no cutci
+.i su'o ci boi da poi ke'a me cy no me'u ku'o zo'u mi ponse da
+
+-----
+> re do cu nanmu
+
+EQ(2) x1:((do) >= (_)). nanmu(x1)
+
+re da poi ke'a me do me'u ku'o zo'u da nanmu
+
+-----
+> le re do cu nanmu
+
+non-veridical: ((do) >= (c0) /\ 2 mei(c0))
+nanmu(c0)
+
+ju'a nai ge cy no me do me'u gi cy no re mei
+.i cy no nanmu
+
+-----
+> re le ci cribe cu bunre
+
+non-veridical: (cribe(c0) /\ 3 mei(c0))
+EQ(2) x1:((c0) >= (_)). bunre(x1)
+
+ju'a nai ge cy no cribe gi cy no ci mei
+.i re da poi ke'a me cy no me'u ku'o zo'u da bunre
+
+-----
+> le re le ci cribe cu bunre
+
+non-veridical: ((c0) >= (c1) /\ 2 mei(c1))
+non-veridical: (cribe(c0) /\ 3 mei(c0))
+bunre(c1)
+
+ju'a nai ge cy pa me cy no me'u gi cy pa re mei
+.i ju'a nai ge cy no cribe gi cy no ci mei
+.i cy pa bunre
+
+-----
+> pa le re le ci cribe cu bunre
+
+non-veridical: ((c0) >= (c1) /\ 2 mei(c1))
+non-veridical: (cribe(c0) /\ 3 mei(c0))
+EQ(1) x1:((c1) >= (_)). bunre(x1)
+
+ju'a nai ge cy pa me cy no me'u gi cy pa re mei
+.i ju'a nai ge cy no cribe gi cy no ci mei
+.i pa da poi ke'a me cy pa me'u ku'o zo'u da bunre
+
+-----
+> mi viska lu le xunre cmaxirma li'u
+
+viska(mi,<< non-veridical: <xunre(_)><cmaxirma>(c0)
+[Fragment: c0] >>)
+
+mi viska lu ju'a nai cy no ke xunre cmaxirma ke'e
+.i cy no li'u
+
+-----
+> mi viska le selsinxa be lu le xunre cmaxirma li'u
+
+non-veridical: selsinxa(c0,<< non-veridical: <xunre(_)><cmaxirma>(c0)
+[Fragment: c0] >>)
+viska(mi,c0)
+
+ju'a nai cy no selsinxa lu ju'a nai cy no ke xunre cmaxirma ke'e
+.i cy no li'u
+.i mi viska cy no
+
+-----
+> mi viska la'e lu le xunre cmaxirma li'u [lu'u]
+
+viska(mi,{la'e}(<< non-veridical: <xunre(_)><cmaxirma>(c0)
+[Fragment: c0] >>))
+
+mi viska la'e lu ju'a nai cy no ke xunre cmaxirma ke'e
+.i cy no li'u lu'u
+
+-----
+> mi pu cusku lu'e le vi cukta
+
+non-veridical: (vi)(). cukta(c0)
+(pu)(). cusku(mi,{lu'e}(c0))
+
+ju'a nai vi ku zo'u cy no cukta
+.i pu ku zo'u mi cusku lu'e cy no lu'u
+
+-----
+> mi pu cusku le sinxa be le vi cukta
+
+non-veridical: sinxa(c1,c0)
+non-veridical: (vi)(). cukta(c0)
+(pu)(). cusku(mi,c1)
+
+ju'a nai cy pa sinxa cy no
+.i ju'a nai vi ku zo'u cy no cukta
+.i pu ku zo'u mi cusku cy pa
+
+-----
+> mi troci tu'a le vorme
+
+non-veridical: vorme(c0)
+troci(mi,{tu'a}(c0))
+
+ju'a nai cy no vorme
+.i mi troci tu'a cy no lu'u
+
+-----
+> lo'i ratcu cu barda .iku'i lu'a ri cmalu
+
+selcmi(c1,c0)
+ratcu(c0)
+barda(c1)
+cmalu({lu'a}(c1))
+
+cy pa selcmi cy no
+.i cy no ratcu
+.i cy pa barda
+.i lu'a cy pa lu'u cmalu
+
+-----
+> lo ratcu cu cmalu .iku'i lu'i ri barda
+
+ratcu(c0)
+cmalu(c0)
+barda({lu'i}(c0))
+
+cy no ratcu
+.i cy no cmalu
+.i lu'i cy no lu'u barda
+
+-----
+> mi ce do girzu .i lu'o ri gunma .i vu'i ri porsi
+
+girzu((mi {ce} do))
+gunma({lu'o}({ri}))
+porsi({vu'i}({lu'o}({ri})))
+
+mi ce ke do ke'e girzu
+.i lu'o ri lu'u gunma
+.i vu'i lu'o ri lu'u lu'u porsi
+
+-----
+> mi viska na'ebo le gerku
+
+non-veridical: gerku(c0)
+viska(mi,{na'e bo}(c0))
+
+ju'a nai cy no gerku
+.i mi viska na'e bo cy no lu'u
+
+-----
+> mi nelci loi glare cidja .ije do nelci to'ebo ri .ije la djein. nelci no'ebo ra
+
+gunma(c1,c0)
+<glare(_)><cidja>(c0)
+((nelci(mi,c1) /\ nelci(do,{to'e bo}(c1))) /\ nelci("djein",{no'e bo}({ra})))
+
+cy pa gunma cy no
+.i cy no ke glare cidja ke'e
+.i ge ge mi nelci cy pa gi do nelci to'e bo cy pa lu'u gi la djein. nelci no'e bo ra lu'u
+
+-----
+> coi
+-----
+> je'e
+-----
+> coi. djan.
+-----
+> coi doi djan.
+-----
+> doi djan.
+-----
+> coi xunre pastu nixli
+-----
+> co'o la bab. .e la noras.
+-----
+> coi le xunre pastu nixli
+-----
+> doi la djan.
+-----
+> doi djan. ko klama mi
+
+klama(ko,mi)
+
+ko klama mi
+
+-----
+> ko klama mi doi djan.
+
+klama(ko,mi)
+
+ko klama mi
+
+-----
+> djan. meris. djein. .alis.
+-----
+> la djonz. klama le zarci
+
+non-veridical: zarci(c0)
+klama("djonz",c0)
+
+ju'a nai cy no zarci
+.i la djonz. klama cy no
+
+-----
+> lai djonz. klama le zarci
+
+non-veridical: zarci(c1)
+gunma(c0,"djonz")
+klama(c0,c1)
+
+ju'a nai cy pa zarci
+.i cy no gunma la djonz.
+.i cy no klama cy pa
+
+-----
+> coi .djan.
+-----
+> zo .djan. cmene mi
+
+cmene({djan},mi)
+
+zo djan cmene mi
+
+-----
+> doi djan. pol. djonz. le bloti cu klama fi la niuport. niuz.
+
+non-veridical: bloti(c0)
+klama(c0, ,"niuport niuz")
+
+ju'a nai cy no bloti
+.i cy no klama fi la niuport niuz.
+
+-----
+> lojban.
+-----
+> mi prami do
+
+prami(mi,do)
+
+mi prami do
+
+-----
+> le cribe goi ko'a cu xekri .i ko'a citka le smacu
+
+non-veridical: smacu(c1)
+non-veridical: cribe(c0)
+xekri(c0)
+citka(c0,c1)
+
+ju'a nai cy pa smacu
+.i ju'a nai cy no cribe
+.i cy no xekri
+.i cy no citka cy pa
+
+-----
+> ro da poi prenu cu prami pa de poi finpe
+
+FA x1:(prenu(_)). EQ(1) x2:(finpe(_)). prami(x1,x2)
+
+ro da poi ke'a prenu ku'o pa de poi ke'a finpe ku'o zo'u da prami de
+
+-----
+> le cribe cu batci vo'a
+
+non-veridical: cribe(c0)
+batci(c0,c0)
+
+ju'a nai cy no cribe
+.i cy no batci cy no
+
+-----
+> mi klama la frankfurt. ri
+
+klama(mi,"frankfurt","frankfurt")
+
+mi klama la frankfurt. la frankfurt.
+
+-----
+> mi klama la frankfurt. zo'e zo'e zo'e
+
+klama(mi,"frankfurt",c0,c1,c2)
+
+mi klama la frankfurt. cy no cy pa cy re
+
+-----
+> ko muvgau ti ta tu
+
+muvgau(ko,ti,ta,tu)
+
+ko muvgau ti ta tu
+
+-----
+> li re su'i re du li vo .i la'e di'u jetnu
+
+=({su'i}(2,2),4)
+jetnu({la'e}(di'u))
+
+li pe'o su'i re boi re boi ku'e lo'o du li vo boi lo'o
+.i la'e di'u lu'u jetnu
+
+-----
+> mi viska le mlatu ku poi zo'e zbasu ke'a loi slasi
+
+(zbasu(c1,c4,c3) /\ (c0) >= (c4))
+gunma(c3,c2)
+slasi(c2)
+non-veridical: mlatu(c0)
+viska(mi,c4)
+
+ge cy pa zbasu cy vo cy ci gi cy vo me cy no me'u
+.i cy ci gunma cy re
+.i cy re slasi
+.i ju'a nai cy no mlatu
+.i mi viska cy vo
+
+-----
+> do klama ma
+
+ma x1. klama(do,x1)
+
+ma goi ko'a zo'u do klama ko'a
+
+-----
+> mi cusku lu mi'e djan. li'u
+
+cusku(mi,<<  >>)
+
+mi cusku lu  li'u
+
+-----
+> mi cusku lo'u li mi le'u
+
+cusku(mi,<{< li mi >}>)
+
+mi cusku lo'u li mi le'u
+
+-----
+> mi cusku zo .ai
+
+cusku(mi,{ai})
+
+mi cusku zo ai
+
+-----
+> mi cusku zoi kuot. I'm John .kuot
+Morphology error:
+	{mi cusku zoi kuot. I'm John .kuot}
+	                    ^
+
+-----
+> li vo
+
+[Fragment: 4]
+
+li vo boi lo'o
+
+-----
+> li re su'i re
+
+[Fragment: {su'i}(2,2)]
+
+li pe'o su'i re boi re boi ku'e lo'o
+
+-----
+> li .abu bopi'i xy. bote'a re su'i by. bopi'i xy. su'i cy.
+Parse error:
+	{li a bu bo pi'i xy bo te'a re su'i by bo pi'i xy su'i cy}
+	         ^
+
+-----
+> me'o vo
+
+[Fragment: [MEX: MexInt 4]]
+
+me'o MexInt 4 lo'o
+
+-----
+> me'o re su'i re
+
+[Fragment: [MEX: Operation (OpVUhU "su'i") [MexInt 2,MexInt 2]]]
+
+me'o Operation (OpVUhU "su'i") [MexInt 2,MexInt 2] lo'o
+
+-----

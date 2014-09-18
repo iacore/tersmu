@@ -1,0 +1,650 @@
+> mi klama le zarci .i do cadzu le bisli
+
+non-veridical: bisli(c1)
+non-veridical: zarci(c0)
+klama(mi,c0)
+cadzu(do,c1)
+
+ju'a nai cy pa bisli
+.i ju'a nai cy no zarci
+.i mi klama cy no
+.i do cadzu cy pa
+
+-----
+> mi klama le zarci
+
+non-veridical: zarci(c0)
+klama(mi,c0)
+
+ju'a nai cy no zarci
+.i mi klama cy no
+
+-----
+> le nuzba zo'u mi ba'o djuno
+
+non-veridical: nuzba(c0)
+(ba'o)(). djuno(mi)
+
+ju'a nai cy no nuzba
+.i ba'o ku zo'u mi djuno
+
+-----
+> mi ba'o djuno le nuzba
+
+non-veridical: nuzba(c0)
+(ba'o)(). djuno(mi,c0)
+
+ju'a nai cy no nuzba
+.i ba'o ku zo'u mi djuno cy no
+
+-----
+> le finpe zo'u citka
+
+non-veridical: finpe(c0)
+citka( )
+
+ju'a nai cy no finpe
+.i citka
+
+-----
+> roda poi prenu ku'o su'ode zo'u de patfu da
+
+FA x1:(prenu(_)). EX x2. patfu(x2,x1)
+
+ro da poi ke'a prenu ku'o su'o de zo'u de patfu da
+
+-----
+> loi patfu roda poi prenu ku'o su'ode zo'u de patfu da
+
+gunma(c1,c0)
+patfu(c0)
+FA x1:(prenu(_)). EX x2. patfu(x2,x1)
+
+cy pa gunma cy no
+.i cy no patfu
+.i ro da poi ke'a prenu ku'o su'o de zo'u de patfu da
+
+-----
+> loi jdini zo'u tu'e do ponse .inaja do djica [tu'u]
+
+gunma(c1,c0)
+jdini(c0)
+(ponse(do) --> djica(do))
+
+cy pa gunma cy no
+.i cy no jdini
+.i ga nai do ponse gi do djica
+
+-----
+> do ponse loi jdini .inaja do djica ri
+
+gunma(c1,c0)
+jdini(c0)
+(ponse(do,c1) --> djica(do,c1))
+
+cy pa gunma cy no
+.i cy no jdini
+.i ga nai do ponse cy pa gi do djica cy pa
+
+-----
+> do ponse loi jdini .inaja do djica tu'a ri
+
+gunma(c1,c0)
+jdini(c0)
+(ponse(do,c1) --> djica(do,{tu'a}(c1)))
+
+cy pa gunma cy no
+.i cy no jdini
+.i ga nai do ponse cy pa gi do djica tu'a cy pa lu'u
+
+-----
+> xu do klama le zarci
+
+non-veridical: zarci(c0)
+?. klama(do,c0)
+
+ju'a nai cy no zarci
+.i xu kau zo'u do klama cy no
+
+-----
+> ma klama le zarci
+
+non-veridical: zarci(c0)
+ma x1. klama(x1,c0)
+
+ju'a nai cy no zarci
+.i ma goi ko'a zo'u ko'a klama cy no
+
+-----
+> do klama ma
+
+ma x1. klama(do,x1)
+
+ma goi ko'a zo'u do klama ko'a
+
+-----
+> le zarci
+
+non-veridical: zarci(c0)
+[Fragment: c0]
+
+ju'a nai cy no zarci
+.i cy no
+
+-----
+> ma klama ma
+
+ma x1. ma x2. klama(x1,x2)
+
+ma goi ko'a ma goi ko'e zo'u ko'a klama ko'e
+
+-----
+> mi le zarci
+
+non-veridical: zarci(c0)
+[Fragment: mi,c0]
+
+ju'a nai cy no zarci
+.i mi cy no
+
+-----
+> ma fa'u ma klama ma fa'u ma
+
+ma x1. ma x2. ma x3. ma x4. klama((x1 {fa'u} x2),(x3 {fa'u} x4))
+
+ma goi ko'a ma goi ko'e ma goi ko'i ma goi ko'o zo'u ko'a fa'u ke ko'e ke'e klama ko'i fa'u ke ko'o ke'e
+
+-----
+> la djan. la marcas. le zarci le briju
+
+non-veridical: briju(c1)
+non-veridical: zarci(c0)
+[Fragment: "djan","marcas",c0,c1]
+
+ju'a nai cy pa briju
+.i ju'a nai cy no zarci
+.i la djan. la marcas. cy no cy pa
+
+-----
+> la lojban. mo
+
+mo("lojban")
+
+la lojban. mo
+
+-----
+> do viska xo prenu
+
+(xo) x1:(prenu(_)). viska(do,x1)
+
+xo boi da poi ke'a prenu ku'o zo'u do viska da
+
+-----
+> vomu
+
+[Fragment]
+
+li'o
+
+-----
+> mi cu klama le zarci le zdani le dargu le karce
+
+non-veridical: karce(c3)
+non-veridical: dargu(c2)
+non-veridical: zdani(c1)
+non-veridical: zarci(c0)
+klama(mi,c0,c1,c2,c3)
+
+ju'a nai cy ci karce
+.i ju'a nai cy re dargu
+.i ju'a nai cy pa zdani
+.i ju'a nai cy no zarci
+.i mi klama cy no cy pa cy re cy ci
+
+-----
+> le karce cu xe klama le zarci le zdani le dargu mi
+
+non-veridical: dargu(c3)
+non-veridical: zdani(c2)
+non-veridical: zarci(c1)
+non-veridical: karce(c0)
+klama(mi,c1,c2,c3,c0)
+
+ju'a nai cy ci dargu
+.i ju'a nai cy re zdani
+.i ju'a nai cy pa zarci
+.i ju'a nai cy no karce
+.i mi klama cy pa cy re cy ci cy no
+
+-----
+> fo le dargu fi le zdani fa mi fe le zarci fu le karce cu klama
+
+non-veridical: karce(c3)
+non-veridical: zarci(c2)
+non-veridical: zdani(c1)
+non-veridical: dargu(c0)
+klama(mi,c2,c1,c0,c3)
+
+ju'a nai cy ci karce
+.i ju'a nai cy re zarci
+.i ju'a nai cy pa zdani
+.i ju'a nai cy no dargu
+.i mi klama cy re cy pa cy no cy ci
+
+-----
+> la'edi'u cu nunkla mi le zarci le zdani le dargu le karce
+
+non-veridical: karce(c3)
+non-veridical: dargu(c2)
+non-veridical: zdani(c1)
+non-veridical: zarci(c0)
+nunkla({la'e}(di'u),mi,c0,c1,c2,c3)
+
+ju'a nai cy ci karce
+.i ju'a nai cy re dargu
+.i ju'a nai cy pa zdani
+.i ju'a nai cy no zarci
+.i la'e di'u lu'u nunkla mi cy no cy pa cy re cy ci
+
+-----
+> le karce cu sexixa nunkla mi le zarci le zdani le dargu la'edi'u
+
+non-veridical: dargu(c3)
+non-veridical: zdani(c2)
+non-veridical: zarci(c1)
+non-veridical: karce(c0)
+nunkla({la'e}(di'u),mi,c1,c2,c3,c0)
+
+ju'a nai cy ci dargu
+.i ju'a nai cy re zdani
+.i ju'a nai cy pa zarci
+.i ju'a nai cy no karce
+.i la'e di'u lu'u nunkla mi cy pa cy re cy ci cy no
+
+-----
+> fu le dargu fo le zdani fe mi fa la'edi'u fi le zarci faxixa le karce cu nunkla
+
+non-veridical: karce(c3)
+non-veridical: zarci(c2)
+non-veridical: zdani(c1)
+non-veridical: dargu(c0)
+nunkla({la'e}(di'u),mi,c2,c1,c0,c3)
+
+ju'a nai cy ci karce
+.i ju'a nai cy re zarci
+.i ju'a nai cy pa zdani
+.i ju'a nai cy no dargu
+.i la'e di'u lu'u nunkla mi cy re cy pa cy no cy ci
+
+-----
+> daxivo
+
+[Fragment: [DONKEY]]
+
+lo XASLI zei da ku
+
+-----
+> ko'ixipaso
+
+[Fragment: {ko'a xi paso}]
+
+ko'a xi paso
+
+-----
+> li xy.boixipa du li xy.boixire su'i xy.boixici
+Parse error:
+	{li xy boi xi pa du li xy boi xi re su'i xy boi xi ci}
+	                 ^
+
+-----
+> la djan. xipa cusku lu mi'enai do li'u la djan. xire
+
+cusku("djan",<<  >>,"djan")
+
+la djan. cusku lu  li'u la djan.
+
+-----
+> li pimu jei mi ganra
+
+jei[ganra(mi)]((pi mu))
+
+li pi mu boi lo'o jei mi ganra kei
+
+-----
+> mi ja'a xipimu ganra
+
+ganra(mi)
+
+mi ganra
+
+-----
+> mi klama pamai le zarci .e remai le zdani
+Parse error:
+	{mi klama pa mai le zarci e re mai le zdani}
+	             ^
+
+-----
+> mi viska le blanu .ia zdani [ku]
+
+non-veridical: <blanu(_)><zdani>(c0)
+viska(mi,c0)
+
+ju'a nai cy no ke blanu zdani ke'e
+.i mi viska cy no
+
+-----
+> mi viska le blanu zdani .ia [ku]
+
+non-veridical: <blanu(_)><zdani>(c0)
+viska(mi,c0)
+
+ju'a nai cy no ke blanu zdani ke'e
+.i mi viska cy no
+
+-----
+> mi viska le .ia blanu zdani [ku]
+
+non-veridical: <blanu(_)><zdani>(c0)
+viska(mi,c0)
+
+ju'a nai cy no ke blanu zdani ke'e
+.i mi viska cy no
+
+-----
+> mi viska le blanu zdani ku .ia
+
+non-veridical: <blanu(_)><zdani>(c0)
+viska(mi,c0)
+
+ju'a nai cy no ke blanu zdani ke'e
+.i mi viska cy no
+
+-----
+> [.i] .ia mi viska le blanu zdani
+
+non-veridical: <blanu(_)><zdani>(c0)
+viska(mi,c0)
+
+ju'a nai cy no ke blanu zdani ke'e
+.i mi viska cy no
+
+-----
+> mi viska le fu'e .ia blanu zdani fu'o ponse
+Parse error:
+	{mi viska le fu'e ia blanu zdani fu'o ponse}
+	             ^
+
+-----
+> mi pu cusku lu mi'e djan [li'u]
+
+(pu)(). cusku(mi,<<  >>)
+
+pu ku zo'u mi cusku lu  li'u
+
+-----
+> lo'u mi du do du la djan. le'u na tergerna la lojban.
+
+!tergerna(<{< mi du do du la djan >}>,"lojban")
+
+na ku lo'u mi du do du la djan le'u tergerna la lojban.
+
+-----
+> lu le mlatu cu viska le finpe li'u zo'u lo'u viska le le'u cu selbasti .ei lo'u viska lo le'u
+
+selbasti(<{< viska le >}>,<{< viska lo >}>)
+
+lo'u viska le le'u selbasti lo'u viska lo le'u
+
+-----
+> la tcarlis. cusku lu le ninmu cu morsi li'u .iku'i ri jmive
+
+cusku("tcarlis",<< non-veridical: ninmu(c0)
+morsi(c0) >>)
+jmive(<< non-veridical: ninmu(c0)
+morsi(c0) >>)
+
+la tcarlis. cusku lu ju'a nai cy no ninmu
+.i cy no morsi li'u
+.i lu ju'a nai cy no ninmu
+.i cy no morsi li'u jmive
+
+-----
+> la tcarlis. cusku lo'u le ninmu cu morsi le'u .iku'i ri jmive
+
+cusku("tcarlis",<{< le ninmu cu morsi >}>)
+jmive(<{< le ninmu cu morsi >}>)
+
+la tcarlis. cusku lo'u le ninmu cu morsi le'u
+.i lo'u le ninmu cu morsi le'u jmive
+
+-----
+> zo si cu lojbo valsi
+
+<lojbo(_)><valsi>({si})
+
+zo si ke lojbo valsi ke'e
+
+-----
+> zoi gy. John is a man .gy. cu glico jufra
+Morphology error:
+	{zoi gy. John is a man .gy. cu glico jufra}
+	         ^
+
+-----
+> mi djuno fi le valsi po'u zoi gy. gyrations .gy.
+
+non-veridical: (valsi(c0) /\ =(c0,<[< gyrations >]>))
+djuno(mi, ,c0)
+
+ju'a nai ge cy no valsi gi cy no du zoi zoi gyrations zoi
+.i mi djuno fi cy no
+
+-----
+> mi djuno fi le valsi po'u zoi jai. gyrations .jai
+Parse error:
+	{mi djuno fi le valsi po'u zoi jai gyrations jai}
+	                               ^
+
+-----
+> zoi ry. sku .ry. cu rafsi zo cusku
+Morphology error:
+	{zoi ry. sku .ry. cu rafsi zo cusku}
+	         ^
+
+-----
+> zo .bab. cmene la bab.
+
+cmene({bab},"bab")
+
+zo bab cmene la bab.
+
+-----
+> zo .bab. cmene la'e zo .bab.
+
+cmene({bab},{la'e}({bab}))
+
+zo bab cmene la'e zo bab lu'u
+
+-----
+> lu'e la bab. cmene la bab.
+
+cmene({lu'e}("bab"),"bab")
+
+lu'e la bab. lu'u cmene la bab.
+
+-----
+> la bab. cmene la bab.
+
+cmene("bab","bab")
+
+la bab. cmene la bab.
+
+-----
+> la'o dy. Goethe .dy. cu me la'o ly. Homo sapiens .ly.
+Morphology error:
+	{la'o dy. Goethe .dy. cu me la'o ly. Homo sapiens .ly.}
+	          ^
+
+-----
+> mi viska la ba'e .djordj.
+
+viska(mi,"djordj")
+
+mi viska la djordj.
+
+-----
+> mi viska ba'e la djordj.
+
+viska(mi,"djordj")
+
+mi viska la djordj.
+
+-----
+> ba'e mi viska la djordj.
+
+viska(mi,"djordj")
+
+mi viska la djordj.
+
+-----
+> mi ba'e viska la djordj.
+
+viska(mi,"djordj")
+
+mi viska la djordj.
+
+-----
+> mi klama la za'e .albeinias.
+
+klama(mi,"albeinias")
+
+mi klama la albeinias.
+
+-----
+> doi lisas. mi djica le nu to doi frank. ko sisti toi do viska le mlatu
+
+non-veridical: nu[viska(do,c0)](c1)
+non-veridical: mlatu(c0)
+sisti(ko)
+djica(mi,c1)
+
+ju'a nai cy pa nu do viska cy no kei
+.i ju'a nai cy no mlatu
+.i ko sisti
+.i mi djica cy pa
+
+-----
+> la frank. cusku lu mi prami do to'isa'a do du la djein. toi li'u
+
+cusku("frank",<< =(do,"djein")
+prami(mi,do) >>)
+
+la frank. cusku lu do du la djein.
+.i mi prami do li'u
+
+-----
+> la frank. prami sei la frank. gleki la djein.
+Parse error:
+	{la frank prami sei la frank gleki la djein}
+	                                   ^
+
+-----
+> la frank. prami sei gleki la djein.
+Parse error:
+	{la frank prami sei gleki la djein}
+	                          ^
+
+-----
+> la frank. prami sei gleki be fa la suzn. la djein.
+Parse error:
+	{la frank prami sei gleki be fa la suzn la djein}
+	                                        ^
+
+-----
+> la djan. cusku lu mi klama le zarci li'u
+
+cusku("djan",<< non-veridical: zarci(c0)
+klama(mi,c0) >>)
+
+la djan. cusku lu ju'a nai cy no zarci
+.i mi klama cy no li'u
+
+-----
+> lu mi klama le zarci seisa'a la djan. cusku be dei li'u
+Parse error:
+	{ le zarci sei sa'a la djan cusku be dei li'u}
+	                                         ^
+
+-----
+> lu seisa'a la djan. cusku be dei mi klama le zarci
+
+[Fragment: << non-veridical: zarci(c0)
+cusku( ,dei,"djan")
+klama(mi,c0) >>]
+
+lu ju'a nai cy no zarci
+.i cusku dei la djan.
+.i mi klama cy no li'u
+
+-----
+> lu mi klama seisa'a la djan cusku le zarci
+Parse error:
+	{lu mi klama sei sa'a la djan cusku le zarci}
+	                                    ^
+
+-----
+> ti gerku si mlatu
+Parse error:
+	{ti gerku si mlatu}
+	          ^
+
+-----
+> ta blanu zdani si si xekri zdani
+Parse error:
+	{ta blanu zdani si si xekri zdani}
+	                ^
+
+-----
+> zo .bab. se cmene zo si si si la bab.
+Parse error:
+	{zo bab se cmene zo si si si la bab}
+	                       ^
+
+-----
+> mi tavla fo la .esperanto si si .esperanton.
+Parse error:
+	{mi tavla fo la e speranto si si esperanton}
+	                ^
+
+-----
+> mi cusku zoi fy. gy. .fy. si si si si zo .djan
+Parse error:
+	{mi cusku zoi fy gy fy si si si si zo djan}
+	                       ^
+
+-----
+> mi se cmene zo .djan. si si zo .djordj.
+Parse error:
+	{mi se cmene zo djan si si zo djordj}
+	                     ^
+
+-----
+> mi viska le sa .i mi cusku zo .djan.
+Parse error:
+	{mi viska le sa i mi cusku zo djan}
+	             ^
+
+-----
+> mi cusku zo .djan.
+
+cusku(mi,{djan})
+
+mi cusku zo djan
+
+-----
+> mi viska le blanu zdan. sa le xekri zdani
+Parse error:
+	{mi viska le blanu zdan sa le xekri zdani}
+	                   ^
+
+-----

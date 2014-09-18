@@ -1,0 +1,7 @@
+TERSMU="../tersmu"
+
+while read line; do
+    echo "> $line";
+    $TERSMU 2>&1 <<<"$line" 
+    echo "-----"
+done

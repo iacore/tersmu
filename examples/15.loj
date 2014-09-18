@@ -1,0 +1,675 @@
+> mi klama le zarci
+
+non-veridical: zarci(c0)
+klama(mi,c0)
+
+ju'a nai cy no zarci
+.i mi klama cy no
+
+-----
+> mi na klama le zarci
+
+non-veridical: zarci(c0)
+!klama(mi,c0)
+
+ju'a nai cy no zarci
+.i na ku mi klama cy no
+
+-----
+> mi [cu] na ca klama le zarci
+
+non-veridical: zarci(c0)
+!(ca)(). klama(mi,c0)
+
+ju'a nai cy no zarci
+.i na ku ca ku zo'u mi klama cy no
+
+-----
+> lo ca nolraitru be le fasygu'e cu na krecau
+
+(ca)(). nolraitru(c1,c0)
+non-veridical: fasygu'e(c0)
+!krecau(c1)
+
+ca ku zo'u cy pa nolraitru cy no
+.i ju'a nai cy no fasygu'e
+.i na ku cy pa krecau
+
+-----
+> ti na barda prenu co melbi mi
+
+!<melbi(_,mi)><<barda(_)><prenu>>(ti)
+
+na ku ti ke melbi be mi ke barda prenu ke'e ke'e
+
+-----
+> mi na gleki le nu na klama le nu dansu
+
+non-veridical: nu[!klama( ,c0)](c1)
+non-veridical: nu[dansu( )](c0)
+!gleki(mi,c1)
+
+ju'a nai cy pa nu na ku klama cy no kei
+.i ju'a nai cy no nu dansu kei
+.i na ku mi gleki cy pa
+
+-----
+> mi nelci le na melbi
+
+non-veridical: !melbi(c0)
+nelci(mi,c0)
+
+ju'a nai na ku cy no melbi
+.i mi nelci cy no
+
+-----
+> mi nelci lo na ca nolraitru be le frasygu'e
+
+!(ca)(). nolraitru(c1,c0)
+non-veridical: frasygu'e(c0)
+nelci(mi,c1)
+
+na ku ca ku zo'u cy pa nolraitru cy no
+.i ju'a nai cy no frasygu'e
+.i mi nelci cy pa
+
+-----
+> ti na na barda prenu co melbi mi
+
+!!<melbi(_,mi)><<barda(_)><prenu>>(ti)
+
+na ku na ku ti ke melbi be mi ke barda prenu ke'e ke'e
+
+-----
+> ti barda prenu co melbi mi
+
+<melbi(_,mi)><<barda(_)><prenu>>(ti)
+
+ti ke melbi be mi ke barda prenu ke'e ke'e
+
+-----
+> mi [cu] ta'e klama le zarci
+
+non-veridical: zarci(c0)
+(ta'e)(). klama(mi,c0)
+
+ju'a nai cy no zarci
+.i ta'e ku zo'u mi klama cy no
+
+-----
+> mi na klama le zarci ki'u lenu le karce cu spofu
+
+non-veridical: nu[spofu(c1)](c2)
+non-veridical: karce(c1)
+non-veridical: zarci(c0)
+!(ki'u)(c2). klama(mi,c0)
+
+ju'a nai cy re nu cy pa spofu kei
+.i ju'a nai cy pa karce
+.i ju'a nai cy no zarci
+.i na ku ki'u cy re zo'u mi klama cy no
+
+-----
+> lenu mi na klama le zarci cu se krinu lenu le karce cu spofu
+
+non-veridical: nu[spofu(c2)](c3)
+non-veridical: karce(c2)
+non-veridical: nu[!klama(mi,c0)](c1)
+non-veridical: zarci(c0)
+krinu(c3,c1)
+
+ju'a nai cy ci nu cy re spofu kei
+.i ju'a nai cy re karce
+.i ju'a nai cy pa nu na ku mi klama cy no kei
+.i ju'a nai cy no zarci
+.i cy ci krinu cy pa
+
+-----
+> mi klama le zarci
+
+non-veridical: zarci(c0)
+klama(mi,c0)
+
+ju'a nai cy no zarci
+.i mi klama cy no
+
+-----
+> mi na'e klama le zarci
+
+non-veridical: zarci(c0)
+{na'e}(klama)(mi,c0)
+
+ju'a nai cy no zarci
+.i mi na'e klama cy no
+
+-----
+> mi na klama le zarci
+
+non-veridical: zarci(c0)
+!klama(mi,c0)
+
+ju'a nai cy no zarci
+.i na ku mi klama cy no
+
+-----
+> mi cadzu klama le zarci
+
+non-veridical: zarci(c0)
+<cadzu(_)><klama>(mi,c0)
+
+ju'a nai cy no zarci
+.i mi ke cadzu klama ke'e cy no
+
+-----
+> mi na'e cadzu klama le zarci
+
+non-veridical: zarci(c0)
+<{na'e}(cadzu)(_)><klama>(mi,c0)
+
+ju'a nai cy no zarci
+.i mi ke na'e cadzu klama ke'e cy no
+
+-----
+> mi cadzu na'e klama le zarci
+
+non-veridical: zarci(c0)
+<cadzu(_)><{na'e}(klama)>(mi,c0)
+
+ju'a nai cy no zarci
+.i mi ke cadzu na'e klama ke'e cy no
+
+-----
+> mi na'eke cadzu klama [ke'e] le zarci
+
+non-veridical: zarci(c0)
+{na'e}(<cadzu(_)><klama>)(mi,c0)
+
+ju'a nai cy no zarci
+.i mi na'e ke cadzu klama ke'e cy no
+
+-----
+> mi na'e (ke cadzu klama [ke'e]) le zarci
+
+non-veridical: zarci(c0)
+{na'e}(<cadzu(_)><klama>)(mi,c0)
+
+ju'a nai cy no zarci
+.i mi na'e ke cadzu klama ke'e cy no
+
+-----
+> mi na'eke sutra cadzu ke'e klama le zarci
+
+non-veridical: zarci(c0)
+<{na'e}(<sutra(_)><cadzu>)(_)><klama>(mi,c0)
+
+ju'a nai cy no zarci
+.i mi ke na'e ke sutra cadzu ke'e klama ke'e cy no
+
+-----
+> mi na'e (ke sutra cadzu ke'e) klama le zarci
+
+non-veridical: zarci(c0)
+<{na'e}(<sutra(_)><cadzu>)(_)><klama>(mi,c0)
+
+ju'a nai cy no zarci
+.i mi ke na'e ke sutra cadzu ke'e klama ke'e cy no
+
+-----
+> mi na'e ke sutra cadzu be le mi birka ke'e klama le zarci
+
+non-veridical: zarci(c1)
+non-veridical: (birka(c0) /\ srana(c0,mi))
+<{na'e}(<sutra(_)><cadzu>)(_,c0)><klama>(mi,c1)
+
+ju'a nai cy pa zarci
+.i ju'a nai ge cy no birka gi cy no srana mi
+.i mi ke na'e ke sutra cadzu ke'e be cy no klama ke'e cy pa
+
+-----
+> mi na'eke sutra cadzu [ke'e] lemi birka
+
+non-veridical: (birka(c0) /\ srana(c0,mi))
+{na'e}(<sutra(_)><cadzu>)(mi,c0)
+
+ju'a nai ge cy no birka gi cy no srana mi
+.i mi na'e ke sutra cadzu ke'e cy no
+
+-----
+> mi na'e (ke sutra cadzu [ke'e]) lemi birka
+
+non-veridical: (birka(c0) /\ srana(c0,mi))
+{na'e}(<sutra(_)><cadzu>)(mi,c0)
+
+ju'a nai ge cy no birka gi cy no srana mi
+.i mi na'e ke sutra cadzu ke'e cy no
+
+-----
+> mi na'eke sutra cadzu be lemi birka [ke'e]
+
+non-veridical: (birka(c0) /\ srana(c0,mi))
+{na'e}(<sutra(_)><cadzu>)(mi,c0)
+
+ju'a nai ge cy no birka gi cy no srana mi
+.i mi na'e ke sutra cadzu ke'e cy no
+
+-----
+> mi na'e (ke sutra cadzu be lemi birka [ke'e])
+
+non-veridical: (birka(c0) /\ srana(c0,mi))
+{na'e}(<sutra(_)><cadzu>)(mi,c0)
+
+ju'a nai ge cy no birka gi cy no srana mi
+.i mi na'e ke sutra cadzu ke'e cy no
+
+-----
+> na'e klama becomes nalkla
+Parse error:
+	{na'e klama becomes nalkla}
+	            ^
+
+-----
+> na'e cadzu klama becomes naldzukla
+Parse error:
+	{na'e cadzu klama becomes naldzukla}
+	                  ^
+
+-----
+> na'e sutra cadzu klama becomes nalsu'adzukla
+Parse error:
+	{na'e sutra cadzu klama becomes nalsu'adzukla}
+	                        ^
+
+-----
+> nake sutra cadzu ke'e klama becomes nalsu'adzuke'ekla
+Parse error:
+	{na ke sutra cadzu ke'e klama becomes nalsu'adzuke'ekla}
+	                              ^
+
+-----
+> mi na'e klama le zarci
+
+non-veridical: zarci(c0)
+{na'e}(klama)(mi,c0)
+
+ju'a nai cy no zarci
+.i mi na'e klama cy no
+
+-----
+> mi nalkla le zarci
+
+non-veridical: zarci(c0)
+nalkla(mi,c0)
+
+ju'a nai cy no zarci
+.i mi nalkla cy no
+
+-----
+> lo ca nolraitru be le fasygu'e cu krecau
+
+(ca)(). nolraitru(c1,c0)
+non-veridical: fasygu'e(c0)
+krecau(c1)
+
+ca ku zo'u cy pa nolraitru cy no
+.i ju'a nai cy no fasygu'e
+.i cy pa krecau
+
+-----
+> lo ca nolraitru be le fasygu'e cu na'e krecau
+
+(ca)(). nolraitru(c1,c0)
+non-veridical: fasygu'e(c0)
+{na'e}(krecau)(c1)
+
+ca ku zo'u cy pa nolraitru cy no
+.i ju'a nai cy no fasygu'e
+.i cy pa na'e krecau
+
+-----
+> lo ca nolraitru be le fasygu'e cu nalkrecau
+
+(ca)(). nolraitru(c1,c0)
+non-veridical: fasygu'e(c0)
+nalkrecau(c1)
+
+ca ku zo'u cy pa nolraitru cy no
+.i ju'a nai cy no fasygu'e
+.i cy pa nalkrecau
+
+-----
+> lo ca nolraitru be le fasygu'e cu na krecau
+
+(ca)(). nolraitru(c1,c0)
+non-veridical: fasygu'e(c0)
+!krecau(c1)
+
+ca ku zo'u cy pa nolraitru cy no
+.i ju'a nai cy no fasygu'e
+.i na ku cy pa krecau
+
+-----
+> le stizu cu na'e xunre
+
+non-veridical: stizu(c0)
+{na'e}(xunre)(c0)
+
+ju'a nai cy no stizu
+.i cy no na'e xunre
+
+-----
+> le stizu cu dzukla be le zarci
+
+non-veridical: zarci(c1)
+non-veridical: stizu(c0)
+dzukla(c0,c1)
+
+ju'a nai cy pa zarci
+.i ju'a nai cy no stizu
+.i cy no dzukla cy pa
+
+-----
+> le stizu cu na'e xunre skari
+
+non-veridical: stizu(c0)
+<{na'e}(xunre)(_)><skari>(c0)
+
+ju'a nai cy no stizu
+.i cy no ke na'e xunre skari ke'e
+
+-----
+> le stizu cu na'e xunre be ci'u loka skari
+
+ka[skari(\1)](c1)
+non-veridical: stizu(c0)
+(ci'u)(c1). {na'e}(xunre)(c0)
+
+cy pa ka ce'u skari kei
+.i ju'a nai cy no stizu
+.i ci'u cy pa zo'u cy no na'e xunre
+
+-----
+> le stizu cu na'e xunre be teci'e le skari
+
+non-veridical: skari(c1)
+non-veridical: stizu(c0)
+(te ci'e)(c1). {na'e}(xunre)(c0)
+
+ju'a nai cy pa skari
+.i ju'a nai cy no stizu
+.i te ci'e cy pa zo'u cy no na'e xunre
+
+-----
+> le stizu cu na'e xunre be ci'e lo'i skari
+
+selcmi(c2,c1)
+skari(c1)
+non-veridical: stizu(c0)
+(ci'e)(c2). {na'e}(xunre)(c0)
+
+cy re selcmi cy pa
+.i cy pa skari
+.i ju'a nai cy no stizu
+.i ci'e cy re zo'u cy no na'e xunre
+
+-----
+> le stizu cu na'e xunre be le'a lo'i skari
+
+selcmi(c2,c1)
+skari(c1)
+non-veridical: stizu(c0)
+(le'a)(c2). {na'e}(xunre)(c0)
+
+cy re selcmi cy pa
+.i cy pa skari
+.i ju'a nai cy no stizu
+.i le'a cy re zo'u cy no na'e xunre
+
+-----
+> le stizu cu to'e xunre be ci'u loka skari
+
+ka[skari(\1)](c1)
+non-veridical: stizu(c0)
+(ci'u)(c1). {to'e}(xunre)(c0)
+
+cy pa ka ce'u skari kei
+.i ju'a nai cy no stizu
+.i ci'u cy pa zo'u cy no to'e xunre
+
+-----
+> ta melbi
+
+melbi(ta)
+
+ta melbi
+
+-----
+> ta na'e melbi
+
+{na'e}(melbi)(ta)
+
+ta na'e melbi
+
+-----
+> ta no'e melbi
+
+{no'e}(melbi)(ta)
+
+ta no'e melbi
+
+-----
+> ta to'e melbi
+
+{to'e}(melbi)(ta)
+
+ta to'e melbi
+
+-----
+> no lo ca nolraitru be le fasygu'e cu krecau
+
+(ca)(). nolraitru(c1,c0)
+non-veridical: fasygu'e(c0)
+EQ(0) x1:((c1) >= (_)). krecau(x1)
+
+ca ku zo'u cy pa nolraitru cy no
+.i ju'a nai cy no fasygu'e
+.i no da poi ke'a me cy pa me'u ku'o zo'u da krecau
+
+-----
+> na'ebo lo ca nolraitru be le fasygu'e cu krecau
+
+(ca)(). nolraitru(c1,c0)
+non-veridical: fasygu'e(c0)
+krecau({na'e bo}(c1))
+
+ca ku zo'u cy pa nolraitru cy no
+.i ju'a nai cy no fasygu'e
+.i na'e bo cy pa lu'u krecau
+
+-----
+> mi klama to'ebo la bastn.
+
+klama(mi,{to'e bo}("bastn"))
+
+mi klama to'e bo la bastn. lu'u
+
+-----
+> mi na pu klama le zarci
+
+non-veridical: zarci(c0)
+!(pu)(). klama(mi,c0)
+
+ju'a nai cy no zarci
+.i na ku pu ku zo'u mi klama cy no
+
+-----
+> mi punai klama le zarci
+
+non-veridical: zarci(c0)
+!(pu)(). klama(mi,c0)
+
+ju'a nai cy no zarci
+.i na ku pu ku zo'u mi klama cy no
+
+-----
+> mi paroinai dansu le bisli
+
+non-veridical: bisli(c0)
+(1 roi nai)(). dansu(mi,c0)
+
+ju'a nai cy no bisli
+.i pa roi nai ku zo'u mi dansu cy no
+
+-----
+> xu la djan. pu klama la paris. .e la rom.
+
+?. (pu)(). (klama("djan","paris") /\ klama("djan","rom"))
+
+xu kau pu ku zo'u ge la djan. klama la paris. gi la djan. klama la rom.
+
+-----
+> na go'i
+
+!go'i( )
+
+na ku go'i
+
+-----
+> la djan. [cu] na pu klama la paris. .e la rom.
+
+!(pu)(). (klama("djan","paris") /\ klama("djan","rom"))
+
+na ku pu ku zo'u ge la djan. klama la paris. gi la djan. klama la rom.
+
+-----
+> na ba go'i
+
+!(ba)(). go'i( )
+
+na ku ba ku zo'u go'i
+
+-----
+> la djan. [cu] na ba klama la paris. .e la rom.
+
+!(ba)(). (klama("djan","paris") /\ klama("djan","rom"))
+
+na ku ba ku zo'u ge la djan. klama la paris. gi la djan. klama la rom.
+
+-----
+> ba na go'i
+
+(ba)(). !go'i( )
+
+ba ku zo'u na ku go'i
+
+-----
+> la djan. [cu] ba na klama la paris. .e la rom.
+
+(ba)(). !(klama("djan","paris") /\ klama("djan","rom"))
+
+ba ku zo'u na ku ge la djan. klama la paris. gi la djan. klama la rom.
+
+-----
+> na'e go'i
+
+{na'e}(go'i)( )
+
+na'e go'i
+
+-----
+> la djan. [cu] pu na'eke klama [ke'e] la paris. .e la rom.
+
+(pu)(). ({na'e}(klama)("djan","paris") /\ {na'e}(klama)("djan","rom"))
+
+pu ku zo'u ge la djan. na'e klama la paris. gi la djan. na'e klama la rom.
+
+-----
+> xu na go'i
+
+?. !go'i( )
+
+xu kau zo'u na ku go'i
+
+-----
+> xu la djan. [cu] na pu klama la paris. .e la rom.
+
+?. !(pu)(). (klama("djan","paris") /\ klama("djan","rom"))
+
+xu kau zo'u na ku pu ku zo'u ge la djan. klama la paris. gi la djan. klama la rom.
+
+-----
+> go'i
+
+go'i( )
+
+go'i
+
+-----
+> na go'i
+
+!go'i( )
+
+na ku go'i
+
+-----
+> ja'a go'i
+
+go'i( )
+
+go'i
+
+-----
+> mi ja'a klama le zarci
+
+non-veridical: zarci(c0)
+klama(mi,c0)
+
+ju'a nai cy no zarci
+.i mi klama cy no
+
+-----
+> ta je'a melbi
+
+{je'a}(melbi)(ta)
+
+ta je'a melbi
+
+-----
+> xu do sisti lezu'o do rapydarxi ledo fetspe
+
+non-veridical: zu'o[rapydarxi(do,c0)](c1)
+non-veridical: (fetspe(c0) /\ srana(c0,do))
+?. sisti(do,c1)
+
+ju'a nai cy pa zu'o do rapydarxi cy no kei
+.i ju'a nai ge cy no fetspe gi cy no srana do
+.i xu kau zo'u do sisti cy pa
+
+-----
+> na'i go'i
+
+go'i( )
+
+go'i
+
+-----
+> go'i na'i
+
+go'i( )
+
+go'i
+
+-----
+> go'i ji'una'iku
+
+(ji'u)(). go'i( )
+
+ji'u ku zo'u go'i
+
+-----
+> na go'i .ije na'e go'i .ije na'i go'i
+
+((!go'i( ) /\ !{na'e}(go'i)( )) /\ !{na'e}(go'i)( ))
+
+ge ge na ku go'i gi na ku na'e go'i gi na ku na'e go'i
+
+-----

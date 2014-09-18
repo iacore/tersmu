@@ -1,0 +1,1321 @@
+> do mamta mi
+
+mamta(do,mi)
+
+do mamta mi
+
+-----
+> do patfu mi
+
+patfu(do,mi)
+
+do patfu mi
+
+-----
+> ta bloti
+
+bloti(ta)
+
+ta bloti
+
+-----
+> ta brablo
+
+brablo(ta)
+
+ta brablo
+
+-----
+> ta blotrskunri
+
+blotrskunri(ta)
+
+ta blotrskunri
+
+-----
+> tu pelnimre tricu
+
+<pelnimre(_)><tricu>(tu)
+
+tu ke pelnimre tricu ke'e
+
+-----
+> la djan. barda nanla
+
+<barda(_)><nanla>("djan")
+
+la djan. ke barda nanla ke'e
+
+-----
+> mi sutra bajra
+
+<sutra(_)><bajra>(mi)
+
+mi ke sutra bajra ke'e
+
+-----
+> mi sutra
+
+sutra(mi)
+
+mi sutra
+
+-----
+> ta klama jubme
+
+<klama(_)><jubme>(ta)
+
+ta ke klama jubme ke'e
+
+-----
+> do barda prenu
+
+<barda(_)><prenu>(do)
+
+do ke barda prenu ke'e
+
+-----
+> do cmalu prenu
+
+<cmalu(_)><prenu>(do)
+
+do ke cmalu prenu ke'e
+
+-----
+> ta cmalu nixli bo ckule
+
+<cmalu(_)><<nixli(_)><ckule>>(ta)
+
+ta ke cmalu ke nixli ckule ke'e ke'e
+
+-----
+> ta cmalu bo nixli ckule
+
+<<cmalu(_)><nixli>(_)><ckule>(ta)
+
+ta ke ke cmalu nixli ke'e ckule ke'e
+
+-----
+> ta cmalu nixli ckule
+
+<<cmalu(_)><nixli>(_)><ckule>(ta)
+
+ta ke ke cmalu nixli ke'e ckule ke'e
+
+-----
+> ta cmalu [] nixli bo ckule
+
+<cmalu(_)><<nixli(_)><ckule>>(ta)
+
+ta ke cmalu ke nixli ckule ke'e ke'e
+
+-----
+> ta cmalu bo nixli [] ckule
+
+<<cmalu(_)><nixli>(_)><ckule>(ta)
+
+ta ke ke cmalu nixli ke'e ckule ke'e
+
+-----
+> ta klama bo jubme
+
+<klama(_)><jubme>(ta)
+
+ta ke klama jubme ke'e
+
+-----
+> do mutce bo barda gerku bo kavbu
+
+<<mutce(_)><barda>(_)><<gerku(_)><kavbu>>(do)
+
+do ke ke mutce barda ke'e ke gerku kavbu ke'e ke'e
+
+-----
+> ta melbi cmalu nixli ckule
+
+<<<melbi(_)><cmalu>(_)><nixli>(_)><ckule>(ta)
+
+ta ke ke ke melbi cmalu ke'e nixli ke'e ckule ke'e
+
+-----
+> ta melbi cmalu nixli bo ckule
+
+<<melbi(_)><cmalu>(_)><<nixli(_)><ckule>>(ta)
+
+ta ke ke melbi cmalu ke'e ke nixli ckule ke'e ke'e
+
+-----
+> ta melbi cmalu bo nixli ckule
+
+<<melbi(_)><<cmalu(_)><nixli>>(_)><ckule>(ta)
+
+ta ke ke melbi ke cmalu nixli ke'e ke'e ckule ke'e
+
+-----
+> ta melbi cmalu bo nixli bo ckule
+
+<melbi(_)><<cmalu(_)><<nixli(_)><ckule>>>(ta)
+
+ta ke melbi ke cmalu ke nixli ckule ke'e ke'e ke'e
+
+-----
+> ta cmalu bo nixli bo ckule
+
+<cmalu(_)><<nixli(_)><ckule>>(ta)
+
+ta ke cmalu ke nixli ckule ke'e ke'e
+
+-----
+> ta ke melbi cmalu ke'e nixli ckule
+
+<<<melbi(_)><cmalu>(_)><nixli>(_)><ckule>(ta)
+
+ta ke ke ke melbi cmalu ke'e nixli ke'e ckule ke'e
+
+-----
+> ta ke ke melbi cmalu ke'e nixli ke'e ckule
+
+<<<melbi(_)><cmalu>(_)><nixli>(_)><ckule>(ta)
+
+ta ke ke ke melbi cmalu ke'e nixli ke'e ckule ke'e
+
+-----
+> ta ke ke ke melbi cmalu ke'e nixli ke'e ckule ke'e
+
+<<<melbi(_)><cmalu>(_)><nixli>(_)><ckule>(ta)
+
+ta ke ke ke melbi cmalu ke'e nixli ke'e ckule ke'e
+
+-----
+> ta melbi ke cmalu nixli ke'e ckule
+
+<<melbi(_)><<cmalu(_)><nixli>>(_)><ckule>(ta)
+
+ta ke ke melbi ke cmalu nixli ke'e ke'e ckule ke'e
+
+-----
+> ta melbi cmalu ke nixli ckule [ke'e]
+
+<<melbi(_)><cmalu>(_)><<nixli(_)><ckule>>(ta)
+
+ta ke ke melbi cmalu ke'e ke nixli ckule ke'e ke'e
+
+-----
+> ta melbi ke cmalu nixli ckule [ke'e]
+
+<melbi(_)><<<cmalu(_)><nixli>(_)><ckule>>(ta)
+
+ta ke melbi ke ke cmalu nixli ke'e ckule ke'e ke'e
+
+-----
+> ta melbi ke cmalu ke nixli ckule [ke'e] [ke'e]
+
+<melbi(_)><<cmalu(_)><<nixli(_)><ckule>>>(ta)
+
+ta ke melbi ke cmalu ke nixli ckule ke'e ke'e ke'e
+
+-----
+> ta melbi ke cmalu nixli bo ckule [ke'e]
+
+<melbi(_)><<cmalu(_)><<nixli(_)><ckule>>>(ta)
+
+ta ke melbi ke cmalu ke nixli ckule ke'e ke'e ke'e
+
+-----
+> barda xunre gerku
+
+<<barda(_)><xunre>(_)><gerku>( )
+
+ke ke barda xunre ke'e gerku ke'e
+
+-----
+> barda xunre bo gerku
+
+<barda(_)><<xunre(_)><gerku>>( )
+
+ke barda ke xunre gerku ke'e ke'e
+
+-----
+> barda je xunre gerku
+
+<<barda(_)>{je}<xunre(_)>(_)><gerku>( )
+
+ke ke barda ke'e je ke xunre ke'e gerku ke'e
+
+-----
+> xunre je barda gerku
+
+<<xunre(_)>{je}<barda(_)>(_)><gerku>( )
+
+ke ke xunre ke'e je ke barda ke'e gerku ke'e
+
+-----
+> barda je pelxu bo xunre gerku
+
+<<barda(_)>{je}<<pelxu(_)><xunre>(_)>(_)><gerku>( )
+
+ke ke barda ke'e je ke ke pelxu xunre ke'e ke'e gerku ke'e
+
+-----
+> barda je ke pelxu xunre ke'e gerku
+
+<<barda(_)>{je}<<pelxu(_)><xunre>(_)>(_)><gerku>( )
+
+ke ke barda ke'e je ke ke pelxu xunre ke'e ke'e gerku ke'e
+
+-----
+> barda je pelxu xunre gerku
+
+<<<barda(_)>{je}<pelxu(_)>(_)><xunre>(_)><gerku>( )
+
+ke ke ke barda ke'e je ke pelxu ke'e xunre ke'e gerku ke'e
+
+-----
+> ta blanu je zdani
+
+<blanu(_)>{je}<zdani(_)>(ta)
+
+ta ke blanu ke'e je ke zdani ke'e
+
+-----
+> ta melbi je nixli ckule
+
+<<melbi(_)>{je}<nixli(_)>(_)><ckule>(ta)
+
+ta ke ke melbi ke'e je ke nixli ke'e ckule ke'e
+
+-----
+> ta ke melbi ckule ke'e je ke nixli ckule [ke'e]
+
+<<melbi(_)><ckule>(_)>{je}<<nixli(_)><ckule>(_)>(ta)
+
+ta ke ke melbi ckule ke'e ke'e je ke ke nixli ckule ke'e ke'e
+
+-----
+> le bajra cu jinga ja te jinga
+
+non-veridical: bajra(c0)
+<jinga(_)>{ja}<jinga( , ,_)>(c0)
+
+ju'a nai cy no bajra
+.i cy no ke jinga ke'e ja ke te jinga be BUG bei BUG ke'e
+
+-----
+> blanu naja lenku skapi
+
+<<blanu(_)>{na ja}<lenku(_)>(_)><skapi>( )
+
+ke ke blanu ke'e na ja ke lenku ke'e skapi ke'e
+
+-----
+> xamgu jo tordu nuntavla
+
+<<xamgu(_)>{jo}<tordu(_)>(_)><nuntavla>( )
+
+ke ke xamgu ke'e jo ke tordu ke'e nuntavla ke'e
+
+-----
+> vajni ju pluka nuntavla
+
+<<vajni(_)>{ju}<pluka(_)>(_)><nuntavla>( )
+
+ke ke vajni ke'e ju ke pluka ke'e nuntavla ke'e
+
+-----
+> ricfu je blanu jabo crino
+
+<ricfu(_)>{je}<<blanu(_)>{ja}<crino(_)>(_)>( )
+
+ke ricfu ke'e je ke ke blanu ke'e ja ke crino ke'e ke'e
+
+-----
+> ricfu je blanu jabo crino bo blanu
+
+<ricfu(_)>{je}<<blanu(_)>{ja}<<crino(_)><blanu>(_)>(_)>( )
+
+ke ricfu ke'e je ke ke blanu ke'e ja ke ke crino blanu ke'e ke'e ke'e
+
+-----
+> ricfu je ke blanu ja crino [ke'e]
+
+<ricfu(_)>{je}<<blanu(_)>{ja}<crino(_)>(_)>( )
+
+ke ricfu ke'e je ke ke blanu ke'e ja ke crino ke'e ke'e
+
+-----
+> ti blanu joi xunre bolci
+
+<<blanu(_)>{joi}<xunre(_)>(_)><bolci>(ti)
+
+ti ke ke blanu ke'e joi ke xunre ke'e bolci ke'e
+
+-----
+> ti blanu xunre bolci
+
+<<blanu(_)><xunre>(_)><bolci>(ti)
+
+ti ke ke blanu xunre ke'e bolci ke'e
+
+-----
+> ti blanu je xunre bolci
+
+<<blanu(_)>{je}<xunre(_)>(_)><bolci>(ti)
+
+ti ke ke blanu ke'e je ke xunre ke'e bolci ke'e
+
+-----
+> gu'e barda gi xunre gerku
+
+<<barda(_)>{je}<xunre(_)>(_)><gerku>( )
+
+ke ke barda ke'e je ke xunre ke'e gerku ke'e
+
+-----
+> gu'e barda je xunre gi gerku ja mlatu
+
+<<<barda(_)>{je}<xunre(_)>(_)>{je}<gerku(_)>(_)>{ja}<mlatu(_)>( )
+
+ke ke ke barda ke'e je ke xunre ke'e ke'e je ke gerku ke'e ke'e ja ke mlatu ke'e
+
+-----
+> ti xamgu zdani
+
+<xamgu(_)><zdani>(ti)
+
+ti ke xamgu zdani ke'e
+
+-----
+> ti xamgu be do bei mi [be'o] zdani
+
+<xamgu(_,do,mi)><zdani>(ti)
+
+ti ke xamgu be do bei mi zdani ke'e
+
+-----
+> ti cmalu be le ka canlu bei lo'e ckule be'o
+
+ckule(c1)
+non-veridical: ka[canlu(\1)](c0)
+cmalu(ti,c0,c1)
+
+cy pa ckule
+.i ju'a nai cy no ka ce'u canlu kei
+.i ti cmalu cy no cy pa
+
+-----
+> nixli be li mu bei lo merko be'o bo ckule
+
+merko(c0)
+<nixli(_,5,c0)><ckule>( )
+
+cy no merko
+.i ke nixli be li mu boi lo'o bei cy no ckule ke'e
+
+-----
+> la bryklyn. loi pemci
+
+gunma(c1,c0)
+pemci(c0)
+[Fragment: "bryklyn",c1]
+
+cy pa gunma cy no
+.i cy no pemci
+.i la bryklyn. cy pa
+
+-----
+> le mela nu,IORK. prenu le jecta
+
+non-veridical: jecta(c1)
+non-veridical: <("nuiork") >= (_)><prenu>(c0)
+[Fragment: c0,c1]
+
+ju'a nai cy pa jecta
+.i ju'a nai cy no ke me la nuiork. me'u prenu ke'e
+.i cy no cy pa
+
+-----
+> mi klama be le zarci bei le zdani [be'o]
+
+non-veridical: zdani(c1)
+non-veridical: zarci(c0)
+klama(mi,c0,c1)
+
+ju'a nai cy pa zdani
+.i ju'a nai cy no zarci
+.i mi klama cy no cy pa
+
+-----
+> mi klama le zarci le zdani
+
+non-veridical: zdani(c1)
+non-veridical: zarci(c0)
+klama(mi,c0,c1)
+
+ju'a nai cy pa zdani
+.i ju'a nai cy no zarci
+.i mi klama cy no cy pa
+
+-----
+> melbi je cmalu nixli bo ckule
+
+<<melbi(_)>{je}<cmalu(_)>(_)><<nixli(_)><ckule>>( )
+
+ke ke melbi ke'e je ke cmalu ke'e ke nixli ckule ke'e ke'e
+
+-----
+> ti xamgu be fi mi bei fe do [be'o] zdani
+
+<xamgu(_,do,mi)><zdani>(ti)
+
+ti ke xamgu be do bei mi zdani ke'e
+
+-----
+> ti xamgu be fi mi [be'o] zdani
+
+<xamgu(_, ,mi)><zdani>(ti)
+
+ti ke xamgu be BUG bei mi zdani ke'e
+
+-----
+> ta blanu be ga'a mi [be'o] zdani
+
+<(ga'a)(mi). blanu(_)><zdani>(ta)
+
+ta ke poi'i ga'a mi zo'u ke'a blanu kei zdani ke'e
+
+-----
+> ta blanu zdani ga'a mi
+
+(ga'a)(mi). <blanu(_)><zdani>(ta)
+
+ga'a mi zo'u ta ke blanu zdani ke'e
+
+-----
+> le xamgu be do noi barda cu zdani
+
+non-veridical: xamgu(c0,do)
+barda(do)
+zdani(c0)
+
+ju'a nai cy no xamgu do
+.i do barda
+.i cy no zdani
+
+-----
+> le xamgu be do be'o noi barda cu zdani
+
+non-veridical: (xamgu(c0,do) /\ barda(c0))
+zdani(c0)
+
+ju'a nai ge cy no xamgu do gi cy no barda
+.i cy no zdani
+
+-----
+> le xamgu be le ctuca [ku] be'o zdani
+
+non-veridical: <xamgu(_,c0)><zdani>(c1)
+non-veridical: ctuca(c0)
+[Fragment: c1]
+
+ju'a nai cy pa ke xamgu be cy no zdani ke'e
+.i ju'a nai cy no ctuca
+.i cy pa
+
+-----
+> ta blanu zdani
+
+<blanu(_)><zdani>(ta)
+
+ta ke blanu zdani ke'e
+
+-----
+> ta zdani co blanu
+
+<blanu(_)><zdani>(ta)
+
+ta ke blanu zdani ke'e
+
+-----
+> mi klama be le zarci bei le zdani be'o troci
+
+non-veridical: zdani(c1)
+non-veridical: zarci(c0)
+<klama(_,c0,c1)><troci>(mi)
+
+ju'a nai cy pa zdani
+.i ju'a nai cy no zarci
+.i mi ke klama be cy no bei cy pa troci ke'e
+
+-----
+> mi troci co klama le zarci le zdani
+
+non-veridical: zdani(c1)
+non-veridical: zarci(c0)
+<klama(_,c0,c1)><troci>(mi)
+
+ju'a nai cy pa zdani
+.i ju'a nai cy no zarci
+.i mi ke klama be cy no bei cy pa troci ke'e
+
+-----
+> ta nixli [bo] ckule co cmalu
+
+<cmalu(_)><<nixli(_)><ckule>>(ta)
+
+ta ke cmalu ke nixli ckule ke'e ke'e
+
+-----
+> ta cmalu ke nixli ckule [ke'e] co melbi
+
+<melbi(_)><<cmalu(_)><<nixli(_)><ckule>>>(ta)
+
+ta ke melbi ke cmalu ke nixli ckule ke'e ke'e ke'e
+
+-----
+> ckule co melbi nixli
+
+<<melbi(_)><nixli>(_)><ckule>( )
+
+ke ke melbi nixli ke'e ckule ke'e
+
+-----
+> ke melbi nixli ke'e ckule
+
+<<melbi(_)><nixli>(_)><ckule>( )
+
+ke ke melbi nixli ke'e ckule ke'e
+
+-----
+> ckule co nixli co cmalu
+
+<<cmalu(_)><nixli>(_)><ckule>( )
+
+ke ke cmalu nixli ke'e ckule ke'e
+
+-----
+> ke ke cmalu ke'e nixli ke'e ckule
+
+<<cmalu(_)><nixli>(_)><ckule>( )
+
+ke ke cmalu nixli ke'e ckule ke'e
+
+-----
+> cmalu nixli ckule
+
+<<cmalu(_)><nixli>(_)><ckule>( )
+
+ke ke cmalu nixli ke'e ckule ke'e
+
+-----
+> mi klama co sutra
+
+<sutra(_)><klama>(mi)
+
+mi ke sutra klama ke'e
+
+-----
+> mi klama be le zarci be'o co sutra
+
+non-veridical: zarci(c0)
+<sutra(_)><klama>(mi,c0)
+
+ju'a nai cy no zarci
+.i mi ke sutra klama ke'e cy no
+
+-----
+> la djan. klama le zarci
+
+non-veridical: zarci(c0)
+klama("djan",c0)
+
+ju'a nai cy no zarci
+.i la djan. klama cy no
+
+-----
+> la djan. go'i troci
+
+<go'i(_)><troci>("djan")
+
+la djan. ke go'i troci ke'e
+
+-----
+> la djan. klama be le zarci be'o troci
+
+non-veridical: zarci(c0)
+<klama(_,c0)><troci>("djan")
+
+ju'a nai cy no zarci
+.i la djan. ke klama be cy no troci ke'e
+
+-----
+> li vo nu'a su'i li re li re
+
+[{su'i}](4,2,2)
+
+li vo boi lo'o nu'a su'i te'u li re boi lo'o li re boi lo'o
+
+-----
+> mi jimpe tu'a loi nu'a su'i nabmi
+
+gunma(c1,c0)
+<[{su'i}](_)><nabmi>(c0)
+jimpe(mi,{tu'a}(c1))
+
+cy pa gunma cy no
+.i cy no ke nu'a su'i te'u nabmi ke'e
+.i mi jimpe tu'a cy pa lu'u
+
+-----
+> la prim. palvr. pamoi cusku
+
+<1 moi(_)><cusku>("prim palvr")
+
+la prim palvr. ke pa moi cusku ke'e
+
+-----
+> la an,iis. joi la .asun. bruna remei
+
+<bruna(_)><2 mei>(("aniis" {joi} "asun"))
+
+la aniis. joi ke la asun. ke'e ke bruna re mei ke'e
+
+-----
+> ti nu zdile kei kumfa
+
+<nu[zdile( )](_)><kumfa>(ti)
+
+ti ke nu zdile kei kumfa ke'e
+
+-----
+> ti zdile kumfa
+
+<zdile(_)><kumfa>(ti)
+
+ti ke zdile kumfa ke'e
+
+-----
+> le ci nolraitru
+
+non-veridical: (nolraitru(c0) /\ 3 mei(c0))
+[Fragment: c0]
+
+ju'a nai ge cy no nolraitru gi cy no ci mei
+.i cy no
+
+-----
+> la BALtazar. cu me le ci nolraitru
+
+non-veridical: (nolraitru(c0) /\ 3 mei(c0))
+(c0) >= ("baltazar")
+
+ju'a nai ge cy no nolraitru gi cy no ci mei
+.i la baltazar. me cy no me'u
+
+-----
+> la kaspar. cu me le ci nolraitru
+
+non-veridical: (nolraitru(c0) /\ 3 mei(c0))
+(c0) >= ("kaspar")
+
+ju'a nai ge cy no nolraitru gi cy no ci mei
+.i la kaspar. me cy no me'u
+
+-----
+> la melxi,or. cu me le ci nolraitru
+
+non-veridical: (nolraitru(c0) /\ 3 mei(c0))
+(c0) >= ("melxior")
+
+ju'a nai ge cy no nolraitru gi cy no ci mei
+.i la melxior. me cy no me'u
+
+-----
+> do du la djan.
+
+=(do,"djan")
+
+do du la djan.
+
+-----
+> do me la djan.
+
+("djan") >= (do)
+
+do me la djan. me'u
+
+-----
+> ta me lai kraislr. [me'u] karce
+
+gunma(c0,"kraislr")
+<(c0) >= (_)><karce>(ta)
+
+cy no gunma la kraislr.
+.i ta ke me cy no me'u karce ke'e
+
+-----
+> re me le ci nolraitru .e la djan. [me'u] cu blabi
+
+non-veridical: (nolraitru(c0) /\ 3 mei(c0))
+EQ(2) x1:(((c0) >= (_) /\ ("djan") >= (_))). blabi(x1)
+
+ju'a nai ge cy no nolraitru gi cy no ci mei
+.i re da poi ge ke'a me cy no me'u gi ke'a me la djan. me'u ku'o zo'u da blabi
+
+-----
+> re me le ci nolraitru me'u .e la djan. cu blabi
+
+non-veridical: (nolraitru(c0) /\ 3 mei(c0))
+(EQ(2) x1:((c0) >= (_)). blabi(x1) /\ blabi("djan"))
+
+ju'a nai ge cy no nolraitru gi cy no ci mei
+.i ge re da poi ke'a me cy no me'u ku'o zo'u da blabi gi la djan. blabi
+
+-----
+> ta me la'e le se cusku be do me'u cukta
+
+non-veridical: cusku(do,c0)
+<({la'e}(c0)) >= (_)><cukta>(ta)
+
+ju'a nai do cusku cy no
+.i ta ke me la'e cy no lu'u me'u cukta ke'e
+
+-----
+> le me le ci nolraitru [ku] me'u nunsalci
+
+non-veridical: <(c0) >= (_)><nunsalci>(c1)
+non-veridical: (nolraitru(c0) /\ 3 mei(c0))
+[Fragment: c1]
+
+ju'a nai cy pa ke me cy no me'u nunsalci ke'e
+.i ju'a nai ge cy no nolraitru gi cy no ci mei
+.i cy pa
+
+-----
+> mi prami do
+
+prami(mi,do)
+
+mi prami do
+
+-----
+> do se prami mi
+
+prami(mi,do)
+
+mi prami do
+
+-----
+> la .alis. cu cadzu klama le zarci
+
+non-veridical: zarci(c0)
+<cadzu(_)><klama>("alis",c0)
+
+ju'a nai cy no zarci
+.i la alis. ke cadzu klama ke'e cy no
+
+-----
+> le zarci cu se ke cadzu klama [ke'e] la .alis.
+
+non-veridical: zarci(c0)
+<cadzu(_)><klama>("alis",c0)
+
+ju'a nai cy no zarci
+.i la alis. ke cadzu klama ke'e cy no
+
+-----
+> le zarci cu se cadzu klama la .alis.
+
+non-veridical: zarci(c0)
+<cadzu( ,_)><klama>(c0,"alis")
+
+ju'a nai cy no zarci
+.i cy no ke se cadzu be BUG klama ke'e la alis.
+
+-----
+> le zarci cu cadzu se klama la .alis.
+
+non-veridical: zarci(c0)
+<cadzu(_)><klama>("alis",c0)
+
+ju'a nai cy no zarci
+.i la alis. ke cadzu klama ke'e cy no
+
+-----
+> la djan. cu cadzu se klama la .alis
+
+<cadzu(_)><klama>("alis","djan")
+
+la alis. ke cadzu klama ke'e la djan.
+
+-----
+> la .alis. cu na'e ke cadzu klama [ke'e] le zarci
+
+non-veridical: zarci(c0)
+{na'e}(<cadzu(_)><klama>)("alis",c0)
+
+ju'a nai cy no zarci
+.i la alis. na'e ke cadzu klama ke'e cy no
+
+-----
+> la .alis. cu na'e cadzu klama le zarci
+
+non-veridical: zarci(c0)
+<{na'e}(cadzu)(_)><klama>("alis",c0)
+
+ju'a nai cy no zarci
+.i la alis. ke na'e cadzu klama ke'e cy no
+
+-----
+> la djonz. cu na'e pamoi cusku
+
+<{na'e}(1 moi)(_)><cusku>("djonz")
+
+la djonz. ke na'e pa moi cusku ke'e
+
+-----
+> mi na'e sutra cadzu be fi le birka be'o klama le zarci
+
+non-veridical: zarci(c1)
+non-veridical: birka(c0)
+<<{na'e}(sutra)(_)><cadzu>(_, ,c0)><klama>(mi,c1)
+
+ju'a nai cy pa zarci
+.i ju'a nai cy no birka
+.i mi ke ke na'e sutra cadzu ke'e be BUG bei cy no klama ke'e cy pa
+
+-----
+> mi na'e ke sutra cadzu be fi le birka [be'o] ke'e klama le zarci
+
+non-veridical: zarci(c1)
+non-veridical: birka(c0)
+<{na'e}(<sutra(_)><cadzu>)(_, ,c0)><klama>(mi,c1)
+
+ju'a nai cy pa zarci
+.i ju'a nai cy no birka
+.i mi ke na'e ke sutra cadzu ke'e be BUG bei cy no klama ke'e cy pa
+
+-----
+> mi sutra cadzu be fi le birka be'o je masno klama le zarci
+
+non-veridical: zarci(c1)
+non-veridical: birka(c0)
+<<sutra(_)><<cadzu(_, ,c0)>{je}<masno(_)>>(_)><klama>(mi,c1)
+
+ju'a nai cy pa zarci
+.i ju'a nai cy no birka
+.i mi ke ke sutra ke cadzu be BUG bei cy no ke'e je ke masno ke'e ke'e klama ke'e cy pa
+
+-----
+> mi ke sutra cadzu be fi le birka [be'o] ke'e je masno klama le zarci
+
+non-veridical: zarci(c1)
+non-veridical: birka(c0)
+<<<sutra(_)><cadzu>(_, ,c0)>{je}<masno(_)>(_)><klama>(mi,c1)
+
+ju'a nai cy pa zarci
+.i ju'a nai cy no birka
+.i mi ke ke ke sutra cadzu ke'e be BUG bei cy no ke'e je ke masno ke'e klama ke'e cy pa
+
+-----
+> mi na'e sutra cadzu be fi le birka be'o je masno klama le zarci
+
+non-veridical: zarci(c1)
+non-veridical: birka(c0)
+<<{na'e}(sutra)(_)><<cadzu(_, ,c0)>{je}<masno(_)>>(_)><klama>(mi,c1)
+
+ju'a nai cy pa zarci
+.i ju'a nai cy no birka
+.i mi ke ke na'e sutra ke cadzu be BUG bei cy no ke'e je ke masno ke'e ke'e klama ke'e cy pa
+
+-----
+> mi na'e ke sutra cadzu be fi le birka [be'o] ke'e je masno klama le zarci
+
+non-veridical: zarci(c1)
+non-veridical: birka(c0)
+<<{na'e}(<sutra(_)><cadzu>)(_, ,c0)>{je}<masno(_)>(_)><klama>(mi,c1)
+
+ju'a nai cy pa zarci
+.i ju'a nai cy no birka
+.i mi ke ke na'e ke sutra cadzu ke'e be BUG bei cy no ke'e je ke masno ke'e klama ke'e cy pa
+
+-----
+> mi na'e ke sutra cadzu be fi le birka be'o je masno klama [ke'e] le zarci
+
+non-veridical: zarci(c1)
+non-veridical: birka(c0)
+{na'e}(<<sutra(_)><<cadzu(_, ,c0)>{je}<masno(_)>>(_)><klama>)(mi,c1)
+
+ju'a nai cy pa zarci
+.i ju'a nai cy no birka
+.i mi na'e ke ke sutra ke cadzu be BUG bei cy no ke'e je ke masno ke'e ke'e klama ke'e cy pa
+
+-----
+> mi na'e ke sutra cadzu be fi le birka je masno klama [be'o] [ke'e] le zarci
+
+non-veridical: zarci(c1)
+non-veridical: <<birka(_)>{je}<masno(_)>(_)><klama>(c0)
+{na'e}(<sutra(_)><cadzu>)(mi, ,c0,c1)
+
+ju'a nai cy pa zarci
+.i ju'a nai cy no ke ke birka ke'e je ke masno ke'e klama ke'e
+.i mi na'e ke sutra cadzu ke'e fi cy no cy pa
+
+-----
+> mi pu klama le zarci
+
+non-veridical: zarci(c0)
+(pu)(). klama(mi,c0)
+
+ju'a nai cy no zarci
+.i pu ku zo'u mi klama cy no
+
+-----
+> la djonz. na pamoi cusku
+
+!<1 moi(_)><cusku>("djonz")
+
+na ku la djonz. ke pa moi cusku ke'e
+
+-----
+> mi na pu klama le zarci
+
+non-veridical: zarci(c0)
+!(pu)(). klama(mi,c0)
+
+ju'a nai cy no zarci
+.i na ku pu ku zo'u mi klama cy no
+
+-----
+> mi na na klama le zarci
+
+non-veridical: zarci(c0)
+!!klama(mi,c0)
+
+ju'a nai cy no zarci
+.i na ku na ku mi klama cy no
+
+-----
+> mi na pu na ca klama le zarci
+
+non-veridical: zarci(c0)
+!(pu)(). !(ca)(). klama(mi,c0)
+
+ju'a nai cy no zarci
+.i na ku pu ku zo'u na ku ca ku zo'u mi klama cy no
+
+-----
+> melbi cmalu nixli ckule
+
+<<<melbi(_)><cmalu>(_)><nixli>(_)><ckule>( )
+
+ke ke ke melbi cmalu ke'e nixli ke'e ckule ke'e
+
+-----
+> melbi je cmalu nixli ckule
+
+<<<melbi(_)>{je}<cmalu(_)>(_)><nixli>(_)><ckule>( )
+
+ke ke ke melbi ke'e je ke cmalu ke'e nixli ke'e ckule ke'e
+
+-----
+> melbi bo cmalu je nixli ckule
+
+<<<melbi(_)><cmalu>(_)>{je}<nixli(_)>(_)><ckule>( )
+
+ke ke ke melbi cmalu ke'e ke'e je ke nixli ke'e ckule ke'e
+
+-----
+> ke melbi cmalu nixli ke'e je ckule
+
+<<<melbi(_)><cmalu>(_)><nixli>(_)>{je}<ckule(_)>( )
+
+ke ke ke melbi cmalu ke'e nixli ke'e ke'e je ke ckule ke'e
+
+-----
+> melbi je cmalu je nixli ckule
+
+<<<melbi(_)>{je}<cmalu(_)>(_)>{je}<nixli(_)>(_)><ckule>( )
+
+ke ke ke melbi ke'e je ke cmalu ke'e ke'e je ke nixli ke'e ckule ke'e
+
+-----
+> melbi bo cmalu je nixli je ckule
+
+<<<melbi(_)><cmalu>(_)>{je}<nixli(_)>(_)>{je}<ckule(_)>( )
+
+ke ke ke melbi cmalu ke'e ke'e je ke nixli ke'e ke'e je ke ckule ke'e
+
+-----
+> ke melbi je cmalu nixli ke'e je ckule
+
+<<<melbi(_)>{je}<cmalu(_)>(_)><nixli>(_)>{je}<ckule(_)>( )
+
+ke ke ke melbi ke'e je ke cmalu ke'e nixli ke'e ke'e je ke ckule ke'e
+
+-----
+> melbi je cmalu je nixli je ckule
+
+<<<melbi(_)>{je}<cmalu(_)>(_)>{je}<nixli(_)>(_)>{je}<ckule(_)>( )
+
+ke ke ke melbi ke'e je ke cmalu ke'e ke'e je ke nixli ke'e ke'e je ke ckule ke'e
+
+-----
+> melbi cmalu nixli bo ckule
+
+<<melbi(_)><cmalu>(_)><<nixli(_)><ckule>>( )
+
+ke ke melbi cmalu ke'e ke nixli ckule ke'e ke'e
+
+-----
+> melbi je cmalu nixli bo ckule
+
+<<melbi(_)>{je}<cmalu(_)>(_)><<nixli(_)><ckule>>( )
+
+ke ke melbi ke'e je ke cmalu ke'e ke nixli ckule ke'e ke'e
+
+-----
+> melbi cmalu nixli je ckule
+
+<<melbi(_)><cmalu>(_)><<nixli(_)>{je}<ckule(_)>>( )
+
+ke ke melbi cmalu ke'e ke nixli ke'e je ke ckule ke'e ke'e
+
+-----
+> melbi bo cmalu je nixli bo ckule
+
+<<melbi(_)><cmalu>(_)>{je}<<nixli(_)><ckule>(_)>( )
+
+ke ke melbi cmalu ke'e ke'e je ke ke nixli ckule ke'e ke'e
+
+-----
+> melbi je cmalu nixli je ckule
+
+<<melbi(_)>{je}<cmalu(_)>(_)><<nixli(_)>{je}<ckule(_)>>( )
+
+ke ke melbi ke'e je ke cmalu ke'e ke nixli ke'e je ke ckule ke'e ke'e
+
+-----
+> melbi bo cmalu je nixli jebo ckule
+
+<<melbi(_)><cmalu>(_)>{je}<<nixli(_)>{je}<ckule(_)>(_)>( )
+
+ke ke melbi cmalu ke'e ke'e je ke ke nixli ke'e je ke ckule ke'e ke'e
+
+-----
+> melbi jebo cmalu je nixli bo ckule
+
+<<melbi(_)>{je}<cmalu(_)>(_)>{je}<<nixli(_)><ckule>(_)>( )
+
+ke ke melbi ke'e je ke cmalu ke'e ke'e je ke ke nixli ckule ke'e ke'e
+
+-----
+> melbi jebo cmalu je nixli jebo ckule
+
+<<melbi(_)>{je}<cmalu(_)>(_)>{je}<<nixli(_)>{je}<ckule(_)>(_)>( )
+
+ke ke melbi ke'e je ke cmalu ke'e ke'e je ke ke nixli ke'e je ke ckule ke'e ke'e
+
+-----
+> melbi cmalu bo nixli ckule
+
+<<melbi(_)><<cmalu(_)><nixli>>(_)><ckule>( )
+
+ke ke melbi ke cmalu nixli ke'e ke'e ckule ke'e
+
+-----
+> melbi cmalu je nixli ckule
+
+<<melbi(_)><<cmalu(_)>{je}<nixli(_)>>(_)><ckule>( )
+
+ke ke melbi ke cmalu ke'e je ke nixli ke'e ke'e ckule ke'e
+
+-----
+> melbi je cmalu bo nixli ckule
+
+<<melbi(_)>{je}<<cmalu(_)><nixli>(_)>(_)><ckule>( )
+
+ke ke melbi ke'e je ke ke cmalu nixli ke'e ke'e ckule ke'e
+
+-----
+> ke melbi cmalu bo nixli ke'e je ckule
+
+<<melbi(_)><<cmalu(_)><nixli>>(_)>{je}<ckule(_)>( )
+
+ke ke melbi ke cmalu nixli ke'e ke'e ke'e je ke ckule ke'e
+
+-----
+> melbi bo cmalu bo nixli je ckule
+
+<<melbi(_)><<cmalu(_)><nixli>>(_)>{je}<ckule(_)>( )
+
+ke ke melbi ke cmalu nixli ke'e ke'e ke'e je ke ckule ke'e
+
+-----
+> melbi je cmalu jebo nixli ckule
+
+<<melbi(_)>{je}<<cmalu(_)>{je}<nixli(_)>(_)>(_)><ckule>( )
+
+ke ke melbi ke'e je ke ke cmalu ke'e je ke nixli ke'e ke'e ckule ke'e
+
+-----
+> melbi je cmalu bo nixli je ckule
+
+<<melbi(_)>{je}<<cmalu(_)><nixli>(_)>(_)>{je}<ckule(_)>( )
+
+ke ke melbi ke'e je ke ke cmalu nixli ke'e ke'e ke'e je ke ckule ke'e
+
+-----
+> ke melbi cmalu je nixli ke'e je ckule
+
+<<melbi(_)><<cmalu(_)>{je}<nixli(_)>>(_)>{je}<ckule(_)>( )
+
+ke ke melbi ke cmalu ke'e je ke nixli ke'e ke'e ke'e je ke ckule ke'e
+
+-----
+> melbi je cmalu jebo nixli je ckule
+
+<<melbi(_)>{je}<<cmalu(_)>{je}<nixli(_)>(_)>(_)>{je}<ckule(_)>( )
+
+ke ke melbi ke'e je ke ke cmalu ke'e je ke nixli ke'e ke'e ke'e je ke ckule ke'e
+
+-----
+> melbi cmalu bo nixli bo ckule
+
+<melbi(_)><<cmalu(_)><<nixli(_)><ckule>>>( )
+
+ke melbi ke cmalu ke nixli ckule ke'e ke'e ke'e
+
+-----
+> melbi ke cmalu ke nixli ckule [ke'e] [ke'e]
+
+<melbi(_)><<cmalu(_)><<nixli(_)><ckule>>>( )
+
+ke melbi ke cmalu ke nixli ckule ke'e ke'e ke'e
+
+-----
+> melbi ke cmalu nixli je ckule [ke'e]
+
+<melbi(_)><<cmalu(_)><<nixli(_)>{je}<ckule(_)>>>( )
+
+ke melbi ke cmalu ke nixli ke'e je ke ckule ke'e ke'e ke'e
+
+-----
+> melbi cmalu je nixli bo ckule
+
+<melbi(_)><<cmalu(_)>{je}<<nixli(_)><ckule>(_)>>( )
+
+ke melbi ke cmalu ke'e je ke ke nixli ckule ke'e ke'e ke'e
+
+-----
+> melbi je cmalu bo nixli bo ckule
+
+<melbi(_)>{je}<<cmalu(_)><<nixli(_)><ckule>>(_)>( )
+
+ke melbi ke'e je ke ke cmalu ke nixli ckule ke'e ke'e ke'e
+
+-----
+> melbi je ke cmalu nixli bo ckule [ke'e]
+
+<melbi(_)>{je}<<cmalu(_)><<nixli(_)><ckule>>(_)>( )
+
+ke melbi ke'e je ke ke cmalu ke nixli ckule ke'e ke'e ke'e
+
+-----
+> melbi je ke cmalu ke nixli ckule [ke'e] [ke'e]
+
+<melbi(_)>{je}<<cmalu(_)><<nixli(_)><ckule>>(_)>( )
+
+ke melbi ke'e je ke ke cmalu ke nixli ckule ke'e ke'e ke'e
+
+-----
+> melbi cmalu je nixli jebo ckule
+
+<melbi(_)><<cmalu(_)>{je}<<nixli(_)>{je}<ckule(_)>(_)>>( )
+
+ke melbi ke cmalu ke'e je ke ke nixli ke'e je ke ckule ke'e ke'e ke'e
+
+-----
+> melbi je cmalu jebo nixli bo ckule
+
+<melbi(_)>{je}<<cmalu(_)>{je}<<nixli(_)><ckule>(_)>(_)>( )
+
+ke melbi ke'e je ke ke cmalu ke'e je ke ke nixli ckule ke'e ke'e ke'e
+
+-----
+> melbi je ke cmalu je nixli bo ckule [ke'e]
+
+<melbi(_)>{je}<<cmalu(_)>{je}<<nixli(_)><ckule>(_)>(_)>( )
+
+ke melbi ke'e je ke ke cmalu ke'e je ke ke nixli ckule ke'e ke'e ke'e
+
+-----
+> melbi je ke cmalu nixli je ckule [ke'e]
+
+<melbi(_)>{je}<<cmalu(_)><<nixli(_)>{je}<ckule(_)>>(_)>( )
+
+ke melbi ke'e je ke ke cmalu ke nixli ke'e je ke ckule ke'e ke'e ke'e
+
+-----
+> melbi jebo cmalu jebo nixli jebo ckule
+
+<melbi(_)>{je}<<cmalu(_)>{je}<<nixli(_)>{je}<ckule(_)>(_)>(_)>( )
+
+ke melbi ke'e je ke ke cmalu ke'e je ke ke nixli ke'e je ke ckule ke'e ke'e ke'e
+
+-----
+> melbi ke cmalu nixli ckule [ke'e]
+
+<melbi(_)><<<cmalu(_)><nixli>(_)><ckule>>( )
+
+ke melbi ke ke cmalu nixli ke'e ckule ke'e ke'e
+
+-----
+> melbi ke cmalu je nixli ckule [ke'e]
+
+<melbi(_)><<<cmalu(_)>{je}<nixli(_)>(_)><ckule>>( )
+
+ke melbi ke ke cmalu ke'e je ke nixli ke'e ckule ke'e ke'e
+
+-----
+> melbi ke cmalu bo nixli je ckule [ke'e]
+
+<melbi(_)><<<cmalu(_)><nixli>(_)>{je}<ckule(_)>>( )
+
+ke melbi ke ke cmalu nixli ke'e ke'e je ke ckule ke'e ke'e
+
+-----
+> melbi je ke cmalu nixli ckule [ke'e]
+
+<melbi(_)>{je}<<<cmalu(_)><nixli>(_)><ckule>(_)>( )
+
+ke melbi ke'e je ke ke ke cmalu nixli ke'e ckule ke'e ke'e
+
+-----
+> melbi cmalu je nixli je ckule
+
+<melbi(_)><<<cmalu(_)>{je}<nixli(_)>(_)>{je}<ckule(_)>>( )
+
+ke melbi ke ke cmalu ke'e je ke nixli ke'e ke'e je ke ckule ke'e ke'e
+
+-----
+> melbi je ke cmalu bo nixli je ckule [ke'e]
+
+<melbi(_)>{je}<<<cmalu(_)><nixli>(_)>{je}<ckule(_)>(_)>( )
+
+ke melbi ke'e je ke ke ke cmalu nixli ke'e ke'e je ke ckule ke'e ke'e
+
+-----
+> melbi je ke cmalu je nixli ckule [ke'e]
+
+<melbi(_)>{je}<<<cmalu(_)>{je}<nixli(_)>(_)><ckule>(_)>( )
+
+ke melbi ke'e je ke ke ke cmalu ke'e je ke nixli ke'e ckule ke'e ke'e
+
+-----
+> melbi je ke cmalu je nixli je ckule [ke'e]
+
+<melbi(_)>{je}<<<cmalu(_)>{je}<nixli(_)>(_)>{je}<ckule(_)>(_)>( )
+
+ke melbi ke'e je ke ke ke cmalu ke'e je ke nixli ke'e ke'e je ke ckule ke'e ke'e
+
+-----

@@ -1,0 +1,239 @@
+> ti fagri festi
+
+<fagri(_)><festi>(ti)
+
+ti ke fagri festi ke'e
+
+-----
+> ti fagyfesti
+
+fagyfesti(ti)
+
+ti fagyfesti
+
+-----
+> la blabi zdani cu gerku be fa la spot. bei la sankt. berNARD. be'o zdani la bil. klinton.
+
+<gerku("spot","sankt bernard",_)><zdani>([Name: <blabi(_)><zdani>(_) ],"bil klinton")
+
+la poi'i ke blabi zdani ke'e ku'o ku ke te gerku be la sankt bernard. bei la spot. zdani ke'e la bil klinton.
+
+-----
+> la mon. rePOS. gerzda la spat.
+
+gerzda("mon repos","spat")
+
+la mon repos. gerzda la spat.
+
+-----
+> la mon. rePOS. zdani la spat. noi gerku
+
+gerku("spat")
+zdani("mon repos","spat")
+
+la spat. gerku
+.i la mon repos. zdani la spat.
+
+-----
+> la mon. rePOS. zdani la spat noi ke'a gerku zo'e
+
+gerku("spat",c0)
+zdani("mon repos","spat")
+
+la spat. gerku cy no
+.i la mon repos. zdani la spat.
+
+-----
+> la mon. rePOS. zdani la spat. noi ke'a gerku la sankt. berNARD.
+
+gerku("spat","sankt bernard")
+zdani("mon repos","spat")
+
+la spat. gerku la sankt bernard.
+.i la mon repos. zdani la spat.
+
+-----
+> la mon. rePOS. gerzda la spat. noi ke'a gerku la sankt. berNARD. ku'o la sankt. berNARD.
+
+gerku("spat","sankt bernard")
+gerzda("mon repos","spat","sankt bernard")
+
+la spat. gerku la sankt bernard.
+.i la mon repos. gerzda la spat. la sankt bernard.
+
+-----
+> di'e jdaselsku la dong.
+
+jdaselsku(di'e,"dong")
+
+di'e jdaselsku la dong.
+
+-----
+> b1 balsoi s2 b2 b3
+Morphology error:
+	{b1 balsoi s2 b2 b3}
+	 ^
+
+-----
+> b1 sonci s2 gi'e banli b2 b3
+Morphology error:
+	{b1 sonci s2 gi'e banli b2 b3}
+	 ^
+
+-----
+> la djak. cu blakanla
+
+blakanla("djak")
+
+la djak. blakanla
+
+-----
+> la djak. cu se blakanla
+
+blakanla( ,"djak")
+
+blakanla la djak.
+
+-----
+> [ke] bakni rectu [ke'e] panlo
+
+<<bakni(_)><rectu>(_)><panlo>( )
+
+ke ke bakni rectu ke'e panlo ke'e
+
+-----
+> bakni ke rectu panlo [ke'e]
+
+<bakni(_)><<rectu(_)><panlo>>( )
+
+ke bakni ke rectu panlo ke'e ke'e
+
+-----
+> zekri ke nenri klama [ke'e]
+
+<zekri(_)><<nenri(_)><klama>>( )
+
+ke zekri ke nenri klama ke'e ke'e
+
+-----
+> [ke] zekri nenri [ke'e] klama
+
+<<zekri(_)><nenri>(_)><klama>( )
+
+ke ke zekri nenri ke'e klama ke'e
+
+-----
+> xamsi ke calku curnu
+
+<xamsi(_)><<calku(_)><curnu>>( )
+
+ke xamsi ke calku curnu ke'e ke'e
+
+-----
+> [ke] xamsi calku [ke'e] curnu
+
+<<xamsi(_)><calku>(_)><curnu>( )
+
+ke ke xamsi calku ke'e curnu ke'e
+
+-----
+> nu sonci kei djica
+
+<nu[sonci( )](_)><djica>( )
+
+ke nu sonci kei djica ke'e
+
+-----
+> mi jai rinka le nu do morsi
+
+non-veridical: nu[morsi(do)](c0)
+rinka({tu'a}(mi),c0)
+
+ju'a nai cy no nu do morsi kei
+.i tu'a mi lu'u rinka cy no
+
+-----
+> mi jaxri'a le nu do morsi
+
+non-veridical: nu[morsi(do)](c0)
+jaxri'a(mi,c0)
+
+ju'a nai cy no nu do morsi kei
+.i mi jaxri'a cy no
+
+-----
+> [ke] xance pilno [ke'e] minde
+
+<<xance(_)><pilno>(_)><minde>( )
+
+ke ke xance pilno ke'e minde ke'e
+
+-----
+> [ke] minde xance [ke'e] pilno
+
+<<minde(_)><xance>(_)><pilno>( )
+
+ke ke minde xance ke'e pilno ke'e
+
+-----
+> minde ke xance pilno [ke'e]
+
+<minde(_)><<xance(_)><pilno>>( )
+
+ke minde ke xance pilno ke'e ke'e
+
+-----
+> mi citmau do lo nanca be li xa
+
+nanca(c0,6)
+citmau(mi,do,c0)
+
+cy no nanca li xa boi lo'o
+.i mi citmau do cy no
+
+-----
+> do citme'a mi lo nanca be li xa
+
+nanca(c0,6)
+citme'a(do,mi,c0)
+
+cy no nanca li xa boi lo'o
+.i do citme'a mi cy no
+
+-----
+> mi ca tsamau
+
+(ca)(). tsamau(mi)
+
+ca ku zo'u mi tsamau
+
+-----
+> mi ca tsaze'a
+
+(ca)(). tsaze'a(mi)
+
+ca ku zo'u mi tsaze'a
+
+-----
+> la djudis. cu citrai lo'i lobypli
+
+selcmi(c1,c0)
+lobypli(c0)
+citrai("djudis",c1)
+
+cy pa selcmi cy no
+.i cy no lobypli
+.i la djudis. citrai cy pa
+
+-----
+> la .ainctain. cu balrai lo'i skegunka
+
+selcmi(c1,c0)
+skegunka(c0)
+balrai("ainctain",c1)
+
+cy pa selcmi cy no
+.i cy no skegunka
+.i la ainctain. balrai cy pa
+
+-----

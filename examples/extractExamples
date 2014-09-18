@@ -1,0 +1,4 @@
+CLL=/home/martin/lojban/cll/todocbook/
+for n in `seq 19`; do sed 's/\&\(ndash\|hellip\);//g' "$CLL/$n.xml" | \
+    xml_grep jbo - | grep jbo | sed 's/<\/\?jbo>\s*//g' | \
+    sed 's/<[^>]*>//g' > $n.jbo; done

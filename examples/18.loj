@@ -1,0 +1,1080 @@
+> pa re ci
+
+[Fragment]
+
+li'o
+
+-----
+> pa no
+
+[Fragment]
+
+li'o
+
+-----
+> pa re ci vo mu xa ze bi so no
+
+[Fragment]
+
+li'o
+
+-----
+> ni'u pa
+
+[Fragment]
+
+li'o
+
+-----
+> ci pi pa vo pa mu
+
+[Fragment]
+
+li'o
+
+-----
+> re fi'u ze
+
+[Fragment]
+
+li'o
+
+-----
+> fi'u ze
+
+[Fragment]
+
+li'o
+
+-----
+> pi ci mu ra'e pa vo re bi mu ze
+
+[Fragment]
+
+li'o
+
+-----
+> ci mu ce'i
+
+[Fragment]
+
+li'o
+
+-----
+> pa ki'o re ci vo ki'o mu xa ze
+
+[Fragment]
+
+li'o
+
+-----
+> pa ki'o re ci ki'o vo
+
+[Fragment]
+
+li'o
+
+-----
+> pi ki'o re re
+
+[Fragment]
+
+li'o
+
+-----
+> pi pa ki'o pa re ki'o pa
+
+[Fragment]
+
+li'o
+
+-----
+> ma'u ci'i
+
+[Fragment]
+
+li'o
+
+-----
+> ci ka'o re
+
+[Fragment]
+
+li'o
+
+-----
+> ci'i no
+
+[Fragment]
+
+li'o
+
+-----
+> pai
+
+[Fragment]
+
+li'o
+
+-----
+> te'o
+
+[Fragment]
+
+li'o
+
+-----
+> pa pi re pi ci
+
+[Fragment]
+
+li'o
+
+-----
+> pa ni'u re
+
+[Fragment]
+
+li'o
+
+-----
+> li pa su'i pa du li re
+
+=({su'i}(1,1),2)
+
+li pe'o su'i pa boi pa boi ku'e lo'o du li re boi lo'o
+
+-----
+> le ci prenu
+
+non-veridical: (prenu(c0) /\ 3 mei(c0))
+[Fragment: c0]
+
+ju'a nai ge cy no prenu gi cy no ci mei
+.i cy no
+
+-----
+> levi sfani cu grake li ci
+
+non-veridical: (vi)(). sfani(c0)
+grake(c0,3)
+
+ju'a nai vi ku zo'u cy no sfani
+.i cy no grake li ci boi lo'o
+
+-----
+> li ci prenu
+
+prenu(3)
+
+li ci boi lo'o prenu
+
+-----
+> li ma'u pa su'i ni'u pa du li no
+
+=({su'i}((ma'u pa),(ni'u pa)),0)
+
+li pe'o su'i ma'u pa boi ni'u pa boi ku'e lo'o du li no boi lo'o
+
+-----
+> li mu su'i pa du li ci su'i ci
+
+=({su'i}(5,1),{su'i}(3,3))
+
+li pe'o su'i mu boi pa boi ku'e lo'o du li pe'o su'i ci boi ci boi ku'e lo'o
+
+-----
+> li ci su'i vo pi'i mu du li reci
+
+=({pi'i}({su'i}(3,4),5),23)
+
+li pe'o pi'i pe'o su'i ci boi vo boi ku'e mu boi ku'e lo'o du li reci boi lo'o
+
+-----
+> li ci su'i vo pi'i mu du li cimu
+
+=({pi'i}({su'i}(3,4),5),35)
+
+li pe'o pi'i pe'o su'i ci boi vo boi ku'e mu boi ku'e lo'o du li cimu boi lo'o
+
+-----
+> li ci su'i vo bi'e pi'i mu du li reci
+
+=({su'i}(3,{pi'i}(4,5)),23)
+
+li pe'o su'i ci boi pe'o pi'i vo boi mu boi ku'e ku'e lo'o du li reci boi lo'o
+
+-----
+> li vei ny. su'i pa ve'o pi'i vei ny. su'i pa [ve'o] du li ny. [bi'e] te'a re su'i re bi'e pi'i ny. su'i pa
+
+=({pi'i}({su'i}((ny),1),{su'i}((ny),1)),{su'i}({su'i}({te'a}((ny),2),{pi'i}(2,(ny))),1))
+
+li pe'o pi'i pe'o su'i ny boi pa boi ku'e pe'o su'i ny boi pa boi ku'e ku'e lo'o du li pe'o su'i pe'o su'i pe'o te'a ny boi re boi ku'e pe'o pi'i re boi ny boi ku'e ku'e pa boi ku'e lo'o
+
+-----
+> li su'i paboi reboi ci[boi] du li xa
+
+=({su'i}(1,2,3),6)
+
+li pe'o su'i pa boi re boi ci boi ku'e lo'o du li xa boi lo'o
+
+-----
+> li py. su'i va'a ny. ku'e su'i zy du li xy.
+
+=({su'i}({su'i}((py),{va'a}((ny))),(zy)),(xy))
+
+li pe'o su'i pe'o su'i py boi pe'o va'a ny boi ku'e ku'e zy boi ku'e lo'o du li xy boi lo'o
+
+-----
+> li zy du li ma'o fy.boi xy.
+
+=((zy),[(fy)]((xy)))
+
+li zy boi lo'o du li pe'o ma'o fy boi te'u xy boi ku'e lo'o
+
+-----
+> li pe'o su'i paboi reboi ciboi ku'e du li xa
+
+=({su'i}(1,2,3),6)
+
+li pe'o su'i pa boi re boi ci boi ku'e lo'o du li xa boi lo'o
+
+-----
+> li py. su'i pe'o va'a ny. ku'e su'i zy du li xy.
+
+=({su'i}({su'i}((py),{va'a}((ny))),(zy)),(xy))
+
+li pe'o su'i pe'o su'i py boi pe'o va'a ny boi ku'e ku'e zy boi ku'e lo'o du li xy boi lo'o
+
+-----
+> li zy du li pe'o ma'o fy.boi xy. ku'e
+
+=((zy),[(fy)]((xy)))
+
+li zy boi lo'o du li pe'o ma'o fy boi te'u xy boi ku'e lo'o
+
+-----
+> li xy. mleca li mu
+
+mleca((xy),5)
+
+li xy boi lo'o mleca li mu boi lo'o
+
+-----
+> py. du xy.boi zy.
+
+=(p,x,z)
+
+py du xy zy
+
+-----
+> li re su'i re na du li mu
+
+!=({su'i}(2,2),5)
+
+na ku li pe'o su'i re boi re boi ku'e lo'o du li mu boi lo'o
+
+-----
+> mi catlu pa prenu
+
+EQ(1) x1:(prenu(_)). catlu(mi,x1)
+
+pa da poi ke'a prenu ku'o zo'u mi catlu da
+
+-----
+> mi catlu ro prenu
+
+FA x1:(prenu(_)). catlu(mi,x1)
+
+ro da poi ke'a prenu ku'o zo'u mi catlu da
+
+-----
+> mi catlu so'a prenu
+
+(so'a) x1:(prenu(_)). catlu(mi,x1)
+
+so'a boi da poi ke'a prenu ku'o zo'u mi catlu da
+
+-----
+> mi catlu so'e prenu
+
+(so'e) x1:(prenu(_)). catlu(mi,x1)
+
+so'e boi da poi ke'a prenu ku'o zo'u mi catlu da
+
+-----
+> mi catlu so'i prenu
+
+(so'i) x1:(prenu(_)). catlu(mi,x1)
+
+so'i boi da poi ke'a prenu ku'o zo'u mi catlu da
+
+-----
+> mi catlu so'o prenu
+
+(so'o) x1:(prenu(_)). catlu(mi,x1)
+
+so'o boi da poi ke'a prenu ku'o zo'u mi catlu da
+
+-----
+> mi catlu so'u prenu
+
+(so'u) x1:(prenu(_)). catlu(mi,x1)
+
+so'u boi da poi ke'a prenu ku'o zo'u mi catlu da
+
+-----
+> mi citka piro lei nanba
+
+gunma(c1,c0)
+non-veridical: nanba(c0)
+(pi ro) x1:((c1) >= (_)). citka(mi,x1)
+
+cy pa gunma cy no
+.i ju'a nai cy no nanba
+.i pi ro boi da poi ke'a me cy pa me'u ku'o zo'u mi citka da
+
+-----
+> mi catlu no'o prenu
+
+(no'o) x1:(prenu(_)). catlu(mi,x1)
+
+no'o boi da poi ke'a prenu ku'o zo'u mi catlu da
+
+-----
+> mi citka pino'o lei nanba
+
+gunma(c1,c0)
+non-veridical: nanba(c0)
+(pi no'o) x1:((c1) >= (_)). citka(mi,x1)
+
+cy pa gunma cy no
+.i ju'a nai cy no nanba
+.i pi no'o boi da poi ke'a me cy pa me'u ku'o zo'u mi citka da
+
+-----
+> mi catlu da'a re prenu
+
+(da'a re) x1:(prenu(_)). catlu(mi,x1)
+
+da'a re boi da poi ke'a prenu ku'o zo'u mi catlu da
+
+-----
+> mi catlu da'a so'u prenu
+
+(da'a so'u) x1:(prenu(_)). catlu(mi,x1)
+
+da'a so'u boi da poi ke'a prenu ku'o zo'u mi catlu da
+
+-----
+> ro ratcu ka'e citka da'a ratcu
+
+FA x1:(ratcu(_)). (ka'e)(). (da'a) x2:(ratcu(_)). citka(x1,x2)
+
+ro da poi ke'a ratcu ku'o ka'e ku da'a boi de poi ke'a ratcu ku'o zo'u da citka de
+
+-----
+> li ci vu'u re du li ma'u
+
+=({vu'u}(3,2),(ma'u))
+
+li pe'o vu'u ci boi re boi ku'e lo'o du li ma'u boi lo'o
+
+-----
+> li ci vu'u vo du li ni'u
+
+=({vu'u}(3,4),(ni'u))
+
+li pe'o vu'u ci boi vo boi ku'e lo'o du li ni'u boi lo'o
+
+-----
+> mi ponse ma'u rupnu
+
+(ma'u) x1:(rupnu(_)). ponse(mi,x1)
+
+ma'u boi da poi ke'a rupnu ku'o zo'u mi ponse da
+
+-----
+> mi ponse rau rupnu
+
+(rau) x1:(rupnu(_)). ponse(mi,x1)
+
+rau boi da poi ke'a rupnu ku'o zo'u mi ponse da
+
+-----
+> mi viska le rore gerku
+
+non-veridical: (gerku(c0) /\ (ro re) mei(c0))
+viska(mi,c0)
+
+ju'a nai ge cy no gerku gi cy no ro re mei
+.i mi viska cy no
+
+-----
+> mi speni so'ici prenu
+
+(so'i ci) x1:(prenu(_)). speni(mi,x1)
+
+so'i ci boi da poi ke'a prenu ku'o zo'u mi speni da
+
+-----
+> ji'i vo no
+
+[Fragment]
+
+li'o
+
+-----
+> vo no ji'i mu no
+
+[Fragment]
+
+li'o
+
+-----
+> re pi ze re ji'i
+
+[Fragment]
+
+li'o
+
+-----
+> re pi ze re ji'i ma'u
+
+[Fragment]
+
+li'o
+
+-----
+> re pi ze pa ji'i ni'u
+
+[Fragment]
+
+li'o
+
+-----
+> mi catlu su'e re prenu
+
+(su'e re) x1:(prenu(_)). catlu(mi,x1)
+
+su'e re boi da poi ke'a prenu ku'o zo'u mi catlu da
+
+-----
+> mi catlu su'o re prenu
+
+(su'o re) x1:(prenu(_)). catlu(mi,x1)
+
+su'o re boi da poi ke'a prenu ku'o zo'u mi catlu da
+
+-----
+> mi catlu me'i re prenu
+
+(me'i re) x1:(prenu(_)). catlu(mi,x1)
+
+me'i re boi da poi ke'a prenu ku'o zo'u mi catlu da
+
+-----
+> mi catlu za'u re prenu
+
+(za'u re) x1:(prenu(_)). catlu(mi,x1)
+
+za'u re boi da poi ke'a prenu ku'o zo'u mi catlu da
+
+-----
+> mi catlu su'o prenu
+
+EX x1:(prenu(_)). catlu(mi,x1)
+
+su'o da poi ke'a prenu ku'o zo'u mi catlu da
+
+-----
+> li pa no pa no ju'u re du li pa no
+
+=({ju'u}(1010,2),10)
+
+li pe'o ju'u panopano boi re boi ku'e lo'o du li pano boi lo'o
+
+-----
+> li daufeigai ju'u paxa du li rezevobi
+
+=({ju'u}((dau fei gai),16),2748)
+
+li pe'o ju'u dau fei gai boi paxa boi ku'e lo'o du li rezevobi boi lo'o
+
+-----
+> li jaureivai ju'u paxa du li cimuxaze
+
+=({ju'u}((jau rei vai),16),3567)
+
+li pe'o ju'u jau rei vai boi paxa boi ku'e lo'o du li cimuxaze boi lo'o
+
+-----
+> li vai pi bi ju'u paxa du li pamu pi mu
+
+=({ju'u}((vai pi bi),16),(pa mu pi mu))
+
+li pe'o ju'u vai pi bi boi paxa boi ku'e lo'o du li pa mu pi mu boi lo'o
+
+-----
+> ci pi'e rere pi'e vono
+
+[Fragment]
+
+li'o
+
+-----
+> li ci pi'e rere pi'e vono su'i pi'e ci pi'e cici du li ci pi'e rexa pi'e paci
+
+=({su'i}((ci pi'e re re pi'e vo no),(pi'e ci pi'e ci ci)),(ci pi'e re xa pi'e pa ci))
+
+li pe'o su'i ci pi'e re re pi'e vo no boi pi'e ci pi'e ci ci boi ku'e lo'o du li ci pi'e re xa pi'e pa ci boi lo'o
+
+-----
+> li pa pi'e re pi'e ci ju'u reno du li vovoci
+
+=({ju'u}((pa pi'e re pi'e ci),20),443)
+
+li pe'o ju'u pa pi'e re pi'e ci boi reno boi ku'e lo'o du li vovoci boi lo'o
+
+-----
+> pano ju'u reno
+Parse error:
+	{pa no ju'u re no}
+	       ^
+
+-----
+> pa pi'e no ju'u reno
+Parse error:
+	{pa pi'e no ju'u re no}
+	            ^
+
+-----
+> li pa pi'e vo pi ze ju'u reno du li re vo pi ci mu
+
+=({ju'u}((pa pi'e vo pi ze),20),(re vo pi ci mu))
+
+li pe'o ju'u pa pi'e vo pi ze boi reno boi ku'e lo'o du li re vo pi ci mu boi lo'o
+
+-----
+> dei jufra panopi'epapamoi
+
+<jufra(_)><(pa no pi'e pa pa) moi>(dei)
+
+dei ke jufra pa no pi'e pa pa moi ke'e
+
+-----
+> lei mi ratcu cu cimei
+
+gunma(c1,c0)
+non-veridical: (ratcu(c0) /\ srana(c0,mi))
+3 mei(c1)
+
+cy pa gunma cy no
+.i ju'a nai ge cy no ratcu gi cy no srana mi
+.i cy pa ci mei
+
+-----
+> mi poi pamei cu cusku dei
+
+(1 mei(c0) /\ (mi) >= (c0))
+cusku(c0,dei)
+
+ge cy no pa mei gi cy no me mi me'u
+.i cy no cusku dei
+
+-----
+> lei ratcu poi zvati le panka cu so'umei lo'i ratcu
+
+selcmi(c4,c3)
+ratcu(c3)
+gunma(c2,c1)
+non-veridical: (ratcu(c1) /\ zvati(c1,c0))
+non-veridical: panka(c0)
+(so'u) mei(c2,c4)
+
+cy vo selcmi cy ci
+.i cy ci ratcu
+.i cy re gunma cy pa
+.i ju'a nai ge cy pa ratcu gi cy pa zvati cy no
+.i ju'a nai cy no panka
+.i cy re so'u mei cy vo
+
+-----
+> le'i ratcu poi zvati le panka cu se so'imei
+
+selcmi(c2,c1)
+non-veridical: (ratcu(c1) /\ zvati(c1,c0))
+non-veridical: panka(c0)
+(so'i) mei( ,c2)
+
+cy re selcmi cy pa
+.i ju'a nai ge cy pa ratcu gi cy pa zvati cy no
+.i ju'a nai cy no panka
+.i so'i mei cy re
+
+-----
+> ti pamoi le'i mi ratcu
+
+selcmi(c1,c0)
+non-veridical: (ratcu(c0) /\ srana(c0,mi))
+1 moi(ti,c1)
+
+cy pa selcmi cy no
+.i ju'a nai ge cy no ratcu gi cy no srana mi
+.i ti pa moi cy pa
+
+-----
+> ta romoi le'i mi ratcu
+
+selcmi(c1,c0)
+non-veridical: (ratcu(c0) /\ srana(c0,mi))
+(ro) moi(ta,c1)
+
+cy pa selcmi cy no
+.i ju'a nai ge cy no ratcu gi cy no srana mi
+.i ta ro moi cy pa
+
+-----
+> mi raumoi le velskina porsi
+
+non-veridical: <velskina(_)><porsi>(c0)
+(rau) moi(mi,c0)
+
+ju'a nai cy no ke velskina porsi ke'e
+.i mi rau moi cy no
+
+-----
+> levi sanmi cu fi'ucisi'e lei mi djedi cidja
+
+gunma(c2,c1)
+non-veridical: (<djedi(_)><cidja>(c1) /\ srana(c1,mi))
+non-veridical: (vi)(). sanmi(c0)
+(fi'u ci) si'e(c0,c2)
+
+cy re gunma cy pa
+.i ju'a nai ge cy pa ke djedi cidja ke'e gi cy pa srana mi
+.i ju'a nai vi ku zo'u cy no sanmi
+.i cy no fi'u ci si'e cy re
+
+-----
+> le nu lo sicni cu sedja'o cu pimucu'o
+
+non-veridical: nu[sedja'o(c0)](c1)
+sicni(c0)
+(pi mu) cu'o(c1)
+
+ju'a nai cy pa nu cy no sedja'o kei
+.i cy no sicni
+.i cy pa pi mu cu'o
+
+-----
+> le vi rozgu cu sofi'upanova'e xunre
+
+non-veridical: (vi)(). rozgu(c0)
+<(so fi'u pa no) va'e(_)><xunre>(c0)
+
+ju'a nai vi ku zo'u cy no rozgu
+.i cy no ke so fi'u pa no va'e xunre ke'e
+
+-----
+> lei ratcu poi zvati le panka cu du'emei fo mi
+
+gunma(c2,c1)
+non-veridical: (ratcu(c1) /\ zvati(c1,c0))
+non-veridical: panka(c0)
+(du'e) mei(c2, , ,mi)
+
+cy re gunma cy pa
+.i ju'a nai ge cy pa ratcu gi cy pa zvati cy no
+.i ju'a nai cy no panka
+.i cy re du'e mei fo mi
+
+-----
+> ta ny.moi le'i mi ratcu
+
+selcmi(c1,c0)
+non-veridical: (ratcu(c0) /\ srana(c0,mi))
+(ny) moi(ta,c1)
+
+cy pa selcmi cy no
+.i ju'a nai ge cy no ratcu gi cy no srana mi
+.i ta ny moi cy pa
+
+-----
+> ta me li ny. su'i pa me'u moi le'i mi ratcu
+
+selcmi(c1,c0)
+non-veridical: (ratcu(c0) /\ srana(c0,mi))
+[{su'i}((ny),1)] moi(ta,c1)
+
+cy pa selcmi cy no
+.i ju'a nai ge cy no ratcu gi cy no srana mi
+.i ta me li pe'o su'i ny boi pa boi ku'e lo'o me'u moi cy pa
+
+-----
+> le nu mi nolraitru cu me le'e snime bolci be vi la xel. cu'o
+
+non-veridical: (vi)("xel"). <snime(_)><bolci>(c1)
+non-veridical: nu[nolraitru(mi)](c0)
+[c1] cu'o(c0)
+
+ju'a nai vi la xel. zo'u cy pa ke snime bolci ke'e
+.i ju'a nai cy no nu mi nolraitru kei
+.i cy no me cy pa me'u cu'o
+
+-----
+> li re su'i re du li xo
+
+=({su'i}(2,2),(xo))
+
+li pe'o su'i re boi re boi ku'e lo'o du li xo boi lo'o
+
+-----
+> le xomoi prenu cu darxi do
+
+non-veridical: <(xo) moi(_)><prenu>(c0)
+darxi(c0,do)
+
+ju'a nai cy no ke xo moi prenu ke'e
+.i cy no darxi do
+
+-----
+> li remu pi'i xa du li paxono
+
+=({pi'i}(25,6),(pa xo no))
+
+li pe'o pi'i remu boi xa boi ku'e lo'o du li pa xo no boi lo'o
+
+-----
+> li xy.boixici du li xy.boixipa su'i xy.boixire
+Parse error:
+	{li xy boi xi ci du li xy boi xi pa su'i xy boi xi re}
+	                 ^
+
+-----
+> xy.boixino
+
+[Fragment: x]
+
+xy
+
+-----
+> xy.boixiny.
+
+[Fragment: x]
+
+xy
+
+-----
+> xy.boixi vei ny. su'i pa [ve'o]
+
+[Fragment: x]
+
+xy
+
+-----
+> xy.boi xi by.boi xi vo
+
+[Fragment: x]
+
+xy
+
+-----
+> li tu'o va'a ny. du li no vu'u ny.
+
+=({va'a}((ny)),{vu'u}(0,(ny)))
+
+li pe'o va'a ny boi ku'e lo'o du li pe'o vu'u no boi ny boi ku'e lo'o
+
+-----
+> li cinonoki'oki'o du li bi gei ci
+
+=((ci no no ki'o ki'o),{gei}(8,3))
+
+li ci no no ki'o ki'o boi lo'o du li pe'o gei bi boi ci boi ku'e lo'o
+
+-----
+> gei reno
+Parse error:
+	{gei re no}
+	 ^
+
+-----
+> papano bi'eju'u re gei pipanopano bi'eju'u re ge'a re
+Parse error:
+	{pa pa no bi'e ju'u re gei pi pa no pa no bi'e ju'u re ge'a re}
+	          ^
+
+-----
+> li jo'i paboi reboi te'u su'i jo'i ciboi voboi du li jo'i voboi xaboi
+
+=({su'i}([1,2],[3,4]),[4,6])
+
+li pe'o su'i jo'i pa boi re boi te'u jo'i ci boi vo boi te'u ku'e lo'o du li jo'i vo boi xa boi te'u lo'o
+
+-----
+> jo'i biboi paboi xa pi'a jo'i ciboi muboi ze ge'a jo'i voboi soboi re
+Parse error:
+	{jo'i bi boi pa boi xa pi'a jo'i ci boi mu boi ze ge'a jo'i vo boi so boi re}
+	 ^
+
+-----
+> jo'i biboi ciboi vo sa'i jo'i paboi muboi so ge'a jo'i xaboi zeboi re
+Parse error:
+	{jo'i bi boi ci boi vo sa'i jo'i pa boi mu boi so ge'a jo'i xa boi ze boi re}
+	 ^
+
+-----
+> li fu'a reboi ci su'i du li mu
+Parse error:
+	{li fu'a re boi ci su'i du li mu}
+	                        ^
+
+-----
+> li fu'a reboi ci pi'i voboi mu pi'i su'i du li rexa
+Parse error:
+	{li fu'a re boi ci pi'i vo boi mu pi'i su'i du li re xa}
+	                                       ^
+
+-----
+> li fu'a ciboi muboi vu'u du li fu'a reboi tu'o va'a
+Parse error:
+	{li fu'a ci boi mu boi vu'u du li fu'a re boi tu'o va'a}
+	                            ^
+
+-----
+> li cinoki'oki'o du li fu'a biboi ciboi panoboi ge'a gei
+Parse error:
+	{du li fu'a bi boi ci boi pa no boi ge'a gei}
+	                                         ^
+
+-----
+> vei ci .a vo ve'o prenu cu klama le zarci
+
+non-veridical: zarci(c0)
+(EQ(3) x1:(prenu(_)). klama(x1,c0) \/ EQ(4) x1:(prenu(_)). klama(x1,c0))
+
+ju'a nai cy no zarci
+.i ga ci da poi ke'a prenu ku'o zo'u da klama cy no gi vo da poi ke'a prenu ku'o zo'u da klama cy no
+
+-----
+> vei ga ci gi vo ve'o prenu cu klama le zarci
+
+non-veridical: zarci(c0)
+(EQ(3) x1:(prenu(_)). klama(x1,c0) \/ EQ(4) x1:(prenu(_)). klama(x1,c0))
+
+ju'a nai cy no zarci
+.i ga ci da poi ke'a prenu ku'o zo'u da klama cy no gi vo da poi ke'a prenu ku'o zo'u da klama cy no
+
+-----
+> li re su'i re du li vo lo'o .onai lo nalseldjuno namcu
+
+<nalseldjuno(_)><namcu>(c0)
+(=({su'i}(2,2),4) <-> !=({su'i}(2,2),c0))
+
+cy no ke nalseldjuno namcu ke'e
+.i go li pe'o su'i re boi re boi ku'e lo'o du li vo boi lo'o gi na ku li pe'o su'i re boi re boi ku'e lo'o du cy no
+
+-----
+> li re su'i je pi'i re du li vo
+
+(=({su'i}(2,2),4) /\ =({pi'i}(2,2),4))
+
+ge li pe'o su'i re boi re boi ku'e lo'o du li vo boi lo'o gi li pe'o pi'i re boi re boi ku'e lo'o du li vo boi lo'o
+
+-----
+> li re ge su'i gi pi'i re du li vo
+Parse error:
+	{li re ge su'i gi pi'i re du li vo}
+	          ^
+
+-----
+> go li .abu bi'epi'i vei xy. te'a re ve'o su'i by. bi'epi'i xy. su'i cy. du li no gi li xy. du li vei va'a by. ku'e su'i ja vu'u fe'a vei by. bi'ete'a re vu'u vo bi'epi'i .abu bi'epi'i cy. ve'o [ku'e] ve'o fe'i re bi'epi'i .abu
+
+(=({su'i}({su'i}({pi'i}((abu),{te'a}((xy),2)),{pi'i}((by),(xy))),(cy)),0) <-> (=((xy),{fe'i}({su'i}({va'a}((by)),{fe'a}({vu'u}({te'a}((by),2),{pi'i}(4,{pi'i}((abu),(cy)))))),{pi'i}(2,(abu)))) \/ =((xy),{fe'i}({vu'u}({va'a}((by)),{fe'a}({vu'u}({te'a}((by),2),{pi'i}(4,{pi'i}((abu),(cy)))))),{pi'i}(2,(abu))))))
+
+go li pe'o su'i pe'o su'i pe'o pi'i abu boi pe'o te'a xy boi re boi ku'e ku'e pe'o pi'i by boi xy boi ku'e ku'e cy boi ku'e lo'o du li no boi lo'o gi ga li xy boi lo'o du li pe'o fe'i pe'o su'i pe'o va'a by boi ku'e pe'o fe'a pe'o vu'u pe'o te'a by boi re boi ku'e pe'o pi'i vo boi pe'o pi'i abu boi cy boi ku'e ku'e ku'e ku'e ku'e pe'o pi'i re boi abu boi ku'e ku'e lo'o gi li xy boi lo'o du li pe'o fe'i pe'o vu'u pe'o va'a by boi ku'e pe'o fe'a pe'o vu'u pe'o te'a by boi re boi ku'e pe'o pi'i vo boi pe'o pi'i abu boi cy boi ku'e ku'e ku'e ku'e ku'e pe'o pi'i re boi abu boi ku'e ku'e lo'o
+
+-----
+> li no ga'o bi'o ke'i pa
+
+[Fragment: (0){ga'obi'oke'i}(1)]
+
+li vei no boi ve'o ga'obi'oke'i vei pa boi ve'o lo'o
+
+-----
+> li pimu ga'o mi'i ke'i pimu
+
+[Fragment: ((pi mu)){ga'omi'ike'i}((pi mu))]
+
+li vei pi mu boi ve'o ga'omi'ike'i vei pi mu boi ve'o lo'o
+
+-----
+> li pimu su'i ni'upimu bi'o ma'upimu
+
+[Fragment: {su'i}((pi mu),((ni'u pi mu)){bi'o}((ma'u pi mu)))]
+
+li pe'o su'i pi mu boi vei ni'u pi mu boi ve'o bi'o vei ma'u pi mu boi ve'o ku'e lo'o
+
+-----
+> xy. xi vei by. ce'o dy. [ve'o]
+
+[Fragment: x]
+
+xy
+
+-----
+> li na'u tanjo te'u vei pai fe'i re [ve'o] du li ci'i
+
+=([tanjo(_)]({fe'i}((pai),2)),(ci'i))
+
+li pe'o na'u tanjo te'u pe'o fe'i pai boi re boi ku'e ku'e lo'o du li ci'i boi lo'o
+
+-----
+> li ni'e ni clani [te'u] pi'i ni'e ni ganra [te'u] pi'i ni'e ni condi te'u du li ni'e ni canlu
+
+=({pi'i}({pi'i}([ni[clani(\1)](_)],[ni[ganra(\1)](_)]),[ni[condi(\1)](_)]),[ni[canlu(\1)](_)])
+
+li pe'o pi'i pe'o pi'i ni'e ni ce'u clani kei te'u ni'e ni ce'u ganra kei te'u ku'e ni'e ni ce'u condi kei te'u ku'e lo'o du li ni'e ni ce'u canlu kei te'u lo'o
+
+-----
+> li mo'e re ratcu su'i mo'e re ractu du li mo'e vo danlu
+
+[Fragment: {su'i}([[DONKEY]],[[DONKEY]]),[[DONKEY]]]
+
+li pe'o su'i mo'e lo XASLI zei da ku te'u mo'e lo XASLI zei da ku te'u ku'e lo'o li mo'e lo XASLI zei da ku te'u lo'o
+
+-----
+> mi viska vei mo'e lo'e lanzu ve'o cinfo
+
+lanzu(c0)
+[c0] x1:(cinfo(_)). viska(mi,x1)
+
+cy no lanzu
+.i mo'e cy no te'u da poi ke'a cinfo ku'o zo'u mi viska da
+
+-----
+> li re su'i re du li vo
+
+=({su'i}(2,2),4)
+
+li pe'o su'i re boi re boi ku'e lo'o du li vo boi lo'o
+
+-----
+> me'o re su'i re du me'o vo
+
+=([MEX: Operation (OpVUhU "su'i") [MexInt 2,MexInt 2]],[MEX: MexInt 4])
+
+me'o Operation (OpVUhU "su'i") [MexInt 2,MexInt 2] lo'o du me'o MexInt 4 lo'o
+
+-----
+> li ni'umu cu nu'a va'a li ma'umu
+
+[{va'a}]((ni'u mu),(ma'u mu))
+
+li ni'u mu boi lo'o nu'a va'a te'u li ma'u mu boi lo'o
+
+-----
+> li re na'u mo re du li vo
+
+=([mo(_)](2,2),4)
+
+li pe'o na'u mo te'u re boi re boi ku'e lo'o du li vo boi lo'o
+
+-----
+> nu'a su'i
+
+[{su'i}]( )
+
+nu'a su'i te'u
+
+-----
+> li re na'u nu'a su'i re du li vo
+
+=([[{su'i}](_)](2,2),4)
+
+li pe'o na'u nu'a su'i te'u te'u re boi re boi ku'e lo'o du li vo boi lo'o
+
+-----
+> pamai
+-----
+> remai
+-----
+> romai
+-----
+> ny.mai
+-----
+> pasomo'o
+-----
+> li ci se vu'u vo du li pa
+
+=({vu'u}(4,3),1)
+
+li pe'o vu'u vo boi ci boi ku'e lo'o du li pa boi lo'o
+
+-----
+> li ci na'e su'i vo du li pare
+
+=({na'e}({su'i})(3,4),12)
+
+li pe'o na'e su'i ci boi vo boi ku'e lo'o du li pare boi lo'o
+
+-----
+> li ci to'e vu'u re du li mu
+
+=({to'e}({vu'u})(3,2),5)
+
+li pe'o to'e vu'u ci boi re boi ku'e lo'o du li mu boi lo'o
+
+-----
+> li re su'i re du li na'ebo mu
+
+=({su'i}(2,2),{na'e bo}(5))
+
+li pe'o su'i re boi re boi ku'e lo'o du li na'e bo mu boi lu'u lo'o
+
+-----
+> la zel. poi gunta la tebes. pu nanmu
+
+((pu)(). gunta(c0,"tebes") /\ ("zel") >= (c0))
+nanmu(c0)
+
+ge pu ku zo'u cy no gunta la tebes. gi cy no me la zel. me'u
+.i cy no nanmu
+
+-----
+> la zemei poi gunta la tebes. pu nanmu
+
+nanmu([Name: (7 mei(_) /\ (pu)(). gunta(_,"tebes")) ])
+
+la poi'i poi'i ge ke'a ze mei gi pu ku zo'u ke'a gunta la tebes. kei ku'o ku nanmu
+
+-----
+> li bize
+
+[Fragment: 87]
+
+li bize boi lo'o
+
+-----
+> li vo pi'i reno su'i ze
+
+[Fragment: {su'i}({pi'i}(4,20),7)]
+
+li pe'o su'i pe'o pi'i vo boi reno boi ku'e ze boi ku'e lo'o
+
+-----
+> li mo'e voboi renomei te'u su'i ze
+
+[Fragment: {su'i}([[DONKEY]],7)]
+
+li pe'o su'i mo'e lo XASLI zei da ku te'u ze boi ku'e lo'o
+
+-----
+> li vo pi'e ze ju'u reno
+
+[Fragment: {ju'u}((vo pi'e ze),20)]
+
+li pe'o ju'u vo pi'e ze boi reno boi ku'e lo'o
+
+-----

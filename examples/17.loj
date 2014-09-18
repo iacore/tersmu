@@ -1,0 +1,354 @@
+> ty. .abu ny. ry. .ubu
+
+[Fragment: tanru]
+
+ty abu ny ry ubu
+
+-----
+> ky. .obu .y'y. .abu
+
+[Fragment: koha]
+
+ky obu y'y abu
+
+-----
+> mi cy. claxu
+
+claxu(mi,c)
+
+mi claxu cy
+
+-----
+> micyclaxu
+
+micyclaxu( )
+
+micyclaxu
+
+-----
+> .iVAN.
+-----
+> .ibu ga'e vy. .abu ny. to'a
+Parse error:
+	{i bu ga'e vy a bu ny to'a}
+	                           ^
+
+-----
+> tau sy.
+
+[Fragment: {tau}(s)]
+
+tau sy
+
+-----
+> tau sy. .ibu
+
+[Fragment: {tau}(s)i]
+
+tau sy ibu
+
+-----
+> zo bu
+
+[Fragment: {bu}]
+
+zo bu
+
+-----
+> ky.bu .ubu .abu cy. ky.
+Parse error:
+	{ky bu u bu a bu cy ky}
+	    ^
+
+-----
+> zai .devanagar. bu
+
+[Fragment: {zai}({devanagar})]
+
+zai devanagar bu
+
+-----
+> zai .katakan. bu
+
+[Fragment: {zai}({katakan})]
+
+zai katakan bu
+
+-----
+> zai .xiragan. bu
+
+[Fragment: {zai}({xiragan})]
+
+zai xiragan bu
+
+-----
+> ce'a .xelveticas. bu
+
+[Fragment: {ce'a}({xelveticas})]
+
+ce'a xelveticas bu
+
+-----
+> ce'a .xancisk. bu
+
+[Fragment: {ce'a}({xancisk})]
+
+ce'a xancisk bu
+
+-----
+> ce'a .pavrel. bu
+
+[Fragment: {ce'a}({pavrel})]
+
+ce'a pavrel bu
+
+-----
+> tei .ebu .akut. bu foi ty. tei .akut. bu .ebu foi
+
+[Fragment: [e,{akut}]t[{akut},e]]
+
+tei ebu akut bu foi ty tei akut bu ebu foi
+
+-----
+> .y'y.bu .abu ny. vo zy. .ibu vo
+Parse error:
+	{y'y bu a bu ny vo zy i bu vo}
+	     ^
+
+-----
+> my. .ibu ty. sy. .ubu by. .ibu sy. .y'y.bu .ibu
+Parse error:
+	{my i bu ty sy u bu by i bu sy y'y bu i bu}
+	                                   ^
+
+-----
+> .abu prami by.
+
+prami(a,b)
+
+abu prami by
+
+-----
+> le gerku goi gy. cu xekri .i gy. klama le zdani
+
+non-veridical: zdani(c1)
+non-veridical: gerku(c0)
+xekri(c0)
+klama(c0,c1)
+
+ju'a nai cy pa zdani
+.i ju'a nai cy no gerku
+.i cy no xekri
+.i cy no klama cy pa
+
+-----
+> le gerku cu xekri. .i gy. klama le zdani
+
+non-veridical: zdani(c1)
+non-veridical: gerku(c0)
+xekri(c0)
+klama(c0,c1)
+
+ju'a nai cy pa zdani
+.i ju'a nai cy no gerku
+.i cy no xekri
+.i cy no klama cy pa
+
+-----
+> la stivn. mark. djonz. merko .i la .aleksandr. paliitc. kuzNIETsyf. rusko .i symyjy. tavla .abupyky. bau la lojban.
+
+merko("stivn mark djonz")
+rusko("aleksandr paliitc kuznietsyf")
+(bau)("lojban"). tavla(smj,apk)
+
+la stivn mark djonz. merko
+.i la aleksandr paliitc kuznietsyf. rusko
+.i bau la lojban. zo'u sy my jy tavla abu py ky
+
+-----
+> .abu dunda by. cy.
+
+dunda(a,bc)
+
+abu dunda by cy
+
+-----
+> .abu [boi] dunda by. boi cy. [boi]
+
+dunda(a,b,c)
+
+abu dunda by cy
+
+-----
+> xy. boi ro [boi] prenu cu prami
+
+FA x1:(prenu(_)). prami(x,x1)
+
+ro da poi ke'a prenu ku'o zo'u xy prami da
+
+-----
+> .abu. cu lerfu
+
+lerfu(a)
+
+abu lerfu
+
+-----
+> me'o .abu cu lerfu
+
+lerfu([MEX: MexLerfuString [LerfuChar 'a']])
+
+me'o MexLerfuString [LerfuChar 'a'] lo'o lerfu
+
+-----
+> dei vasru vo lerfu po'u me'o .ebu
+
+EQ(4) x1:((lerfu(_) /\ =(_,[MEX: MexLerfuString [LerfuChar 'e']]))). vasru(dei,x1)
+
+vo da poi ge ke'a lerfu gi ke'a du me'o MexLerfuString [LerfuChar 'e'] lo'o ku'o zo'u dei vasru da
+
+-----
+> lu .abu li'u cu lerfu
+
+lerfu(<< [Fragment: a] >>)
+
+lu abu li'u lerfu
+
+-----
+> la'e lu .abu li'u cu lerfu
+
+lerfu({la'e}(<< [Fragment: a] >>))
+
+la'e lu abu li'u lu'u lerfu
+
+-----
+> li .abu du li by. su'i cy.
+
+=((abu),{su'i}((by),(cy)))
+
+li abu boi lo'o du li pe'o su'i by boi cy boi ku'e lo'o
+
+-----
+> li .y.bu du li ma'o fy. boi xy.
+
+=((y bu),[(fy)]((xy)))
+
+li y bu boi lo'o du li pe'o ma'o fy boi te'u xy boi ku'e lo'o
+
+-----
+> le vi ratcu ny.moi le'i mi ratcu
+
+selcmi(c2,c1)
+non-veridical: (ratcu(c1) /\ srana(c1,mi))
+non-veridical: (vi)(). <ratcu(_)><(ny) moi>(c0)
+[Fragment: c0,c2]
+
+cy re selcmi cy pa
+.i ju'a nai ge cy pa ratcu gi cy pa srana mi
+.i ju'a nai vi ku zo'u cy no ke ratcu ny moi ke'e
+.i cy no cy re
+
+-----
+> ny.mai
+-----
+> xy. xi ky.
+
+[Fragment: x]
+
+xy
+
+-----
+> vei ny. [ve'o] lo prenu
+
+prenu(c0)
+[Fragment: [DONKEY]]
+
+cy no prenu
+.i lo XASLI zei da ku
+
+-----
+> la dyny'abub. .i la ny'abuty'obub. .i la cy'ibu'abub. .i la sykybulyl. .i la .ibubymym. .i la ny'ybucyc.
+
+[Fragment: "dyny'abub"]
+[Fragment: "ny'abuty'obub"]
+[Fragment: "cy'ibu'abub"]
+[Fragment: "sykybulyl"]
+[Fragment: "ibubymym"]
+[Fragment: "ny'ybucyc"]
+
+la dyny'abub.
+.i la ny'abuty'obub.
+.i la cy'ibu'abub.
+.i la sykybulyl.
+.i la ibubymym.
+.i la ny'ybucyc.
+
+-----
+> la dyny'am. .i la ny'aty'om. .i la cy'i'am. .i la sykybulym. .i la .ibymym. .i la ny'ybucym.
+
+[Fragment: "dyny'am"]
+[Fragment: "ny'aty'om"]
+[Fragment: "cy'i'am"]
+[Fragment: "sykybulym"]
+[Fragment: "ibymym"]
+[Fragment: "ny'ybucym"]
+
+la dyny'am.
+.i la ny'aty'om.
+.i la cy'i'am.
+.i la sykybulym.
+.i la ibymym.
+.i la ny'ybucym.
+
+-----
+> la dynyzaz. .i la nyzatyzoz. .i la cyzizaz. .i la sykybulyz. .i la .ibymyz. .i la nyzybucyz.
+
+[Fragment: "dynyzaz"]
+[Fragment: "nyzatyzoz"]
+[Fragment: "cyzizaz"]
+[Fragment: "sykybulyz"]
+[Fragment: "ibymyz"]
+[Fragment: "nyzybucyz"]
+
+la dynyzaz.
+.i la nyzatyzoz.
+.i la cyzizaz.
+.i la sykybulyz.
+.i la ibymyz.
+.i la nyzybucyz.
+
+-----
+> la me dy ny. .abu
+
+[Fragment: [Name: (dna) >= (_) ]]
+
+la poi'i me dy ny abu me'u ku'o ku
+
+-----
+> la cribe cu ciska
+
+ciska([Name: cribe(_) ])
+
+la poi'i cribe ku'o ku ciska
+
+-----
+> me'o se'ecixa cu lerfu la .asycy'i'is. loi merko rupnu
+
+gunma(c1,c0)
+<merko(_)><rupnu>(c0)
+lerfu([MEX: MexLerfuString [LerfuChar 's',LerfuChar '3',LerfuChar '6']],"asycy'i'is",c1)
+
+cy pa gunma cy no
+.i cy no ke merko rupnu ke'e
+.i me'o MexLerfuString [LerfuChar 's',LerfuChar '3',LerfuChar '6'] lo'o lerfu la asycy'i'is. cy pa
+
+-----
+> me'o se'erexarerei sinxa le ka panpi
+
+non-veridical: ka[panpi(\1)](c0)
+sinxa([MEX: MexLerfuString [LerfuChar 's',LerfuChar '2',LerfuChar '6',LerfuChar '2',LerfuPA "rei"]],c0)
+
+ju'a nai cy no ka ce'u panpi kei
+.i me'o MexLerfuString [LerfuChar 's',LerfuChar '2',LerfuChar '6',LerfuChar '2',LerfuPA "rei"] lo'o sinxa cy no
+
+-----

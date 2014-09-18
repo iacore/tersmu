@@ -1,0 +1,1875 @@
+> mi klama le zarci
+
+non-veridical: zarci(c0)
+klama(mi,c0)
+
+ju'a nai cy no zarci
+.i mi klama cy no
+
+-----
+> mi cu pu klama le zarci
+
+non-veridical: zarci(c0)
+(pu)(). klama(mi,c0)
+
+ju'a nai cy no zarci
+.i pu ku zo'u mi klama cy no
+
+-----
+> mi pu klama le zarci
+
+non-veridical: zarci(c0)
+(pu)(). klama(mi,c0)
+
+ju'a nai cy no zarci
+.i pu ku zo'u mi klama cy no
+
+-----
+> puku mi klama le zarci
+
+non-veridical: zarci(c0)
+(pu)(). klama(mi,c0)
+
+ju'a nai cy no zarci
+.i pu ku zo'u mi klama cy no
+
+-----
+> mi klama puku le zarci
+
+non-veridical: zarci(c0)
+(pu)(). klama(mi,c0)
+
+ju'a nai cy no zarci
+.i pu ku zo'u mi klama cy no
+
+-----
+> mi klama le zarci pu [ku]
+
+non-veridical: zarci(c0)
+(pu)(). klama(mi,c0)
+
+ju'a nai cy no zarci
+.i pu ku zo'u mi klama cy no
+
+-----
+> le nanmu va batci le gerku
+
+non-veridical: gerku(c1)
+non-veridical: nanmu(c0)
+(va)(). batci(c0,c1)
+
+ju'a nai cy pa gerku
+.i ju'a nai cy no nanmu
+.i va ku zo'u cy no batci cy pa
+
+-----
+> le nanmu zu'a batci le gerku
+
+non-veridical: gerku(c1)
+non-veridical: nanmu(c0)
+(zu'a)(). batci(c0,c1)
+
+ju'a nai cy pa gerku
+.i ju'a nai cy no nanmu
+.i zu'a ku zo'u cy no batci cy pa
+
+-----
+> le nanmu zu'avi batci le gerku
+
+non-veridical: gerku(c1)
+non-veridical: nanmu(c0)
+(zu'a)(). (vi)(). batci(c0,c1)
+
+ju'a nai cy pa gerku
+.i ju'a nai cy no nanmu
+.i zu'a ku vi ku zo'u cy no batci cy pa
+
+-----
+> zu'aviku le nanmu cu batci le gerku
+
+non-veridical: gerku(c1)
+non-veridical: nanmu(c0)
+(zu'a)(). (vi)(). batci(c0,c1)
+
+ju'a nai cy pa gerku
+.i ju'a nai cy no nanmu
+.i zu'a ku vi ku zo'u cy no batci cy pa
+
+-----
+> le nanmu ga'u zu'a batci le gerku
+
+non-veridical: gerku(c1)
+non-veridical: nanmu(c0)
+(ga'u)(). (zu'a)(). batci(c0,c1)
+
+ju'a nai cy pa gerku
+.i ju'a nai cy no nanmu
+.i ga'u ku zu'a ku zo'u cy no batci cy pa
+
+-----
+> le nanmu zu'a ga'u batci le gerku
+
+non-veridical: gerku(c1)
+non-veridical: nanmu(c0)
+(zu'a)(). (ga'u)(). batci(c0,c1)
+
+ju'a nai cy pa gerku
+.i ju'a nai cy no nanmu
+.i zu'a ku ga'u ku zo'u cy no batci cy pa
+
+-----
+> le nanmu zu'avi ga'uvu batci le gerku
+
+non-veridical: gerku(c1)
+non-veridical: nanmu(c0)
+(zu'a)(). (vi)(). (ga'u)(). (vu)(). batci(c0,c1)
+
+ju'a nai cy pa gerku
+.i ju'a nai cy no nanmu
+.i zu'a ku vi ku ga'u ku vu ku zo'u cy no batci cy pa
+
+-----
+> le nanmu vi zu'a batci le gerku
+
+non-veridical: gerku(c1)
+non-veridical: nanmu(c0)
+(vi)(). (zu'a)(). batci(c0,c1)
+
+ju'a nai cy pa gerku
+.i ju'a nai cy no nanmu
+.i vi ku zu'a ku zo'u cy no batci cy pa
+
+-----
+> le nanmu ca'uvi ni'ava ri'uvu ne'i batci le gerku
+
+non-veridical: gerku(c1)
+non-veridical: nanmu(c0)
+(ca'u)(). (vi)(). (ni'a)(). (va)(). (ri'u)(). (vu)(). (ne'i)(). batci(c0,c1)
+
+ju'a nai cy pa gerku
+.i ju'a nai cy no nanmu
+.i ca'u ku vi ku ni'a ku va ku ri'u ku vu ku ne'i ku zo'u cy no batci cy pa
+
+-----
+> le nanmu pu batci le gerku
+
+non-veridical: gerku(c1)
+non-veridical: nanmu(c0)
+(pu)(). batci(c0,c1)
+
+ju'a nai cy pa gerku
+.i ju'a nai cy no nanmu
+.i pu ku zo'u cy no batci cy pa
+
+-----
+> le nanmu puzi batci le gerku
+
+non-veridical: gerku(c1)
+non-veridical: nanmu(c0)
+(pu)(). (zi)(). batci(c0,c1)
+
+ju'a nai cy pa gerku
+.i ju'a nai cy no nanmu
+.i pu ku zi ku zo'u cy no batci cy pa
+
+-----
+> le nanmu pu pu batci le gerku
+
+non-veridical: gerku(c1)
+non-veridical: nanmu(c0)
+(pu)(). (pu)(). batci(c0,c1)
+
+ju'a nai cy pa gerku
+.i ju'a nai cy no nanmu
+.i pu ku pu ku zo'u cy no batci cy pa
+
+-----
+> le nanmu ba puzi batci le gerku
+
+non-veridical: gerku(c1)
+non-veridical: nanmu(c0)
+(ba)(). (pu)(). (zi)(). batci(c0,c1)
+
+ju'a nai cy pa gerku
+.i ju'a nai cy no nanmu
+.i ba ku pu ku zi ku zo'u cy no batci cy pa
+
+-----
+> le nanmu zi pu batci le gerku
+
+non-veridical: gerku(c1)
+non-veridical: nanmu(c0)
+(zi)(). (pu)(). batci(c0,c1)
+
+ju'a nai cy pa gerku
+.i ju'a nai cy no nanmu
+.i zi ku pu ku zo'u cy no batci cy pa
+
+-----
+> le nanmu zu batci le gerku
+
+non-veridical: gerku(c1)
+non-veridical: nanmu(c0)
+(zu)(). batci(c0,c1)
+
+ju'a nai cy pa gerku
+.i ju'a nai cy no nanmu
+.i zu ku zo'u cy no batci cy pa
+
+-----
+> le nanmu puzu vu batci le gerku
+
+non-veridical: gerku(c1)
+non-veridical: nanmu(c0)
+(pu)(). (zu)(). (vu)(). batci(c0,c1)
+
+ju'a nai cy pa gerku
+.i ju'a nai cy no nanmu
+.i pu ku zu ku vu ku zo'u cy no batci cy pa
+
+-----
+> le nanmu batci le gerku puzuvuku
+
+non-veridical: gerku(c1)
+non-veridical: <nanmu(_)><batci>(c0)
+[Fragment: c0,c1]
+
+ju'a nai cy pa gerku
+.i ju'a nai cy no ke nanmu batci ke'e
+.i cy no cy pa
+
+-----
+> le verba ve'i cadzu le bisli
+
+non-veridical: bisli(c1)
+non-veridical: verba(c0)
+(ve'i)(). cadzu(c0,c1)
+
+ju'a nai cy pa bisli
+.i ju'a nai cy no verba
+.i ve'i ku zo'u cy no cadzu cy pa
+
+-----
+> le verba ze'a cadzu le bisli
+
+non-veridical: bisli(c1)
+non-veridical: verba(c0)
+(ze'a)(). cadzu(c0,c1)
+
+ju'a nai cy pa bisli
+.i ju'a nai cy no verba
+.i ze'a ku zo'u cy no cadzu cy pa
+
+-----
+> le verba pu ze'a cadzu le bisli
+
+non-veridical: bisli(c1)
+non-veridical: verba(c0)
+(pu)(). (ze'a)(). cadzu(c0,c1)
+
+ju'a nai cy pa bisli
+.i ju'a nai cy no verba
+.i pu ku ze'a ku zo'u cy no cadzu cy pa
+
+-----
+> mi ca ze'ica cusku dei
+
+(ca)(). (ze'i)(). (ca)(). cusku(mi,dei)
+
+ca ku ze'i ku ca ku zo'u mi cusku dei
+
+-----
+> mi ca ze'ipu cusku dei
+
+(ca)(). (ze'i)(). (pu)(). cusku(mi,dei)
+
+ca ku ze'i ku pu ku zo'u mi cusku dei
+
+-----
+> mi pu ze'aba citka le mi sanmi
+
+non-veridical: (sanmi(c0) /\ srana(c0,mi))
+(pu)(). (ze'a)(). (ba)(). citka(mi,c0)
+
+ju'a nai ge cy no sanmi gi cy no srana mi
+.i pu ku ze'a ku ba ku zo'u mi citka cy no
+
+-----
+> mi pu ze'aca citka le mi sanmi
+
+non-veridical: (sanmi(c0) /\ srana(c0,mi))
+(pu)(). (ze'a)(). (ca)(). citka(mi,c0)
+
+ju'a nai ge cy no sanmi gi cy no srana mi
+.i pu ku ze'a ku ca ku zo'u mi citka cy no
+
+-----
+> ta ri'u ve'i finpe
+
+(ri'u)(). (ve'i)(). finpe(ta)
+
+ri'u ku ve'i ku zo'u ta finpe
+
+-----
+> ta ri'u ve'ica'u finpe
+
+(ri'u)(). (ve'i)(). (ca'u)(). finpe(ta)
+
+ri'u ku ve'i ku ca'u ku zo'u ta finpe
+
+-----
+> mi pu klama le zarci
+
+non-veridical: zarci(c0)
+(pu)(). klama(mi,c0)
+
+ju'a nai cy no zarci
+.i pu ku zo'u mi klama cy no
+
+-----
+> le tricu ba crino
+
+non-veridical: tricu(c0)
+(ba)(). crino(c0)
+
+ju'a nai cy no tricu
+.i ba ku zo'u cy no crino
+
+-----
+> le verba ve'a vi'a cadzu le bisli
+
+non-veridical: bisli(c1)
+non-veridical: verba(c0)
+(ve'a)(). (vi'a)(). cadzu(c0,c1)
+
+ju'a nai cy pa bisli
+.i ju'a nai cy no verba
+.i ve'a ku vi'a ku zo'u cy no cadzu cy pa
+
+-----
+> le verba mo'i ri'u cadzu le bisli
+
+non-veridical: bisli(c1)
+non-veridical: verba(c0)
+(mo'i ri'u)(). cadzu(c0,c1)
+
+ju'a nai cy pa bisli
+.i ju'a nai cy no verba
+.i mo'i ri'u ku zo'u cy no cadzu cy pa
+
+-----
+> le verba ri'u cadzu le bisli
+
+non-veridical: bisli(c1)
+non-veridical: verba(c0)
+(ri'u)(). cadzu(c0,c1)
+
+ju'a nai cy pa bisli
+.i ju'a nai cy no verba
+.i ri'u ku zo'u cy no cadzu cy pa
+
+-----
+> le verba mo'i ri'u cadzu le bisli ma'i vo'a
+
+non-veridical: bisli(c1)
+non-veridical: verba(c0)
+(mo'i ri'u)(). (ma'i)(c0). cadzu(c0,c1)
+
+ju'a nai cy pa bisli
+.i ju'a nai cy no verba
+.i mo'i ri'u ku ma'i cy no zo'u cy no cadzu cy pa
+
+-----
+> le verba zu'avu mo'i ri'uvi cadzu le bisli
+
+non-veridical: bisli(c1)
+non-veridical: verba(c0)
+(zu'a)(). (vu)(). (mo'i ri'u)(). (vi)(). cadzu(c0,c1)
+
+ju'a nai cy pa bisli
+.i ju'a nai cy no verba
+.i zu'a ku vu ku mo'i ri'u ku vi ku zo'u cy no cadzu cy pa
+
+-----
+> mi mo'i ca'uvu citka le mi sanmi
+
+non-veridical: (sanmi(c0) /\ srana(c0,mi))
+(mo'i ca'u)(). (vu)(). citka(mi,c0)
+
+ju'a nai ge cy no sanmi gi cy no srana mi
+.i mo'i ca'u ku vu ku zo'u mi citka cy no
+
+-----
+> mi puzu ze'u velckule
+
+(pu)(). (zu)(). (ze'u)(). velckule(mi)
+
+pu ku zu ku ze'u ku zo'u mi velckule
+
+-----
+> mi puzu ze'u di'i velckule
+
+(pu)(). (zu)(). (ze'u)(). (di'i)(). velckule(mi)
+
+pu ku zu ku ze'u ku di'i ku zo'u mi velckule
+
+-----
+> mi ba ta'e klama le zarci
+
+non-veridical: zarci(c0)
+(ba)(). (ta'e)(). klama(mi,c0)
+
+ju'a nai cy no zarci
+.i ba ku ta'e ku zo'u mi klama cy no
+
+-----
+> mi na'o klama le zarci
+
+non-veridical: zarci(c0)
+(na'o)(). klama(mi,c0)
+
+ju'a nai cy no zarci
+.i na'o ku zo'u mi klama cy no
+
+-----
+> le verba ru'inai cadzu le bisli
+
+non-veridical: bisli(c1)
+non-veridical: verba(c0)
+(ru'i nai)(). cadzu(c0,c1)
+
+ju'a nai cy pa bisli
+.i ju'a nai cy no verba
+.i ru'i nai ku zo'u cy no cadzu cy pa
+
+-----
+> mi paroi klama le zarci
+
+non-veridical: zarci(c0)
+(1 roi)(). klama(mi,c0)
+
+ju'a nai cy no zarci
+.i pa roi ku zo'u mi klama cy no
+
+-----
+> mi du'eroi klama le zarci
+
+non-veridical: zarci(c0)
+((du'e) roi)(). klama(mi,c0)
+
+ju'a nai cy no zarci
+.i du'e roi ku zo'u mi klama cy no
+
+-----
+> mi pu reroi klama le zarci
+
+non-veridical: zarci(c0)
+(pu)(). (2 roi)(). klama(mi,c0)
+
+ju'a nai cy no zarci
+.i pu ku re roi ku zo'u mi klama cy no
+
+-----
+> le ratcu reroinai citka le cirla
+
+non-veridical: cirla(c1)
+non-veridical: ratcu(c0)
+(2 roi nai)(). citka(c0,c1)
+
+ju'a nai cy pa cirla
+.i ju'a nai cy no ratcu
+.i re roi nai ku zo'u cy no citka cy pa
+
+-----
+> mi ze'e paroi klama le zarci
+
+non-veridical: zarci(c0)
+(ze'e)(). (1 roi)(). klama(mi,c0)
+
+ju'a nai cy no zarci
+.i ze'e ku pa roi ku zo'u mi klama cy no
+
+-----
+> mi ze'epu noroi klama le zarci
+
+non-veridical: zarci(c0)
+(ze'e)(). (pu)(). (0 roi)(). klama(mi,c0)
+
+ju'a nai cy no zarci
+.i ze'e ku pu ku no roi ku zo'u mi klama cy no
+
+-----
+> mi pu'o damba
+
+(pu'o)(). damba(mi)
+
+pu'o ku zo'u mi damba
+
+-----
+> la stiv. ca'o bacru
+
+(ca'o)(). bacru("stiv")
+
+ca'o ku zo'u la stiv. bacru
+
+-----
+> le verba ba'o cadzu le bisli
+
+non-veridical: bisli(c1)
+non-veridical: verba(c0)
+(ba'o)(). cadzu(c0,c1)
+
+ju'a nai cy pa bisli
+.i ju'a nai cy no verba
+.i ba'o ku zo'u cy no cadzu cy pa
+
+-----
+> mi ba co'a citka le mi sanmi
+
+non-veridical: (sanmi(c0) /\ srana(c0,mi))
+(ba)(). (co'a)(). citka(mi,c0)
+
+ju'a nai ge cy no sanmi gi cy no srana mi
+.i ba ku co'a ku zo'u mi citka cy no
+
+-----
+> mi pu co'u citka le mi sanmi
+
+non-veridical: (sanmi(c0) /\ srana(c0,mi))
+(pu)(). (co'u)(). citka(mi,c0)
+
+ju'a nai ge cy no sanmi gi cy no srana mi
+.i pu ku co'u ku zo'u mi citka cy no
+
+-----
+> mi ba di'i co'a bajra
+
+(ba)(). (di'i)(). (co'a)(). bajra(mi)
+
+ba ku di'i ku co'a ku zo'u mi bajra
+
+-----
+> mi pu mo'u citka le mi sanmi
+
+non-veridical: (sanmi(c0) /\ srana(c0,mi))
+(pu)(). (mo'u)(). citka(mi,c0)
+
+ju'a nai ge cy no sanmi gi cy no srana mi
+.i pu ku mo'u ku zo'u mi citka cy no
+
+-----
+> mi pu de'a citka le mi sanmi
+
+non-veridical: (sanmi(c0) /\ srana(c0,mi))
+(pu)(). (de'a)(). citka(mi,c0)
+
+ju'a nai ge cy no sanmi gi cy no srana mi
+.i pu ku de'a ku zo'u mi citka cy no
+
+-----
+> mi ba di'a citka le mi sanmi
+
+non-veridical: (sanmi(c0) /\ srana(c0,mi))
+(ba)(). (di'a)(). citka(mi,c0)
+
+ju'a nai ge cy no sanmi gi cy no srana mi
+.i ba ku di'a ku zo'u mi citka cy no
+
+-----
+> le ctuca pu za'o ciksi le cmaci seldanfu le tadgri
+
+non-veridical: tadgri(c2)
+non-veridical: <cmaci(_)><seldanfu>(c1)
+non-veridical: ctuca(c0)
+(pu)(). (za'o)(). ciksi(c0,c1,c2)
+
+ju'a nai cy re tadgri
+.i ju'a nai cy pa ke cmaci seldanfu ke'e
+.i ju'a nai cy no ctuca
+.i pu ku za'o ku zo'u cy no ciksi cy pa cy re
+
+-----
+> la djan. pu co'i catra la djim
+
+(pu)(). (co'i)(). catra("djan","djim")
+
+pu ku co'i ku zo'u la djan. catra la djim.
+
+-----
+> mi pare'u klama le zarci
+
+non-veridical: zarci(c0)
+(1 re'u)(). klama(mi,c0)
+
+ju'a nai cy no zarci
+.i pa re'u ku zo'u mi klama cy no
+
+-----
+> mi pare'u paroi klama le zarci
+
+non-veridical: zarci(c0)
+(1 re'u)(). (1 roi)(). klama(mi,c0)
+
+ju'a nai cy no zarci
+.i pa re'u ku pa roi ku zo'u mi klama cy no
+
+-----
+> mi paroi pare'u klama le zarci
+
+non-veridical: zarci(c0)
+(1 roi)(). (1 re'u)(). klama(mi,c0)
+
+ju'a nai cy no zarci
+.i pa roi ku pa re'u ku zo'u mi klama cy no
+
+-----
+> ko vi'i fe'e di'i sombo le gurni
+
+non-veridical: gurni(c0)
+(vi'i)(). (fe'e di'i)(). sombo(ko,c0)
+
+ju'a nai cy no gurni
+.i vi'i ku fe'e di'i ku zo'u ko sombo cy no
+
+-----
+> mi fe'e ciroi tervecnu lo selsalta
+
+selsalta(c0)
+(fe'e 3 roi)(). tervecnu(mi,c0)
+
+cy no selsalta
+.i fe'e ci roi ku zo'u mi tervecnu cy no
+
+-----
+> ze'e roroi ve'e fe'e roroi ku li re su'i re du li vo
+
+(ze'e)(). ((ro) roi)(). (ve'e)(). (fe'e (ro) roi)(). =({su'i}(2,2),4)
+
+ze'e ku ro roi ku ve'e ku fe'e ro roi ku zo'u li pe'o su'i re boi re boi ku'e lo'o du li vo boi lo'o
+
+-----
+> tu ve'abe'a fe'e co'a rokci
+
+(ve'a)(). (be'a)(). (fe'e co'a)(). rokci(tu)
+
+ve'a ku be'a ku fe'e co'a ku zo'u tu rokci
+
+-----
+> mi klama le zarci ca le nu do klama le zdani
+
+non-veridical: nu[klama(do,c1)](c2)
+non-veridical: zdani(c1)
+non-veridical: zarci(c0)
+(ca)(c2). klama(mi,c0)
+
+ju'a nai cy re nu do klama cy pa kei
+.i ju'a nai cy pa zdani
+.i ju'a nai cy no zarci
+.i ca cy re zo'u mi klama cy no
+
+-----
+> mi klama le zarci pu le nu do pu klama le zdani
+
+non-veridical: nu[(pu)(). klama(do,c1)](c2)
+non-veridical: zdani(c1)
+non-veridical: zarci(c0)
+(pu)(c2). klama(mi,c0)
+
+ju'a nai cy re nu pu ku zo'u do klama cy pa kei
+.i ju'a nai cy pa zdani
+.i ju'a nai cy no zarci
+.i pu cy re zo'u mi klama cy no
+
+-----
+> le ratcu cu citka le cirla vi le panka
+
+non-veridical: panka(c2)
+non-veridical: cirla(c1)
+non-veridical: ratcu(c0)
+(vi)(c2). citka(c0,c1)
+
+ju'a nai cy re panka
+.i ju'a nai cy pa cirla
+.i ju'a nai cy no ratcu
+.i vi cy re zo'u cy no citka cy pa
+
+-----
+> le ratcu cu citka le cirla vi le vu panka
+
+non-veridical: (vu)(). panka(c2)
+non-veridical: cirla(c1)
+non-veridical: ratcu(c0)
+(vi)(c2). citka(c0,c1)
+
+ju'a nai vu ku zo'u cy re panka
+.i ju'a nai cy pa cirla
+.i ju'a nai cy no ratcu
+.i vi cy re zo'u cy no citka cy pa
+
+-----
+> le ratcu cu citka le cirla vu le vi panka
+
+non-veridical: (vi)(). panka(c2)
+non-veridical: cirla(c1)
+non-veridical: ratcu(c0)
+(vu)(c2). citka(c0,c1)
+
+ju'a nai vi ku zo'u cy re panka
+.i ju'a nai cy pa cirla
+.i ju'a nai cy no ratcu
+.i vu cy re zo'u cy no citka cy pa
+
+-----
+> mi morsi ba'o le nu mi jmive
+
+non-veridical: nu[jmive(mi)](c0)
+(ba'o)(c0). morsi(mi)
+
+ju'a nai cy no nu mi jmive kei
+.i ba'o cy no zo'u mi morsi
+
+-----
+> mi morsi ba le nu mi jmive
+
+non-veridical: nu[jmive(mi)](c0)
+(ba)(c0). morsi(mi)
+
+ju'a nai cy no nu mi jmive kei
+.i ba cy no zo'u mi morsi
+
+-----
+> mi klama le zarci pu'o le nu mi citka
+
+non-veridical: nu[citka(mi)](c1)
+non-veridical: zarci(c0)
+(pu'o)(c1). klama(mi,c0)
+
+ju'a nai cy pa nu mi citka kei
+.i ju'a nai cy no zarci
+.i pu'o cy pa zo'u mi klama cy no
+
+-----
+> mi klama le zarci ba'o le nu mi citka
+
+non-veridical: nu[citka(mi)](c1)
+non-veridical: zarci(c0)
+(ba'o)(c1). klama(mi,c0)
+
+ju'a nai cy pa nu mi citka kei
+.i ju'a nai cy no zarci
+.i ba'o cy pa zo'u mi klama cy no
+
+-----
+> le bloti pu za'o xelklama fe'e ba'o le lalxu
+
+non-veridical: lalxu(c1)
+non-veridical: bloti(c0)
+(pu)(). (za'o)(). (fe'e ba'o)(c1). xelklama(c0)
+
+ju'a nai cy pa lalxu
+.i ju'a nai cy no bloti
+.i pu ku za'o ku fe'e ba'o cy pa zo'u cy no xelklama
+
+-----
+> mi klama le zarci reroi le ca djedi
+
+non-veridical: (ca)(). djedi(c1)
+non-veridical: zarci(c0)
+(2 roi)(c1). klama(mi,c0)
+
+ju'a nai ca ku zo'u cy pa djedi
+.i ju'a nai cy no zarci
+.i re roi cy pa zo'u mi klama cy no
+
+-----
+> loi snime cu carvi ze'u le ca dunra
+
+non-veridical: (ca)(). dunra(c2)
+gunma(c1,c0)
+snime(c0)
+(ze'u)(c2). carvi(c1)
+
+ju'a nai ca ku zo'u cy re dunra
+.i cy pa gunma cy no
+.i cy no snime
+.i ze'u cy re zo'u cy pa carvi
+
+-----
+> loi snime cu carvi ca le ze'u dunra
+
+non-veridical: (ze'u)(). dunra(c2)
+gunma(c1,c0)
+snime(c0)
+(ca)(c2). carvi(c1)
+
+ju'a nai ze'u ku zo'u cy re dunra
+.i cy pa gunma cy no
+.i cy no snime
+.i ca cy re zo'u cy pa carvi
+
+-----
+> mi puki klama le zarci .i le nanmu cu batci le gerku
+
+non-veridical: gerku(c2)
+non-veridical: nanmu(c1)
+non-veridical: zarci(c0)
+(pu)(). (ki)(). klama(mi,c0)
+batci(c1,c2)
+
+ju'a nai cy re gerku
+.i ju'a nai cy pa nanmu
+.i ju'a nai cy no zarci
+.i pu ku ki ku zo'u mi klama cy no
+.i cy pa batci cy re
+
+-----
+> mi puki klama le zarci .i le nanmu pu batci le gerku
+
+non-veridical: gerku(c2)
+non-veridical: nanmu(c1)
+non-veridical: zarci(c0)
+(pu)(). (ki)(). klama(mi,c0)
+(pu)(). batci(c1,c2)
+
+ju'a nai cy re gerku
+.i ju'a nai cy pa nanmu
+.i ju'a nai cy no zarci
+.i pu ku ki ku zo'u mi klama cy no
+.i pu ku zo'u cy pa batci cy re
+
+-----
+> mi pu klama le zarci .i le nanmu pupu batci le gerku
+
+non-veridical: gerku(c2)
+non-veridical: nanmu(c1)
+non-veridical: zarci(c0)
+(pu)(). klama(mi,c0)
+(pu)(). (pu)(). batci(c1,c2)
+
+ju'a nai cy re gerku
+.i ju'a nai cy pa nanmu
+.i ju'a nai cy no zarci
+.i pu ku zo'u mi klama cy no
+.i pu ku pu ku zo'u cy pa batci cy re
+
+-----
+> puku mi ba klama le zarci
+
+non-veridical: zarci(c0)
+(pu)(). (ba)(). klama(mi,c0)
+
+ju'a nai cy no zarci
+.i pu ku ba ku zo'u mi klama cy no
+
+-----
+> mi puba klama le zarci
+
+non-veridical: zarci(c0)
+(pu)(). (ba)(). klama(mi,c0)
+
+ju'a nai cy no zarci
+.i pu ku ba ku zo'u mi klama cy no
+
+-----
+> mi ba klama le zarci puku
+
+non-veridical: zarci(c0)
+(ba)(). (pu)(). klama(mi,c0)
+
+ju'a nai cy no zarci
+.i ba ku pu ku zo'u mi klama cy no
+
+-----
+> mi bapu klama le zarci
+
+non-veridical: zarci(c0)
+(ba)(). (pu)(). klama(mi,c0)
+
+ju'a nai cy no zarci
+.i ba ku pu ku zo'u mi klama cy no
+
+-----
+> pukiku mi ba klama le zarci .i le nanmu cu batci le gerku
+
+non-veridical: gerku(c2)
+non-veridical: nanmu(c1)
+non-veridical: zarci(c0)
+(pu)(). (ki)(). (ba)(). klama(mi,c0)
+batci(c1,c2)
+
+ju'a nai cy re gerku
+.i ju'a nai cy pa nanmu
+.i ju'a nai cy no zarci
+.i pu ku ki ku ba ku zo'u mi klama cy no
+.i cy pa batci cy re
+
+-----
+> mi pu klama le ba'o zarci
+
+non-veridical: (ba'o)(). zarci(c0)
+(pu)(). klama(mi,c0)
+
+ju'a nai ba'o ku zo'u cy no zarci
+.i pu ku zo'u mi klama cy no
+
+-----
+> mi ca jinvi le du'u mi ba morsi
+
+non-veridical: du'u[(ba)(). morsi(mi)](c0)
+(ca)(). jinvi(mi,c0)
+
+ju'a nai cy no du'u ba ku zo'u mi morsi kei
+.i ca ku zo'u mi jinvi cy no
+
+-----
+> puzuki ku ne'iki le kevna le ninmu goi ko'a zutse le rokci
+
+non-veridical: rokci(c2)
+non-veridical: ninmu(c1)
+non-veridical: kevna(c0)
+(pu)(). (zu)(). (ki)(). (ne'i ki)(c0). zutse(c1,c2)
+
+ju'a nai cy re rokci
+.i ju'a nai cy pa ninmu
+.i ju'a nai cy no kevna
+.i pu ku zu ku ki ku ne'i ki cy no zo'u cy pa zutse cy re
+
+-----
+> .i ko'a citka loi kanba rectu
+
+gunma(c1,c0)
+<kanba(_)><rectu>(c0)
+citka({ko'a},c1)
+
+cy pa gunma cy no
+.i cy no ke kanba rectu ke'e
+.i ko'a citka cy pa
+
+-----
+> .i ko'a pu jukpa ri le mudyfagri
+
+non-veridical: mudyfagri(c0)
+(pu)(). jukpa({ko'a},{ri},c0)
+
+ju'a nai cy no mudyfagri
+.i pu ku zo'u ko'a jukpa ri cy no
+
+-----
+> .i lei rectu cu zanglare
+
+gunma(c1,c0)
+non-veridical: rectu(c0)
+zanglare(c1)
+
+cy pa gunma cy no
+.i ju'a nai cy no rectu
+.i cy pa zanglare
+
+-----
+> .i le labno goi ko'e bazaki nenri klama le kevna
+
+non-veridical: kevna(c1)
+non-veridical: labno(c0)
+(ba)(). (za)(). (ki)(). <nenri(_)><klama>(c0,c1)
+
+ju'a nai cy pa kevna
+.i ju'a nai cy no labno
+.i ba ku za ku ki ku zo'u cy no ke nenri klama ke'e cy pa
+
+-----
+> .i ko'e lebna lei rectu ko'a
+
+gunma(c1,c0)
+non-veridical: rectu(c0)
+lebna({ko'e},c1,{ko'a})
+
+cy pa gunma cy no
+.i ju'a nai cy no rectu
+.i ko'e lebna cy pa ko'a
+
+-----
+> .i ko'e bartu klama
+
+<bartu(_)><klama>({ko'e})
+
+ko'e ke bartu klama ke'e
+
+-----
+> la djan. ca cusku le se du'u la djordj. ca klama le zarci
+
+non-veridical: du'u[(ca)(). klama("djordj",c0)]( ,c1)
+non-veridical: zarci(c0)
+(ca)(). cusku("djan",c1)
+
+ju'a nai du'u ca ku zo'u la djordj. klama cy no kei cy pa
+.i ju'a nai cy no zarci
+.i ca ku zo'u la djan. cusku cy pa
+
+-----
+> la djan. ca cusku le se du'u la djordj. pu klama le zarci
+
+non-veridical: du'u[(pu)(). klama("djordj",c0)]( ,c1)
+non-veridical: zarci(c0)
+(ca)(). cusku("djan",c1)
+
+ju'a nai du'u pu ku zo'u la djordj. klama cy no kei cy pa
+.i ju'a nai cy no zarci
+.i ca ku zo'u la djan. cusku cy pa
+
+-----
+> la djan. pu cusku le se du'u la djordj. ca klama le zarci
+
+non-veridical: du'u[(ca)(). klama("djordj",c0)]( ,c1)
+non-veridical: zarci(c0)
+(pu)(). cusku("djan",c1)
+
+ju'a nai du'u ca ku zo'u la djordj. klama cy no kei cy pa
+.i ju'a nai cy no zarci
+.i pu ku zo'u la djan. cusku cy pa
+
+-----
+> la djan. pu cusku le se du'u la djordj. pu klama le zarci
+
+non-veridical: du'u[(pu)(). klama("djordj",c0)]( ,c1)
+non-veridical: zarci(c0)
+(pu)(). cusku("djan",c1)
+
+ju'a nai du'u pu ku zo'u la djordj. klama cy no kei cy pa
+.i ju'a nai cy no zarci
+.i pu ku zo'u la djan. cusku cy pa
+
+-----
+> la djan. pu cusku le se du'u la .alis pu cusku le se du'u la djordj. pu cusku le se du'u la maris. nau klama le zarci
+
+non-veridical: du'u[(pu)(). cusku("alis",c2)]( ,c3)
+non-veridical: du'u[(pu)(). cusku("djordj",c1)]( ,c2)
+non-veridical: du'u[(cu'e)(). klama("maris",c0)]( ,c1)
+non-veridical: zarci(c0)
+(pu)(). cusku("djan",c3)
+
+ju'a nai du'u pu ku zo'u la alis. cusku cy re kei cy ci
+.i ju'a nai du'u pu ku zo'u la djordj. cusku cy pa kei cy re
+.i ju'a nai du'u cu'e ku zo'u la maris. klama cy no kei cy pa
+.i ju'a nai cy no zarci
+.i pu ku zo'u la djan. cusku cy ci
+
+-----
+> le verba cu cadzu le bisli zu'a le nu le nanmu cu batci le gerku
+
+non-veridical: nu[batci(c2,c3)](c4)
+non-veridical: gerku(c3)
+non-veridical: nanmu(c2)
+non-veridical: bisli(c1)
+non-veridical: verba(c0)
+(zu'a)(c4). cadzu(c0,c1)
+
+ju'a nai cy vo nu cy re batci cy ci kei
+.i ju'a nai cy ci gerku
+.i ju'a nai cy re nanmu
+.i ju'a nai cy pa bisli
+.i ju'a nai cy no verba
+.i zu'a cy vo zo'u cy no cadzu cy pa
+
+-----
+> le nanmu cu batci le gerku .izu'abo le verba cu cadzu le bisli
+
+non-veridical: bisli(c3)
+non-veridical: verba(c2)
+non-veridical: gerku(c1)
+non-veridical: nanmu(c0)
+EX x1. (x1=. batci(c0,c1) /\ (zu'a)(x1). cadzu(c2,c3))
+
+ju'a nai cy ci bisli
+.i ju'a nai cy re verba
+.i ju'a nai cy pa gerku
+.i ju'a nai cy no nanmu
+.i su'o da zo'u ge fi'o du da zo'u cy no batci cy pa gi zu'a da zo'u cy re cadzu cy ci
+
+-----
+> le nanmu cu batci le gerku .i zu'a la'edi'u le verba cu cadzu le bisli
+
+non-veridical: bisli(c3)
+non-veridical: verba(c2)
+non-veridical: gerku(c1)
+non-veridical: nanmu(c0)
+batci(c0,c1)
+(zu'a)({la'e}(di'u)). cadzu(c2,c3)
+
+ju'a nai cy ci bisli
+.i ju'a nai cy re verba
+.i ju'a nai cy pa gerku
+.i ju'a nai cy no nanmu
+.i cy no batci cy pa
+.i zu'a la'e di'u lu'u zo'u cy re cadzu cy ci
+
+-----
+> le nanmu cu batci le gerku .i zu'a le verba cu cadzu le bisli
+
+non-veridical: bisli(c3)
+non-veridical: verba(c2)
+non-veridical: gerku(c1)
+non-veridical: nanmu(c0)
+batci(c0,c1)
+(zu'a)(c2). cadzu( ,c3)
+
+ju'a nai cy ci bisli
+.i ju'a nai cy re verba
+.i ju'a nai cy pa gerku
+.i ju'a nai cy no nanmu
+.i cy no batci cy pa
+.i zu'a cy re zo'u cadzu cy ci
+
+-----
+> le nanmu cu batci le gerku .i zu'aku le verba cu cadzu le bisli
+
+non-veridical: bisli(c3)
+non-veridical: verba(c2)
+non-veridical: gerku(c1)
+non-veridical: nanmu(c0)
+batci(c0,c1)
+(zu'a)(). cadzu(c2,c3)
+
+ju'a nai cy ci bisli
+.i ju'a nai cy re verba
+.i ju'a nai cy pa gerku
+.i ju'a nai cy no nanmu
+.i cy no batci cy pa
+.i zu'a ku zo'u cy re cadzu cy ci
+
+-----
+> pugi mi klama le zarci gi mi klama le zdani
+
+non-veridical: zdani(c1)
+non-veridical: zarci(c0)
+EX x1. (x1=. klama(mi,c0) /\ (pu)(x1). klama(mi,c1))
+
+ju'a nai cy pa zdani
+.i ju'a nai cy no zarci
+.i su'o da zo'u ge fi'o du da zo'u mi klama cy no gi pu da zo'u mi klama cy pa
+
+-----
+> mi klama pugi le zarci gi le zdani
+
+non-veridical: zdani(c1)
+non-veridical: zarci(c0)
+EX x1. (x1=. klama(mi,c0) /\ (pu)(x1). klama(mi,c1))
+
+ju'a nai cy pa zdani
+.i ju'a nai cy no zarci
+.i su'o da zo'u ge fi'o du da zo'u mi klama cy no gi pu da zo'u mi klama cy pa
+
+-----
+> mi pugi klama le zarci gi klama le zdani
+
+non-veridical: zdani(c1)
+non-veridical: zarci(c0)
+EX x1. (x1=. klama(mi,c0) /\ (pu)(x1). klama(mi,c1))
+
+ju'a nai cy pa zdani
+.i ju'a nai cy no zarci
+.i su'o da zo'u ge fi'o du da zo'u mi klama cy no gi pu da zo'u mi klama cy pa
+
+-----
+> la teris. satre le mlatu .ije la teris. satre le ractu
+
+non-veridical: ractu(c1)
+non-veridical: mlatu(c0)
+(satre("teris",c0) /\ satre("teris",c1))
+
+ju'a nai cy pa ractu
+.i ju'a nai cy no mlatu
+.i ge la teris. satre cy no gi la teris. satre cy pa
+
+-----
+> la teris. satre le mlatu gi'e satre le ractu
+
+non-veridical: ractu(c1)
+non-veridical: mlatu(c0)
+(satre("teris",c0) /\ satre("teris",c1))
+
+ju'a nai cy pa ractu
+.i ju'a nai cy no mlatu
+.i ge la teris. satre cy no gi la teris. satre cy pa
+
+-----
+> la teris. satre le mlatu .e le ractu
+
+non-veridical: ractu(c1)
+non-veridical: mlatu(c0)
+(satre("teris",c0) /\ satre("teris",c1))
+
+ju'a nai cy pa ractu
+.i ju'a nai cy no mlatu
+.i ge la teris. satre cy no gi la teris. satre cy pa
+
+-----
+> la teris. satre le mlatu .ijebabo la teris. satre le ractu
+
+non-veridical: ractu(c1)
+non-veridical: mlatu(c0)
+EX x1. (x1=. satre("teris",c0) /\ (ba)(x1). satre("teris",c1))
+
+ju'a nai cy pa ractu
+.i ju'a nai cy no mlatu
+.i su'o da zo'u ge fi'o du da zo'u la teris. satre cy no gi ba da zo'u la teris. satre cy pa
+
+-----
+> la teris. satre le mlatu gi'ebabo satre le ractu
+
+non-veridical: ractu(c1)
+non-veridical: mlatu(c0)
+EX x1. (x1=. satre("teris",c0) /\ (ba)(x1). satre("teris",c1))
+
+ju'a nai cy pa ractu
+.i ju'a nai cy no mlatu
+.i su'o da zo'u ge fi'o du da zo'u la teris. satre cy no gi ba da zo'u la teris. satre cy pa
+
+-----
+> la teris. satre le mlatu .ebabo le ractu
+
+non-veridical: ractu(c1)
+non-veridical: mlatu(c0)
+EX x1. (x1=. satre("teris",c0) /\ (ba)(x1). satre("teris",c1))
+
+ju'a nai cy pa ractu
+.i ju'a nai cy no mlatu
+.i su'o da zo'u ge fi'o du da zo'u la teris. satre cy no gi ba da zo'u la teris. satre cy pa
+
+-----
+> mi bevri le dakli .ije tu'e mi bevri le gerku .ija mi bevri le mlatu tu'u
+
+non-veridical: mlatu(c2)
+non-veridical: gerku(c1)
+non-veridical: dakli(c0)
+(bevri(mi,c0) /\ (bevri(mi,c1) \/ bevri(mi,c2)))
+
+ju'a nai cy re mlatu
+.i ju'a nai cy pa gerku
+.i ju'a nai cy no dakli
+.i ge mi bevri cy no gi ga mi bevri cy pa gi mi bevri cy re
+
+-----
+> mi bevri le dakli gi'eke bevri le gerku gi'a bevri le mlatu
+
+non-veridical: mlatu(c2)
+non-veridical: gerku(c1)
+non-veridical: dakli(c0)
+(bevri(mi,c0) /\ (bevri(mi,c1) \/ bevri(mi,c2)))
+
+ju'a nai cy re mlatu
+.i ju'a nai cy pa gerku
+.i ju'a nai cy no dakli
+.i ge mi bevri cy no gi ga mi bevri cy pa gi mi bevri cy re
+
+-----
+> mi bevri le dakli .eke le gerku .a le mlatu
+
+non-veridical: mlatu(c2)
+non-veridical: gerku(c1)
+non-veridical: dakli(c0)
+(bevri(mi,c0) /\ (bevri(mi,c1) \/ bevri(mi,c2)))
+
+ju'a nai cy re mlatu
+.i ju'a nai cy pa gerku
+.i ju'a nai cy no dakli
+.i ge mi bevri cy no gi ga mi bevri cy pa gi mi bevri cy re
+
+-----
+> mi bevri le dakli .ije ba tu'e mi bevri le gerku .ijacabo mi bevri le mlatu tu'u
+
+non-veridical: mlatu(c2)
+non-veridical: gerku(c1)
+non-veridical: dakli(c0)
+(bevri(mi,c0) /\ (ba)(). EX x1. (x1=. bevri(mi,c1) \/ (ca)(x1). bevri(mi,c2)))
+
+ju'a nai cy re mlatu
+.i ju'a nai cy pa gerku
+.i ju'a nai cy no dakli
+.i ge mi bevri cy no gi ba ku su'o da zo'u ga fi'o du da zo'u mi bevri cy pa gi ca da zo'u mi bevri cy re
+
+-----
+> mi bevri le dakli gi'ebake bevri le gerku gi'acabo bevri le mlatu
+
+non-veridical: mlatu(c2)
+non-veridical: gerku(c1)
+non-veridical: dakli(c0)
+EX x1. (x1=. bevri(mi,c0) /\ (ba)(x1). EX x2. (x2=. bevri(mi,c1) \/ (ca)(x2). bevri(mi,c2)))
+
+ju'a nai cy re mlatu
+.i ju'a nai cy pa gerku
+.i ju'a nai cy no dakli
+.i su'o da zo'u ge fi'o du da zo'u mi bevri cy no gi ba da su'o de zo'u ga fi'o du de zo'u mi bevri cy pa gi ca de zo'u mi bevri cy re
+
+-----
+> mi bevri le dakli .ebake le gerku .acabo le mlatu
+
+non-veridical: mlatu(c2)
+non-veridical: gerku(c1)
+non-veridical: dakli(c0)
+EX x1. (x1=. bevri(mi,c0) /\ (ba)(x1). EX x2. (x2=. bevri(mi,c1) \/ (ca)(x2). bevri(mi,c2)))
+
+ju'a nai cy re mlatu
+.i ju'a nai cy pa gerku
+.i ju'a nai cy no dakli
+.i su'o da zo'u ge fi'o du da zo'u mi bevri cy no gi ba da su'o de zo'u ga fi'o du de zo'u mi bevri cy pa gi ca de zo'u mi bevri cy re
+
+-----
+> mi punai klama le zarci
+
+non-veridical: zarci(c0)
+!(pu)(). klama(mi,c0)
+
+ju'a nai cy no zarci
+.i na ku pu ku zo'u mi klama cy no
+
+-----
+> mi klama le zarci canai le nu do klama le zdani
+
+non-veridical: nu[klama(do,c1)](c2)
+non-veridical: zdani(c1)
+non-veridical: zarci(c0)
+(ca nai)(c2). klama(mi,c0)
+
+ju'a nai cy re nu do klama cy pa kei
+.i ju'a nai cy pa zdani
+.i ju'a nai cy no zarci
+.i ca nai cy re zo'u mi klama cy no
+
+-----
+> le nanmu batci le gerku ne'inai le kumfa
+
+non-veridical: kumfa(c2)
+non-veridical: gerku(c1)
+non-veridical: <nanmu(_)><batci>(c0)
+[Fragment: c0,c1]
+
+ju'a nai cy re kumfa
+.i ju'a nai cy pa gerku
+.i ju'a nai cy no ke nanmu batci ke'e
+.i cy no cy pa
+
+-----
+> mi morsi ca'onai le nu mi jmive
+
+non-veridical: nu[jmive(mi)](c0)
+(ca'o nai)(c0). morsi(mi)
+
+ju'a nai cy no nu mi jmive kei
+.i ca'o nai cy no zo'u mi morsi
+
+-----
+> mi na'e pu klama le zarci
+
+non-veridical: zarci(c0)
+(na'e pu)(). klama(mi,c0)
+
+ju'a nai cy no zarci
+.i na'e pu ku zo'u mi klama cy no
+
+-----
+> le nanmu batci le gerku to'e ne'i le kumfa
+
+non-veridical: kumfa(c2)
+non-veridical: gerku(c1)
+non-veridical: <nanmu(_)><batci>(c0)
+[Fragment: c0,c1]
+
+ju'a nai cy re kumfa
+.i ju'a nai cy pa gerku
+.i ju'a nai cy no ke nanmu batci ke'e
+.i cy no cy pa
+
+-----
+> mi klama le zarci na'e ca le nu do klama le zdani
+
+non-veridical: nu[klama(do,c1)](c2)
+non-veridical: zdani(c1)
+non-veridical: zarci(c0)
+(na'e ca)(c2). klama(mi,c0)
+
+ju'a nai cy re nu do klama cy pa kei
+.i ju'a nai cy pa zdani
+.i ju'a nai cy no zarci
+.i na'e ca cy re zo'u mi klama cy no
+
+-----
+> mi morsi na'e ca'o le nu mi jmive
+
+non-veridical: nu[jmive(mi)](c0)
+(na'e ca'o)(c0). morsi(mi)
+
+ju'a nai cy no nu mi jmive kei
+.i na'e ca'o cy no zo'u mi morsi
+
+-----
+> le verba na'e ri'u cadzu le bisli
+
+non-veridical: bisli(c1)
+non-veridical: verba(c0)
+(na'e ri'u)(). cadzu(c0,c1)
+
+ju'a nai cy pa bisli
+.i ju'a nai cy no verba
+.i na'e ri'u ku zo'u cy no cadzu cy pa
+
+-----
+> ro datka cu flulimna
+
+FA x1:(datka(_)). flulimna(x1)
+
+ro da poi ke'a datka ku'o zo'u da flulimna
+
+-----
+> ro datka ca flulimna
+
+FA x1:(datka(_)). (ca)(). flulimna(x1)
+
+ro da poi ke'a datka ku'o ca ku zo'u da flulimna
+
+-----
+> ro datka ca ca'a flulimna
+
+FA x1:(datka(_)). (ca)(). (ca'a)(). flulimna(x1)
+
+ro da poi ke'a datka ku'o ca ku ca'a ku zo'u da flulimna
+
+-----
+> ro datka ka'e flulimna
+
+FA x1:(datka(_)). (ka'e)(). flulimna(x1)
+
+ro da poi ke'a datka ku'o ka'e ku zo'u da flulimna
+
+-----
+> la djan. ka'e viska
+
+(ka'e)(). viska("djan")
+
+ka'e ku zo'u la djan. viska
+
+-----
+> le cukta ka'e viska
+
+non-veridical: cukta(c0)
+(ka'e)(). viska(c0)
+
+ju'a nai cy no cukta
+.i ka'e ku zo'u cy no viska
+
+-----
+> ro cifydatka nu'o flulimna
+
+FA x1:(cifydatka(_)). (nu'o)(). flulimna(x1)
+
+ro da poi ke'a cifydatka ku'o nu'o ku zo'u da flulimna
+
+-----
+> la frank. pu'i viska
+
+(pu'i)(). viska("frank")
+
+pu'i ku zo'u la frank. viska
+
+-----
+> mi pu ca'a klama le zarci
+
+non-veridical: zarci(c0)
+(pu)(). (ca'a)(). klama(mi,c0)
+
+ju'a nai cy no zarci
+.i pu ku ca'a ku zo'u mi klama cy no
+
+-----
+> la frank. ba nu'o klama le zdani
+
+non-veridical: zdani(c0)
+(ba)(). (nu'o)(). klama("frank",c0)
+
+ju'a nai cy no zdani
+.i ba ku nu'o ku zo'u la frank. klama cy no
+
+-----
+> ta jelca
+
+jelca(ta)
+
+ta jelca
+
+-----
+> ta ca ca'a jelca
+
+(ca)(). (ca'a)(). jelca(ta)
+
+ca ku ca'a ku zo'u ta jelca
+
+-----
+> ta ka'e jelca
+
+(ka'e)(). jelca(ta)
+
+ka'e ku zo'u ta jelca
+
+-----
+> jelca
+
+jelca( )
+
+jelca
+
+-----
+> mi pu je ba klama le zarci
+
+non-veridical: zarci(c0)
+((pu)(). klama(mi,c0) /\ (ba)(). klama(mi,c0))
+
+ju'a nai cy no zarci
+.i ge pu ku zo'u mi klama cy no gi ba ku zo'u mi klama cy no
+
+-----
+> mi pu klama le zarci .ije mi ba klama le zarci
+
+non-veridical: zarci(c1)
+non-veridical: zarci(c0)
+((pu)(). klama(mi,c0) /\ (ba)(). klama(mi,c1))
+
+ju'a nai cy pa zarci
+.i ju'a nai cy no zarci
+.i ge pu ku zo'u mi klama cy no gi ba ku zo'u mi klama cy pa
+
+-----
+> mi punai je canai je ba klama le zarci
+
+non-veridical: zarci(c0)
+((!(pu)(). klama(mi,c0) /\ !(ca)(). klama(mi,c0)) /\ (ba)(). klama(mi,c0))
+
+ju'a nai cy no zarci
+.i ge ge na ku pu ku zo'u mi klama cy no gi na ku ca ku zo'u mi klama cy no gi ba ku zo'u mi klama cy no
+
+-----
+> mi ba klama le zarci
+
+non-veridical: zarci(c0)
+(ba)(). klama(mi,c0)
+
+ju'a nai cy no zarci
+.i ba ku zo'u mi klama cy no
+
+-----
+> mi mo'izu'anai je mo'iri'u cadzu
+
+(!(mo'i zu'a)(). cadzu(mi) /\ (mo'i ri'u)(). cadzu(mi))
+
+ge na ku mo'i zu'a ku zo'u mi cadzu gi mo'i ri'u ku zo'u mi cadzu
+
+-----
+> mi mo'izu'a naje mo'iri'u cadzu
+
+(!(mo'i zu'a)(). cadzu(mi) /\ (mo'i ri'u)(). cadzu(mi))
+
+ge na ku mo'i zu'a ku zo'u mi cadzu gi mo'i ri'u ku zo'u mi cadzu
+
+-----
+> mi puza bi'o bazu vasxu
+
+({bi'o}(pu za,ba zu))(). vasxu(mi)
+
+pu za bi'o ba zu ku zo'u mi vasxu
+
+-----
+> mi reroi pi'u xaroi cecla le seldanti
+
+non-veridical: seldanti(c0)
+({pi'u}(2 roi,6 roi))(). cecla(mi,c0)
+
+ju'a nai cy no seldanti
+.i re roi pi'u xa roi ku zo'u mi cecla cy no
+
+-----
+> la djordj. ca'o co'a ciska
+
+(ca'o)(). (co'a)(). ciska("djordj")
+
+ca'o ku co'a ku zo'u la djordj. ciska
+
+-----
+> mi reroi ca'o xaroi darxi le damri
+
+non-veridical: damri(c0)
+(2 roi)(). (ca'o)(). (6 roi)(). darxi(mi,c0)
+
+ju'a nai cy no damri
+.i re roi ku ca'o ku xa roi ku zo'u mi darxi cy no
+
+-----
+> mi cu klama le zarci
+
+non-veridical: zarci(c0)
+klama(mi,c0)
+
+ju'a nai cy no zarci
+.i mi klama cy no
+
+-----
+> le zarci cu se klama mi
+
+non-veridical: zarci(c0)
+klama(mi,c0)
+
+ju'a nai cy no zarci
+.i mi klama cy no
+
+-----
+> le ratcu cu citka le cirla vi le panka
+
+non-veridical: panka(c2)
+non-veridical: cirla(c1)
+non-veridical: ratcu(c0)
+(vi)(c2). citka(c0,c1)
+
+ju'a nai cy re panka
+.i ju'a nai cy pa cirla
+.i ju'a nai cy no ratcu
+.i vi cy re zo'u cy no citka cy pa
+
+-----
+> le panka cu jai vi citka le cirla fai le ratcu
+
+non-veridical: ratcu(c2)
+non-veridical: cirla(c1)
+non-veridical: panka(c0)
+(vi)(c0). citka(c2,c1)
+
+ju'a nai cy re ratcu
+.i ju'a nai cy pa cirla
+.i ju'a nai cy no panka
+.i vi cy no zo'u cy re citka cy pa
+
+-----
+> fa mi cu klama fe le zarci
+
+non-veridical: zarci(c0)
+klama(mi,c0)
+
+ju'a nai cy no zarci
+.i mi klama cy no
+
+-----
+> fe le zarci cu klama fa mi
+
+non-veridical: zarci(c0)
+klama(mi,c0)
+
+ju'a nai cy no zarci
+.i mi klama cy no
+
+-----
+> mi cu klama le zarci
+
+non-veridical: zarci(c0)
+klama(mi,c0)
+
+ju'a nai cy no zarci
+.i mi klama cy no
+
+-----
+> mi viska le jai vi citka be le cirla
+
+non-veridical: (vi)(c1). citka( ,c0)
+non-veridical: cirla(c0)
+viska(mi,c1)
+
+ju'a nai vi cy pa zo'u citka cy no
+.i ju'a nai cy no cirla
+.i mi viska cy pa
+
+-----
+> mi djuno fi le jai ca morsi be fai la djan.
+
+non-veridical: (ca)(c0). morsi("djan")
+djuno(mi, ,c0)
+
+ju'a nai ca cy no zo'u la djan. morsi
+.i mi djuno fi cy no
+
+-----
+> mi nelci do mu'i le nu do nelci mi
+
+non-veridical: nu[nelci(do,mi)](c0)
+(mu'i)(c0). nelci(mi,do)
+
+ju'a nai cy no nu do nelci mi kei
+.i mu'i cy no zo'u mi nelci do
+
+-----
+> mi nelci do ba le nu do nelci mi
+
+non-veridical: nu[nelci(do,mi)](c0)
+(ba)(c0). nelci(mi,do)
+
+ju'a nai cy no nu do nelci mi kei
+.i ba cy no zo'u mi nelci do
+
+-----
+> le nu do nelci mi cu mukti le nu mi nelci do
+
+non-veridical: nu[nelci(mi,do)](c1)
+non-veridical: nu[nelci(do,mi)](c0)
+mukti(c0,c1)
+
+ju'a nai cy pa nu mi nelci do kei
+.i ju'a nai cy no nu do nelci mi kei
+.i cy no mukti cy pa
+
+-----
+> le nu mi nelci do cu balvi le nu do nelci mi
+
+non-veridical: nu[nelci(do,mi)](c1)
+non-veridical: nu[nelci(mi,do)](c0)
+balvi(c0,c1)
+
+ju'a nai cy pa nu do nelci mi kei
+.i ju'a nai cy no nu mi nelci do kei
+.i cy no balvi cy pa
+
+-----
+> mi nelci do .imu'ibo do nelci mi
+
+EX x1. ((mu'i)(x1). nelci(mi,do) /\ x1=. nelci(do,mi))
+
+su'o da zo'u ge mu'i da zo'u mi nelci do gi fi'o du da zo'u do nelci mi
+
+-----
+> do nelci mi .ibabo mi nelci do
+
+EX x1. (x1=. nelci(do,mi) /\ (ba)(x1). nelci(mi,do))
+
+su'o da zo'u ge fi'o du da zo'u do nelci mi gi ba da zo'u mi nelci do
+
+-----
+> mu'igi do nelci mi gi mi nelci do
+
+EX x1. (x1=. nelci(do,mi) /\ (mu'i)(x1). nelci(mi,do))
+
+su'o da zo'u ge fi'o du da zo'u do nelci mi gi mu'i da zo'u mi nelci do
+
+-----
+> bagi do nelci mi gi mi nelci do
+
+EX x1. (x1=. nelci(do,mi) /\ (ba)(x1). nelci(mi,do))
+
+su'o da zo'u ge fi'o du da zo'u do nelci mi gi ba da zo'u mi nelci do
+
+-----
+> do klama le zdani ca ma
+
+non-veridical: zdani(c0)
+ma x1. (ca)(x1). klama(do,c0)
+
+ju'a nai cy no zdani
+.i ma goi ko'a ca ko'a zo'u do klama cy no
+
+-----
+> le verba vi ma pu cadzu le bisli
+
+non-veridical: bisli(c1)
+non-veridical: verba(c0)
+ma x1. (vi)(x1). (pu)(). cadzu(c0,c1)
+
+ju'a nai cy pa bisli
+.i ju'a nai cy no verba
+.i ma goi ko'a vi ko'a pu ku zo'u cy no cadzu cy pa
+
+-----
+> le nanmu cu'e batci le gerku
+
+non-veridical: gerku(c1)
+non-veridical: nanmu(c0)
+(cu'e)(). batci(c0,c1)
+
+ju'a nai cy pa gerku
+.i ju'a nai cy no nanmu
+.i cu'e ku zo'u cy no batci cy pa
+
+-----
+> va
+
+[Fragment: ]
+
+
+
+-----
+> puzu
+
+[Fragment: ]
+
+
+
+-----
+> vi le lunra
+
+non-veridical: lunra(c0)
+[Fragment: ]
+
+ju'a nai cy no lunra
+.i 
+
+-----
+> pu'o
+
+[Fragment: ]
+
+
+
+-----
+> seka'a le briju
+
+non-veridical: briju(c0)
+[Fragment: ]
+
+ju'a nai cy no briju
+.i 
+
+-----
+> do puzi je cu'e sombo le gurni
+
+non-veridical: gurni(c0)
+((pu)(). (zi)(). sombo(do,c0) /\ (cu'e)(). sombo(do,c0))
+
+ju'a nai cy no gurni
+.i ge pu ku zi ku zo'u do sombo cy no gi cu'e ku zo'u do sombo cy no
+
+-----
+> la .artr. pu je'i ba nolraitru
+
+({je'i}(pu,ba))(). nolraitru("artr")
+
+pu je'i ba ku zo'u la artr. nolraitru
+
+-----
+> la frank. sanli zu'a nu'i la djordj. la'u lo mitre be li mu [nu'u]
+
+mitre(c0,5)
+(zu'a)(). sanli("frank","djordj")
+
+cy no mitre li mu boi lo'o
+.i zu'a ku zo'u la frank. sanli la djordj.
+
+-----
+> la frank. sanli zu'a nu'i la'u lo mitre be li mu
+
+mitre(c0,5)
+(zu'a)(). sanli("frank")
+
+cy no mitre li mu boi lo'o
+.i zu'a ku zo'u la frank. sanli
+
+-----
+> .a'o do pu seju ba roroi ca'o fe'e su'oroi jimpe fi le lojbo temci selsku ciste
+
+non-veridical: <<<lojbo(_)><temci>(_)><selsku>(_)><ciste>(c0)
+(ba)(). ((ro) roi)(). (ca'o)(). (fe'e (su'o) roi)(). jimpe(do, ,c0)
+
+ju'a nai cy no ke ke ke lojbo temci ke'e selsku ke'e ciste ke'e
+.i ba ku ro roi ku ca'o ku fe'e su'o roi ku zo'u do jimpe fi cy no
+
+-----
