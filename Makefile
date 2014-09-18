@@ -5,7 +5,7 @@ tersmu: *.hs Tersmu.hs Morphology.hs Pappy/Parse.hs
 	ghc -o tersmu -XMultiParamTypeClasses -XFunctionalDependencies \
 	    -XTypeSynonymInstances -XFlexibleInstances --make Main
 tersmuBot: *.hs Tersmu.hs Morphology.hs Pappy/Parse.hs
-	killall tersmuBot || true
+	#killall tersmuBot || true
 	ghc -o tersmuBot -XMultiParamTypeClasses -XFunctionalDependencies \
 	    -XTypeSynonymInstances -XFlexibleInstances --make tersmuBot.hs
 ${PAPPY}:

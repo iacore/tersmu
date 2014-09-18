@@ -209,15 +209,15 @@ parseTU (TUAbstraction a ss) =
 	    _ -> Nothing
     of
 	Just "lambda" -> do
-	    vpred <- (bridiToJboVPred<$>) $ partiallyRunSubBridiM $ do
+	    vpred <- (bridiToJboVPred<$>) $ withQuestions False $ partiallyRunSubBridiM $ do
 		shuntLambdas 1
-		withQuestions False $ parseSubsentence ss
-	    jboRelToBridi . AbsPred a <$> doLambdas vpred
+		parseSubsentence ss
+	    (jboRelToBridi . AbsPred a <$>) $ doLambdas vpred
 	Just "relvar" -> do
 	    pred <- withQuestions False $ subsentToPred ss
 	    return $ jboRelToBridi $ AbsPred a $ predToNPred pred
 	_ -> jboRelToBridi . AbsProp a <$>
-	    (runSubBridiM (withQuestions False $ parseSubsentence ss))
+	    (withQuestions False $ runSubBridiM (parseSubsentence ss))
 parseTU (TUPermuted n tu) =
     (.swapArgs (NPos 1) (NPos n)) <$> parseTU tu
 parseTU (TUJai (Just tag) tu) = do

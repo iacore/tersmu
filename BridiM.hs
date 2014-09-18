@@ -381,6 +381,12 @@ instance PreProp (a -> JboProp) where
     liftToProp = liftA
     liftToProp2 = liftA2
     dummyPreProp = \_ -> Eet
+instance PreProp JboNPred where
+    liftToProp f (JboNPred n p) = JboNPred n (liftA f p)
+    liftToProp2 f (JboNPred n p) (JboNPred n' p') | n==n' =
+	JboNPred n (liftA2 f p p')
+    liftToProp2 _ _ _ = error "mismatched JboNPred arities in liftToProp2"
+    dummyPreProp = JboNPred 0 (\_ -> Eet)
 instance PreProp p => PreProp (Maybe p) where
     liftToProp = liftA . liftToProp
     liftToProp2 = liftA2 . liftToProp2
