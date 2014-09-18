@@ -996,7 +996,7 @@ NUhUmain :: String = "nu'u"
 
 --         numbers and numeric punctuation 
 PA :: String = s:PAmain Spacing -> s
-PAmain :: String =  "pi'e" / "fi'u" / "za'u" / "me'i" / "ni'u" / "ki'o" / "ce'i" / "ma'u" / "ra'e" / "da'a" / "so'a" / "ji'i" / "su'o" / "su'e" / "rau" / "so'u" / "so'i" / "so'e" / "so'o" / "mo'a" / "du'e" / "te'o" / "ka'o" / "ci'i" / "tu'o" / "pai" / "no'o" / "ro" / "xo" / "no" / "pa" / "re" / "ci" / "vo" / "mu" / "xa" / "ze" / "bi" / "so" / "dau" / "fei" / "gai" / "jau" / "rei" / "vai" / "pi"
+PAmain :: String =  "pi'e" / "fi'u" / "za'u" / "me'i" / "ni'u" / "ki'o" / "ce'i" / "ma'u" / "ra'e" / "da'a" / "so'a" / "ji'i" / "su'o" / "su'e" / "rau" / "so'u" / "so'i" / "so'e" / "so'o" / "mo'a" / "du'e" / "te'o" / "ka'o" / "ci'i" / "tu'o" / "pai" / "dau" / "fei" / "gai" / "jau" / "rei" / "vai" / "no'o" / "ro" / "xo" / "no" / "pa" / "ci" / "vo" / "mu" / "xa" / "ze" / "bi" / "so" / "pi" / "re" 
 --         afterthought termset connective prefix 
 PEhE :: String = s:PEhEmain Spacing -> s
 PEhEmain :: String = "pe'e" 
