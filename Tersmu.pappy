@@ -64,7 +64,7 @@ coi :: COI
 -- TODO: indicators = FUhE? indicator+
 
 indicator :: Free
-    = "xu":UI !BU k:("kau":UI !BU x:("xi":XI n:litnum -> n)? -> {fromMaybe 1 x})? -> {TruthQ k}
+    = "xu":UI !BU k:("kau":UI !BU x:xiLit? -> {fromMaybe 1 x})? -> {TruthQ k}
     / c:(UI/CAI) nai:NAI? !BU -> { Indicator (isJust nai) c }
     / c:(DAhO/FUhO) !BU -> { Indicator False c }
 
@@ -291,17 +291,17 @@ sumti6 :: SumtiAtom
     / k:KOhA &{k `elem` ["do","ko","do'o","mi","ma'a","mi'a","mi'o"]} -> {NonAnaphoricProsumti k}
     / k:KOhA &{k `elem` ["ti","ta","tu"]} -> {NonAnaphoricProsumti k}
     / k:KOhA &{k `elem` ["da'e","de'e","di'e","da'u","de'u","di'u","dei","do'i"]} -> {NonAnaphoricProsumti k}
-    / n:variable mn:("xi":XI n:litnum -> n)? -> {Variable $ fromMaybe n mn}
-    / "ke'a":KOhA mn:("xi":XI n:litnum -> n)? -> {RelVar $ fromMaybe 1 mn}
-    / "ce'u":KOhA ml:("xi":XI n:litnum -> n)? mn:("xi":XI n:litnum -> n)? -> {LambdaVar ml mn}
-    / "ri":KOhA mn:("xi":XI n:litnum -> n)? -> {Ri $ fromMaybe 1 mn}
+    / n:variable mn:xiLit? -> {Variable $ fromMaybe n mn}
+    / "ke'a":KOhA mn:xiLit? -> {RelVar $ fromMaybe 1 mn}
+    / "ce'u":KOhA ml:xiLit? mn:xiLit? -> {LambdaVar ml mn}
+    / "ri":KOhA mn:xiLit? -> {Ri $ fromMaybe 1 mn}
     / "ra":KOhA -> {Ra "ra"}
     / "ru":KOhA -> {Ra "ru"}
-    / n:assignable mn:("xi":XI n:litnum -> n)? -> {Assignable $ fromMaybe n mn}
-    / n:mainBridiSumbasti mn:("xi":XI n:litnum -> n)? -> {MainBridiSumbasti $ fromMaybe n mn}
+    / n:assignable mn:xiLit? -> {Assignable $ fromMaybe n mn}
+    / n:mainBridiSumbasti mn:xiLit? -> {MainBridiSumbasti $ fromMaybe n mn}
     / "zo'e":KOhA -> {Zohe}
     / k:KOhA &{k `elem` ["zi'o","zu'i"]} -> {NonAnaphoricProsumti k}
-    / "ma":KOhA k:("kau":UI x:("xi":XI n:litnum -> n)? -> {fromMaybe 1 x})? -> {SumtiQ k}
+    / "ma":KOhA k:("kau":UI x:xiLit? -> {fromMaybe 1 x})? -> {SumtiQ k}
     / g:LA n:name -> {n g}
     / g:(LA/LE) {(is,q,ssb,rels,irels)}:sumtiTail KU? ->
 	{Description g is q ssb rels irels}
@@ -428,7 +428,7 @@ tanruUnit2 :: TanruUnit
     -- XXX: probably this ZEI handling interacts badly with other magic words?
     = v:Valsi vs:(ZEI v:Valsi -> v)+ -> {TUZei $ v:vs}
     / bv:BRIVLA -> {TUBrivla bv}
-    / g:GOhA mn:("xi":XI n:litnum -> n)? RAhO? -> {TUGOhA g $ fromMaybe 1 mn}
+    / g:GOhA mn:xiLit? RAhO? -> {TUGOhA g $ fromMaybe 1 mn}
     / KE sb:selbri3 KEhE? -> {TUSelbri3 sb}
     / ME s:(sumti / ls:lerfuString -> {QAtom Nothing [] $ LerfuString ls}) MEhU? mmoi:MOI?
 	-> {maybe (TUMe s) (TUMoi s) mmoi}
@@ -441,7 +441,7 @@ tanruUnit2 :: TanruUnit
     / XOhI t:tag -> {TUXOhI t}
 
 convSE :: Int
-    = SE XI n:litnum -> n
+    = SE n:xiLit -> n
     / "se":SE -> {2}
     / "te":SE -> {3}
     / "ve":SE -> {4}
@@ -551,7 +551,7 @@ numberOrLerfuString :: Mex
     / ls:lerfuString -> {MexLerfuString ls}
 
 number :: Mex
-    = n:litnum -> {MexInt n}
+    = n:litnum !numeral -> {MexInt n}
     / p:PA t:numeral*
 	-> { MexNumeralString $ (PA p):t }
 numeral :: Numeral
@@ -575,6 +575,9 @@ digit :: Int
     / "bi":PA -> {8}
     / "so":PA -> {9}
     / c:Char &{isDigit c} -> {digitToInt c}
+
+xiLit :: Int
+    = XI n:litnum !numeral -> n
 
 lerfuString :: {[Lerfu]}
     = c:lerfuWord cs:(lerfuWord
@@ -666,7 +669,7 @@ guhekGUhA :: Char = "gu'a":GUhA -> {'a'}
     / "gu'i":GUhA -> {'i'}
 
 tagFA :: Int
-    = FA XI n:litnum -> n
+    = FA n:xiLit -> n
     / "fa":FA -> {1}
     / "fe":FA -> {2}
     / "fi":FA -> {3}
