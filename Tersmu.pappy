@@ -13,9 +13,11 @@ import Data.Char (isSpace, isDigit, digitToInt)
 
 data JekJoik = JJJek LogJboConnective | JJJoik Joik
 jjJboCon :: (Maybe Tag) -> JekJoik -> Connective
-jjJboCon mtag (JJJek (LogJboConnective _ 'i' _)) = JboConnJoik mtag "??"
-jjJboCon mtag (JJJek lcon) = JboConnLog mtag lcon
+jjJboCon mtag (JJJek lcon) = jboConnLogOrQ mtag lcon
 jjJboCon mtag (JJJoik joik) = JboConnJoik mtag joik
+
+jboConnLogOrQ mtag (LogJboConnective _ 'i' _) = JboConnJoik mtag "??"
+jboConnLogOrQ mtag lcon = JboConnLog mtag lcon
 
 freelessTerm :: Term' -> Term
 freelessTerm t' = Term [] $ Just t'
@@ -142,8 +144,8 @@ statement3 :: Statement1
 fragment :: Fragment
     = p:prenex -> {FragPrenex p}
     / ts:terms VAU? -> {FragTerms ts}
-    / c:ek -> {FragCon $ JboConnLog Nothing c}
-    / c:gihek -> {FragCon $ JboConnLog Nothing c}
+    / c:ek -> {FragCon $ jboConnLogOrQ Nothing c}
+    / c:gihek -> {FragCon $ jboConnLogOrQ Nothing c}
     / m:quantifier -> {FragQuantifier m}
     / n:NA !JA -> {FragNA n}
     / rels:relativeClauses -> {FragRels rels}
@@ -171,7 +173,7 @@ subsentence :: Subsentence
 
 bridiTail :: BridiTail
     = bt1:bridiTail1 gihek:(lcon:gihek mtag:(tag)? KE bt2:bridiTail KEhE? tts:tailTerms ->
-	{(JboConnLog mtag lcon, bt2, tts)} )? -> {
+	{(jboConnLogOrQ mtag lcon, bt2, tts)} )? -> {
 	    case gihek of
 		Nothing -> bt1
 		Just (con, bt2, tts) -> ConnectedBT con bt1 bt2 tts }
@@ -184,12 +186,12 @@ bridiTail1 :: BridiTail
 -- _gihekbt: helper for bridiTail1
 _gihekbt :: {(Connective, BridiTail, [Term])}
     = lcon:gihek !(tag? BO -> {()}) !(tag? KE -> {()}) bt:bridiTail2 tts:tailTerms
-	-> {(JboConnLog Nothing lcon, bt, tts)}
+	-> {(jboConnLogOrQ Nothing lcon, bt, tts)}
 
 bridiTail2 :: BridiTail
     = bt1:bridiTail3
 	gihek:(lcon:gihek mtag:(tag)? BO bt2:bridiTail2 tts:tailTerms
-	    -> {(JboConnLog mtag lcon,bt2,tts)})?
+	    -> {(jboConnLogOrQ mtag lcon,bt2,tts)})?
 	-> { case gihek of
 		Nothing -> bt1
 		Just (con, bt2, tts) -> ConnectedBT con bt1 bt2 tts }
@@ -414,7 +416,7 @@ selbri6 :: Selbri3
     / tu:tanruUnit !free -> tu
     / mn:NAhE? pcon:guhek sb1:selbri b:gik sb2:selbri6
 	-> { maybe id ScalarNegatedSB mn $
-	    ConnectedSB True (JboConnLog Nothing $ pcon b) sb1 sb2 }
+	    ConnectedSB True (jboConnLogOrQ Nothing $ pcon b) sb1 sb2 }
 
 tanruUnit :: Selbri3
     = tu:tanruUnit CEI tu':tanruUnit1 -> {BridiBinding tu tu'}
@@ -506,7 +508,7 @@ operator1 :: Operator
 	-> { ConnectedOperator False (jjJboCon mtag jj) op1 op2 }
     / op:operator2 !free -> op
     / pcon:guhek op1:operator1 b:gik op2:operator2
-	-> { ConnectedOperator True (JboConnLog Nothing $ pcon b) op1 op2 }
+	-> { ConnectedOperator True (jboConnLogOrQ Nothing $ pcon b) op1 op2 }
 
 operator2 :: Operator
     = mexOperator
@@ -622,10 +624,10 @@ joikJek :: JekJoik
 
 gek :: {Bool -> Connective}
     = se:(SE)? conchar:gekGA ln:NAI?
-	-> { JboConnLog Nothing . LogJboConnective (isNothing ln) 
+	-> { jboConnLogOrQ Nothing . LogJboConnective (isNothing ln) 
 		    (if (isJust se) && conchar=='u' then 'U' else conchar) }
     / joik:joik GI -> { \_ -> JboConnJoik Nothing joik } 
-    / tag:tag gik -> { \_ -> JboConnLog (Just tag) (LogJboConnective True 'e' True) }
+    / tag:tag gik -> { \_ -> jboConnLogOrQ (Just tag) (LogJboConnective True 'e' True) }
 
 guhek :: {Bool -> LogJboConnective} = se:(SE)? conchar:guhekGUhA ln:NAI?
     -> { LogJboConnective (isNothing ln) 

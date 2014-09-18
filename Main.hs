@@ -24,8 +24,8 @@ import System.Process
 
 repl :: IO ()
 repl = do 
-    putStr "> "
-    hFlush stdout
+    -- putStr "> "
+    -- hFlush stdout
     s <- getLine
     case morph s of
         Left errpos ->
