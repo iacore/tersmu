@@ -153,6 +153,8 @@ instance JboShow Lerfu where
     logjboshow False (LerfuChar c) = return $ [c]
     logjboshow jbo (LerfuPA p) = return $ (if jbo then id else bracket '{') p
     logjboshow jbo (LerfuValsi v) = return $ (if jbo then (++" bu") else bracket '{') v
+    logjboshow jbo (LerfuShift s) =
+	return $ (if jbo then id else bracket '{') s
     logjboshow jbo (LerfuShifted lau l) =
 	(if jbo then ((lau++" ")++) else ((bracket '{' lau)++) . bracket '(') <$> 
 	    logjboshow jbo l
