@@ -483,10 +483,12 @@ foreOperands :: {[Mex]}
 
 rpExpression :: Mex
     = o:operand mt:rpExpressionTail -> { mt o }
-    / o:operand !free -> o
+    / o:operand -> o
 rpExpressionTail :: {Mex -> Mex}
     = m:rpExpression opr:operator t:rpExpressionTail
 	-> { t . \m1 -> Operation opr [m1,m] }
+    / m:rpExpression opr:operator
+	-> { \m1 -> Operation opr [m1,m] }
 
 operator :: Operator
     = op:operator1 jekss:_jekops*
@@ -499,7 +501,7 @@ _jekops :: {(Connective, Operator)}
 operator1 :: Operator
     = op1:operator2 jj:joikJek mtag:tag? BO op2:operator1
 	-> { ConnectedOperator False (jjJboCon mtag jj) op1 op2 }
-    / op:operator2 !free -> op
+    / op:operator2 -> op
     / pcon:guhek op1:operator1 b:gik op2:operator2
 	-> { ConnectedOperator True (jboConnLogOrQ Nothing $ pcon b) op1 op2 }
 
@@ -579,7 +581,10 @@ lerfuString :: {[Lerfu]}
 	-> {c:cs}
 
 lerfuWord :: Lerfu
-    = s:BY -> {if s=="y'y" then LerfuChar 'h' else LerfuChar $ s!!0}
+    = s:BY -> {case s of
+	"y'y" -> LerfuChar 'h' 
+	s:"y" -> LerfuChar s
+	_ -> LerfuShift s}
     / v:VowelValsi BU -> { LerfuChar v }
     / v:Valsi BU -> { LerfuValsi v }
     / lau:LAU l:lerfuWord -> { LerfuShifted lau l }

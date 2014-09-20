@@ -381,15 +381,17 @@ ju'a nai cy no cukta
 > .e'enaise'anai
 -----
 > mi .e .ui nai do
-Parse error:
-	{mi e ui nai do}
-	           ^
+
+[Fragment: [DONKEY]]
+
+lo XASLI zei da ku
 
 -----
 > mi .e nai .ui do
-Parse error:
-	{mi e nai ui do}
-	           ^
+
+[Fragment: [DONKEY]]
+
+lo XASLI zei da ku
 
 -----
 > mi pu tavla do .o'onai .oi
@@ -612,9 +614,12 @@ cusku la rik.
 
 -----
 > .i sei la djordj. cusku se'u .a'o ko gleki doi ma
-Parse error:
-	{a djordj cusku se'u a'o ko gleki doi ma}
-	                                         ^
+
+cusku( ,"djordj")
+gleki(ko)
+
+cusku la djordj.
+.i ko gleki
 
 -----
 > .i sei la pam. cusku se'u pe'u .alis. xu mi ba terfriti le nunspenybi'o

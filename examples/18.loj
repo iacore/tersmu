@@ -749,7 +749,7 @@ li pe'o pi'i remu boi xa boi ku'e lo'o du li pa xo no boi lo'o
 > li xy.boixici du li xy.boixipa su'i xy.boixire
 Parse error:
 	{li xy boi xi ci du li xy boi xi pa su'i xy boi xi re}
-	                 ^
+	                                    ^
 
 -----
 > xy.boixino
@@ -826,27 +826,31 @@ Parse error:
 
 -----
 > li fu'a reboi ci su'i du li mu
-Parse error:
-	{li fu'a re boi ci su'i du li mu}
-	                        ^
+
+=({su'i}(2,3),5)
+
+li pe'o su'i re boi ci boi ku'e lo'o du li mu boi lo'o
 
 -----
 > li fu'a reboi ci pi'i voboi mu pi'i su'i du li rexa
-Parse error:
-	{li fu'a re boi ci pi'i vo boi mu pi'i su'i du li re xa}
-	                                       ^
+
+=({su'i}({pi'i}(2,3),{pi'i}(4,5)),26)
+
+li pe'o su'i pe'o pi'i re boi ci boi ku'e pe'o pi'i vo boi mu boi ku'e ku'e lo'o du li rexa boi lo'o
 
 -----
 > li fu'a ciboi muboi vu'u du li fu'a reboi tu'o va'a
-Parse error:
-	{li fu'a ci boi mu boi vu'u du li fu'a re boi tu'o va'a}
-	                            ^
+
+=({vu'u}(3,5),{va'a}(2))
+
+li pe'o vu'u ci boi mu boi ku'e lo'o du li pe'o va'a re boi ku'e lo'o
 
 -----
 > li cinoki'oki'o du li fu'a biboi ciboi panoboi ge'a gei
-Parse error:
-	{du li fu'a bi boi ci boi pa no boi ge'a gei}
-	                                         ^
+
+=((ci no ki'o ki'o),{gei}(8,3,10))
+
+li ci no ki'o ki'o boi lo'o du li pe'o gei bi boi ci boi pano boi ku'e lo'o
 
 -----
 > vei ci .a vo ve'o prenu cu klama le zarci

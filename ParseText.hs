@@ -25,7 +25,10 @@ afterPos p s = drop (posCol p - 1) s
 --
 -- FIXME: MAI isn't really handled, since the parse failure can come at the
 -- MAI rather than the start of the free, so e.g. "za'u re'u re mai broda"
--- fails.
+-- fails. Similarly {le zarci e re mai le zdani}
+--
+-- FIXME: {li ci xi pa su'i vo} - nudging the xi clause back has it pick up
+-- the {ci}, resulting in a parse error...
 --
 -- XXX: possible source of parse bugs: misplaced free can interrupt crucial
 -- greed. e.g. "tag sumti / tag KU?" acts buggily on "vi ue ta",

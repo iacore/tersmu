@@ -294,7 +294,7 @@ ko'a xi paso
 > li xy.boixipa du li xy.boixire su'i xy.boixici
 Parse error:
 	{li xy boi xi pa du li xy boi xi re su'i xy boi xi ci}
-	                 ^
+	                                    ^
 
 -----
 > la djan. xipa cusku lu mi'enai do li'u la djan. xire
@@ -321,7 +321,7 @@ mi ganra
 > mi klama pamai le zarci .e remai le zdani
 Parse error:
 	{mi klama pa mai le zarci e re mai le zdani}
-	             ^
+	                               ^
 
 -----
 > mi viska le blanu .ia zdani [ku]
@@ -544,21 +544,30 @@ la frank. cusku lu do du la djein.
 
 -----
 > la frank. prami sei la frank. gleki la djein.
-Parse error:
-	{la frank prami sei la frank gleki la djein}
-	                                   ^
+
+gleki( ,"frank")
+prami("frank","djein")
+
+gleki la frank.
+.i la frank. prami la djein.
 
 -----
 > la frank. prami sei gleki la djein.
-Parse error:
-	{la frank prami sei gleki la djein}
-	                          ^
+
+gleki( )
+prami("frank","djein")
+
+gleki
+.i la frank. prami la djein.
 
 -----
 > la frank. prami sei gleki be fa la suzn. la djein.
-Parse error:
-	{la frank prami sei gleki be fa la suzn la djein}
-	                                        ^
+
+gleki("suzn")
+prami("frank","djein")
+
+la suzn. gleki
+.i la frank. prami la djein.
 
 -----
 > la djan. cusku lu mi klama le zarci li'u
@@ -571,9 +580,14 @@ la djan. cusku lu ju'a nai cy no zarci
 
 -----
 > lu mi klama le zarci seisa'a la djan. cusku be dei li'u
-Parse error:
-	{ le zarci sei sa'a la djan cusku be dei li'u}
-	                                         ^
+
+[Fragment: << non-veridical: zarci(c0)
+cusku( ,dei,"djan")
+klama(mi,c0) >>]
+
+lu ju'a nai cy no zarci
+.i cusku dei la djan.
+.i mi klama cy no li'u
 
 -----
 > lu seisa'a la djan. cusku be dei mi klama le zarci
@@ -588,9 +602,14 @@ lu ju'a nai cy no zarci
 
 -----
 > lu mi klama seisa'a la djan cusku le zarci
-Parse error:
-	{lu mi klama sei sa'a la djan cusku le zarci}
-	                                    ^
+
+[Fragment: << non-veridical: zarci(c0)
+cusku( ,"djan")
+klama(mi,c0) >>]
+
+lu ju'a nai cy no zarci
+.i cusku la djan.
+.i mi klama cy no li'u
 
 -----
 > ti gerku si mlatu

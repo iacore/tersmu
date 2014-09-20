@@ -485,9 +485,14 @@ ju'a nai pu ku zo'u cy pa klama cy no
 
 -----
 > mi ba zgana le du'u la djan. jikau la djordj. cu zvati le panka
-Parse error:
-	{mi ba zgana le du'u la djan ji kau la djordj cu zvati le panka}
-	                                 ^
+
+non-veridical: du'u[zvati(("djan" {??} "djordj"),c0)](c1)
+non-veridical: panka(c0)
+(ba)(). zgana(mi,c1)
+
+ju'a nai cy pa du'u la djan. ?? ke la djordj. ke'e zvati cy no kei
+.i ju'a nai cy no panka
+.i ba ku zo'u mi zgana cy pa
 
 -----
 > mi morji le li'i mi verba

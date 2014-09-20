@@ -29,9 +29,10 @@ micyclaxu
 > .iVAN.
 -----
 > .ibu ga'e vy. .abu ny. to'a
-Parse error:
-	{i bu ga'e vy a bu ny to'a}
-	                           ^
+
+[Fragment: i{ga'e}van{to'a}]
+
+ibu ga'e vy abu ny to'a
 
 -----
 > tau sy.
@@ -56,9 +57,10 @@ zo bu
 
 -----
 > ky.bu .ubu .abu cy. ky.
-Parse error:
-	{ky bu u bu a bu cy ky}
-	    ^
+
+[Fragment: {ky}uack]
+
+ky bu ubu abu cy ky
 
 -----
 > zai .devanagar. bu
@@ -111,15 +113,17 @@ tei ebu akut bu foi ty tei akut bu ebu foi
 
 -----
 > .y'y.bu .abu ny. vo zy. .ibu vo
-Parse error:
-	{y'y bu a bu ny vo zy i bu vo}
-	     ^
+
+[Fragment: {y'y}an4zi4]
+
+y'y bu abu ny vo zy ibu vo
 
 -----
 > my. .ibu ty. sy. .ubu by. .ibu sy. .y'y.bu .ibu
-Parse error:
-	{my i bu ty sy u bu by i bu sy y'y bu i bu}
-	                                   ^
+
+[Fragment: mitsubis{y'y}i]
+
+my ibu ty sy ubu by ibu sy y'y bu ibu
 
 -----
 > .abu prami by.
@@ -336,19 +340,19 @@ la poi'i cribe ku'o ku ciska
 
 gunma(c1,c0)
 <merko(_)><rupnu>(c0)
-lerfu([MEX: MexLerfuString [LerfuChar 's',LerfuChar '3',LerfuChar '6']],"asycy'i'is",c1)
+lerfu([MEX: MexLerfuString [LerfuShift "se'e",LerfuChar '3',LerfuChar '6']],"asycy'i'is",c1)
 
 cy pa gunma cy no
 .i cy no ke merko rupnu ke'e
-.i me'o MexLerfuString [LerfuChar 's',LerfuChar '3',LerfuChar '6'] lo'o lerfu la asycy'i'is. cy pa
+.i me'o MexLerfuString [LerfuShift "se'e",LerfuChar '3',LerfuChar '6'] lo'o lerfu la asycy'i'is. cy pa
 
 -----
 > me'o se'erexarerei sinxa le ka panpi
 
 non-veridical: ka[panpi(\1)](c0)
-sinxa([MEX: MexLerfuString [LerfuChar 's',LerfuChar '2',LerfuChar '6',LerfuChar '2',LerfuPA "rei"]],c0)
+sinxa([MEX: MexLerfuString [LerfuShift "se'e",LerfuChar '2',LerfuChar '6',LerfuChar '2',LerfuPA "rei"]],c0)
 
 ju'a nai cy no ka ce'u panpi kei
-.i me'o MexLerfuString [LerfuChar 's',LerfuChar '2',LerfuChar '6',LerfuChar '2',LerfuPA "rei"] lo'o sinxa cy no
+.i me'o MexLerfuString [LerfuShift "se'e",LerfuChar '2',LerfuChar '6',LerfuChar '2',LerfuPA "rei"] lo'o sinxa cy no
 
 -----
