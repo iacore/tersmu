@@ -53,9 +53,7 @@ data COI = COI {coiCOI::String, coiNAI::Bool}
 
 type FreeIndex = Int
 
-data Term = Term [Free] (Maybe Term')
-    deriving (Eq, Show, Ord)
-data Term'
+data Term
     = Sumti Tagged Sumti
     | Negation
     | Termset [Term]
@@ -119,14 +117,14 @@ isTense (DecoratedTagUnits dtus) = or $ map isTenseDTU dtus
 type Cmavo = String
 
 data Sumti = ConnectedSumti Bool Connective Sumti Sumti [RelClause]
-	   | QAtom (Maybe Mex) [RelClause] SumtiAtom
+	   | QAtom [Free] (Maybe Mex) [RelClause] SumtiAtom
 	   | QSelbri Mex [RelClause] Selbri
 	   deriving (Eq, Show, Ord)
 
 appendRelsToSumti newrels (ConnectedSumti fore con s1 s2 rels) =
     ConnectedSumti fore con s1 s2 (rels++newrels)
-appendRelsToSumti newrels (QAtom q rels sa) =
-    QAtom q (rels++newrels) sa
+appendRelsToSumti newrels (QAtom fs q rels sa) =
+    QAtom fs q (rels++newrels) sa
 appendRelsToSumti newrels (QSelbri q rels s) =
     QSelbri q (rels++newrels) s
 
@@ -165,6 +163,7 @@ data Lerfu
     = LerfuChar Char
     | LerfuPA Cmavo
     | LerfuValsi String
+    | LerfuShift Cmavo
     | LerfuShifted Cmavo Lerfu
     | LerfuComposite [Lerfu]
     deriving (Eq, Show, Ord)
@@ -212,7 +211,7 @@ data Selbri3 = SBTanru Selbri3 Selbri3
 	     | ConnectedSB Bool Connective Selbri Selbri3
 	     | BridiBinding Selbri3 Selbri3
 	     | ScalarNegatedSB NAhE Selbri3
-	     | TanruUnit TanruUnit [Term]
+	     | TanruUnit [Free] TanruUnit [Term]
 	     deriving (Eq, Show, Ord)
 
 type NAhE = Cmavo
@@ -288,7 +287,7 @@ lerfuStringsOfSelbri (Selbri2 sb2) = do
 	sb3tols (SBTanru sb sb') = (++) <$> sb3tols sb <*> sb3tols sb'
 	sb3tols (ConnectedSB _ _ sb sb3) = (++) <$> sbtols sb <*> sb3tols sb3
 	sb3tols (BridiBinding sb3 _) = sb3tols sb3
-	sb3tols (TanruUnit tu _) = tutols tu
+	sb3tols (TanruUnit _ tu _) = tutols tu
 	sbtols = lerfuStringsOfSelbri
 	tutols (TUBrivla s) = return $ [LerfuChar $ head s]
 	tutols (TUZei vs) = [map (LerfuChar . head) $ vs

@@ -125,7 +125,7 @@ parseBTail (BridiTail3 (Selbri2 (SBInverted sb sb')) tts) =
     getInvertedRel sb sb' =
 	(parseSelbri3 sb >>=) $ applySeltau $ case sb' of
 	    SBInverted sb'' sb''' -> getInvertedRel sb'' sb'''
-	    Selbri3 sb'' -> parseSelbri $ Selbri2 (Selbri3 (TanruUnit (TUSelbri3 sb'') tts))
+	    Selbri3 sb'' -> parseSelbri $ Selbri2 (Selbri3 (TanruUnit [] (TUSelbri3 sb'') tts))
 
 parseBTail (BridiTail3 sb tts) = do
     parseSelbri sb <* parseTerms tts
@@ -166,8 +166,8 @@ parseSelbri3 (ConnectedSB fore con sb sb') = do
     return $ jboRelToBridi $ TanruConnective con' p p'
 parseSelbri3 (ScalarNegatedSB nahe sb) =
     mapRelsInBridi (ScalarNegatedRel nahe) <$> parseSelbri3 sb
-parseSelbri3 (TanruUnit tu2 las) =
-    advanceArgPosToBridi >> parseTU tu2 <* parseTerms las
+parseSelbri3 (TanruUnit fs tu2 las) =
+    doFreesInParseM fs >> advanceArgPosToBridi >> parseTU tu2 <* parseTerms las
 parseSelbri3 (BridiBinding tu tu') = do
     assigned' <- tryAssign tu'
     assigned <- if assigned' then return False else tryAssign tu
@@ -175,7 +175,7 @@ parseSelbri3 (BridiBinding tu tu') = do
 	else if assigned' then parseSelbri3 tu
 	    else parseSelbri3 tu <* parseSelbri3 tu'
     where
-	tryAssign (TanruUnit (TUBrivla bv) []) |
+	tryAssign (TanruUnit [] (TUBrivla bv) []) |
 		bv `elem` map (\v -> "brod" ++ [v]) "aeiou"
 	    = setBribastiToCurrent (TUBrivla bv) >> return True
 	tryAssign _ = return False
@@ -246,9 +246,7 @@ parseTerms ts = concat <$> flip mapM ts (\t -> do
 	    _ -> return [])
 
 parseTerm :: PreProp r => Term -> ParseM r (Maybe (Either (JboTag, Maybe JboTerm) JboTerm))
-parseTerm (Term fs mt) = 
-    join <$> traverse parseTerm' mt <* doFreesInParseM fs
-parseTerm' t = case t of
+parseTerm t = case t of
     Termset ts -> mapM_ parseTerm ts >> return Nothing
     ConnectedTerms fore con t1 t2 -> do
 	doConnective fore con
@@ -290,7 +288,7 @@ parseSumti s = do
 		    return $ JoikedTerms joik o1 o2
 	    jrels <- parseRels rels
 	    return (o,jrels)
-	(QAtom mq rels sa) -> case sa of
+	(QAtom fs mq rels sa) -> doFreesInParseM fs >> case sa of
 	     Variable _ -> do
 		mm <- traverse parseMex mq
 		(rps,jrels) <- stripForeRestrictives <$> parseRels rels
@@ -343,7 +341,7 @@ parseRels rels = concat . map maybeToList <$> mapM parseRel rels where
 	(Just . JRIncidental <$>) $ withQuestions True $ subsentToPred ss
     parseRel (RestrictiveGOI goi t) = goiRel goi JRRestrictive t
     parseRel (IncidentalGOI goi t) = goiRel goi JRIncidental t
-    parseRel (Assignment (Term [] (Just (Sumti Untagged (QAtom Nothing [] sa))))) | isAssignable sa = 
+    parseRel (Assignment (Sumti Untagged (QAtom [] Nothing [] sa))) | isAssignable sa = 
 	return $ Just . JRAssign $ Left sa
     parseRel (Assignment t) = do
 	ret <- ignoringArgs $ parseTerm t
@@ -424,7 +422,7 @@ parseSumtiAtom sa = do
 		Right s -> isAmong <$> parseSumti s
 	    (irps,iips,ias) <- (segregateRels . (extrairels++) <$>) $ parseRels $
 		irels ++ maybeToList ((\is ->
-		    IncidentalGOI "ne" (Term [] $ Just $ Sumti Untagged is)) <$> mis)
+		    IncidentalGOI "ne" (Sumti Untagged is)) <$> mis)
 	    let xorlo_ps = sr : maybeToList mmr
 	    o <- case gadri!!1 of
 		'o' -> do
