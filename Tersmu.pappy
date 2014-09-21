@@ -421,6 +421,7 @@ tanruUnit2 :: TanruUnit
     -- XXX: probably this ZEI handling interacts badly with other magic words?
     = v:Valsi vs:(ZEI v:Valsi -> v)+ -> {TUZei $ v:vs}
     / bv:BRIVLA -> {TUBrivla bv}
+    / "mo":GOhA k:("kau":UI x:xiLit? -> {fromMaybe 1 x})? -> {TUBridiQ k}
     / g:GOhA mn:xiLit? RAhO? -> {TUGOhA g $ fromMaybe 1 mn}
     / KE sb:selbri3 KEhE? -> {TUSelbri3 sb}
     / ME s:(sumti / ls:lerfuString -> {QAtom [] Nothing [] $ LerfuString ls}) MEhU? mmoi:MOI?

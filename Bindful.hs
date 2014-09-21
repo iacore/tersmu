@@ -1,3 +1,4 @@
+{-# LANGUAGE MultiParamTypeClasses,FunctionalDependencies,TypeSynonymInstances,FlexibleInstances#-}
 module Bindful where
 
 -- monad to conveniently handle binding values to numbered variables

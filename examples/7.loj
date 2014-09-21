@@ -591,21 +591,21 @@ mi bajykla ti ta
 -----
 > do klama ma
 
-ma x1. klama(do,x1)
+? x1. klama(do,x1)
 
 ma goi ko'a zo'u do klama ko'a
 
 -----
 > do mo
 
-mo(do)
+? R1. R1(do)
 
-do mo
+mo cei broda zo'u do broda
 
 -----
 > ma cmene do
 
-ma x1. cmene(x1,do)
+? x1. cmene(x1,do)
 
 ma goi ko'a zo'u ko'a cmene do
 
@@ -614,18 +614,18 @@ ma goi ko'a zo'u ko'a cmene do
 -----
 > lo mo prenu cu darxi do .i barda
 
-<mo(_)><prenu>(c0)
+? R1. <R1(_)><prenu>(c0)
 darxi(c0,do)
 barda( )
 
-cy no ke mo prenu ke'e
+mo cei broda zo'u cy no ke broda prenu ke'e
 .i cy no darxi do
 .i barda
 
 -----
 > ma djuno ma
 
-ma x1. ma x2. djuno(x1,x2)
+? x1. ? x2. djuno(x1,x2)
 
 ma goi ko'a ma goi ko'e zo'u ko'a djuno ko'e
 

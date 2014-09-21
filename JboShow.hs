@@ -1,3 +1,4 @@
+{-# LANGUAGE TypeSynonymInstances, FlexibleInstances #-}
 module JboShow where
 
 import Bindful
@@ -16,42 +17,46 @@ import Data.List
 instance Rel JboRel where
     relstr r = evalBindful $ logshow r
 
+data ShowBindable
+    = SVar Int
+    | SRVar Int
+    | SAss Int
+    | SRAss Int
+    | SRel Int
+    | SLambda Int Int
+    deriving (Eq, Show, Ord)
+
 class JboShow t where
-    jboshow :: t -> Bindful SumtiAtom String
-    logshow :: t -> Bindful SumtiAtom String
-    logjboshow :: Bool -> t -> Bindful SumtiAtom String
+    jboshow :: t -> Bindful ShowBindable String
+    logshow :: t -> Bindful ShowBindable String
+    logjboshow :: Bool -> t -> Bindful ShowBindable String
 
     -- minimal complete definition: (jboshow and logshow) or logjboshow
     jboshow = logjboshow True
     logshow = logjboshow False
     logjboshow jbo = if jbo then jboshow else logshow
 
-withNextVariable f =
-    do vals <- getValues
-       let n = head [ n | n <- [1..], not $ (Variable n) `elem` vals ]
-	   in withBinding (Variable n) f
-
-withNextAssignable f =
-    do vals <- getValues
-       let n = head [ n | n <- [1..], not $ (Assignable n) `elem` vals ]
-	   in withBinding (Assignable n) f
-
+withNext :: (Int -> ShowBindable) -> (Int -> Bindful ShowBindable a) -> (Bindful ShowBindable a)
+withNext v f = do
+    vals <- getValues
+    let n = head [ n | n <- [1..], not $ (v n) `elem` vals ]
+    withBinding (v n) f
 
 withShuntedRelVar f =
-    do twiddleBound $ \s -> case s of RelVar n -> RelVar $ n+1
+    do twiddleBound $ \s -> case s of SRel n -> SRel $ n+1
 				      _ -> s
-       r <- withBinding (RelVar 1) f
-       twiddleBound $ \s -> case s of RelVar n -> RelVar $ n-1
+       r <- withBinding (SRel 1) f
+       twiddleBound $ \s -> case s of SRel n -> SRel $ n-1
 				      _ -> s
        return r
 withShuntedLambdas arity f = do
     twiddleBound $ \s -> case s of
-	LambdaVar (Just l) (Just n) -> LambdaVar (Just $ l+1) (Just n)
+	SLambda l n -> SLambda (l+1) n
 	_ -> s
     r <- ($[]) $ foldl (\h b -> \ns -> b $ \n -> h $ n:ns)
-	f [withBinding (LambdaVar (Just 1) (Just n)) | n <- [1..arity]]
+	f [withBinding (SLambda 1 n) | n <- [1..arity]]
     twiddleBound $ \s -> case s of
-	LambdaVar (Just l) (Just n) -> LambdaVar (Just $ l-1) (Just n)
+	SLambda l n -> SLambda (l-1) n
 	_ -> s
     return r
 
@@ -77,7 +82,7 @@ instance JboShow String where
     logjboshow _ s = return s
 
 instance JboShow JboQuantifier where
-    logjboshow _ QuestionQuantifier = return "ma"
+    logjboshow _ QuestionQuantifier = return "?"
     logjboshow jbo (LojQuantifier q) = logjboshow jbo q
     logjboshow jbo (MexQuantifier m) = logjboshow jbo m
 instance JboShow LojQuantifier where
@@ -86,7 +91,7 @@ instance JboShow LojQuantifier where
     jboshow (Exactly n) = return $ jbonum n
     logshow = return . show
 
-logjboshowlist :: JboShow a => Bool -> [a] -> Bindful SumtiAtom String
+logjboshowlist :: JboShow a => Bool -> [a] -> Bindful ShowBindable String
 logjboshowlist jbo as = do
     ass <- mapM (logjboshow jbo) as
     return $ intercalate (if jbo then " " else ",") ass 
@@ -127,7 +132,7 @@ instance JboShow JboMex where
 
 -- |logjboshownumber: for cases when we shouldn't append a {boi} (number and
 -- numberOrLerfuString productions)
-logjboshownumber :: Bool -> JboMex -> Bindful SumtiAtom String
+logjboshownumber :: Bool -> JboMex -> Bindful ShowBindable String
 logjboshownumber _ m | not (mexIsNumberOrLS m) = error "[BUG: Full mex in ljsn]"
 logjboshownumber jbo (MexInt n) = logjboshow jbo n
 logjboshownumber jbo@True (MexNumeralString ns) = logjboshowlist jbo ns
@@ -259,7 +264,7 @@ instance JboShow JboVPred where
 
 logjboshowpred jbo@False p =
     withShuntedRelVar $ \n -> logjboshow jbo $ p n
-logjboshowpred jbo@True p = withNextVariable $ \v ->
+logjboshowpred jbo@True p = withNext SVar $ \v ->
      case p v of
 	 Rel sb ts | isJust $ elemIndex (BoundVar v) ts -> do
 	     s <- logjboshow jbo sb
@@ -332,6 +337,9 @@ instance JboShow JboRel where
     logjboshow jbo (UnboundBribasti (TUGOhA g n)) = return $
 	(if jbo then unwords else concat) $
 	    g : if n==1 then [] else ["xi",jbonum n]
+    logjboshow jbo (BoundRVar n) = binding n >>= logjboshow jbo
+    logjboshow True (RVar _) = return $ "XASLI zei bu'a"
+    logjboshow False (RVar _) = return $ "XASLI"
     logjboshow jbo (UnboundBribasti (TUBrivla s)) = return s
     logjboshow jbo (OperatorRel op) =
 	(if jbo then jbobracket "nu'a" "te'u" else bracket '[') <$> logjboshow jbo op
@@ -344,14 +352,6 @@ instance JboShow SumtiAtom where
     logjboshow jbo (LerfuString s) = logjboshow jbo s
     logjboshow jbo v =
 	if jbo then return $ case v of
-	    Variable n | n <= 3 -> "d" ++ vowelnum n
-	    Variable n -> "da xi " ++ jbonum n
-	    RelVar 1 -> "ke'a"
-	    RelVar n -> "ke'a xi " ++ jbonum n
-	    LambdaVar (Just 1) (Just 1) -> "ce'u"
-	    LambdaVar (Just l) (Just 1) -> "ce'u xi " ++ jbonum l
-	    LambdaVar (Just l) (Just n) ->
-		"ce'u xi " ++ jbonum l ++ " xi " ++ jbonum n
 	    Assignable n | n <= 5 -> "ko'" ++ vowelnum n
 	    Assignable n | n <= 10 -> "fo'" ++ vowelnum (n-5)
 	    Assignable n -> "ko'a xi " ++ jbonum n
@@ -361,15 +361,35 @@ instance JboShow SumtiAtom where
 	    MainBridiSumbasti n | n <= 5 -> "vo'" ++ vowelnum n
 	    MainBridiSumbasti n -> "vo'a xi " ++ jbonum n
 	else case v of
-	    Variable n -> return $ "x" ++ show n
-	    RelVar 1 -> return $ "_"
-	    RelVar n -> return $ "_" ++ show n
-	    LambdaVar (Just 1) (Just n) -> return $ "\\" ++ show n
-	    LambdaVar (Just l) (Just n) ->
-		return $ "\\" ++ bracket '(' (show l ++ "," ++ show n)
 	    v -> do
 		s <- logjboshow True v
 		return $ "{" ++ s ++ "}"
+instance JboShow ShowBindable where
+    jboshow v = return $ case v of
+	SVar n | n <= 3 -> "d" ++ vowelnum n
+	SVar n -> "da xi " ++ jbonum n
+	SRel 1 -> "ke'a"
+	SRel n -> "ke'a xi " ++ jbonum n
+	SLambda 1 1 -> "ce'u"
+	SLambda l 1 -> "ce'u xi " ++ jbonum l
+	SLambda l n ->
+	    "ce'u xi " ++ jbonum l ++ " xi " ++ jbonum n
+	SAss n | n <= 5 -> "ko'" ++ vowelnum n
+	SAss n | n <= 10 -> "fo'" ++ vowelnum (n-5)
+	SAss n -> "ko'a xi " ++ jbonum n
+	SRVar n -> if n <= 3 then "bu'" ++ vowelnum n
+	    else "bu'a xi " ++ jbonum n
+	SRAss n | n <= 5 -> "brod" ++ vowelnum n
+	SRAss n -> "broda xi " ++ jbonum n
+    logshow v = case v of
+	SVar n -> return $ "x" ++ show n
+	SRel 1 -> return $ "_"
+	SRel n -> return $ "_" ++ show n
+	SLambda 1 n -> return $ "\\" ++ show n
+	SLambda l n ->
+	    return $ "\\" ++ bracket '(' (show l ++ "," ++ show n)
+	SRVar n -> return $ "R" ++ show n
+	_ -> bracket '{' <$> jboshow v
 instance JboShow JboTerm where
     logjboshow False (Unfilled) = return " "
     logjboshow True (Unfilled) = return "BUG"
@@ -460,7 +480,7 @@ instance JboShow JboProp
     where {logjboshow jbo p = (if jbo then unwords else concat)
 				<$> logjboshow' jbo [] p
 	where
-	  logjboshow' :: Bool -> [String] -> JboProp -> Bindful SumtiAtom [String]
+	  logjboshow' :: Bool -> [String] -> JboProp -> Bindful ShowBindable [String]
 	  {-
 	  logjboshow' True ps (Quantified (Gadri gadri) r p) =
 	      withNextAssignable $ \n ->
@@ -470,11 +490,21 @@ instance JboShow JboProp
 			 ["ku","goi",vs]) (p n)
 	  -}
 	  logjboshow' True ps (Quantified QuestionQuantifier _ p) =
-	      withNextAssignable $ \n ->
+	      withNext SAss $ \n ->
 		  do as <- logjboshow jbo (BoundVar n)
 		     logjboshow' jbo (ps ++ ["ma","goi",as]) (p n)
+	  logjboshow' True ps (Quantified (RelQuantifier QuestionQuantifier) _ p) =
+	      withNext SRAss $ \n ->
+		  do as <- logjboshow jbo (BoundRVar n)
+		     logjboshow' jbo (ps ++ ["mo","cei",as]) (p n)
+	  logjboshow' jbo ps (Quantified (RelQuantifier q) _ p) =
+	    withNext SRVar $ \n -> do
+		qs <- logjboshow jbo q
+		rvs <- logjboshow jbo (BoundRVar n)
+		logjboshow' jbo (ps ++
+		    [qs, if jbo then rvs else " " ++ rvs ++ ". "]) (p n)
 	  logjboshow' jbo ps (Quantified q r p) =
-	      withNextVariable $ \n ->
+	      withNext SVar $ \n ->
 		  do qs <- logjboshow jbo q
 		     vs <- logjboshow jbo (BoundVar n)
 		     rss <- case r of

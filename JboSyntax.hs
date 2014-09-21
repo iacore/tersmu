@@ -144,7 +144,6 @@ data SumtiAtom = Name Gadri [RelClause] String
 	       | RelVar Int -- ke'a
 	       | LambdaVar (Maybe Int) (Maybe Int) -- ce'u [xi ly] [xi ny]
 	       | SelbriVar -- fake, for description sumti
-	       | BuhaVar -- fake, for bu'a etc
 	       | Description Gadri (Maybe Sumti) (Maybe Mex) (Either Selbri Sumti) [RelClause] [RelClause]
 	       | Assignable Int -- ko'a
 	       | LerfuString [Lerfu]
@@ -225,6 +224,7 @@ sb3tosb = Selbri2 . Selbri3
 data TanruUnit
     = TUBrivla String
     | TUZei [String]
+    | TUBridiQ (Maybe Int)
     | TUGOhA String Int
     | TUMe Sumti
     | TUMoi Sumti String

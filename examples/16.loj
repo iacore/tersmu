@@ -701,23 +701,23 @@ na ku ge la djan. klama la paris. gi la djan. klama la rom.
 -----
 > su'o bu'a zo'u la djim. bu'a la djan.
 
-EX x1:(bu'a(_)). bu'a("djim","djan")
+EX R1. R1("djim","djan")
 
-su'o da poi ke'a bu'a ku'o zo'u la djim. bu'a la djan.
+su'o bu'a zo'u la djim. bu'a la djan.
 
 -----
 > la djim. bu'a la djan.
 
-bu'a("djim","djan")
+EX R1. R1("djim","djan")
 
-la djim. bu'a la djan.
+su'o bu'a zo'u la djim. bu'a la djan.
 
 -----
 > ro bu'a zo'u la djim. bu'a la djan.
 
-FA x1:(bu'a(_)). bu'a("djim","djan")
+FA R1. R1("djim","djan")
 
-ro da poi ke'a bu'a ku'o zo'u la djim. bu'a la djan.
+ro bu'a zo'u la djim. bu'a la djan.
 
 -----
 > ci da poi mlatu cu blabi .ije re da cu barda

@@ -1,4 +1,4 @@
-{-# LANGUAGE DeriveDataTypeable #-}
+{-# LANGUAGE FlexibleInstances, TypeSynonymInstances, DeriveDataTypeable #-}
 module JboProp where
 
 import FOL hiding (Term)

@@ -1763,7 +1763,7 @@ su'o da zo'u ge fi'o du da zo'u do nelci mi gi ba da zo'u mi nelci do
 > do klama le zdani ca ma
 
 non-veridical: zdani(c0)
-ma x1. (ca)(x1). klama(do,c0)
+? x1. (ca)(x1). klama(do,c0)
 
 ju'a nai cy no zdani
 .i ma goi ko'a ca ko'a zo'u do klama cy no
@@ -1773,7 +1773,7 @@ ju'a nai cy no zdani
 
 non-veridical: bisli(c1)
 non-veridical: verba(c0)
-ma x1. (vi)(x1). (pu)(). cadzu(c0,c1)
+? x1. (vi)(x1). (pu)(). cadzu(c0,c1)
 
 ju'a nai cy pa bisli
 .i ju'a nai cy no verba

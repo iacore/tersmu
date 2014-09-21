@@ -61,9 +61,9 @@ parseStatements :: [Statement] -> JboPropM JboProp
 parseStatements ss = bigAnd <$> mapM parseStatement ss
 
 parseStatement :: Statement -> JboPropM JboProp
-parseStatement (Statement fs ps s) = do
+parseStatement (Statement fs pts s) = do
     doFreesInParseM fs
-    ignoringArgs $ parseTerms ps
+    parsePrenexTerms pts
     parseStatement1 s
 
 parseStatement1 :: Statement1 -> JboPropM JboProp
@@ -84,9 +84,9 @@ parseStatement1 (StatementSentence fs s) = do
     return $ b nullArgs
 
 parseSubsentence :: Subsentence -> BridiM Bridi
-parseSubsentence (Subsentence fs ps s) = do
+parseSubsentence (Subsentence fs pts s) = do
     doFreesInParseM fs
-    ignoringArgs $ parseTerms ps
+    parsePrenexTerms pts
     parseSentence s
 
 parseSentence :: Sentence -> BridiM Bridi
@@ -184,10 +184,10 @@ parseTU :: TanruUnit -> BridiM Bridi
 parseTU tu@(TUBrivla bv) = getBribasti tu
 parseTU (TUZei vs) = return . jboRelToBridi . Brivla $ intercalate "-zei-" vs
 parseTU (TUGOhA "du" _) = return $ jboRelToBridi Equal
-parseTU (TUGOhA g mn) | g `elem` map ("bu'"++) "aei" =
-    let n = fromMaybe (head [n | (v,n) <- zip "aei" [1..], g=="bu'"++[v]]) mn
-    in do x <- lookupVarBinding $ BuhaVar n
+parseTU tu | tuIsBuha tu =
+    jboRelToBridi <$> doBuha mexExists tu
 parseTU tu@(TUGOhA _ _) = getBribasti tu
+parseTU (TUBridiQ kau) = jboRelToBridi <$> addBridiQuestion kau
 parseTU (TUMe s) = do
     o <- parseSumti s
     return $ jboRelToBridi $ Among o
@@ -239,9 +239,34 @@ parseTU (TUXOhI tag) = do
     return $ jboRelToBridi $ TagRel jbotag
 parseTU (TUSelbri3 sb) = parseSelbri3 sb
 
+tuIsBuha :: TanruUnit -> Bool
+tuIsBuha (TUGOhA g n) = g `elem` map (\c -> "bu'"++[c]) "aei"
+tuIsBuha _ = False
+doBuha :: PreProp r => JboMex -> TanruUnit -> ParseM r JboRel
+doBuha m tu@(TUGOhA g n) | tuIsBuha tu =
+    let bn = if n > 1 then n else head [n | (v,n) <- zip "aei" [1..], g=="bu'"++[v]]
+	tu = TUGOhA "bu'a" bn
+    in do
+	x <- lookupVarBinding tu
+	case x of
+	    Just (RVar n) -> return $ RVar n
+	    Nothing -> do 
+		r <- rquantify m
+		setVarBinding tu r
+		return r
 
-parseTerms :: PreProp r => [Term] -> ParseM r [JboTerm]
-parseTerms ts = concat <$> flip mapM ts (\t -> do
+
+parseTerms,parsePrenexTerms :: PreProp r => [Term] -> ParseM r [JboTerm]
+parseTerms = parseTerms' False
+parsePrenexTerms = ignoringArgs . parseTerms' True
+parseTerms' prenex ts = concat <$> flip mapM ts (\t -> case t of
+    Sumti Untagged (QSelbri m _ (Selbri2 (Selbri3 (TanruUnit _ tu _)))) |
+	    prenex && tuIsBuha tu -> do
+	-- the "quantified buha in prenex" hack
+	m' <- parseMex m
+	doBuha m' tu
+	return []
+    _ -> do
 	ret <- parseTerm t
 	case ret of
 	    Just (Left (jbotag,mo)) -> doTag jbotag mo >> return []
@@ -576,6 +601,14 @@ quantify m r = do
 	    \v -> subTerm fresh (BoundVar v) p
     return fresh
 
+rquantify :: PreProp r => JboMex -> ParseM r JboRel
+rquantify m = do
+    fresh <- getFreshRVar
+    mapProp $ \p ->
+	Quantified (RelQuantifier $ terpJboMexAsQuantifier m) Nothing $
+	    \v -> subRel fresh (BoundRVar v) p
+    return fresh
+
 doTag :: PreProp r => JboTag -> Maybe JboTerm -> ParseM r ()
 doTag (DecoratedTagUnits dtus) Nothing =
     -- separate into a stream of possibly negated modals
@@ -611,9 +644,7 @@ mapRelsInBridi f b = (terpProp (\r ts -> Rel (f r) ts) id id) . b
 selbriToVPred :: Selbri -> ParseM r JboVPred
 selbriToVPred sb = parsedSelbriToVPred $ parseSelbri sb
 parsedSelbriToVPred :: BridiM Bridi -> ParseM r JboVPred
-parsedSelbriToVPred m = do
-    fresh <- getFreshVar UnrestrictedDomain
-    bridiToJboVPred <$> partiallyRunSubBridiM m
+parsedSelbriToVPred m = bridiToJboVPred <$> partiallyRunSubBridiM m
 
 selbriToPred sb = vPredToPred <$> selbriToVPred sb
 

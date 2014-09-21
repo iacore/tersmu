@@ -110,7 +110,7 @@ ju'a nai cy no zarci
 > ma klama le zarci
 
 non-veridical: zarci(c0)
-ma x1. klama(x1,c0)
+? x1. klama(x1,c0)
 
 ju'a nai cy no zarci
 .i ma goi ko'a zo'u ko'a klama cy no
@@ -118,7 +118,7 @@ ju'a nai cy no zarci
 -----
 > do klama ma
 
-ma x1. klama(do,x1)
+? x1. klama(do,x1)
 
 ma goi ko'a zo'u do klama ko'a
 
@@ -134,7 +134,7 @@ ju'a nai cy no zarci
 -----
 > ma klama ma
 
-ma x1. ma x2. klama(x1,x2)
+? x1. ? x2. klama(x1,x2)
 
 ma goi ko'a ma goi ko'e zo'u ko'a klama ko'e
 
@@ -150,7 +150,7 @@ ju'a nai cy no zarci
 -----
 > ma fa'u ma klama ma fa'u ma
 
-ma x1. ma x2. ma x3. ma x4. klama((x1 {fa'u} x2),(x3 {fa'u} x4))
+? x1. ? x2. ? x3. ? x4. klama((x1 {fa'u} x2),(x3 {fa'u} x4))
 
 ma goi ko'a ma goi ko'e ma goi ko'i ma goi ko'o zo'u ko'a fa'u ke ko'e ke'e klama ko'i fa'u ke ko'o ke'e
 
@@ -168,9 +168,9 @@ ju'a nai cy pa briju
 -----
 > la lojban. mo
 
-mo("lojban")
+? R1. R1("lojban")
 
-la lojban. mo
+mo cei broda zo'u la lojban. broda
 
 -----
 > do viska xo prenu

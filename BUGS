@@ -2,10 +2,8 @@ All known divergence from baseline (CLL+xorlo), or from plausible
 interpretations thereof, is noted here.
 
 Definite bugs:
-    Question words other than {xu} and {ma} are not handled properly;
-    {kau} works only after {xu} or {ma}.
-
-    {bu'a} quantification isn't handled.
+    Question words other than {xu},{ma} and {mo} are not handled properly;
+    {kau} works only after these question words
 
     {ra'o} is ignored.
 

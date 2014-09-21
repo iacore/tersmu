@@ -2,12 +2,10 @@ PAPPY=pappy/pappy/pappy
 PAPPYOPTS=--2010 -e --monad
 all: tersmu tersmuBot
 tersmu: *.hs Tersmu.hs Morphology.hs Pappy/Parse.hs
-	ghc -o tersmu -XMultiParamTypeClasses -XFunctionalDependencies \
-	    -XTypeSynonymInstances -XFlexibleInstances --make Main
+	ghc -o tersmu --make Main
 tersmuBot: *.hs Tersmu.hs Morphology.hs Pappy/Parse.hs
 	#killall tersmuBot || true
-	ghc -o tersmuBot -XMultiParamTypeClasses -XFunctionalDependencies \
-	    -XTypeSynonymInstances -XFlexibleInstances --make tersmuBot.hs
+	ghc -o tersmuBot --make tersmuBot.hs
 ${PAPPY}:
 	# get my patched version of Chris Done's version of Bryan Ford's pappy
 	darcs clone http://mbays.freeshell.org/pappy

@@ -442,7 +442,7 @@ la djan. cusku lu ju'a nai cy no zarci
 -----
 > mi djuno le du'u makau pu klama le zarci
 
-non-veridical: du'u[ma x1. (pu)(). klama(x1,c0)](c1)
+non-veridical: du'u[? x1. (pu)(). klama(x1,c0)](c1)
 non-veridical: zarci(c0)
 djuno(mi,c1)
 
@@ -464,7 +464,7 @@ ju'a nai cy pa du'u pu ku zo'u la djan. klama cy no kei
 -----
 > mi djuno le du'u ma pu klama le zarci
 
-non-veridical: ma x1. du'u[(pu)(). klama(x1,c0)](c1)
+non-veridical: ? x1. du'u[(pu)(). klama(x1,c0)](c1)
 non-veridical: zarci(c0)
 djuno(mi,c1)
 

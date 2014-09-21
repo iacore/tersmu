@@ -1,3 +1,4 @@
+{-# LANGUAGE TypeSynonymInstances, FlexibleInstances, MultiParamTypeClasses #-}
 module BridiM where
 
 import JboProp
@@ -25,6 +26,7 @@ data ParseState = ParseState
     { sumbastiBindings::SumbastiBindings
     , bribastiBindings::BribastiBindings
     , nextFreshVar::Int
+    , nextFreshRVar::Int
     , variableDomains :: Map Int VariableDomain
     , nextFreshConstant::Int
     , referencedVars::Set Int
@@ -32,13 +34,13 @@ data ParseState = ParseState
     , lambdas::Map LambdaPos Int
     , sideTexticules::[Texticule]
     }
-nullParseState = ParseState Map.empty Map.empty 0 Map.empty 0 Set.empty [] Map.empty []
+nullParseState = ParseState Map.empty Map.empty 0 0 Map.empty 0 Set.empty [] Map.empty []
 type ParseStateT = StateT ParseState
 type ParseStateM = ParseStateT Identity
 
 -- BridiParseState holds state which respects the logical structure
-data BridiParseState = BridiParseState {arglist::Arglist,varBindings::VarBindings,isSubBridi::Bool}
-nullBridiParseState = BridiParseState nullArglist Map.empty False
+data BridiParseState = BridiParseState {arglist::Arglist,varBindings::VarBindings,rvarBindings::RVarBindings,isSubBridi::Bool}
+nullBridiParseState = BridiParseState nullArglist Map.empty Map.empty False
 
 type ParseM r = (StateT BridiParseState) (ContT r ParseStateM)
 type BridiM = ParseM Bridi
@@ -70,6 +72,7 @@ data Question = Question {qKauDepth :: Maybe Int, qInfo::QInfo}
 data QInfo
     = QTruth
     | QSumti JboTerm
+    | QBridi JboRel
 
 data LambdaPos = LambdaPos {lambdaLevel :: Int, lambdaNum :: Int}
     deriving (Eq, Show, Ord)
@@ -105,10 +108,12 @@ class (Monad m,Applicative m) => ParseStateful m where
     getBribasti :: TanruUnit -> m Bridi
     getBribasti s = (`getBribastiBinding` s) <$> getBribastiBindings
 
-    getNextFreshVar :: m Int
+    getNextFreshVar,getNextFreshRVar :: m Int
     getNextFreshVar = nextFreshVar <$> getParseState
-    putNextFreshVar :: Int -> m ()
+    getNextFreshRVar = nextFreshRVar <$> getParseState
+    putNextFreshVar,putNextFreshRVar :: Int -> m ()
     putNextFreshVar n = modifyParseState $ \ps -> ps{nextFreshVar=n}
+    putNextFreshRVar n = modifyParseState $ \ps -> ps{nextFreshRVar=n}
     modifyDomains :: (Map Int VariableDomain -> Map Int VariableDomain) -> m ()
     modifyDomains f = modifyParseState $ \ps -> ps{variableDomains = f $ variableDomains ps}
     setDomain :: JboTerm -> VariableDomain -> m ()
@@ -142,6 +147,11 @@ class (Monad m,Applicative m) => ParseStateful m where
 	n <- getNextFreshConstant
 	putNextFreshConstant $ n+1
 	return $ Constant n []
+    getFreshRVar :: m JboRel
+    getFreshRVar = do
+	n <- getNextFreshRVar
+	putNextFreshRVar $ n+1
+	return $ RVar n
     setReferenced :: Int -> m ()
     setReferenced n = getReferenced >>= putReferenced . Set.insert n
     referenced :: Int -> m Bool
@@ -214,6 +224,11 @@ addSumtiQuestion kau = do
     o <- getFreshVar UnrestrictedDomain
     addQuestion $ Question kau $ QSumti o
     return o
+addBridiQuestion :: ParseStateful m => Maybe Int -> m JboRel
+addBridiQuestion kau = do
+    r <- getFreshRVar
+    addQuestion $ Question kau $ QBridi r
+    return r
 withQuestions :: (ParseStateful m, PreProp p) => Bool -> m p -> m p
 withQuestions top m = do
     -- XXX: using ParseState for this is a bit of a hack, really, but I'd
@@ -229,6 +244,9 @@ doQInfo (QSumti qv) = liftToProp $ \p ->
     -- TODO: really, this ought to use a plural variable
     Quantified QuestionQuantifier Nothing $
 	\v -> subTerm qv (BoundVar v) p
+doQInfo (QBridi qv) = liftToProp $ \p ->
+    Quantified (RelQuantifier QuestionQuantifier) Nothing $
+	\v -> subRel qv (BoundRVar v) p
 doQInfo QTruth = liftToProp $ Modal QTruthModal
 deKau :: ParseStateful m => Bool -> m [QInfo]
 deKau top = do
@@ -339,24 +357,28 @@ setArgInArglist p o = modifyArglist $ \al -> al{args = setArg p o $ args al}
 setArgPos n = modifyArglist $ \al -> al{position=n}
 
 type VarBindings = Map SumtiAtom JboTerm
-class (Monad m,Applicative m) => VarBindful m where
-    getVarBindings :: m VarBindings
-    putVarBindings :: VarBindings -> m ()
-    modifyVarBindings :: (VarBindings -> VarBindings) -> m ()
+type RVarBindings = Map TanruUnit JboRel
+class (Monad m,Applicative m,Ord s,Show s) => VarBindful s t m where
+    getVarBindings :: m (Map s t)
+    putVarBindings :: (Map s t) -> m ()
+    modifyVarBindings :: ((Map s t) -> (Map s t)) -> m ()
     modifyVarBindings f = (f <$> getVarBindings) >>= putVarBindings
-    setVarBinding :: SumtiAtom -> JboTerm -> m ()
+    setVarBinding :: s -> t -> m ()
     setVarBinding a t = (Map.insert a t <$> getVarBindings) >>= putVarBindings
-    lookupVarBinding :: SumtiAtom -> m (Maybe JboTerm)
+    lookupVarBinding :: s -> m (Maybe t)
     lookupVarBinding a = Map.lookup a <$> getVarBindings 
-    getVarBinding :: SumtiAtom -> m JboTerm
+    getVarBinding :: s -> m t
     getVarBinding a = do
 	mv <- lookupVarBinding a
 	case mv of
 	    Just v -> return v
 	    Nothing -> error $ "Unbound variable " ++ show a
-instance VarBindful (ParseM r) where
+instance VarBindful SumtiAtom JboTerm (ParseM r) where
     getVarBindings = varBindings <$> get
     putVarBindings vbs = modify $ \s -> s{varBindings=vbs}
+instance VarBindful TanruUnit JboRel (ParseM r) where
+    getVarBindings = rvarBindings <$> get
+    putVarBindings vbs = modify $ \s -> s{rvarBindings=vbs}
 
 shuntVars :: Ord a => (Int -> a) -> Map a b -> Map a b
 shuntVars var bs = foldr ( \n -> Map.insert (var $ n+1)
