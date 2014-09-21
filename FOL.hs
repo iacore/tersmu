@@ -1,5 +1,7 @@
+{-# LANGUAGE DeriveDataTypeable #-}
 module FOL where 
 import Control.Monad.State
+import Data.Data
 
 data Prop r t c o q
     = Not    (Prop r t c o q)
@@ -9,11 +11,22 @@ data Prop r t c o q
     | Modal o (Prop r t c o q)
     | Rel    r [t]
     | Eet
+    deriving (Typeable,Data)
+
+class Dummyful a where dummy :: a
+instance Dummyful Int where dummy = -1
+instance (Typeable a, Dummyful a, Data p) => Data (a -> p) where
+    -- XXX: these dummy instances don't cut it when we really want to traverse
+    -- over a proposition - see gsubstituteIn
+    gfoldl k z f = z const `k` f dummy
+    gunfold k z c = k $ z const
+    toConstr f = mkConstr (dataTypeOf f) "Dummyful -> " [] Prefix
+    dataTypeOf f = mkDataType "DataIntFun" $ [toConstr f]
 
 data Connective = And | Or | Impl | Equiv
-    deriving (Eq, Ord)
+    deriving (Eq, Ord,Typeable,Data)
 data LojQuantifier = Exists | Forall | Exactly Int
-    deriving (Eq, Ord)
+    deriving (Eq, Ord,Typeable,Data)
 
 instance Show Connective where
     show And = "/\\"
