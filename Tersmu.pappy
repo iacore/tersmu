@@ -268,8 +268,8 @@ sumti4 :: Sumti = sumti5
 	    -> { ConnectedSumti True (pcon b) s1 s2 [] }
 
 sumti5 :: Sumti
-	= q:quantifier? s:sumti6 fs:free* rels:maybeRelativeClauses
-	    -> {QAtom fs q rels s}
+	= q:quantifier? s:sumti6 k:("kau":UI x:xiLit? -> {fromMaybe 1 x})? fs:free* rels:maybeRelativeClauses
+	    -> {QAtom fs q rels (maybe s (SumtiQ . Just) k)}
 	/ q:quantifier sb:selbri KU? rels:maybeRelativeClauses
 	    -> {QSelbri q rels sb}
 
@@ -294,7 +294,7 @@ sumti6 :: SumtiAtom
     / n:mainBridiSumbasti mn:xiLit? -> {MainBridiSumbasti $ fromMaybe n mn}
     / "zo'e":KOhA -> {Zohe}
     / k:KOhA &{k `elem` ["zi'o","zu'i"]} -> {NonAnaphoricProsumti k}
-    / "ma":KOhA k:("kau":UI x:xiLit? -> {fromMaybe 1 x})? -> {SumtiQ k}
+    / "ma":KOhA -> {SumtiQ Nothing}
     / g:LA n:name -> {n g}
     / g:(LA/LE) {(is,q,ssb,rels,irels)}:sumtiTail KU? ->
 	{Description g is q ssb rels irels}
@@ -415,13 +415,14 @@ tanruUnit :: Selbri3
     = tu:tanruUnit CEI tu':tanruUnit1 -> {BridiBinding tu tu'}
     / tanruUnit1
 tanruUnit1 :: Selbri3
-    = tu:tanruUnit2 fs:free* las:linkargs? -> {TanruUnit fs tu (fromMaybe [] las)}
+    = tu:tanruUnit2 k:("kau":UI x:xiLit? -> {fromMaybe 1 x})? fs:free* las:linkargs?
+	-> {TanruUnit fs (maybe tu (TUBridiQ . Just) k) (fromMaybe [] las)}
 
 tanruUnit2 :: TanruUnit
     -- XXX: probably this ZEI handling interacts badly with other magic words?
     = v:Valsi vs:(ZEI v:Valsi -> v)+ -> {TUZei $ v:vs}
     / bv:BRIVLA -> {TUBrivla bv}
-    / "mo":GOhA k:("kau":UI x:xiLit? -> {fromMaybe 1 x})? -> {TUBridiQ k}
+    / "mo":GOhA -> {TUBridiQ Nothing}
     / g:GOhA mn:xiLit? RAhO? -> {TUGOhA g $ fromMaybe 1 mn}
     / KE sb:selbri3 KEhE? -> {TUSelbri3 sb}
     / ME s:(sumti / ls:lerfuString -> {QAtom [] Nothing [] $ LerfuString ls}) MEhU? mmoi:MOI?
