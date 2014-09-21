@@ -28,7 +28,22 @@ afterPos p s = drop (posCol p - 1) s
 -- fails. Similarly {le zarci e re mai le zdani}
 --
 -- FIXME: {li ci xi pa su'i vo} - nudging the xi clause back has it pick up
--- the {ci}, resulting in a parse error...
+-- the {ci}, resulting in a parse error. Can be fixed by bracketing our free
+-- before nudging it.
+--
+-- FIXME: more seriously, this appraoch doesn't actually work - the parse
+-- error caused by a misplaced free often isn't at the start of the free, for
+-- various reasons. Probably we should consider the current algorithm "good
+-- enough for present purposes", but plan to move to piggy-backing on a full
+-- camxes implementation. For example, we could literally depend on the
+-- standard camxes java implementation, parse its output to find frees and
+-- move them into canonical positions, then put them through this parser -
+-- with the hacky preparsing implemented in this file as a fallback when we
+-- don't have access to camxes.
+--
+-- Note: probably makes more sense to have our canonical free positions be
+-- after QAtom and TanruUnit and at (sub)sentence start, rather than riding on
+-- Term as at present.
 --
 -- XXX: possible source of parse bugs: misplaced free can interrupt crucial
 -- greed. e.g. "tag sumti / tag KU?" acts buggily on "vi ue ta",
