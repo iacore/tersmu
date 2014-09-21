@@ -141,7 +141,8 @@ data SumtiAtom = Name Gadri [RelClause] String
 	       | NonAnaphoricProsumti String -- mi
 	       | RelVar Int -- ke'a
 	       | LambdaVar (Maybe Int) (Maybe Int) -- ce'u [xi ly] [xi ny]
-	       | SelbriVar -- fake
+	       | SelbriVar -- fake, for description sumti
+	       | BuhaVar -- fake, for bu'a etc
 	       | Description Gadri (Maybe Sumti) (Maybe Mex) (Either Selbri Sumti) [RelClause] [RelClause]
 	       | Assignable Int -- ko'a
 	       | LerfuString [Lerfu]

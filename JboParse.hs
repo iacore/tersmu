@@ -184,6 +184,9 @@ parseTU :: TanruUnit -> BridiM Bridi
 parseTU tu@(TUBrivla bv) = getBribasti tu
 parseTU (TUZei vs) = return . jboRelToBridi . Brivla $ intercalate "-zei-" vs
 parseTU (TUGOhA "du" _) = return $ jboRelToBridi Equal
+parseTU (TUGOhA g mn) | g `elem` map ("bu'"++) "aei" =
+    let n = fromMaybe (head [n | (v,n) <- zip "aei" [1..], g=="bu'"++[v]]) mn
+    in do x <- lookupVarBinding $ BuhaVar n
 parseTU tu@(TUGOhA _ _) = getBribasti tu
 parseTU (TUMe s) = do
     o <- parseSumti s

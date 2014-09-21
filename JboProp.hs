@@ -40,6 +40,7 @@ data JboRel = Tanru JboVPred JboRel
 	    | Among JboTerm
 	    | Equal
 	    | UnboundBribasti TanruUnit
+	    | BoundRelVar Int
 	    | OperatorRel JboOperator
 	    | TagRel JboTag -- xo'i
 	    | Brivla String
@@ -72,6 +73,7 @@ data JboQuantifier
     = MexQuantifier JboMex
     | LojQuantifier LojQuantifier
     | QuestionQuantifier
+    | RelQuantifier JboQuantifier
     deriving (Eq, Show, Ord)
 
 instance FOL.Term JboTerm where
