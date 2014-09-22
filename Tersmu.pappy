@@ -195,13 +195,13 @@ bridiTail2 :: BridiTail
 
 bridiTail3 :: BridiTail
     = sb:selbri ts:tailTerms -> { BridiTail3 sb ts }
-    / gs:gekSentence -> { GekSentence gs }
+    / ("ja'a":NA -> {()})? gs:gekSentence -> { GekSentence gs }
 
 gekSentence :: GekSentence
     = pcon:gek s1:subsentence b:gik s2:subsentence tts:tailTerms
 	-> { ConnectedGS (pcon b) s1 s2 tts }
     / mtag:tag? KE gs:gekSentence KEhE? -> { maybe gs (flip TaggedGS gs) mtag }
-    / NA gs:gekSentence -> {NegatedGS gs}
+    / "na":NA gs:gekSentence -> {NegatedGS gs}
 
 tailTerms :: {[Term]}
     = ts:terms1* VAU? -> ts
@@ -223,9 +223,10 @@ term :: Term
     / n:tagFA KU?  -> {BareFA $ Just n}
     / "fai":FA s:sumti -> {Sumti FAITagged s}
     -- TODO: fi'a
-    / FA KU? -> {BareFA Nothing}
+    / FA KU? -> {NullTerm}
     / termset
-    / NA KU -> {Negation}
+    / "na":NA KU -> {Negation}
+    / "ja'a":NA -> {NullTerm}
 
 termset :: Term
     = NUhI pcon:gek ts1:terms NUhU b:gik ts2:terms NUhU?
@@ -594,19 +595,19 @@ lerfuWord :: Lerfu
 
 ek :: LogJboConnective = ln:NA?
 	se:(SE)? conchar:ekA rn:NAI?
-    -> { LogJboConnective (isNothing ln) 
+    -> { LogJboConnective (ln /= Just "na")
 		    (if (isJust se) && conchar=='u' then 'U' else conchar)
 		    (isNothing rn) }
 
 gihek :: LogJboConnective = ln:NA?
 	se:(SE)? conchar:gihekGIhA rn:NAI?
-    -> { LogJboConnective (isNothing ln) 
+    -> { LogJboConnective (ln /= Just "na")
 		    (if (isJust se) && conchar=='u' then 'U' else conchar)
 		    (isNothing rn) }
 
 jek :: LogJboConnective = ln:NA?
 	se:(SE)? conchar:jekJA rn:NAI?
-    -> { LogJboConnective (isNothing ln) 
+    -> { LogJboConnective (ln /= Just "na") 
 		    (if (isJust se) && conchar=='u' then 'U' else conchar)
 		    (isNothing rn) }
 

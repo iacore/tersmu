@@ -62,6 +62,7 @@ data Term
     | ConnectedTerms Bool Connective Term Term
     | BareTag Tag
     | BareFA (Maybe Int)
+    | NullTerm
     deriving (Eq, Show, Ord, Typeable, Data)
 
 data Tagged = Untagged

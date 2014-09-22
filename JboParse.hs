@@ -292,6 +292,7 @@ parseTerm t = case t of
 	return $ Just $ Right o
     BareFA (Just n) -> setArgPos n >> return Nothing
     BareFA Nothing -> return Nothing
+    NullTerm -> return Nothing
     BareTag tag -> (\jt -> Just $ Left (jt, Nothing)) <$> parseTag tag
 
 parseSumti :: PreProp r => Sumti -> ParseM r JboTerm

@@ -6,12 +6,11 @@ Definite bugs:
 
     {ra'o} is ignored.
 
-    {zoi} doesn't really work.
-
-    Occasional misparsings with MAI, e.g. on {za'u re'u re mai broda}.
-
-    No serious effort has been made to handle magic word interactions
-    correctly; e.g., {lo'u li'u le'u bu} doesn't work correctly.
+    The parser is only an approximation of camxes, resulting in some bugs:
+	free clauses (vocatives, {to} brackets, {sei} etc) sometimes lead to
+	    parse errors if they're not at the start of a (sub)sentence;
+	{zoi} quotes don't work properly;
+	magic words aren't handled accurately, and erasure cmavo not at all.
 
 Probably bugs:
     We parse the name in "LA sumtiTail", whereas arguably we should just use
