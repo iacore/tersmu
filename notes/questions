@@ -66,3 +66,11 @@ So on the semantic side, we need:
     new bridi quantifier for {mo}.
 
 
+
+------
+
+{xo} is painful. It's in selma'o PA, so it can appear in the middle of a
+number or lerfu string.
+
+I suppose it actually should just be handled textually?
+Similarly for cu'e and ji?

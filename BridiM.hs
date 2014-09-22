@@ -71,7 +71,7 @@ type BribastiBindings = Map TanruUnit Bridi
 data Question = Question {qKauDepth :: Maybe Int, qInfo::QInfo}
 data QInfo
     = QTruth
-    | QSumti JboTerm
+    | QSumti JboTerm (Maybe JboPred)
     | QBridi JboRel
 
 data LambdaPos = LambdaPos {lambdaLevel :: Int, lambdaNum :: Int}
@@ -79,6 +79,8 @@ data LambdaPos = LambdaPos {lambdaLevel :: Int, lambdaNum :: Int}
 
 data VariableDomain = UnrestrictedDomain | FiniteDomain [JboTerm] | PredDomain JboPred
     deriving (Eq, Show, Ord)
+mPredToVDom :: Maybe JboPred -> VariableDomain
+mPredToVDom = maybe UnrestrictedDomain PredDomain
 
 class (Monad m,Applicative m) => ParseStateful m where
     getParseState :: m ParseState
@@ -219,10 +221,10 @@ takeSideTexticules =
 	<* (modifyParseState $ \pst -> pst{sideTexticules=[]})
 
 
-addSumtiQuestion :: ParseStateful m => Maybe Int -> m JboTerm
-addSumtiQuestion kau = do
-    o <- getFreshVar UnrestrictedDomain
-    addQuestion $ Question kau $ QSumti o
+addSumtiQuestion :: ParseStateful m => Maybe Int -> Maybe JboPred -> m JboTerm
+addSumtiQuestion kau dom = do
+    o <- getFreshVar $ mPredToVDom dom
+    addQuestion $ Question kau $ QSumti o dom
     return o
 addBridiQuestion :: ParseStateful m => Maybe Int -> m JboRel
 addBridiQuestion kau = do
@@ -240,9 +242,9 @@ doQuestions :: (ParseStateful m, PreProp p) => Bool -> p -> m p
 doQuestions top p =
     foldl (flip doQInfo) p <$> deKau top
 doQInfo :: PreProp p => QInfo -> p -> p
-doQInfo (QSumti qv) = liftToProp $ \p ->
+doQInfo (QSumti qv dom) = liftToProp $ \p ->
     -- TODO: really, this ought to use a plural variable
-    Quantified QuestionQuantifier Nothing $
+    Quantified QuestionQuantifier (jboPredToLojPred <$> dom) $
 	\v -> subTerm qv (BoundVar v) p
 doQInfo (QBridi qv) = liftToProp $ \p ->
     Quantified (RelQuantifier QuestionQuantifier) Nothing $

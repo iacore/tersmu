@@ -167,7 +167,7 @@ parseSelbri3 (ConnectedSB fore con sb sb') = do
 parseSelbri3 (ScalarNegatedSB nahe sb) =
     mapRelsInBridi (ScalarNegatedRel nahe) <$> parseSelbri3 sb
 parseSelbri3 (TanruUnit fs tu2 las) =
-    doFreesInParseM fs >> advanceArgPosToBridi >> parseTU tu2 <* parseTerms las
+    advanceArgPosToBridi >> parseTU tu2 <* parseTerms las <* doFreesInParseM fs
 parseSelbri3 (BridiBinding tu tu') = do
     assigned' <- tryAssign tu'
     assigned <- if assigned' then return False else tryAssign tu
@@ -317,16 +317,24 @@ parseSumti s = do
 		    return $ JoikedTerms joik o1 o2
 	    jrels <- parseRels rels
 	    return (o,jrels)
-	(QAtom fs mq rels sa) -> doFreesInParseM fs >> case sa of
+	(QAtom fs mq rels sa) -> (<* doFreesInParseM fs) $ do
+	    mm <- traverse parseMex mq
+	    case sa of
 	     Variable _ -> do
-		mm <- traverse parseMex mq
 		(rps,jrels) <- stripForeRestrictives <$> parseRels rels
 		o <- parseVariable sa rps mm
 		return (o,jrels)
 	     _ -> do
-		 mm <- traverse parseMex mq
-		 (o,ijrels) <- parseSumtiAtom sa
-		 jrels <- (ijrels++) <$> parseRels rels
+		 (o,jrels) <- case sa of
+		    SumtiQ kau -> do
+			jrels <- parseRels rels
+			let (rps,jrels') = stripForeRestrictives jrels
+			o <- addSumtiQuestion kau $ andMPred rps
+			return (o,jrels')
+		    _ -> do
+			(o,ijrels) <- parseSumtiAtom sa
+			jrels <- (ijrels++) <$> parseRels rels
+			return (o,jrels)
 		 (o,jrels) <- case mm of
 		     Nothing -> return (o,jrels)
 		     Just m | m == nullMex ->
@@ -477,7 +485,6 @@ parseSumtiAtom sa = do
 	Assignable _ -> getSumbasti sa
 	LerfuString _ -> getSumbasti sa
 	MainBridiSumbasti _ -> getSumbasti sa
-	SumtiQ kau -> addSumtiQuestion kau
 	Zohe -> getFreshConstant
 	-- TODO: following ought all to give fresh constants, really
 	NonAnaphoricProsumti ps -> return $ NonAnaph ps

@@ -453,11 +453,11 @@ ju'a nai cy pa du'u ma goi ko'a pu ku zo'u ko'a klama cy no kei
 -----
 > mi djuno le du'u la djan. kau pu klama le zarci
 
-non-veridical: du'u[(pu)(). klama("djan",c0)](c1)
+non-veridical: du'u[? x1. (pu)(). klama(x1,c0)](c1)
 non-veridical: zarci(c0)
 djuno(mi,c1)
 
-ju'a nai cy pa du'u pu ku zo'u la djan. klama cy no kei
+ju'a nai cy pa du'u ma goi ko'a pu ku zo'u ko'a klama cy no kei
 .i ju'a nai cy no zarci
 .i mi djuno cy pa
 
@@ -486,11 +486,11 @@ ju'a nai pu ku zo'u cy pa klama cy no
 -----
 > mi ba zgana le du'u la djan. jikau la djordj. cu zvati le panka
 
-non-veridical: du'u[zvati(("djan" {??} "djordj"),c0)](c1)
+non-veridical: du'u[? x1. zvati((x1 {??} "djordj"),c0)](c1)
 non-veridical: panka(c0)
 (ba)(). zgana(mi,c1)
 
-ju'a nai cy pa du'u la djan. ?? ke la djordj. ke'e zvati cy no kei
+ju'a nai cy pa du'u ma goi ko'a zo'u ko'a ?? ke la djordj. ke'e zvati cy no kei
 .i ju'a nai cy no panka
 .i ba ku zo'u mi zgana cy pa
 

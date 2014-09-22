@@ -489,10 +489,13 @@ instance JboShow JboProp
 		     logjboshow' jbo (ps ++ [gadri] ++ [rss] ++
 			 ["ku","goi",vs]) (p n)
 	  -}
-	  logjboshow' True ps (Quantified QuestionQuantifier _ p) =
-	      withNext SAss $ \n ->
-		  do as <- logjboshow jbo (BoundVar n)
-		     logjboshow' jbo (ps ++ ["ma","goi",as]) (p n)
+	  logjboshow' True ps (Quantified QuestionQuantifier r p) =
+	      withNext SAss $ \n -> do
+		as <- logjboshow jbo (BoundVar n)
+		rss <- logjboshowRestriction jbo r
+		logjboshow' jbo (ps ++ ["ma"] ++
+		    rss ++ (if null rss then [] else ["zi'e"]) ++
+		    ["goi",as]) (p n)
 	  logjboshow' True ps (Quantified (RelQuantifier QuestionQuantifier) _ p) =
 	      withNext SRAss $ \n ->
 		  do as <- logjboshow jbo (BoundRVar n)
@@ -507,14 +510,7 @@ instance JboShow JboProp
 	      withNext SVar $ \n ->
 		  do qs <- logjboshow jbo q
 		     vs <- logjboshow jbo (BoundVar n)
-		     rss <- case r of
-			Nothing -> return $ if jbo then [] else [". "]
-			Just r' ->
-			 do ss <- withShuntedRelVar (\m ->
-				  logjboshow' jbo [] (r' m) )
-			    return $ [if jbo then "poi" else ":("]
-				     ++ ss
-				     ++ [if jbo then "ku'o" else "). "]
+		     rss <- logjboshowRestriction jbo r
 		     logjboshow' jbo (ps ++
 			 [qs, (if jbo then "" else " ") ++ vs] ++ rss) (p n)
 	  logjboshow' jbo ps (Modal (WithEventAs t) p) = do
@@ -576,6 +572,13 @@ instance JboShow JboProp
 	             [s ++ "(" ++ (intercalate "," tss) ++ ")"]
 	  logjboshow' True [] Eet = return ["jitfa to SPOFU toi"]
 	  logjboshow' False [] Eet = return ["_|_ (BUG)"]
+
+	  logjboshowRestriction jbo Nothing = return $ if jbo then [] else [". "]
+	  logjboshowRestriction jbo (Just r) = do
+	    ss <- withShuntedRelVar (\m -> logjboshow' jbo [] (r m) )
+	    return $ [if jbo then "poi" else ":("]
+		++ ss
+		++ [if jbo then "ku'o" else "). "]
 	  }
 
 instance JboShow Texticule where
