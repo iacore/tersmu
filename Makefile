@@ -1,9 +1,9 @@
 PAPPY=pappy/pappy/pappy
 PAPPYOPTS=--2010 -e --monad
 all: tersmu tersmuBot
-tersmu: *.hs Tersmu.hs Morphology.hs Pappy/Parse.hs
+tersmu: *.hs Lojban.hs Morphology.hs Pappy/Parse.hs
 	ghc -o tersmu --make Main
-tersmuBot: *.hs Tersmu.hs Morphology.hs Pappy/Parse.hs
+tersmuBot: *.hs Lojban.hs Morphology.hs Pappy/Parse.hs
 	#killall tersmuBot || true
 	ghc -o tersmuBot --make tersmuBot.hs
 ${PAPPY}:
@@ -13,7 +13,7 @@ ${PAPPY}:
 Pappy/Parse.hs:
 	mkdir Pappy || true
 	${PAPPY} --2010 --write-files
-Tersmu.hs: Tersmu.pappy ${PAPPY}
+Lojban.hs: Lojban.pappy ${PAPPY}
 	${PAPPY} ${PAPPYOPTS} Tersmu.pappy
 Morphology.hs: Morphology.pappy ${PAPPY}
 	${PAPPY} ${PAPPYOPTS} Morphology.pappy
