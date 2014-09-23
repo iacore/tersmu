@@ -1,10 +1,11 @@
+Bugs, limitations, and questionable design choices
+==================================================
+
 All known divergence from baseline (CLL+xorlo), or from plausible
 interpretations thereof, is noted here.
 
-Definite bugs:
+Bugs:
     Question words other than {xu},{ma} and {mo} are not handled properly.
-
-    {ra'o} is ignored.
 
     The parser is only an approximation of camxes, resulting in some bugs:
 	free clauses (vocatives, {to} brackets, {sei} etc) sometimes lead to
@@ -12,7 +13,14 @@ Definite bugs:
 	{zoi} quotes don't work properly;
 	magic words aren't handled accurately, and erasure cmavo not at all.
 
-Probably bugs:
+Limitations:
+    Most indicators and frees are ignored, even those such as "irrealis"
+    attitudinals which arguably have logical meaning.
+
+    {ko} is not handled specially.
+
+    {ra'o} is ignored.
+
     We parse the name in "LA sumtiTail", whereas arguably we should just use
     the text. Similarly, we don't keep hold of the raw text of a lu-quote.
 
@@ -21,7 +29,7 @@ Probably bugs:
 
     We don't handle {soi}.
 
-Other deviations from baseline, not considered bugs:
+Deliberate deviations from baseline, not considered bugs:
     {na broda} is equivalent to {naku broda}; consequently, {ja'a} has no
     logical effect. This is in line with the BPFK section "brivla negators".
 

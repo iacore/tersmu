@@ -1,6 +1,6 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 module JboSyntax where
-import FOL hiding (Term, Connective)
+import Logic hiding (Term, Connective)
 import Control.Applicative
 import Data.Data
 -- Abstract syntax:

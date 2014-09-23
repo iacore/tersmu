@@ -2,8 +2,6 @@ Support {sei sa'a} and {to'i}?
 
 use to...toi in lojban for sides?
 
-rename things; try to make JboParse.hs readable.
-
 alternative tags mode, doing away with modals and non-logical sentence
 connectives in favour of extra WithEventAs and TagRels?
     Nice idea, but I don't see how to handle complicated joik connected

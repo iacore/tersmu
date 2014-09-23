@@ -4,7 +4,7 @@ module ParseM where
 import JboProp
 import JboSyntax
 import Util
-import FOL hiding (Term)
+import Logic hiding (Term)
 
 import Data.Maybe
 import Control.Applicative

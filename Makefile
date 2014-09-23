@@ -14,7 +14,7 @@ Pappy/Parse.hs:
 	mkdir Pappy || true
 	${PAPPY} --2010 --write-files
 Lojban.hs: Lojban.pappy ${PAPPY}
-	${PAPPY} ${PAPPYOPTS} Tersmu.pappy
+	${PAPPY} ${PAPPYOPTS} Lojban.pappy
 Morphology.hs: Morphology.pappy ${PAPPY}
 	${PAPPY} ${PAPPYOPTS} Morphology.pappy
 test: tersmu

@@ -1,6 +1,6 @@
 module ParseText (parseText) where
 
-import Tersmu
+import Lojban
 import Pappy.Pos
 import Pappy.Parse
 import JboSyntax
@@ -10,7 +10,7 @@ import Control.Applicative
 -- traceIt x = traceShow x x
 
 parseText :: String -> Either Int Text
-parseText str = nudgeFrees (tersmuterminatedText . tersmuParse "terminatedText") $ str ++ " %%%END%%%"
+parseText str = nudgeFrees (lojbanterminatedText . lojbanParse "terminatedText") $ str ++ " %%%END%%%"
 
 afterPos :: Pos -> String -> String
 afterPos p s = drop (posCol p - 1) s
@@ -54,9 +54,9 @@ afterPos p s = drop (posCol p - 1) s
 -- which is a bad idea, and more to the point we're reparsing the whole text
 -- repeatedly. Chunking the text into paragraphs would be a start.
 --
-nudgeFrees :: (String -> Result TersmuDerivs a) -> String -> Either Int a
+nudgeFrees :: (String -> Result LojbanDerivs a) -> String -> Either Int a
 nudgeFrees parse s = fmap fst $ nudgeFrees' False parse s where
-    nudgeFrees' :: Bool -> (String -> Result TersmuDerivs a) -> String -> Either Int (a,Int)
+    nudgeFrees' :: Bool -> (String -> Result LojbanDerivs a) -> String -> Either Int (a,Int)
     nudgeFrees' inFree parse str =
 	case parse str of
 	    Parsed a d _ -> Right (a, parsedPoint d)
@@ -70,7 +70,7 @@ nudgeFrees parse s = fmap fst $ nudgeFrees' False parse s where
 			nudgeFrees' inFree parse $ nudgeFree head tail flen
     errorPoint e = posCol (errorPos e) - 1
     parsedPoint d = posCol (dvPos d) - 1
-    parseFree = tersmufree . tersmuParse "free"
+    parseFree = lojbanfree . lojbanParse "free"
     nudgeFree head tail flen =
 	let ws = words head
 	    (headws',headws'') = splitAt (length ws - 1) ws
@@ -81,7 +81,7 @@ nudgeFrees parse s = fmap fst $ nudgeFrees' False parse s where
 {-
 -- Direct parsing without any preprocessing - currently unused
 parseAText :: String -> Either Int [Statement]
-parseAText str = case tersmuatext1 (tersmuParse "atext1" (str ++ " ")) of
+parseAText str = case lojbanatext1 (lojbanParse "atext1" (str ++ " ")) of
 	Parsed p _ _ -> Right p
 	NoParse e -> Left (posCol (errorPos e))
 
@@ -96,9 +96,9 @@ parseTextSplitting = parseText' . stripTextHead . (++" ") where
 		then [Right parsed]
 		else Right parsed:parseText' tail
     parseStatement :: String -> Either Int ((Statement,[Free]),String)
-    parseStatement = stripFrees $ tersmuwholeStatement . tersmuParse "wholeStatement"
+    parseStatement = stripFrees $ lojbanwholeStatement . lojbanParse "wholeStatement"
     stripTextHead :: String -> String
     stripTextHead str =
-	let Parsed _ d _ = tersmutextHead . tersmuParse "textHead" $ str
+	let Parsed _ d _ = lojbantextHead . lojbanParse "textHead" $ str
 	in afterPos (dvPos d) str
 -}

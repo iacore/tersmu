@@ -23,6 +23,6 @@ Step 2: The abstract syntax is converted to logical form.
 	predicate logic defined abstractly in Logic and specialised to lojban
 	in JboProp.
 
-Step 3: For now, all we know how to do with a JboProp is print it.
+Output: For now, all we know how to do with a JboProp is print it.
     JboShow has the print routines.
-    The output should be considered provisional, subject to change.
+    The output syntax should be considered provisional, subject to change.

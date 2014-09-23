@@ -3,9 +3,9 @@ module TersmuIRC (onelineParse) where
 import ParseText (parseText)
 import JboParse (evalText, evalStatement)
 import JboSyntax
-import BridiM (ParseStateM, evalParseStateM)
+import ParseM (ParseStateM, evalParseStateM)
 import JboShow
-import FOL
+import Logic
 import Bindful
 import Morph
 

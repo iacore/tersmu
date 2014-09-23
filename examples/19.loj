@@ -279,9 +279,9 @@ ju'a nai cy ci karce
 -----
 > daxivo
 
-[Fragment: [DONKEY]]
+[Fragment: [UNBOUND Var]]
 
-lo XASLI zei da ku
+lo NALSELTRO zei da ku
 
 -----
 > ko'ixipaso
@@ -370,9 +370,12 @@ ju'a nai cy no ke blanu zdani ke'e
 
 -----
 > mi viska le fu'e .ia blanu zdani fu'o ponse
-Parse error:
-	{mi viska le fu'e ia blanu zdani fu'o ponse}
-	             ^
+
+non-veridical: <<blanu(_)><zdani>(_)><ponse>(c0)
+viska(mi,c0)
+
+ju'a nai cy no ke ke blanu zdani ke'e ponse ke'e
+.i mi viska cy no
 
 -----
 > mi pu cusku lu mi'e djan [li'u]

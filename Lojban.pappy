@@ -1,5 +1,5 @@
 -- vim:ft=haskell
-parser tersmu:
+parser lojban:
 
 {
 import JboSyntax
@@ -47,7 +47,7 @@ free :: Free
     / q:numberOrLerfuString MAI -> { MAI q }
     / TO !BU t:text TOI? -> {Bracketed t}
     / q:xiClause -> {XI q}
-    / indicator
+    / FUhE? i:indicator -> i -- FUhE ignored for now
     -- XXX following aren't frees, but pretending they are lets our preparsing
     -- mechanism strip them out
     / BAhE -> {NullFree}
@@ -57,8 +57,6 @@ vocative :: {[COI]}
     = cs:coi* DOI -> cs / coi+
 coi :: COI
     = c:COI mn:NAI? -> {COI c $ isJust mn}
-
--- TODO: indicators = FUhE? indicator+
 
 indicator :: Free
     = "xu":UI !BU k:("kau":UI !BU x:xiLit? -> {fromMaybe 1 x})? -> {TruthQ k}

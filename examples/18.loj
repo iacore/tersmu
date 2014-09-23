@@ -944,9 +944,9 @@ li pe'o pi'i pe'o pi'i ni'e ni ce'u clani kei te'u ni'e ni ce'u ganra kei te'u k
 -----
 > li mo'e re ratcu su'i mo'e re ractu du li mo'e vo danlu
 
-[Fragment: {su'i}([[DONKEY]],[[DONKEY]]),[[DONKEY]]]
+[Fragment: {su'i}([[UNBOUND Var]],[[UNBOUND Var]]),[[UNBOUND Var]]]
 
-li pe'o su'i mo'e lo XASLI zei da ku te'u mo'e lo XASLI zei da ku te'u ku'e lo'o li mo'e lo XASLI zei da ku te'u lo'o
+li pe'o su'i mo'e lo NALSELTRO zei da ku te'u mo'e lo NALSELTRO zei da ku te'u ku'e lo'o li mo'e lo NALSELTRO zei da ku te'u lo'o
 
 -----
 > mi viska vei mo'e lo'e lanzu ve'o cinfo
@@ -1070,9 +1070,9 @@ li pe'o su'i pe'o pi'i vo boi reno boi ku'e ze boi ku'e lo'o
 -----
 > li mo'e voboi renomei te'u su'i ze
 
-[Fragment: {su'i}([[DONKEY]],7)]
+[Fragment: {su'i}([[UNBOUND Var]],7)]
 
-li pe'o su'i mo'e lo XASLI zei da ku te'u ze boi ku'e lo'o
+li pe'o su'i mo'e lo NALSELTRO zei da ku te'u ze boi ku'e lo'o
 
 -----
 > li vo pi'e ze ju'u reno

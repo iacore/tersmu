@@ -13,6 +13,7 @@ import Data.Traversable (traverse)
 import Data.List
 
 ---- Printing routines, in lojban and in (customized) logical notation
+-- XXX: output liable to change in future versions. Please do not rely on it.
 
 instance Rel JboRel where
     relstr r = evalBindful $ logshow r
@@ -338,8 +339,8 @@ instance JboShow JboRel where
 	(if jbo then unwords else concat) $
 	    g : if n==1 then [] else ["xi",jbonum n]
     logjboshow jbo (BoundRVar n) = binding n >>= logjboshow jbo
-    logjboshow True (RVar _) = return $ "XASLI zei bu'a"
-    logjboshow False (RVar _) = return $ "XASLI"
+    logjboshow True (RVar _) = return $ "NALSELTRO zei bu'a"
+    logjboshow False (RVar _) = return $ "[UNBOUND RVar]"
     logjboshow jbo (UnboundBribasti (TUBrivla s)) = return s
     logjboshow jbo (OperatorRel op) =
 	(if jbo then jbobracket "nu'a" "te'u" else bracket '[') <$> logjboshow jbo op
@@ -394,7 +395,7 @@ instance JboShow JboTerm where
     logjboshow False (Unfilled) = return " "
     logjboshow True (Unfilled) = return "BUG"
     logjboshow jbo (BoundVar n) = binding n >>= logjboshow jbo
-    logjboshow jbo (Var n) = return $ if jbo then "lo XASLI zei da ku" else "[DONKEY]"
+    logjboshow jbo (Var n) = return $ if jbo then "lo NALSELTRO zei da ku" else "[UNBOUND Var]"
     logjboshow True (Constant n []) = return $ "cy " ++ jbonum n
     logjboshow False (Constant n []) = return $ "c" ++ show n
     logjboshow jbo (Constant n ts) = do

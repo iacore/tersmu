@@ -3,6 +3,9 @@ module Logic where
 import Control.Monad.State
 import Data.Data
 
+-- |Prop: abstract proposition type, allowing for generalised quantifiers,
+-- structured relations and terms, modal operators, and non-logical
+-- connectives.
 data Prop r t c o q
     = Not    (Prop r t c o q)
     | Connected Connective (Prop r t c o q) (Prop r t c o q)
