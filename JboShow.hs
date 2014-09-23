@@ -4,7 +4,7 @@ module JboShow where
 import Bindful
 import JboSyntax
 import JboProp
-import FOL hiding (Term)
+import Logic hiding (Term)
 import Util
 
 import Data.Maybe

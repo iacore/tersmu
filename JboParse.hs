@@ -1,9 +1,9 @@
 module JboParse where
 
-import FOL hiding (Term,Connective)
+import Logic hiding (Term,Connective)
 import JboProp
 import JboSyntax
-import BridiM
+import ParseM
 import Util
 
 import Data.Maybe

@@ -3,7 +3,7 @@ parser tersmu:
 
 {
 import JboSyntax
-import FOL hiding (Term,Connective)
+import Logic hiding (Term,Connective)
 
 import Data.Maybe
 import Control.Monad.State

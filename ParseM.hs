@@ -1,5 +1,5 @@
 {-# LANGUAGE TypeSynonymInstances, FlexibleInstances, MultiParamTypeClasses #-}
-module BridiM where
+module ParseM where
 
 import JboProp
 import JboSyntax

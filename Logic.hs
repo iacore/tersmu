@@ -1,5 +1,5 @@
 {-# LANGUAGE DeriveDataTypeable #-}
-module FOL where 
+module Logic where 
 import Control.Monad.State
 import Data.Data
 

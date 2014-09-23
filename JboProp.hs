@@ -1,8 +1,8 @@
 {-# LANGUAGE FlexibleInstances, TypeSynonymInstances, DeriveDataTypeable #-}
 module JboProp where
 
-import FOL hiding (Term)
-import qualified FOL (Term)
+import Logic hiding (Term)
+import qualified Logic (Term)
 import JboSyntax
 
 import Bindful
@@ -85,7 +85,7 @@ data JboQuantifier
     | RelQuantifier JboQuantifier
     deriving (Eq, Show, Ord, Typeable, Data)
 
-instance FOL.Term JboTerm where
+instance Logic.Term JboTerm where
     var n = BoundVar n
 
 data JboFragment
