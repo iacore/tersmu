@@ -1,3 +1,13 @@
+Next main job:
+    redo parsing so as to properly handle full grammar and morphology,
+    and ensure frees are correctly associated with their positions.
+
+    I'm currently unsure whether this should be done by using a camxes
+    implementation as an external program, or by implementing camxes
+    ourselves.
+
+    Once this is done, we can think about handling UI and so on.
+
 Support {sei sa'a} and {to'i}?
 
 use to...toi in lojban for sides?
