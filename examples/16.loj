@@ -487,20 +487,23 @@ ge ro da zo'u mi prami da gi na ku ro da zo'u do prami da
 
 -----
 > roda zo'u mi prami da .ije naku zo'u do prami da
+
 Parse error:
 	{ro da zo'u mi prami da i je na ku zo'u do prami da}
 	                                   ^
 
 -----
 > su'oda zo'u mi prami da .ije naku zo'u do prami da
+
 Parse error:
 	{su'o da zo'u mi prami da i je na ku zo'u do prami da}
 	                                     ^
 
 -----
 > Some children do not go to school.
+
 Morphology error:
-	{Some children do not go to school.}
+	{Some children do not go to school. }
 	      ^
 
 -----

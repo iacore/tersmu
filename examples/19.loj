@@ -292,6 +292,7 @@ ko'a xi paso
 
 -----
 > li xy.boixipa du li xy.boixire su'i xy.boixici
+
 Parse error:
 	{li xy boi xi pa du li xy boi xi re su'i xy boi xi ci}
 	                                    ^
@@ -319,6 +320,7 @@ mi ganra
 
 -----
 > mi klama pamai le zarci .e remai le zdani
+
 Parse error:
 	{mi klama pa mai le zarci e re mai le zdani}
 	                               ^
@@ -429,8 +431,9 @@ zo si ke lojbo valsi ke'e
 
 -----
 > zoi gy. John is a man .gy. cu glico jufra
+
 Morphology error:
-	{zoi gy. John is a man .gy. cu glico jufra}
+	{zoi gy. John is a man .gy. cu glico jufra }
 	         ^
 
 -----
@@ -444,14 +447,16 @@ ju'a nai ge cy no valsi gi cy no du zoi zoi gyrations zoi
 
 -----
 > mi djuno fi le valsi po'u zoi jai. gyrations .jai
+
 Parse error:
 	{mi djuno fi le valsi po'u zoi jai gyrations jai}
 	                               ^
 
 -----
 > zoi ry. sku .ry. cu rafsi zo cusku
+
 Morphology error:
-	{zoi ry. sku .ry. cu rafsi zo cusku}
+	{zoi ry. sku .ry. cu rafsi zo cusku }
 	         ^
 
 -----
@@ -484,8 +489,9 @@ la bab. cmene la bab.
 
 -----
 > la'o dy. Goethe .dy. cu me la'o ly. Homo sapiens .ly.
+
 Morphology error:
-	{la'o dy. Goethe .dy. cu me la'o ly. Homo sapiens .ly.}
+	{la'o dy. Goethe .dy. cu me la'o ly. Homo sapiens .ly. }
 	          ^
 
 -----
@@ -616,42 +622,49 @@ lu ju'a nai cy no zarci
 
 -----
 > ti gerku si mlatu
+
 Parse error:
 	{ti gerku si mlatu}
 	          ^
 
 -----
 > ta blanu zdani si si xekri zdani
+
 Parse error:
 	{ta blanu zdani si si xekri zdani}
 	                ^
 
 -----
 > zo .bab. se cmene zo si si si la bab.
+
 Parse error:
 	{zo bab se cmene zo si si si la bab}
 	                       ^
 
 -----
 > mi tavla fo la .esperanto si si .esperanton.
+
 Parse error:
 	{mi tavla fo la e speranto si si esperanton}
 	                ^
 
 -----
 > mi cusku zoi fy. gy. .fy. si si si si zo .djan
+
 Parse error:
 	{mi cusku zoi fy gy fy si si si si zo djan}
 	                       ^
 
 -----
 > mi se cmene zo .djan. si si zo .djordj.
+
 Parse error:
 	{mi se cmene zo djan si si zo djordj}
 	                     ^
 
 -----
 > mi viska le sa .i mi cusku zo .djan.
+
 Parse error:
 	{mi viska le sa i mi cusku zo djan}
 	             ^
@@ -665,6 +678,7 @@ mi cusku zo djan
 
 -----
 > mi viska le blanu zdan. sa le xekri zdani
+
 Parse error:
 	{mi viska le blanu zdan sa le xekri zdani}
 	                   ^

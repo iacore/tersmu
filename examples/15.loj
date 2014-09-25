@@ -263,24 +263,28 @@ ju'a nai ge cy no birka gi cy no srana mi
 
 -----
 > na'e klama becomes nalkla
+
 Parse error:
 	{na'e klama becomes nalkla}
 	            ^
 
 -----
 > na'e cadzu klama becomes naldzukla
+
 Parse error:
 	{na'e cadzu klama becomes naldzukla}
 	                  ^
 
 -----
 > na'e sutra cadzu klama becomes nalsu'adzukla
+
 Parse error:
 	{na'e sutra cadzu klama becomes nalsu'adzukla}
 	                        ^
 
 -----
 > nake sutra cadzu ke'e klama becomes nalsu'adzuke'ekla
+
 Parse error:
 	{na ke sutra cadzu ke'e klama becomes nalsu'adzuke'ekla}
 	                              ^

@@ -172,6 +172,7 @@ ju'a nai cy no zarci
 
 -----
 > la djan. .ije la .alis. klama le zarci
+
 Parse error:
 	{la djan i je la alis klama le zarci}
 	         ^
@@ -920,6 +921,7 @@ ge ge ge la djeimyz. prami la meris. gi la djordj. prami la meris. gi la djeimyz
 
 -----
 > la djeimyz. ce'e la meris. pe'e .e la djordj. ce'e la martas. prami
+
 Parse error:
 	{la djeimyz ce'e la meris pe'e e la djordj ce'e la martas prami}
 	                               ^
@@ -999,6 +1001,7 @@ ke gunma re mei ke'e mi joi ke do ke'e ce ke la djan. joi ke la djein. ke'e ke'e
 
 -----
 > mi ce'e bau la lojban. pe'e joi do ce'e bau la gliban. nu'u casnu
+
 Parse error:
 	{a lojban pe'e joi do ce'e bau la gliban nu'u casnu}
 	                                         ^
@@ -1012,6 +1015,7 @@ joi gi mi casnu gi do casnu
 
 -----
 > la djan. fa'u la frank. cusku nu'i bau la lojban. nu'u fa'u bai tu'a la djordj. [nu'u]
+
 Parse error:
 	{ la frank cusku nu'i bau la lojban nu'u fa'u bai tu'a la djordj nu'u}
 	                                         ^
@@ -1170,6 +1174,7 @@ ge li pe'o su'i re boi re boi ku'e lo'o du li vo boi lo'o gi li pe'o pi'i re boi
 
 -----
 > li re ge su'i gi pi'i re du li vo
+
 Parse error:
 	{li re ge su'i gi pi'i re du li vo}
 	          ^

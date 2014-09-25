@@ -1,32 +1,41 @@
 > .i.ai.i.ai.o
+
 Parse error:
 	{i ai i ai o}
 	      ^
 
 -----
 > .i,ai,i,ai,on.
+
 Morphology error:
-	{.i,ai,i,ai,on.}
+	{.i,ai,i,ai,on. }
 	  ^
 
 -----
 > .i,iai,ii,iai,ion.
+
 Morphology error:
-	{.i,iai,ii,iai,ion.}
+	{.i,iai,ii,iai,ion. }
 	  ^
 
 -----
 > .i'ai'i'ai'on.
+
 -----
 > brlgan.
+
 -----
 > meiin.
+
 -----
 > mei,in.
+
 -----
 > me,iin.
+
 -----
 > djeimyz.
+
 -----
 > vrusi
 
@@ -36,6 +45,7 @@ vrusi
 
 -----
 > .AMsterdam.
+
 -----
 > klama
 
@@ -171,10 +181,13 @@ dikyjvo
 
 -----
 > .armstrong.
+
 -----
 > .ARM,strong.
+
 -----
 > .ARMstron.
+
 -----
 > bisydja
 

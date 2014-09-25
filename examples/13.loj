@@ -302,22 +302,29 @@ do zukte
 
 -----
 > do sazri le karce .i .e'a
+
 Parse error:
 	{do sazri le karce i e'a}
 	                         ^
 
 -----
 > .ei
+
 -----
 > .eicai
+
 -----
 > .eisai
+
 -----
 > .eiru'e
+
 -----
 > .eicu'i
+
 -----
 > .einai
+
 -----
 > ko ga'inai nenri klama le mi zdani
 
@@ -356,12 +363,16 @@ ju'a nai cy no xarju
 
 -----
 > .ause'i
+
 -----
 > .ause'inai
+
 -----
 > .o'onai ri'enai
+
 -----
 > .uiro'obe'unai
+
 -----
 > le cukta be'u cu zvati ma
 
@@ -373,12 +384,16 @@ ju'a nai cy no cukta
 
 -----
 > .e'ese'a
+
 -----
 > .e'ese'anai
+
 -----
 > .e'enaise'a
+
 -----
 > .e'enaise'anai
+
 -----
 > mi .e .ui nai do
 
@@ -402,22 +417,31 @@ pu ku zo'u mi tavla do
 
 -----
 > .iepei
+
 -----
 > .iare'epei
+
 -----
 > .aipei
+
 -----
 > .aicai
+
 -----
 > .e'apei
+
 -----
 > pei.o'u
+
 -----
 > pei.o'ucu'i
+
 -----
 > pei.o'usai
+
 -----
 > .oiro'odai
+
 -----
 > le bloti .iidai .uu pu klama le xasloi
 
@@ -431,8 +455,10 @@ ju'a nai cy pa xasloi
 
 -----
 > .o'onai bu'o
+
 -----
 > .iu bu'onai .uinai
+
 -----
 > mi ca ba'o prami do ja'e le nu mi badri
 
@@ -483,6 +509,7 @@ daspo la kartagos.
 
 -----
 > ru'a doi livinston.
+
 -----
 > mi po'o darxi le mi tamne fo le nazbi
 
@@ -647,6 +674,7 @@ ju'a nai cy pa ka ce'u gleki kei
 
 -----
 > .i sei la rik. cusku se'u mi'e .rik. doi terpreti
+
 Parse error:
 	{la rik cusku se'u mi'e rik doi terpreti}
 	                                         ^
@@ -687,14 +715,16 @@ cusku la rik.
 
 -----
 > .i sei la pam. cusku se'u be'e selfu
+
 Parse error:
 	{i sei la pam cusku se'u be'e selfu}
 	                                    ^
 
 -----
 > .i sei le selfu cu cusku se'u re'i [end-comment]
+
 Morphology error:
-	{.i sei le selfu cu cusku se'u re'i [end-comment]}
+	{.i sei le selfu cu cusku se'u re'i [end-comment] }
 	                                         ^
 
 -----
@@ -712,30 +742,35 @@ ju'a nai ba ku za ku zo'u cy pa speni
 
 -----
 > .i sei le selfu cu cusku se'u vi'o
+
 Parse error:
 	{i sei le selfu cu cusku se'u vi'o}
 	                                   ^
 
 -----
 > .i sei la rik. cusku se'u ki'e .pam.
+
 Parse error:
 	{i sei la rik cusku se'u ki'e pam}
 	                                  ^
 
 -----
 > .i sei la pam. cusku se'u je'e
+
 Parse error:
 	{i sei la pam cusku se'u je'e}
 	                              ^
 
 -----
 > .i sei la djan. cusku se'u .y. mi .y. mutce spopa .y. le nu le speni si .y. ba speni .y. .y. su .yyyyyy. mu'o
+
 Parse error:
 	{e'u y mi y mutce spopa y le nu le speni si y ba speni y y su yyyyyy mu'o}
 	                                         ^
 
 -----
 > .i sei la djordj. cusku se'u ke'o .djan. zo'o
+
 Parse error:
 	{sei la djordj cusku se'u ke'o djan zo'o}
 	                                         ^
@@ -771,6 +806,7 @@ cusku la djan.
 
 -----
 > .i sei la djordj. cusku se'u co'o ro zvati pe secau la djan. ga'i
+
 Parse error:
 	{'u co'o ro zvati pe se cau la djan ga'i}
 	                                         ^

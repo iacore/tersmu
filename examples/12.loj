@@ -70,14 +70,16 @@ di'e jdaselsku la dong.
 
 -----
 > b1 balsoi s2 b2 b3
+
 Morphology error:
-	{b1 balsoi s2 b2 b3}
+	{b1 balsoi s2 b2 b3 }
 	 ^
 
 -----
 > b1 sonci s2 gi'e banli b2 b3
+
 Morphology error:
-	{b1 sonci s2 gi'e banli b2 b3}
+	{b1 sonci s2 gi'e banli b2 b3 }
 	 ^
 
 -----

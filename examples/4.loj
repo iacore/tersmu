@@ -1,10 +1,12 @@
 > .iseci'i
+
 Parse error:
 	{i se ci'i}
 	      ^
 
 -----
 > .i se ci'i
+
 Parse error:
 	{i se ci'i}
 	      ^
@@ -25,10 +27,13 @@ Parse error:
 
 -----
 > ki'e.u'e
+
 -----
 > ki'e .u'e
+
 -----
 > ki'e'u'e
+
 Parse error:
 	{ki'e'u'e}
 	 ^
@@ -316,6 +321,7 @@ ke na'e-zei-a-zei-na'e-zei-by livgyterbilma ke'e
 
 -----
 > .cerman. zei jamkarce
+
 Parse error:
 	{cerman zei jamkarce}
 	        ^
@@ -329,8 +335,9 @@ na'e-zei-a-zei-na'e-zei-by-zei-livgyterbilma
 
 -----
 > me la'o ly. spaghetti .ly.
+
 Morphology error:
-	{me la'o ly. spaghetti .ly.}
+	{me la'o ly. spaghetti .ly. }
 	             ^
 
 -----
@@ -351,14 +358,16 @@ cy no jbanize
 
 -----
 > cidj,r,spageti prefix long rafsi
+
 Parse error:
 	{cidjrspageti prefix long rafsi}
 	              ^
 
 -----
 > dja,r,spageti prefix short rafsi
+
 Morphology error:
-	{dja,r,spageti prefix short rafsi}
+	{dja,r,spageti prefix short rafsi }
 	                      ^
 
 -----
@@ -372,30 +381,35 @@ cy no jbanize
 
 -----
 > xaceru add initial consonant and final vowel
+
 Morphology error:
-	{xaceru add initial consonant and final vowel}
+	{xaceru add initial consonant and final vowel }
 	        ^
 
 -----
 > tric,r,xaceru prefix rafsi
+
 Parse error:
 	{tricrxaceru prefix rafsi}
 	             ^
 
 -----
 > ric,r,xaceru prefix short rafsi
+
 Morphology error:
-	{ric,r,xaceru prefix short rafsi}
+	{ric,r,xaceru prefix short rafsi }
 	                     ^
 
 -----
 > bri Lojbanize
+
 Morphology error:
-	{bri Lojbanize}
+	{bri Lojbanize }
 	 ^
 
 -----
 > cirl,r,bri prefix rafsi
+
 Parse error:
 	{cirlrbri prefix rafsi}
 	          ^
@@ -411,6 +425,7 @@ cy no jbanize
 
 -----
 > sinc,r,kobra prefix rafsi
+
 Parse error:
 	{sincrkobra prefix rafsi}
 	            ^
@@ -426,12 +441,14 @@ cy no jbanize
 
 -----
 > kuarka add final vowel
+
 Morphology error:
-	{kuarka add final vowel}
+	{kuarka add final vowel }
 	        ^
 
 -----
 > sask,r,kuarka prefix rafsi
+
 Parse error:
 	{saskrkuarka prefix rafsi}
 	             ^
@@ -447,12 +464,14 @@ cy no jbanize
 
 -----
 > lerf,r,djamo prefix rafsi
+
 Parse error:
 	{lerfrdjamo prefix rafsi}
 	            ^
 
 -----
 > ler,l,djamo prefix rafsi
+
 Parse error:
 	{lerldjamo prefix rafsi}
 	           ^
@@ -480,58 +499,77 @@ gugdrblgaria
 
 -----
 > bang,r,kore,a
+
 Morphology error:
-	{bang,r,kore,a}
+	{bang,r,kore,a }
 	 ^
 
 -----
 > kuln,r,kore,a
+
 Morphology error:
-	{kuln,r,kore,a}
+	{kuln,r,kore,a }
 	 ^
 
 -----
 > djim.
+
 -----
 > djein.
+
 -----
 > .arnold.
+
 -----
 > pit.
+
 -----
 > katrinas.
+
 -----
 > kat,r,in.
+
 -----
 > katis.
+
 -----
 > keit.
+
 -----
 > djan. braun.
+
 -----
 > djanbraun.
+
 -----
 > NEderlants.
+
 Morphology error:
-	{NEderlants.}
+	{NEderlants. }
 	 ^
 
 -----
 > NEder lants.
+
 Morphology error:
-	{NEder lants.}
+	{NEder lants. }
 	       ^
 
 -----
 > NEder
+
 -----
 > pav.
+
 -----
 > sol.
+
 -----
 > ralj.
+
 -----
 > nol.
+
 -----
 > zbasai
 
