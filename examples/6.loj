@@ -594,22 +594,31 @@ cy pa gunma cy no
 
 -----
 > coi
+
 -----
 > je'e
+
 -----
 > coi. djan.
+
 -----
 > coi doi djan.
+
 -----
 > doi djan.
+
 -----
 > coi xunre pastu nixli
+
 -----
 > co'o la bab. .e la noras.
+
 -----
 > coi le xunre pastu nixli
+
 -----
 > doi la djan.
+
 -----
 > doi djan. ko klama mi
 
@@ -626,6 +635,7 @@ ko klama mi
 
 -----
 > djan. meris. djein. .alis.
+
 -----
 > la djonz. klama le zarci
 
@@ -648,6 +658,7 @@ ju'a nai cy pa zarci
 
 -----
 > coi .djan.
+
 -----
 > zo .djan. cmene mi
 
@@ -666,6 +677,7 @@ ju'a nai cy no bloti
 
 -----
 > lojban.
+
 -----
 > mi prami do
 
@@ -777,8 +789,9 @@ mi cusku zo ai
 
 -----
 > mi cusku zoi kuot. I'm John .kuot
+
 Morphology error:
-	{mi cusku zoi kuot. I'm John .kuot}
+	{mi cusku zoi kuot. I'm John .kuot }
 	                    ^
 
 -----
@@ -797,6 +810,7 @@ li pe'o su'i re boi re boi ku'e lo'o
 
 -----
 > li .abu bopi'i xy. bote'a re su'i by. bopi'i xy. su'i cy.
+
 Parse error:
 	{li a bu bo pi'i xy bo te'a re su'i by bo pi'i xy su'i cy}
 	         ^

@@ -21,36 +21,83 @@ import System.IO
 import System.IO.Error
 import System.Exit
 import System.Process
+import System.Environment
+import System.Console.GetOpt
 
-repl :: IO ()
-repl = do 
-    -- putStr "> "
-    -- hFlush stdout
-    s <- getLine
-    case morph s of
-        Left errpos ->
-            highlightError errpos s "Morphology error"
-        Right text ->
-            evalParseStateT $ showParsedText text $ parseText text
-    repl
+doParse :: OutputType -> Handle -> Handle -> String -> IO ()
+doParse ot h herr s = case morph s of
+    Left errpos -> highlightError herr errpos s "Morphology error"
+    Right text -> evalParseStateT $ showParsedText ot h herr text $ parseText text
 
-showParsedText :: String -> Either Int Text -> ParseStateT IO ()
-showParsedText s (Right text) = do
+showParsedText :: OutputType -> Handle -> Handle -> String -> Either Int Text -> ParseStateT IO ()
+showParsedText ot h _ s (Right text) = do
     jboText <- mapStateT (return.runIdentity) $ JboParse.evalText text
     when (not $ null jboText) $ do
-        let logstr = evalBindful $ logshow jboText
-            jbostr = evalBindful $ jboshow jboText
-        liftIO $ putStr $ "\n" ++ logstr ++ "\n\n" ++ jbostr ++ "\n\n"
-showParsedText s (Left pos) = highlightError pos s "Parse error"
+        liftIO $ hPutStr h $ concat
+	    [if not $ (jbo && ot == Loj) || (not jbo && ot == Jbo)
+		then evalBindful (logjboshow jbo jboText) ++ "\n\n"
+		else ""
+	    | jbo <- [False,True]
+	    ]
+showParsedText _ _ herr s (Left pos) = highlightError herr pos s "Parse error"
 
-highlightError pos s errstr = let context = 40 in
-    liftIO $ putStr $ errstr++":" ++
+highlightError h pos s errstr = let context = 40 in
+    liftIO $ hPutStr h $ errstr++":" ++
 	"\n\t{" ++ take (context*2) (drop (pos-context) s) ++ "}" ++
 	"\n\t " ++ replicate (min pos context) ' ' ++
 	"^" ++
 	"\n\n"
 
+data OutputType = Jbo | Loj | Both
+    deriving (Eq, Ord, Show)
+data InputType = WholeText | Paras | Lines
+    deriving (Eq, Ord, Show)
+data Opt = Output OutputType | Input InputType | Help
+    deriving (Eq, Ord, Show)
+options =
+    [ Option ['l'] ["loj"] (NoArg (Output Loj)) "output logical form only"
+    , Option ['j'] ["jbo"] (NoArg (Output Jbo)) "output forethoughtful lojbanic form only"
+    , Option ['L'] ["lines"] (NoArg (Input Lines)) "interpret each line as a lojban text"
+    , Option ['p'] ["paragraphs"] (NoArg (Input Paras)) "interpret each blank-line-separated paragraph as a lojban text"
+    , Option ['h'] ["help"] (NoArg Help) "output both logical and lojbanic forms (default)"
+    ]
+parseArgs :: [String] -> IO ([Opt],[String])
+parseArgs argv =
+    case getOpt Permute options argv of
+	(o,_,[]) | Help `elem` o -> putStrLn (usageInfo header options) >> exitWith ExitSuccess
+	(o,n,[]) -> return (o,n)
+	(_,_,errs) -> ioError (userError (concat errs ++ usageInfo header options))
+    where header = "Usage: tersmu [OPTION...] [in] [out]\n\t(use '-' for stdin/stdout)"
 main :: IO ()
-main = repl `catchIOError` (\e -> if isEOFError e then exitWith ExitSuccess
-					   else do putStr $ show e
-						   exitFailure)
+main = do
+    (opts,args) <- getArgs >>= parseArgs
+    let outType = last $ Both:[t | Output t <- opts]
+    let inType = last $ WholeText:[t | Input t <- opts]
+    (inf, h) <- case args of
+	[] -> return (Nothing,stdout)
+	[infn] -> do
+	    s <- if infn == "-" then getContents else readFile infn
+	    return (Just s,stdout)
+	[infn,outfn] -> do
+	    s <- if infn == "-" then getContents else readFile infn
+	    h <- if outfn == "-" then return stdout else openFile outfn WriteMode
+	    return (Just s, h)
+    case inf of
+	Nothing -> repl outType h `catchIOError` (\e ->
+	    if isEOFError e then exitWith ExitSuccess
+		else putStr (show e) >> exitFailure)
+	Just s -> mapM (doParse outType h stderr) (mangleInput inType s) >> hClose h
+    where
+	repl outType h = do
+	    -- interactive mode
+	    hPutStr stderr "> "
+	    hFlush stderr
+	    s <- getLine
+	    hPutStrLn stderr ""
+	    doParse outType h stderr s
+	    repl outType h
+	mangleInput WholeText = (\x -> [x]) . map (\c -> if c `elem` "\n\r" then ' ' else c)
+	mangleInput Lines = lines
+	mangleInput Paras = map (intercalate " ") . splitAtNulls . lines
+	splitAtNulls ls = let (h,t) = break null ls in
+	    h : if null t then [] else splitAtNulls (tail t)

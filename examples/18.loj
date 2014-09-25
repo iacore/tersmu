@@ -538,12 +538,14 @@ li pe'o ju'u pa pi'e re pi'e ci boi reno boi ku'e lo'o du li vovoci boi lo'o
 
 -----
 > pano ju'u reno
+
 Parse error:
 	{pa no ju'u re no}
 	       ^
 
 -----
 > pa pi'e no ju'u reno
+
 Parse error:
 	{pa pi'e no ju'u re no}
 	            ^
@@ -747,6 +749,7 @@ li pe'o pi'i remu boi xa boi ku'e lo'o du li pa xo no boi lo'o
 
 -----
 > li xy.boixici du li xy.boixipa su'i xy.boixire
+
 Parse error:
 	{li xy boi xi ci du li xy boi xi pa su'i xy boi xi re}
 	                                    ^
@@ -795,12 +798,14 @@ li ci no no ki'o ki'o boi lo'o du li pe'o gei bi boi ci boi ku'e lo'o
 
 -----
 > gei reno
+
 Parse error:
 	{gei re no}
 	 ^
 
 -----
 > papano bi'eju'u re gei pipanopano bi'eju'u re ge'a re
+
 Parse error:
 	{pa pa no bi'e ju'u re gei pi pa no pa no bi'e ju'u re ge'a re}
 	          ^
@@ -814,12 +819,14 @@ li pe'o su'i jo'i pa boi re boi te'u jo'i ci boi vo boi te'u ku'e lo'o du li jo'
 
 -----
 > jo'i biboi paboi xa pi'a jo'i ciboi muboi ze ge'a jo'i voboi soboi re
+
 Parse error:
 	{jo'i bi boi pa boi xa pi'a jo'i ci boi mu boi ze ge'a jo'i vo boi so boi re}
 	 ^
 
 -----
 > jo'i biboi ciboi vo sa'i jo'i paboi muboi so ge'a jo'i xaboi zeboi re
+
 Parse error:
 	{jo'i bi boi ci boi vo sa'i jo'i pa boi mu boi so ge'a jo'i xa boi ze boi re}
 	 ^
@@ -888,6 +895,7 @@ ge li pe'o su'i re boi re boi ku'e lo'o du li vo boi lo'o gi li pe'o pi'i re boi
 
 -----
 > li re ge su'i gi pi'i re du li vo
+
 Parse error:
 	{li re ge su'i gi pi'i re du li vo}
 	          ^
@@ -1001,14 +1009,19 @@ li pe'o na'u nu'a su'i te'u te'u re boi re boi ku'e lo'o du li vo boi lo'o
 
 -----
 > pamai
+
 -----
 > remai
+
 -----
 > romai
+
 -----
 > ny.mai
+
 -----
 > pasomo'o
+
 -----
 > li ci se vu'u vo du li pa
 

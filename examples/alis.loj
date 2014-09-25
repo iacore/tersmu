@@ -19,14 +19,16 @@ cy pa ke nunpai kumfa ke'e
 
 -----
 > .i finti fa la'o me. Lewis Carroll .me
+
 Morphology error:
-	{.i finti fa la'o me. Lewis Carroll .me}
+	{.i finti fa la'o me. Lewis Carroll .me }
 	                      ^
 
 -----
 > .i terxra fa la'o me. John Tenniel .me
+
 Morphology error:
-	{.i terxra fa la'o me. John Tenniel .me}
+	{.i terxra fa la'o me. John Tenniel .me }
 	                       ^
 
 -----
@@ -293,18 +295,21 @@ cy mu nu na ku la alis. zifre cy vo kei
 
 -----
 > ni'o ga lo jintyke'a cu mutce lo ka condi gi .abu mutce lo ka masno lo nu farlu .i ni'i bo lo nunfarlu temci cu mutce banzu lo nu catlu lo sruri gi'e kucli lo du'u ma kau ba zi fasnu .i pa mai .abu troci lo nu catlu lo cnita gi'e facki lo du'u .abu ma kau klama .i ku'i dukse lo ka manku kei lo nu ka'e viska .i re mai .abu catlu lo mlana be lo jintyke'a gi'e facki lo du'u my culno lo se kajna tanxe jo'u lo cukta kajna .i .abu viska lo so'o cartu jo'u lo so'o pixra vu'o noi dandu lo so'o genxu .i .abu lebna lo botpi lo kajna ca lo nu lampagre .i by se tcita *lu NAJNIMRE TITYJDU li'u* gi'e ku'i .u'a nai kunti .i .abu mu'i lo nu terpa lo nu catra da cu na djica lo nu falcru lo botpi .i se ki'u bo .abu suksa lo nu punji by lo se kajna tanxe poi .abu ke'a farlu lampagre
+
 Morphology error:
 	{na ca lo nu lampagre .i by se tcita *lu NAJNIMRE TITYJDU li'u* gi'e ku'i .u'a na}
 	                                         ^
 
 -----
 > ni'o *lu uo *sei la .alis. cu pensi* mi ba lo nu farlu tai ti cu ba na xanka lo nu farlu fo lo serti .i *lu ua virnu *sei lo lanzu fi mi ba jinvi* li'u* .i .u'o mi no da cusku va'o ji'a sai lo nu mi farlu fi lo drudi be lo zdani (to sa'a la'e di'u la'a sai jetnu toi) li'u*
+
 Parse error:
 	{ni to sa'a la'e di'u la'a sai jetnu toi li'u}
 	                                         ^
 
 -----
 > ni'o mo'i ni'a mo'i ni'a mo'i ni'a .i xu lo nu farlu cu no roi mulno .i *lu mi kucli lo du'u mi ca minli li xo kau lo ni farlu *sei .abu cladu cusku* .i ia mi pu'o jibni lo midju be lo terdi .i ka'u minli li vo ki'o lo ni cnita (to sa'a la .alis. pu cilre so'o da la'e di'u lo ckule .i zu'u lo cabna ki'u lo nu no da .abu tirna cu na ba'e mutce mapti lo nu jarco lo ka djuno .i zu'u nai lo nu rapsku cu xamgu .abu lo nu cilre toi) .i ie se'i lo se minli cu jibni drani .i ku'i mi kucli lo du'u ma kau ti bernanjudri gi'e sunsicyjudri li'u* .i (to la .alis. na sai djuno lo du'u ma kau smuni ga zo bernanjudri gi zo sunsicyjudri .i ku'i .abu jinvi lo du'u melbi je banli valsi toi)
+
 Parse error:
 	{ jinvi lo du'u melbi je banli valsi toi}
 	                                         ^
@@ -613,12 +618,14 @@ cy re trixe cy pa
 
 -----
 > ni'o la .alis. cu kargau lo vrogai gi'e facki lo du'u vy se jersi lo cmalu vorme noi na bramau lo ratcu kevna .i .abu cidni sanli gi'e catlu lo se vorme noi mlerai lo purdi poi su'o roi se viska .i .a'o sai barkla lo manku kumfa gi'e cadzu jbini lo va carmi xrula zdani jo'u lo va lenku je'erjinto .i ku'i .abu na ka'e gregau lo stedu ji'a sai lo vorme .i *lu lo stedu be mi va'o ji'a sai lo nu ka'e pagre *sei la .alis. uu cu pensi* cu tolmutce lo ka se pilno kei se cau lo mi janco .i .au mi ka'e se polje tai tu'a lo darvistci .i pe'i mi ka'e go'i va'o lo nu da'i mi djuno lo du'u mi co'a go'i ta'i ma kau li'u* .i lo pu zi nalfadni fasnu cu tai so'i mei ja'e lo nu la .alis. co'a jinvi lo du'u so'u sai da ca'a nalcumki
+
 Parse error:
 	{ djuno lo du'u mi co'a go'i ta'i ma kau li'u i lo pu zi nalfadni fasnu cu tai so}
 	                                         ^
 
 -----
 > ni'o simlu lo ka na prali fi lo nu denpa fi tu'a lo cmalu vorme .i se ki'u bo .abu xruti lo jubme gi'e xadba pacna lo nu tolcri lo drata ckiku .a do'a nai lo cukta co javni be lo nu ta'i ma kau polje lo prenu tai tu'a lo darvistci .i ca lo ca krefu .abu tolcri lo cmalu botpi (to *lu noi ju'o pu na zvati ti *sei la .alis. cu cusku* li'u* toi) .i sruri lo botpi cnebo fa lo pelji tcita noi lo valsi po'u *lu KO MI PINXE li'u* cu melbi prina ke'a se pi'o lo barda lerfu
+
 Morphology error:
 	{pelji tcita noi lo valsi po'u *lu KO MI PINXE li'u* cu melbi prina ke'a se pi'o }
 	                                         ^
@@ -730,14 +737,19 @@ cy pano du'u pluka kei
 
 -----
 > 
+
 -----
 > * * * * * * *
+
 -----
 > * * * * * *
+
 -----
 > * * * * * * *
+
 -----
 > 
+
 -----
 > ni'o *lu ue cizra selga'e *sei la .alis. cu cusku* .i ru'a ju'o mi se polje tai tu'a lo darvistci li'u*
 
@@ -938,7 +950,7 @@ cy pamu ka ce'u nelci cy pavo kei
 .i ge ta'e ku zo'u abu sezystidi cy no gi su'o roi ku tai ku ja'e cy vo zo'u abu ke junri sezytolzarsku ke'e
 .i abu morji cy pano
 .i cy papa mutce cy pamu
-.i lu ge cy mu ke se sinma be BUG prenu ke'e gi cy mu pa mei
+.i lu ge cy mu ke se sinma prenu ke'e gi cy mu pa mei
 .i cy vo nu marji kei
 .i vimcu fi mi cy ci
 .i cy re nu sruma cy pa kei
@@ -950,6 +962,7 @@ cy pamu ka ce'u nelci cy pavo kei
 
 -----
 > ni'o lo nu .abu catlu cu ba zi se farna lo cmalu ke blaci tanxe noi cnita lo jubme .i .abu kargau ty gi'e facki lo du'u nenri ty fa lo cmalu mutce titnanba noi bu'u ke'a lo valsi po'u *lu KO MI CITKA li'u* se morna lo sudjba .i *lu .ai mi ti citka *sei la .alis. cu cusku* .i mi va'o lo nu da'i gau ti mi braze'a cu snada lo nu cpacu lo ckiku .i mi va'o lo nu da'i gau ti mi cmaze'a cu kakne lo nu reskla ni'a lo vrogai .i se ki'u bo mi va'o ro fasnu cu kakne lo nu klama lo purdi .i na vajni mi fa lo du'u ma kau ca'a fasnu li'u*
+
 Morphology error:
 	{a noi bu'u ke'a lo valsi po'u *lu KO MI CITKA li'u* se morna lo sudjba .i *lu .a}
 	                                         ^
@@ -1014,25 +1027,31 @@ cy no titnanba
 
 -----
 > 
+
 -----
 > * * * * * * *
+
 -----
 > * * * * * *
+
 -----
 > * * * * * * *
+
 -----
 > 
+
 -----
 > ni'o ni'o re mo'o lo se klaku lalxu
 
 <klaku( ,_)><lalxu>(c0)
 [Fragment: c0]
 
-cy no ke se klaku be BUG lalxu ke'e
+cy no ke se klaku lalxu ke'e
 .i cy no
 
 -----
 > la .alis. cu clani ni'o *lu cizra je ci'izra *sei la .alis. cu krixa (to .abu tai se spaji ja'e lo nu ze'a tolmorji lo nu ta'i ma kau tavla bau lo drani lojbo toi)* .i ca ku mi se tolplo tai tu'a lo brarai darvistci .i co'o jamfu (to sa'a lo jamfu ca'o binxo lo tai darno ja'e lo nu jy jibni fi'o te simlu .abu lo na ka'e se viska toi) .i uu doi cmalu jamfu ma do ba dasygau lo cutci jo'u lo smoka doi dirba .i ju'o mi na ba ka'e go'i .i mi ba mutce dukse lo ka darno do kei lo nu kurji do .i ko renvi ta'i lo do xagrai selka'e .i ku'i .ei mi jy xendo *sei la .alis. cu pensi* .i va'o da'i na'e bo la'e di'u ju'o cu'i jy na cadzu ve ka'a lo mi se djica .i ua .ai mi dunda ca ro xisyjbenunsla lo cnino cutci re mei li'u*
+
 Parse error:
 	{ ro xisyjbenunsla lo cnino cutci re mei li'u}
 	                                         ^
@@ -1070,6 +1089,7 @@ cy no nu ma goi ko'a ta'i ko'a zo'u co'e kei
 
 -----
 > 
+
 -----
 > la selsi'a ke pritu jamfu be la .alis. bu'u la fagzda lolgai ne'a lo fagju'e (to la .alis. cu prami benji toi)
 
@@ -1083,10 +1103,13 @@ cy no fagju'e
 
 -----
 > 
+
 -----
 > 
+
 -----
 > li'u* .i ue mi bebna tavla li'u*
+
 Parse error:
 	{li'u i ue mi bebna tavla li'u}
 	 ^
@@ -1293,6 +1316,7 @@ cy bi nu jdice cy ze kei
 
 -----
 > ni'o *lu ju'o mi na me la .adas. *sei .abu cusku* .i ki'u bo ge lo kerfa be ri cu clani sarlu gi lo me mi moi cu na sai sarlu .i ji'a ju'o mi na me la .mabel. .i ki'u bo ge mi djuno lo so'i vrici gi my .y djuno lo tolmutce .i ji'a ge my me my gi mi me mi .i .oi ue ro da cfipu .i mi mi cipygau lo ka ca djuno ro da poi mi pu djuno .i pilji li vo li mu fa li pa re .i pilji li vo li xa fa li pa ci .i pilji li vo li ze fa .y .i .oi mi ba no roi snada tu'a li re no va'o lo nu tai masno .i ku'i lo pilji porsi na vajni .i .e'u troci tu'a lo tedyske .i la .londn. cu raltca la .paris. .i la .paris. cu raltca la .romas. .i la .romas. si si la'e di'u naldrani ju'o .i ju'o da pu galfi mi la .mabel. .i mi troci lo nu cusku la'e *lu ua lo cmalu li'u* li'u* .i .abu punji lo kruca xance lo tuple tai lo nu cusku lo se cilre kei gi'e co'a sitsku .i ku'i lo voksa cu se sance lo rufsu je cizra .i lo valsi na mintu lo se tcaci
+
 Parse error:
 	{ la paris cu raltca la romas i la romas si si la'e di'u naldrani ju'o i ju'o da }
 	                                         ^
@@ -1341,6 +1365,7 @@ cy pa ke ke cisma xedja ke'e ganra ke'e
 
 -----
 > ni'o *lu ju'o lo valsi na drani *sei la .alis. uu cu cusku* li'u* .i lo kanla be .abu cu za'u re'u tisna lo se klaku ca lo nu di'a cusku *lu ja'o mi me la .mabel. .i mi ba bilga lo nu xabju lo pindi ke cmalu zdani gi'e ponse ji'i no selkei gi'e .oi cilre so'i sai da .i .ai na go'i .i mi mu'o jdice lo du'u mi ga nai me la .mabel. gi stali ti .i no da ba prali lo bartu prenu lo nu py setca lo stedu ti gi'e cusku *lu ko barkla doi dirba li'u* .i mi ba fa'a ga'u catlu gi'e cusku *lu pau mi me ma .i pa mai ko mi jungau la'e di'u .i ba bo mi va'o lo nu nelci lo nu me ma kau cu barkla .i va'o lo nu na nelci cu denpa ti lo nu mi drata li'u* .i ku'i .oi *sei la .alis. cu suksa klaku krixa* .i .au da ba'e ca'a setca lo stedu ti .i mi tai ba'e mutce tatpi lo nu mi ti nonkansa li'u*
+
 Parse error:
 	{i ba'e mutce tatpi lo nu mi ti nonkansa li'u}
 	                                         ^
@@ -1443,7 +1468,7 @@ cy vo ke blaci jubme ke'e
 .i za'u re'u ku zo'u cy ci vreta cy vo
 .i lu cy re ka ce'u xlali kei
 .i pensi cy pa
-.i cy pa ke se kecti be BUG verba ke'e
+.i cy pa ke se kecti verba ke'e
 .i cy no tcini
 .i su'o da zo'u ge ki'u da ro de zo'u cy no xlamau de gi fi'o du da no roi ku pu ku tai ti zo'u mi cmalu
 .i 
@@ -1526,7 +1551,7 @@ cy rere nu la alis. jinru cy repa kei
 <klaku( ,_)><lalxu>(c0)
 jinru("alis",c0)
 
-cy no ke se klaku be BUG lalxu ke'e
+cy no ke se klaku lalxu ke'e
 .i la alis. jinru cy no
 
 -----
@@ -1658,6 +1683,7 @@ cy papa ka ce'u rinsa fi cy pano kei
 
 -----
 > ni'o cumki fa lo nu ta na se bangu lo lojbo *sei la .alis. cu pensi* .i ru'a ta fraso smacu gi'e kansa la .uiliam. poi jamji'a ku'o lo nu klama ti li'u* (to .abu djuno so'i da lo purcedra gi'e ku'i na mutce lo ka jimpe lo du'u ma kau pu fasnu za ma kau toi) .i .abu cu za'u re'u co'a cusku zoi fy. ou est ma chatte? .fy noi pa moi lo jufra pe lo .abu fraso ve cilre cukta .i lo smacu cu suksa plipe lo bartu be lo djacu gi'e simlu lo ka desku lo nu terpa .i *lu .oi se'i ko mi fraxu *sei la .alis. noi xersmadi lo du'u ke'a crogau lo danlu lo cnirango cu sutra krixa* .i mi mulno lo ka tolmorji lo nu do na nelci lo mlatu li'u*
+
 Morphology error:
 	{.i .abu cu za'u re'u co'a cusku zoi fy. ou est ma chatte? .fy noi pa moi lo jufr}
 	                                         ^
@@ -1685,7 +1711,7 @@ lu cy re nu do me mi me'u kei
 <klaku( ,_)><lalxu>(c0)
 jinru(("alis" {jo'u} [Name: smacu(_) ]),c0)
 
-cy no ke se klaku be BUG lalxu ke'e
+cy no ke se klaku lalxu ke'e
 .i la alis. jo'u ke la poi'i smacu ku'o ku ke'e jinru cy no
 
 -----
@@ -1776,6 +1802,7 @@ lu cy mu cmene
 
 -----
 > ni'o *lu vi'o sai *sei la .alis. noi sutra lo nu galfi lo selsnu cu cusku* .i xu .y xu do .y nelci .y lo gerku li'u* .i la smacu na spuda .i se ki'u bo la .alis. ca'o cusku *lu lo melbi ke cmalu gerku noi xabju lo jibni be lo zdani be mi'a zo'u mi djica lo nu mi gy do jarco .i gy cmalu gerku la .terier. gi'e se kerfa lo clani je sarlu je bunre gi'e xrubei lo dacti poi do renro .i gy fa'a ga'u zutse gi'e cpedu lo sanmi gi'e zukte lo so'i vrici noi mi na morji lo xadba be ke'a .i gy se ponse lo te cange noi xusra lo du'u gy tai plixau ja'e lo nu gy se vamji lo rupnu be li pa no no .i cy xusra lo du'u gy catra ro lo ratcu .i .oi se'i *sei la .alis. cu xenru tonga krixa* .i mi xersmadi lo du'u mi ta za'u re'u cnixai li'u* .i la smacu ca'o limna to'o .abu se rai lo kamvli gi'e mutce lo ka kalsygau lo lalxu ca lo nu klama
+
 Parse error:
 	{oi sutra lo nu galfi lo selsnu cu cusku i xu y xu do y nelci y lo gerku li'u i l}
 	                                         ^
@@ -1960,6 +1987,7 @@ cy mu nu la alis. birti cy vo kei
 
 -----
 > ni'o *lu ta'a *sei la smacu cu vajni simlu cusku* .i xu ro do bredi .i la'e di'e cu sudrai lo ro se djuno be mi .i .e'o ro ko smaji .i *lu la .uiliam. poi jamji'a zi'e noi lo jdaja'a cu zanru lo jamna te zukte be fi ke'a cu ze'i trubi'o lo glipre noi ke'a djica lo turni gi'e pu mutce lo ka se tcaci lo nu flacau trubasti gi'e jamji'a .i la .eduin. jo'u la .morkar. vu'o noi turni la .mersias. fa'u la .nortumbrias. li'u* li'u*
+
 Parse error:
 	{ ta'a sei la smacu cu vajni simlu cusku i xu ro do bredi i la'e di'e cu sudrai l}
 	                                         ^
@@ -1973,6 +2001,7 @@ lu  li'u
 
 -----
 > ni'o *lu ke'o pe'u *sei la smacu cu frumu cusku je ke ku'i clite mutce* .i xu do cusku * li'u*
+
 Parse error:
 	{u cu frumu cusku je ke ku'i clite mutce i xu do cusku li'u}
 	                                         ^
@@ -2009,12 +2038,14 @@ lu cy no du'u go'i kei
 
 -----
 > ni'o *lu facki fi ba'e ma *sei la datka cu cusku* li'u*
+
 Parse error:
 	{ facki fi ba'e ma sei la datka cu cusku li'u}
 	                                         ^
 
 -----
 > ni'o *lu *lu facki fi ba'e da li'u* *sei la smacu cu spuda co fengu milxe* .i li'a do djuno lo du'u ma kau smuni zo da li'u*
+
 Parse error:
 	{i'a do djuno lo du'u ma kau smuni zo da li'u}
 	                                         ^
@@ -2042,6 +2073,7 @@ lu cy ci ke banli jdatro ke'e
 
 -----
 > ni'o la smacu na sanji lo di'u preti gi'e sutra lo nu di'a cusku *lu *lu facki fi da fe lo du'u xamgu sidbo fa lo nu kansa la .edgar.atelin. lo nu penmi la .uiliam. gi'e friti lo trumapku .ubu .i lo se tarti be la .uiliam. ca lo nu cfari cu milxe .i ku'i lo nuntolclite be lo .ubu normano li'u* .i pei doi do iu *sei sy di'a cusku je ca bo carcra be la .alis.* li'u*
+
 Parse error:
 	{y di'a cusku je ca bo carcra be la alis li'u}
 	                                         ^
@@ -2109,7 +2141,7 @@ cy ci ke drata cipni ke'e
 .i bau la lojban. zo'u ko tavla
 .i ge na ku cy re slabu mi gi na ku na ku cy re slabu do li'u
 .i te zu'e cy re zo'u la poi'i ke atkuila cifnu ke'e ku'o ku krogau cy no
-.i su'o da poi ke'a me cy ci me'u ku'o zo'u da ke se tirna be BUG mi'amli ke'e
+.i su'o da poi ke'a me cy ci me'u ku'o zo'u da ke se tirna mi'amli ke'e
 
 -----
 > ni'o *lu mi pu pu'o cusku *sei la cipnrdodo cu se xrani cusku* lo se du'u lo traji be lo ka se jalge lo nu sudgau mi'o cu jdijmaji terjvi li'u*
@@ -2125,7 +2157,7 @@ lu du'u cy re ke jdijmaji terjvi ke'e kei cy ci
 .i cy re traji cy pa
 .i cy pa ka cy no jalge ce'u kei
 .i cy no nu sudgau mi'o kei
-.i ke se xrani be BUG cusku ke'e la poi'i cipnrdodo ku'o ku
+.i ke se xrani cusku ke'e la poi'i cipnrdodo ku'o ku
 .i pu ku pu'o ku zo'u mi cusku cy ci li'u
 
 -----
@@ -2259,6 +2291,7 @@ lu preti cy no
 
 -----
 > ni'o *lu li'a ba'e tu *sei la cipnrdodo noi sinxa la .alis. se pi'o pa degji cu cusku* li'u* .i je lo ro mei ba zi jmaji lo sruri be .abu gi'e se cfipu kixsku *lu .au ve cnemu .i .au ve cnemu li'u*
+
 Parse error:
 	{ la alis se pi'o pa degji cu cusku li'u i je lo ro mei ba zi jmaji lo sruri be a}
 	                                         ^
@@ -2472,10 +2505,11 @@ lisri(c0,mi)
 
 lu fa'a la alis. zo'u la poi'i smacu ku'o ku ke cusku ke'e je ke dricmo ke'e
 .i cy no lisri mi
-.i cy no ke clani ke'e je ke se badri be BUG ke'e li'u
+.i cy no ke clani ke'e je ke se badri ke'e li'u
 
 -----
 > ni'o *lu ba'e je'a clani linsi *sei la .alis. noi manci catlu lo rebla be la smacu cu cusku* .i ku'i ki'u ma do ly mi'a skicu lo ka se badri li'u* .i .abu ca lo nu la smacu cu cusku cu ca'o manci la'e di'u ja'e lo nu lo te sidbo lo rebla linsi lo simsa be *lu
+
 Parse error:
 	{ te sidbo lo rebla linsi lo simsa be lu}
 	                                         ^
@@ -2519,8 +2553,10 @@ cy mu nu catra do kei
 
 -----
 > 
+
 -----
 > li'u*
+
 Parse error:
 	{li'u}
 	 ^
@@ -3195,6 +3231,7 @@ cy xa nu za'u re'u ku zo'u la alis. bartu cy mu kei
 
 -----
 > ni'o *lu lo mi zdani ti mutce zmadu lo ka pluka *sei la .alis. uu cu pensi* .i bu'u zy ge nai ro roi zenba jo'u jdika gi nai ro roi se minde lo smacu .a lo ractu .i .au nai ru'e mi na klama fo lo ractu kevna .i ku'i .i ku'i cizra fa lo tai nu jmive .i mi ja'a kucli lo du'u mi ma kau ca'a lifri .i mi ca lo nu tcidu lo crida lisri cu krici lo du'u lo tai cuntu no roi fasnu .i ca ku mi cy midju .i .ei da finti lo cukta mi .i ie .ei go'i .i .ai mi ca lo nu ba'o banro cu finti .i ku'i mi ca ba'o banro *sei .abu badri jmina* .i ba'u nai lo bu'u canlu na banzu lo nu banro lo bancu li'u*
+
 Parse error:
 	{u'u canlu na banzu lo nu banro lo bancu li'u}
 	                                         ^
@@ -3220,18 +3257,21 @@ lu cy no ka ce'u tolcitno kei
 
 -----
 > ni'o *lu .oi doi .alis. noi bebna *sei .abu sezyspuda* ta'i ma do da bu'u ka'e cilre .i ue lo canlu ja'a ru'e banzu tu'a do .i no da bu'u canlu lo ve cilre cukta li'u*
+
 Parse error:
 	{do i no da bu'u canlu lo ve cilre cukta li'u}
 	                                         ^
 
 -----
 > ni'o .abu ca'o co'e .i pa mai darlu lo mlana gi'e re mai darlu lo drata gi'e zbasu lo vajni nuncasnu lo ro mei .i ku'i ba lo mentu be li so'o .abu tirna lo voksa noi bartu ku'o gi'e sisti te zu'e lo nu tinzga
+
 Parse error:
 	{'o co'e i pa mai darlu lo mlana gi'e re mai darlu lo drata gi'e zbasu lo vajni n}
 	                                         ^
 
 -----
 > ni'o *lu doi .merian. doi .merian. *sei lo voksa cu cusku* ko bevri lo mi gluta mi ca ku li'u* .i ba bo tirna lo nu cmalu ke jamfu stapa lo serti .i la .alis. cu djuno lo du'u la ractu cu klama te zu'e lo nu sisku .abu .i .abu desku ja'e lo nu lo zdani cu desku .i .abu tolmorji lo nu ge .abu ca kilto la ractu lo ka barda gi se ki'u bo no da krinu lo nu terpa ry
+
 Parse error:
 	{ko bevri lo mi gluta mi ca ku li'u i ba bo tirna lo nu cmalu ke jamfu stapa lo s}
 	                                         ^
@@ -3362,8 +3402,9 @@ lu ge cy pa zvati cy no gi cy pa me ta me'u
 
 -----
 > ni'o *lu ju'o ta birka doi banli li'u* (to py bacru zo biryrka toi)
+
 Morphology error:
-	{a birka doi banli li'u* (to py bacru zo biryrka toi)}
+	{a birka doi banli li'u* (to py bacru zo biryrka toi) }
 	                                         ^
 
 -----
@@ -3401,12 +3442,14 @@ lu no da va ku zo'u da cuntu ta
 
 -----
 > ni'o baku ze'u smaji .i la .alis. so'u roi tirna lo lauble selsku no'u mu'a *lu ju'o mi na nelci doi banli .i na sai go'i li'u* .e *lu ko zukte tai lo mi te minde doi tolvri li'u* .i uo .abu cu re re'u pejgau lo xance gi'e re re'u jgari lo vacri .i ca ku tirna re cmalu se krixa .e lo porpi blaci sance drata .i *lu ue xo kau guzme tanxe cu zvati *sei la .alis. cu pensi* .i .a'u ma ba zi se zukte .i lo nu lacpu mi pa'o lo canko zo'u .au kakne .i ju'o mi na djica lo nu za'o stali ti li'u*
+
 Parse error:
 	{ lu ju'o mi na nelci doi banli i na sai go'i li'u e lu ko zukte tai lo mi te min}
 	                                         ^
 
 -----
 > ni'o .abu ze'a denpa gi'e tirna no lo za'u moi .i ro mai tirna lo sance be lo cmalu carce xislu .e so'i sai voksa noi tavla kansi'u .i .abu snada lo nu jimpe tu'a lo valsi .i *lu lo drata serti ma zvati .i ua .ei mi bevri lo pa mei .i la .bil. cu co'e lo drata .i ju'i .bil. ko ta ti bevri doi citno .i ko ta punji lo vi kojna .i na go'i .i puku ko ta jonsimgau .i ta za'o na preja lo galtu banzu .i ju'o ta ba xamgu banzu .i ko na tcila jundi .i ju'i .bil. ko jgari lo vi skori .i xu lo drudi ba sarji .i ko jundi lo va kluza tapla .i .oi ta ca'o farlu ju'i cnita (to sa'a cladu popsna toi) .i ma ta gasnu .i ru'a la .bil. .i ma ba cnita klama fo lo danmo tubnu .i mi na.e ko go'i .i vi'o nai .i la .bil. ba go'i .i ju'i .bil. lo selse'u do minde lo nu do cnita klama fo lo danmo tubnu li'u*
+
 Parse error:
 	{ lo nu do cnita klama fo lo danmo tubnu li'u}
 	                                         ^
@@ -3438,18 +3481,21 @@ lu vi ku zo'u cy ci fagzda
 
 -----
 > *lu ta mo'i me la .bil. li'u* ni'o .abu tolse'a lo jamfu lo tubnu se rai lo kamvli gi'e denpa lo nu tirna lo cmalu danlu (to .abu na smadi lo du'u danlu ma kau toi) noi sraku je srukla ne'i lo tubnu ga'u ne'a .abu .i ba zi bo .abu ca lo nu sezysku *lu ti me la .bil. li'u* cu pa roi kinli tikpa gi'e denpa lo nu zgana lo nu ma kau ba fasnu
+
 Parse error:
 	{lu ta mo'i me la bil li'u ni'o a bu tolse'a lo jamfu lo tubnu se rai lo kamvli g}
 	       ^
 
 -----
 > ni'o pa mai .abu tirna lo voksa so'i mei pe *lu ta mo'i me la .bil. li'u* .i re mai go'i lo ractu voksa pe *lu ko ta jgari doi lamji be lo spati bitmu li'u* .i ci mai go'i lo smaji .i vo mai go'i lo drata ke voksa kalsa pe *lu ko sarji lo stedu be ta .i gau ko ta pinxe lo jikru .i ko ta na vaxydicra .i ma mo doi pendo .i do ma pu lifri .i ko mi'a jungau la'e di'u li'u*
+
 Parse error:
 	{i a bu tirna lo voksa so'i mei pe lu ta mo'i me la bil li'u i re mai go'i lo rac}
 	                                         ^
 
 -----
 > ni'o ro mai go'i lo cmalu je ruble je lauble voksa (to *lu tu me la .bil. *sei la .alis. cu pensi* li'u* toi) pe *lu mi ja'a ru'e djuno .i banzu ki'e .i mi ca kufra .i ku'i mi dukse lo ka jenca kei lo nu jungau .i mi djuno lo po'o du'u da mi catke tai lo danre selkei plipe .i mi tolfa'u tai tu'a lo tsani jakne li'u*
+
 Parse error:
 	{is cu pensi li'u toi pe lu mi ja'a ru'e djuno i banzu ki'e i mi ca kufra i ku'i }
 	                                         ^
@@ -3536,6 +3582,7 @@ cy re ke drata ke smaji mulno ke'e ke'e
 
 -----
 > ni'o la .alis. cu se spaji sanji lo nu ro lo bidju cu binxo lo cmalu nanba ca lo nu vreta lo loldi .i lo carmi co'a sidbo fi lo .abu menli .i *lu lo nu mi citka pa lo nanba *sei .abu pensi* ba ju'o rinka lo nu mi cenba lo ka barda .i na sai ka'e brazengau mi .i ja'o ju'o pe'i cmazengau mi li'u*
+
 Parse error:
 	{zengau mi i ja'o ju'o pe'i cmazengau mi li'u}
 	                                         ^
@@ -3752,7 +3799,7 @@ cy reso ke xadba ganlo ke'e
 .i cy re nu ge abu lafti cy no gi abu jarco cy no cy pa kei
 .i cy pa gerpanzi
 .i cy no ke cmalu grana ke'e
-.i su'o da zo'u ge ja'e da zo'u abu sanji cy re gi fi'o du da su'o de zo'u ge fi'o du de zo'u ge ge ge ro di poi ke'a me cy mu me'u ku'o zo'u cy ci plipe cy vo di gi cy ci ke se pluka be BUG cmoni ke'e gi cy ci sezre'o cy xa gi cy ci gasnu cy bi gi ba de zo'u la alis. rivbi cy so cy pare
+.i su'o da zo'u ge ja'e da zo'u abu sanji cy re gi fi'o du da su'o de zo'u ge fi'o du de zo'u ge ge ge ro di poi ke'a me cy mu me'u ku'o zo'u cy ci plipe cy vo di gi cy ci ke se pluka cmoni ke'e gi cy ci sezre'o cy xa gi cy ci gasnu cy bi gi ba de zo'u la alis. rivbi cy so cy pare
 .i su'o da zo'u ge fi'o du da ca cy pamu zo'u ge za'u re'u ku zo'u cy paci sezre'o cy paxa gi se ja'e cy pabi zo'u cy paci ke gunro farlu ke'e gi ba da za'u re'u ku fa'a ti'a cy revo zo'u la alis. bajra
 .i ge ge ge ge ge ge co'a ku so'o roi ku ze'i ku zo'u cy remu gunta cy rexa gi ge ve'i ku fa'a ku zo'u cy remu bajra gi ve'u ku to'o ku zo'u cy remu bajra gi ro roi ku zo'u cy remu ke rufsu bacru ke'e gi vu ku zo'u cy remu zutse gi cy remu ta'irva'u gi cy rebi tance cy remu gi cy reso kanla cy remu
 
@@ -3854,7 +3901,7 @@ cy paci du'u ge catlu gi viska cy pare kei
 .i cy xa jibni la alis.
 .i cy mu ke barda gumri ke'e
 .i cy vo ka ce'u mapti cy ci kei
-.i cy ci ke se citka be BUG ke'e ja ke pinxe ke'e
+.i cy ci ke se citka ke'e ja ke pinxe ke'e
 .i cy re srasu
 .i cy pa xrula
 .i cy no ke banli preti ke'e
@@ -4582,6 +4629,7 @@ lu cy re nu tai ku zo'u cy pa cafne kei
 
 -----
 > ni'o *lu .i'i ba'e nai *sei la ciftoldi cu cusku* li'u*
+
 Parse error:
 	{u i'i ba'e nai sei la ciftoldi cu cusku li'u}
 	                                         ^
@@ -4826,14 +4874,19 @@ cy paci nu tunlo cy pare kei
 
 -----
 > 
+
 -----
 > * * * * * * *
+
 -----
 > * * * * * *
+
 -----
 > * * * * * * *
+
 -----
 > 
+
 -----
 > ni'o *lu ua lo stedu be mi cu zifre li'u* se cusku la .alis. fi'o tonga lo ka gleki poi ba zi binxo lo ka tepselspaji kei ca lo nu facki lo du'u na ka'e tolcri lo janco .i .abu fa'a ni'a catlu gi'e viska lo tcebra clani cnebo po'o noi stani simsa sanli lo xamsi be fi lo ni'a vu crino pezli
 
@@ -5137,6 +5190,7 @@ cy re nu morji cy pa kei
 
 -----
 > ni'o *lu lisri lakne ia nai *sei la tcacpi cu tolsi'arai tonga cusku* .i mi pu viska so'i cmalu nixli .i ku'i no ri se cnebo lo simsa be ta .i ie nai cai .i do since .i je .e'e nai do tolxu'a .i la'a do ba zi cusku lo se du'u do pu no roi vu'izga lo sovda li'u*
+
 Parse error:
 	{o se du'u do pu no roi vu'izga lo sovda li'u}
 	                                         ^
@@ -5227,6 +5281,7 @@ lu cy ci ke nalseljukpa sovda ke'e
 
 -----
 > ni'o *lu ko cliva va'o ku *sei la tcacpi cu tolxendo tonga cusku* li'u* .i ty cu za'u re'u zutse lo ty zdani .i la .alis. cu dzikla lo jbini be lo tricu tai lo xagrai selka'e .i lo .abu cnebo jo'u lo jimca cu za'o se jgena binxo .i .abu cu so'i roi bilga lo nu tolselto'i cy
+
 Parse error:
 	{u sei la tcacpi cu tolxendo tonga cusku li'u i ty cu za'u re'u zutse lo ty zdani}
 	                                         ^
@@ -5258,6 +5313,7 @@ cy mu nu ke tcaci clani ke'e kei
 
 -----
 > ni'o .abu pu mitre lo drani simsa zu lo tai mutce ja'e lo nu cizra ca lo cfari .i ku'i .abu se tcaci binxo ze'a lo mentu be li so'u gi'e di'a ta'e sezytavla .i *lu uo lo xadba be lo mi selpla ba'o se zukte .i .u'e lo bu'u nuncenba cu cizra .i mi no roi birti lo du'u mi ba binxo ma kau zi lo mentu .i ku'i mi ba'o xruti lo ka drani mitre .i ca ku .ei nerkla lo melbi purdi .i .a'u ta'i ma zukte la'e di'u li'u* .i .abu ca lo nu cusku di'u cu suksa tolcliva lo klina noi vasru lo cmalu zdani noi mitre li ji'i pa .i *lu va'o lo nu ma kau xabju ta *sei la .alis. cu pensi* cu na drani fa lo nu mi tolcanci tai lo nu mi ca mitre .i va'o ku mi terpygau mutce li'u* .i se ki'u bo .abu co'a za'u re'u citka lo pritu spisa gi'e na darsi lo nu jbikla lo zdani kei pu lo nu ba'o jdika ja'e lo nu cenmitre li re no
+
 Parse error:
 	{lbi purdi i a'u ta'i ma zukte la'e di'u li'u i a bu ca lo nu cusku di'u cu suksa}
 	                                         ^
@@ -5271,6 +5327,7 @@ ke xarju ke'e jo'u ke cpinytsapi ke'e
 
 -----
 > ni'o ze'a lo mentu .abu sanli gi'e catlu lo zdani gi'e pensi lo du'u .ei ba zi zukte ma kau .i ca bo lo selfu noi dasni lo manfyta'u cu bajra cliva lo ricfoi (to .abu lo du'u ra selfu cu jinvi fo lo nu ra dasni lo manfyta'u .i va'o da'i na'e bo la'e di'u .abu ca lo po'o nu viska lo flira cu te cmene ra zo finpe toi) gi'e cladu darxi lo vorme lo degycidni .i vy karbi'o gau lo drata manfyta'u dasni selfu noi se flira lo cukla gi'e se kanla lo barda tai tu'a lo plipybanfi .i lo re selfu *sei la .alis. cu sanji* zo'u lo kerfa cu pumvau gi'e cukla gacri pi ro lo stedu .i .abu mutce kucli lo du'u srana ma kau kei gi'e parkla lo milxe bartu be lo ricfoi ki'u lo nu tinju'i
+
 Parse error:
 	{ di'u a bu ca lo po'o nu viska lo flira cu te cmene ra zo finpe toi gi'e cladu d}
 	                                         ^
@@ -5746,6 +5803,7 @@ lu cy vo du'u ma goi ko'a tai ku mu'i ko'a zo'u cy ci cisma kei
 
 -----
 > ni'o *lu tu tcicymlatu *sei la noltroni'u cu cusku* .i la'e di'u krinu .i doi xarju li'u*
+
 Parse error:
 	{ cu cusku i la'e di'u krinu i doi xarju li'u}
 	                                         ^
@@ -5984,6 +6042,7 @@ cy xa ka na ku ce'u jundi kei
 
 -----
 > ni'o *lu .oi ko mi na fanza *sei la noltroni'u cu cusku* .i mi na ka'e renvi lo namcu li'u* .i ca bo ny co'a za'u re'u kurji lo cifnu gi'e sanga lo sipygau simsa cy gi'e vlile desygau cy ca lo fanmo be ro vlali'i
+
 Parse error:
 	{u i mi na ka'e renvi lo namcu li'u i ca bo ny co'a za'u re'u kurji lo cifnu gi'e}
 	                                         ^
@@ -6006,18 +6065,21 @@ nu[fanza(p,do)](c0)
 <zukte( , ,_)><krasi>(c0)
 
 cy no nu py fanza do kei
-.i cy no ke te zukte be BUG bei BUG krasi ke'e
+.i cy no ke te zukte krasi ke'e
 
 -----
 > KREFU
+
 Morphology error:
-	{KREFU}
+	{KREFU }
 	 ^
 
 -----
 > (to lo jukpa lo cifnu cu kansa toi)
+
 -----
 > ua ua ua
+
 -----
 > ni'o la noltroni'u ca lo nu sanga lo re moi be lo vlagri cu ca'o vlile renro lo cifnu lo gapru jo'u lo cnita .i lo se kecti cmalu cu tai krixa ja'e lo nu la .alis. cu ja'a ru'e tirna lo valsi
 
@@ -6035,7 +6097,7 @@ vlagri(c0)
 
 cy bi nu la alis. tirna cy ze kei
 .i cy ze valsi
-.i cy xa ke se kecti be BUG cmalu ke'e
+.i cy xa ke se kecti cmalu ke'e
 .i cy mu cnita
 .i cy vo gapru
 .i cy ci cifnu
@@ -6062,17 +6124,19 @@ ge cy no panzi gi cy no srana mi
 <pluka( ,_)><banzu>(p)
 <cpinytsapi(_)><stasu>( )
 
-py ke se pluka be BUG banzu ke'e
+py ke se pluka banzu ke'e
 .i ke cpinytsapi stasu ke'e
 
 -----
 > KREFU
+
 Morphology error:
-	{KREFU}
+	{KREFU }
 	 ^
 
 -----
 > ua ua ua
+
 -----
 > ni'o *lu ju'i do'u .e'a do ti kurji *sei la noltroni'u ca lo nu renro lo cifnu la .alis. cu cusku* .i .ei mi mi bredygau lo nu kansa la noltruni'u lo nu kelcrkroke li'u* .i ny sutra cliva lo kumfa .i lo jukpa cu renro lo tansi ny ca lo nu ny barkla .i ku'i ja'a ru'e fliba lo nu darxi
 
@@ -6145,6 +6209,7 @@ cy bi nu jgari kei
 
 -----
 > ni'o .abu zi ba lo nu facki lo du'u ma kau drani tadji lo nu kurji (to no'u lo nu tongau cy ja'e lo jgena gi'e tagji jgari lo cy pritu kerlo jo'u lo cy zunle jamfu ja'e lo nu rivbi lo nu cy sezytolplo toi) cu bevri cy lo bartu vacri .i *lu da va'o lo nu mi na lebna lo vi cifnu *sei la .alis. cu pensi* cu ba catra cy za lo djedi be li ji'i re .i xu na zekri fa lo nu cliva cy li'u* .i .abu cladu cusku lo ro moi valsi .i lo cmalu cu spuda cmoni (to cy pu co'u senci toi) .i *lu ko na cmoni *sei la .alis. cu cusku* .i na sai drani tadji lo nu cusku li'u*
+
 Parse error:
 	{ cusku i na sai drani tadji lo nu cusku li'u}
 	                                         ^
@@ -6224,7 +6289,7 @@ cy ci smaji
 .i cy re re mei
 .i na ku cy pa cumki
 .i ga no da poi ke'a dirgo ku'o ba'o ku zo'u klaku da gi xajycmo
-.i cy no ke se kecti be BUG cmalu ke'e
+.i cy no ke se kecti cmalu ke'e
 .i cy pa nu jdice kei
 .i na ku co'e
 .i no da poi ke'a dirgo ku'o ba'o ku zo'u klaku da
@@ -6326,6 +6391,7 @@ cy papa nu cy pano ke milxe spaji ke'e abu kei
 
 -----
 > la .alis. cu tavla la tcicymlatu la .alis. cu tavla la tcicymlatu
+
 Parse error:
 	{la alis cu tavla la tcicymlatu la alis cu tavla la tcicymlatu}
 	                                        ^
@@ -6531,6 +6597,7 @@ cy no du'u la'e di'u lu'u je'urja'o kei
 
 -----
 > ni'o *lu pa mai *sei la mlatu cu cusku* lo gerku na fenki .i ie pei li'u*
+
 Parse error:
 	{atu cu cusku lo gerku na fenki i ie pei li'u}
 	                                         ^
@@ -6701,7 +6768,7 @@ sezysku( ,a)
 cy mu jimca cy vo
 .i cy vo tricu
 .i cy ci nu cusku di'u kei
-.i la poi'i ke cibmasti cicyractu ke'e ku'o ku ke se cusku be BUG xabju ke'e cy re
+.i la poi'i ke cibmasti cicyractu ke'e ku'o ku ke se cusku xabju ke'e cy re
 .i cy pa mentu li ji'i re boi lo'o
 .i cy no nu za'u re'u ku zo'u viska my kei
 .i ge ze'i ku zo'u la alis. denpa gi la alis. ke xadba pacna ke'e cy no
@@ -6748,6 +6815,7 @@ lu cy pa nu mutce cy no kei
 
 -----
 > ni'o *lu vi'o *sei la mlatu cu cusku* li'u* .i ca ku my masno mutce canci co'a lo fanmo be lo rebla co'u lo nu cisma noi ze'a renvi ba lo nu lo drata pagbu ba'o canci
+
 Parse error:
 	{ni'o lu vi'o sei la mlatu cu cusku li'u i ca ku my masno mutce canci co'a lo fan}
 	                                    ^
@@ -6790,6 +6858,7 @@ lu ze'a cy mu zo'u mi viska cy xa
 
 -----
 > ni'o .abu ze'u nai klama pu lo nu viska lo zdani be la cibmasti cicyractu .i .abu jinvi lo du'u drani zdani kei fo lo du'u ge lo damtu'u cu tarmi lo kerlo gi lo drudi cu se gacri lo skapi .i lo zdani cu tai barda ja'e lo nu .abu na nelci lo nu jbikla pu lo nu ge citka pi so'u lo zunle spisa be lo gumri gi gasnu lo nu .abu banro lo mitre be li ji'i pi mu .i se va'o ji'a sai bo .abu milxe toldarsi cadzu fa'a zy gi'e sezysku *lu ru'a cycy ca'a tcetce fenki .i .au nai ru'e mi se ba'i pu klama lo nu viska la mapypre li'u*
+
 Parse error:
 	{tre be li ji'i pi mu i se va'o ji'a sai bo a bu milxe toldarsi cadzu fa'a zy gi'}
 	                                         ^
@@ -7023,7 +7092,7 @@ jinvi(mi,c2) >>]
 lu cy re du'u ka'e ku zo'u mi smadi la'e di'u lu'u kei
 .i ke bacru jmina ke'e la alis.
 .i cy pa nu co'a ku zo'u retsku cy no kei
-.i cy no ke se manci be BUG nabmi ke'e
+.i cy no ke se manci nabmi ke'e
 .i pensi la alis.
 .i ze'a ku ba ku zo'u zdile mi
 .i mi gleki cy pa
@@ -7130,6 +7199,7 @@ lu du'u lu cy no nu sipna kei
 
 -----
 > ni'o *lu ja'a mintu sera'a do *sei la mapypre cu cusku* li'u* .i ca bo lo nu casnu cu ve denpa .i lo kansi'u cu smaji zutse ze'a lo mentu ca'o lo nu la .alis. cu pensi pi ro da poi .abu morji ke'a lo korvo .a lo ciska jubme zi'e noi na mutce
+
 Parse error:
 	{'a do sei la mapypre cu cusku li'u i ca bo lo nu casnu cu ve denpa i lo kansi'u }
 	                                         ^
@@ -7320,6 +7390,7 @@ lu cy no me mi me'u moi
 
 -----
 > ni'o la .alis. cu cinmo lo ka mutce se cfipu .i lo pinka be fi la mapypre cu simlu lo ka no da smuni ke'a kei gi'e ku'i ja'a lojbo .i *lu mi na mulno jimpe *sei .abu se rai lo ka clite cu cusku* li'u*
+
 tersmu: Unbound variable RelVar 1
 -----
 > ni'o *lu la sipsmacu za'u re'u sipna *sei la mapypre cu cusku* li'u* .i my falcru pi so'u lo glare tcati lo sy nazbi
@@ -7356,7 +7427,7 @@ cy re nu kargau cy pa kei
 cusku( ,[Name: mapypre(_) ],"alis")
 ?. (ba'o)(). smadi(do,{tu'a}(c0)) >>]
 
-lu cy no ke se manci be BUG nabmi ke'e
+lu cy no ke se manci nabmi ke'e
 .i cusku la poi'i mapypre ku'o ku la alis.
 .i xu kau ba'o ku zo'u do smadi tu'a cy no lu'u li'u
 
@@ -7409,7 +7480,7 @@ la alis. ke tatpi patyva'u ke'e
 .i lu cy vo xagmau cy ci
 .i cy ci nu ta'i cy re zo'u xaksu cy no kei
 .i cy re nu cy pa preti kei
-.i ge cy pa ke se manci be BUG nabmi ke'e gi na ku danfu cy pa
+.i ge cy pa ke se manci nabmi ke'e gi na ku danfu cy pa
 .i cy no temci
 .i cusku abu
 .i ka'e ku ta'i cy vo zo'u cy no prali do li'u
@@ -7584,6 +7655,7 @@ gu'irgu'i
 
 -----
 > .i .a'u xu lo selsanga do slabu li'u*
+
 Parse error:
 	{i a'u xu lo selsanga do slabu li'u}
 	                               ^
@@ -7631,6 +7703,7 @@ gu'irgu'i
 
 -----
 > li'u*
+
 Parse error:
 	{li'u}
 	 ^
@@ -7838,6 +7911,7 @@ lu cusku la poi'i ke cibmasti cicyractu ke'e ku'o ku
 
 -----
 > ni'o *lu .e'o go'i pe'u *sei la .alis. cu cpesku* li'u*
+
 Parse error:
 	{ lu e'o go'i pe'u sei la alis cu cpesku li'u}
 	                                         ^
@@ -7900,6 +7974,7 @@ lu ba cy re zo'u cusku la poi'i sipsmacu ku'o ku
 
 -----
 > ni'o *lu ka'u na ka'e go'i *sei la .alis. cu xendo te pinka* .i va'o da'i ku my bilma li'u*
+
 Parse error:
 	{i la alis cu xendo te pinka i va'o da'i ku my bilma li'u}
 	                                         ^
@@ -7986,6 +8061,7 @@ lu ge cy no seljinvi gi cy no srana do
 
 -----
 > ni'o *lu ma cusku lo prenu pinka ca ku *sei la mapypre cu jinga reisku* li'u*
+
 Parse error:
 	{ka ca ku sei la mapypre cu jinga reisku li'u}
 	                                         ^
@@ -8020,6 +8096,7 @@ cy no mentu li ji'i re boi lo'o
 
 -----
 > ni'o *lu .o'o nai no go'i cu zasti *sei la .alis. co'a fengu cusku* li'u* .i ku'i la mapypre jo'u la cibmasti cicyractu cu bacru zoi sance c c sance .i la sipsmacu cu pante te pinka fi *lu .e'e do se'a dai mulgau lo lisri va'o lo nu do na ka'e clite li'u*
+
 Parse error:
 	{jo'u la cibmasti cicyractu cu bacru zoi sance c c sance i la sipsmacu cu pante t}
 	                                         ^
@@ -8055,7 +8132,7 @@ nu[pixra( )](c0)
 [Fragment: c1] >>]
 
 cy no nu di'a ku zo'u co'e kei
-.i lu ke se si'arxai be BUG cusku ke'e la poi'i sipsmacu ku'o ku
+.i lu ke se si'arxai cusku ke'e la poi'i sipsmacu ku'o ku
 .i zasti li'u
 .i sy nalpro cy no
 .i lu ge cy pa ke cmalu mensi ke'e gi ge cy pa ci mei gi ca'o ku zo'u cy pa crebi'o cy no
@@ -8153,6 +8230,7 @@ cy no nu su'o da zo'u ge fi'o du da za'u re'u ku zo'u cnixai la poi'i sipsmacu k
 
 -----
 > ni'o *lu ka'u ka'e cpacu lo djacu lo djacu jintyke'a *sei la mapypre cu cusku* .i si'a li'a ka'e cpacu lo satyjisra lo satyjisra jintyke'a vau ie pei doi bebna li'u*
+
 Parse error:
 	{atyjisra jintyke'a vau ie pei doi bebna li'u}
 	                                         ^
@@ -8234,6 +8312,7 @@ lu cusku la alis.
 
 -----
 > ni'o *lu ki'u ma na ku da'i *sei la cibmasti cicyractu cu cusku* li'u*
+
 Parse error:
 	{da'i sei la cibmasti cicyractu cu cusku li'u}
 	                                         ^
@@ -8284,7 +8363,7 @@ cy pa nu la poi'i mapypre ku'o ku tunta kei
 [Fragment: << <<mutce(_)><cfipu>( ,_)><cusku>( ,"alis")
 !go'i( ) >>]
 
-lu ke se ke mutce cfipu ke'e be BUG cusku ke'e la alis.
+lu ke se ke mutce cfipu ke'e cusku ke'e la alis.
 .i na ku go'i li'u
 
 -----
@@ -8298,6 +8377,7 @@ lu cusku la poi'i mapypre ku'o ku
 
 -----
 > ni'o lo di'u se tolclite cu zmadu lo sarji selka'e be la .alis. .i .abu selrigni gi'e sa'irbi'o gi'e to'o cadzu .i la sipsmacu cu ze'i sipybi'o .i no lo re drata cu jundi lo nu .abu cliva .i .abu ji'i re roi trixe catlu fau lo nu xadba pacna lo du'u lo re mei cu xrucpe .abu .i lo re mei ca lo nu ro moi se viska .abu cu troci lo nu setca la sipsmacu lo tcati patxu
+
 Parse error:
 	{u jundi lo nu a bu cliva i a bu ji'i re roi trixe catlu fau lo nu xadba pacna lo}
 	                                         ^
@@ -8645,12 +8725,14 @@ cy xa nu viska la poi'i noltruni'u ku'o ku kei
 
 -----
 > ni'o klama pa moi fa lo pa no sonci noi bevri lo grana .i sy mintu lo purdykurji lo ka ma kau tarmi ce'u .i clani kurfa gi'e plita gi'e se kojna lo xance jo'u lo jamfu .i jersi fa lo pa no nolkansa noi ricfu se jadni lo tabjme gi'e re mei cadzu du'i tu'a lo sonci .i jersi fa lo noltru panzi noi pa no mei .i lo cmalu dirba cu gleki plipe klama co xance jgari re mei .i ro lo panzi cu se jadni lo risna .i jersi fa lo vitke .i so'e ri noltrunau ja noltruni'u .i la .alis. cu fakyvi'a la blabi ractu noi jbini vy .i ry sutra je xanka tavla gi'e cisma frati ro se cusku gi'e zo'a klama se cau lo nu sanji .abu .i jersi fa la nolse'u pe lo risna zi'e noi bevri lo noltrunau mapku se pi'o lo zirxu'e ranbu'u kicne .i fanmo lo banli dzupoi fa ba'e fu'e LA NOLTRUNAU JO'U LA NOLTRUNI'U VU'O PE LO RISNA fu'o
+
 Morphology error:
 	{i fanmo lo banli dzupoi fa ba'e fu'e LA NOLTRUNAU JO'U LA NOLTRUNI'U VU'O PE LO }
 	                                         ^
 
 -----
 > ni'o la .alis. cu senpi lo du'u xu kau .ei cnita flira vreta tai tu'a lo ci purdykurji .i ku'i .abu na morji lo du'u ti'e la'e di'u dzupoi javni .i *lu ji'a ma ma prali lo dzupoi *sei .abu pensi* va'o lo nu .ei ro da cnita flira vreta ja'e lo nu na ka'e viska dy li'u* .i se ki'u bo .abu sanli lo se zvati gi'e denpa
+
 Parse error:
 	{e lo nu na ka'e viska dy li'u i se ki'u bo a bu sanli lo se zvati gi'e denpa}
 	                                         ^
@@ -8698,6 +8780,7 @@ lu zo alis cmene mi li'u
 
 -----
 > ni'o *lu ba'e ti mo li'u* se cusku la noltruni'u noi farja'o lo ci purdykurji noi vreta ru'u lo rozgu tricu .i ny ca lo nu py cnita flira vreta kei ki'u lo nu lo trixe morna cu mintu lo me ro drata moi cu na ka'e djuno lo du'u py purdykurji ji kau sonci ji kau nolkansa ji kau panzi be ny ci mei
+
 Parse error:
 	{ka'e djuno lo du'u py purdykurji ji kau sonci ji kau nolkansa ji kau panzi be ny}
 	                                         ^
@@ -8828,6 +8911,7 @@ lu mi'a troci li'u
 
 -----
 > ni'o *lu je'e li'a *sei la noltruni'u noi pu ca'o lanli lo rozgu cu cusku* .i ko lo stedu ta vimcu li'u* .i lo dzupoi cu di'a muvdu .i ci lo sonci cu stali mu'i lo nu selmidycatra lo se malfu'a purdykurji noi bajra fa'a la .alis. mu'i lo nu se marbi
+
 Parse error:
 	{i'u noi pu ca'o lanli lo rozgu cu cusku i ko lo stedu ta vimcu li'u i lo dzupoi }
 	                                         ^
@@ -9164,7 +9248,7 @@ cy cimu du'u cy cici mutce cy civo kei
 .i cy no nandu la alis.
 .i ca cy re zo'u cy pa nu jitro cy ci kei
 .i la alis. snada cy bi
-.i ta'e ku ca cy paci zo'u ge ge cy ci torni gi fa'a cy pavo zo'u cy ci catlu gi ja'e cy paxa zo'u cy ci ke se cfipu be BUG frumu ke'e
+.i ta'e ku ca cy paci zo'u ge ge cy ci torni gi fa'a cy pavo zo'u cy ci catlu gi ja'e cy paxa zo'u cy ci ke se cfipu frumu ke'e
 .i ca cy paso zo'u cy reci ke xajmi mutce ke'e
 .i ta'e ku zo'u ga ca cy rebi zo'u cy revo zunti gi ca cy rebi zo'u cy remu zunti
 .i ki'u cy cire zo'u la alis. jivbi'o cy cimu
@@ -9379,6 +9463,7 @@ lu ke ke lauble voksa ke'e cusku ke'e la poi'i mlatu ku'o ku
 
 -----
 > ni'o *lu na sai go'i *sei la .alis. cu cusku* .i ny mutce .y li'u* .i ca ku .abu sanji lo nu la noltruni'u cu jibni trixe .abu gi'e tirna .i se ki'u bo di'a cusku *lu lo ka lakne fa lo nu ce'u jinga .i se ki'u bo na vamji lo temci fa lo nu mo'u kelci li'u*
+
 Parse error:
 	{ go'i sei la alis cu cusku i ny mutce y li'u i ca ku a bu sanji lo nu la noltrun}
 	                                         ^
@@ -9401,7 +9486,7 @@ stedu(c0,[Name: mlatu(_) ])
 cy no stedu la poi'i mlatu ku'o ku
 .i lu cusku la poi'i noltrunau ku'o ku
 .i ma goi ko'a zo'u do tavla ko'a li'u
-.i ge ny klama la alis. gi ny ke se ke mutce cinri ke'e be BUG catlu ke'e cy no
+.i ge ny klama la alis. gi ny ke se ke mutce cinri ke'e catlu ke'e cy no
 
 -----
 > ni'o *lu ta mi pendo .i ta tcicymlatu *sei la .alis. cu cusku* .i .e'a pei mi do ta pengau li'u*
@@ -9514,12 +9599,14 @@ ro da poi ke'a nabmi ku'o zo'u da ke barda ke'e ja ke cmalu ke'e
 
 -----
 > ni'o ba'e mi klagau lo selmi'ecatra *sei la noltrunau cu sutydji cusku* li'u* .i ny sutra klama
+
 Parse error:
 	{catra sei la noltrunau cu sutydji cusku li'u i ny sutra klama}
 	                                         ^
 
 -----
 > ni'o la .alis. cu jdice lo du'u xruti gi'e viska lo nu lo nunkelci cu mo kau .i ca bo .abu tirna lo darno voksa be la noltruni'u noi cinmo krixa .i .abu ba'o tirna lo nu ny minde lo nu ci kelci cu se catra ki'u lo nu ky na kelci ca lo kelka'u be ky .i .abu na'e nelci lo jvinu be lo cuntu ki'u lo nu lo nunkelci cu mutce lo ka cfipu kei ja'e lo nu .abu no roi djuno lo du'u xu kau ca .ei kelci .i se ki'u bo .abu co'a sisku lo .abu jesymabru
+
 Parse error:
 	{utce lo ka cfipu kei ja'e lo nu a bu no roi djuno lo du'u xu kau ca ei kelci i s}
 	                                         ^
@@ -9667,6 +9754,7 @@ cy re nu ke katna vimcu ke'e cy pa kei
 
 -----
 > ni'o lo seldau be lo selmi'ecatra zo'u na ka'e katna vimcu lo stedu se cau lo nu da poi xadni zo'u ka'e katna vimcu lo stedu da .i sy no roi pu zukte lo simsa .i .ai na co'a go'i ca lo sy ca nunjmive pagbu
+
 Parse error:
 	{'u ka'e katna vimcu lo stedu da i sy no roi pu zukte lo simsa i ai na co'a go'i }
 	                                         ^
@@ -9745,6 +9833,7 @@ cy pa danti
 
 -----
 > ni'o lo stedu be la mlatu co'a kadze'a ca lo nu sy cliva kei gi'e ba'o mu'o canci ca lo nu sy xruti co kansa la noltroni'u .i se ki'u bo la noltrunau .e lo selmi'ecatra cu cilce bajra gi'e sisku my ca lo nu lo drata cu di'a kelci
+
 Parse error:
 	{nu sy cliva kei gi'e ba'o mu'o canci ca lo nu sy xruti co kansa la noltroni'u i }
 	                                         ^
@@ -9802,6 +9891,7 @@ cy xa du'u cy re rinka cy mu kei
 
 -----
 > ni'o *lu ca lo nu ba'e mi noltroni'u kei *sei .abu (to se pi'o nai ku'i lo pacna mutce tonga toi) sezysku* no sai cpinytsapi ba zvati lo mi jupku'a .i lo stasu cu xamgu se cau ku .i cumki fa lo nu ro roi ku lo cpinytsapi cu rinka lo nu lo prenu cu cpina tarti *sei .abu mutce se pluka be lo nu facki lo cnino javni* .i lo sarvanju cu rinka lo nu py slari tarti .i lo spatrkamomili cu rinka lo nu py kurki tarti .i .y .i lo bavmi sakta .e lo simsa cu rinka lo nu lo verba cu titla tarti .i .au lo prenu cu djuno la'e ba'e di'u ja'e lo nu py na mobdu'a ra li'u*
+
 Parse error:
 	{o se pi'o nai ku'i lo pacna mutce tonga toi sezysku no sai cpinytsapi ba zvati l}
 	                                         ^
@@ -9859,6 +9949,7 @@ cy no nu tavla kei
 
 -----
 > ni'o la .alis. na mutce nelci lo nu tai jibni ny ge pa mai ki'u lo nu la noltroni'u cu mutce lo ka tolmelbi gi re mai ki'u lo nu ny satci ke galtu mapti lo nu vregau lo firji'o lo .abu janco .i se tolkufra kinli firji'o .i ku'i .abu na nelci lo nu tolclite .i se ki'u bo .abu renvi se rai lo ka se kakne
+
 Parse error:
 	{na mutce nelci lo nu tai jibni ny ge pa mai ki'u lo nu la noltroni'u cu mutce lo}
 	                                         ^
@@ -10099,6 +10190,7 @@ lu cy pa ka ce'u stagi ce'u kei
 
 -----
 > ni'o *lu mi do ja'a sai tugni *sei la noltroni'u cu cusku* .i la'e di'u madni'i la'e *lu ko ckaji lo se simlu be do li'u* .i va'i sa'u *lu ko no roi se xanri lo nu do na ckaji na'e bo da poi do simlu fi lo drata fe lo ka de poi do ca'a ja nu'o ckaji ke'a na drata di poi do simlu ke'a lo drata lo drata li'u* li'u*
+
 Parse error:
 	{oi do simlu ke'a lo drata lo drata li'u li'u}
 	                                         ^
@@ -10128,7 +10220,7 @@ nu[cuxna(mi)](c0)
 
 lu ge ka'e ku va'o cy no zo'u cusku cy pa gi cy pa srana mi
 .i cy no nu mi cuxna kei
-.i ke ke se pluka be BUG tonga ke'e spuda ke'e la poi'i noltroni'u ku'o ku
+.i ke ke se pluka tonga ke'e spuda ke'e la poi'i noltroni'u ku'o ku
 .i ci'u cy pa zo'u di'u no va'e li'u
 
 -----
@@ -10235,14 +10327,14 @@ catlu("alis")
 ge cy mu birka gi cy mu jorne cy vo
 .i ge cy vo birka gi cy vo srana la alis.
 .i cy ci midju cy re
-.i ge cy re ke se nelrai be BUG valsi ke'e gi ge cy re du zo madni'i gi cy re srana cy pa
+.i ge cy re ke se nelrai valsi ke'e gi ge cy re du zo madni'i gi cy re srana cy pa
 .i cy pa nu ca ku zo'u cy no canci kei
 .i cy no voksa la poi'i noltroni'u ku'o ku
 .i ca ku zo'u cy pa ke mutce spaji ke'e la alis. cy ci
 .i co'a ku zo'u cy mu desku
 .i la alis. catlu
 .i ca'u ku zo'u la poi'i noltruni'u ku'o ku sanli
-.i ge ke se polje be BUG birka ke'e la poi'i noltruni'u ku'o ku gi la poi'i noltruni'u ku'o ku ke ke lindi simsa ke'e frumu ke'e
+.i ge ke se polje birka ke'e la poi'i noltruni'u ku'o ku gi la poi'i noltruni'u ku'o ku ke ke lindi simsa ke'e frumu ke'e
 
 -----
 > ni'o *lu xamgu donri doi nolba'i *sei la noltroni'u co'a lauble je ruble voksa cusku* li'u*
@@ -10458,7 +10550,7 @@ klagau(ko,c0,c2)
 !mutce("alis",c6)
 EX x1. ((se ki'u)(x1). pensi("alis",c10) /\ x1=. denpa("alis"))
 
-cy pano du'u cy ze ke se snura be BUG dunli ke'e cy so kei
+cy pano du'u cy ze ke se snura dunli ke'e cy so kei
 .i cy so nu jersi cy bi kei
 .i cy bi ke cilce noltruni'u ke'e
 .i cy ze nu stali tu'a la poi'i cpicinfo ku'o ku lu'u kei
@@ -10642,6 +10734,7 @@ cy pa mentu li so'o boi lo'o
 
 -----
 > ni'o *lu puku *sei la jitfa cakyrespa cu condi vruvasxu cusku* mi jetnu cakyrespa li'u*
+
 Parse error:
 	{condi vruvasxu cusku mi jetnu cakyrespa li'u}
 	                                         ^
@@ -10719,6 +10812,7 @@ lu cy no nu ra ctuca mi'a kei
 
 -----
 > ni'o *lu .ei do ckeji lo nu cusku lo tai sampu preti *sei la cpicinfo cu jmina cusku* li'u* .i ba bo lo re mei cu smaji zutse gi'e catlu la .alis. uu noi cinmo lo nu bredi lo nu se tunlo lo terdi .i ba zu bo la cpicinfo cu cusku fi la jitfa cakyrespa fe *lu .e'e doi slabu ko na co'e ze'a pi ro lo donri li'u* .i jycy di'a cusku di'e
+
 Parse error:
 	{ei la cpicinfo cu jmina cusku li'u i ba bo lo re mei cu smaji zutse gi'e catlu l}
 	                                         ^
@@ -10928,6 +11022,7 @@ lu ro da poi ga ke'a du cy re gi ke'a du cy pa ku'o ro de poi ga ke'a du cy ci g
 
 -----
 > ni'o *lu mi na jimpe fi zo jmina'e *sei la .alis. cu cusku darsi* .i ki'a li'u*
+
 Parse error:
 	{ina'e sei la alis cu cusku darsi i ki'a li'u}
 	                                         ^
@@ -10988,6 +11083,7 @@ cy no nu za'u re'u ku zo'u preti la'e di'u lu'u kei
 
 -----
 > ni'o *lu lo cridyske *sei la jitfa cakyrespa noi kancu lo seltadni se pi'o lo limna'i cu cusku* .i lo cridyske no'u lo prutce jo'u lo cabna ge'u .e lo xasyske .i ji'a lo nu pixra'i zo'u lo pixra'i ctuca cu tolci'o sincyfi'e noi zvati pa roi ro jeftu .i ba'e ra ctuca fo lo nu pixra'i gi'e grasu'u cintai finti li'u*
+
 Parse error:
 	{lo nu pixra'i gi'e grasu'u cintai finti li'u}
 	                                         ^
@@ -11037,6 +11133,7 @@ lu cy pa ke dzeklu ctuca ke'e
 
 -----
 > ni'o *lu mi ri no roi zvati *sei la jitfa cakyrespa cu vruvasxu cusku* .i ri ctuca fo ti'e lo clacmo jo'u lo geisto li'u*
+
 Parse error:
 	{ ctuca fo ti'e lo clacmo jo'u lo geisto li'u}
 	                                         ^
@@ -11079,6 +11176,7 @@ lu cy re cacra li xo boi lo'o
 
 -----
 > ni'o *lu ze'a lo cacra be li pa re ca lo pa moi donri .e lo re moi donri *sei la jitfa cakyrespa cu cusku* .i li so ca lo ci moi .e lo vo moi .i li xa ca lo mu moi .e lo xa moi .i si'a li'o li'u*
+
 Parse error:
 	{xa ca lo mu moi e lo xa moi i si'a li'o li'u}
 	                                         ^
@@ -11261,6 +11359,7 @@ lu cy pa ke xamsi korbi ke'e
 
 -----
 > ni'o *lu ba'e re da *sei la jitfa cakyrespa cu krixa* .i lo pinpedi ce'o lo cakyrespa ce'o lo salmone ce'o da si'a li'o .i ba bo ba lo nu mo'u vimcu ro mivjau lo jvinu - li'u*
+
 Parse error:
 	{ ce'o lo salmone ce'o da si'a li'o i ba bo ba lo nu mo'u vimcu ro mivjau lo jvin}
 	                                         ^
@@ -11322,6 +11421,7 @@ lu cy pa mintu
 
 -----
 > ni'o *lu baku ju'i do'u *sei la jitfa cakyrespa di'a cusku* .i .e'e renro li'u*
+
 Parse error:
 	{ jitfa cakyrespa di'a cusku i e'e renro li'u}
 	                                         ^
@@ -11597,12 +11697,14 @@ ba ku zo'u do dansu
 
 -----
 > li'u*
+
 Parse error:
 	{li'u}
 	 ^
 
 -----
 > ni'o *lu ki'e .i lo nu dansu zo'u mutce cinri fa lo nu catlu *sei la .alis. noi mutce gleki lo nu uo mulno cu cusku* .i mi ja'a sai nelci lo cinri selsanga be sera'a lo merlanu li'u*
+
 Parse error:
 	{lo cinri selsanga be se ra'a lo merlanu li'u}
 	                                         ^
@@ -11620,6 +11722,7 @@ lu cy no merlanu
 
 -----
 > ni'o *lu go'i *sei la .alis. cu cusku* .i mi my so'i roi viska lo sairpaln- *sei .abu sutra sezydicra* li'u*
+
 Parse error:
 	{ go'i sei la alis cu cusku i mi my so'i roi viska lo sairpaln sei a bu sutra sez}
 	                                         ^
@@ -11660,18 +11763,21 @@ lu cy re nabyspi
 
 -----
 > ni'o *lu do srera tu'a lo nabyspi *sei la jitfa cakyrespa cu cusku* .i lo nabyspi cu se jisybi'o va'o lo nu jinru lo xamsi .i ku'i lo my rebla ja'a nenri lo my moklu .i krinu la'e di'u fa - *sei ca ku la jitfa cakyrespa cu sipfru ke kanla ga'orgau* .i ko ta tavla lo krinu .e ro srana *sei fi la cpicinfo cu cusku* li'u*
+
 Parse error:
 	{ e ro srana sei fi la cpicinfo cu cusku li'u}
 	                                         ^
 
 -----
 > ni'o *lu krinu *sei la cpicinfo cu cusku* fa lo nu my ba'e ja'a kansa lo xasyjukni lo nu dansu .i se ki'u bo my se renro fi lo xamsi .i se ki'u bo my farlu lo darno .i se ki'u bo my carmi setca lo rebla lo moklu .i se ki'u bo my na ka'e tolsetca .i uo li'u*
+
 Parse error:
 	{u i se ki'u bo my na ka'e tolsetca i uo li'u}
 	                                         ^
 
 -----
 > ni'o *lu ki'e *sei la .alis. cu cusku* .i cinri mutce .i mi pu no roi djuno lo tai mutce lo merlanu li'u*
+
 Parse error:
 	{ni'o lu ki'e sei la alis cu cusku i cinri mutce i mi pu no roi djuno lo tai mutc}
 	                                   ^
@@ -11766,6 +11872,7 @@ cy no nu danfu kei
 
 -----
 > ni'o *lu ie la lobyfi'e va'i nai .i lo gendra ni'a lo xamsi *sei la cpicinfo cu di'a condi voksa cusku* cu se cipra lo labyfi'e .i ka'udai li'u*
+
 Parse error:
 	{usku cu se cipra lo labyfi'e i ka'u dai li'u}
 	                                         ^
@@ -12049,6 +12156,7 @@ ke xasyjukni voksa ke'e
 
 -----
 > li'u* gi'e zbipilno lo nu vo'a cnici lo ka dasri joi batke .e ro si'a vrici
+
 Parse error:
 	{li'u gi'e zbipilno lo nu vo'a cnici lo ka dasri joi batke e ro si'a vrici}
 	 ^
@@ -12073,7 +12181,7 @@ canre(c0)
 
 cy pa nu cy no sudga kei
 .i cy no canre
-.i ca cy pa zo'u ge cmila gi ke se ke ke ckasu brafi'e ke'e cfila ke'e be BUG tavla ke'e
+.i ca cy pa zo'u ge cmila gi ke se ke ke ckasu brafi'e ke'e cfila ke'e tavla ke'e
 
 -----
 > .i ii ku'i ca lo nu lo xamsi cu banro kei lo voksa cu binxo lo sance tolkanro
@@ -12092,6 +12200,7 @@ cy ci ke sance tolkanro ke'e
 
 -----
 > li'u*
+
 Parse error:
 	{li'u}
 	 ^
@@ -12165,6 +12274,7 @@ lu cy no ke jersi pempau ke'e
 
 -----
 > ni'o *lu ku'i lo batke xu *sei la jitfa cakyrespa cu za'o co'e* .i ta'i ba'e ma pilno lo nazbi lo nu cnici li'u*
+
 Parse error:
 	{ta'i ba'e ma pilno lo nazbi lo nu cnici li'u}
 	                                         ^
@@ -12278,6 +12388,7 @@ cy ci nu pilno cy re kei
 
 -----
 > li'u*
+
 Parse error:
 	{li'u}
 	 ^
@@ -12320,12 +12431,14 @@ cy pa ka ce'u gleki cy no kei
 
 -----
 > ni'o *lu .e'u pei mi'a troci lo drata morna be fi lo xasyjukni vonseldansu *sei la cpicinfo cu di'a cusku* .i ji .au pei la jitfa cakyrespa cu sanga da do li'u*
+
 Parse error:
 	{u pei la jitfa cakyrespa cu sanga da do li'u}
 	                                         ^
 
 -----
 > ni'o *lu .a'e .e'o sanga pe'u doi jitfa cakyrespa *sei la .alis. cu spuda* li'u* .i lo nu .abu tai sutra spuda cu rinka lo nu la cpicinfo cu cusku se pi'o lo jgicro tonga *lu .i'a na ka'e jimpe lo nu ma kau pluka .i ko sanga *lu cakyrespa stasu li'u* ta vau .ai pei doi slabu li'u*
+
 Parse error:
 	{espa stasu li'u ta vau ai pei doi slabu li'u}
 	                                         ^
@@ -12373,14 +12486,16 @@ ke ke vanci ke melbi stasu ke'e ke'e stasu ke'e
 
 -----
 > stasu co vanci melbi bo stasu me*elbi bo sta*asu me*elbi bo sta*asu
+
 Morphology error:
-	{tasu co vanci melbi bo stasu me*elbi bo sta*asu me*elbi bo sta*asu}
+	{tasu co vanci melbi bo stasu me*elbi bo sta*asu me*elbi bo sta*asu }
 	                                         ^
 
 -----
 > sta*asu co va*a*anci melbi bo melbi bo stasu
+
 Morphology error:
-	{sta*asu co va*a*anci melbi bo melbi bo stasu}
+	{sta*asu co va*a*anci melbi bo melbi bo stasu }
 	 ^
 
 -----
@@ -12423,18 +12538,21 @@ cy pa nu djica cy no kei
 
 -----
 > da lo nu djica lo melbi bo stasu me*elbi bo sta*asu me*elbi bo sta*asu
+
 Morphology error:
-	{o nu djica lo melbi bo stasu me*elbi bo sta*asu me*elbi bo sta*asu}
+	{o nu djica lo melbi bo stasu me*elbi bo sta*asu me*elbi bo sta*asu }
 	                                         ^
 
 -----
 > sta*asu co va*a*anci melbi bo melbi * BO STAsu
+
 Morphology error:
-	{sta*asu co va*a*anci melbi bo melbi * BO STAsu}
+	{sta*asu co va*a*anci melbi bo melbi * BO STAsu }
 	 ^
 
 -----
 > li'u*
+
 Parse error:
 	{li'u}
 	 ^
@@ -12496,12 +12614,14 @@ lu cy vo nu cy ci bleze'a kei
 
 -----
 > sta*asu co va*a*anci melbi bo melbi bo stasu
+
 Morphology error:
-	{sta*asu co va*a*anci melbi bo melbi bo stasu}
+	{sta*asu co va*a*anci melbi bo melbi bo stasu }
 	 ^
 
 -----
 > li'u*
+
 Parse error:
 	{li'u}
 	 ^
@@ -12564,7 +12684,7 @@ cy reci nu cy rere culno kei
 .i cy paxa nu catlu kei
 .i cy pamu kumfa
 .i cy pavo drata
-.i cy paci ke te ke skapi ciska ke'e be BUG bei BUG slanu ke'e
+.i cy paci ke te ke skapi ciska ke'e slanu ke'e
 .i cy pare xance
 .i cy papa tabra
 .i ge cy pano ke sonci re mei ke'e gi cy pano fanta
@@ -12648,6 +12768,7 @@ cy bi ka ce'u kufra kei
 
 -----
 > ni'o *lu tu pairkamni tsina *sei la .alis. cu pensi* .i lo vu pa re jmive (to .ei .abu cusku zo jmive ki'u lo nu ge su'o ri mabru gi su'o ri cipni toi) cu pairkamnycmi pe'i li'u* .i .abu ji'i ci roi cusku lo ro moi valsi gi'e jgira mutce ki'u lo nu jinvi (to drani toi) lo du'u so'u sai cmalu nixli be lo me .abu moi cu djuno lo du'u ma kau smuni .i ku'i zo paicmi ji'a mapti banzu
+
 Parse error:
 	{sina sei la alis cu pensi i lo vu pa re jmive to ei a bu cusku zo jmive ki'u lo }
 	                                         ^
@@ -12728,6 +12849,7 @@ cy no tabra
 
 -----
 > ni'o la .alis. ka'e viska (to frili tai lo nu da'i catlu ga'u lo janco be py toi) lo nu ro lo pairkamnycmi cu ciska *lu ue bebna li'u* lo py tanbo kei gi'e ji'a sai ka'e tilvi'a lo nu pa me py na se slabu lo lerfu pe zo bebna gi'e nitcu lo nu cpedu lo nu se jungau kei lo lamji .i *lu ba melbi kalsa fa lo tanbo pu lo nu lo nunpai cu mulno *sei la .alis. cu cu pensi* li'u*
+
 Parse error:
 	{lo nu lo nunpai cu mulno sei la alis cu cu pensi li'u}
 	                                         ^
@@ -12799,7 +12921,7 @@ lu cy no ke zerfuzyxu'a selsku ke'e
 tabra(c0)
 (ca)(). (((3 roi)(). tolsakci([Name: <blabi(_)><ractu>(_) ],c0) /\ tolgurgau([Name: <blabi(_)><ractu>(_) ],c1)) /\ <tcidu(_)><bacru>([Name: <blabi(_)><ractu>(_) ],<<  >>))
 
-cy pa ke te ke skapi ciska ke'e be BUG bei BUG slanu ke'e
+cy pa ke te ke skapi ciska ke'e slanu ke'e
 .i cy no tabra
 .i ca ku zo'u ge ge ci roi ku zo'u la poi'i ke blabi ractu ke'e ku'o ku tolsakci cy no gi la poi'i ke blabi ractu ke'e ku'o ku tolgurgau cy pa gi la poi'i ke blabi ractu ke'e ku'o ku ke tcidu bacru ke'e lu  li'u
 
@@ -12829,6 +12951,7 @@ cy pa rutytisna
 
 -----
 > li'u*
+
 Parse error:
 	{li'u}
 	 ^
@@ -13056,7 +13179,7 @@ jamfu(c0)
 !simlu({la'e}(di'u),c7)
 
 cy ze ka ce'u darsygau cy xa kei
-.i ge cy xa zgana gi ge ge za'o ku zo'u cy xa slilu fi cy re gi cy xa ke xanka catlu ke'e la poi'i noltruni'u ku'o ku gi ge cy xa ke se cfipu be BUG batyvi'u ke'e cy ci cy vo gi na ku cy xa ke se cfipu be BUG batyvi'u ke'e cy ci cy mu
+.i ge cy xa zgana gi ge ge za'o ku zo'u cy xa slilu fi cy re gi cy xa ke xanka catlu ke'e la poi'i noltruni'u ku'o ku gi ge cy xa ke se cfipu batyvi'u ke'e cy ci cy vo gi na ku cy xa ke se cfipu batyvi'u ke'e cy ci cy mu
 .i cy mu ke nanba ke'e joi ke matne ke'e
 .i cy vo ke tcati kabri ke'e
 .i cy ci ke barda spisa ke'e
@@ -13067,12 +13190,14 @@ cy ze ka ce'u darsygau cy xa kei
 
 -----
 > ni'o ca ku la .alis. cu ganse lo cizra noi cfipu .abu co'u lo nu facki lo du'u ma kau fasnu .i .abu ca'o co'a za'u re'u barda banro gi'e pa mai jdice lo nu cliva lo kumfa kei gi'e ku'i re mai jdice lo nu stali ze'a lo nu lo canlu cu banzu
+
 Parse error:
 	{ca'o co'a za'u re'u barda banro gi'e pa mai jdice lo nu cliva lo kumfa kei gi'e }
 	                                         ^
 
 -----
 > ni'o *lu .au do na tai catke *sei la sipsmacu noi zutse lamji .abu cu cusku* .i mi ka'e ru'e vasxu li'u*
+
 Parse error:
 	{amji a bu cu cusku i mi ka'e ru'e vasxu li'u}
 	                                         ^
@@ -13308,6 +13433,7 @@ cy pa nu zgana cy no kei
 
 -----
 > ni'o *lu baku *sei la mapypre cu di'a cusku* mi za'u re'u katna lo nanba joi matne li'u*
+
 Parse error:
 	{u mi za'u re'u katna lo nanba joi matne li'u}
 	                                         ^
@@ -13449,6 +13575,7 @@ lu cy pa loldi
 
 -----
 > ni'o .e'a va'o la'e di'u do nitytse *sei la noltrunau cu spuda* li'u*
+
 Parse error:
 	{'u do nitytse sei la noltrunau cu spuda li'u}
 	                                         ^
@@ -13855,6 +13982,7 @@ cy ze du'u ga ge ze'i ku zo'u crepu gi punji cy no cy xa gi ba ku zo'u cy xa mro
 
 -----
 > ni'o *lu lo nunpai na ka'e di'a fasnu *sei la noltrunau cu junri mutce voksa cusku* pu lo nu ro lo pairkamnycmi cu xruti lo drani selzva .i ba'e ro ra *sei ny re re'u basna mutce cusku* li'u* .i ny catlu la .alis. ca lo nu cusku
+
 Parse error:
 	{ lo drani selzva i ba'e ro ra sei ny re re'u basna mutce cusku li'u i ny catlu l}
 	                                         ^
@@ -13967,12 +14095,14 @@ lu cusku la alis.
 
 -----
 > ni'o *lu xu no sai da *sei la noltrunau cu za'o co'e* li'u*
+
 Parse error:
 	{no sai da sei la noltrunau cu za'o co'e li'u}
 	                                         ^
 
 -----
 > ni'o *lu no sai da *sei la .alis. cu cusku* li'u*
+
 Parse error:
 	{ni'o lu no sai da sei la alis cu cusku li'u}
 	                                        ^
@@ -14027,6 +14157,7 @@ cy re nu cipra cy no cy pa kei
 
 -----
 > ni'o so'o lo pairkamnycmi cu ciska zo vajni .i so'o drata cu go'i zo tolvajni .i la .alis. ka'e viska ki'u lo nu jibni co banzu lo nu catlu lo py tanbo .i *lu ku'i na sai vajni *sei .abu pensi sezysku* li'u*
+
 Parse error:
 	{u'i na sai vajni sei a bu pensi sezysku li'u}
 	                                         ^
@@ -14195,6 +14326,7 @@ lu pa da poi ke'a me cy no me'u ku'o zo'u cusku da
 
 -----
 > ni'o *lu na sai se judri *sei la blabi ractu cu cusku* .i je'u no da se ciska fi lo bartu li'u* .i ry tolplo lo pelji ca lo nu tavla kei gi'e jmina *lu pa'e ti na xatra .i ti penpau selcmi li'u*
+
 Parse error:
 	{cusku i je'u no da se ciska fi lo bartu li'u i ry tolplo lo pelji ca lo nu tavla}
 	                                         ^
@@ -14269,6 +14401,7 @@ lu cy pa fanmo tu
 
 -----
 > ni'o *lu lo cuntu cu xlaze'a va'o lo nu do na ciska lo do cmene *sei la noltrunau cu cusku* .i ba'e ju'o do zukte fi lo nu palci .i bo do va'o lo nu na go'i cu ja'a pu ciska lo do cmene tai tu'a lo stace li'u*
+
 Parse error:
 	{i i bo do va'o lo nu na go'i cu ja'a pu ciska lo do cmene tai tu'a lo stace li'u}
 	                                         ^
@@ -14404,12 +14537,14 @@ ro da zo'u ge li ma'o fyno mo'e da lo'o me da me'u gi li ma'o fyno mo'e da lo'o 
 
 -----
 > .i ga nai ga mi gi ta iu se cuntu lo vi fasnu
+
 Parse error:
 	{nai ga mi gi ta iu se cuntu lo vi fasnu}
 	                                         ^
 
 -----
 > gi ia tu lacri do lo nu do zifre xruti gasnu
+
 Parse error:
 	{gi ia tu lacri do lo nu do zifre xruti gasnu}
 	 ^
@@ -14452,6 +14587,7 @@ cy no nu ca ku zo'u nei kei
 
 -----
 > ni'o *lu la'e di'u cu vajrai lo datni poi se tirna ca lo cabdei *sei la noltrunau noi simymosra lo xance cu cusku* .i se ki'u bo .ei lo pairkanmi li'o li'u*
+
 Parse error:
 	{cusku i se ki'u bo ei lo pairkanmi li'o li'u}
 	                                         ^
@@ -14542,6 +14678,7 @@ di'a ku zo'u cusku ny
 
 -----
 > ni'o pe'i mi viska lo smuni .i lo'u gi nai mi limna di li'u* .i ju'i do'u je'u pei do na ka'e limna di *sei ny fa'a la nolse'u cu jmina* li'u*
+
 Parse error:
 	{ni'o pe'i mi viska lo smuni i lo'u gi nai mi limna di li'u i ju'i do'u je'u pei }
 	                               ^
@@ -14626,6 +14763,7 @@ lu ke jinga cusku ke'e la poi'i poi'i ge ke'a noltrunau gi ke'a jarco cy pa kei 
 
 -----
 > ni'o *lu no roi *sei la noltruni'u cu fengu mutce cusku* li'u* .i ny renro lo xinmo vasru lo rebyrespa ca lo nu tavla .i (to la .bil. uu pu de'a ciska fi lo tanbo lo degji .i mu'i bo dy na mornygau .i ku'i by ca zi di'a co'e se pi'o lo xinmo noi carvi lo by flira ku'o ze'a lo nu xy renvi toi)
+
 Parse error:
 	{ sei la noltruni'u cu fengu mutce cusku li'u i ny renro lo xinmo vasru lo rebyre}
 	                                         ^
@@ -14868,7 +15006,7 @@ mensi(c0)
 senva( ,{la'e}(di'e))
 
 cy bi mensi
-.i ge ke se manci be BUG lifri ke'e cy ze gi cy ze srana la alis.
+.i ge ke se manci lifri ke'e cy ze gi cy ze srana la alis.
 .i ge cy xa cmalu gi cy xa du la alis.
 .i cy mu nu cy vo farlu kei
 .i cy vo solri
@@ -15113,6 +15251,8 @@ cy paci nu ca cy pa zo'u ge ge ge ge ge ge cy no ke makcu ninmu ke'e gi ze'a cy 
 
 -----
 > fa'o
+
 -----
 > References
+
 -----

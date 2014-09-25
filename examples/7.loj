@@ -321,6 +321,7 @@ ju'a nai cy no zarci
 
 -----
 > A: mi ba klama le zarci B: mi nelci le si'o mi go'i A: do go'e
+
 Parse error:
 	{a mi ba klama le zarci b mi nelci le si'o mi go'i a do go'e}
 	 ^
@@ -611,6 +612,7 @@ ma goi ko'a zo'u ko'a cmene do
 
 -----
 > doi ma
+
 -----
 > lo mo prenu cu darxi do .i barda
 
