@@ -279,8 +279,10 @@ logjboshowpred jbo@True p = withNext SVar $ \v ->
 	     case ts' of
 		 [] -> return s'
 		 _ -> do
-		     tss <- sequence $ map (logjboshow jbo) ts'
-		     return $ s' ++ " be " ++ intercalate " bei " tss
+		     tss <- mapM jboshow ts'
+		     let ptss = positionallyTaggedTerms ts' tss
+		     return $ s' ++ if null ptss then ""
+			else " be " ++ intercalate " bei " ptss
 	 _ -> withShuntedRelVar $ \n -> do
 		 s <- logjboshow jbo (p n)
 		 return $ "poi'i " ++ s ++ " kei"
@@ -560,12 +562,7 @@ instance JboShow JboProp
 		    else (\x->[x]) <$> jboshow x1
 	         rs <- jboshow r
 	         ss <- mapM jboshow xs
-	         return $ fore ++ [rs] ++ concat [
-		    (if skipped then [faToStr n] else []) ++ [s]
-		    | (s,x,lastx,n) <- zip4 ss xs (Nothing:map Just xs) [2..]
-		    , x /= Unfilled
-		    , let skipped = lastx == Just Unfilled
-		    ]
+	         return $ fore ++ [rs] ++ positionallyTaggedTerms xs ss
 	  logjboshow' False [] (Rel r ts) =
 	      do s <- logshow r
 		 tss <- mapM logshow ts
@@ -581,6 +578,14 @@ instance JboShow JboProp
 		++ ss
 		++ [if jbo then "ku'o" else "). "]
 	  }
+
+positionallyTaggedTerms :: [JboTerm] -> [String] -> [String]
+positionallyTaggedTerms xs ss = [
+    (if skipped then faToStr n ++ " " else "") ++ s
+    | (s,x,lastx,n) <- zip4 ss xs (Nothing:map Just xs) [2..]
+    , x /= Unfilled
+    , let skipped = lastx == Just Unfilled
+    ]
 
 instance JboShow Texticule where
     logjboshow jbo (TexticuleFrag f) = logjboshow jbo f
