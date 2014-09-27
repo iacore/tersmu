@@ -710,7 +710,7 @@ tagUnit :: TagUnit
     / f:(FEhE)? q:number r:ROI -> { ROI r (isJust f) q }
     / f:(FEhE)? s:(TAhE / ZAhO) -> { TAhE_ZAhO (isJust f) s }
     / FIhO s:selbri FEhU? -> { FIhO s }
-    / CUhE -> { CUhE }
+    / c:CUhE -> { CUhE c }
     / KI -> { KI }
 
 

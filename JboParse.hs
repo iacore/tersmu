@@ -545,7 +545,7 @@ parseTagUnit (FIhO sb) = FIhO <$> selbriToVPred sb
 -- for now.
 parseTagUnit KI = return KI
 -- TODO: we should actually deal with cu'e, though
-parseTagUnit CUhE = return CUhE
+parseTagUnit (CUhE c) = return $ CUhE c
 
 parseConnective :: PreProp r => Connective -> ParseM r JboConnective
 parseConnective (JboConnLog mtag lcon) = do
