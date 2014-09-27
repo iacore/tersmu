@@ -3,7 +3,7 @@
 (bu'u)([Name: selmacygu'e(_) ]). selfri(c0,"alis")
 [Fragment: c0]
 
-bu'u la poi'i selmacygu'e ku'o ku zo'u cy no selfri la alis.
+bu'u la selmacygu'e ku zo'u cy no selfri la alis.
 .i cy no
 
 -----
@@ -15,7 +15,7 @@ rutytisna(c0)
 
 cy pa ke nunpai kumfa ke'e
 .i cy no rutytisna
-.i bu'u cy pa zo'u la poi'i niltrunau ku'o ku jo'u ke la poi'i noltruni'u ku'o ku ke'e lanli cy no
+.i bu'u cy pa zo'u la niltrunau ku jo'u ke la noltruni'u ku ke'e lanli cy no
 
 -----
 > .i finti fa la'o me. Lewis Carroll .me
@@ -116,16 +116,16 @@ ge cy rere ke ke ke verba selsne ke'e jivbu ke'e stuzi ke'e gi tai cy repa zo'u 
 .i fau cy vo zo'u cy re ke terbloga'a catke ke'e
 .i ni'a cy xa zo'u cy mu ke ruble pikci ke'e fi cy ze
 .i ma goi ko'a ta'i ko'a pa da poi ke'a voksa ku'o ka'e ku zo'u da damba cy bi
-.i fa'a ku zo'u la poi'i pa moi ku'o ku mi'esku lu ko cfagau li'u
-.i la poi'i re moi ku'o ku ke racmau djicpe ke'e cy so
-.i me'i ro boi da poi ke'a snidu ku'o ca da zo'u la poi'i ci moi ku'o ku ke lisri zunti ke'e
+.i fa'a ku zo'u la pa moi ku mi'esku lu ko cfagau li'u
+.i la re moi ku ke racmau djicpe ke'e cy so
+.i me'i ro boi da poi ke'a snidu ku'o ca da zo'u la ci moi ku ke lisri zunti ke'e
 .i ba ku zi ku ca'o ku ca cy pano pa'o cy paci zo'u ke xanri jersi ke'e cy papa
 .i ke jetnu ckaji ke'e
 .i xarjintysudbi'o
 .i di'a ku zo'u bavlamke'u
 .i ke tatpi bletoi ke'e cy pamu
 .i lu cu'e ku zo'u bavlamke'u li'u selki'a
-.i tai ku pu ku zo'u cy paxa banro la poi'i selmacygu'e ku'o ku
+.i tai ku pu ku zo'u cy paxa banro la selmacygu'e ku
 .i ba cy pabi cu'e ku mo'u ku zo'u lisru'e
 .i ni'a cy paso zo'u ma'a ke gleki zdakla ke'e
 .i ge ko lebna dei gi ko xanracpu'i dei cy rere
@@ -234,15 +234,15 @@ cy repa nu mo'i ne'i cy reno zo'u cy pavo canci kei
 .i cy paxa nu cy pamu ke lindi pagre ke'e cy papa kei
 .i cy pamu si'o pu ku no roi ku zo'u cy papa viska cy pavo kei
 .i ge cy pavo ractu gi ga cy pavo ponse cy pare gi cy pavo ponse cy paci
-.i ge cy paci junla gi ka'e ku zo'u la poi'i ractu ku'o ku lebna cy paci cy ze
+.i ge cy paci junla gi ka'e ku zo'u la ractu ku lebna cy paci cy ze
 .i cy pare ke kosta daski ke'e
 .i cy papa menli la alis.
-.i cy pano nu ge ge ca'a ku zo'u la poi'i ractu ku'o ku lebna cy bi cy so gi la poi'i ractu ku'o ku catlu cy bi gi di'a ku zo'u la poi'i ractu ku'o ku sutra kei
+.i cy pano nu ge ge ca'a ku zo'u la ractu ku lebna cy bi cy so gi la ractu ku catlu cy bi gi di'a ku zo'u la ractu ku sutra kei
 .i cy so ke kosta daski ke'e
 .i cy bi junla
 .i cy ze du'u cy xa mutce cy pa kei
 .i cy xa nu tirna cy mu kei
-.i cy mu nu la poi'i ractu ku'o ku sezysku lu mi lerci li'u kei
+.i cy mu nu la ractu ku sezysku lu mi lerci li'u kei
 .i ca ku ro da poi ke'a me ra me'u ku'o zo'u da simlu cy vo
 .i ba ku ca cy re zo'u cy ci sidbo cy re la alis.
 .i cy no ka ce'u cizra kei
@@ -261,7 +261,7 @@ junla(c0)
 catlu([Name: <blabi(_)><ractu>(_) ],c0)
 
 cy no junla
-.i la poi'i ke blabi ractu ke'e ku'o ku catlu cy no
+.i la ke blabi ractu ke'e ku catlu cy no
 
 -----
 > ni'o ba zi ku la .alis. mo'i ne'i jersi ry gi'e no roi pensi lo du'u ta'i ba'e ma kau .abu ba za'u re'u bartu
@@ -518,7 +518,7 @@ cy pare du'u cy bi zvati cy papa kei
 .i cy no jamfu
 .i ge ge na ku xrani la alis. gi zi ku zo'u la alis. sanli fi cy no gi la alis. catlu cy pa
 .i cy re crane la alis.
-.i ge za'o ku zo'u viska la poi'i ke blabi ractu ke'e ku'o ku gi la poi'i ke blabi ractu ke'e ku'o ku sutra cy ci
+.i ge za'o ku zo'u viska la ke blabi ractu ke'e ku gi la ke blabi ractu ke'e ku sutra cy ci
 .i na ku la alis. denpa
 .i ge tai tu'a cy vo lu'u zo'u la alis. klama gi la alis. snada cy xa
 .i ca cy bi zo'u la alis. ke jibni trixe ke'e ry
@@ -1099,7 +1099,7 @@ fagju'e(c0)
 
 cy no fagju'e
 .i la alis. ke prami benji ke'e
-.i la poi'i ke selsi'a ke pritu jamfu ke'e ke'e be la alis. ku'o ku
+.i la ke selsi'a ke pritu jamfu ke'e ke'e be la alis. ku
 
 -----
 > 
@@ -1222,7 +1222,7 @@ cy pabi kamsutra
 .i cy paxa bifpra
 .i cy pamu ke blabi ke kanba gluta ke'e ke'e
 .i cy pavo ke ke lauble ke'e je ke toldarsi ke'e voksa ke'e
-.i cy paci nu la poi'i ractu ku'o ku jibni kei
+.i cy paci nu la ractu ku jibni kei
 .i cy pare nu bredi cy papa kei
 .i cy papa nu ma goi ko'a zo'u cpedu cy pano ko'a kei
 .i cy pano nunsidju
@@ -1237,12 +1237,12 @@ cy pabi kamsutra
 .i cy pa nu ke cmalu stapa ke'e cy no kei
 .i cy no darno
 .i ba ku za ku zo'u ge abu tirna cy pa gi abu sutra cy mu
-.i la poi'i poi'i ge ke'a ke blabi ractu ke'e gi ge ge ke'a xruti gi ke'a ke melbi dasni ke'e gi ke'a jgari cy xa fa'u ke cy ze ke'e cy bi kei ku'o ku klama
+.i la poi'i ge ke'a ke blabi ractu ke'e gi ge ge ke'a xruti gi ke'a ke melbi dasni ke'e gi ke'a jgari cy xa fa'u ke cy ze ke'e cy bi kei ku klama
 .i ge ry ke ke sutra bajra ke'e klama ke'e gi ry sezysku lu cy pa nu mi gasnu cy no kei
-.i cy no nu la poi'i noltroni'u ku'o ku denpa kei
-.i ba ku va'o cy pa zo'u la poi'i noltroni'u ku'o ku ke cilce fengu ke'e li'u
+.i cy no nu la noltroni'u ku denpa kei
+.i ba ku va'o cy pa zo'u la noltroni'u ku ke cilce fengu ke'e li'u
 .i su'o da zo'u ge se ki'u da tai ku ja'e cy pare zo'u la alis. cinmo cy so gi fi'o du da ca cy paci co'a ku se pi'o cy pavo zo'u la alis. cusku lu  li'u
-.i ge ge ke suksa jenca ke'e la poi'i ractu ku'o ku gi la poi'i ractu ku'o ku falcru cy pamu jo'u ke cy paxa ke'e gi mo'i ne'i cy paze se rai cy pabi zo'u la poi'i ractu ku'o ku bajra
+.i ge ge ke suksa jenca ke'e la ractu ku gi la ractu ku falcru cy pamu jo'u ke cy paxa ke'e gi mo'i ne'i cy paze se rai cy pabi zo'u la ractu ku bajra
 
 -----
 > la .alis. noi bratce cu catlu lo nu la ractu cu to'o bajra
@@ -1251,7 +1251,7 @@ nu[(to'o)(). bajra([Name: ractu(_) ])](c0)
 bratce("alis")
 catlu("alis",c0)
 
-cy no nu to'o ku zo'u la poi'i ractu ku'o ku bajra kei
+cy no nu to'o ku zo'u la ractu ku bajra kei
 .i la alis. bratce
 .i la alis. catlu cy no
 
@@ -1408,7 +1408,7 @@ cy paci nu zi ku mo'u ku zo'u jdika kei
 .i cy mu nu viska cy vo kei
 .i cy vo nu pu ku ca'o ku pa da poi ke'a me cy re me'u ku'o ze'a cy ci zo'u abu dasni da kei
 .i cy ci nu tavla kei
-.i ge cy re ke cmalu ke blabi ke kanba gluta ke'e ke'e ke'e gi cy re srana la poi'i ractu ku'o ku
+.i ge cy re ke cmalu ke blabi ke kanba gluta ke'e ke'e ke'e gi cy re srana la ractu ku
 .i cy pa xance
 .i cy no nu cusku di'u kei
 .i ca cy no zo'u ge fa'a ku ni'a ku zo'u abu catlu cy pa gi cy mu spaji abu
@@ -1701,7 +1701,7 @@ mlatu(c0)
 lu cy re nu do me mi me'u kei
 .i cy pa mlatu
 .i cy no mlatu
-.i ke ke ke kinli ke'e je ke cinmo ke'e voksa ke'e krixa ke'e la poi'i smacu ku'o ku
+.i ke ke ke kinli ke'e je ke cinmo ke'e voksa ke'e krixa ke'e la smacu ku
 .i na ku nelci cy no
 .i xu kau va'o cy re zo'u do nelci cy pa li'u
 
@@ -1712,7 +1712,7 @@ lu cy re nu do me mi me'u kei
 jinru(("alis" {jo'u} [Name: smacu(_) ]),c0)
 
 cy no ke se klaku lalxu ke'e
-.i la alis. jo'u ke la poi'i smacu ku'o ku ke'e jinru cy no
+.i la alis. jo'u ke la smacu ku ke'e jinru cy no
 
 -----
 > ni'o *lu .y la'a nai *sei la .alis. cu surgau tonga cusku* .i ko na fengu .i ku'i .au mi ka'e jarco lo mi'a mlatu no'u la .dinas. do .i pe'i do co'a nelci lo mlatu va'o lo nu da'i do dy viska .i dy tai dirba smaji *sei la .alis. fi .abu ca lo nu lazni limna lo lalxu cu ca'o cusku* .i dy melbi cmoni zutse ne'a lo fagri gi'e tacpe'u lo xance be dy gi'e lumci lo flira be dy .i dy tai pluka ranti lo nu kujyjai .i dy tai certu lo nu kavbu lo smacu .i .oi se'i ko mi fraxu *sei la .alis. noi birti lo du'u la smacu noi ca ku tinsa cu je'u cnicro cu za'u re'u krixa* .i mi'o dy na ba di'a casnu va'o lo nu do zmanei li'u*
@@ -1747,7 +1747,7 @@ fraxu(ko,mi)
 lu cy pare nu do zmanei kei
 .i za'u re'u ku zo'u krixa la alis.
 .i la alis. birti cy papa
-.i cy papa du'u la poi'i poi'i ge ke'a smacu gi ca ku zo'u ke'a tinsa kei ku'o ku cnicro kei
+.i cy papa du'u la poi'i ge ke'a smacu gi ca ku zo'u ke'a tinsa kei ku cnicro kei
 .i cy pano nu kavbu cy so kei
 .i cy so smacu
 .i cy bi nu kujyjai kei
@@ -1791,7 +1791,7 @@ lu cy mu cmene
 .i cy vo mlatu
 .i cy ci lanzu mi
 .i cy re simsa
-.i krixa la poi'i poi'i ge ke'a smacu gi fe'e co'u cy pa zo'u ke'a desku kei ku'o ku
+.i krixa la poi'i ge ke'a smacu gi fe'e co'u cy pa zo'u ke'a desku kei ku
 .i cy pa jipno cy no
 .i cy no rebla
 .i zo mi'o
@@ -1841,9 +1841,9 @@ cy ci ka ce'u blabi kei
 .i cy no mlatu
 .i za'u re'u ku zo'u ko xruti
 .i ba ku zo'u ge na ku va'o cy re zo'u mi'o casnu cy no gi va'o cy re zo'u mi'o casnu cy pa li'u
-.i ca cy no zo'u ge la poi'i smacu ku'o ku carna gi la poi'i smacu ku'o ku ke ke masno limna ke'e xruti ke'e abu
+.i ca cy no zo'u ge la smacu ku carna gi la smacu ku ke ke masno limna ke'e xruti ke'e abu
 .i cy pa mutce cy ci
-.i la poi'i smacu ku'o ku ke ke ke lauble ke'e je ke desku ke'e voksa ke'e cusku ke'e lu cy mu du'u ma goi ko'a zo'u ko'a krinu cy vo kei
+.i la smacu ku ke ke ke lauble ke'e je ke desku ke'e voksa ke'e cusku ke'e lu cy mu du'u ma goi ko'a zo'u ko'a krinu cy vo kei
 .i cy vo nu ge mi xebni cy re gi mi xebni cy ci kei
 .i cy ci gerku
 .i cy re mlatu
@@ -1879,7 +1879,7 @@ cy bi korbi
 .i cy pa lalxu
 .i cy no nu cliva kei
 .i ca ku ki'u cy mu zo'u ke mapti tcika ke'e cy no
-.i la poi'i datka ku'o ku jo'u ke la poi'i cipnrdodo ku'o ku ke'e jo'u ke la poi'i cipnrlori ku'o ku ke'e jo'u ke la poi'i ke atkuila cifnu ke'e ku'o ku ke'e jo'u ke cy xa ke'e
+.i la datka ku jo'u ke la cipnrdodo ku ke'e jo'u ke la cipnrlori ku ke'e jo'u ke la ke atkuila cifnu ke'e ku ke'e jo'u ke cy xa ke'e
 .i la alis. lidne
 .i fa'a cy bi zo'u cy ze limna
 
@@ -1954,9 +1954,9 @@ cy pano nu jungau fi cy so kei
 .i cy no ke pa moi preti ke'e
 .i cy no du'u ma goi ko'a ta'i ko'a za'u re'u ku zo'u sudga kei
 .i su'o da zo'u ge fi'o du da zo'u casnu la'e di'u lu'u gi ba da zi cy pa zo'u cy xa simlu cy re
-.i ze'u ku zo'u la alis. daupro la poi'i poi'i ge ke'a cipnrlori gi ge ke'a ke badri carna ke'e gi ke'a cusku lu su'o de zo'u ge fi'o du de zo'u mi tolcitmau do gi ja'e de zo'u mi junmau do li'u kei ku'o ku
+.i ze'u ku zo'u la alis. daupro la poi'i ge ke'a cipnrlori gi ge ke'a ke badri carna ke'e gi ke'a cusku lu su'o de zo'u ge fi'o du de zo'u mi tolcitmau do gi ja'e de zo'u mi junmau do li'u kei ku
 .i na ku se cau cy bi zo'u la alis. curmi
-.i su'o da zo'u ge ja'e da zo'u la poi'i cipnrlori ku'o ku je'a tolbre cy pano gi fi'o du da no de poi ke'a drata ku'o zo'u cusku de
+.i su'o da zo'u ge ja'e da zo'u la cipnrlori ku je'a tolbre cy pano gi fi'o du da no de poi ke'a drata ku'o zo'u cusku de
 
 -----
 > ni'o ro mai la smacu noi simlu lo ka catni lo ro mei cu krixa *lu ko zutse doi ro do gi'e jundi mi .i ba'e mi do ba zi sudgau li'u* .i lo ro mei ca zi zutse gi'e barda djine .i la smacu cu midju .i la .alis. cu ca'o xanka catlu sy ki'u lo nu .abu birti lo du'u .abu co'a bilma bai lo nu na ba zi sudga
@@ -1979,11 +1979,11 @@ cy mu nu la alis. birti cy vo kei
 .i cy re ro mei
 .i cy pa ka ce'u catni cy no kei
 .i cy no ro mei
-.i la poi'i poi'i ge ke'a smacu gi ke'a simlu cy pa kei ku'o ku krixa lu ge ko zutse gi ko jundi mi
+.i la poi'i ge ke'a smacu gi ke'a simlu cy pa kei ku krixa lu ge ko zutse gi ko jundi mi
 .i ba ku zi ku zo'u mi sudgau do li'u
 .i ge ca ku zi ku zo'u cy re zutse gi cy re ke barda djine ke'e
-.i la poi'i smacu ku'o ku midju
-.i ca'o ku ki'u cy mu zo'u la alis. ke xanka catlu ke'e la poi'i smacu ku'o ku
+.i la smacu ku midju
+.i ca'o ku ki'u cy mu zo'u la alis. ke xanka catlu ke'e la smacu ku
 
 -----
 > ni'o *lu ta'a *sei la smacu cu vajni simlu cusku* .i xu ro do bredi .i la'e di'e cu sudrai lo ro se djuno be mi .i .e'o ro ko smaji .i *lu la .uiliam. poi jamji'a zi'e noi lo jdaja'a cu zanru lo jamna te zukte be fi ke'a cu ze'i trubi'o lo glipre noi ke'a djica lo turni gi'e pu mutce lo ka se tcaci lo nu flacau trubasti gi'e jamji'a .i la .eduin. jo'u la .morkar. vu'o noi turni la .mersias. fa'u la .nortumbrias. li'u* li'u*
@@ -2012,7 +2012,7 @@ Parse error:
 [Fragment: << <sutra(_)><cusku>( ,[Name: cipnrlori(_) ])
 !go'i(mi) >>]
 
-lu ke sutra cusku ke'e la poi'i cipnrlori ku'o ku
+lu ke sutra cusku ke'e la cipnrlori ku
 .i na ku mi go'i li'u
 
 -----
@@ -2028,7 +2028,7 @@ turni(("eduin" {jo'u} "morkar"),("mersias" {fa'u} "nortumbrias"))
 ((se va'u)(u). xusra(("eduin" {jo'u} "morkar")) /\ EX x1. facki("stigand",c0,x1)) >>] >>]
 
 lu cy no du'u go'i kei
-.i cusku la poi'i smacu ku'o ku
+.i cusku la smacu ku
 .i pu ku zo'u mi jinvi cy no
 .i di'a ku zo'u mi cusku
 .i lu cy no du'u ke xamgu sidbo ke'e kei
@@ -2066,7 +2066,7 @@ lu cy ci ke banli jdatro ke'e
 .i cy re preti
 .i cy pa nu su'o da zo'u mi facki fi da kei
 .i ro da so'e roi ku zo'u da ke banfi ke'e ja ke curnu ke'e
-.i cusku la poi'i datka ku'o ku
+.i cusku la datka ku
 .i cy no du'u ma goi ko'a zo'u ko'a smuni zo da kei
 .i ca cy pa zo'u mi djuno cy no
 .i ma goi ko'a zo'u cy ci facki fi ko'a li'u
@@ -2109,7 +2109,7 @@ lu cy mu du'u te zu'e cy vo zo'u tolcfari'i cy re kei
 .i cy vo nu ke temsepcau plicu'a ke'e cy ci kei
 .i cy ci ke tolcadmau daftadji ke'e
 .i cy re nu penmi kei
-.i ca cy pa zo'u ke junri cusku ke'e la poi'i cipnrdodo ku'o ku
+.i ca cy pa zo'u ke junri cusku ke'e la cipnrdodo ku
 .i cy pa nu sa'irbi'o fi cy no kei
 .i cy no tuple
 .i va'o la'e di'u lu'u zo'u mi stidi cy mu li'u
@@ -2137,10 +2137,10 @@ cy ci ke drata cipni ke'e
 .i lu cy re smuni cy pa
 .i cy pa xadba cy no
 .i ge cy no ke clani valsi ke'e gi cy no srana di'u
-.i cusku la poi'i ke atkuila cifnu ke'e ku'o ku
+.i cusku la ke atkuila cifnu ke'e ku
 .i bau la lojban. zo'u ko tavla
 .i ge na ku cy re slabu mi gi na ku na ku cy re slabu do li'u
-.i te zu'e cy re zo'u la poi'i ke atkuila cifnu ke'e ku'o ku krogau cy no
+.i te zu'e cy re zo'u la ke atkuila cifnu ke'e ku krogau cy no
 .i su'o da poi ke'a me cy ci me'u ku'o zo'u da ke se tirna mi'amli ke'e
 
 -----
@@ -2157,7 +2157,7 @@ lu du'u cy re ke jdijmaji terjvi ke'e kei cy ci
 .i cy re traji cy pa
 .i cy pa ka cy no jalge ce'u kei
 .i cy no nu sudgau mi'o kei
-.i ke se xrani cusku ke'e la poi'i cipnrdodo ku'o ku
+.i ke se xrani cusku ke'e la cipnrdodo ku
 .i pu ku pu'o ku zo'u mi cusku cy ci li'u
 
 -----
@@ -2183,7 +2183,7 @@ cy mu ka ce'u djica cy vo kei
 .i lu cusku la alis.
 .i ke jdijmaji terjvi ke'e li'u
 .i na ku abu mutce cy pa
-.i ge pu ku tai cy ci zo'u la poi'i cipnrdodo ku'o ku denpa gi no da poi ke'a drata ku'o pu ku zo'u da simlu cy mu
+.i ge pu ku tai cy ci zo'u la cipnrdodo ku denpa gi no da poi ke'a drata ku'o pu ku zo'u da simlu cy mu
 
 -----
 > ni'o *lu je'u *sei la cipnrdodo cu cusku* lo xagrai be lo ciksi tadji cu nu zukte li'u* (to ji'a ki'u lo nu ju'o cu'i do ji'a djica lo nu troci ca lo dunra donri kei mi do jungau lo du'u la cipnrdodo cu zukte ma kau toi)
@@ -2200,10 +2200,10 @@ nu[zukte( )](c1) >>]
 cy no ke dunra donri ke'e
 .i cy pa nu ca cy no zo'u troci kei
 .i cy re ke nu do djica cy pa mi do kei jungau ke'e
-.i cy ci du'u ma goi ko'a zo'u la poi'i cipnrdodo ku'o ku zukte ko'a kei
+.i cy ci du'u ma goi ko'a zo'u la cipnrdodo ku zukte ko'a kei
 .i lu cy pa xagrai cy no
 .i cy no ke ciksi tadji ke'e
-.i cusku la poi'i cipnrdodo ku'o ku
+.i cusku la cipnrdodo ku
 .i cy pa nu zukte kei li'u
 
 -----
@@ -2251,7 +2251,7 @@ cy papa ro mei
 .i li'o
 .i li'o
 .i ko bajra li'u me'u ku'o zo'u cusku de gi fi'o du da su'o de zo'u ge se ki'u de ro di zo'u ge co'a ku ca li ma'o fymu mo'e di lo'o zo'u di bajra gi co'u ku ca li ma'o fyxa mo'e di lo'o zo'u di bajra gi fi'o du de zo'u na ku cy bi frili
-.i ba cy pano zo'u la poi'i cipnrdodo ku'o ku ke spaji kixsku ke'e lu cy no nu jivna kei
+.i ba cy pano zo'u la cipnrdodo ku ke spaji kixsku ke'e lu cy no nu jivna kei
 .i cy no mulno li'u
 .i ge ge cy papa ke denmi sanli ke'e gi cy papa ke vasxu mutce ke'e gi lu ma goi ko'a zo'u ko'a jinga li'u preti fi cy papa
 
@@ -2275,8 +2275,8 @@ cy xa drata
 .i cy pa nu ke mutce pensi ke'e kei
 .i cy re nu se cau cy pa zo'u danfu kei
 .i cy ci nu fi'o poi'i ta'e ku zo'u pixra ke'a kei fe'u la ceikspir. zo'u tarmi la ceikspir. kei
-.i ge na ku la poi'i cipnrdodo ku'o ku kakne cy re gi su'o da zo'u ge fi'o du da ze'u ku fau cy mu zo'u dy zutse gi ca da zo'u cy xa ke denpa ke'e je ke smaji ke'e
-.i la poi'i cipnrdodo ku'o ku cusku lu ge ro da zo'u da jinga gi ro da zo'u cnemu da li'u
+.i ge na ku la cipnrdodo ku kakne cy re gi su'o da zo'u ge fi'o du da ze'u ku fau cy mu zo'u dy zutse gi ca da zo'u cy xa ke denpa ke'e je ke smaji ke'e
+.i la cipnrdodo ku cusku lu ge ro da zo'u da jinga gi ro da zo'u cnemu da li'u
 
 -----
 > ni'o *lu ku'i ma cnemu *sei lo voksa so'i mei cu te preti* li'u*
@@ -2335,7 +2335,7 @@ cy pano nu ro da pa de poi ke'a titspi ku'o zo'u dunda de da kei
 [Fragment: << cusku( ,[Name: smacu(_) ])
 cnemu( ,tu) >>]
 
-lu cusku la poi'i smacu ku'o ku
+lu cusku la smacu ku
 .i cnemu tu li'u
 
 -----
@@ -2348,7 +2348,7 @@ lu cusku la poi'i smacu ku'o ku
 
 lu ge cy no daski gi cy no srana do
 .i fa'a la alis. zo'u ke jmina cusku ke'e
-.i ke junri spuda ke'e la poi'i cipnrdodo ku'o ku
+.i ke junri spuda ke'e la cipnrdodo ku
 .i ma poi ke'a drata ku'o zi'e goi ko'a zo'u ko'a nenri cy no li'u
 
 -----
@@ -2368,7 +2368,7 @@ lu cy no tajgai
 [Fragment: << cusku( ,[Name: cipnrdodo(_) ])
 dunda(ko,ta,mi) >>]
 
-lu cusku la poi'i cipnrdodo ku'o ku
+lu cusku la cipnrdodo ku
 .i ko dunda ta mi li'u
 
 -----
@@ -2388,7 +2388,7 @@ sruri(c1,a)
 cy xa nu mo'u ku zo'u dy cusku cy mu kei
 .i ke tordu cusku ke'e cy mu
 .i cy vo ro mei
-.i cy ci nu ge la poi'i cipnrdodo ku'o ku ke junri dunda ke'e cy re gi la poi'i cipnrdodo ku'o ku cusku lu cy pa nu do cpazau cy no kei
+.i cy ci nu ge la cipnrdodo ku ke junri dunda ke'e cy re gi la cipnrdodo ku cusku lu cy pa nu do cpazau cy no kei
 .i vi ku zo'u cy no ke melbi tajgai ke'e
 .i mi'a pikci do cy pa li'u kei
 .i cy re tajgai
@@ -2403,7 +2403,7 @@ tajgai(c0)
 dunda([Name: cipnrdodo(_) ],c0,"alis")
 
 cy no tajgai
-.i la poi'i cipnrdodo ku'o ku dunda cy no la alis.
+.i la cipnrdodo ku dunda cy no la alis.
 
 -----
 > ni'o la .alis. cu jinvi lo du'u pi ro lo tcini cu mutce lo ka cizra .i ku'i lo ro mei cu simlu lo ka tai junri kei ja'e lo nu .abu na darsi lo nu cmila .i .abu ki'u lo nu na te sidbo lo du'u .ei cusku ma kau cu krobi'o rinsa gi'e lebna lo tajgai se rai lo ka junri simlu
@@ -2473,7 +2473,7 @@ cy pare nu di'a ku zo'u cusku kei
 .i cy no bavla'i
 .i cy no nu citka cy pa kei
 .i ki'u cy pano zo'u la'e di'u lu'u rinka cy re
-.i ge mo'u ku zo'u co'e gi ge za'u re'u ku zo'u cy papa ke djine zutse ke'e gi cy papa pikci la poi'i smacu ku'o ku cy pare
+.i ge mo'u ku zo'u co'e gi ge za'u re'u ku zo'u cy papa ke djine zutse ke'e gi cy papa pikci la smacu ku cy pare
 
 -----
 > ni'o *lu do nupre lo nu jungau mi lo citri be do *sei la .alis. cu cusku* .e lo du'u ki'u ma kau do xebni .y my jo'u gy *sei tolylau jmina* li'u* .i .abu xadba terpa lo nu sy cu za'u re'u cinmo se xrani
@@ -2503,7 +2503,7 @@ cy no nu za'u re'u ku zo'u ke cinmo xrani ke'e sy kei
 lisri(c0,mi)
 <clani(_)>{je}<badri( ,_)>(c0) >>]
 
-lu fa'a la alis. zo'u la poi'i smacu ku'o ku ke cusku ke'e je ke dricmo ke'e
+lu fa'a la alis. zo'u la smacu ku ke cusku ke'e je ke dricmo ke'e
 .i cy no lisri mi
 .i cy no ke clani ke'e je ke se badri ke'e li'u
 
@@ -2535,15 +2535,15 @@ farlu(mi)
 (!vajni( ) /\ pajni(mi,c5))
 
 cy mu nu catra do kei
-.i cusku la poi'i fengu ku'o ku
+.i cusku la fengu ku
 .i cy vo pairkamni
 .i darlu cy ci
 .i cy ci smacu
 .i ca ku zo'u cy re cerni
 .i cy pa zdani
-.i ge cy no smacu gi la poi'i fengu ku'o ku cpacu cy no
-.i la poi'i fengu ku'o ku penmi cy no cy pa
-.i la poi'i fengu ku'o ku jungasnu ra
+.i ge cy no smacu gi la fengu ku cpacu cy no
+.i la fengu ku penmi cy no cy pa
+.i la fengu ku jungasnu ra
 .i lo NALSELTRO zei da ku
 .i flajvisi'u
 .i ca cy re no da poi ke'a drata ku'o zo'u da fasnu
@@ -2568,7 +2568,7 @@ lisri(c0)
 cusku([Name: smacu(_) ],c0)
 
 cy no lisri
-.i la poi'i smacu ku'o ku cusku cy no
+.i la smacu ku cusku cy no
 
 -----
 > ni'o *lu do na jundi *sei la smacu fi la .alis. cu junri cusku* .i do pensi ma li'u*
@@ -2577,7 +2577,7 @@ cy no lisri
 !jundi(do)
 ? x1. pensi(do,x1) >>]
 
-lu ke junri cusku ke'e la poi'i smacu ku'o ku la alis.
+lu ke junri cusku ke'e la smacu ku la alis.
 .i na ku do jundi
 .i ma goi ko'a zo'u do pensi ko'a li'u
 
@@ -2600,7 +2600,7 @@ lu cy pa mu moi cy no
 [Fragment: << <<<cladu(_)>{je}<fengu(_)>(_)><mutce>(_)><krixa>( ,[Name: smacu(_) ])
 (!go'i( ) /\ !simsa( )) >>]
 
-lu ke ke ke cladu ke'e je ke fengu ke'e mutce ke'e krixa ke'e la poi'i smacu ku'o ku
+lu ke ke ke cladu ke'e je ke fengu ke'e mutce ke'e krixa ke'e la smacu ku
 .i ge na ku go'i gi na ku simsa li'u
 
 -----
@@ -2633,7 +2633,7 @@ EQ(0) x1:(simsa(_)). curmi(mi,x1)
 
 lu cy pa nu do cusku cy no kei
 .i tai ku zo'u cy no nonselsmu
-.i la poi'i smacu ku'o ku ke ke cusku ke'e je ke sa'irbi'o ke'e ke'e je ke cliva ke'e
+.i la smacu ku ke ke cusku ke'e je ke sa'irbi'o ke'e ke'e je ke cliva ke'e
 .i no da poi ke'a simsa ku'o zo'u mi curmi da
 .i fau cy pa zo'u do tolsi'a mi li'u
 
@@ -2657,7 +2657,7 @@ nu[cmoni( )](c0)
 spuda([Name: smacu(_) ], ,c0)
 
 cy no nu cmoni kei
-.i la poi'i smacu ku'o ku spuda fi cy no
+.i la smacu ku spuda fi cy no
 
 -----
 > ni'o *lu .e'o sai ko xruti klama gi'e mo'u cusku lo lisri be do *sei la .alis. cu kixsku* li'u* .i lo drata cu kansa cusku *lu go'i .e'o sai li'u* .i ku'i la smacu cu desygau po'o lo stedu gi'e depcau sutyze'a lo ka cadzu
@@ -2678,7 +2678,7 @@ cy re ka ce'u cadzu kei
 .i kixsku la alis.
 .i ge ko ke xruti klama ke'e gi mo'u ku zo'u ko cusku cy no li'u
 .i cy no ke kansa cusku ke'e lu go'i li'u
-.i ge la poi'i smacu ku'o ku desygau cy pa gi la poi'i smacu ku'o ku ke depcau sutyze'a ke'e cy re
+.i ge la smacu ku desygau cy pa gi la smacu ku ke depcau sutyze'a ke'e cy re
 
 -----
 > ni'o *lu .u'u na stali li'u* se xersku la cipnrlori zi ba lo nu mo'u na'e se viska .i je lo tolci'o cakyjukni cu cabmoi cusku fi lo tixnu be ri fe *lu ie doi dirba be mi .i .a'o ctuca do lo nu ba'e do no roi fengu li'u* .i *lu ko na cusku doi mamta *sei lo citno cakyjukni cu milxe bikla cusku* .i do jai banzu lo nu fegygau lo xamsi cakcurnu li'u*
@@ -2696,7 +2696,7 @@ banzu({tu'a}(do),c1) >>]
 cy re tixnu cy pa
 .i cy pa ke tolci'o cakyjukni ke'e
 .i cy no nu mo'u ku zo'u na'e viska kei
-.i ge zi ba cy no zo'u la poi'i cipnrlori ku'o ku xersku lu na ku stali li'u gi cy pa ke cabmoi cusku ke'e lu cy no nu no roi ku zo'u do fengu kei
+.i ge zi ba cy no zo'u la cipnrlori ku xersku lu na ku stali li'u gi cy pa ke cabmoi cusku ke'e lu cy no nu no roi ku zo'u do fengu kei
 .i ctuca do cy no li'u cy re
 .i lu cy pa nu fegygau cy no kei
 .i cy no ke xamsi cakcurnu ke'e
@@ -2723,7 +2723,7 @@ cusku( ,[Name: cipnrlori(_) ])
 darsi(mi,c0) >>]
 
 lu cy no nu preti kei
-.i cusku la poi'i cipnrlori ku'o ku
+.i cusku la cipnrlori ku
 .i la dinas.
 .i mi darsi cy no li'u
 
@@ -2824,7 +2824,7 @@ xagrai("dinas",c1)
 ?. (ba)(). ((za'u) re'u)(). viska(mi,do) >>]
 (EX x1. (x1=. (ca)(). (co'a)(). ((za'u) re'u)(). (ki'u)(c2). klaku("alis") /\ (ba zi)(x1). ((za'u) re'u)(). tirna("alis",c3)) /\ (<djicni(_)><catlu>("alis",c4) /\ <xadba(_)><pacna>("alis",c8)))
 
-cy bi du'u ge la poi'i smacu ku'o ku jdice cy mu gi te zu'e cy ze zo'u la poi'i smacu ku'o ku xruti kei
+cy bi du'u ge la smacu ku jdice cy mu gi te zu'e cy ze zo'u la smacu ku xruti kei
 .i cy ze nu mo'u ku zo'u cusku cy xa kei
 .i cy xa lisri
 .i cy mu drata
@@ -2849,7 +2849,7 @@ cy bi du'u ge la poi'i smacu ku'o ku jdice cy mu gi te zu'e cy ze zo'u la poi'i 
 benji([Name: ractu(_) ],c0)
 
 cy no ke cmalu me la bil. me'u ke'e
-.i la poi'i ractu ku'o ku benji cy no
+.i la ractu ku benji cy no
 
 -----
 > ni'o me la blabi ractu noi masno bajra xruti gi'e xanka ke sruri catlu ca lo nu klama kei tai lo nu ry da pu cirko .i .abu tirna lo nu ry lauble sezysku *lu .oi la noltroni'u .i .oi la noltroni'u doi dirba xance be mi doi skapi be mi doi zbikre be mi zo'u ny da mi ba catrymi'e ju'o sai .i jo ro mabrnfuru cu mabrnfuru .i mi ko'a ma falcru li'u* .i la .alis. zi smadi lo du'u ry sisku lo bifpra .e lo blabi ke kanba gluta re mei .i .abu noi xendo cu co'a sisku ko'a .i ku'i ko'a na se viska .i ro da ba lo nu .abu limna lo lalxu cu simlu lo ka ba'o cenba .i lo barda kumfa poi vasru lo blaci jubme .e lo cmalu vorme cu ba'o mulno canci
@@ -2887,12 +2887,12 @@ ge cy papa ke barda kumfa ke'e gi ge cy papa vasru cy so gi cy papa vasru cy pan
 .i cy mu du'u ge ry sisku cy ci gi ry sisku cy vo kei
 .i cy vo ke blabi ke ke kanba gluta ke'e re mei ke'e ke'e
 .i cy ci bifpra
-.i cy re nu ry ke lauble sezysku ke'e lu la poi'i noltroni'u ku'o ku
-.i go su'o da ba ku zo'u la poi'i noltroni'u ku'o ku catrymi'e da mi gi ro da poi ke'a mabrnfuru ku'o zo'u da mabrnfuru
+.i cy re nu ry ke lauble sezysku ke'e lu la noltroni'u ku
+.i go su'o da ba ku zo'u la noltroni'u ku catrymi'e da mi gi ro da poi ke'a mabrnfuru ku'o zo'u da mabrnfuru
 .i ma goi ko'a zo'u mi falcru ko'a ko'a li'u kei
 .i cy pa nu su'o da pu ku zo'u ry cirko da kei
 .i cy no nu klama kei
-.i me la poi'i poi'i ge ke'a ke blabi ractu ke'e gi ge ke'a ke ke masno bajra ke'e xruti ke'e gi ca cy no tai cy pa zo'u ke'a ke xanka ke sruri catlu ke'e ke'e kei ku'o ku me'u
+.i me la poi'i ge ke'a ke blabi ractu ke'e gi ge ke'a ke ke masno bajra ke'e xruti ke'e gi ca cy no tai cy pa zo'u ke'a ke xanka ke sruri catlu ke'e ke'e kei ku me'u
 .i abu tirna cy re
 .i zi ku zo'u la alis. smadi cy mu
 .i co'a ku zo'u la alis. sisku ko'a
@@ -2919,10 +2919,10 @@ sutra(ko) >>,"alis"))
 
 cy ci nu ge zi ku fa'a cy no zo'u la alis. bajra gi na ku la alis. troci cy re kei
 .i cy re nu ciksi cy pa kei
-.i la poi'i ractu ku'o ku srera cy pa
-.i ge cy no farna gi la poi'i ractu ku'o ku jarco cy no
+.i la ractu ku srera cy pa
+.i ge cy no farna gi la ractu ku jarco cy no
 .i ru'u ku zo'u la alis. sisku
-.i ba ku zi ku zo'u ge la poi'i ractu ku'o ku sanji la alis. gi la poi'i ractu ku'o ku ke fengu kixsku ke'e lu cy ci bifpra
+.i ba ku zi ku zo'u ge la ractu ku sanji la alis. gi la ractu ku ke fengu kixsku ke'e lu cy ci bifpra
 .i cy re ke gluta re mei ke'e
 .i cy pa zdani
 .i cy no bartu
@@ -3148,7 +3148,7 @@ cy papa nu punji cy pano kei
 zdani(c0,[Name: <blabi(_)><ractu>(_) ])
 culno(c0,"alis")
 
-cy no zdani la poi'i ke blabi ractu ke'e ku'o ku
+cy no zdani la ke blabi ractu ke'e ku
 .i cy no culno la alis.
 
 -----
@@ -3291,7 +3291,7 @@ vorme(c0)
 (ki'u)(c5). fliba(c2)
 tirna("alis",c6)
 
-cy xa nu la poi'i ractu ku'o ku sezysku lu cy no canko
+cy xa nu la ractu ku sezysku lu cy no canko
 .i ge mi srukla gi mi nerkla fo cy no li'u kei
 .i cy mu nu ge fa'a ku ne'i ku zo'u cy ci karbi'o gi cy vo catke cy ci kei
 .i cy vo cidni la alis.
@@ -3299,7 +3299,7 @@ cy xa nu la poi'i ractu ku'o ku sezysku lu cy no canko
 .i troci cy re
 .i cy pa nu kargau cy no kei
 .i cy no vorme
-.i ca ku zo'u ge la poi'i ractu ku'o ku tolcliva cy no gi la poi'i ractu ku'o ku troci cy pa
+.i ca ku zo'u ge la ractu ku tolcliva cy no gi la ractu ku troci cy pa
 .i ki'u cy mu zo'u cy re fliba
 .i la alis. tirna cy xa
 
@@ -3326,7 +3326,7 @@ EX x1. (x1=. denpa(a,c3) /\ (ba zi)(x1). suksa({tu'a}(a)))
 ((EQ(0) x1. kavbu(a,x1) /\ ((tirna(a,c7) /\ tirna(a,c8)) /\ tirna(a,c9))) /\ nibji'i(a,{la'e}(di'u),c13))
 
 cy paci du'u cy pare cumki kei
-.i cy pare nu ga la poi'i ractu ku'o ku farlu cy pano gi la poi'i ractu ku'o ku farlu cy papa kei
+.i cy pare nu ga la ractu ku farlu cy pano gi la ractu ku farlu cy papa kei
 .i cy papa simsa
 .i cy pano ke guzme tanxe ke'e
 .i cy so ke ke porpi blaci ke'e sance ke'e
@@ -3337,7 +3337,7 @@ cy paci du'u cy pare cumki kei
 .i cy vo xance
 .i cy ci nu krici cy re kei
 .i cy re du'u tirna cy pa kei
-.i cy pa nu la poi'i ractu ku'o ku cnita cy no kei
+.i cy pa nu la ractu ku cnita cy no kei
 .i cy no canko
 .i lu pensi la alis.
 .i na ku ba ku zo'u go'i li'u
@@ -3351,7 +3351,7 @@ nu[jgari( ,[Name: <blabi(_)><ractu>(_) ])](c1)
 xance(c0,"alis")
 troci( ,c1)
 
-cy pa nu jgari la poi'i ke blabi ractu ke'e ku'o ku kei
+cy pa nu jgari la ke blabi ractu ke'e ku kei
 .i cy no xance la alis.
 .i troci cy pa
 
@@ -3385,7 +3385,7 @@ sance cy no
 .i cy no ke drata ke porpi blaci ke'e ke'e
 .i lu cy pa nu mi bartu ti kei
 .i cy no plise
-.i ke fengu cusku ke'e la poi'i ractu ku'o ku
+.i ke fengu cusku ke'e la ractu ku
 .i ke kakpa sisku ke'e cy no
 .i ge ko klama mi gi ko sidju mi cy pa li'u
 
@@ -3539,7 +3539,7 @@ nu[prije( )](c0)
 (ba zi)(c0). (co'a)(). ((za'u) re'u)(). (ru'u)(). muvdu( )
 tirna("alis",c1)
 
-cy pa nu la poi'i ractu ku'o ku cusku lu cy pa nu cfari kei
+cy pa nu la ractu ku cusku lu cy pa nu cfari kei
 .i ge cy no carcylai gi cy no pa mei
 .i cy no banzu cy pa li'u kei
 .i cy no mentu li ji'i re boi lo'o
@@ -3961,7 +3961,7 @@ cy ci ke ke surla ke'e je ke cando ke'e voksa ke'e
 .i cy re moklu
 .i cy pa nargile
 .i cy no nu ke smaji catlu ke'e kei
-.i su'o da zo'u ge fi'o du da ze'a ku zo'u la poi'i ciftoldi ku'o ku joi ke la alis. ke'e simxu cy no gi ba zu da zo'u ge la poi'i ciftoldi ku'o ku bevri cy pa fo cy re gi la poi'i ciftoldi ku'o ku cusku fi la alis. cy ci
+.i su'o da zo'u ge fi'o du da ze'a ku zo'u la ciftoldi ku joi ke la alis. ke'e simxu cy no gi ba zu da zo'u ge la ciftoldi ku bevri cy pa fo cy re gi la ciftoldi ku cusku fi la alis. cy ci
 
 -----
 > ni'o *lu do me ba'e ma *sei la ciftoldi cu cusku* li'u*
@@ -3969,7 +3969,7 @@ cy ci ke ke surla ke'e je ke cando ke'e voksa ke'e
 [Fragment: << cusku( ,[Name: ciftoldi(_) ])
 ? x1. (x1) >= (do) >>]
 
-lu cusku la poi'i ciftoldi ku'o ku
+lu cusku la ciftoldi ku
 .i ma goi ko'a zo'u do me ko'a me'u li'u
 
 -----
@@ -3977,7 +3977,7 @@ lu cusku la poi'i ciftoldi ku'o ku
 
 penmi("alis",[Name: ciftoldi(_) ])
 
-la alis. penmi la poi'i ciftoldi ku'o ku
+la alis. penmi la ciftoldi ku
 
 -----
 > ni'o di'u na xamgu mukti lo nu co'a casnu .i la .alis. cu toldarsi spusku *lu mi .y .i mi na'e mulno djuno doi do'u ga'i nai ca lo cabna .i sa'u nai mi djuno lo du'u mi me ma kau ca lo nu mi ckana cliva ca lo cabycerni .i ku'i pe'i mi so'o roi se galfi ba la'e di'u li'u*
@@ -4011,7 +4011,7 @@ cy no nu co'a ku zo'u casnu kei
 ? x1. smuni(x1,di'u,do)
 ciksi(ko,ko) >>]
 
-lu ke tolxendo cusku ke'e la poi'i ciftoldi ku'o ku
+lu ke tolxendo cusku ke'e la ciftoldi ku
 .i ma goi ko'a zo'u ko'a smuni di'u do
 .i ko ciksi ko li'u
 
@@ -4056,7 +4056,7 @@ lu cy ci nu so'i boi da ze'a cy re zo'u mitre da kei
 [Fragment: << cusku( ,[Name: ciftoldi(_) ])
 !go'i( ) >>]
 
-lu cusku la poi'i ciftoldi ku'o ku
+lu cusku la ciftoldi ku
 .i na ku go'i li'u
 
 -----
@@ -4111,7 +4111,7 @@ lu cy re du'u mi cinmo cy pa kei
 [Fragment: do]
 ? x1. (x1) >= (do) >>]
 
-lu ke tolsi'a cusku ke'e la poi'i ciftoldi ku'o ku
+lu ke tolsi'a cusku ke'e la ciftoldi ku
 .i do
 .i ma goi ko'a zo'u do me ko'a me'u li'u
 
@@ -4127,7 +4127,7 @@ xrugau(di'u,c0,c2)
 ((<milxe(_)><fanza>("alis",c4) /\ <sanli(_)><zenba>("alis")) /\ <<junri(_)><mutce>(_)><cusku>("alis",<< ? x1. du'u[(x1) >= (do)]( ,c0)
 (pu)(). cusku(do,c0) >>))
 
-cy vo nu la poi'i ciftoldi ku'o ku cusku cy ci kei
+cy vo nu la ciftoldi ku cusku cy ci kei
 .i cy ci ke ke tordu mutce ke'e pinka ke'e
 .i cy re krasi cy pa
 .i cy pa nu ta'arsi'u kei
@@ -4142,7 +4142,7 @@ cy vo nu la poi'i ciftoldi ku'o ku cusku cy ci kei
 [Fragment: << cusku( ,[Name: ciftoldi(_) ])
 [Fragment: ] >>]
 
-lu cusku la poi'i ciftoldi ku'o ku
+lu cusku la ciftoldi ku
 .i  li'u
 
 -----
@@ -4158,7 +4158,7 @@ cy re ka na ku zdile ce'u kei
 .i cy pa nu pensi cy no kei
 .i cy no ke xamgu krinu ke'e
 .i la'e di'u lu'u ke cfipu preti ke'e
-.i ge na ku la alis. kakne cy pa gi su'o da zo'u ge se ki'u da zo'u la poi'i ciftoldi ku'o ku simlu cy re gi fi'o du da co'a ku zo'u la alis. cliva
+.i ge na ku la alis. kakne cy pa gi su'o da zo'u ge se ki'u da zo'u la ciftoldi ku simlu cy re gi fi'o du da co'a ku zo'u la alis. cliva
 
 -----
 > ni'o *lu ko xruti *sei la ciftoldi fa'a .abu krixa* .i .ei mi cusku lo vajni li'u*
@@ -4169,7 +4169,7 @@ xruti(ko)
 cusku(mi,c0) >>]
 
 lu cy no vajni
-.i fa'a abu zo'u krixa la poi'i ciftoldi ku'o ku
+.i fa'a abu zo'u krixa la ciftoldi ku
 .i ko xruti
 .i mi cusku cy no li'u
 
@@ -4188,7 +4188,7 @@ la'e di'u lu'u ke cinri simsa ke'e
 [Fragment: << cusku( ,[Name: ciftoldi(_) ])
 <surla(_)><stali>(ko) >>]
 
-lu cusku la poi'i ciftoldi ku'o ku
+lu cusku la ciftoldi ku
 .i ko ke surla stali ke'e li'u
 
 -----
@@ -4212,7 +4212,7 @@ cy pa ke xagrai nu abu kakne kei ke'e
 [Fragment: << cusku( ,[Name: ciftoldi(_) ])
 !go'i( ) >>]
 
-lu cusku la poi'i ciftoldi ku'o ku
+lu cusku la ciftoldi ku
 .i na ku go'i li'u
 
 -----
@@ -4277,7 +4277,7 @@ cusku( ,[Name: ciftoldi(_) ])
 !kakne( ,c0) >>]
 
 lu ma goi ko'a zo'u cy no nu morji ko'a kei
-.i cusku la poi'i ciftoldi ku'o ku
+.i cusku la ciftoldi ku
 .i na ku kakne cy no li'u
 
 -----
@@ -4303,7 +4303,7 @@ lu cy pa frica
 [Fragment: << cusku( ,[Name: ciftoldi(_) ])
 sitna(ko,<< tolcitno(do) >>) >>]
 
-lu cusku la poi'i ciftoldi ku'o ku
+lu cusku la ciftoldi ku
 .i ko sitna lu do tolcitno li'u li'u
 
 -----
@@ -4561,7 +4561,7 @@ ba ku ze'e ku zo'u mi tirna do
 [Fragment: << cusku( ,[Name: ciftoldi(_) ])
 !<drani(_)><cusku>( ,di'u) >>]
 
-lu cusku la poi'i ciftoldi ku'o ku
+lu cusku la ciftoldi ku
 .i na ku ke drani cusku ke'e di'u li'u
 
 -----
@@ -4589,7 +4589,7 @@ cfafanmo(c0)
 
 cy no mentu li so'o boi lo'o
 .i lu cy pa tolcfafanmo
-.i ke birti cusku ke'e la poi'i ciftoldi ku'o ku
+.i ke birti cusku ke'e la ciftoldi ku
 .i cy no cfafanmo
 .i co'a cy no co'u cy pa zo'u toldrani li'u
 .i ze'a cy no zo'u smaji
@@ -4599,7 +4599,7 @@ cy no mentu li so'o boi lo'o
 
 <tavla(_)><1 moi>([Name: ciftoldi(_) ])
 
-la poi'i ciftoldi ku'o ku ke tavla pa moi ke'e
+la ciftoldi ku ke tavla pa moi ke'e
 
 -----
 > ni'o *lu .au pei do clani mitre ma *sei cy te preti* li'u*
@@ -4653,7 +4653,7 @@ cy pa nu ke fengu binxo ke'e kei
 [Fragment: << cusku( ,[Name: ciftoldi(_) ])
 ?. (ca)(). mansa( ,do) >>]
 
-lu cusku la poi'i ciftoldi ku'o ku
+lu cusku la ciftoldi ku
 .i xu kau ca ku zo'u mansa do li'u
 
 -----
@@ -4684,7 +4684,7 @@ mutce( ,c0) >>]
 cy no nu tavla kei
 .i cy ke satci cenmitre ke'e li ze boi lo'o
 .i lu cy no ka ce'u zabna kei
-.i ke fengu cusku ke'e la poi'i ciftoldi ku'o ku
+.i ke fengu cusku ke'e la ciftoldi ku
 .i mutce cy no li'u
 .i ca cy no zo'u cy ke sanli binxo ke'e
 
@@ -4714,9 +4714,9 @@ cusku( ,[Name: ciftoldi(_) ])
 
 lu cy pa moklu
 .i cy no nargile
-.i cusku la poi'i ciftoldi ku'o ku
+.i cusku la ciftoldi ku
 .i ba ku co'a ku zo'u tcaci do
-.i ge la poi'i ciftoldi ku'o ku punji cy no cy pa gi co'a ku za'u re'u ku zo'u la poi'i ciftoldi ku'o ku damva'u li'u
+.i ge la ciftoldi ku punji cy no cy pa gi co'a ku za'u re'u ku zo'u la ciftoldi ku damva'u li'u
 
 -----
 > ni'o ca ku la .alis. cu denpa lo nu cy di'a tavla .i ba lo mentu be li ji'i re la ciftoldi cu vimcu lo nargile lo moklu gi'e ji'i re roi sipfru gi'e desku .i cy cliva lo gumri gi'e cpare lo srasu lo darno gi'e ca bo piksku po'o *lu pa mlana do clazengau .i je lo drata mlana do torzengau li'u*
@@ -4741,8 +4741,8 @@ cy xa darno
 .i cy pa mentu li ji'i re boi lo'o
 .i cy no nu di'a ku zo'u cy tavla kei
 .i ca ku zo'u la alis. denpa cy no
-.i ba cy pa zo'u ge ge la poi'i ciftoldi ku'o ku vimcu cy re cy ci gi ji'i re roi ku zo'u la poi'i ciftoldi ku'o ku sipfru gi la poi'i ciftoldi ku'o ku desku
-.i ge la poi'i ciftoldi ku'o ku cliva cy vo gi su'o da zo'u ge fi'o du da zo'u la poi'i ciftoldi ku'o ku cpare cy mu cy xa gi ca da zo'u la poi'i ciftoldi ku'o ku piksku lu cy no ke drata mlana ke'e
+.i ba cy pa zo'u ge ge la ciftoldi ku vimcu cy re cy ci gi ji'i re roi ku zo'u la ciftoldi ku sipfru gi la ciftoldi ku desku
+.i ge la ciftoldi ku cliva cy vo gi su'o da zo'u ge fi'o du da zo'u la ciftoldi ku cpare cy mu cy xa gi ca da zo'u la ciftoldi ku piksku lu cy no ke drata mlana ke'e
 .i ge pa de poi ke'a mlana ku'o zo'u de clazengau do gi cy no torzengau do li'u
 
 -----
@@ -4766,9 +4766,9 @@ nu[tirna([Name: ciftoldi(_) ],c0)](c1)
 EX x1. (x1=. (tai)(c1). cusku([Name: ciftoldi(_) ],<< gumri(c0)
 [Fragment: c0] >>) /\ (ba zi)(x1). canci( ))
 
-cy pa nu la poi'i ciftoldi ku'o ku tirna cy no kei
+cy pa nu la ciftoldi ku tirna cy no kei
 .i ge cy no selpensi gi cy no srana abu
-.i su'o da zo'u ge fi'o du da tai cy pa zo'u la poi'i ciftoldi ku'o ku cusku lu cy no gumri
+.i su'o da zo'u ge fi'o du da tai cy pa zo'u la ciftoldi ku cusku lu cy no gumri
 .i cy no li'u gi ba zi da zo'u canci
 
 -----
@@ -5012,7 +5012,7 @@ cy revo nalci
 [Fragment: << krixa( ,[Name: tcacpi(_) ])
 since( ) >>]
 
-lu krixa la poi'i tcacpi ku'o ku
+lu krixa la tcacpi ku
 .i since li'u
 
 -----
@@ -5033,7 +5033,7 @@ lu ke fengu cusku ke'e la alis.
 since( ) >>]
 <klaku(_)><jmina>(t,<< FA x1:(troci(mi,_)). !mansa(x1,s) >>)
 
-lu ke mlimau rapsku ke'e la poi'i tcacpi ku'o ku
+lu ke mlimau rapsku ke'e la tcacpi ku
 .i since li'u
 .i ty ke klaku jmina ke'e lu ro da poi mi troci ke'a ku'o zo'u na ku da mansa sy li'u
 
@@ -5062,7 +5062,7 @@ EQ(0) x1. pluka(x1,c4) >>]
 
 lu cy vo since
 .i cy ci spabi'u
-.i se cau cy re zo'u cusku la poi'i tcacpi ku'o ku
+.i se cau cy re zo'u cusku la tcacpi ku
 .i cy re nu jundi abu kei
 .i cy pa rirkoi
 .i cy no ke tricu genja ke'e
@@ -5081,7 +5081,7 @@ pensi("alis",c3)
 
 cy ci du'u no da zo'u da prali cy re kei
 .i cy re nu pu cy pa zo'u ke jmina cusku ke'e kei
-.i cy pa nu mo'u ku zo'u la poi'i tcacpi ku'o ku tavla kei
+.i cy pa nu mo'u ku zo'u la tcacpi ku tavla kei
 .i cy no ka cfipu ce'u kei
 .i la alis. zenba cy no
 .i la alis. pensi cy ci
@@ -5105,7 +5105,7 @@ lu cy mu jeftu li ci boi lo'o
 .i cy re since
 .i cy pa nu kurji cy no kei
 .i cy no sovda
-.i cusku la poi'i tcacpi ku'o ku
+.i cusku la tcacpi ku
 .i ge cy pa nandu gi ze'a cy ci jo'u ke cy vo ke'e zo'u mi kajde mi cy re
 .i ze'u cy mu no da zo'u mi sipna da li'u
 
@@ -5144,7 +5144,7 @@ lu cy mu tsani
 .i cy re since
 .i ge cy pa tricu gi cy pa galrai cy no
 .i cy no ricfoi
-.i ke ke krixa zenba ke'e ke ranji cusku ke'e ke'e la poi'i tcacpi ku'o ku
+.i ke ke krixa zenba ke'e ke ranji cusku ke'e ke'e la tcacpi ku
 .i su'o da zo'u ge fi'o du da zo'u mi cuxna cy pa gi ca da zo'u mi pensi cy vo
 .i cy re ke torni klama ke'e fi cy mu
 .i since li'u
@@ -5171,7 +5171,7 @@ cusku( ,[Name: tcacpi(_) ])
 zgana(mi,c0) >>]
 
 lu cy no du'u do ke poi'i su'o de zo'u ke'a finti de kei troci ke'e kei
-.i cusku la poi'i tcacpi ku'o ku
+.i cusku la tcacpi ku
 .i mo cei broda zo'u do broda
 .i mi zgana cy no li'u
 
@@ -5229,7 +5229,7 @@ EX x1. since(c0,x1)
 
 lu ka'e ku zo'u cusku cy pa
 .i cy no ke cmalu nixli ke'e
-.i cusku la poi'i tcacpi ku'o ku
+.i cusku la tcacpi ku
 .i su'o da zo'u cy no since da
 .i di'u pi ro si'e cy pa li'u
 
@@ -5246,7 +5246,7 @@ sidbo(c0)
 (tai)(). (ja'e)(c2). cnino(c0,"alis")
 curmi({la'e}(di'u),c3)
 
-cy ci nu la poi'i tcacpi ku'o ku jmina lu cy pa du'u mo cei broda zo'u ?? gi do ke cmalu broda ke'e gi do since kei
+cy ci nu la tcacpi ku jmina lu cy pa du'u mo cei broda zo'u ?? gi do ke cmalu broda ke'e gi do since kei
 .i cy no sovda
 .i do sisku cy no
 .i na ku cy pa vajni mi li'u kei
@@ -5355,11 +5355,11 @@ cy xa ke valsi porsi ke'e
 .i cy re ka ce'u barda kei
 .i cy pa cnita cy no
 .i cy no birka
-.i la poi'i ke finpe selfu ke'e ku'o ku tolsa'e cy ci cy pa
+.i la ke finpe selfu ke'e ku tolsa'e cy ci cy pa
 .i ge ra dunda xy cy vo gi ra ke ke junri tonga ke'e cusku ke'e lu cy no nu kelcrkroke kei
-.i la poi'i noltruni'u ku'o ku fityti'i cy no la poi'i noltroni'u ku'o ku li'u
-.i ge ge la poi'i ke plipybanfi selfu ke'e ku'o ku mintu fi cy mu gi la poi'i ke plipybanfi selfu ke'e ku'o ku ke milxe stika ke'e cy xa gi la poi'i ke plipybanfi selfu ke'e ku'o ku refsku lu cy no nu kelcrkroke kei
-.i la poi'i noltruni'u ku'o ku fityti'i cy no la poi'i noltroni'u ku'o ku li'u
+.i la noltruni'u ku fityti'i cy no la noltroni'u ku li'u
+.i ge ge la ke plipybanfi selfu ke'e ku mintu fi cy mu gi la ke plipybanfi selfu ke'e ku ke milxe stika ke'e cy xa gi la ke plipybanfi selfu ke'e ku refsku lu cy no nu kelcrkroke kei
+.i la noltruni'u ku fityti'i cy no la noltroni'u ku li'u
 
 -----
 > la finpe selfu cu dunda lo xatra la plipybanfi selfu
@@ -5368,7 +5368,7 @@ xatra(c0)
 dunda([Name: <finpe(_)><selfu>(_) ],c0,[Name: <plipybanfi(_)><selfu>(_) ])
 
 cy no xatra
-.i la poi'i ke finpe selfu ke'e ku'o ku dunda cy no la poi'i ke plipybanfi selfu ke'e ku'o ku
+.i la ke finpe selfu ke'e ku dunda cy no la ke plipybanfi selfu ke'e ku
 
 -----
 > ni'o ba ku lo re mei cu simxu lo ka krobi'o rinsa .i lo kerfa be lo re mei cu xrebi'o
@@ -5414,7 +5414,7 @@ cy so tsani
 .i cy pa nu ru tirna kei
 .i cy no ricfoi
 .i tai ku mu'i la'e di'u lu'u ja'e cy vo zo'u la alis. cmila
-.i ca cy mu zo'u ge ba'o ku zo'u la poi'i ke finpe selfu ke'e ku'o ku cliva gi ge ne'a cy bi zo'u cy xa zutse cy ze gi fa'a cy so zo'u cy xa ke bebna catlu ke'e
+.i ca cy mu zo'u ge ba'o ku zo'u la ke finpe selfu ke'e ku cliva gi ge ne'a cy bi zo'u cy xa zutse cy ze gi fa'a cy so zo'u cy xa ke bebna catlu ke'e
 
 -----
 > ni'o la .alis. cu toldarsi klama lo vorme gi'e darxi
@@ -5459,7 +5459,7 @@ cy ci nu ga cy pa porpi gi cy re porpi kei
 .i mo cei broda zo'u cy re ke broda mlana ke'e cy pa
 .i cy pa vorme
 .i cy no nu darxi kei
-.i cusku la poi'i selfu ku'o ku
+.i cusku la selfu ku
 .i no da zo'u da prali do cy no
 .i re da ki'u da no de zo'u de prali do cy no
 .i mi dunli do cy ci
@@ -5512,7 +5512,7 @@ cy re du'u sy tolclite la'e di'u lu'u kei
 .i cy vo nu do nenri kei
 .i cy ci nu mi sepli do cy re kei
 .i cy re vorme
-.i se cau cy pa di'a ku zo'u co'e la poi'i selfu ku'o ku
+.i se cau cy pa di'a ku zo'u co'e la selfu ku
 .i cy pa nu jundi abu kei
 .i cy no nu do darxi kei
 .i va'o cy ci zo'u cy no racli
@@ -5538,7 +5538,7 @@ pinka( ,[Name: selfu(_) ])
 (co'u)(c0). zutse(mi,ti) >>]
 
 lu cy no bavlamdei
-.i pinka la poi'i selfu ku'o ku
+.i pinka la selfu ku
 .i co'u cy no zo'u mi zutse ti li'u
 
 -----
@@ -5557,7 +5557,7 @@ zdani(c0)
 
 ge cy xa tricu gi cy xa trixe cy vo
 .i ge cy mu nazbi gi cy mu srana cy vo
-.i cy vo stedu la poi'i selfu ku'o ku
+.i cy vo stedu la selfu ku
 .i cy ci bartu
 .i cy re ke barda palta ke'e
 .i cy pa vorme cy no
@@ -5576,7 +5576,7 @@ nu[EQ(0) x1. fasnu(x1)](c1)
 
 cy pa nu no da zo'u da fasnu kei
 .i cy no ke mintu tonga ke'e
-.i di'a ku se pi'o cy no tai cy pa zo'u la poi'i selfu ku'o ku cusku lu cy no ke ke bavlamji re moi ke'e djedi ke'e
+.i di'a ku se pi'o cy no tai cy pa zo'u la selfu ku cusku lu cy no ke ke bavlamji re moi ke'e djedi ke'e
 .i co'u cy no zo'u go'i li'u
 
 -----
@@ -5599,7 +5599,7 @@ cusku( ,[Name: selfu(_) ])
 1 moi(di'u,c0) >>]
 
 lu cy no preti
-.i cusku la poi'i selfu ku'o ku
+.i cusku la selfu ku
 .i xu kau zo'u do nerkla
 .i di'u pa moi cy no li'u
 
@@ -5638,7 +5638,7 @@ cusku( ,s)
 cy re ka ce'u jinvi cy pa kei
 .i cy pa du'u mapti cy no kei
 .i cy no nu za'u re'u ku zo'u pinka kei
-.i la poi'i selfu ku'o ku simlu cy re
+.i la selfu ku simlu cy re
 .i lu cy no djedi li so'i boi lo'o
 .i cusku sy
 .i ba ku ru'i nai ze'a cy no zo'u mi zutse ti li'u
@@ -5661,7 +5661,7 @@ cusku( ,[Name: selfu(_) ])
 (co'a)(). siclu(s)
 
 lu do djica cy no
-.i cusku la poi'i selfu ku'o ku
+.i cusku la selfu ku
 .i cy no li'u
 .i co'a ku zo'u sy siclu
 
@@ -5693,7 +5693,7 @@ jukpa(c0)
 
 cy pa cifnu
 .i cy no jukpa
-.i cy no jo'u ke la poi'i noltroni'u ku'o ku ke'e jo'u ke la poi'i tcicymlatu ku'o ku ke'e jo'u ke cy pa ke'e jo'u ke la alis. ke'e
+.i cy no jo'u ke la noltroni'u ku ke'e jo'u ke la tcicymlatu ku ke'e jo'u ke cy pa ke'e jo'u ke la alis. ke'e
 
 -----
 > ni'o lo vorme cu pluta lo barda jupku'a noi culno lo danmo fe'e co'a lo fanmo fe'e co'u lo drata .i la noltroni'u cu zutse lo cibyseltuple stizu bu'u lo midju gi'e kurji lo cifnu .i lo jukpa cu korcu ga'u lo fagri gi'e jicla do'e lo barda patxu noi simlu lo ka culno lo stasu
@@ -5729,7 +5729,7 @@ ge cy pare ke barda patxu ke'e gi cy pare simlu cy papa
 .i cy pa danmo
 .i cy no vorme
 .i cy no pluta cy vo
-.i ge bu'u cy xa zo'u la poi'i noltroni'u ku'o ku zutse cy mu gi la poi'i noltroni'u ku'o ku kurji cy ze
+.i ge bu'u cy xa zo'u la noltroni'u ku zutse cy mu gi la noltroni'u ku kurji cy ze
 .i ge ga'u cy so zo'u cy bi korcu gi do'e cy pare zo'u cy bi jicla
 
 -----
@@ -5776,7 +5776,7 @@ ge cy so ke barda mlatu ke'e gi ge cy so zutse cy bi gi cy so ke ke relkerlo gan
 .i cy pa vacri
 .i cy no dukse
 .i cy no zvati cy pa
-.i ru'i nai ku zo'u la poi'i noltroni'u ku'o ku senci
+.i ru'i nai ku zo'u la noltroni'u ku senci
 .i na ku cy re denpa fo cy ci
 .i cy mu me cy xa jo'u ke cy so ke'e me'u
 
@@ -5847,7 +5847,7 @@ cy mu nu di'a ku zo'u cusku lu cy vo du'u cy re kakne cy ci kei
 [Fragment: << cusku( ,[Name: noltroni'u(_) ])
 (FA x1:(mlatu(_)). kakne(x1) /\ (so'e) x1:(mlatu(_)). (ca'a)(). co'e(x1)) >>]
 
-lu cusku la poi'i noltroni'u ku'o ku
+lu cusku la noltroni'u ku
 .i ge ro da poi ke'a mlatu ku'o zo'u da kakne gi so'e boi da poi ke'a mlatu ku'o ca'a ku zo'u da co'e li'u
 
 -----
@@ -5873,7 +5873,7 @@ cy pa nu co'a ku zo'u pagbu cy no kei
 [Fragment: << cusku( ,[Name: noltroni'u(_) ])
 (!(so'i) x1. djuno(do,x1) /\ fatci({la'e}(di'u))) >>]
 
-lu cusku la poi'i noltroni'u ku'o ku
+lu cusku la noltroni'u ku
 .i ge na ku so'i boi da zo'u do djuno da gi la'e di'u lu'u fatci li'u
 
 -----
@@ -5911,10 +5911,10 @@ cy reno nu cy paso nalcumki kei
 .i cy pabi du'u xu kau zo'u cy paze crogau kei
 .i cy paze nundarxi
 .i cy paxa cifnu
-.i cy pamu nu darxi la poi'i noltroni'u ku'o ku kei
+.i cy pamu nu darxi la noltroni'u ku kei
 .i cy pavo ke ke ke tansi ke'e jo'u ke palta ke'e ke'e jo'u ke palne ke'e carvi ke'e
 .i cy paci ke fagri tirse ke'e
-.i cy pare nu ro da poi cy mu kuspe ke'a ku'o zo'u renro da la poi'i noltroni'u ku'o ku jo'u ke cy papa ke'e kei
+.i cy pare nu ro da poi cy mu kuspe ke'a ku'o zo'u renro da la noltroni'u ku jo'u ke cy papa ke'e kei
 .i cy papa cifnu
 .i cy pano fagri
 .i cy so patxu cy bi
@@ -5930,7 +5930,7 @@ cy reno nu cy paso nalcumki kei
 .i ge na ku la alis. nelci cy pa gi la alis. jinvi cy vo
 .i ca cy ze zo'u ge cy mu lebna cy so cy pano gi co'a ku zo'u cy mu zukte cy pare
 .i su'o da zo'u ge fi'o du da zo'u cy paci pa moi gi ba da zo'u cy pavo jersi
-.i ca cy pamu zo'u la poi'i noltroni'u ku'o ku na'e jundi
+.i ca cy pamu zo'u la noltroni'u ku na'e jundi
 .i pu ku ca'o ku tai ku ja'e cy reno zo'u cy paxa ke mutce krixa ke'e
 
 -----
@@ -5967,7 +5967,7 @@ FA x1. cuntu(f0(x1),x1)
 lu cy ci ka ce'u ke carna sutra ke'e kei
 .i cy re munje
 .i cy pa nu ro da zo'u da kurji li ma'o fyno mo'e da lo'o kei
-.i ke ke rufsu cmoni ke'e cusku ke'e la poi'i noltroni'u ku'o ku
+.i ke ke rufsu cmoni ke'e cusku ke'e la noltroni'u ku
 .i ro da zo'u li ma'o fyno mo'e da lo'o cuntu da
 .i va'o cy pa zo'u cy re zenba cy ci li'u
 
@@ -6012,7 +6012,7 @@ vimcu(ko,c1,tu) >>]
 
 lu cy pa stedu
 .i cy no nu catra kei
-.i cusku la poi'i noltroni'u ku'o ku
+.i cusku la noltroni'u ku
 .i ko vimcu cy pa tu li'u
 
 -----
@@ -6104,7 +6104,7 @@ cy bi nu la alis. tirna cy ze kei
 .i cy re nu sanga cy pa kei
 .i cy pa re moi cy no
 .i cy no vlagri
-.i ca cy re ca'o ku zo'u la poi'i noltroni'u ku'o ku ke vlile renro ke'e cy ci cy vo jo'u ke cy mu ke'e
+.i ca cy re ca'o ku zo'u la noltroni'u ku ke vlile renro ke'e cy ci cy vo jo'u ke cy mu ke'e
 .i tai ku ja'e cy bi zo'u cy xa krixa
 
 -----
@@ -6161,9 +6161,9 @@ cy vo nu darxi kei
 .i cy re tansi
 .i cy pa jukpa
 .i cy no kumfa
-.i lu cy ci nu kansa la poi'i noltruni'u ku'o ku cy re kei
+.i lu cy ci nu kansa la noltruni'u ku cy re kei
 .i cy re nu kelcrkroke kei
-.i ca cy pa zo'u cusku la poi'i noltroni'u ku'o ku
+.i ca cy pa zo'u cusku la noltroni'u ku
 .i cy pa nu renro cy no la alis. kei
 .i cy no cifnu
 .i do kurji ti
@@ -6367,7 +6367,7 @@ nu[EX x1. galfi( ,x1)](c0)
 djuno( ,c1) >>)
 
 cy papa nu cy pano ke milxe spaji ke'e abu kei
-.i cy pano nu viska la poi'i poi'i ge ke'a tcicymlatu gi va cy so zo'u ke'a zutse cy bi kei ku'o ku kei
+.i cy pano nu viska la poi'i ge ke'a tcicymlatu gi va cy so zo'u ke'a zutse cy bi kei ku kei
 .i cy so mitre li su'o boi lo'o
 .i cy bi jimca cy ze
 .i cy ze tricu
@@ -6420,20 +6420,20 @@ EX x1. ((se ki'u)(x1). (jgalu(c2,[Name: mlatu(_) ]) /\ denci(c3,[Name: mlatu(_) 
 jungau(ko,mi,c1) >>)
 
 cy ze nu na ku djuno cy xa kei
-.i cy xa du'u xu kau zo'u la poi'i mlatu ku'o ku nelci cy mu kei
+.i cy xa du'u xu kau zo'u la mlatu ku nelci cy mu kei
 .i cy mu cmene
-.i cy vo du'u sinma la poi'i mlatu ku'o ku kei
+.i cy vo du'u sinma la mlatu ku kei
 .i cy ci so'i mei
 .i cy re ke clani mutce ke'e
 .i cy pa ka ce'u xendo kei
 .i pensi la alis.
 .i cy no nu viska la alis. kei
-.i ca cy no zo'u la poi'i mlatu ku'o ku cisma
-.i la poi'i mlatu ku'o ku simlu cy pa
-.i su'o da zo'u ge se ki'u da zo'u ge cy re jgalu la poi'i mlatu ku'o ku gi cy ci denci la poi'i mlatu ku'o ku gi fi'o du da zo'u la alis. jinvi cy vo
+.i ca cy no zo'u la mlatu ku cisma
+.i la mlatu ku simlu cy pa
+.i su'o da zo'u ge se ki'u da zo'u ge cy re jgalu la mlatu ku gi cy ci denci la mlatu ku gi fi'o du da zo'u la alis. jinvi cy vo
 .i lu  li'u
 .i ki'u cy ze zo'u la alis. ke toldarsi cfasku ke'e
-.i la poi'i mlatu ku'o ku ke ganze'a cisma ke'e
+.i la mlatu ku ke ganze'a cisma ke'e
 .i lu pensi la alis.
 .i ca ku zo'u pluka ta li'u
 .i di'a ku zo'u la alis. cusku lu cy pa du'u ma goi ko'a zo'u mi klama cy no ti ko'a kei
@@ -6449,7 +6449,7 @@ jalge({la'e}(di'u),c1) >>]
 
 lu cy pa du'u do djica cy no kei
 .i cy no nu ma goi ko'a zo'u klama ko'a kei
-.i cusku la poi'i mlatu ku'o ku
+.i cusku la mlatu ku
 .i la'e di'u lu'u jalge cy pa li'u
 
 -----
@@ -6471,7 +6471,7 @@ cusku( ,[Name: mlatu(_) ])
 (va'o)({la'e}(di'u)). !vajni(c0) >>]
 
 lu cy no nu ma goi ko'a zo'u do klama fo ko'a kei
-.i cusku la poi'i mlatu ku'o ku
+.i cusku la mlatu ku
 .i va'o la'e di'u lu'u zo'u na ku cy no vajni li'u
 
 -----
@@ -6495,7 +6495,7 @@ cusku( ,[Name: mlatu(_) ])
 
 lu cy pa nu ze'a cy no zo'u do cadzu kei
 .i cy no banzu
-.i cusku la poi'i mlatu ku'o ku
+.i cusku la mlatu ku
 .i ca'a ku va'o cy pa zo'u do co'e li'u
 
 -----
@@ -6530,9 +6530,9 @@ EX x1. FA x2:((f1(x1)) >= (_)). fenki(x2) >>]
 lu ro da zo'u ge li ma'o fypa mo'e da lo'o me da me'u gi li ma'o fypa mo'e da lo'o re mei
 .i do nelci cy no
 .i ke ke drata xance ke'e desku ke'e
-.i ke ke ke pritu xance ke'e desku ke'e cusku ke'e la poi'i mlatu ku'o ku
-.i vu fa'a tu zo'u xabju la poi'i mapypre ku'o ku
-.i vu fa'a tu zo'u xabju la poi'i ke cibmasti cicyractu ke'e ku'o ku
+.i ke ke ke pritu xance ke'e desku ke'e cusku ke'e la mlatu ku
+.i vu fa'a tu zo'u xabju la mapypre ku
+.i vu fa'a tu zo'u xabju la ke cibmasti cicyractu ke'e ku
 .i ko vitke cy no
 .i su'o da ro de poi ke'a me li ma'o fypa mo'e da lo'o me'u ku'o zo'u de fenki li'u
 
@@ -6558,7 +6558,7 @@ lu cy pa nu jbini cy no kei
 fenki(mi)
 fenki(do) >>]
 
-lu cusku la poi'i mlatu ku'o ku
+lu cusku la mlatu ku
 .i na ku ka'e ku zo'u do rivbi
 .i bu'u ti ro da poi ke'a me ma'a me'u ku'o zo'u da fenki
 .i mi fenki
@@ -6579,7 +6579,7 @@ lu cy no du'u mi fenki kei
 [Fragment: << cusku( ,[Name: mlatu(_) ])
 (co'e(do) \/ !(ba'o)(). klama(do,ti)) >>]
 
-lu cusku la poi'i mlatu ku'o ku
+lu cusku la mlatu ku
 .i ga do co'e gi na ku ba'o ku zo'u do klama ti li'u
 
 -----
@@ -6626,7 +6626,7 @@ lu cy vo nu fengu kei
 .i cy re nu gleki kei
 .i cy pa nu fengu kei
 .i cy no gerku
-.i di'a ku zo'u cusku la poi'i mlatu ku'o ku
+.i di'a ku zo'u cusku la mlatu ku
 .i ge ca cy pa zo'u cy no fe'ucmo gi ca cy re zo'u cy no ke rebla deskygau ke'e
 .i su'o da zo'u ge se ni'i da zo'u ge ca cy ci zo'u mi fe'ucmo gi ca cy vo zo'u mi ke rebla deskygau ke'e gi fi'o du da zo'u mi fenki li'u
 
@@ -6652,9 +6652,9 @@ cmene(c0, ,ko)
 lu cy re nu ca cy pa zo'u kelcrkroke kei
 .i cy pa cabdei
 .i ge nelci cy no gi cy no srana do
-.i cusku la poi'i mlatu ku'o ku
+.i cusku la mlatu ku
 .i cy no cmene fi ko
-.i xu kau zo'u do kansa la poi'i noltruni'u ku'o ku cy re li'u
+.i xu kau zo'u do kansa la noltruni'u ku cy re li'u
 
 -----
 > ni'o *lu mi mutce lo ka nelci la'e di'u *sei la .alis. cu cusku* .i ku'i mi za'o na te friti li'u*
@@ -6676,7 +6676,7 @@ lu cy no ka ce'u nelci la'e di'u lu'u kei
 (ba)(). (bu'u)(). viska(do,mi) >>]
 canci(m)
 
-lu cusku la poi'i mlatu ku'o ku
+lu cusku la mlatu ku
 .i ba ku bu'u ku zo'u do viska mi li'u
 .i my canci
 
@@ -6692,12 +6692,12 @@ cizra(c0)
 (ca)(c4). ((za'u) re'u)(). tolcanci([Name: mlatu(_) ])
 
 cy vo nu la alis. catlu cy ci kei
-.i pu ku zo'u la poi'i mlatu ku'o ku zvati cy ci
+.i pu ku zo'u la mlatu ku zvati cy ci
 .i cy re nu ca'o ku co'a ku zo'u cy pa tcaci la alis. kei
 .i cy pa nu cy no fasnu kei
 .i cy no cizra
 .i na ku ki'u cy re zo'u la'e di'u lu'u ke mutce spaji ke'e la alis.
-.i ca cy vo za'u re'u ku zo'u la poi'i mlatu ku'o ku tolcanci
+.i ca cy vo za'u re'u ku zo'u la mlatu ku tolcanci
 
 -----
 > ni'o *lu ta'o lo cifnu cu mo *sei la mlatu cu cusku* .i mi na ru'e tolmo'i lo nu te preti li'u*
@@ -6709,7 +6709,7 @@ cifnu(c0)
 !tolmo'i(mi,c1) >>]
 
 lu cy pa nu preti kei
-.i cusku la poi'i mlatu ku'o ku
+.i cusku la mlatu ku
 .i cy no cifnu
 .i mo cei broda zo'u cy no broda
 .i na ku mi tolmo'i cy pa li'u
@@ -6736,7 +6736,7 @@ cusku( ,[Name: mlatu(_) ])
 ((za'u) re'u)(). canci( )
 
 lu cy no du'u go'i kei
-.i cusku la poi'i mlatu ku'o ku
+.i cusku la mlatu ku
 .i pu ku zo'u mi jinvi cy no li'u
 .i za'u re'u ku zo'u canci
 
@@ -6768,7 +6768,7 @@ sezysku( ,a)
 cy mu jimca cy vo
 .i cy vo tricu
 .i cy ci nu cusku di'u kei
-.i la poi'i ke cibmasti cicyractu ke'e ku'o ku ke se cusku xabju ke'e cy re
+.i la ke cibmasti cicyractu ke'e ku ke se cusku xabju ke'e cy re
 .i cy pa mentu li ji'i re boi lo'o
 .i cy no nu za'u re'u ku zo'u viska my kei
 .i ge ze'i ku zo'u la alis. denpa gi la alis. ke xadba pacna ke'e cy no
@@ -6781,11 +6781,11 @@ cy mu jimca cy vo
 .i cy no mapypre
 .i sezysku abu
 .i pu ku zo'u mi viska cy no
-.i la poi'i ke cibmasti cicyractu ke'e ku'o ku ke mutce zmadu ke'e fi cy pa
-.i ki'u cy re zo'u na ku la poi'i ke cibmasti cicyractu ke'e ku'o ku ke tcetce fenki ke'e
+.i la ke cibmasti cicyractu ke'e ku ke mutce zmadu ke'e fi cy pa
+.i ki'u cy re zo'u na ku la ke cibmasti cicyractu ke'e ku ke tcetce fenki ke'e
 .i na ku tai ku du'i cy vo zo'u fenki li'u
 .i ca cy ci fa'a ku ga'u ku zo'u la alis. catlu
-.i ge za'u re'u ku zo'u la poi'i mlatu ku'o ku zvati gi la poi'i mlatu ku'o ku zutse cy mu
+.i ge za'u re'u ku zo'u la mlatu ku zvati gi la mlatu ku zutse cy mu
 
 -----
 > ni'o *lu pau do cusku zo xarju ji zo narju *sei la mlatu cu cusku* li'u*
@@ -6793,7 +6793,7 @@ cy mu jimca cy vo
 [Fragment: << cusku( ,[Name: mlatu(_) ])
 cusku(do,({xarju} {??} {narju})) >>]
 
-lu cusku la poi'i mlatu ku'o ku
+lu cusku la mlatu ku
 .i do cusku zo xarju ?? ke zo narju ke'e li'u
 
 -----
@@ -6827,7 +6827,7 @@ nu[cisma( )](c0)
 (ja'e)(c0). canci([Name: tcicymlatu(_) ])
 
 cy no nu cisma kei
-.i ja'e cy no zo'u la poi'i tcicymlatu ku'o ku canci
+.i ja'e cy no zo'u la tcicymlatu ku canci
 
 -----
 > ni'o *lu ue mi so'i roi viska lo mlatu pe se cau lo nu cisma *sei la .alis. cu pensi* .i ku'i ua lo nu cisma pe se cau lo mlatu .i traji lo ka cizra kei lo se viska be mi bei ze'a lo nu mi jmive li'u*
@@ -6893,7 +6893,7 @@ pensi( ,"alis")
 (va'o)(c0). !vajni( ,[Name: sipsmacu(_) ]) >>]
 
 cy so ka ga'u cy bi zo'u ce'u tavla kei
-.i ge cy bi stedu gi cy bi srana la poi'i sipsmacu ku'o ku
+.i ge cy bi stedu gi cy bi srana la sipsmacu ku
 .i cy ze bircidni
 .i cy xa nu kicne kei
 .i cy mu re mei
@@ -6903,13 +6903,13 @@ cy so ka ga'u cy bi zo'u ce'u tavla kei
 .i cy pa tricu
 .i cy no jubme
 .i ni'a cy pa ca'u cy re zo'u cy no bredi
-.i la poi'i ke cibmasti cicyractu ke'e ku'o ku jo'u ke la poi'i mapypre ku'o ku ke'e pinxe cy ci
-.i ge la poi'i sipsmacu ku'o ku ke zutse jbini ke'e cy vo gi la poi'i sipsmacu ku'o ku ke carmi sipna ke'e
-.i ge ge cy mu pilno la poi'i sipsmacu ku'o ku cy xa gi cy mu vregau cy ze la poi'i sipsmacu ku'o ku gi cy mu simxu cy so
+.i la ke cibmasti cicyractu ke'e ku jo'u ke la mapypre ku ke'e pinxe cy ci
+.i ge la sipsmacu ku ke zutse jbini ke'e cy vo gi la sipsmacu ku ke carmi sipna ke'e
+.i ge ge cy mu pilno la sipsmacu ku cy xa gi cy mu vregau cy ze la sipsmacu ku gi cy mu simxu cy so
 .i lu cy no nu sipna kei
 .i pensi la alis.
-.i la poi'i sipsmacu ku'o ku ke mutce tolkufra ke'e
-.i va'o cy no zo'u na ku vajni la poi'i sipsmacu ku'o ku li'u
+.i la sipsmacu ku ke mutce tolkufra ke'e
+.i va'o cy no zo'u na ku vajni la sipsmacu ku li'u
 
 -----
 > ni'o lo jubme cu barda .i ku'i lo ci mei cu tagji jmaji lo kojna be jy .i *lu canlu no mei .i canlu no mei *sei lo re mei ca lo nu viska lo nu la .alis. cu klama cu krixa* li'u* .i *lu canlu ba'e za'u rau mei *sei la .alis. cu fengu cusku* li'u* .i .abu tsebi'o lo barda birstizu bu'u lo fanmo be lo jubme
@@ -6958,7 +6958,7 @@ cy mu fanmo cy vo
 cpacu(ko,c0) >>]
 
 lu cy no vanju
-.i ke zanru cusku ke'e la poi'i ke cibmasti cicyractu ke'e ku'o ku
+.i ke zanru cusku ke'e la ke cibmasti cicyractu ke'e ku
 .i ko cpacu cy no li'u
 
 -----
@@ -6984,7 +6984,7 @@ cy no jubme
 [Fragment: << cusku( ,[Name: <cibmasti(_)><cicyractu>(_) ])
 EQ(0) x1:(vanju(_)). zvati(x1) >>]
 
-lu cusku la poi'i ke cibmasti cicyractu ke'e ku'o ku
+lu cusku la ke cibmasti cicyractu ke'e ku
 .i no da poi ke'a vanju ku'o zo'u da zvati li'u
 
 -----
@@ -7008,7 +7008,7 @@ cusku( ,[Name: <cibmasti(_)><cicyractu>(_) ])
 
 lu cy pa nu se cau cy no zo'u tsebi'o kei
 .i cy no nu zvacpe kei
-.i cusku la poi'i ke cibmasti cicyractu ke'e ku'o ku
+.i cusku la ke cibmasti cicyractu ke'e ku
 .i na ku do clite cy pa li'u
 
 -----
@@ -7038,7 +7038,7 @@ nitcu(c0,c1) >>]
 ((pu)(). (ze'u)(). <<mutce(_)><kucli>(_)><catlu>(m,"alis") /\ (ca)(). (1 re'u)(). tavla(m))
 
 lu cy pa nu katna kei
-.i cusku la poi'i mapypre ku'o ku
+.i cusku la mapypre ku
 .i ge cy no kerfa gi cy no srana do
 .i cy no nitcu cy pa li'u
 .i ge pu ku ze'u ku zo'u my ke ke mutce kucli ke'e catlu ke'e la alis. gi ca ku pa re'u ku zo'u my tavla
@@ -7072,8 +7072,8 @@ korvo(c0)
 cy re nu tirna di'u kei
 .i cy pa nu ke mutce ganra ke'e kei
 .i cy no kanla
-.i ja'e cy pa ca cy re zo'u la poi'i mapypre ku'o ku kargau cy no
-.i la poi'i mapypre ku'o ku cusku lu cy pa ke ciska jubme ke'e
+.i ja'e cy pa ca cy re zo'u la mapypre ku kargau cy no
+.i la mapypre ku cusku lu cy pa ke ciska jubme ke'e
 .i cy no korvo
 .i ma goi ko'a zo'u cy no simsa cy pa ko'a li'u
 
@@ -7110,7 +7110,7 @@ cusku( ,[Name: <cibmasti(_)><cicyractu>(_) ])
 lu cy re du'u do jinvi cy pa kei
 .i cy pa du'u ka'e ku zo'u do facki cy no kei
 .i cy no danfu di'u
-.i cusku la poi'i ke cibmasti cicyractu ke'e ku'o ku
+.i cusku la ke cibmasti cicyractu ke'e ku
 .i xu kau zo'u do skudji cy re li'u
 
 -----
@@ -7130,7 +7130,7 @@ lu cusku la alis.
 cusku(do,c0) >>]
 
 lu ge skudji cy no gi cy no srana do
-.i di'a ku zo'u cusku la poi'i ke cibmasti cicyractu ke'e ku'o ku
+.i di'a ku zo'u cusku la ke cibmasti cicyractu ke'e ku
 .i do cusku cy no li'u
 
 -----
@@ -7161,7 +7161,7 @@ cusku( ,[Name: mapypre(_) ])
 lu du'u lu ge citka cy no gi cy no srana mi
 .i mi viska cy no li'u mintu lu ge viska cy no gi cy no srana mi
 .i mi citka cy no li'u kei cy no
-.i cusku la poi'i mapypre ku'o ku
+.i cusku la mapypre ku
 .i na ku mintu
 .i du'i ku ka'e ku zo'u do cusku cy no li'u
 
@@ -7177,7 +7177,7 @@ jmina( ,[Name: <cibmasti(_)><cicyractu>(_) ])
 lu du'u lu ge cpacu cy no gi cy no srana mi
 .i mi nelci cy no li'u mintu lu ge nelci cy no gi cy no srana mi
 .i mi cpacu cy no li'u kei cy no
-.i jmina la poi'i ke cibmasti cicyractu ke'e ku'o ku
+.i jmina la ke cibmasti cicyractu ke'e ku
 .i du'i ku ka'e ku zo'u do cusku cy no li'u
 
 -----
@@ -7193,7 +7193,7 @@ ka[<sipna(_)><tavla>(\1)](c0)
 lu du'u lu cy no nu sipna kei
 .i ze'a cy no zo'u mi vasxu li'u mintu lu cy no nu vasxu kei
 .i ze'a cy no zo'u mi sipna li'u kei cy pa
-.i jmina la poi'i poi'i ge ke'a sipsmacu gi ke'a simlu cy no kei ku'o ku
+.i jmina la poi'i ge ke'a sipsmacu gi ke'a simlu cy no kei ku
 .i cy no ka ce'u ke sipna tavla ke'e kei
 .i du'i ku ka'e ku zo'u do cusku cy pa li'u
 
@@ -7218,7 +7218,7 @@ ke fenki ke tcati kansi'u ke'e ke'e
 1 moi([Name: mapypre(_) ],c0)
 
 co'u ku zo'u cy no smaji
-.i la poi'i mapypre ku'o ku pa moi cy no
+.i la mapypre ku pa moi cy no
 
 -----
 > ni'o *lu lo xo moi be lo masti djedi cu detri *sei my fa'a la .alis. cu cusku* li'u* .i my lo junla ba'o cpacu lo daski gi'e ca'o xanka catlu gi'e di'i nai desygau gi'e jbipu'i lo my kerlo
@@ -7268,10 +7268,10 @@ lu cy ci du'u na ku cy pa mapti cy re kei
 .i jmina cy pa
 .i cy pa matne
 .i cy no djedi li re boi lo'o
-.i cusku la poi'i mapypre ku'o ku
+.i cusku la mapypre ku
 .i la'u cy no zo'u srera
 .i pu ku zo'u mi jungau do cy ci li'u
-.i my ke fengu catlu ke'e la poi'i ke cibmasti cicyractu ke'e ku'o ku
+.i my ke fengu catlu ke'e la ke cibmasti cicyractu ke'e ku
 
 -----
 > ni'o *lu ra ba'e xagrai lo matne *sei la cibmasti cicyractu cu cumla spuda* li'u*
@@ -7281,7 +7281,7 @@ lu cy ci du'u na ku cy pa mapti cy re kei
 xagrai({ra},c0) >>]
 
 lu cy no matne
-.i ke cumla spuda ke'e la poi'i ke cibmasti cicyractu ke'e ku'o ku
+.i ke cumla spuda ke'e la ke cibmasti cicyractu ke'e ku
 .i ra xagrai cy no li'u
 
 -----
@@ -7295,7 +7295,7 @@ nerbi'o(c0)
 !(pu)(). (se pi'o)(c1). setca(do,{ra}) >>]
 
 lu cy pa ke nanba dakfu ke'e
-.i pante la poi'i mapypre ku'o ku
+.i pante la mapypre ku
 .i cy no ke nanba spisa ke'e
 .i go'i
 .i cy no nerbi'o
@@ -7319,8 +7319,8 @@ cy vo nu pensi cy ci kei
 .i ra xagrai cy no li'u
 .i cy pa ke kabri tcati ke'e
 .i cy no junla
-.i ge ge ge la poi'i ke cibmasti cicyractu ke'e ku'o ku jgari cy no gi la poi'i ke cibmasti cicyractu ke'e ku'o ku ke tolgei catlu ke'e cy no gi la poi'i ke cibmasti cicyractu ke'e ku'o ku jirgau cy no cy pa gi re re'u ku zo'u la poi'i ke cibmasti cicyractu ke'e ku'o ku catlu cy no
-.i na ku la poi'i ke cibmasti cicyractu ke'e ku'o ku kakne cy vo
+.i ge ge ge la ke cibmasti cicyractu ke'e ku jgari cy no gi la ke cibmasti cicyractu ke'e ku ke tolgei catlu ke'e cy no gi la ke cibmasti cicyractu ke'e ku jirgau cy no cy pa gi re re'u ku zo'u la ke cibmasti cicyractu ke'e ku catlu cy no
+.i na ku la ke cibmasti cicyractu ke'e ku kakne cy vo
 
 -----
 > ni'o la .alis. pu ca'o kucli catlu ga'u lo cycy janco .i *lu .a'u xajmi junla *sei .abu te pinka* .i ue jy sinxa lo du'u lo xo kau moi be lo masti djedi cu detri .e nai ku'i lo du'u ma kau tcika li'u*
@@ -7358,7 +7358,7 @@ cusku( ,[Name: mapypre(_) ])
 lu cy re du'u cy pa detri kei
 .i cy pa ke xo moi nanca ke'e
 .i ge cy no junla gi cy no srana do
-.i cusku la poi'i mapypre ku'o ku
+.i cusku la mapypre ku
 .i ma goi ko'a ki'u ko'a zo'u go'i
 .i xu kau zo'u cy no sinxa cy re li'u
 
@@ -7385,7 +7385,7 @@ cusku( ,[Name: mapypre(_) ])
 mintu( ,c0) >>]
 
 lu cy no me mi me'u moi
-.i cusku la poi'i mapypre ku'o ku
+.i cusku la mapypre ku
 .i mintu cy no li'u
 
 -----
@@ -7403,8 +7403,8 @@ tersmu: Unbound variable RelVar 1
 
 ge cy pa nazbi gi cy pa srana sy
 .i cy no ke glare tcati ke'e
-.i lu cusku la poi'i mapypre ku'o ku
-.i za'u re'u ku zo'u la poi'i sipsmacu ku'o ku sipna li'u
+.i lu cusku la mapypre ku
+.i za'u re'u ku zo'u la sipsmacu ku sipna li'u
 .i pi so'u boi da poi ke'a me cy no me'u ku'o zo'u my falcru da cy pa
 
 -----
@@ -7418,7 +7418,7 @@ stedu(c0)
 cy re nu kargau cy pa kei
 .i cy pa kanla
 .i cy no stedu
-.i ge la poi'i sipsmacu ku'o ku ke tolsurla desygau ke'e cy no gi se cau cy re zo'u la poi'i sipsmacu ku'o ku cusku lu pu'o ku zo'u di'u pinka fi mi li'u
+.i ge la sipsmacu ku ke tolsurla desygau ke'e cy no gi se cau cy re zo'u la sipsmacu ku cusku lu pu'o ku zo'u di'u pinka fi mi li'u
 
 -----
 > ni'o *lu xu do ba'o smadi tu'a lo se manci nabmi *sei la mapypre fi la .alis. cu cusku* li'u*
@@ -7428,7 +7428,7 @@ cusku( ,[Name: mapypre(_) ],"alis")
 ?. (ba'o)(). smadi(do,{tu'a}(c0)) >>]
 
 lu cy no ke se manci nabmi ke'e
-.i cusku la poi'i mapypre ku'o ku la alis.
+.i cusku la mapypre ku la alis.
 .i xu kau ba'o ku zo'u do smadi tu'a cy no lu'u li'u
 
 -----
@@ -7452,7 +7452,7 @@ cusku( ,[Name: mapypre(_) ])
 !sidbo(c0,{la'e}(di'u),mi) >>]
 
 lu cy no cmarai
-.i cusku la poi'i mapypre ku'o ku
+.i cusku la mapypre ku
 .i na ku cy no sidbo la'e di'u lu'u mi li'u
 
 -----
@@ -7461,7 +7461,7 @@ lu cy no cmarai
 [Fragment: << cusku( ,[Name: <cibmasti(_)><cicyractu>(_) ])
 go'i(mi) >>]
 
-lu cusku la poi'i ke cibmasti cicyractu ke'e ku'o ku
+lu cusku la ke cibmasti cicyractu ke'e ku
 .i mi go'i li'u
 
 -----
@@ -7495,10 +7495,10 @@ cusku( ,[Name: mapypre(_) ])
 (va'o)(c1). !pilno(do,{lo},c2)
 mapti({la}) >>]
 
-lu cy re nu cmene la poi'i temci ku'o ku kei
-.i cy pa nu du'i cy no zo'u la poi'i temci ku'o ku slabu kei
+lu cy re nu cmene la temci ku kei
+.i cy pa nu du'i cy no zo'u la temci ku slabu kei
 .i cy no nu mi no'a kei
-.i cusku la poi'i mapypre ku'o ku
+.i cusku la mapypre ku
 .i va'o cy pa zo'u na ku do pilno zo lo cy re
 .i zo la mapti li'u
 
@@ -7520,9 +7520,9 @@ lu cy no du'u ma goi ko'a zo'u do skudji ko'a kei
 !go'i(do)
 (0 roi)(). tavla(do,[Name: temci(_) ]) >>]
 
-lu ke ke ke stedu muvgau ke'e tolsi'a ke'e cusku ke'e la poi'i mapypre ku'o ku
+lu ke ke ke stedu muvgau ke'e tolsi'a ke'e cusku ke'e la mapypre ku
 .i na ku do go'i
-.i no roi ku zo'u do tavla la poi'i temci ku'o ku li'u
+.i no roi ku zo'u do tavla la temci ku li'u
 
 -----
 > ni'o *lu ie ru'e *sei la .alis. cu kajde spuda* .i ku'i ju'o .ei mi darxi do'e lo temci ca lo nu mi cilre lo nu se zgike li'u*
@@ -7566,7 +7566,7 @@ lu cy ze nu citka kei
 .i cy re junla
 .i cy pa nu do pendo kei
 .i cy no nu darxi kei
-.i cusku la poi'i mapypre ku'o ku
+.i cusku la mapypre ku
 .i ciksi fo la'e di'u lu'u
 .i na ku ty nelci cy no
 .i va'o cy pa so'a boi da poi do nelci ke'a ku'o ri'i cy re zo'u ty gasnu da
@@ -7596,7 +7596,7 @@ cusku( ,[Name: mapypre(_) ])
 
 lu ge djica cy pa gi cy pa srana do
 .i cy no cfari
-.i cusku la poi'i mapypre ku'o ku
+.i cusku la mapypre ku
 .i ca cy no zo'u go'i
 .i za'o ku ze'u cy pa zo'u li pa ci pi'e ci no boi lo'o tcika li'u
 
@@ -7630,12 +7630,12 @@ EX x1. (x1=. (ca)(c0). da'arsi'u(mi'a) /\ (ba zi)(x1). <fenki(_)><binxo>(t))
 bilga(mi,c5) >>]
 
 cy no stedu
-.i la poi'i mapypre ku'o ku ke tolgei desygau ke'e cy no
+.i la mapypre ku ke tolgei desygau ke'e cy no
 .i lu cy mu nu sanga di'e kei
-.i la poi'i poi'i ge ke'a noltruni'u gi ke'a srana cy ci kei ku'o ku ke banli ke zgike tigni ke'e ke'e cy vo
+.i la poi'i ge ke'a noltruni'u gi ke'a srana cy ci kei ku ke banli ke zgike tigni ke'e ke'e cy vo
 .i cy ci risna
 .i pilno my cy pa cy re
-.i cy re nu farja'o la poi'i ke cibmasti cicyractu ke'e ku'o ku kei
+.i cy re nu farja'o la ke cibmasti cicyractu ke'e ku kei
 .i cy pa ke tcati smuci ke'e
 .i pu ku zi ku zo'u cy no cibmasti
 .i spuda my
@@ -7676,7 +7676,7 @@ lu cy no simsa
 
 cusku([Name: mapypre(_) ])
 
-la poi'i mapypre ku'o ku cusku
+la mapypre ku cusku
 
 -----
 > ni'o *lu di'a co'e *sei la mapypre di'a cusku* di'e
@@ -7684,7 +7684,7 @@ la poi'i mapypre ku'o ku cusku
 [Fragment: << (di'a)(). cusku( ,[Name: mapypre(_) ])
 (di'a)(). co'e( ,di'e) >>]
 
-lu di'a ku zo'u cusku la poi'i mapypre ku'o ku
+lu di'a ku zo'u cusku la mapypre ku
 .i di'a ku zo'u co'e di'e li'u
 
 -----
@@ -7719,9 +7719,9 @@ nu[tunta( ,[Name: sipsmacu(_) ])](c0)
 
 cy ci nu ge sipna lu ke gu'irgu'i gu'irgu'i ke'e li'u gi ze'u ku za'o ku ja'e cy re zo'u co'e kei
 .i cy re nu cy no sarcu cy pa kei
-.i cy pa nu stigau la poi'i sipsmacu ku'o ku kei
-.i cy no nu tunta la poi'i sipsmacu ku'o ku kei
-.i ca ku zo'u ge la poi'i sipsmacu ku'o ku desyzu'e gi co'a ku ca cy ci zo'u la poi'i sipsmacu ku'o ku sanga
+.i cy pa nu stigau la sipsmacu ku kei
+.i cy no nu tunta la sipsmacu ku kei
+.i ca ku zo'u ge la sipsmacu ku desyzu'e gi co'a ku ca cy ci zo'u la sipsmacu ku sanga
 
 -----
 > ni'o *lu no'i mi pu zi ba'o mulgau lo pa moi pempau *sei la mapypre cu cusku* ca lo nu la noltruni'u cu zunti gi'e krixa *lu ta catra lo temci .i ko lo stedu ta vimcu li'u* li'u*
@@ -7734,12 +7734,12 @@ vimcu(ko,c1,ta) >>))](c1)
 cusku( ,[Name: mapypre(_) ])
 (pu)(). (zi)(). (ba'o)(). (ca)(c1). mulgau(mi,c0) >>]
 
-lu cy pa nu ge la poi'i noltruni'u ku'o ku zunti gi la poi'i noltruni'u ku'o ku krixa lu cy pa stedu
+lu cy pa nu ge la noltruni'u ku zunti gi la noltruni'u ku krixa lu cy pa stedu
 .i cy no temci
 .i ta catra cy no
 .i ko vimcu cy pa ta li'u kei
 .i cy no ke pa moi pempau ke'e
-.i cusku la poi'i mapypre ku'o ku
+.i cusku la mapypre ku
 .i pu ku zi ku ba'o ku ca cy pa zo'u mi mulgau cy no li'u
 
 -----
@@ -7758,7 +7758,7 @@ lu ki'asku la alis.
 (co'a)({la'e}(di'u)). EQ(0) x1:(cpedu(mi,_)). zukte(t,x1)
 (ca)(). (ze'e)(). (ru'i)(). tcika(6) >>]
 
-lu di'a ku zo'u ke tolgei cusku ke'e la poi'i mapypre ku'o ku
+lu di'a ku zo'u ke tolgei cusku ke'e la mapypre ku
 .i co'a la'e di'u lu'u no da poi mi cpedu ke'a ku'o zo'u ty zukte da
 .i ca ku ze'e ku ru'i ku zo'u li xa boi lo'o tcika li'u
 
@@ -7793,7 +7793,7 @@ lu cy ci nu ca cy re zo'u lumci cy pa kei
 .i cy re jbini
 .i cy pa dacti
 .i cy no ke tcati sanmi ke'e
-.i ke va'urpante cusku ke'e la poi'i mapypre ku'o ku
+.i ke va'urpante cusku ke'e la mapypre ku
 .i go'i
 .i ru'i ku zo'u tcika cy no
 .i no roi ku zo'u mi'a kakne cy ci li'u
@@ -7819,7 +7819,7 @@ cusku( ,[Name: mapypre(_) ])
 
 lu cy pa nu so'o boi da poi ke'a me cy no me'u ku'o mo'u ku zo'u xaksu da kei
 .i cy no dacti
-.i cusku la poi'i mapypre ku'o ku
+.i cusku la mapypre ku
 .i ca cy pa zo'u go'i li'u
 
 -----
@@ -7849,7 +7849,7 @@ sarji(mi,c3) >>]
 lu cy ci nu su'o da zo'u da lisri cy pa cy re mi'a kei
 .i cy re ke citno ninmu ke'e
 .i casnu cy no
-.i la poi'i ke cibmasti cicyractu ke'e ku'o ku ke zunti ke'e je ke sipfru ke'e
+.i la ke cibmasti cicyractu ke'e ku ke zunti ke'e je ke sipfru ke'e
 .i mi'o galfi cy no
 .i mi tatpi ti
 .i mi sarji cy ci li'u
@@ -7891,10 +7891,10 @@ cy ci kanla
 .i cy no re mei
 .i lu krixa cy no
 .i cy no re mei
-.i va'o la'e di'u lu'u ba ku zo'u la poi'i sipsmacu ku'o ku co'e
+.i va'o la'e di'u lu'u ba ku zo'u la sipsmacu ku co'e
 .i ko cikybi'o li'u
 .i ca cy re zo'u cy no tunta sy cy pa
-.i la poi'i sipsmacu ku'o ku ke masno kargau ke'e cy ci
+.i la sipsmacu ku ke masno kargau ke'e cy ci
 .i lu se pi'o cy no zo'u cusku sy
 .i cy no ke ke rufsu ke'e je ke ruble ke'e voksa ke'e
 .i na ku pu ku zo'u mi sipna
@@ -7906,7 +7906,7 @@ cy ci kanla
 [Fragment: << cusku( ,[Name: <cibmasti(_)><cicyractu>(_) ])
 lisri( , ,ko,mi'a) >>]
 
-lu cusku la poi'i ke cibmasti cicyractu ke'e ku'o ku
+lu cusku la ke cibmasti cicyractu ke'e ku
 .i lisri fi ko mi'a li'u
 
 -----
@@ -7924,7 +7924,7 @@ jmina( ,[Name: mapypre(_) ])
 EX x1. ((se va'o nai)(x1). sutra(ko) /\ x1=. (ba)(). (pu)(c0). sipna(do)) >>]
 
 lu cy no nu mulno kei
-.i jmina la poi'i mapypre ku'o ku
+.i jmina la mapypre ku
 .i su'o da zo'u ge se va'o nai da zo'u ko sutra gi fi'o du da ba ku pu cy no zo'u do sipna li'u
 
 -----
@@ -7940,7 +7940,7 @@ xabju(m,c2) >>]
 lu cy re loldi cy pa
 .i cy pa jintyke'a
 .i ge cy no ke cmalu mensi ke'e gi cy no ci mei
-.i ke ke mutce sutra ke'e tolsisti ke'e la poi'i sipsmacu ku'o ku
+.i ke ke mutce sutra ke'e tolsisti ke'e la sipsmacu ku
 .i pu ku zu ku vu ku zo'u zo elsis fa'u ke zo lesis ke'e fa'u ke zo tilis ke'e cmene
 .i my xabju cy re li'u
 
@@ -7966,7 +7966,7 @@ mentu(c1,(ji'i re))
 satyjisra(c0)
 cidja(c0,m) >>]
 
-lu ba cy re zo'u cusku la poi'i sipsmacu ku'o ku
+lu ba cy re zo'u cusku la sipsmacu ku
 .i cy re nu ze'a cy pa zo'u pensi kei
 .i cy pa mentu li ji'i re boi lo'o
 .i cy no satyjisra
@@ -7988,7 +7988,7 @@ go'i( )
 mutce( ,c0) >>]
 
 lu cy no ka ce'u bilma kei
-.i cusku la poi'i sipsmacu ku'o ku
+.i cusku la sipsmacu ku
 .i go'i
 .i mutce cy no li'u
 
@@ -8021,7 +8021,7 @@ cy ci ka ce'u cfipu la alis. kei
 ((za'u) re'u)(). pinxe(ko,c0) >>]
 
 lu cy no tcati
-.i ke ke mutce junri ke'e cusku ke'e la poi'i ke cibmasti cicyractu ke'e ku'o ku la alis.
+.i ke ke mutce junri ke'e cusku ke'e la ke cibmasti cicyractu ke'e ku la alis.
 .i za'u re'u ku zo'u ko pinxe cy no li'u
 
 -----
@@ -8044,7 +8044,7 @@ frili(c1) >>]
 
 lu cy pa nu za'u no re'u ku zo'u do skudji cy no kei
 .i cy no du'u na ku ka'e ku me'i re'u ku zo'u do pinxe kei
-.i cusku la poi'i mapypre ku'o ku
+.i cusku la mapypre ku
 .i do skudji cy no
 .i cy pa frili li'u
 
@@ -8083,7 +8083,7 @@ cy ci nu cpacu cy pa jo'u ke cy re ke'e kei
 .i cy no nu spuda la'e di'u lu'u kei
 .i su'o da zo'u ge se ki'u da zo'u na ku la alis. kakne cy no gi fi'o du da su'o de zo'u ge fi'o du de zo'u la alis. sezyse'u cy ci gi ba de re re'u ku zo'u lu cy pa loldi cy no
 .i cy no jintyke'a
-.i ma goi ko'a ki'u ko'a zo'u my xabju cy pa li'u preti fi la alis. la poi'i sipsmacu ku'o ku
+.i ma goi ko'a ki'u ko'a zo'u my xabju cy pa li'u preti fi la alis. la sipsmacu ku
 
 -----
 > ni'o la sipsmacu za'u re'u pensi ze'a lo mentu be li ji'i re gi'e ba bo cusku *lu jy satyjisra jintyke'a li'u*
@@ -8092,7 +8092,7 @@ mentu(c0,(ji'i re))
 EX x1. (x1=. ((za'u) re'u)(). (ze'a)(c0). pensi([Name: sipsmacu(_) ]) /\ (ba)(x1). cusku([Name: sipsmacu(_) ],<< <satyjisra(_)><jintyke'a>(j) >>))
 
 cy no mentu li ji'i re boi lo'o
-.i su'o da zo'u ge fi'o du da za'u re'u ku ze'a cy no zo'u la poi'i sipsmacu ku'o ku pensi gi ba da zo'u la poi'i sipsmacu ku'o ku cusku lu jy ke satyjisra jintyke'a ke'e li'u
+.i su'o da zo'u ge fi'o du da za'u re'u ku ze'a cy no zo'u la sipsmacu ku pensi gi ba da zo'u la sipsmacu ku cusku lu jy ke satyjisra jintyke'a ke'e li'u
 
 -----
 > ni'o *lu .o'o nai no go'i cu zasti *sei la .alis. co'a fengu cusku* li'u* .i ku'i la mapypre jo'u la cibmasti cicyractu cu bacru zoi sance c c sance .i la sipsmacu cu pante te pinka fi *lu .e'e do se'a dai mulgau lo lisri va'o lo nu do na ka'e clite li'u*
@@ -8132,7 +8132,7 @@ nu[pixra( )](c0)
 [Fragment: c1] >>]
 
 cy no nu di'a ku zo'u co'e kei
-.i lu ke se si'arxai cusku ke'e la poi'i sipsmacu ku'o ku
+.i lu ke se si'arxai cusku ke'e la sipsmacu ku
 .i zasti li'u
 .i sy nalpro cy no
 .i lu ge cy pa ke cmalu mensi ke'e gi ge cy pa ci mei gi ca'o ku zo'u cy pa crebi'o cy no
@@ -8161,7 +8161,7 @@ nu[pensi( )](c0)
 [Fragment: c1] >>]
 
 lu cy pa satyjisra
-.i ca ku se cau cy no zo'u cusku la poi'i sipsmacu ku'o ku
+.i ca ku se cau cy no zo'u cusku la sipsmacu ku
 .i cy no nu pensi kei
 .i cy pa li'u
 
@@ -8176,7 +8176,7 @@ FA x1:((mi'o) >= (_)). muvdu(x1,c1) >>]
 
 lu cy pa ke lamji stuzi ke'e
 .i cy no ke jinsa kabri ke'e
-.i zunti la poi'i mapypre ku'o ku
+.i zunti la mapypre ku
 .i mi djica cy no
 .i ro da poi ke'a me mi'o me'u ku'o zo'u da muvdu cy pa li'u
 
@@ -8199,20 +8199,20 @@ basti("alis",[Name: <cibmasti(_)><cicyractu>(_) ],c2)
 EX x1. prali(x1,[Name: mapypre(_) ],c3)
 (ki'u)(c7). tolprali(c4,"alis")
 
-cy ze nu pu ku zi ku zo'u la poi'i ke cibmasti cicyractu ke'e ku'o ku falcru cy mu cy xa kei
-.i ge cy xa palta gi cy xa srana la poi'i ke cibmasti cicyractu ke'e ku'o ku
+cy ze nu pu ku zi ku zo'u la ke cibmasti cicyractu ke'e ku falcru cy mu cy xa kei
+.i ge cy xa palta gi cy xa srana la ke cibmasti cicyractu ke'e ku
 .i cy mu ke ladru botpi ke'e
 .i cy vo mutce
 .i cy ci nuncenba
 .i cy re ka ma goi ko'a zo'u ce'u zvati ko'a kei
 .i la alis. ke banzu naldjica ke'e
-.i pu ku zo'u la poi'i sipsmacu ku'o ku zvati cy pa
+.i pu ku zo'u la sipsmacu ku zvati cy pa
 .i cy no nu cusku kei
 .i ca cy no zo'u my muvdu
-.i la poi'i sipsmacu ku'o ku jersi my
-.i la poi'i ke cibmasti cicyractu ke'e ku'o ku muvdu cy pa
-.i la alis. basti la poi'i ke cibmasti cicyractu ke'e ku'o ku cy re
-.i su'o da zo'u da prali la poi'i mapypre ku'o ku cy ci
+.i la sipsmacu ku jersi my
+.i la ke cibmasti cicyractu ke'e ku muvdu cy pa
+.i la alis. basti la ke cibmasti cicyractu ke'e ku cy re
+.i su'o da zo'u da prali la mapypre ku cy ci
 .i ki'u cy ze zo'u cy vo tolprali la alis.
 
 -----
@@ -8223,7 +8223,7 @@ nu[EX x1. (x1=. ((za'u) re'u)(). cnixai( ,[Name: sipsmacu(_) ]) /\ (se ki'u)(x1)
 ? x2. cpacu(m,c0,x2) >>))](c0)
 !djica("alis",c0)
 
-cy no nu su'o da zo'u ge fi'o du da za'u re'u ku zo'u cnixai la poi'i sipsmacu ku'o ku gi se ki'u da zo'u ke kajde ke tolsti cusku ke'e ke'e lu cy no satyjisra
+cy no nu su'o da zo'u ge fi'o du da za'u re'u ku zo'u cnixai la sipsmacu ku gi se ki'u da zo'u ke kajde ke tolsti cusku ke'e ke'e lu cy no satyjisra
 .i na ku mi jimpe
 .i ma goi ko'a zo'u my cpacu cy no ko'a li'u kei
 .i na ku la alis. djica cy no
@@ -8244,7 +8244,7 @@ Parse error:
 nenri(m,c1) >>]
 
 lu cy pa jintyke'a
-.i ke naljundi be cy no bei la poi'i sipsmacu ku'o ku cusku ke'e
+.i ke naljundi be cy no bei la sipsmacu ku cusku ke'e
 .i cy no ke ro moi pinka ke'e
 .i my nenri cy pa li'u
 
@@ -8257,7 +8257,7 @@ go'i( )
 nenri( ,c0) >>]
 
 lu cy no jintyke'a
-.i cusku la poi'i sipsmacu ku'o ku
+.i cusku la sipsmacu ku
 .i go'i
 .i nenri cy no li'u
 
@@ -8271,7 +8271,7 @@ danfu(c0)
 (tai)(). (ja'e)(c3). <mutce(_)><cfipu>(c0,"alis")
 
 cy ci nu curmi cy re kei
-.i cy re nu ca'o ku ze'a cy pa zo'u la poi'i sipsmacu ku'o ku co'e kei
+.i cy re nu ca'o ku ze'a cy pa zo'u la sipsmacu ku co'e kei
 .i cy pa nu na ku la alis. zunti kei
 .i cy no danfu
 .i tai ku ja'e cy ci zo'u cy no ke mutce cfipu ke'e la alis.
@@ -8293,7 +8293,7 @@ dacti(c0)
 cy pa nu co'a ku zo'u sipydji kei
 .i cy no kanla
 .i lu cy no nu pixra kei
-.i di'a ku zo'u co'e la poi'i sipsmacu ku'o ku
+.i di'a ku zo'u co'e la sipsmacu ku
 .i ca'o ku zo'u my crebi'o cy no li'u
 .i ge sy sipfru gi ki'u cy pa zo'u sy mosra cy no
 .i lu ro da zo'u li ma'o fypa mo'e da lo'o ke cmene be da lerfu ke'e
@@ -8342,10 +8342,10 @@ FA x1. <cmene(_,x1)><lerfu>(f0(x1))
 EX x1. (ka'e)(). mutce(x1)
 ?. ((su'o) roi)(). viska(do,c6) >>))
 
-cy pa nu la poi'i mapypre ku'o ku tunta kei
+cy pa nu la mapypre ku tunta kei
 .i cy no kanla
-.i ge ba'o ku ca la'e di'u lu'u zo'u la poi'i sipsmacu ku'o ku ga'orgau cy no gi ca'o ku co'a ku zo'u la poi'i sipsmacu ku'o ku sipna
-.i ca cy pa zo'u ge ge za'u re'u ku zo'u la poi'i sipsmacu ku'o ku cikybi'o gi la poi'i sipsmacu ku'o ku ke cmalu krixa ke'e gi di'a ku zo'u la poi'i sipsmacu ku'o ku cusku lu cy xa pixra cy mu
+.i ge ba'o ku ca la'e di'u lu'u zo'u la sipsmacu ku ga'orgau cy no gi ca'o ku co'a ku zo'u la sipsmacu ku sipna
+.i ca cy pa zo'u ge ge za'u re'u ku zo'u la sipsmacu ku cikybi'o gi la sipsmacu ku ke cmalu krixa ke'e gi di'a ku zo'u la sipsmacu ku cusku lu cy xa pixra cy mu
 .i cy mu mutce
 .i cy vo mutce
 .i cy ci mojrango
@@ -8372,7 +8372,7 @@ lu ke se ke mutce cfipu ke'e cusku ke'e la alis.
 [Fragment: << cusku( ,[Name: mapypre(_) ])
 (va'o)({la'e}(di'u)). !tavla(do) >>]
 
-lu cusku la poi'i mapypre ku'o ku
+lu cusku la mapypre ku
 .i va'o la'e di'u lu'u zo'u na ku do tavla li'u
 
 -----
@@ -8389,7 +8389,7 @@ Parse error:
 setca(([Name: mapypre(_) ] {jo'u} [Name: cicyractu(_) ]),[Name: sipsmacu(_) ],c0)
 
 cy no ke tcati patxu ke'e
-.i la poi'i mapypre ku'o ku jo'u ke la poi'i cicyractu ku'o ku ke'e setca la poi'i sipsmacu ku'o ku cy no
+.i la mapypre ku jo'u ke la cicyractu ku ke'e setca la sipsmacu ku cy no
 
 -----
 > ni'o *lu ta'o nai .ai mi no roi za'u re'u klama ba'e tu *sei la .alis. ca lo nu pluta sisku pa'o lo ricfoi cu cusku* .i traji lo kambebna lo tcati kansi'u poi mi pagbu ca lo nu mi jmive li'u*
@@ -8496,7 +8496,7 @@ cy pano ke ke lenku milxe ke'e je'erjinto ke'e
 
 <[[Name: noltruni'u(_) ]] moi(_)><<kelcrkroke(_)><foldi>>( )
 
-ke me la poi'i noltruni'u ku'o ku me'u moi ke kelcrkroke foldi ke'e ke'e
+ke me la noltruni'u ku me'u moi ke kelcrkroke foldi ke'e ke'e
 
 -----
 > ni'o lo barda ke rozgu tricu cu jibni lo vorme be lo purdi .i lo rozgu poi xrula ty cu blabi .i ku'i ci purdykurji cu ca'o punji lo xunre cinta ry .i la .alis. cu pensi jinvi lo du'u mutce cizra kei gi'e jbize'a te zu'e lo nu catlu .i .abu ca lo nu ba'o klama cu tirna lo nu pa lo purdykurji cu cusku *lu .o'i doi .mum. ko na renro lo cinta mi li'u*
@@ -8572,7 +8572,7 @@ lu cy re du'u vimcu cy pa do kei
 .i cy no purlamdei
 .i cusku la mum.
 .i na ku do tavla
-.i ca cy no zo'u la poi'i noltruni'u ku'o ku xusra cy re li'u
+.i ca cy no zo'u la noltruni'u ku xusra cy re li'u
 
 -----
 > ni'o *lu ma krinu *sei lo tavla pa moi cu cusku* li'u*
@@ -8698,7 +8698,7 @@ FA x1:((mi'a) >= (_)). (va'o)(c2). (ba)(). <katna(_)><vimcu>( ,c3,x1)
 (so'i) x1:(nu[stapa( )](_)). sance( ,x1)
 (catlu("alis",c5) /\ djica("alis",c6))
 
-cy xa nu viska la poi'i noltruni'u ku'o ku kei
+cy xa nu viska la noltruni'u ku kei
 .i cy mu sruri
 .i cy vo nu cy re cpana cy ci kei
 .i cy ci loldi
@@ -8710,15 +8710,15 @@ cy xa nu viska la poi'i noltruni'u ku'o ku kei
 .i co'a ku zo'u la rel. ke ke kandi voksa ke'e cusku ke'e lu cy mu nu cy re klama kei
 .i ge cy vo xagrai gi cy vo srana mi'a
 .i cy ci stedu
-.i cy re nu la poi'i noltruni'u ku'o ku facki la'e di'u lu'u kei
+.i cy re nu la noltruni'u ku facki la'e di'u lu'u kei
 .i cy pa nu sombo cy no kei
 .i cy no blabi
 .i ti ke ke xunre rozgu ke'e tricu ke'e
 .i pu ku zo'u mi'a srera cy pa
 .i ro da poi ke'a me mi'a me'u ku'o va'o cy re ba ku zo'u ke katna vimcu ke'e cy ci da
 .i pu cy mu zo'u mi'a zukte cy vo li'u
-.i ca ku zo'u la mum. krixa lu la poi'i noltruni'u ku'o ku
-.i la poi'i noltruni'u ku'o ku li'u
+.i ca ku zo'u la mum. krixa lu la noltruni'u ku
+.i la noltruni'u ku li'u
 .i ja'e cy vo zo'u cy pa sezre'o
 .i so'i boi da poi ke'a nu stapa kei ku'o zo'u sance da
 .i ge la alis. catlu cy mu gi la alis. djica cy xa
@@ -8753,8 +8753,8 @@ cy ci nu ke krobi'o ke'e je ke cisma ke'e kei
 .i cy pa nu cy no crane la alis. kei
 .i cy no dzupoi
 .i ro da ca cy pa zo'u ge da sisti gi da catlu la alis.
-.i la poi'i noltruni'u ku'o ku ke junri cusku ke'e lu mo cei broda zo'u ti broda li'u
-.i la poi'i noltruni'u ku'o ku cusku di'u la poi'i poi'i ge ke'a nolse'u gi ge ke'a srana cy re gi ke'a spuda kei ku'o ku cy ci
+.i la noltruni'u ku ke junri cusku ke'e lu mo cei broda zo'u ti broda li'u
+.i la noltruni'u ku cusku di'u la poi'i ge ke'a nolse'u gi ge ke'a srana cy re gi ke'a spuda kei ku cy ci
 
 -----
 > ni'o *lu doi bebna *sei la noltruni'u cu sutydji cusku* li'u* .i fa'a la .alis. ny di'a cusku *lu ma do cmene doi verba li'u*
@@ -8816,7 +8816,7 @@ cy vo nu zi cy re tai tu'a cy ci lu'u zo'u catlu abu kei
 .i cy re mokca
 .i cy pa nu fengu kei
 .i cy no xunzi'u
-.i ri'a cy pa zo'u la poi'i noltruni'u ku'o ku binxo cy no
+.i ri'a cy pa zo'u la noltruni'u ku binxo cy no
 .i ba cy vo zo'u cy pa krixa lu cy no stedu
 .i ko vimcu cy no ta
 .i ko li'u
@@ -8839,7 +8839,7 @@ smaji([Name: noltruni'u(_) ])
 
 lu ke ke cladu ke'e je ke birti ke'e cusku ke'e la alis.
 .i nonselsmu li'u
-.i la poi'i noltruni'u ku'o ku smaji
+.i la noltruni'u ku smaji
 
 -----
 > ni'o la noltrunau cu punji lo xance lo birka be la noltruni'u gi'e toldarsi cusku *lu ko pensi doi dirba lo nu ta verba po'o li'u*
@@ -8849,9 +8849,9 @@ xance(c0)
 (punji([Name: noltrunau(_) ],c0,c1) /\ <toldarsi(_)><cusku>([Name: noltrunau(_) ],<< nu[verba(ta)](c0)
 pensi(ko,c0) >>))
 
-cy pa birka la poi'i noltruni'u ku'o ku
+cy pa birka la noltruni'u ku
 .i cy no xance
-.i ge la poi'i noltrunau ku'o ku punji cy no cy pa gi la poi'i noltrunau ku'o ku ke toldarsi cusku ke'e lu cy no nu ta verba kei
+.i ge la noltrunau ku punji cy no cy pa gi la noltrunau ku ke toldarsi cusku ke'e lu cy no nu ta verba kei
 .i ko pensi cy no li'u
 
 -----
@@ -8859,7 +8859,7 @@ cy pa birka la poi'i noltruni'u ku'o ku
 
 ((to'o)([Name: noltrunau(_) ]). carna([Name: noltruni'u(_) ]) /\ cusku([Name: noltruni'u(_) ],<< fa'ergau(ko,ta) >>,[Name: nolse'u(_) ]))
 
-ge to'o la poi'i noltrunau ku'o ku zo'u la poi'i noltruni'u ku'o ku carna gi la poi'i noltruni'u ku'o ku cusku lu ko fa'ergau ta li'u la poi'i nolse'u ku'o ku
+ge to'o la noltrunau ku zo'u la noltruni'u ku carna gi la noltruni'u ku cusku lu ko fa'ergau ta li'u la nolse'u ku
 
 -----
 > ni'o la nolse'u cu kurji mutce fa'ergau se pi'o lo jamfu
@@ -8868,7 +8868,7 @@ jamfu(c0)
 (se pi'o)(c0). <<kurji(_)><mutce>(_)><fa'ergau>([Name: nolse'u(_) ])
 
 cy no jamfu
-.i se pi'o cy no zo'u la poi'i nolse'u ku'o ku ke ke kurji mutce ke'e fa'ergau ke'e
+.i se pi'o cy no zo'u la nolse'u ku ke ke kurji mutce ke'e fa'ergau ke'e
 
 -----
 > ni'o *lu ko sanli *sei la noltruni'u cu cpina je cladu voksa cusku* li'u* .i lo ci purdykurji ze'i sa'irbi'o gi'e co'a korcu rinsa la noltrunau .e la noltruni'u .e lo noltru panzi .e ro lo drata
@@ -8883,9 +8883,9 @@ sanli(ko) >>]
 cy re drata
 .i cy pa ke noltru panzi ke'e
 .i ge cy no purdykurji gi cy no ci mei
-.i lu ke ke ke cpina ke'e je ke cladu ke'e voksa ke'e cusku ke'e la poi'i noltruni'u ku'o ku
+.i lu ke ke ke cpina ke'e je ke cladu ke'e voksa ke'e cusku ke'e la noltruni'u ku
 .i ko sanli li'u
-.i ge ze'i ku zo'u cy no sa'irbi'o gi co'a ku zo'u ge ge ge cy no ke korcu rinsa ke'e la poi'i noltrunau ku'o ku gi cy no ke korcu rinsa ke'e la poi'i noltruni'u ku'o ku gi cy no ke korcu rinsa ke'e cy pa gi ro da poi ke'a me cy re me'u ku'o zo'u cy no ke korcu rinsa ke'e da
+.i ge ze'i ku zo'u cy no sa'irbi'o gi co'a ku zo'u ge ge ge cy no ke korcu rinsa ke'e la noltrunau ku gi cy no ke korcu rinsa ke'e la noltruni'u ku gi cy no ke korcu rinsa ke'e cy pa gi ro da poi ke'a me cy re me'u ku'o zo'u cy no ke korcu rinsa ke'e da
 
 -----
 > ni'o *lu ko ta sisti *sei la noltruni'u cu krixa* .i do mi tolylaxygau li'u* .i fa'a lo rozgu tricu ny di'a cusku *lu do ma ca'o vi zukte li'u*
@@ -8897,7 +8897,7 @@ tolylaxygau(do,mi) >>]
 (fa'a)(c0). (di'a)(). cusku(n,<< ? x1. (ca'o)(). (vi)(). zukte(do,x1) >>)
 
 cy no ke rozgu tricu ke'e
-.i lu krixa la poi'i noltruni'u ku'o ku
+.i lu krixa la noltruni'u ku
 .i ko sisti ta
 .i do tolylaxygau mi li'u
 .i fa'a cy no di'a ku zo'u ny cusku lu ma goi ko'a ca'o ku vi ku zo'u do zukte ko'a li'u
@@ -8946,7 +8946,7 @@ cy ci drata
 stedu(c0)
 ?. (ba'o)(). vimcu( ,c0) >>]
 
-lu krixa la poi'i noltruni'u ku'o ku
+lu krixa la noltruni'u ku
 .i cy no stedu
 .i xu kau ba'o ku zo'u vimcu cy no li'u
 
@@ -8965,7 +8965,7 @@ lu cy no stedu
 [Fragment: << krixa( ,[Name: noltruni'u(_) ])
 ?. kelcrkroke(do) >>]
 
-lu krixa la poi'i noltruni'u ku'o ku
+lu krixa la noltruni'u ku
 .i xu kau zo'u do kelcrkroke li'u
 
 -----
@@ -9016,7 +9016,7 @@ ge cy no flira gi cy no srana abu
 .i ke ke mutce toldarsi ke'e voksa ke'e cy no
 .i melbi
 .i ke melbi donri ke'e li'u
-.i ca'o ku ne'a la poi'i poi'i ge ke'a ke blabi ractu ke'e gi ze'i ku zo'u ke'a catlu cy no kei ku'o ku zo'u abu cadzu
+.i ca'o ku ne'a la poi'i ge ke'a ke blabi ractu ke'e gi ze'i ku zo'u ke'a catlu cy no kei ku zo'u abu cadzu
 
 -----
 > ni'o *lu mutce *sei la .alis. cu cusku* .i la noltroni'u ma zvati li'u*
@@ -9027,7 +9027,7 @@ mutce( )
 
 lu cusku la alis.
 .i mutce
-.i ma goi ko'a zo'u la poi'i noltroni'u ku'o ku zvati ko'a li'u
+.i ma goi ko'a zo'u la noltroni'u ku zvati ko'a li'u
 
 -----
 > ni'o *lu .o'i .o'i *sei la ractu cu lauble je sutra tonga cusku* li'u* .i ry xanka catlu ga'u lo janco ca lo nu tavla kei gi'e sezgalgau co cpana lo jmadegji gi'e jbigau lo moklu lo .abu kerlo gi'e lauble cusku *lu ri ba se selmidycatra li'u*
@@ -9063,7 +9063,7 @@ lu cusku la alis.
 [Fragment: << retsku( ,[Name: ractu(_) ])
 ?. (pu)(). cusku(do,<< kecti(mi) >>) >>]
 
-lu retsku la poi'i ractu ku'o ku
+lu retsku la ractu ku
 .i xu kau pu ku zo'u do cusku lu mi kecti li'u li'u
 
 -----
@@ -9091,14 +9091,14 @@ darxi(n,c0) >>]
 (pu)(). <lerci(_)><klama>([Name: noltruni'u(_) ])
 cusku([Name: noltruni'u(_) ]) >>]
 
-lu cy no kerlo la poi'i noltruni'u ku'o ku
-.i co'a ku zo'u cusku la poi'i ractu ku'o ku
+lu cy no kerlo la noltruni'u ku
+.i co'a ku zo'u cusku la ractu ku
 .i ny darxi cy no li'u
 .i la alis. ke cmila krixa ke'e
-.i lu ke ke terpa tonga ke'e laurblesku ke'e la poi'i ractu ku'o ku
-.i ba ku zo'u la poi'i noltruni'u ku'o ku tirna do
-.i pu ku zo'u la poi'i noltruni'u ku'o ku ke lerci klama ke'e
-.i la poi'i noltruni'u ku'o ku cusku li'u
+.i lu ke ke terpa tonga ke'e laurblesku ke'e la ractu ku
+.i ba ku zo'u la noltruni'u ku tirna do
+.i pu ku zo'u la noltruni'u ku ke lerci klama ke'e
+.i la noltruni'u ku cusku li'u
 
 -----
 > ni'o *lu ko zvati lo me do moi *sei la noltruni'u cu lidvru voksa cusku* li'u* .i lo prenu co'a bajra fa'a ro da gi'e jalsi'u .i ku'i bredi zi lo mentu be li ji'i re .i lo nu kelci cu cfari .i la .alis. cu jinvi lo du'u no roi lo nunji'e pu viska lo tai kelcrkroke foldi .i cpana jo'u skuro .i lo bolci cu jmive jesymabru .i lo mruli cu jmive fagycpi .i lo sonci cu krosa'ibi'o fi lo xance jo'u lo jamfu ja'e lo nu bargu
@@ -9140,7 +9140,7 @@ cy papa nu bargu kei
 .i cy pa mentu li ji'i re boi lo'o
 .i cy no prenu
 .i lu cy no me do me'u moi
-.i ke ke lidvru voksa ke'e cusku ke'e la poi'i noltruni'u ku'o ku
+.i ke ke lidvru voksa ke'e cusku ke'e la noltruni'u ku
 .i ko zvati cy no li'u
 .i ge co'a ku ro da fa'a da zo'u cy no bajra gi cy no jalsi'u
 .i zi cy pa zo'u bredi
@@ -9270,8 +9270,8 @@ cy ci jesymabru
 .i cy pa mintu
 .i cy no kelci
 .i ro da poi ke'a me cy no me'u ku'o zo'u ge ge ge ca cy pa zo'u da kelci gi na ku da denpa cy re gi ru'i ku zo'u da toltugni gi da damba fi cy ci
-.i ba ku zi ku zo'u ge ge la poi'i noltruni'u ku'o ku ke fengu cinmo ke'e gi ca'o ku zo'u la poi'i noltruni'u ku'o ku ke marxa cadzu ke'e gi ga ro da poi ke'a mentu ku'o ji'i pa roi da zo'u la poi'i noltruni'u ku'o ku krixa lu cy no stedu
-.i ko vimcu cy no ta li'u gi ro da poi ke'a mentu ku'o ji'i pa roi da zo'u la poi'i noltruni'u ku'o ku krixa lu cy no stedu
+.i ba ku zi ku zo'u ge ge la noltruni'u ku ke fengu cinmo ke'e gi ca'o ku zo'u la noltruni'u ku ke marxa cadzu ke'e gi ga ro da poi ke'a mentu ku'o ji'i pa roi da zo'u la noltruni'u ku krixa lu cy no stedu
+.i ko vimcu cy no ta li'u gi ro da poi ke'a mentu ku'o ji'i pa roi da zo'u la noltruni'u ku krixa lu cy no stedu
 .i ko vimcu cy no tu li'u
 
 -----
@@ -9294,7 +9294,7 @@ pensi( ,a)
 cy pa du'u ka'e ku ba ku zi ku zo'u fasnu kei
 .i cy no ka ce'u tolkufra kei
 .i co'a ku zo'u la alis. cinmo cy no
-.i ge za'o ku zo'u na ku la alis. damba la poi'i noltruni'u ku'o ku gi la alis. djuno cy pa
+.i ge za'o ku zo'u na ku la alis. damba la noltruni'u ku gi la alis. djuno cy pa
 .i lu cy vo nu su'o da zo'u da stali cy ci kei
 .i cy ci ka ce'u jmive kei
 .i cy re nu vimcu cy no cy pa kei
@@ -9323,7 +9323,7 @@ EX x1. (x1=. (sisku(a,c1) /\ pensi(a,c3)) /\ (ca)(x1). (co'a)(). sanji(a,c5))
 (ca)(c6). cfipu(c1,a)
 (ba)(c8). facki(a,c9)
 
-cy so du'u ge cy pa nu cisma kei gi cy pa sezysku lu la poi'i tcicymlatu ku'o ku
+cy so du'u ge cy pa nu cisma kei gi cy pa sezysku lu la tcicymlatu ku
 .i ca ku su'o da ka'e ku zo'u mi tavla da li'u kei
 .i cy bi nu ze'a cy ze zo'u catlu cy pa kei
 .i cy ze mentu li ji'i re boi lo'o
@@ -9347,7 +9347,7 @@ nu[tavla( )](c1)
 ni[moklu(\1)](c0)
 ? R1. R1(do) >>]
 
-lu ca cy re zo'u cusku la poi'i mlatu ku'o ku
+lu ca cy re zo'u cusku la mlatu ku
 .i cy re nu cy no banzu cy pa kei
 .i cy pa nu tavla kei
 .i cy no ni ce'u moklu kei
@@ -9391,7 +9391,7 @@ simlu([Name: mlatu(_) ],c7)
 EQ(0) x1:(<drata(_)><pagbu>(_,[Name: mlatu(_) ])). tolcanci(x1)
 
 cy ze ka ce'u jinvi cy xa kei
-.i cy xa du'u pi rau boi da poi ke'a me la poi'i mlatu ku'o ku me'u ku'o ca ku zo'u viska da kei
+.i cy xa du'u pi rau boi da poi ke'a me la mlatu ku me'u ku'o ca ku zo'u viska da kei
 .i cy mu ka ce'u gleki cy vo kei
 .i cy vo nu su'o da zo'u da tirna la alis. kei
 .i cy ci nunkei
@@ -9400,8 +9400,8 @@ cy ze ka ce'u jinvi cy xa kei
 .i cy no ke drata mentu ke'e
 .i za cy no mo'u ku zo'u cy pa tolcanci
 .i ge ge la alis. toljgari cy re gi co'a ku zo'u lisri cy ci la alis. gi la alis. cinmo cy mu
-.i la poi'i mlatu ku'o ku simlu cy ze
-.i no da poi ke'a ke drata pagbu ke'e la poi'i mlatu ku'o ku ku'o zo'u da tolcanci
+.i la mlatu ku simlu cy ze
+.i no da poi ke'a ke drata pagbu ke'e la mlatu ku ku'o zo'u da tolcanci
 
 -----
 > ni'o *lu mi na jinvi lo du'u tu ca'o stace kelci *sei la .alis. co'a pante tonga cusku* .i ro tu da'arta'a ja'e lo nu na ka'e tirna lo nu tavla .i tu simlu lo ka na steci javni fi ce'u .i ja do'a nai no da va'o lo nu de ja'a javni cu jundi de .i do na se xanri lo du'u tai ma kau cfipu fa lo du'u ro lo dacti cu jmive .i mu'a lo bargu poi .ei mi ca pagre cu co'a cadzu lo drata fanmo be lo foldi .i mi pu'o kroke lo jesymabru pe la noltruni'u .i je ku'i ue jy to'o bajra ca lo nu viska lo nu lo me mi moi cu jbikla li'u*
@@ -9432,7 +9432,7 @@ FA x1:((tu) >= (_)). (ja'e)(c2). da'arta'a(x1)
 lu cy pavo nu viska cy paci kei
 .i cy paci nu cy pare jbikla kei
 .i cy pare me mi me'u moi
-.i ge cy papa jesymabru gi cy papa srana la poi'i noltruni'u ku'o ku
+.i ge cy papa jesymabru gi cy papa srana la noltruni'u ku
 .i cy pano ke drata fanmo ke'e cy so
 .i cy so foldi
 .i ge cy bi bargu gi ca ku zo'u mi pagre cy bi
@@ -9458,8 +9458,8 @@ lu cy pavo nu viska cy paci kei
 [Fragment: << <<lauble(_)><voksa>(_)><cusku>( ,[Name: mlatu(_) ])
 ?. nelci(do,[Name: noltruni'u(_) ]) >>]
 
-lu ke ke lauble voksa ke'e cusku ke'e la poi'i mlatu ku'o ku
-.i xu kau zo'u do nelci la poi'i noltruni'u ku'o ku li'u
+lu ke ke lauble voksa ke'e cusku ke'e la mlatu ku
+.i xu kau zo'u do nelci la noltruni'u ku li'u
 
 -----
 > ni'o *lu na sai go'i *sei la .alis. cu cusku* .i ny mutce .y li'u* .i ca ku .abu sanji lo nu la noltruni'u cu jibni trixe .abu gi'e tirna .i se ki'u bo di'a cusku *lu lo ka lakne fa lo nu ce'u jinga .i se ki'u bo na vamji lo temci fa lo nu mo'u kelci li'u*
@@ -9473,7 +9473,7 @@ Parse error:
 
 (cisma([Name: noltruni'u(_) ]) /\ pagre([Name: noltruni'u(_) ]))
 
-ge la poi'i noltruni'u ku'o ku cisma gi la poi'i noltruni'u ku'o ku pagre
+ge la noltruni'u ku cisma gi la noltruni'u ku pagre
 
 -----
 > ni'o *lu do ma tavla *sei la noltrunau cu cusku* li'u* .i ny klama la .alis. gi'e mutce se cinri catlu lo stedu be la mlatu
@@ -9483,8 +9483,8 @@ stedu(c0,[Name: mlatu(_) ])
 ? x1. tavla(do,x1) >>]
 (klama(n,"alis") /\ <<mutce(_)><cinri>( ,_)><catlu>(n,c0))
 
-cy no stedu la poi'i mlatu ku'o ku
-.i lu cusku la poi'i noltrunau ku'o ku
+cy no stedu la mlatu ku
+.i lu cusku la noltrunau ku
 .i ma goi ko'a zo'u do tavla ko'a li'u
 .i ge ny klama la alis. gi ny ke se ke mutce cinri ke'e catlu ke'e cy no
 
@@ -9514,7 +9514,7 @@ cusku( ,[Name: noltrunau(_) ])
 lu cy re nu pluka ta kei
 .i ge cy pa xance gi cy pa srana mi
 .i cy no nu ma goi ko'a zo'u ta simlu ko'a kei
-.i cusku la poi'i noltrunau ku'o ku
+.i cusku la noltrunau ku
 .i na ku mi nelci cy no
 .i va'o cy re zo'u ta cinba cy pa li'u
 
@@ -9526,7 +9526,7 @@ pinka( ,[Name: mlatu(_) ])
 zmanei(mi,c0) >>]
 
 lu cy no nu na ku go'i kei
-.i pinka la poi'i mlatu ku'o ku
+.i pinka la mlatu ku
 .i mi zmanei cy no li'u
 
 -----
@@ -9541,7 +9541,7 @@ trixe(c0,"alis")
 
 cy pa nu tavla kei
 .i cy no trixe la alis.
-.i lu cusku la poi'i noltrunau ku'o ku
+.i lu cusku la noltrunau ku
 .i na ku ko tolsi'a
 .i na ku tai ta zo'u ko catlu mi li'u
 .i ca cy pa zo'u ny klama cy no
@@ -9575,10 +9575,10 @@ vimcu( ,ta) >>]
 skuta'a(n,[Name: (noltruni'u(_) /\ (ca)(). <jibni(_)><pagre>(_,<< (vi)(). mlatu(c0)
 EX x1. vicygau(do,x1,c0) >>)) ])
 
-lu ke jdice cusku ke'e la poi'i noltrunau ku'o ku
+lu ke jdice cusku ke'e la noltrunau ku
 .i vimcu ta li'u
-.i ny skuta'a la poi'i poi'i ge ke'a noltruni'u gi ca ku zo'u ke'a ke jibni pagre ke'e lu vi ku zo'u cy no mlatu
-.i su'o de zo'u do vicygau de cy no li'u kei ku'o ku
+.i ny skuta'a la poi'i ge ke'a noltruni'u gi ca ku zo'u ke'a ke jibni pagre ke'e lu vi ku zo'u cy no mlatu
+.i su'o de zo'u do vicygau de cy no li'u kei ku
 
 -----
 > ni'o la noltruni'u cu cikre ta'i pa da ro nabmi noi barda ja cmalu .i *lu ko lo stedu ta vimcu *sei ny se cau lo nu fa'a catlu cu cusku* li'u*
@@ -9591,7 +9591,7 @@ stedu(c0)
 vimcu(ko,c0,ta) >>]
 
 ro da poi ke'a nabmi ku'o zo'u da ke barda ke'e ja ke cmalu ke'e
-.i pa da ta'i da ro de poi ke'a nabmi ku'o zo'u la poi'i noltruni'u ku'o ku cikre de
+.i pa da ta'i da ro de poi ke'a nabmi ku'o zo'u la noltruni'u ku cikre de
 .i lu se cau cy pa zo'u cusku ny
 .i cy pa nu fa'a ku zo'u catlu kei
 .i cy no stedu
@@ -9700,17 +9700,17 @@ nu[(ba'o)(). xruti( ,{tu'a}([Name: tcicymlatu(_) ]))](c0)
 (ca)(c0). spaji(c4,a)
 da'arsi'u(((c5 {jo'u} [Name: noltrunau(_) ]) {jo'u} [Name: noltruni'u(_) ]))
 
-ro da poi ke'a me cy mu jo'u ke la poi'i noltrunau ku'o ku ke'e jo'u ke la poi'i noltruni'u ku'o ku ke'e me'u ku'o ca cy xa ca cy ze zo'u da tavla cy mu jo'u ke la poi'i noltrunau ku'o ku ke'e jo'u ke la poi'i noltruni'u ku'o ku ke'e
+ro da poi ke'a me cy mu jo'u ke la noltrunau ku ke'e jo'u ke la noltruni'u ku ke'e me'u ku'o ca cy xa ca cy ze zo'u da tavla cy mu jo'u ke la noltrunau ku ke'e jo'u ke la noltruni'u ku ke'e
 .i cy ze nu ro da poi ke'a drata ku'o zo'u ge da ke smaji mutce ke'e gi da ke tolkufra simlu ke'e kei
 .i cy xa mintu
 .i cy mu selmi'ecatra
 .i cy vo nu facki cy ci kei
 .i cy ci du'u ba'o ku zo'u cy pa jmaji cy re kei
-.i cy re sruri la poi'i tcicymlatu ku'o ku
+.i cy re sruri la tcicymlatu ku
 .i cy pa ke prenu so'i mei ke'e
-.i cy no nu ba'o ku zo'u xruti tu'a la poi'i tcicymlatu ku'o ku lu'u kei
+.i cy no nu ba'o ku zo'u xruti tu'a la tcicymlatu ku lu'u kei
 .i ca cy no zo'u cy vo spaji abu
-.i cy mu jo'u ke la poi'i noltrunau ku'o ku ke'e jo'u ke la poi'i noltruni'u ku'o ku ke'e da'arsi'u
+.i cy mu jo'u ke la noltrunau ku ke'e jo'u ke la noltruni'u ku ke'e da'arsi'u
 
 -----
 > ni'o la .alis. ca lo nu tolcliva cu te cpedu lo nu jdice lo cuntu kei ro lo ci mei .i ku'i .abu ki'u lo nu ro ri tavla ca lo mintu cu mutce lo ka se nandu lo nu jimpe lo du'u ma kau se cusku
@@ -9748,9 +9748,9 @@ selmi'ecatra(c0)
 snuda'a(c0,[Name: noltrunau(_) ],c2)
 
 cy re nu ke katna vimcu ke'e cy pa kei
-.i cy pa stedu la poi'i tcicymlatu ku'o ku
+.i cy pa stedu la tcicymlatu ku
 .i cy no selmi'ecatra
-.i cy no snuda'a la poi'i noltrunau ku'o ku cy re
+.i cy no snuda'a la noltrunau ku cy re
 
 -----
 > ni'o lo seldau be lo selmi'ecatra zo'u na ka'e katna vimcu lo stedu se cau lo nu da poi xadni zo'u ka'e katna vimcu lo stedu da .i sy no roi pu zukte lo simsa .i .ai na co'a go'i ca lo sy ca nunjmive pagbu
@@ -9768,7 +9768,7 @@ FA x1:(stedu( ,_)). (ka'e)(). sedycaugau( ,x1)
 !cusku( ,c1)
 
 cy pa nonselsmu
-.i cy no seldau la poi'i noltrunau ku'o ku
+.i cy no seldau la noltrunau ku
 .i ro da poi stedu ke'a ku'o ka'e ku zo'u sedycaugau da
 .i na ku cusku cy pa
 
@@ -9790,7 +9790,7 @@ nu[(pi ro) x1:((c5) >= (_)). simlu(x1,c7)](c8)
 
 cy so nu ro da zo'u catra da kei
 .i cy vo rinka cy bi
-.i cy no seldau la poi'i noltruni'u ku'o ku
+.i cy no seldau la noltruni'u ku
 .i cy pa cuntu
 .i cy re ke temci pi no si'e ke'e
 .i cy ci mleca cy re
@@ -9799,7 +9799,7 @@ cy so nu ro da zo'u catra da kei
 .i cy xa ka ce'u ke junri ke'e je ke xanka ke'e kei
 .i cy ze ka ce'u mutce cy xa kei
 .i cy bi nu pi ro boi da poi ke'a me cy mu me'u ku'o zo'u da simlu cy ze kei
-.i ga su'o da se ra'a cy pa zi cy ci zo'u zukte da gi ba ku zo'u la poi'i noltruni'u ku'o ku minde fi cy so
+.i ga su'o da se ra'a cy pa zi cy ci zo'u zukte da gi ba ku zo'u la noltruni'u ku minde fi cy so
 
 -----
 > ni'o la .alis. na ka'e pensi lo nu cusku na'e bo *lu ta se ponse la noltroni'u .i .e'u preti ta ko ba'e ny li'u*
@@ -9808,8 +9808,8 @@ nu[cusku( ,{na'e bo}(<< ponse([Name: noltroni'u(_) ],ta)
 preti( ,ta,ko,[Name: noltroni'u(_) ]) >>))](c0)
 !(ka'e)(). pensi("alis",c0)
 
-cy no nu cusku na'e bo lu la poi'i noltroni'u ku'o ku ponse ta
-.i preti ta ko la poi'i noltroni'u ku'o ku li'u lu'u kei
+cy no nu cusku na'e bo lu la noltroni'u ku ponse ta
+.i preti ta ko la noltroni'u ku li'u lu'u kei
 .i na ku ka'e ku zo'u la alis. pensi cy no
 
 -----
@@ -9825,10 +9825,10 @@ klagau(ko,[Name: noltruni'u(_) ],ti) >>]
 
 cy pa danti
 .i cy no selmi'ecatra
-.i lu cusku la poi'i noltruni'u ku'o ku cy no
+.i lu cusku la noltruni'u ku cy no
 .i cy no selmi'ecatra
 .i ny pinfu
-.i ko klagau la poi'i noltruni'u ku'o ku ti li'u
+.i ko klagau la noltruni'u ku ti li'u
 .i tai tu'a cy pa lu'u zo'u cy no klama
 
 -----
@@ -9843,7 +9843,7 @@ Parse error:
 
 lisri( , ,[Name: <jitfa(_)><cakyrespa>(_) ])
 
-lisri fi la poi'i ke jitfa cakyrespa ke'e ku'o ku
+lisri fi la ke jitfa cakyrespa ke'e ku
 
 -----
 > ni'o *lu do na ka'e pensi lo nu se la'u ma kau mi gleki lo nu mi do za'u re'u viska doi dirba slabu *sei la noltroni'u cu cusku* li'u* .i ny xendo tagygau lo ny birka lo me la .alis. moi .i ny jo'u .abu kansi'u lo nu cadzu cliva
@@ -9912,9 +9912,9 @@ rinka({la'e}(di'u),c1)
 (ba)(). (zi)(). morji(mi) >>]
 
 cy re nu tirna cy pa kei
-.i ge cy pa voksa gi ge cy pa jibni cy no gi cy pa srana la poi'i noltroni'u ku'o ku
+.i ge cy pa voksa gi ge cy pa jibni cy no gi cy pa srana la noltroni'u ku
 .i ge cy no kerlo gi cy no srana abu
-.i ca ku zo'u ge abu nalmo'i fi la poi'i noltroni'u ku'o ku gi ca cy re zo'u ke milxe spaji ke'e abu
+.i ca ku zo'u ge abu nalmo'i fi la noltroni'u ku gi ca cy re zo'u ke milxe spaji ke'e abu
 .i lu du'u ma goi ko'a zo'u la'e di'u lu'u madni'i ko'a kei cy re
 .i cy pa nu do tolmo'i cy no kei
 .i cy no nu tavla kei
@@ -9980,7 +9980,7 @@ nu[prami( )](c0)
 nu[prami( )]( )
 rinka(c0,c2) >>)) >>]
 
-lu cusku la poi'i noltroni'u ku'o ku
+lu cusku la noltroni'u ku
 .i go'i
 .i la'e di'u lu'u madni'i la'e lu cy re nu cy pa carna kei
 .i cy pa munje
@@ -10014,7 +10014,7 @@ smuni(c0)
 EX x1. ((se va'o)(x1). kurji(ko,c0) /\ x1=. kurji(c1,c1)) >>)) >>]
 
 lu cy re ka ce'u smuni kei
-.i cusku la poi'i poi'i ge ke'a noltroni'u gi ke'a ca'ergau cy no cy pa kei ku'o ku
+.i cusku la poi'i ge ke'a noltroni'u gi ke'a ca'ergau cy no cy pa kei ku
 .i cy pa janco la alis.
 .i cy no ke ke kinli ke'e je ke cmalu ke'e firji'o ke'e
 .i mintu fi cy re
@@ -10059,7 +10059,7 @@ lu cy bi nu cipra kei
 .i du'u ma goi ko'a zo'u ko'a krinu cy ci kei cy vo
 .i cy ci nu na ku mi srupunji cy no cy re kei
 .i ge cy re xadmidju gi cy re srana do
-.i ba cy pa zo'u cusku la poi'i noltroni'u ku'o ku
+.i ba cy pa zo'u cusku la noltroni'u ku
 .i cy pa nundenpa
 .i ge cy no birka gi cy no srana mi
 .i do ke pensi sezretsku ke'e cy vo
@@ -10095,7 +10095,7 @@ madni'i({la'e}(di'u),{la'e}(<< (cipni(c0) /\ <pimdu'i(_)><ckaji>(c0))
 
 lu cy pa sansrmustardo
 .i cy no fagycpi
-.i cusku la poi'i noltroni'u ku'o ku
+.i cusku la noltroni'u ku
 .i ge cy no batci gi cy pa batci
 .i la'e di'u lu'u madni'i la'e lu ge cy no cipni gi cy no ke pimdu'i ckaji ke'e
 .i ro roi ku zo'u cy no jmaji li'u lu'u li'u
@@ -10122,7 +10122,7 @@ klina(c0,c1) >>]
 
 lu cy pa nu jimpe kei
 .i cy no nu do cusku kei
-.i cusku la poi'i noltroni'u ku'o ku
+.i cusku la noltroni'u ku
 .i drani
 .i cy no klina cy pa li'u
 
@@ -10133,7 +10133,7 @@ fagycpi(c0)
 (jgari("alis",c0) /\ tavla("alis",[Name: noltroni'u(_) ]))
 
 cy no fagycpi
-.i ge la alis. jgari cy no gi la alis. tavla la poi'i noltroni'u ku'o ku
+.i ge la alis. jgari cy no gi la alis. tavla la noltroni'u ku
 
 -----
 > ni'o *lu sy kunra ba'e pe'i *sei la .alis. cu cusku* li'u*
@@ -10160,7 +10160,7 @@ nu[zenba(c0)](c1)
 panra(c1,c3) >>)) >>]
 
 lu cy re ke barda ke sansrmustardo terkunra ke'e ke'e
-.i cusku la poi'i poi'i ge ke'a noltroni'u gi ke'a simlu cy pa kei ku'o ku
+.i cusku la poi'i ge ke'a noltroni'u gi ke'a simlu cy pa kei ku
 .i cy pa ka ce'u bredi cy no kei
 .i cy no nu ro da zo'u tugni la alis. da kei
 .i go'i
@@ -10220,7 +10220,7 @@ nu[cuxna(mi)](c0)
 
 lu ge ka'e ku va'o cy no zo'u cusku cy pa gi cy pa srana mi
 .i cy no nu mi cuxna kei
-.i ke ke se pluka tonga ke'e spuda ke'e la poi'i noltroni'u ku'o ku
+.i ke ke se pluka tonga ke'e spuda ke'e la noltroni'u ku
 .i ci'u cy pa zo'u di'u no va'e li'u
 
 -----
@@ -10243,7 +10243,7 @@ lu cy pa nu se pi'o cy no zo'u cusku kei
 !raktu( )
 FA x1:((ca)(). (ba'o)(). cusku(mi,_)). dunda(mi,x1,do) >>]
 
-lu cusku la poi'i noltroni'u ku'o ku
+lu cusku la noltroni'u ku
 .i na ku raktu
 .i ro da poi ca ku ba'o ku zo'u mi cusku ke'a ku'o zo'u mi dunda da do li'u
 
@@ -10274,7 +10274,7 @@ nu[((za'u) re'u)(). ca'ergau( ,c0)](c1)
 <<kinli(_)>{je}<cmalu(_)>(_)><firji'o>(c0)
 ?. ((za'u) re'u)(). pensi( ) >>]
 
-lu ca cy pa zo'u preti la poi'i noltroni'u ku'o ku
+lu ca cy pa zo'u preti la noltroni'u ku
 .i cy pa nu za'u re'u ku zo'u ca'ergau cy no kei
 .i cy no ke ke kinli ke'e je ke cmalu ke'e firji'o ke'e
 .i xu kau za'u re'u ku zo'u pensi li'u
@@ -10305,7 +10305,7 @@ madni'i({la'e}(di'u)) >>]
 lu cy re nu cy no zifre cy pa kei
 .i cy pa nu vofli kei
 .i cy no xarju
-.i cusku la poi'i noltroni'u ku'o ku
+.i cusku la noltroni'u ku
 .i 
 .i la'e di'u lu'u madni'i li'u
 
@@ -10329,12 +10329,12 @@ ge cy mu birka gi cy mu jorne cy vo
 .i cy ci midju cy re
 .i ge cy re ke se nelrai valsi ke'e gi ge cy re du zo madni'i gi cy re srana cy pa
 .i cy pa nu ca ku zo'u cy no canci kei
-.i cy no voksa la poi'i noltroni'u ku'o ku
+.i cy no voksa la noltroni'u ku
 .i ca ku zo'u cy pa ke mutce spaji ke'e la alis. cy ci
 .i co'a ku zo'u cy mu desku
 .i la alis. catlu
-.i ca'u ku zo'u la poi'i noltruni'u ku'o ku sanli
-.i ge ke se polje birka ke'e la poi'i noltruni'u ku'o ku gi la poi'i noltruni'u ku'o ku ke ke lindi simsa ke'e frumu ke'e
+.i ca'u ku zo'u la noltruni'u ku sanli
+.i ge ke se polje birka ke'e la noltruni'u ku gi la noltruni'u ku ke ke lindi simsa ke'e frumu ke'e
 
 -----
 > ni'o *lu xamgu donri doi nolba'i *sei la noltroni'u co'a lauble je ruble voksa cusku* li'u*
@@ -10358,7 +10358,7 @@ cuxna(ko) >>]
 
 lu ge cy vo temci gi cy vo no mei
 .i cy ci stedu do
-.i ca cy re zo'u krixa la poi'i noltruni'u ku'o ku
+.i ca cy re zo'u krixa la noltruni'u ku
 .i cy re nu darxi cy no cy pa kei
 .i cy pa jamfu
 .i cy no loldi
@@ -10371,7 +10371,7 @@ lu ge cy vo temci gi cy vo no mei
 
 (cuxna([Name: noltroni'u(_) ]) /\ (zi)(). (ba'o)(). cliva([Name: noltroni'u(_) ]))
 
-ge la poi'i noltroni'u ku'o ku cuxna gi zi ku ba'o ku zo'u la poi'i noltroni'u ku'o ku cliva
+ge la noltroni'u ku cuxna gi zi ku ba'o ku zo'u la noltroni'u ku cliva
 
 -----
 > ni'o *lu .e'u mi'o di'a kelci *sei la noltruni'u fi la .alis. cu cusku* li'u* .i la .alis. cu dukse lo ka terpa kei gi'e cusku no valsi gi'e ku'i masno jersi ny fa'a lo kelcrkroke foldi
@@ -10384,7 +10384,7 @@ ka[terpa(\1)](c0)
 
 cy pa ke kelcrkroke foldi ke'e
 .i cy no ka ce'u terpa kei
-.i lu cusku la poi'i noltruni'u ku'o ku la alis.
+.i lu cusku la noltruni'u ku la alis.
 .i di'a ku zo'u mi'o kelci li'u
 .i ge ge la alis. dukse cy no gi no da poi ke'a valsi ku'o zo'u la alis. cusku da gi fa'a cy pa zo'u la alis. ke masno jersi ke'e ny
 
@@ -10411,13 +10411,13 @@ cy so du'u cy bi jdima cy ze kei
 .i cy xa nu xruti cy mu kei
 .i cy mu nu kelci kei
 .i cy vo nu viska cy ci kei
-.i cy ci nu la poi'i noltruni'u ku'o ku nalzvati kei
+.i cy ci nu la noltruni'u ku nalzvati kei
 .i cy re ke drata vitke ke'e
 .i cy pa nu bu'u cy no zo'u surla kei
 .i cy no ctino
 .i cy pa prali cy re cy ci
 .i ca cy vo zi ku zo'u vy sutra cy xa
-.i cy so pinka fi la poi'i noltruni'u ku'o ku
+.i cy so pinka fi la noltruni'u ku
 
 -----
 > ni'o ze'a pi ro lo nunkei la noltruni'u no roi de'a damba lo drata kelci gi'e no roi de'a krixa *lu ko lo stedu ta vimcu li'u* .a *lu ko lo stedu tu vimcu li'u* .i lo se dapma be ny cu klagau lo sonci noi li'a de'a bargu .i ba za lo cacra be li ji'i pi mu ge no bargu cu zvati gi ro lo kelci po'u na'e bo la noltrunau .a la noltruni'u .a la .alis. cu pinfu gi'e se dapma fi lo nu se selmi'ecatra .i ba bo la noltruni'u cu tatpi cliva gi'e cusku fi la .alis. fe *lu xu do pu viska la jitfa cakyrespa li'u*
@@ -10436,17 +10436,17 @@ klagau(c2,c3)
 EX x1. (x1=. (ba za)(c4). (EQ(0) x2:(bargu(_)). zvati(x2) /\ ((FA x2:((f5([Name: noltrunau(_) ])) >= (_)). (pinfu(x2) /\ dapma( ,x2,c6)) \/ FA x2:((f5([Name: noltruni'u(_) ])) >= (_)). (pinfu(x2) /\ dapma( ,x2,c6))) \/ FA x2:((f5("alis")) >= (_)). (pinfu(x2) /\ dapma( ,x2,c6)))) /\ (ba)(x1). (<tatpi(_)><cliva>([Name: noltruni'u(_) ]) /\ cusku([Name: noltruni'u(_) ],<< ?. (pu)(). viska(do,[Name: <jitfa(_)><cakyrespa>(_) ]) >>,"alis")))
 
 cy xa nu selmi'ecatra kei
-.i ro da poi ga ke'a du la poi'i noltruni'u ku'o ku gi ke'a du la poi'i noltrunau ku'o ku ku'o ro de poi ga ke'a du la alis. gi ke'a du da ku'o zo'u ge li ma'o fymu mo'e de lo'o kelci gi li ma'o fymu mo'e de lo'o du na'e bo de lu'u
+.i ro da poi ga ke'a du la noltruni'u ku gi ke'a du la noltrunau ku ku'o ro de poi ga ke'a du la alis. gi ke'a du da ku'o zo'u ge li ma'o fymu mo'e de lo'o kelci gi li ma'o fymu mo'e de lo'o du na'e bo de lu'u
 .i cy vo cacra li ji'i pi mu boi lo'o
 .i ge cy ci sonci gi de'a ku zo'u cy ci bargu
-.i la poi'i noltruni'u ku'o ku dapma cy re
+.i la noltruni'u ku dapma cy re
 .i cy pa ke drata kelci ke'e
 .i cy no nunkei
-.i pi ro boi da poi ke'a me cy no me'u ku'o ze'a da zo'u ge no roi ku de'a ku zo'u la poi'i noltruni'u ku'o ku damba cy pa gi no roi ku de'a ku zo'u ga la poi'i noltruni'u ku'o ku krixa lu cy no stedu
-.i ko vimcu cy no ta li'u gi la poi'i noltruni'u ku'o ku krixa lu cy no stedu
+.i pi ro boi da poi ke'a me cy no me'u ku'o ze'a da zo'u ge no roi ku de'a ku zo'u la noltruni'u ku damba cy pa gi no roi ku de'a ku zo'u ga la noltruni'u ku krixa lu cy no stedu
+.i ko vimcu cy no ta li'u gi la noltruni'u ku krixa lu cy no stedu
 .i ko vimcu cy no tu li'u
 .i cy re klagau cy ci
-.i su'o da zo'u ge fi'o du da ba za cy vo zo'u ge no de poi ke'a bargu ku'o zo'u de zvati gi ga ga ro de poi ke'a me li ma'o fymu mo'e la poi'i noltrunau ku'o ku lo'o me'u ku'o zo'u ge de pinfu gi dapma de cy xa gi ro de poi ke'a me li ma'o fymu mo'e la poi'i noltruni'u ku'o ku lo'o me'u ku'o zo'u ge de pinfu gi dapma de cy xa gi ro de poi ke'a me li ma'o fymu mo'e la alis. lo'o me'u ku'o zo'u ge de pinfu gi dapma de cy xa gi ba da zo'u ge la poi'i noltruni'u ku'o ku ke tatpi cliva ke'e gi la poi'i noltruni'u ku'o ku cusku lu xu kau pu ku zo'u do viska la poi'i ke jitfa cakyrespa ke'e ku'o ku li'u la alis.
+.i su'o da zo'u ge fi'o du da ba za cy vo zo'u ge no de poi ke'a bargu ku'o zo'u de zvati gi ga ga ro de poi ke'a me li ma'o fymu mo'e la noltrunau ku lo'o me'u ku'o zo'u ge de pinfu gi dapma de cy xa gi ro de poi ke'a me li ma'o fymu mo'e la noltruni'u ku lo'o me'u ku'o zo'u ge de pinfu gi dapma de cy xa gi ro de poi ke'a me li ma'o fymu mo'e la alis. lo'o me'u ku'o zo'u ge de pinfu gi dapma de cy xa gi ba da zo'u ge la noltruni'u ku ke tatpi cliva ke'e gi la noltruni'u ku cusku lu xu kau pu ku zo'u do viska la ke jitfa cakyrespa ke'e ku li'u la alis.
 
 -----
 > ni'o *lu na go'i *sei la .alis. cu cusku* .i mi na djuno ji'a sai lo du'u ma kau jitfa cakyrespa li'u*
@@ -10469,7 +10469,7 @@ cusku( ,[Name: noltruni'u(_) ])
 zbasu( ,c0) >>]
 
 lu cy no ke jitfa ke cakyrespa stasu ke'e ke'e
-.i cusku la poi'i noltruni'u ku'o ku
+.i cusku la noltruni'u ku
 .i zbasu cy no li'u
 
 -----
@@ -10488,9 +10488,9 @@ lu cusku la alis.
 klama(mi'o)
 (ba)(). lisri( ,c,[Name: noltruni'u(_) ],do) >>]
 
-lu cusku la poi'i noltruni'u ku'o ku
+lu cusku la noltruni'u ku
 .i mi'o klama
-.i ba ku zo'u lisri cy la poi'i noltruni'u ku'o ku do li'u
+.i ba ku zo'u lisri cy la noltruni'u ku do li'u
 
 -----
 > ni'o la .alis. ca lo nu cliva cadzu cu tirna lo nu la noltrunau cu lauble voksa cusku fi lo zvati fe *lu ca'e ro do se fraxu li'u* .i *lu ri'e la'e ba'e di'u xamgu *sei .abu sezysku* .i .abu pu cinmo lo nu tolgei lo nu la noltruni'u cu minde xo kau nuncatra
@@ -10505,12 +10505,12 @@ sezysku( ,a)
 xamgu({la'e}(di'u))
 (pu)(). cinmo(a,c1) >>]
 
-cy re nu la poi'i noltrunau ku'o ku ke ke lauble voksa ke'e cusku ke'e lu ro da poi ke'a me do me'u ku'o zo'u fraxu da li'u cy pa kei
+cy re nu la noltrunau ku ke ke lauble voksa ke'e cusku ke'e lu ro da poi ke'a me do me'u ku'o zo'u fraxu da li'u cy pa kei
 .i cy pa zvati
 .i cy no nu ke cliva cadzu ke'e kei
 .i ca cy no zo'u la alis. tirna cy re
 .i lu cy pa nu tolgei cy no kei
-.i cy no nu mo cei broda xo boi da poi ke'a nuncatra ku'o zo'u la poi'i noltruni'u ku'o ku broda da kei
+.i cy no nu mo cei broda xo boi da poi ke'a nuncatra ku'o zo'u la noltruni'u ku broda da kei
 .i sezysku abu
 .i la'e di'u lu'u xamgu
 .i pu ku zo'u abu cinmo cy pa li'u
@@ -10520,7 +10520,7 @@ cy re nu la poi'i noltrunau ku'o ku ke ke lauble voksa ke'e cusku ke'e lu ro da 
 
 sipna([Name: cpicinfo(_) ])
 
-la poi'i cpicinfo ku'o ku sipna
+la cpicinfo ku sipna
 
 -----
 > ni'o ba zi ku penmi la cpicinfo noi sipna mutce vreta lo se solgu'i (to .e'u ko va'o lo nu na djuno lo du'u ma kau cpicinfo cu catlu lo pixra toi) .i *lu ko sanli doi lazni *sei la noltruni'u cu cusku* .i ko klagau lo vi citno ninmu lo nu viska la jitfa cakyrespa gi'e tirna lo cy lisri .i .ei mi xruti gi'e jitro so'o nuncatra noi mi pu minde li'u* .i ny cadzu cliva la .alis. noi stali tu'a la cpicinfo .i la .alis. na mutce lo ka nelci lo jvinu be lo vi danlu .i ku'i .abu pensi lo du'u se snura dunli fa lo nu stali tu'a cy kei lo nu jersi lo cilce noltruni'u .i se ki'u bo .abu denpa
@@ -10553,19 +10553,19 @@ EX x1. ((se ki'u)(x1). pensi("alis",c10) /\ x1=. denpa("alis"))
 cy pano du'u cy ze ke se snura dunli ke'e cy so kei
 .i cy so nu jersi cy bi kei
 .i cy bi ke cilce noltruni'u ke'e
-.i cy ze nu stali tu'a la poi'i cpicinfo ku'o ku lu'u kei
+.i cy ze nu stali tu'a la cpicinfo ku lu'u kei
 .i cy xa ka ce'u nelci cy mu kei
 .i cy mu jvinu cy vo
 .i vi ku zo'u cy vo danlu
-.i la alis. stali tu'a la poi'i cpicinfo ku'o ku lu'u
+.i la alis. stali tu'a la cpicinfo ku lu'u
 .i solgu'i cy ci
 .i va'o cy pa zo'u ko catlu cy re
 .i cy no du'u ma goi ko'a zo'u ko'a cpicinfo kei
 .i cy pa nu na ku djuno cy no kei
 .i cy re pixra
-.i ba ku zi ku zo'u penmi la poi'i poi'i ge ke'a cpicinfo gi ke'a ke ke sipna mutce ke'e vreta ke'e cy ci kei ku'o ku
+.i ba ku zi ku zo'u penmi la poi'i ge ke'a cpicinfo gi ke'a ke ke sipna mutce ke'e vreta ke'e cy ci kei ku
 .i lu ro da poi ke'a nuncatra ku'o pu ku zo'u mi minde da
-.i cy re nu ge viska la poi'i ke jitfa cakyrespa ke'e ku'o ku gi tirna cy pa kei
+.i cy re nu ge viska la ke jitfa cakyrespa ke'e ku gi tirna cy pa kei
 .i ge cy pa lisri gi cy pa srana cy no
 .i vi ku zo'u cy no ke citno ninmu ke'e
 .i ko sanli
@@ -10584,10 +10584,10 @@ kanla(c0)
 [Fragment: << cusku( ,[Name: cpicinfo(_) ])
 zdile( ) >>]
 
-cy pa nu na ku ka'e ku zo'u viska la poi'i noltruni'u ku'o ku kei
+cy pa nu na ku ka'e ku zo'u viska la noltruni'u ku kei
 .i cy no kanla
-.i ge la poi'i cpicinfo ku'o ku tsebi'o gi su'o da zo'u ge fi'o du da zo'u la poi'i cpicinfo ku'o ku mosra cy no gi ba da su'o de zo'u ge fi'o du de co'u cy pa zo'u la poi'i cpicinfo ku'o ku catlu la poi'i noltruni'u ku'o ku gi ba de zo'u la poi'i cpicinfo ku'o ku cmila
-.i lu cusku la poi'i cpicinfo ku'o ku
+.i ge la cpicinfo ku tsebi'o gi su'o da zo'u ge fi'o du da zo'u la cpicinfo ku mosra cy no gi ba da su'o de zo'u ge fi'o du de co'u cy pa zo'u la cpicinfo ku catlu la noltruni'u ku gi ba de zo'u la cpicinfo ku cmila
+.i lu cusku la cpicinfo ku
 .i zdile li'u
 
 -----
@@ -10608,7 +10608,7 @@ FA x1. xanri(x1,tu)
 (0 roi)(). EX x1. selmi'ecatra( ,x1)
 klama( ) >>]
 
-lu cusku la poi'i cpicinfo ku'o ku
+lu cusku la cpicinfo ku
 .i tu
 .i ro da zo'u da xanri tu
 .i no roi ku su'o da zo'u selmi'ecatra da
@@ -10652,19 +10652,19 @@ klama( ) >>)
 
 ge cy bi valsi gi cy bi ke jibni mintu ke'e cy ze
 .i pu ku zo'u cy ze valsi
-.i cy xa ka ce'u kecti la poi'i poi'i ge ke'a ke jitfa cakyrespa ke'e gi zu ku zo'u ke'a ke ke badri ke'e je ke nonkansa ke'e zutse ke'e cy re kei ku'o ku kei
-.i cy mu nu tai cy vo zo'u la poi'i poi'i ge ke'a ke jitfa cakyrespa ke'e gi zu ku zo'u ke'a ke ke badri ke'e je ke nonkansa ke'e zutse ke'e cy re kei ku'o ku vruva'u kei
+.i cy xa ka ce'u kecti la poi'i ge ke'a ke jitfa cakyrespa ke'e gi zu ku zo'u ke'a ke ke badri ke'e je ke nonkansa ke'e zutse ke'e cy re kei ku kei
+.i cy mu nu tai cy vo zo'u la poi'i ge ke'a ke jitfa cakyrespa ke'e gi zu ku zo'u ke'a ke ke badri ke'e je ke nonkansa ke'e zutse ke'e cy re kei ku vruva'u kei
 .i cy vo nu ke mutce badri ke'e kei
 .i cy ci nu jbize'a kei
 .i cy re ke cmalu ke rokci ctebi ke'e ke'e
 .i cy pa nu ve'u ku zo'u klama kei
 .i cy no re mei
-.i pu cy pa zo'u cy no viska la poi'i poi'i ge ke'a ke jitfa cakyrespa ke'e gi zu ku zo'u ke'a ke ke badri ke'e je ke nonkansa ke'e zutse ke'e cy re kei ku'o ku
+.i pu cy pa zo'u cy no viska la poi'i ge ke'a ke jitfa cakyrespa ke'e gi zu ku zo'u ke'a ke ke badri ke'e je ke nonkansa ke'e zutse ke'e cy re kei ku
 .i ca cy ci zo'u la alis. tirna cy mu
 .i la alis. carmi cy xa
-.i lu retsku abu la poi'i cpicinfo ku'o ku
+.i lu retsku abu la cpicinfo ku
 .i ma goi ko'a zo'u tu badri ko'a li'u
-.i se pi'o cy bi zo'u la poi'i cpicinfo ku'o ku spuda lu ro da zo'u da xanri tu
+.i se pi'o cy bi zo'u la cpicinfo ku spuda lu ro da zo'u da xanri tu
 .i no da zo'u tu badri da
 .i klama li'u
 
@@ -10677,7 +10677,7 @@ klama(c0,[Name: (<jitfa(_)><cakyrespa>(_) /\ ((se pi'o)(c1). catlu(_) /\ EQ(0) x
 
 cy pa ke ke barda ke'e je ke selkakclu ke'e kanla ke'e
 .i cy no re mei
-.i cy no klama la poi'i poi'i ge ke'a ke jitfa cakyrespa ke'e gi ge se pi'o cy pa zo'u ke'a catlu gi no de zo'u ke'a cusku de kei ku'o ku
+.i cy no klama la poi'i ge ke'a ke jitfa cakyrespa ke'e gi ge se pi'o cy pa zo'u ke'a catlu gi no de zo'u ke'a cusku de kei ku
 
 -----
 > ni'o *lu lo vi citno ninmu zo'u *sei la cpicinfo cu cusku* ti djica lo nu djuno fi lo do lisri .i go'i li'u*
@@ -10692,7 +10692,7 @@ djica(ti,c2) >>]
 lu cy re nu djuno fi cy pa kei
 .i ge cy pa lisri gi cy pa srana do
 .i vi ku zo'u cy no ke citno ninmu ke'e
-.i cusku la poi'i cpicinfo ku'o ku
+.i cusku la cpicinfo ku
 .i ti djica cy re
 .i ti djica cy re li'u
 
@@ -10709,7 +10709,7 @@ tavla(mi,ta,l)
 lu cy re nu mo'u ku zo'u mi co'e kei
 .i cy pa valsi
 .i ge cy no me do me'u gi cy no re mei
-.i ke ke ke condi ke'e je ke kunti ke'e tonga ke'e cusku ke'e la poi'i ke jitfa cakyrespa ke'e ku'o ku
+.i ke ke ke condi ke'e je ke kunti ke'e tonga ke'e cusku ke'e la ke jitfa cakyrespa ke'e ku
 .i mi tavla ta ly
 .i ge cy no tsebi'o gi na ku pu cy re zo'u cy no cusku cy pa li'u
 
@@ -10744,7 +10744,7 @@ Parse error:
 
 sanga(([Name: <jitfa(_)><cakyrespa>(_) ] {jo'u} [Name: cpicinfo(_) ]), ,"alis")
 
-la poi'i ke jitfa cakyrespa ke'e ku'o ku jo'u ke la poi'i cpicinfo ku'o ku ke'e sanga fi la alis.
+la ke jitfa cakyrespa ke'e ku jo'u ke la cpicinfo ku ke'e sanga fi la alis.
 
 -----
 > ni'o lo di'u valsi cu se jersi lo nu ze'u smaji noi zunti ke'a fa po'o lo ru'i nai me zo xyjyckryrx se krixa be la cpicinfo be'o .e lo ru'i tilju nunvruvasxu be la jitfa cakyrespa .i la .alis. pu'o sa'irbi'o je cusku *lu ki'e doi prenu mi do ckire lo do cinri lisri li'u* gi'e ku'i na ka'e rivbi lo nu pensi lo du'u .ei da ji'a jersi .i se ki'u bo .abu smaji zutse gi'e cusku no da
@@ -10761,8 +10761,8 @@ ckire(mi,do,c0) >>) /\ !(ka'e)(). rivbi("alis",c5)) /\ x1=. (<smaji(_)><zutse>("
 
 cy mu nu pensi cy vo kei
 .i cy vo du'u su'o da zo'u da jersi kei
-.i ru'i ku zo'u cy ci ke tilju nunvruvasxu ke'e la poi'i ke jitfa cakyrespa ke'e ku'o ku
-.i ru'i nai ku zo'u la poi'i cpicinfo ku'o ku ke me zo xyjyckryrx me'u krixa ke'e cy re
+.i ru'i ku zo'u cy ci ke tilju nunvruvasxu ke'e la ke jitfa cakyrespa ke'e ku
+.i ru'i nai ku zo'u la cpicinfo ku ke me zo xyjyckryrx me'u krixa ke'e cy re
 .i ge cy pa nu ze'u ku zo'u smaji kei gi zunti cy pa
 .i ge cy no valsi gi cy no srana di'u
 .i ge cy pa jersi cy no cy re gi cy pa jersi cy no cy ci
@@ -10782,7 +10782,7 @@ xamsi(c1)
 lu cy re ralju
 .i cy pa xamsi
 .i ke nu mi'a cmalu mi'a kei ckule ke'e fo cy no
-.i di'a ku zo'u cusku la poi'i poi'i ge ke'a ke jitfa cakyrespa ke'e gi ge ca ku zo'u ke'a ke surla zenba ke'e gi ru'i nai ku za'o ku zo'u ke'a ke milxe vruvasxu ke'e kei ku'o ku
+.i di'a ku zo'u cusku la poi'i ge ke'a ke jitfa cakyrespa ke'e gi ge ca ku zo'u ke'a ke surla zenba ke'e gi ru'i nai ku za'o ku zo'u ke'a ke milxe vruvasxu ke'e kei ku
 .i cy pa
 .i ge cy re ke ke junri ke'e je ke tolcitno ke'e cakyrespa ke'e gi lu ke ractu cafmi'a ke'e li'u cmene cy re mi'a li'u
 
@@ -10806,7 +10806,7 @@ lu cy no nu ge na ku ra ractu gi na ku ra cafmi'a kei
 <bebna(_)><mutce>(do) >>]
 
 lu cy no nu ra ctuca mi'a kei
-.i ke fengu cusku ke'e la poi'i ke jitfa cakyrespa ke'e ku'o ku
+.i ke fengu cusku ke'e la ke jitfa cakyrespa ke'e ku
 .i ki'u cy no zo'u lu ke ractu cafmi'a ke'e li'u cmene ra mi'a
 .i do ke bebna mutce ke'e li'u
 
@@ -10843,7 +10843,7 @@ lu du'u na ku mi krici kei cy no
 [Fragment: << cusku( ,[Name: <jitfa(_)><cakyrespa>(_) ])
 go'i(do) >>]
 
-lu cusku la poi'i ke jitfa cakyrespa ke'e ku'o ku
+lu cusku la ke jitfa cakyrespa ke'e ku
 .i do go'i li'u
 
 -----
@@ -10856,10 +10856,10 @@ ri'urgau(ko,c1) >>]
 (di'a)(). co'e([Name: <jitfa(_)><cakyrespa>(_) ])
 
 lu cy pa tance
-.i pu cy no zo'u ke jmina cusku ke'e la poi'i cpicinfo ku'o ku
+.i pu cy no zo'u ke jmina cusku ke'e la cpicinfo ku
 .i cy no nu ka'e ku za'u re'u ku zo'u la alis. tavla kei
 .i ko ri'urgau cy pa li'u
-.i di'a ku zo'u la poi'i ke jitfa cakyrespa ke'e ku'o ku co'e
+.i di'a ku zo'u la ke jitfa cakyrespa ke'e ku co'e
 
 -----
 > ni'o *lu mi'a cilre fu lo xagrai .i je'u mi'a zvati lo ckule ca ro donri li'u*
@@ -10895,7 +10895,7 @@ lu cy no ke donri ckule ke'e
 ?. ctuca( ,do, ,c0) >>]
 
 lu cy no ke seljmina tercli ke'e
-.i ke ke xanka milxe ke'e retsku ke'e la poi'i ke jitfa cakyrespa ke'e ku'o ku
+.i ke ke xanka milxe ke'e retsku ke'e la ke jitfa cakyrespa ke'e ku
 .i xu kau zo'u ctuca do fo cy no li'u
 
 -----
@@ -10921,7 +10921,7 @@ cusku( ,[Name: cakyrespa(_) ])
 ?. go'i( , ,c0) >>]
 
 lu cy no nu lumci kei
-.i cusku la poi'i cakyrespa ku'o ku
+.i cusku la cakyrespa ku
 .i xu kau zo'u go'i fi cy no li'u
 
 -----
@@ -10950,7 +10950,7 @@ fasybau(c0)
 lu cy ci dejnoi fi cy re
 .i cy re me mi'a me'u moi
 .i cy pa ka ce'u ke xamgu ckule ke'e kei
-.i ke ke ke surbi'o mutce ke'e tonga ke'e cusku ke'e la poi'i ke jitfa cakyrespa ke'e ku'o ku
+.i ke ke ke surbi'o mutce ke'e tonga ke'e cusku ke'e la ke jitfa cakyrespa ke'e ku
 .i cy no me do me'u moi
 .i na ku cy no mutce cy pa
 .i lu cy re nu lumci kei
@@ -10984,7 +10984,7 @@ cilre(mi,c1) >>]
 
 lu cy pa fadni
 .i cy no nu pleji kei
-.i ke vruvasxu cusku ke'e la poi'i ke jitfa cakyrespa ke'e ku'o ku
+.i ke vruvasxu cusku ke'e la ke jitfa cakyrespa ke'e ku
 .i na ku mi kakne cy no
 .i mi cilre cy pa li'u
 
@@ -11016,7 +11016,7 @@ lu ro da poi ga ke'a du cy re gi ke'a du cy pa ku'o ro de poi ga ke'a du cy ci g
 .i cy re nu vimcu'a kei
 .i cy pa nu jmina'e kei
 .i cy no nacycmaci
-.i spuda la poi'i ke jitfa cakyrespa ke'e ku'o ku
+.i spuda la ke jitfa cakyrespa ke'e ku
 .i nu ge ctidu'e gi ci'iska kei
 .i li ma'o fymu mo'e lo NALSELTRO zei da ku lo'o li'u
 
@@ -11037,7 +11037,7 @@ Parse error:
 jimpe(do, ,{natfe}) >>]
 
 ge cy no xance gi cy no re mei
-.i la poi'i cpicinfo ku'o ku ke spaji lafti ke'e cy no
+.i la cpicinfo ku ke spaji lafti ke'e cy no
 .i lu ki'asku cy
 .i xu kau zo'u na ku jimpe fi zo jmina'e
 .i do jimpe fi zo natfe li'u
@@ -11066,7 +11066,7 @@ lu cy pa du'u go su'o da ka'e ku zo'u da jetnu gi na ku su'o da ka'e ku zo'u da 
 (va'o)(c0). bebna(do) >>]
 
 lu cy no nu na ku do ke ke jimpe natfe ke'e jimpe ke'e kei
-.i di'a ku zo'u cusku la poi'i cpicinfo ku'o ku
+.i di'a ku zo'u cusku la cpicinfo ku
 .i do ke natfe jimpe ke'e
 .i va'o cy no zo'u do bebna li'u
 
@@ -11079,7 +11079,7 @@ nu[((za'u) re'u)(). preti( ,{la'e}(di'u))](c0)
 
 cy no nu za'u re'u ku zo'u preti la'e di'u lu'u kei
 .i na ku la alis. darsi cy no
-.i fa'a la poi'i ke jitfa cakyrespa ke'e ku'o ku zo'u la alis. cusku lu ma goi ko'a zo'u do cilre fi ko'a li'u
+.i fa'a la ke jitfa cakyrespa ke'e ku zo'u la alis. cusku lu ma goi ko'a zo'u do cilre fi ko'a li'u
 
 -----
 > ni'o *lu lo cridyske *sei la jitfa cakyrespa noi kancu lo seltadni se pi'o lo limna'i cu cusku* .i lo cridyske no'u lo prutce jo'u lo cabna ge'u .e lo xasyske .i ji'a lo nu pixra'i zo'u lo pixra'i ctuca cu tolci'o sincyfi'e noi zvati pa roi ro jeftu .i ba'e ra ctuca fo lo nu pixra'i gi'e grasu'u cintai finti li'u*
@@ -11107,10 +11107,10 @@ dukse(mi,c0)
 (0 roi)(). cilre([Name: cpicinfo(_) ]) >>]
 
 lu cy no ka ce'u tinsa kei
-.i cusku la poi'i ke jitfa cakyrespa ke'e ku'o ku
+.i cusku la ke jitfa cakyrespa ke'e ku
 .i na ku ka'e ku zo'u mi jarco
 .i mi dukse cy no
-.i no roi ku zo'u la poi'i cpicinfo ku'o ku cilre li'u
+.i no roi ku zo'u la cpicinfo ku cilre li'u
 
 -----
 > ni'o *lu claxu lo temci *sei la cpicinfo cu cusku* .i mi zvati lo dzeklu ctuca .i ri tolci'o xasyjukni .i ba'e ri go'i li'u*
@@ -11125,7 +11125,7 @@ zvati(mi,c1)
 
 lu cy pa ke dzeklu ctuca ke'e
 .i cy no temci
-.i cusku la poi'i cpicinfo ku'o ku
+.i cusku la cpicinfo ku
 .i claxu cy no
 .i mi zvati cy pa
 .i cy pa ke tolci'o xasyjukni ke'e
@@ -11152,7 +11152,7 @@ gairgau(c0,f1(c0),f2(c0))
 ro da zo'u ge li ma'o fyre mo'e da lo'o flira gi li ma'o fyre mo'e da lo'o srana da
 .i ro da zo'u ge li ma'o fypa mo'e da lo'o xance gi li ma'o fypa mo'e da lo'o srana da
 .i ge cy no danlu gi cy no re mei
-.i lu cusku la poi'i poi'i ge ke'a cpicinfo gi ke'a vruvasxu kei ku'o ku
+.i lu cusku la poi'i ge ke'a cpicinfo gi ke'a vruvasxu kei ku
 .i go'i
 .i go'i li'u
 .i cy no gairgau li ma'o fypa mo'e cy no lo'o li ma'o fyre mo'e cy no lo'o
@@ -11228,7 +11228,7 @@ cy pa nu lu cy pa ke pano moi donri ke'e
 [Fragment: << cusku( ,[Name: <jitfa(_)><cakyrespa>(_) ])
 go'i( ) >>]
 
-lu cusku la poi'i ke jitfa cakyrespa ke'e ku'o ku
+lu cusku la ke jitfa cakyrespa ke'e ku
 .i go'i li'u
 
 -----
@@ -11253,7 +11253,7 @@ nu[ckule( )](c0)
 
 lu cy pa nu kelci kei
 .i cy no nu ckule kei
-.i ke ke jditce tonga ke'e zunti ke'e la poi'i cpicinfo ku'o ku
+.i ke ke jditce tonga ke'e zunti ke'e la cpicinfo ku
 .i se ra'a cy no zo'u la'e di'u lu'u banzu
 .i ca ku zo'u ko tavla ti cy pa li'u
 
@@ -11296,14 +11296,14 @@ cy so ka voksa ce'u kei
 .i cy re kanla
 .i pa da poi ke'a me cy no me'u ku'o zo'u cy pa trixe da
 .i cy no limna'i
-.i ge ge ge la poi'i ke jitfa cakyrespa ke'e ku'o ku ke condi vruvasxu ke'e gi la poi'i ke jitfa cakyrespa ke'e ku'o ku mosra cy pa cy re gi la poi'i ke jitfa cakyrespa ke'e ku'o ku catlu la alis. gi la poi'i ke jitfa cakyrespa ke'e ku'o ku troci cy ci
+.i ge ge ge la ke jitfa cakyrespa ke'e ku ke condi vruvasxu ke'e gi la ke jitfa cakyrespa ke'e ku mosra cy pa cy re gi la ke jitfa cakyrespa ke'e ku catlu la alis. gi la ke jitfa cakyrespa ke'e ku troci cy ci
 .i ze'a cy vo zo'u cy mu dicra cy xa
 .i lu cy re nu cy no zunti cy pa kei
 .i cy pa galxe
-.i cusku la poi'i cpicinfo ku'o ku
+.i cusku la cpicinfo ku
 .i cy no bongu
 .i mintu cy re li'u
-.i su'o da zo'u ge fi'o du da co'a ku zo'u cy gunka cy bi gi ba za da zo'u ge la poi'i ke jitfa cakyrespa ke'e ku'o ku xruti cy so gi di'a ku zo'u la poi'i ke jitfa cakyrespa ke'e ku'o ku ke ke selklaku flira ke'e cusku ke'e
+.i su'o da zo'u ge fi'o du da co'a ku zo'u cy gunka cy bi gi ba za da zo'u ge la ke jitfa cakyrespa ke'e ku xruti cy so gi di'a ku zo'u la ke jitfa cakyrespa ke'e ku ke ke selklaku flira ke'e cusku ke'e
 
 -----
 > ni'o *lu ju'o cu'i do na ze'u xabju lo xamsi cnita (to sa'a *lu mi na go'i *sei la .alis. cu cusku* li'u* toi) .i ju'o cu'i do no roi penmi lo xasyjukni (to sa'a la .alis. co'a cusku *lu mi pa roi vu'irga'e li'u* gi'e ku'i sutra sezydicra gi'e cusku *lu no roi go'i li'u* toi) .i se ki'u bo do na ka'e se xanri lo nu lo xasyjukni vonseldansu cu mo kau kukte li'u*
@@ -11342,7 +11342,7 @@ lu cusku la alis.
 jarco(([Name: <jitfa(_)><cakyrespa>(_) ] {jo'u} [Name: cpicinfo(_) ]),c0,"alis")
 
 cy no ke xasyjukni vonseldansu ke'e
-.i la poi'i ke jitfa cakyrespa ke'e ku'o ku jo'u ke la poi'i cpicinfo ku'o ku ke'e jarco cy no la alis.
+.i la ke jitfa cakyrespa ke'e ku jo'u ke la cpicinfo ku ke'e jarco cy no la alis.
 
 -----
 > ni'o *lu ta'a do'u *sei la cpicinfo cu cusku* .i pa mai lo dansu pa da se linji pa'a lo xamsi korbi - li'u*
@@ -11354,7 +11354,7 @@ EQ(1) x1. (pa'a)(c1). linji(x1,c0) >>]
 
 lu cy pa ke xamsi korbi ke'e
 .i cy no dansu
-.i cusku la poi'i cpicinfo ku'o ku
+.i cusku la cpicinfo ku
 .i pa da pa'a cy pa zo'u da linji cy no li'u
 
 -----
@@ -11370,7 +11370,7 @@ Parse error:
 [Fragment: << zunti( ,[Name: cpicinfo(_) ])
 (ta'e)(). (ze'u)(). co'e({la'e}(di'u)) >>]
 
-lu zunti la poi'i cpicinfo ku'o ku
+lu zunti la cpicinfo ku
 .i ta'e ku ze'u ku zo'u la'e di'u lu'u co'e li'u
 
 -----
@@ -11388,7 +11388,7 @@ krixa( ,[Name: cpicinfo(_) ])
 FA x1. kansa(x1,c0) >>]
 
 lu cy no xasyjukni
-.i krixa la poi'i cpicinfo ku'o ku
+.i krixa la cpicinfo ku
 .i ro da zo'u da kansa cy no li'u
 
 -----
@@ -11400,7 +11400,7 @@ cusku( ,[Name: <jitfa(_)><cakyrespa>(_) ])
 penmi( ,c0) >>]
 
 lu cy no kansa
-.i cusku la poi'i ke jitfa cakyrespa ke'e ku'o ku
+.i cusku la ke jitfa cakyrespa ke'e ku
 .i re roi ku zo'u crakla
 .i penmi cy no li'u
 
@@ -11414,7 +11414,7 @@ cajysi'u( ,c0)
 (po'i)(c1). xruti( ) >>]
 
 lu cy pa mintu
-.i di'a ku zo'u co'e la poi'i cpicinfo ku'o ku
+.i di'a ku zo'u co'e la cpicinfo ku
 .i cy no xasyjukni
 .i cajysi'u cy no
 .i po'i cy pa zo'u xruti li'u
@@ -11435,7 +11435,7 @@ vacri(c0)
 [Fragment: c1] >>]
 
 lu cy pa xasyjukni
-.i krixa la poi'i poi'i ge ke'a cpicinfo gi ke'a plipe cy no kei ku'o ku
+.i krixa la poi'i ge ke'a cpicinfo gi ke'a plipe cy no kei ku
 .i cy no vacri
 .i cy pa li'u
 
@@ -11458,7 +11458,7 @@ krixa( ,[Name: cpicinfo(_) ])
 <limna(_)><jersi>( ,c0) >>]
 
 lu cy no xasyjukni
-.i krixa la poi'i cpicinfo ku'o ku
+.i krixa la cpicinfo ku
 .i ke limna jersi ke'e cy no li'u
 
 -----
@@ -11469,7 +11469,7 @@ krixa( ,[Name: <jitfa(_)><cakyrespa>(_) ])
 (ne'i)(c0). pipcarna( ) >>]
 
 lu cy no xamsi
-.i krixa la poi'i ke jitfa cakyrespa ke'e ku'o ku
+.i krixa la ke jitfa cakyrespa ke'e ku
 .i ne'i cy no zo'u pipcarna li'u
 
 -----
@@ -11480,7 +11480,7 @@ lu cy no xamsi
 ((za'u) re'u)(). cajysi'u( ,c0) >>]
 
 lu cy no xasyjukni
-.i ke ke ke voksa cladu ke'e traji ke'e krixa ke'e la poi'i cpicinfo ku'o ku
+.i ke ke ke voksa cladu ke'e traji ke'e krixa ke'e la cpicinfo ku
 .i za'u re'u ku zo'u cajysi'u cy no li'u
 
 -----
@@ -11497,7 +11497,7 @@ xruti( ,c0)
 
 ge cy pa danlu gi ge cy pa re mei gi pu ku ru'u ku ze'a la'e di'u lu'u tai cy no zo'u cy pa plipe
 .i cy no nu fenki kei
-.i lu cusku la poi'i poi'i ge ke'a ke jitfa cakyrespa ke'e gi ke'a ke suksa jdikygau ke'e cy pa kei ku'o ku
+.i lu cusku la poi'i ge ke'a ke jitfa cakyrespa ke'e gi ke'a ke suksa jdikygau ke'e cy pa kei ku
 .i cy pa voksa
 .i cy no tumla
 .i xruti cy no
@@ -11521,7 +11521,7 @@ cusku( ,[Name: <jitfa(_)><cakyrespa>(_) ])
 viska(do,c0) >>]
 
 lu cy no mupli
-.i cusku la poi'i ke jitfa cakyrespa ke'e ku'o ku
+.i cusku la ke jitfa cakyrespa ke'e ku
 .i do viska cy no li'u
 
 -----
@@ -11545,7 +11545,7 @@ troci(mi'o,c0)
 
 lu cy pa xasyjukni
 .i cy no nu ke pa moi morna ke'e kei
-.i cusku la poi'i ke jitfa cakyrespa ke'e ku'o ku la poi'i cpicinfo ku'o ku
+.i cusku la ke jitfa cakyrespa ke'e ku la cpicinfo ku
 .i mi'o troci cy no
 .i se cau cy pa zo'u mi'o kakne
 .i ma goi ko'a zo'u ko'a sanga li'u
@@ -11559,7 +11559,7 @@ go'i(do)
 tolmorji(mi,c0) >>]
 
 lu cy no valsi
-.i cusku la poi'i cpicinfo ku'o ku
+.i cusku la cpicinfo ku
 .i do go'i
 .i mi tolmorji cy no li'u
 
@@ -11582,7 +11582,7 @@ cy vo nu sinxa cy ci kei
 .i ge cy no jmadegji gi cy no srana la alis.
 .i co'a ku ru'u la alis. zo'u ke junri dansu ke'e
 .i ru'i nai ku ca cy pa zo'u stapa cy no
-.i su'o da zo'u ge fi'o du da te zu'e cy vo zo'u sligau cy re gi ze'a da zo'u la poi'i ke jitfa cakyrespa ke'e ku'o ku ke ke ke masno ke'e je ke badri ke'e mutce ke'e sanga ke'e lu  li'u
+.i su'o da zo'u ge fi'o du da te zu'e cy vo zo'u sligau cy re gi ze'a da zo'u la ke jitfa cakyrespa ke'e ku ke ke ke masno ke'e je ke badri ke'e mutce ke'e sanga ke'e lu  li'u
 
 -----
 > .e'o sutra doi cakcurnu .i ko ti'a zgana ua pa xajyfi'e noi jbitrixe gi'e me mi rebla stapa
@@ -11717,7 +11717,7 @@ cusku( ,[Name: <jitfa(_)><cakyrespa>(_) ])
 (pu)(). (ca'a)(). viska(do,c0) >>]
 
 lu cy no merlanu
-.i cusku la poi'i ke jitfa cakyrespa ke'e ku'o ku
+.i cusku la ke jitfa cakyrespa ke'e ku
 .i pu ku ca'a ku zo'u do viska cy no li'u
 
 -----
@@ -11740,7 +11740,7 @@ cusku( ,[Name: <jitfa(_)><cakyrespa>(_) ])
 lu cy re nu ma goi ko'a zo'u ko'a jvinu my kei
 .i cy pa nu tai ku so'i roi ku zo'u viska my kei
 .i cy no du'u ma goi ko'a zo'u ko'a stuzi la sairpaln. kei
-.i cusku la poi'i ke jitfa cakyrespa ke'e ku'o ku
+.i cusku la ke jitfa cakyrespa ke'e ku
 .i na ku mi djuno cy no
 .i va'o cy pa zo'u cy re slabu do li'u
 
@@ -11797,7 +11797,7 @@ lu cy ci du'u ma goi ko'a zo'u ko'a krinu cy re kei
 .i cy re nu zo labyfi'e cmene cy pa kei
 .i cy pa merlanu
 .i jmina cy no
-.i cusku la poi'i cpicinfo ku'o ku
+.i cusku la cpicinfo ku
 .i ka'e ku zo'u mi tavla do cy no
 .i xu kau zo'u do djuno cy ci li'u
 
@@ -11821,7 +11821,7 @@ jufra(c0)
 (kurji(m,c0) /\ kurji(m,c1)) >>]
 
 lu cy pa selsku
-.i ke junri spuda ke'e la poi'i cpicinfo ku'o ku
+.i ke junri spuda ke'e la cpicinfo ku
 .i cy no jufra
 .i ge my kurji cy no gi my kurji cy pa li'u
 
@@ -11855,7 +11855,7 @@ cusku( ,[Name: cpicinfo(_) ])
 lu cy re ka ce'u gendra kei
 .i cy pa nu kurji cy no kei
 .i ge cy no selsku gi cy no srana do
-.i cusku la poi'i cpicinfo ku'o ku
+.i cusku la cpicinfo ku
 .i ma goi ko'a zo'u do pilno ko'a cy pa
 .i ma goi ko'a zo'u ko'a cipra cy re li'u
 
@@ -11868,7 +11868,7 @@ nu[danfu( )](c0)
 
 cy no nu danfu kei
 .i ze'a ku pu cy no zo'u la alis. pensi
-.i lu la poi'i jbofi'e ku'o ku go'i li'u
+.i lu la jbofi'e ku go'i li'u
 
 -----
 > ni'o *lu ie la lobyfi'e va'i nai .i lo gendra ni'a lo xamsi *sei la cpicinfo cu di'a condi voksa cusku* cu se cipra lo labyfi'e .i ka'udai li'u*
@@ -11909,7 +11909,7 @@ EQ(0) x1:(<clite(_)><finpe>(_)). rivbi(x1,c1) >>]
 
 lu cy pa xajyfi'e
 .i cy no nu xy kansa kei
-.i cusku la poi'i ke jitfa cakyrespa ke'e ku'o ku
+.i cusku la ke jitfa cakyrespa ke'e ku
 .i bilga cy no
 .i no da poi ke'a ke clite finpe ke'e ku'o zo'u da rivbi cy pa li'u
 
@@ -11932,7 +11932,7 @@ go'i( )
 
 lu cy pa nu preti fi cy no kei
 .i cy no finpe
-.i cusku la poi'i ke jitfa cakyrespa ke'e ku'o ku
+.i cusku la ke jitfa cakyrespa ke'e ku
 .i go'i
 .i va'o cy pa zo'u mi cusku lu ge cy no xajyfi'e gi cy no srana do
 .i ma goi ko'a zo'u do friti ko'a cy no li'u li'u
@@ -11956,9 +11956,9 @@ minsku([Name: cpicinfo(_) ],<< (selfri(c0) /\ srana(c0,do))
 EX x1:((c0) >= (_)). tavla(do,mi'a,x1) >>)
 
 lu mi cusku cy no
-.i ke ke jgicro tonga ke'e spuda ke'e la poi'i ke jitfa cakyrespa ke'e ku'o ku
+.i ke ke jgicro tonga ke'e spuda ke'e la ke jitfa cakyrespa ke'e ku
 .i mi skudji cy no li'u
-.i la poi'i cpicinfo ku'o ku minsku lu ge cy no selfri gi cy no srana do
+.i la cpicinfo ku minsku lu ge cy no selfri gi cy no srana do
 .i su'o da poi ke'a me cy no me'u ku'o zo'u do tavla mi'a da li'u
 
 -----
@@ -11986,7 +11986,7 @@ lu cy ci nu peixru cy re kei
 [Fragment: << cusku( ,[Name: <jitfa(_)><cakyrespa>(_) ])
 (pi ro) x1:(({la'e}(di'u)) >= (_)). ciksi(ko,x1) >>]
 
-lu cusku la poi'i ke jitfa cakyrespa ke'e ku'o ku
+lu cusku la ke jitfa cakyrespa ke'e ku
 .i pi ro boi da poi ke'a me la'e di'u lu'u me'u ku'o zo'u ko ciksi da li'u
 
 -----
@@ -12001,7 +12001,7 @@ selfri(c0)
 
 lu cy pa velcki
 .i cy no selfri
-.i ke ke sutydji tonga ke'e cusku ke'e la poi'i cpicinfo ku'o ku
+.i ke ke sutydji tonga ke'e cusku ke'e la cpicinfo ku
 .i na ku go'i
 .i cy no
 .i ze'u ku zo'u cy pa co'e li'u
@@ -12035,7 +12035,7 @@ mutce({la'e}(di'u),c0) >>))
 
 cy pavo nu la alis. pencu cy paci kei
 .i ge cy paci pagbu gi cy pare xo'i se ra'a cy paci
-.i cy pare nu fau cy papa zo'u la alis. sitsku lu do tolcitno li'u la poi'i ciftoldi ku'o ku kei
+.i cy pare nu fau cy papa zo'u la alis. sitsku lu do tolcitno li'u la ciftoldi ku kei
 .i cy papa nu cy pano fricybi'o kei
 .i cy pano valsi
 .i tirna cy so
@@ -12047,14 +12047,14 @@ cy pavo nu la alis. pencu cy paci kei
 .i cy ci cfari
 .i cy re ka ce'u xanka la'e di'u lu'u kei
 .i ge cy pa selfri gi ge cy no xo'i co'a cy pa gi cy pa srana la alis.
-.i cy no nu pa re'u ku zo'u viska la poi'i ke blabi ractu ke'e ku'o ku kei
+.i cy no nu pa re'u ku zo'u viska la ke blabi ractu ke'e ku kei
 .i co'a ku zo'u la alis. tavla fi cy pa
 .i ca cy ci zo'u la alis. milxe cy re
 .i ge cy vo ke mutce jibni ke'e la alis. gi cy vo mlana la alis.
 .i ge cy vo ke ke ganra mutce ke'e kargau ke'e cy mu gi cy vo ke ke ganra mutce ke'e kargau ke'e cy xa
 .i la alis. zenba cy bi
 .i co'u cy pavo zo'u cy so ke prane smaji ke'e
-.i ca ku zo'u ge ze'u ku zo'u la poi'i ke jitfa cakyrespa ke'e ku'o ku sakyvasxu gi la poi'i ke jitfa cakyrespa ke'e ku'o ku cusku lu cy no ka ce'u cizra kei
+.i ca ku zo'u ge ze'u ku zo'u la ke jitfa cakyrespa ke'e ku sakyvasxu gi la ke jitfa cakyrespa ke'e ku cusku lu cy no ka ce'u cizra kei
 .i la'e di'u lu'u mutce cy no li'u
 
 -----
@@ -12067,7 +12067,7 @@ traji( ,c1) >>]
 
 lu cy pa ka ce'u cizra fo cy no kei
 .i cy no cizra
-.i cusku la poi'i cpicinfo ku'o ku
+.i cusku la cpicinfo ku
 .i traji cy pa li'u
 
 -----
@@ -12086,16 +12086,16 @@ skumi'e(ko,ta,c3) >>]
 (tai)(c1). catlu(jc,[Name: cpicinfo(_) ])
 
 cy pa nu jinvi cy no kei
-.i cy no du'u la poi'i cpicinfo ku'o ku catni la alis. kei
+.i cy no du'u la cpicinfo ku catni la alis. kei
 .i lu cy ci nu co'a ku zo'u co'e kei
 .i cy re nu tirna cy pa kei
 .i cy pa nu ca ku zo'u ta troci cy no kei
 .i cy no nu su'o da zo'u sitsku da kei
-.i re re'u ku zo'u ke pensi cusku ke'e la poi'i ke jitfa cakyrespa ke'e ku'o ku
+.i re re'u ku zo'u ke pensi cusku ke'e la ke jitfa cakyrespa ke'e ku
 .i ro da zo'u da fricybi'o
 .i mi djica cy re
 .i ko skumi'e ta cy ci li'u
-.i tai cy pa zo'u jy cy catlu la poi'i cpicinfo ku'o ku
+.i tai cy pa zo'u jy cy catlu la cpicinfo ku
 
 -----
 > ni'o *lu ko sa'irbi'o gi'e sitsku *lu lazni se voksa li'u* *sei la cpicinfo cu cusku* li'u*
@@ -12103,7 +12103,7 @@ cy pa nu jinvi cy no kei
 [Fragment: << cusku( ,[Name: cpicinfo(_) ])
 (sa'irbi'o(ko) /\ sitsku(ko,<< <lazni(_)><voksa>( ) >>)) >>]
 
-lu cusku la poi'i cpicinfo ku'o ku
+lu cusku la cpicinfo ku
 .i ge ko sa'irbi'o gi ko sitsku lu ke lazni voksa ke'e li'u li'u
 
 -----
@@ -12215,7 +12215,7 @@ frica(di'u,c1) >>]
 
 lu ta'e ku ca cy no zo'u mi cusku cy pa
 .i cy no nu mi verba kei
-.i cusku la poi'i cpicinfo ku'o ku
+.i cusku la cpicinfo ku
 .i di'u frica cy pa li'u
 
 -----
@@ -12227,7 +12227,7 @@ cusku( ,[Name: <jitfa(_)><cakyrespa>(_) ])
 simlu( ,c0) >>]
 
 lu cy no ka ce'u ke nalfadni nonselsmu ke'e kei
-.i cusku la poi'i ke jitfa cakyrespa ke'e ku'o ku
+.i cusku la ke jitfa cakyrespa ke'e ku
 .i pu ku no roi ku zo'u mi tirna di'u
 .i simlu cy no li'u
 
@@ -12256,7 +12256,7 @@ cusku( ,[Name: <jitfa(_)><cakyrespa>(_) ])
 djica(mi,c0) >>]
 
 lu cy no nu ciksi fi mi kei
-.i cusku la poi'i ke jitfa cakyrespa ke'e ku'o ku
+.i cusku la ke jitfa cakyrespa ke'e ku
 .i mi djica cy no li'u
 
 -----
@@ -12268,7 +12268,7 @@ lu cy no nu ciksi fi mi kei
 (di'a)(). co'e( ,c0) >>]
 
 lu cy no ke jersi pempau ke'e
-.i ke sutra cusku ke'e la poi'i cpicinfo ku'o ku
+.i ke sutra cusku ke'e la cpicinfo ku
 .i na ku ka'e ku zo'u ti ciksi
 .i di'a ku zo'u co'e cy no li'u
 
@@ -12308,7 +12308,7 @@ cy re nu cy pa cenba kei
 pagre(mi,c0) >>) >>]
 
 lu cy no ke jersi pempau ke'e
-.i re re'u ku zo'u ke naldenpa cusku ke'e la poi'i cpicinfo ku'o ku
+.i re re'u ku zo'u ke naldenpa cusku ke'e la cpicinfo ku
 .i di'a ku zo'u co'e cy no
 .i co'a ku zo'u co'e lu cy no purdi
 .i mi pagre cy no li'u li'u
@@ -12408,7 +12408,7 @@ lu ge tirna cy ci gi cy ci srana mi
 .i cy re ka ce'u cfipu kei
 .i cy pa nu ro da poi ke'a me di'u me'u ku'o va'o cy no zo'u sitsku da kei
 .i cy no nu na ku ca'o ku zo'u do ciksi kei
-.i zunti la poi'i ke jitfa cakyrespa ke'e ku'o ku
+.i zunti la ke jitfa cakyrespa ke'e ku
 .i ma goi ko'a zo'u ko'a prali fi cy pa
 .i traji cy re fo cy ci li'u
 
@@ -12424,7 +12424,7 @@ mutce("alis",c1)
 
 cy pa ka ce'u gleki cy no kei
 .i cy no nu tai ku zo'u zukte kei
-.i lu cusku la poi'i cpicinfo ku'o ku
+.i lu cusku la cpicinfo ku
 .i go'i
 .i sisti li'u
 .i la alis. mutce cy pa
@@ -12451,7 +12451,7 @@ Parse error:
 [Fragment: <<  >>]
 
 ge cy no voksa gi so'o roi ku zo'u cy no dicra
-.i ge la poi'i ke jitfa cakyrespa ke'e ku'o ku ke condi vruvasxu ke'e gi co'a ku se pi'o cy no zo'u la poi'i ke jitfa cakyrespa ke'e ku'o ku sanga di'e
+.i ge la ke jitfa cakyrespa ke'e ku ke condi vruvasxu ke'e gi co'a ku se pi'o cy no zo'u la ke jitfa cakyrespa ke'e ku sanga di'e
 .i lu  li'u
 
 -----
@@ -12570,9 +12570,9 @@ krefu( ) >>]
 cy pa nu ke darno tirna ke'e cy no kei
 .i ge cy no selkrixa gi cy no du lu cy no nunpai
 .i cy no cfari li'u
-.i lu krixa la poi'i cpicinfo ku'o ku
+.i lu krixa la cpicinfo ku
 .i krefu li'u
-.i pu ku zi ku co'a ku re re'u ku ca cy pa zo'u la poi'i ke jitfa cakyrespa ke'e ku'o ku sanga
+.i pu ku zi ku co'a ku re re'u ku ca cy pa zo'u la ke jitfa cakyrespa ke'e ku sanga
 
 -----
 > ni'o *lu .e'e *sei la cpicinfo cu krixa* li'u* .i cy jgari la .alis. fo lo xance gi'e sutra cliva gi'e na denpa lo nu mo'u sanga
@@ -12609,7 +12609,7 @@ lu cy vo nu cy ci bleze'a kei
 .i ca cy pa zo'u ke vaxyselnandu cusku ke'e la alis.
 .i ro da zo'u ge li ma'o fyre mo'e da lo'o brife gi li ma'o fyre mo'e da lo'o jersi da
 .i mo cei broda zo'u cy no broda
-.i ge la poi'i cpicinfo ku'o ku spuda zo e'e gi ca'o cy vo zo'u la poi'i cpicinfo ku'o ku ke sutyze'a bajra ke'e
+.i ge la cpicinfo ku spuda zo e'e gi ca'o cy vo zo'u la cpicinfo ku ke sutyze'a bajra ke'e
 .i lu  li'u li'u
 
 -----
@@ -12694,15 +12694,15 @@ cy reci nu cy rere culno kei
 .i cy xa ke cmalu ke cipni ke'e jo'u ke danlu ke'e ke'e
 .i cy mu sruri
 .i cy vo ke barda so'i mei ke'e
-.i cy ci nu la alis. jo'u ke la poi'i cpicinfo ku'o ku ke'e tolcliva kei
+.i cy ci nu la alis. jo'u ke la cpicinfo ku ke'e tolcliva kei
 .i ro da zo'u ge li ma'o fyre mo'e da lo'o nolstizu gi li ma'o fyre mo'e da lo'o srana da
-.i ge cy pa srana cy no gi cy pa me la poi'i noltrunau ku'o ku jo'u ke la poi'i noltruni'u ku'o ku ke'e me'u
+.i ge cy pa srana cy no gi cy pa me la noltrunau ku jo'u ke la noltruni'u ku ke'e me'u
 .i cy no risna
 .i ca cy ci zo'u cy pa zutse li ma'o fyre mo'e cy pa lo'o
 .i cy vo jmaji cy mu
 .i lo NALSELTRO zei da ku jo'u ke cy ze ke'e
-.i ge ge ca'u cy bi zo'u la poi'i nolse'u ku'o ku sanli gi cy so rinju la poi'i nolse'u ku'o ku gi la poi'i nolse'u ku'o ku jbini cy pano
-.i la poi'i poi'i ge ke'a ke blabi ractu ke'e gi ge ke'a jgari cy papa cy pare gi ke'a jgari cy paci cy pavo kei ku'o ku jibni la poi'i noltrunau ku'o ku
+.i ge ge ca'u cy bi zo'u la nolse'u ku sanli gi cy so rinju la nolse'u ku gi la nolse'u ku jbini cy pano
+.i la poi'i ge ke'a ke blabi ractu ke'e gi ge ke'a jgari cy papa cy pare gi ke'a jgari cy paci cy pavo kei ku jibni la noltrunau ku
 .i cy reno ke satci midju ke'e cy pamu
 .i lu cy pa cidja
 .i cy no nunpai
@@ -12763,7 +12763,7 @@ cy bi ka ce'u kufra kei
 .i cy ci nu ma goi ko'a ta'i ko'a zo'u dasni kei
 .i cy vo nu viska cy ci kei
 .i cy mu nu do djica cy vo kei
-.i cy no me la poi'i poi'i ge ke'a noltrunau gi ge ke'a dasni cy pa cy ze gi ke'a simlu cy bi kei ku'o ku me'u
+.i cy no me la poi'i ge ke'a noltrunau gi ge ke'a dasni cy pa cy ze gi ke'a simlu cy bi kei ku me'u
 .i na ku ke melbi mapti ke'e
 
 -----
@@ -12790,7 +12790,7 @@ cy pa tanbo
 .i ro da poi ke'a me cy no me'u ku'o zo'u da ke zuktce ciska ke'e fi cy pa
 .i lu cy pa nu cy no cfari kei
 .i cy no nunpai
-.i ke tolylau cusku ke'e la alis. la poi'i cpicinfo ku'o ku
+.i ke tolylau cusku ke'e la alis. la cpicinfo ku
 .i ma goi ko'a zo'u tu zukte ko'a
 .i na ku ka'e ku su'o da pu cy pa zo'u tu ciska da li'u
 
@@ -12810,7 +12810,7 @@ lu cy vo nu terpa cy ci kei
 .i cy re fanmo cy pa
 .i cy pa nunpai
 .i ge cy no cmene gi cy no srana tu
-.i ke tolylau spuda ke'e la poi'i cpicinfo ku'o ku
+.i ke tolylau spuda ke'e la cpicinfo ku
 .i ki'u cy vo zo'u tu ciska cy no li'u
 
 -----
@@ -12831,12 +12831,12 @@ cy vo nu facki cy ci kei
 .i cy ci du'u ma goi ko'a zo'u ko'a tavla kei
 .i cy re sruri
 .i cy pa vistci
-.i cy no nu la poi'i ke blabi ractu ke'e ku'o ku krixa lu cy no kumfa
+.i cy no nu la ke blabi ractu ke'e ku krixa lu cy no kumfa
 .i bu'u cy no zo'u smaji li'u kei
 .i lu co'a ku zo'u ke ke ke cladu ke'e je ke fengu ke'e voksa ke'e cusku ke'e la alis.
 .i bebna li'u
 .i ki'u cy no zo'u abu ke sutra sisti ke'e
-.i ge co'a ku zo'u la poi'i noltrunau ku'o ku dasni cy pa gi te zu'e cy vo zo'u la poi'i noltrunau ku'o ku ke xanka catlu ke'e cy re
+.i ge co'a ku zo'u la noltrunau ku dasni cy pa gi te zu'e cy vo zo'u la noltrunau ku ke xanka catlu ke'e cy re
 
 -----
 > la blabi ractu cu tolsakci lo tabra
@@ -12845,7 +12845,7 @@ tabra(c0)
 tolsakci([Name: <blabi(_)><ractu>(_) ],c0)
 
 cy no tabra
-.i la poi'i ke blabi ractu ke'e ku'o ku tolsakci cy no
+.i la ke blabi ractu ke'e ku tolsakci cy no
 
 -----
 > ni'o la .alis. ka'e viska (to frili tai lo nu da'i catlu ga'u lo janco be py toi) lo nu ro lo pairkamnycmi cu ciska *lu ue bebna li'u* lo py tanbo kei gi'e ji'a sai ka'e tilvi'a lo nu pa me py na se slabu lo lerfu pe zo bebna gi'e nitcu lo nu cpedu lo nu se jungau kei lo lamji .i *lu ba melbi kalsa fa lo tanbo pu lo nu lo nunpai cu mulno *sei la .alis. cu cu pensi* li'u*
@@ -12911,7 +12911,7 @@ cusku( ,[Name: noltrunau(_) ])
 tcidu(ko,c0) >>]
 
 lu cy no ke zerfuzyxu'a selsku ke'e
-.i cusku la poi'i noltrunau ku'o ku
+.i cusku la noltrunau ku
 .i ko tcidu cy no li'u
 
 -----
@@ -12923,7 +12923,7 @@ tabra(c0)
 
 cy pa ke te ke skapi ciska ke'e slanu ke'e
 .i cy no tabra
-.i ca ku zo'u ge ge ci roi ku zo'u la poi'i ke blabi ractu ke'e ku'o ku tolsakci cy no gi la poi'i ke blabi ractu ke'e ku'o ku tolgurgau cy pa gi la poi'i ke blabi ractu ke'e ku'o ku ke tcidu bacru ke'e lu  li'u
+.i ca ku zo'u ge ge ci roi ku zo'u la ke blabi ractu ke'e ku tolsakci cy no gi la ke blabi ractu ke'e ku tolgurgau cy pa gi la ke blabi ractu ke'e ku ke tcidu bacru ke'e lu  li'u
 
 -----
 > la noltruni'u pe lo risna cu zbasu lo rutytisna ze'a lo crisa djedi
@@ -12936,7 +12936,7 @@ risna(c0)
 cy re ke crisa djedi ke'e
 .i cy pa rutytisna
 .i cy no risna
-.i ze'a cy re zo'u la poi'i poi'i ge ke'a noltruni'u gi ke'a srana cy no kei ku'o ku zbasu cy pa
+.i ze'a cy re zo'u la poi'i ge ke'a noltruni'u gi ke'a srana cy no kei ku zbasu cy pa
 
 -----
 > .i la nolse'u pe lo risna cu zerle'a lo rutytisna gi'e darbevri bredi
@@ -12947,7 +12947,7 @@ risna(c0)
 
 cy pa rutytisna
 .i cy no risna
-.i ge la poi'i poi'i ge ke'a nolse'u gi ke'a srana cy no kei ku'o ku zerle'a cy pa gi la poi'i poi'i ge ke'a nolse'u gi ke'a srana cy no kei ku'o ku ke darbevri bredi ke'e
+.i ge la poi'i ge ke'a nolse'u gi ke'a srana cy no kei ku zerle'a cy pa gi la poi'i ge ke'a nolse'u gi ke'a srana cy no kei ku ke darbevri bredi ke'e
 
 -----
 > li'u*
@@ -12965,7 +12965,7 @@ pairkamni(c0)
 pensi(ko,c1) >>]
 
 lu ge paijdi cy pa gi cy pa srana do
-.i cusku la poi'i noltrunau ku'o ku cy no
+.i cusku la noltrunau ku cy no
 .i cy no pairkamni
 .i ko pensi cy pa li'u
 
@@ -12979,7 +12979,7 @@ lu ge paijdi cy pa gi cy pa srana do
 purci(c0,{la'e}(di'u)) >>]
 
 lu cy no mutce
-.i ke sutra zunti ke'e la poi'i ractu ku'o ku
+.i ke sutra zunti ke'e la ractu ku
 .i za'o ku zo'u na ku go'i
 .i za'o ku zo'u na ku za'o ku zo'u na ku go'i
 .i cy no purci la'e di'u lu'u li'u
@@ -12995,9 +12995,9 @@ klagau(ko,c0) >>]
 
 cy no tabra
 .i lu cy no ke pa moi zgana ke'e
-.i cusku la poi'i noltrunau ku'o ku
+.i cusku la noltrunau ku
 .i ko klagau cy no li'u
-.i ge ci roi ku zo'u la poi'i ke blabi ractu ke'e ku'o ku tolsakci cy no gi la poi'i ke blabi ractu ke'e ku'o ku krixa lu  li'u
+.i ge ci roi ku zo'u la ke blabi ractu ke'e ku tolsakci cy no gi la ke blabi ractu ke'e ku krixa lu  li'u
 
 -----
 > ni'o lo pa moi zgana cu me la mapypre noi nerkla gi'e jgari ge lo tcati kabri lo xance gi lo nanba joi matne lo drata .i *lu ko mi fraxu doi nolba'i *sei my co'a cusku* lo nu mi ti nerbevri .i ku'i mi na mo'u pinxe lo tcati ca lo nu mi se klagau li'u*
@@ -13019,7 +13019,7 @@ cy vo drata
 .i cy re xance
 .i cy pa ke tcati kabri ke'e
 .i cy no ke pa moi zgana ke'e
-.i cy no me la poi'i poi'i ge ke'a mapypre gi ge ke'a nerkla gi ge ke'a jgari cy pa cy re gi ke'a jgari cy ci cy vo kei ku'o ku me'u
+.i cy no me la poi'i ge ke'a mapypre gi ge ke'a nerkla gi ge ke'a jgari cy pa cy re gi ke'a jgari cy ci cy vo kei ku me'u
 .i lu cy re nu klagau mi kei
 .i cy pa tcati
 .i cy no nu mi nerbevri ti kei
@@ -13033,7 +13033,7 @@ cy vo drata
 (pu)(). (mo'u)(). go'i(do)
 ? x1. (ca)(x1). (co'a)(). (pu)(). (mo'u)(). go'i(do) >>]
 
-lu cusku la poi'i noltrunau ku'o ku
+lu cusku la noltrunau ku
 .i pu ku mo'u ku zo'u do go'i
 .i ma goi ko'a ca ko'a co'a ku pu ku mo'u ku zo'u do go'i li'u
 
@@ -13048,7 +13048,7 @@ cusku( ,c)
 [Fragment: c1] >>]
 
 cy no kumfa
-.i la poi'i mapypre ku'o ku catlu la poi'i poi'i ge ke'a ke cibmasti cicyractu ke'e gi ge pu ku zo'u ke'a klaje'i la poi'i mapypre ku'o ku cy no gi ke'a kansa la poi'i sipsmacu ku'o ku kei ku'o ku
+.i la mapypre ku catlu la poi'i ge ke'a ke cibmasti cicyractu ke'e gi ge pu ku zo'u ke'a klaje'i la mapypre ku cy no gi ke'a kansa la sipsmacu ku kei ku
 .i lu ge cy pa pavo moi gi cy pa srana cy no
 .i cy no cibmasti
 .i cusku cy
@@ -13060,7 +13060,7 @@ cy no kumfa
 [Fragment: << cusku( ,[Name: <cibmasti(_)><cicyractu>(_) ])
 15 moi( ) >>]
 
-lu cusku la poi'i ke cibmasti cicyractu ke'e ku'o ku
+lu cusku la ke cibmasti cicyractu ke'e ku
 .i pamu moi li'u
 
 -----
@@ -13069,7 +13069,7 @@ lu cusku la poi'i ke cibmasti cicyractu ke'e ku'o ku
 [Fragment: << jmina( ,[Name: sipsmacu(_) ])
 16 moi( ) >>]
 
-lu jmina la poi'i sipsmacu ku'o ku
+lu jmina la sipsmacu ku
 .i paxa moi li'u
 
 -----
@@ -13090,7 +13090,7 @@ cy vo ke rupnu ke'e jo'u ke fepni ke'e
 .i ge cy re tanbo gi cy re srana cy no
 .i ge cy pa detri gi cy pa ci mei
 .i cy no pairkamni
-.i lu cusku la poi'i noltrunau ku'o ku cy no
+.i lu cusku la noltrunau ku cy no
 .i cy no pairkamni
 .i ko ciska la'e di'u lu'u li'u
 .i ge ge cy no ke sutra ciska ke'e cy pa cy re gi cy no sujykanji fi cy pa gi cy no galfi cy ci cy vo
@@ -13103,7 +13103,7 @@ cusku( ,[Name: noltrunau(_) ],[Name: mapypre(_) ])
 vimcu(ko,c0) >>]
 
 lu ge cy no mapku gi cy no srana do
-.i cusku la poi'i noltrunau ku'o ku la poi'i mapypre ku'o ku
+.i cusku la noltrunau ku la mapypre ku
 .i ko vimcu cy no li'u
 
 -----
@@ -13112,7 +13112,7 @@ lu ge cy no mapku gi cy no srana do
 [Fragment: << cusku( ,[Name: mapypre(_) ])
 ![mi] moi(ti) >>]
 
-lu cusku la poi'i mapypre ku'o ku
+lu cusku la mapypre ku
 .i na ku ti me mi me'u moi li'u
 
 -----
@@ -13125,7 +13125,7 @@ zerle'a( ) >>]
 (zi)(). notci'a(p,c0)
 
 cy no fatci
-.i lu fa'a cy no zo'u ki'asku la poi'i noltrunau ku'o ku
+.i lu fa'a cy no zo'u ki'asku la noltrunau ku
 .i cy no pairkamni
 .i zerle'a li'u
 .i zi ku zo'u py notci'a cy no
@@ -13138,7 +13138,7 @@ vecnu(mi,ti)
 EQ(0) x1:((ti) >= (_)). ponse(mi,x1)
 mapypre(mi) >>]
 
-lu ke jmina ciksi ke'e la poi'i mapypre ku'o ku
+lu ke jmina ciksi ke'e la mapypre ku
 .i mi vecnu ti
 .i no da poi ke'a me ti me'u ku'o zo'u mi ponse da
 .i mi mapypre li'u
@@ -13150,7 +13150,7 @@ vistci(c0)
 (ca)(). ((co'a)(). dasni([Name: noltruni'u(_) ],c0) /\ (co'a)(). (ze'a)(). catlu([Name: noltruni'u(_) ],[Name: (mapypre(_) /\ (labybi'o(_) /\ <xanka(_)><tarti>(_))) ]))
 
 cy no vistci
-.i ca ku zo'u ge co'a ku zo'u la poi'i noltruni'u ku'o ku dasni cy no gi co'a ku ze'a ku zo'u la poi'i noltruni'u ku'o ku catlu la poi'i poi'i ge ke'a mapypre gi ge ke'a labybi'o gi ke'a ke xanka tarti ke'e kei ku'o ku
+.i ca ku zo'u ge co'a ku zo'u la noltruni'u ku dasni cy no gi co'a ku ze'a ku zo'u la noltruni'u ku catlu la poi'i ge ke'a mapypre gi ge ke'a labybi'o gi ke'a ke xanka tarti ke'e kei ku
 
 -----
 > ni'o *lu ko dunda lo do datni *sei la noltrunau cu cusku* .i ko na xanka .i ja mi da do nau catrymi'e li'u*
@@ -13161,7 +13161,7 @@ dunda(ko,c0)
 (!xanka(ko) \/ EX x1. (cu'e)(). catrymi'e(mi,x1,do)) >>]
 
 lu ge cy no datni gi cy no srana do
-.i cusku la poi'i noltrunau ku'o ku
+.i cusku la noltrunau ku
 .i ko dunda cy no
 .i ga na ku ko xanka gi su'o da cu'e ku zo'u mi catrymi'e da do li'u
 
@@ -13179,7 +13179,7 @@ jamfu(c0)
 !simlu({la'e}(di'u),c7)
 
 cy ze ka ce'u darsygau cy xa kei
-.i ge cy xa zgana gi ge ge za'o ku zo'u cy xa slilu fi cy re gi cy xa ke xanka catlu ke'e la poi'i noltruni'u ku'o ku gi ge cy xa ke se cfipu batyvi'u ke'e cy ci cy vo gi na ku cy xa ke se cfipu batyvi'u ke'e cy ci cy mu
+.i ge cy xa zgana gi ge ge za'o ku zo'u cy xa slilu fi cy re gi cy xa ke xanka catlu ke'e la noltruni'u ku gi ge cy xa ke se cfipu batyvi'u ke'e cy ci cy vo gi na ku cy xa ke se cfipu batyvi'u ke'e cy ci cy mu
 .i cy mu ke nanba ke'e joi ke matne ke'e
 .i cy vo ke tcati kabri ke'e
 .i cy ci ke barda spisa ke'e
@@ -13219,7 +13219,7 @@ lu ke cumla cusku ke'e la alis.
 [Fragment: << cusku( ,[Name: sipsmacu(_) ])
 !(bu'u)(). banro(do) >>]
 
-lu cusku la poi'i sipsmacu ku'o ku
+lu cusku la sipsmacu ku
 .i na ku bu'u ku zo'u do banro li'u
 
 -----
@@ -13248,7 +13248,7 @@ go'i( )
 cy pa ke drata fanmo ke'e
 .i cy no kumfa
 .i lu cy no ka ce'u ke racli sutra ke'e kei
-.i cusku la poi'i sipsmacu ku'o ku
+.i cusku la sipsmacu ku
 .i go'i
 .i se kai cy no zo'u mi banro
 .i na ku tai ku se kai cy no zo'u mi ke ckasu banro ke'e li'u
@@ -13272,14 +13272,14 @@ bevri(ko,c2) >>))
 cy mu nu cy vo nalseldasybi'o kei
 .i ge cy vo cutci gi cy vo re mei
 .i cy ci ke nunpai pulji ke'e
-.i cy re nu la poi'i sipsmacu ku'o ku pagre cy pa kei
+.i cy re nu la sipsmacu ku pagre cy pa kei
 .i cy pa kumfa
-.i cy no nu catlu la poi'i mapypre ku'o ku kei
-.i ze'a la'e di'u lu'u zo'u ge no roi ku zo'u la poi'i noltruni'u ku'o ku sisti cy no gi ca cy re pa da poi ke'a me cy ci me'u ku'o zo'u la poi'i noltruni'u ku'o ku cusku fi da lu cy re liste cy pa
+.i cy no nu catlu la mapypre ku kei
+.i ze'a la'e di'u lu'u zo'u ge no roi ku zo'u la noltruni'u ku sisti cy no gi ca cy re pa da poi ke'a me cy ci me'u ku'o zo'u la noltruni'u ku cusku fi da lu cy re liste cy pa
 .i ge cy pa sanga gi cy pa srana cy no
 .i ke ro moi ke zgike tigni ke'e ke'e cy no
 .i ko bevri cy re li'u
-.i tai ku ja'e cy mu zo'u la poi'i mapypre ku'o ku desku
+.i tai ku ja'e cy mu zo'u la mapypre ku desku
 
 -----
 > ni'o *lu ko dunda lo do datni *sei la noltrunau re re'u fengu cusku* .i ja do te catrymi'e gi'u xanka li'u*
@@ -13289,7 +13289,7 @@ cy mu nu cy vo nalseldasybi'o kei
 (dunda(ko,c0) \/ catrymi'e( , ,do)) >>]
 
 lu ge cy no datni gi cy no srana do
-.i re re'u ku zo'u ke fengu cusku ke'e la poi'i noltrunau ku'o ku
+.i re re'u ku zo'u ke fengu cusku ke'e la noltrunau ku
 .i ga ko dunda cy no gi catrymi'e fi do li'u
 
 -----
@@ -13320,7 +13320,7 @@ lu cy ci tcati
 ? R1. R1(c0)
 tergu'i(c0) >>]
 
-lu cusku la poi'i noltrunau ku'o ku
+lu cusku la noltrunau ku
 .i mo cei broda zo'u cy no broda
 .i cy no tergu'i li'u
 
@@ -13332,7 +13332,7 @@ spuda( ,[Name: mapypre(_) ])
 (ty pa) moi( ,c0) >>]
 
 lu cy no go'i
-.i spuda la poi'i mapypre ku'o ku
+.i spuda la mapypre ku
 .i ty pa moi cy no li'u
 
 -----
@@ -13345,7 +13345,7 @@ lu cy no go'i
 (di'a)(). co'e( ) >>]
 
 lu cy no du'u mi bebna kei
-.i ke kinli cusku ke'e la poi'i noltrunau ku'o ku
+.i ke kinli cusku ke'e la noltrunau ku
 .i ty pa moi zo tergu'i
 .i xu kau zo'u do jinvi cy no
 .i di'a ku zo'u co'e li'u
@@ -13358,10 +13358,10 @@ pindi(mi)
 (so'e) x1. (ba)({la'e}(di'u)). tergu'i(x1)
 cusku([Name: <cibmasti(_)><cicyractu>(_) ]) >>]
 
-lu di'a ku zo'u co'e la poi'i mapypre ku'o ku
+lu di'a ku zo'u co'e la mapypre ku
 .i mi pindi
 .i so'e boi da ba la'e di'u lu'u zo'u da tergu'i
-.i la poi'i ke cibmasti cicyractu ke'e ku'o ku cusku li'u
+.i la ke cibmasti cicyractu ke'e ku cusku li'u
 
 -----
 > ni'o *lu mi na go'i *sei la cibmasti cicyractu cu sutra zunti* li'u*
@@ -13369,7 +13369,7 @@ lu di'a ku zo'u co'e la poi'i mapypre ku'o ku
 [Fragment: << <sutra(_)><zunti>( ,[Name: <cibmasti(_)><cicyractu>(_) ])
 !go'i(mi) >>]
 
-lu ke sutra zunti ke'e la poi'i ke cibmasti cicyractu ke'e ku'o ku
+lu ke sutra zunti ke'e la ke cibmasti cicyractu ke'e ku
 .i na ku mi go'i li'u
 
 -----
@@ -13378,7 +13378,7 @@ lu ke sutra zunti ke'e la poi'i ke cibmasti cicyractu ke'e ku'o ku
 [Fragment: << cusku( ,[Name: mapypre(_) ])
 go'i(do) >>]
 
-lu cusku la poi'i mapypre ku'o ku
+lu cusku la mapypre ku
 .i do go'i li'u
 
 -----
@@ -13390,7 +13390,7 @@ datni(c0)
 
 cy pa cutci
 .i cy no datni
-.i ge la poi'i mapypre ku'o ku dunda cy no gi la poi'i mapypre ku'o ku cirko cy pa
+.i ge la mapypre ku dunda cy no gi la mapypre ku cirko cy pa
 
 -----
 > ni'o *lu mi tolxu'a *sei la cibmasti cicyractu cu cusku* li'u*
@@ -13398,7 +13398,7 @@ cy pa cutci
 [Fragment: << cusku( ,[Name: <cibmasti(_)><cicyractu>(_) ])
 tolxu'a(mi) >>]
 
-lu cusku la poi'i ke cibmasti cicyractu ke'e ku'o ku
+lu cusku la ke cibmasti cicyractu ke'e ku
 .i mi tolxu'a li'u
 
 -----
@@ -13410,7 +13410,7 @@ tolxu'a(tu)
 tolju'i(ko,c0) >>]
 
 lu ge cy no pagbu gi cy no srana di'u
-.i cusku la poi'i noltrunau ku'o ku
+.i cusku la noltrunau ku
 .i tu tolxu'a
 .i ko tolju'i cy no li'u
 
@@ -13426,8 +13426,8 @@ cusku([Name: sipsmacu(_) ]) >>]
 
 cy pa nu zgana cy no kei
 .i cy no nu xu kau zo'u sy tolxu'a kei
-.i lu di'a ku zo'u co'e la poi'i mapypre ku'o ku
-.i la poi'i sipsmacu ku'o ku cusku li'u
+.i lu di'a ku zo'u co'e la mapypre ku
+.i la sipsmacu ku cusku li'u
 .i te zu'e cy pa zo'u my ke xanka ke sruri catlu ke'e ke'e
 .i ge no da zo'u sy tolxu'a da gi sy ke carmi sipna ke'e
 
@@ -13447,7 +13447,7 @@ pairkamnycmi(c0)
 
 lu pa da poi ke'a me cy no me'u ku'o zo'u preti da
 .i cy no pairkamnycmi
-.i ma goi ko'a zo'u la poi'i sipsmacu ku'o ku cusku ko'a li'u
+.i ma goi ko'a zo'u la sipsmacu ku cusku ko'a li'u
 
 -----
 > ni'o *lu mi na morji *sei la mapypre cu cusku* li'u*
@@ -13455,7 +13455,7 @@ lu pa da poi ke'a me cy no me'u ku'o zo'u preti da
 [Fragment: << cusku( ,[Name: mapypre(_) ])
 !morji(mi) >>]
 
-lu cusku la poi'i mapypre ku'o ku
+lu cusku la mapypre ku
 .i na ku mi morji li'u
 
 -----
@@ -13464,7 +13464,7 @@ lu cusku la poi'i mapypre ku'o ku
 [Fragment: << notsku( ,[Name: noltrunau(_) ])
 (morji(do) \/ EX x1. catrymi'e(mi,x1,do)) >>]
 
-lu notsku la poi'i noltrunau ku'o ku
+lu notsku la noltrunau ku
 .i ga do morji gi su'o da zo'u mi catrymi'e da do li'u
 
 -----
@@ -13479,7 +13479,7 @@ cidni(c2)
 cy re cidni
 .i cy pa ke nanba ke'e joi ke matne ke'e
 .i cy no ke tcati kabri ke'e
-.i ge la poi'i poi'i ge ke'a mapypre gi ke'a ke dunku mutce ke'e kei ku'o ku falcru cy no jo'u ke cy pa ke'e gi pa da poi ke'a me cy re me'u ku'o zo'u la poi'i poi'i ge ke'a mapypre gi ke'a ke dunku mutce ke'e kei ku'o ku sanli fi da
+.i ge la poi'i ge ke'a mapypre gi ke'a ke dunku mutce ke'e kei ku falcru cy no jo'u ke cy pa ke'e gi pa da poi ke'a me cy re me'u ku'o zo'u la poi'i ge ke'a mapypre gi ke'a ke dunku mutce ke'e kei ku sanli fi da
 .i lu mi pindi li'u
 
 -----
@@ -13490,7 +13490,7 @@ cusku( ,[Name: noltrunau(_) ])
 pindi(do,c0) >>]
 
 lu cy no ka ce'u ke tavla certu ke'e kei
-.i cusku la poi'i noltrunau ku'o ku
+.i cusku la noltrunau ku
 .i do pindi cy no li'u
 
 -----
@@ -13552,7 +13552,7 @@ nu[(pi ro) si'e({la'e}(di'u),c1)](c2)
 cuntu(c0)
 (va'o)(c2). nitkla(do) >>]
 
-lu di'a ku zo'u cusku la poi'i noltrunau ku'o ku
+lu di'a ku zo'u cusku la noltrunau ku
 .i cy re nu la'e di'u lu'u pi ro si'e cy pa kei
 .i ge djuno cy pa cy no gi cy pa srana do
 .i cy no cuntu
@@ -13569,7 +13569,7 @@ cpana(mi,c1) >>]
 
 lu cy pa loldi
 .i cy no nitmau
-.i cusku la poi'i mapypre ku'o ku
+.i cusku la mapypre ku
 .i na ku ka'e ku zo'u mi klama cy no
 .i mi cpana cy pa li'u
 
@@ -13613,9 +13613,9 @@ zmanei(mi,c0) >>]
 cy pa liste cy no
 .i cy no sanga
 .i lu cy no nu mo'u ku zo'u ke tcati pinxe ke'e kei
-.i cusku la poi'i mapypre ku'o ku
+.i cusku la mapypre ku
 .i mi zmanei cy no li'u
-.i my ke xanka catlu ke'e la poi'i poi'i ge ke'a noltruni'u gi ke'a tcidu cy pa kei ku'o ku
+.i my ke xanka catlu ke'e la poi'i ge ke'a noltruni'u gi ke'a tcidu cy pa kei ku
 
 -----
 > ni'o *lu .e'a klama *sei la noltrunau cu cusku* li'u* .i la mapypre cu sutra cliva lo kumfa se cau lo nu denpa ji'a sai lo nu dasni lo cutci
@@ -13632,16 +13632,16 @@ cy ci nu denpa cy re kei
 .i cy re nu dasni cy pa kei
 .i cy pa cutci
 .i cy no kumfa
-.i lu cusku la poi'i noltrunau ku'o ku
+.i lu cusku la noltrunau ku
 .i klama li'u
-.i se cau cy ci zo'u la poi'i mapypre ku'o ku ke sutra cliva ke'e cy no
+.i se cau cy ci zo'u la mapypre ku ke sutra cliva ke'e cy no
 
 -----
 > la mapypre cu sutra cliva
 
 <sutra(_)><cliva>([Name: mapypre(_) ])
 
-la poi'i mapypre ku'o ku ke sutra cliva ke'e
+la mapypre ku ke sutra cliva ke'e
 
 -----
 > ni'o *lu .i je ko lo stedu tu vimcu bu'u lo bartu *sei la noltruni'u fi pa lo pulji cu jmina cusku* li'u* .i ku'i la mapypre na ka'e se viska pu lo nu lo pulji cu tolcliva lo vorme
@@ -13660,11 +13660,11 @@ cy re nu cy no tolcliva cy pa kei
 .i cy pa vorme
 .i cy no pulji
 .i lu cy re bartu
-.i pa da poi ke'a me cy pa me'u ku'o zo'u ke jmina cusku ke'e la poi'i noltruni'u ku'o ku da
+.i pa da poi ke'a me cy pa me'u ku'o zo'u ke jmina cusku ke'e la noltruni'u ku da
 .i cy pa pulji
 .i cy no stedu
 .i bu'u cy re zo'u ko vimcu cy no tu li'u
-.i na ku ka'e ku pu cy re zo'u viska la poi'i mapypre ku'o ku
+.i na ku ka'e ku pu cy re zo'u viska la mapypre ku
 
 -----
 > ni'o *lu ko klagau lo jersi zgana *sei la noltrunau cu cusku* li'u*
@@ -13674,7 +13674,7 @@ cusku( ,[Name: noltrunau(_) ])
 klagau(ko,c0) >>]
 
 lu cy no ke jersi zgana ke'e
-.i cusku la poi'i noltrunau ku'o ku
+.i cusku la noltrunau ku
 .i ko klagau cy no li'u
 
 -----
@@ -13702,7 +13702,7 @@ cy so nu ro da poi ke'a me cy bi me'u ku'o co'a ku zo'u da senci kei
 .i cy vo du'u ma goi ko'a zo'u me ko'a me'u kei
 .i cy ci xance
 .i cy re ke cpinytsapi tanxe ke'e
-.i ge cy pa jukpa gi cy pa srana la poi'i noltroni'u ku'o ku
+.i ge cy pa jukpa gi cy pa srana la noltroni'u ku
 .i cy no ke jersi zgana ke'e
 .i cy no me cy pa me'u
 .i cy pa jgari cy re cy ci
@@ -13716,7 +13716,7 @@ cusku( ,[Name: noltrunau(_) ])
 dunda(ko,c0) >>]
 
 lu ge cy no datni gi cy no srana do
-.i cusku la poi'i noltrunau ku'o ku
+.i cusku la noltrunau ku
 .i ko dunda cy no li'u
 
 -----
@@ -13737,9 +13737,9 @@ lu cusku cy no
 nolba'i(c0)
 kuclanli(c0,c1) >>)) ])
 
-la poi'i noltrunau ku'o ku ke xanka catlu ke'e la poi'i poi'i ge ke'a ke blabi ractu ke'e gi ke'a ke ke tolylau voksa ke'e cusku ke'e lu vi ku zo'u cy pa zgana
+la noltrunau ku ke xanka catlu ke'e la poi'i ge ke'a ke blabi ractu ke'e gi ke'a ke ke tolylau voksa ke'e cusku ke'e lu vi ku zo'u cy pa zgana
 .i cy no nolba'i
-.i cy no kuclanli cy pa li'u kei ku'o ku
+.i cy no kuclanli cy pa li'u kei ku
 
 -----
 > ni'o *lu .i'a .o'o .i'a *sei la noltrunau cu tolgleki* li'u* .i ny ba lo nu kucysimgau lo birka gi'e frumu fa'a lo jukpa co'u lo nu lo ny kanla cu jibni lo nu na ka'e se viska cu condi voksa cusku *lu ma te zbasu lo rutytisna li'u*
@@ -13807,8 +13807,8 @@ vimcu(ko,c2) >>]
 lu cy re zbikre
 .i cy pa kumfa
 .i cy no stedu
-.i krixa la poi'i noltruni'u ku'o ku
-.i ko selkarlygau la poi'i poi'i vu ku zo'u ke'a sipsmacu kei ku'o ku
+.i krixa la noltruni'u ku
+.i ko selkarlygau la poi'i vu ku zo'u ke'a sipsmacu kei ku
 .i ko vimcu cy no tu
 .i ko barklagau tu cy pa
 .i ko rinju tu
@@ -13828,7 +13828,7 @@ mentu(c0,(so'o))
 
 cy vo jukpa
 .i cy ci nu ke cnici xruti ke'e kei
-.i cy re nu gau ku zo'u la poi'i sipsmacu ku'o ku barkla kei
+.i cy re nu gau ku zo'u la sipsmacu ku barkla kei
 .i cy pa kumfa
 .i cy no mentu li so'o boi lo'o
 .i ze'a cy no ca'o cy re zo'u cy pa kalsa
@@ -13848,14 +13848,14 @@ kuclanli(do,c0)
 <mutce(_)><corgau>(c1,mi,c2) >>,[Name: noltruni'u(_) ])
 
 lu cy no ke jersi zgana ke'e
-.i ke ke surla mutce ke'e cusku ke'e la poi'i noltrunau ku'o ku
+.i ke ke surla mutce ke'e cusku ke'e la noltrunau ku
 .i na ku vajni
 .i ko klagau cy no li'u
 .i ny ke ke ke tolylau tonga ke'e jmina ke'e cusku ke'e lu cy re sedycra
 .i cy pa nu do kuclanli cy no kei
 .i cy no ke jersi zgana ke'e
 .i do kuclanli cy no
-.i cy pa ke mutce corgau ke'e mi cy re li'u la poi'i noltruni'u ku'o ku
+.i cy pa ke mutce corgau ke'e mi cy re li'u la noltruni'u ku
 
 -----
 > ni'o la .alis. cu catlu la blabi ractu noi juxre co'e lo liste ku'o gi'e mutce kucli lo du'u lo jersi zgana cu mo kau .i *lu za'o na mutce lo ka datni *sei .abu sezysku* li'u* .i ko se xanri lo nu spaji fa lo nu la blabi ractu se pi'o lo kinli je cmalu voksa cu bacru tcidu lo cmene po'u zo .alis.
@@ -13874,13 +13874,13 @@ sezysku( ,a)
 xanri(c6,ko)
 
 cy xa nu cy mu spaji kei
-.i cy mu nu se pi'o cy ci zo'u la poi'i ke blabi ractu ke'e ku'o ku ke bacru tcidu ke'e cy vo kei
+.i cy mu nu se pi'o cy ci zo'u la ke blabi ractu ke'e ku ke bacru tcidu ke'e cy vo kei
 .i ge cy vo cmene gi cy vo du zo alis
 .i cy ci ke ke kinli ke'e je ke cmalu ke'e voksa ke'e
 .i cy re du'u mo cei broda zo'u cy pa broda kei
 .i cy pa ke jersi zgana ke'e
 .i cy no liste
-.i ge la alis. catlu la poi'i poi'i ge ke'a ke blabi ractu ke'e gi ke'a ke juxre co'e ke'e cy no kei ku'o ku gi la alis. ke mutce kucli ke'e cy re
+.i ge la alis. catlu la poi'i ge ke'a ke blabi ractu ke'e gi ke'a ke juxre co'e ke'e cy no kei ku gi la alis. ke mutce kucli ke'e cy re
 .i lu cy no ka ce'u datni kei
 .i sezysku abu
 .i za'o ku zo'u na ku mutce cy no li'u
@@ -14081,7 +14081,7 @@ cusku( ,[Name: noltrunau(_) ],"alis")
 ? x1. djuno(do,x1,c0) >>]
 
 lu cy no cuntu
-.i cusku la poi'i noltrunau ku'o ku la alis.
+.i cusku la noltrunau ku la alis.
 .i ma goi ko'a zo'u do djuno ko'a cy no li'u
 
 -----
@@ -14122,10 +14122,10 @@ mutce({la'e}(di'u),c1) >>]
 (frumu(r) /\ (ca)(c2). <flira(_)><snigau>(r))
 
 cy re nu tavla kei
-.i cy pa nu la poi'i ke blabi ractu ke'e ku'o ku zunti kei
+.i cy pa nu la ke blabi ractu ke'e ku zunti kei
 .i cy no tanbo
 .i lu cy pa ka ce'u vajni kei
-.i fa'a cy no zo'u cusku la poi'i noltrunau ku'o ku
+.i fa'a cy no zo'u cusku la noltrunau ku
 .i cy no pairkamni
 .i la'e di'u lu'u mutce cy pa li'u
 .i co'a ku ca cy pa zo'u py ciska di'u cy no
@@ -14148,7 +14148,7 @@ vajni( ) >>)
 cy re nu cipra cy no cy pa kei
 .i cy pa valsi
 .i cy no ka ma poi ke'a srana ce'u ku'o zi'e goi ko'a zo'u ko'a xagmau kei
-.i lu ke sutra cusku ke'e la poi'i noltrunau ku'o ku
+.i lu ke sutra cusku ke'e la noltrunau ku
 .i mi skudji zo tolvajni li'u
 .i ca'o ku tai cy re zo'u ny ke tolylau sezysku ke'e lu vajni
 .i tolvajni
@@ -14172,7 +14172,7 @@ kumfa(c1)
 FA x1:((prenu(_) /\ <galtu(_)><minli>(_,(za'u pa)))). bilga(x1,c2) >>,c))
 
 ge cy no ke notci cukta ke'e gi cy no srana ny
-.i ca ku zo'u ge la poi'i poi'i ge ke'a noltrunau gi pu ku ze'a ku zo'u ke'a ke zukte ciska ke'e fi cy no kei ku'o ku cusku lu smaji li'u gi la poi'i poi'i ge ke'a noltrunau gi pu ku ze'a ku zo'u ke'a ke zukte ciska ke'e fi cy no kei ku'o ku ke bacru tcidu ke'e lu cy re nu cliva cy pa kei
+.i ca ku zo'u ge la poi'i ge ke'a noltrunau gi pu ku ze'a ku zo'u ke'a ke zukte ciska ke'e fi cy no kei ku cusku lu smaji li'u gi la poi'i ge ke'a noltrunau gi pu ku ze'a ku zo'u ke'a ke zukte ciska ke'e fi cy no kei ku ke bacru tcidu ke'e lu cy re nu cliva cy pa kei
 .i cy pa kumfa
 .i cy no ke vore moi javni ke'e
 .i ro da poi ge ke'a prenu gi ke'a ke galtu minli ke'e li za'u pa boi lo'o ku'o zo'u da bilga cy re li'u cy
@@ -14199,7 +14199,7 @@ lu cusku la alis.
 [Fragment: << cusku( ,[Name: noltrunau(_) ])
 go'i(do) >>]
 
-lu cusku la poi'i noltrunau ku'o ku
+lu cusku la noltrunau ku
 .i do go'i li'u
 
 -----
@@ -14208,7 +14208,7 @@ lu cusku la poi'i noltrunau ku'o ku
 [Fragment: << jmina( ,[Name: noltruni'u(_) ])
 go'i( ,(ji'i re)) >>]
 
-lu jmina la poi'i noltruni'u ku'o ku
+lu jmina la noltruni'u ku
 .i go'i li ji'i re boi lo'o li'u
 
 -----
@@ -14234,7 +14234,7 @@ tolcitrai(j,c1) >>]
 
 lu ge cy pa javni gi cy pa srana cy no
 .i cy no cukta
-.i cusku la poi'i noltrunau ku'o ku
+.i cusku la noltrunau ku
 .i jy tolcitrai cy pa li'u
 
 -----
@@ -14257,9 +14257,9 @@ pairkamni(c0)
 pensi(ko,c1) >>]
 
 cy no ke notci cukta ke'e
-.i ge la poi'i noltrunau ku'o ku labybi'o gi la poi'i noltrunau ku'o ku ke sutra polje ke'e cy no
+.i ge la noltrunau ku labybi'o gi la noltrunau ku ke sutra polje ke'e cy no
 .i lu ge paijdi cy pa gi cy pa srana do
-.i ke ke ke lauble ke'e je ke desku ke'e voksa ke'e cusku ke'e la poi'i noltrunau ku'o ku cy no
+.i ke ke ke lauble ke'e je ke desku ke'e voksa ke'e cusku ke'e la noltrunau ku cy no
 .i cy no pairkamni
 .i ko pensi cy pa li'u
 
@@ -14282,7 +14282,7 @@ lu vi ku zo'u cy pa pelji
 [Fragment: << cusku( ,[Name: noltruni'u(_) ])
 ? x1. ciska( ,x1,ta) >>]
 
-lu cusku la poi'i noltruni'u ku'o ku
+lu cusku la noltruni'u ku
 .i ma goi ko'a zo'u ciska ko'a ta li'u
 
 -----
@@ -14296,7 +14296,7 @@ EX x1. simlu(ti,c1,x1) >>]
 
 lu cy pa ka ce'u xatra fi cy no kei
 .i cy no pinfu
-.i cusku la poi'i ke blabi ractu ke'e ku'o ku
+.i cusku la ke blabi ractu ke'e ku
 .i za'o ku zo'u na ku mi kargau ti
 .i su'o da zo'u ti simlu cy pa da li'u
 
@@ -14309,7 +14309,7 @@ cusku( ,[Name: noltrunau(_) ])
 rirci({la'e}(di'u)) >>]
 
 lu ro da zo'u ge li ma'o fyno mo'e da lo'o me da me'u gi li ma'o fyno mo'e da lo'o no mei
-.i cusku la poi'i noltrunau ku'o ku
+.i cusku la noltrunau ku
 .i go go'i gi na ku su'o da zo'u ti xatra li ma'o fyno mo'e da lo'o
 .i la'e di'u lu'u rirci li'u
 
@@ -14361,7 +14361,7 @@ ro da poi ke'a me cy no me'u ku'o zo'u da simlu cy pa
 .i cy no pairkamnycmi
 .i cy pa ka cfipu ce'u kei
 .i lu cy no ka ce'u cizra kei
-.i cusku la poi'i ke blabi ractu ke'e ku'o ku
+.i cusku la ke blabi ractu ke'e ku
 .i na ku go'i
 .i la'e di'u lu'u traji cy no li'u
 
@@ -14381,7 +14381,7 @@ ro da poi ke'a me cy no me'u ku'o zo'u da xruti cy pa
 .i cy pa ka ce'u cikygei kei
 .i lu ge cy pa ke ciska tarmi ke'e gi cy pa srana cy no
 .i cy no drata
-.i cusku la poi'i noltrunau ku'o ku
+.i cusku la noltrunau ku
 .i py fukygau ta cy pa li'u
 
 -----
@@ -14415,7 +14415,7 @@ cabdei(c0)
 kampu(c1)
 
 cy pa nu xanvruzau la'e di'u lu'u kei
-.i di'u ke poi'i ca cy no zo'u ke'a ke tolbebna selsku ke'e la poi'i noltrunau ku'o ku kei pa moi ke'e
+.i di'u ke poi'i ca cy no zo'u ke'a ke tolbebna selsku ke'e la noltrunau ku kei pa moi ke'e
 .i cy no cabdei
 .i cy pa kampu
 
@@ -14427,7 +14427,7 @@ cusku( ,[Name: noltruni'u(_) ])
 jetyja'o({la'e}(di'u),c0) >>]
 
 lu cy no du'u tu zerzu'e kei
-.i cusku la poi'i noltruni'u ku'o ku
+.i cusku la noltruni'u ku
 .i la'e di'u lu'u jetyja'o cy no li'u
 
 -----
@@ -14449,7 +14449,7 @@ lu cy no du'u ma goi ko'a zo'u ciska ko'a kei
 [Fragment: << cusku( ,[Name: noltrunau(_) ])
 tcidu(ko) >>]
 
-lu cusku la poi'i noltrunau ku'o ku
+lu cusku la noltrunau ku
 .i ko tcidu li'u
 
 -----
@@ -14460,7 +14460,7 @@ vistci(c0)
 [Fragment: << ? x1. (co'a)(x1). go'i(mi) >>]
 
 cy no vistci
-.i co'a ku zo'u la poi'i ke blabi ractu ke'e ku'o ku dasni cy no
+.i co'a ku zo'u la ke blabi ractu ke'e ku dasni cy no
 .i lu ma goi ko'a co'a ko'a zo'u mi go'i li'u
 
 -----
@@ -14473,7 +14473,7 @@ EX x1. (x1=. (co'a)(c0). (ca'o)(). (co'u)(c1). go'i(ko) /\ (ba)(x1). sisti(ko)) 
 
 lu cy pa fanmo
 .i cy no cfafanmo
-.i ke junri cusku ke'e la poi'i noltrunau ku'o ku
+.i ke junri cusku ke'e la noltrunau ku
 .i su'o da zo'u ge fi'o du da co'a cy no ca'o ku co'u cy pa zo'u ko go'i gi ba da zo'u ko sisti li'u
 
 -----
@@ -14481,7 +14481,7 @@ lu cy pa fanmo
 
 <tcidu([Name: <blabi(_)><ractu>(_) ],_)><penmi>(di'e)
 
-di'e ke se tcidu be la poi'i ke blabi ractu ke'e ku'o ku penmi ke'e
+di'e ke se tcidu be la ke blabi ractu ke'e ku penmi ke'e
 
 -----
 > .i ti'e do ta vitke ca'a .i do tu tavla mi
@@ -14599,7 +14599,7 @@ Parse error:
 (bu'u)(c0). pensi([Name: noltrunau(_) ])
 
 cy no ke nunpai kumfa ke'e
-.i bu'u cy no zo'u la poi'i noltrunau ku'o ku pensi
+.i bu'u cy no zo'u la noltrunau ku pensi
 
 -----
 > ni'o *lu mi va'o lo nu py di'u ka'e ciksi *sei la .alis. cu cusku (to .abu banro lo tai barda ze'a lo pu zi mentu be li so'u ja'e lo nu .abu na sai terpa lo nu zunti ny toi)* cu dunda lo rupnu py .i ba'e mi na jinvi lo du'u lo smuni selci ji'a sai cu zvati di'u li'u*
@@ -14673,7 +14673,7 @@ di'a ku zo'u cusku ny
 .i cy re smuni
 .i cy pa ke barda raktu ke'e
 .i cy no nu no da zo'u da smuni di'u kei
-.i cusku la poi'i noltrunau ku'o ku
+.i cusku la noltrunau ku
 .i ki'u cy vo zo'u cy no fanta cy pa li'u
 
 -----
@@ -14695,11 +14695,11 @@ marji([Name: nolse'u(_) ],c1)
 cusku( ,n)
 ?. simlu(mi,c0) >>]
 
-na ku la poi'i nolse'u ku'o ku simlu
+na ku la nolse'u ku simlu
 .i cy no stedu
 .i cy pa jarple
-.i la poi'i nolse'u ku'o ku marji cy pa
-.i la poi'i nolse'u ku'o ku ke badri daskygau ke'e cy no
+.i la nolse'u ku marji cy pa
+.i la nolse'u ku ke badri daskygau ke'e cy no
 .i lu cy no ka ka'e ku zo'u ce'u go'i kei
 .i cusku ny
 .i xu kau zo'u mi simlu cy no li'u
@@ -14751,7 +14751,7 @@ nu[fengu(ta)](c0)
 [Fragment: ] >>]
 (0 roi)(). fengu(do) >>]
 
-lu ke jinga cusku ke'e la poi'i poi'i ge ke'a noltrunau gi ke'a jarco cy pa kei ku'o ku
+lu ke jinga cusku ke'e la poi'i ge ke'a noltrunau gi ke'a jarco cy pa kei ku
 .i ge cy pa rutytisna gi cy pa cpana cy no
 .i cy no jubme
 .i ry zvati tu
@@ -14779,7 +14779,7 @@ valsi(c0)
 <morsi(_)><smaji>( )
 
 cy no sruri
-.i lu cusku la poi'i noltrunau ku'o ku
+.i lu cusku la noltrunau ku
 .i cy no valsi
 .i na ku cy no mapti do li'u
 .i ny ke cisma catlu ke'e cy no
@@ -14792,7 +14792,7 @@ cy no sruri
 (pu)(). vlakei(mi) >>]
 FA x1. cmila(x1)
 
-lu ke ke jgicro tonga ke'e jmina ke'e la poi'i noltrunau ku'o ku
+lu ke ke jgicro tonga ke'e jmina ke'e la noltrunau ku
 .i pu ku zo'u mi vlakei li'u
 .i ro da zo'u da cmila
 
@@ -14806,7 +14806,7 @@ pairkamni(c0)
 pensi(c0,c2) >>]
 
 lu paijdi cy re
-.i ji'i re no re'u cy pa zo'u cusku la poi'i noltrunau ku'o ku
+.i ji'i re no re'u cy pa zo'u cusku la noltrunau ku
 .i cy pa djedi
 .i cy no pairkamni
 .i cy no pensi cy re li'u
@@ -14824,7 +14824,7 @@ cusku( ,[Name: noltruni'u(_) ])
 
 lu paijdi cy pa
 .i sfami'e cy no
-.i cusku la poi'i noltruni'u ku'o ku
+.i cusku la noltruni'u ku
 .i na ku go'i
 .i na ku na ku go'i
 .i cy no pa moi
@@ -14851,7 +14851,7 @@ cusku( ,[Name: (noltruni'u(_) /\ <zirpu(_)><binxo>(_)) ])
 ri'urgau(ko,c0) >>]
 
 lu ge cy no tance gi cy no srana do
-.i cusku la poi'i poi'i ge ke'a noltruni'u gi ke'a ke zirpu binxo ke'e kei ku'o ku
+.i cusku la poi'i ge ke'a noltruni'u gi ke'a ke zirpu binxo ke'e kei ku
 .i ko ri'urgau cy no li'u
 
 -----
@@ -14871,7 +14871,7 @@ stedu(c0)
 vimcu(ko,c0,tu) >>]
 EQ(0) x1. muvdu(x1)
 
-lu ke ke voksa launrai ke'e krixa ke'e la poi'i noltruni'u ku'o ku
+lu ke ke voksa launrai ke'e krixa ke'e la noltruni'u ku
 .i cy no stedu
 .i ko vimcu cy no tu li'u
 .i no da zo'u da muvdu
@@ -15099,7 +15099,7 @@ minde(c9, ,c11)
 ((za'u) re'u)(). (ga'u re'o)(c13). (ca)(c16). senci(c12)
 ((za'u) re'u)(). (tisna(c24,c23) /\ jorne(c23,c25))
 
-cy remu ke darno kaksna ke'e la poi'i poi'i ge ke'a ke jitfa cakyrespa ke'e gi ke'a tolgeitce kei ku'o ku
+cy remu ke darno kaksna ke'e la poi'i ge ke'a ke jitfa cakyrespa ke'e gi ke'a tolgeitce kei ku
 .i cy revo vacri
 .i cy reci ro mei
 .i cy repa zunva'u cy rere
@@ -15107,26 +15107,26 @@ cy remu ke darno kaksna ke'e la poi'i poi'i ge ke'a ke jitfa cakyrespa ke'e gi k
 .i cy reno snamli cy paso
 .i ge cy paso ke tanbo pinsi ke'e gi cy paso srana cy pabi
 .i cy pabi rebyrespa
-.i cy paze selkrixa la poi'i cpicinfo ku'o ku
+.i cy paze selkrixa la cpicinfo ku
 .i cy paxa nu cy pavo jo'u ke cy pamu ke'e ke sruri porpi ke'e kei
 .i cy pamu palne
 .i cy pavo palta
-.i cy paci cidni la poi'i noltroni'u ku'o ku
+.i cy paci cidni la noltroni'u ku
 .i cy pare ke xarju cifnu ke'e
 .i cy papa nu catra cy pano kei
 .i cy pano ke malselfu'a vitke ke'e
-.i cy so ke cpina voksa ke'e la poi'i noltruni'u ku'o ku
-.i cy bi nu la poi'i ke cibmasti cicyractu ke'e ku'o ku kansa cy xa cy ze kei
+.i cy so ke cpina voksa ke'e la noltruni'u ku
+.i cy bi nu la ke cibmasti cicyractu ke'e ku kansa cy xa cy ze kei
 .i ze'e ku zo'u cy ze nu sanmi kei
-.i ge cy xa pendo gi cy xa srana la poi'i ke cibmasti cicyractu ke'e ku'o ku
+.i ge cy xa pendo gi cy xa srana la ke cibmasti cicyractu ke'e ku
 .i cy mu sance cy vo
 .i cy vo ke tcati kabri ke'e
 .i cy ci ke jibni la'ucma ke'e
-.i cy re nu la poi'i ke blabi ractu ke'e ku'o ku ke sutra klama ke'e kei
+.i cy re nu la ke blabi ractu ke'e ku ke sutra klama ke'e kei
 .i ge cy pa jamfu gi cy pa srana my
 .i cy no ke clani srasu ke'e
 .i bu'u cy pa ca cy re zo'u cy no vruvricypra
-.i la poi'i poi'i ge ke'a smacu gi ke'a terpa kei ku'o ku ke jacre'o pagre ke'e cy ci
+.i la poi'i ge ke'a smacu gi ke'a terpa kei ku ke jacre'o pagre ke'e cy ci
 .i ca cy bi zo'u my tirna cy mu
 .i cy so minde fi cy papa
 .i za'u re'u ku ga'u re'o cy paci ca cy paxa zo'u cy pare senci
@@ -15166,7 +15166,7 @@ lanjanbe cy pare
 .i cy vo nu ro da zo'u da binxo cy ci kei
 .i cy ci ke tolzdi fatci ke'e
 .i cy re nu kargau cy no kei
-.i cy pa du'u my zvati la poi'i selmacygu'e ku'o ku kei
+.i cy pa du'u my zvati la selmacygu'e ku kei
 .i cy no ganlo
 .i cy no kanla
 .i ge za'o ku zo'u my zutse gi my ke xadba krici ke'e cy pa
@@ -15196,7 +15196,7 @@ binxo(c0,c2)
 FA x1:((c6) >= (_)). binxo(c7,c9)
 basti(c11,c12)
 
-cy pare ke tilju kaksna ke'e la poi'i ke jitfa cakyrespa ke'e ku'o ku
+cy pare ke tilju kaksna ke'e la ke jitfa cakyrespa ke'e ku
 .i cy pano cmoni cy papa
 .i zu ku zo'u cy pano bakni
 .i cy so ke mixre sance ke'e cy bi
@@ -15204,12 +15204,12 @@ cy pare ke tilju kaksna ke'e la poi'i ke jitfa cakyrespa ke'e ku'o ku
 .i djuno my
 .i cy ze ro mei
 .i cy xa ke drata ke cizra savru ke'e ke'e
-.i cy mu selkrixa la poi'i cpicinfo ku'o ku
+.i cy mu selkrixa la cpicinfo ku
 .i cy vo nunsenci cy ci
 .i cy ci cifnu
 .i cy re voksa cy pa
 .i cy pa ke lankurji nanla ke'e
-.i la poi'i noltruni'u ku'o ku ke cpina krixa ke'e cy no
+.i la noltruni'u ku ke cpina krixa ke'e cy no
 .i cy no binxo cy re
 .i ro da poi ke'a me cy xa me'u ku'o zo'u cy ze binxo cy so
 .i cy papa basti cy pare
@@ -15239,7 +15239,7 @@ cy paci nu ca cy pa zo'u ge ge ge ge ge ge cy no ke makcu ninmu ke'e gi ze'a cy 
 .i ge ke sampu gleki ke'e cy pano gi cy pano srana ra
 .i ge ke sampu tolgei ke'e cy so gi cy so srana ra
 .i cy bi nu so'i boi da poi ke'a ke cizra lisri ke'e ku'o zo'u da jo'u ke cy ze ke'e ke carmi cinri ke'e cy xa kei
-.i ge senva cy ze gi cy ze srana la poi'i poi'i pu ku zu ku zo'u ke'a selmacygu'e kei ku'o ku
+.i ge senva cy ze gi cy ze srana la poi'i pu ku zu ku zo'u ke'a selmacygu'e kei ku
 .i ge cy xa kanla gi cy xa srana cy mu
 .i ge cy mu ke cmalu panzi ke'e gi cy mu srana cy no
 .i ge cy vo ke ke sampu ke'e je ke prami ke'e risna ke'e gi cy vo srana cy ci
