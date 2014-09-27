@@ -1,3 +1,13 @@
+-- This file is part of tersmu
+-- Copyright (C) 2014 Martin Bays <mbays@sdf.org>
+--
+-- This program is free software: you can redistribute it and/or modify
+-- it under the terms of version 3 of the GNU General Public License as
+-- published by the Free Software Foundation.
+--
+-- You should have received a copy of the GNU General Public License
+-- along with this program.  If not, see http://www.gnu.org/licenses/.
+
 {-# LANGUAGE TypeSynonymInstances, FlexibleInstances #-}
 module JboShow where
 
@@ -409,7 +419,7 @@ instance JboShow JboTerm where
 		(intercalate "," ss) ++ ")"
     logjboshow True (Named s) = return $ "la " ++ s ++ "."
     logjboshow False (Named s) = return $ bracket '"' s
-    logjboshow jbo (PredNamed p) = (if jbo then jbobracket "la poi'i" "ku'o ku"
+    logjboshow jbo (PredNamed p) = (if jbo then jbobracket "la" "ku"
 	else brackets "[Name: ") <$> logjboshow jbo p
     logjboshow jbo (JboQuote (ParsedQuote ps)) =
 	(if jbo then jbobracket "lu" "li'u" else brackets "<< ") <$> logjboshow jbo ps

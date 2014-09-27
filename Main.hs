@@ -1,3 +1,13 @@
+-- This file is part of tersmu
+-- Copyright (C) 2014 Martin Bays <mbays@sdf.org>
+--
+-- This program is free software: you can redistribute it and/or modify
+-- it under the terms of version 3 of the GNU General Public License as
+-- published by the Free Software Foundation.
+--
+-- You should have received a copy of the GNU General Public License
+-- along with this program.  If not, see http://www.gnu.org/licenses/.
+
 module Main where
 
 import ParseText (parseText)
@@ -23,6 +33,8 @@ import System.Exit
 import System.Process
 import System.Environment
 import System.Console.GetOpt
+
+versionString = "0.2"
 
 doParse :: OutputType -> Handle -> Handle -> String -> IO ()
 doParse ot h herr s = case morph s of
@@ -52,19 +64,21 @@ data OutputType = Jbo | Loj | Both
     deriving (Eq, Ord, Show)
 data InputType = WholeText | Paras | Lines
     deriving (Eq, Ord, Show)
-data Opt = Output OutputType | Input InputType | Help
+data Opt = Output OutputType | Input InputType | Help | Version
     deriving (Eq, Ord, Show)
 options =
     [ Option ['l'] ["loj"] (NoArg (Output Loj)) "output logical form only"
     , Option ['j'] ["jbo"] (NoArg (Output Jbo)) "output forethoughtful lojbanic form only"
     , Option ['L'] ["lines"] (NoArg (Input Lines)) "interpret each line as a lojban text"
     , Option ['p'] ["paragraphs"] (NoArg (Input Paras)) "interpret each blank-line-separated paragraph as a lojban text"
-    , Option ['h'] ["help"] (NoArg Help) "output both logical and lojbanic forms (default)"
+    , Option ['v'] ["version"] (NoArg Version) "show version"
+    , Option ['h'] ["help"] (NoArg Help) "show help"
     ]
 parseArgs :: [String] -> IO ([Opt],[String])
 parseArgs argv =
     case getOpt Permute options argv of
 	(o,_,[]) | Help `elem` o -> putStrLn (usageInfo header options) >> exitWith ExitSuccess
+	(o,_,[]) | Version `elem` o -> putStrLn versionString >> exitWith ExitSuccess
 	(o,n,[]) -> return (o,n)
 	(_,_,errs) -> ioError (userError (concat errs ++ usageInfo header options))
     where header = "Usage: tersmu [OPTION...] [in] [out]\n\t(use '-' for stdin/stdout)"

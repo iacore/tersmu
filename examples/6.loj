@@ -81,7 +81,7 @@ non-veridical: lisri(c0)
 (pu)(). finti([Name: cribe(_) ],c0)
 
 ju'a nai cy no lisri
-.i pu ku zo'u la poi'i cribe ku'o ku finti cy no
+.i pu ku zo'u la cribe ku finti cy no
 
 -----
 > la stace pu citka lo cirla
@@ -90,7 +90,7 @@ cirla(c0)
 (pu)(). citka([Name: stace(_) ],c0)
 
 cy no cirla
-.i pu ku zo'u la poi'i stace ku'o ku citka cy no
+.i pu ku zo'u la stace ku citka cy no
 
 -----
 > le cribe pu finti le lisri
@@ -205,7 +205,7 @@ gunma(c0,[Name: cribe(_) ])
 (pu)(). finti(c0,c1)
 
 ju'a nai vi ku zo'u cy pa cukta
-.i cy no gunma la poi'i cribe ku'o ku
+.i cy no gunma la cribe ku
 .i pu ku zo'u cy no finti cy pa
 
 -----
