@@ -169,7 +169,7 @@ ju'a nai ge cy no stizu gi cy no ke steci srana ke'e mi
 non-veridical: (stizu(c0) /\ <steci( ,_)><srana>(c0,mi))
 xunre(c0)
 
-ju'a nai ge cy no stizu gi cy no ke se steci be BUG srana ke'e mi
+ju'a nai ge cy no stizu gi cy no ke se steci srana ke'e mi
 .i cy no xunre
 
 -----
@@ -187,7 +187,7 @@ ju'a nai ge cy no birka gi cy no ke jinzi srana ke'e mi
 non-veridical: (birka(c0) /\ <jinzi(_)><<steci( ,_)><srana>>(c0,mi))
 spofu(c0)
 
-ju'a nai ge cy no birka gi cy no ke jinzi ke se steci be BUG srana ke'e ke'e mi
+ju'a nai ge cy no birka gi cy no ke jinzi ke se steci srana ke'e ke'e mi
 .i cy no spofu
 
 -----
@@ -516,7 +516,7 @@ non-veridical: FA x1. (xirma(f0(x1)) /\ srana(f0(x1),x1))
 viska(mi,[Name: (nanmu(_) /\ terpa( ,f0(_))) ])
 
 ju'a nai ro da zo'u ge li ma'o fyno mo'e da lo'o xirma gi li ma'o fyno mo'e da lo'o srana da
-.i mi viska la poi'i poi'i ge ke'a nanmu gi terpa li ma'o fyno mo'e ke'a lo'o kei ku'o ku
+.i mi viska la poi'i ge ke'a nanmu gi terpa li ma'o fyno mo'e ke'a lo'o kei ku
 
 -----
 > mi viska la nanmu ku poi terpa le ke'a xirma.
@@ -525,7 +525,7 @@ ju'a nai ro da zo'u ge li ma'o fyno mo'e da lo'o xirma gi li ma'o fyno mo'e da l
 non-veridical: FA x1. (xirma(f0(x1)) /\ srana(f0(x1),x1))
 viska(mi,c1)
 
-ge terpa li ma'o fyno mo'e cy pa lo'o gi cy pa me la poi'i nanmu ku'o ku me'u
+ge terpa li ma'o fyno mo'e cy pa lo'o gi cy pa me la nanmu ku me'u
 .i ju'a nai ro da zo'u ge li ma'o fyno mo'e da lo'o xirma gi li ma'o fyno mo'e da lo'o srana da
 .i mi viska cy pa
 

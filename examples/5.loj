@@ -298,7 +298,7 @@ non-veridical: bajra(c0)
 <jinga(_)>{ja}<jinga( , ,_)>(c0)
 
 ju'a nai cy no bajra
-.i cy no ke jinga ke'e ja ke te jinga be BUG bei BUG ke'e
+.i cy no ke jinga ke'e ja ke te jinga ke'e
 
 -----
 > blanu naja lenku skapi
@@ -474,7 +474,7 @@ ti ke xamgu be do bei mi zdani ke'e
 
 <xamgu(_, ,mi)><zdani>(ti)
 
-ti ke xamgu be BUG bei mi zdani ke'e
+ti ke xamgu be fi mi zdani ke'e
 
 -----
 > ta blanu be ga'a mi [be'o] zdani
@@ -829,7 +829,7 @@ non-veridical: zarci(c0)
 <cadzu( ,_)><klama>(c0,"alis")
 
 ju'a nai cy no zarci
-.i cy no ke se cadzu be BUG klama ke'e la alis.
+.i cy no ke se cadzu klama ke'e la alis.
 
 -----
 > le zarci cu cadzu se klama la .alis.
@@ -881,7 +881,7 @@ non-veridical: birka(c0)
 
 ju'a nai cy pa zarci
 .i ju'a nai cy no birka
-.i mi ke ke na'e sutra cadzu ke'e be BUG bei cy no klama ke'e cy pa
+.i mi ke ke na'e sutra cadzu ke'e be fi cy no klama ke'e cy pa
 
 -----
 > mi na'e ke sutra cadzu be fi le birka [be'o] ke'e klama le zarci
@@ -892,7 +892,7 @@ non-veridical: birka(c0)
 
 ju'a nai cy pa zarci
 .i ju'a nai cy no birka
-.i mi ke na'e ke sutra cadzu ke'e be BUG bei cy no klama ke'e cy pa
+.i mi ke na'e ke sutra cadzu ke'e be fi cy no klama ke'e cy pa
 
 -----
 > mi sutra cadzu be fi le birka be'o je masno klama le zarci
@@ -903,7 +903,7 @@ non-veridical: birka(c0)
 
 ju'a nai cy pa zarci
 .i ju'a nai cy no birka
-.i mi ke ke sutra ke cadzu be BUG bei cy no ke'e je ke masno ke'e ke'e klama ke'e cy pa
+.i mi ke ke sutra ke cadzu be fi cy no ke'e je ke masno ke'e ke'e klama ke'e cy pa
 
 -----
 > mi ke sutra cadzu be fi le birka [be'o] ke'e je masno klama le zarci
@@ -914,7 +914,7 @@ non-veridical: birka(c0)
 
 ju'a nai cy pa zarci
 .i ju'a nai cy no birka
-.i mi ke ke ke sutra cadzu ke'e be BUG bei cy no ke'e je ke masno ke'e klama ke'e cy pa
+.i mi ke ke ke sutra cadzu ke'e be fi cy no ke'e je ke masno ke'e klama ke'e cy pa
 
 -----
 > mi na'e sutra cadzu be fi le birka be'o je masno klama le zarci
@@ -925,7 +925,7 @@ non-veridical: birka(c0)
 
 ju'a nai cy pa zarci
 .i ju'a nai cy no birka
-.i mi ke ke na'e sutra ke cadzu be BUG bei cy no ke'e je ke masno ke'e ke'e klama ke'e cy pa
+.i mi ke ke na'e sutra ke cadzu be fi cy no ke'e je ke masno ke'e ke'e klama ke'e cy pa
 
 -----
 > mi na'e ke sutra cadzu be fi le birka [be'o] ke'e je masno klama le zarci
@@ -936,7 +936,7 @@ non-veridical: birka(c0)
 
 ju'a nai cy pa zarci
 .i ju'a nai cy no birka
-.i mi ke ke na'e ke sutra cadzu ke'e be BUG bei cy no ke'e je ke masno ke'e klama ke'e cy pa
+.i mi ke ke na'e ke sutra cadzu ke'e be fi cy no ke'e je ke masno ke'e klama ke'e cy pa
 
 -----
 > mi na'e ke sutra cadzu be fi le birka be'o je masno klama [ke'e] le zarci
@@ -947,7 +947,7 @@ non-veridical: birka(c0)
 
 ju'a nai cy pa zarci
 .i ju'a nai cy no birka
-.i mi na'e ke ke sutra ke cadzu be BUG bei cy no ke'e je ke masno ke'e ke'e klama ke'e cy pa
+.i mi na'e ke ke sutra ke cadzu be fi cy no ke'e je ke masno ke'e ke'e klama ke'e cy pa
 
 -----
 > mi na'e ke sutra cadzu be fi le birka je masno klama [be'o] [ke'e] le zarci
