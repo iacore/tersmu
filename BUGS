@@ -21,6 +21,9 @@ Limitations:
 
     {ra'o} is ignored.
 
+    The distinction between {lV'e} and {lV} (whatever that might be) is not
+    handled.
+
     We parse the name in "LA sumtiTail", whereas arguably we should just use
     the text. Similarly, we don't keep hold of the raw text of a lu-quote.
 
