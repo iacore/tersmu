@@ -83,9 +83,9 @@ slolecydo'i(c0)
 xarjintysudbi'o( )
 (di'a)(). bavlamke'u( )
 <tatpi(_)><bletoi>( ,c15)
-selki'a(<< (cu'e)(). bavlamke'u( ) >>)
+selki'a(<< (nau)(). bavlamke'u( ) >>)
 (tai)(). (pu)(). banro(c16,[Name: selmacygu'e(_) ])
-(ba)(c18). (cu'e)(). (mo'u)(). lisru'e( )
+(ba)(c18). (nau)(). (mo'u)(). lisru'e( )
 (ni'a)(c19). <gleki(_)><zdakla>(ma'a)
 (lebna(ko,dei) /\ xanracpu'i(ko,dei,c22))
 
@@ -124,9 +124,9 @@ ge cy rere ke ke ke verba selsne ke'e jivbu ke'e stuzi ke'e gi tai cy repa zo'u 
 .i xarjintysudbi'o
 .i di'a ku zo'u bavlamke'u
 .i ke tatpi bletoi ke'e cy pamu
-.i lu cu'e ku zo'u bavlamke'u li'u selki'a
+.i lu nau ku zo'u bavlamke'u li'u selki'a
 .i tai ku pu ku zo'u cy paxa banro la selmacygu'e ku
-.i ba cy pabi cu'e ku mo'u ku zo'u lisru'e
+.i ba cy pabi nau ku mo'u ku zo'u lisru'e
 .i ni'a cy paso zo'u ma'a ke gleki zdakla ke'e
 .i ge ko lebna dei gi ko xanracpu'i dei cy rere
 
@@ -13158,12 +13158,12 @@ cy no vistci
 [Fragment: << (datni(c0) /\ srana(c0,do))
 cusku( ,[Name: noltrunau(_) ])
 dunda(ko,c0)
-(!xanka(ko) \/ EX x1. (cu'e)(). catrymi'e(mi,x1,do)) >>]
+(!xanka(ko) \/ EX x1. (nau)(). catrymi'e(mi,x1,do)) >>]
 
 lu ge cy no datni gi cy no srana do
 .i cusku la noltrunau ku
 .i ko dunda cy no
-.i ga na ku ko xanka gi su'o da cu'e ku zo'u mi catrymi'e da do li'u
+.i ga na ku ko xanka gi su'o da nau ku zo'u mi catrymi'e da do li'u
 
 -----
 > ni'o la'e di'u na sai simlu lo ka darsygau lo zgana noi za'o slilu fi lo nu sanli fi lo jamfu fa'u lo drata kei gi'e xanka catlu la noltruni'u gi'e se cfipu batyvi'u lo barda spisa lo tcati kabri .e nai lo nanba joi matne
