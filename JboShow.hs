@@ -209,13 +209,16 @@ logjboshowConn True prefix (JboConnLog mtag lcon) = do
     mtags <- maybe "" ((" "++).(++" bo")) <$> traverse (logjboshow True) mtag
     return $ lc ++ mtags
 logjboshowConn True prefix (JboConnJoik mtag joik) = do
-    let jois = if joik == "??" then case prefix of
+    joiks <- logjboshowJoik True (case prefix of
 		"." -> "ji"
 		"j" -> "je'i"
-		_ -> "BUG"
-	    else joik
+		_ -> "BUG")
+	    joik
     mtags <- maybe "" ((" "++).(++" bo")) <$> traverse (logjboshow True) mtag
-    return $ jois ++ mtags
+    return $ joiks ++ mtags
+
+logjboshowJoik False _ joik = return joik
+logjboshowJoik True qconn joik = return $ if joik == "??" then qconn else joik
 
 instance JboShow JboTag where
     logjboshow jbo (ConnectedTag con tag1 tag2) = do
@@ -261,10 +264,10 @@ instance JboShow Abstractor where
 	    else "({" ++ conns ++ "}(" ++ s1 ++ "," ++ s2 ++ "))"
     logjboshow jbo (JoiConnectedAbstractor joik a1 a2) = do
 	[s1,s2] <- mapM (logjboshow jbo) [a1,a2]
-	conns <- logjboshow jbo joik
+	joiks <- logjboshowJoik jbo "je'i" joik
 	return $ if jbo
-	    then s1 ++ " " ++ conns ++ " " ++ s2
-	    else "({" ++ conns ++ "}(" ++ s1 ++ "," ++ s2 ++ "))"
+	    then s1 ++ " " ++ joiks ++ " " ++ s2
+	    else "({" ++ joiks ++ "}(" ++ s1 ++ "," ++ s2 ++ "))"
 
 instance JboShow JboPred where
     logjboshow jbo p = logjboshowpred jbo (\n -> p (BoundVar n))
@@ -413,6 +416,8 @@ instance JboShow JboTerm where
     logjboshow jbo (Constant n ts) = do
 	ss <- mapM (logjboshow jbo) ts
 	return $ if jbo
+	    -- Note: xorxes suggests {fy pe ko'a} in place of {li ma'o fy mo'e
+	    -- ko'e} (having fy refer to the join of the f(x))
 	    then "li ma'o fy" ++ jbonum n ++ " " ++
 		(intercalate " " $ map ("mo'e "++) ss) ++ " lo'o"
 	    else "f" ++ show n ++ "(" ++
@@ -440,7 +445,7 @@ instance JboShow JboTerm where
     logjboshow _ (NonAnaph s) = return s
     logjboshow jbo (JoikedTerms joik t1 t2) = do
 	[ts1,ts2] <- mapM (logjboshow jbo) [t1,t2]
-	joiks <- logjboshow jbo joik
+	joiks <- logjboshowJoik jbo "ji" joik
 	return $ if jbo then ts1 ++ " " ++ joiks ++ " ke " ++ ts2 ++ " ke'e"
 	    else "(" ++ ts1 ++ " {" ++ joiks ++ "} " ++ ts2 ++ ")"
     logjboshow jbo (QualifiedTerm qual t) = do
@@ -556,11 +561,11 @@ instance JboShow JboProp
 	  logjboshow' jbo [] (NonLogConnected joik p1 p2) =
 	      do ss1 <- logjboshow' jbo [] p1
 	         ss2 <- logjboshow' jbo [] p2
-		 joiks <- logjboshow jbo joik
-	         return $ if jbo then [joik,"gi"]
-	      			++ ss1 ++ ["gi"] ++ ss2
-	      		   else ["("] ++ ss1 ++
-	      		        [" {"++joik++"} "] ++ ss2 ++ [")"]
+	         return $ if jbo then
+		    (if joik=="??" then ["ge'i"] else [joik,"gi"])
+			++ ss1 ++ ["gi"] ++ ss2
+		   else ["("] ++ ss1 ++
+			[" {"++joik++"} "] ++ ss2 ++ [")"]
 	  logjboshow' jbo [] (Not p) =
 	      do ss <- logjboshow' jbo [] p
 	         return $ (if jbo then ["na","ku"] else ["!"]) ++ ss

@@ -460,8 +460,10 @@ abstractor :: Abstractor
 	-> {let a1 = (if isJust nai then NegatedAbstractor else id) $ NU n
 	    in case mca of
 		Nothing -> a1
-		Just (JJJek lcon,a2) -> LogConnectedAbstractor lcon a1 a2
-		Just (JJJoik joik,a2) -> JoiConnectedAbstractor joik a1 a2}
+		Just (JJJoik joik,a2) -> JoiConnectedAbstractor joik a1 a2
+		Just (JJJek lcon@(LogJboConnective _ 'i' _),a2) ->
+		    JoiConnectedAbstractor "??" a1 a2
+		Just (JJJek lcon,a2) -> LogConnectedAbstractor lcon a1 a2}
 
 linkargs :: {[Term]}
     = BE t:term ts:links? BEhO? -> {(t : (fromMaybe [] ts))}
