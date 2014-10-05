@@ -514,7 +514,6 @@ parseSumtiAtom sa = do
 	    o' <- getFreshConstant
 	    let collector = Brivla $ if s == "i" then "gunma" else "selcmi"
 	    doIncidental o' $ \x -> Rel collector [x,o]
-	    return o'
 	_ -> return o
     updateSumbastiWithSumtiAtom sa o
     return (o,jrels)
