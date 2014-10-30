@@ -481,9 +481,7 @@ parseSumtiAtom sa = do
 		_ -> error "You call that a gadri?"
 	    doAssigns o ias
 	    return o
-	QualifiedSumti qual _ s -> do
-	    o <- parseSumti s
-	    return $ QualifiedTerm qual o
+	QualifiedSumti qual _ s -> QualifiedTerm qual <$> parseSumti s
 	MexLi m -> Value <$> parseMex m
 	MexMex m -> return $ TheMex m
 	-- FIXME: RelVar crashes the program if unbound!
