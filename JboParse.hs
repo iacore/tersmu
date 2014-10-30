@@ -117,9 +117,8 @@ parseBTail (GekSentence (TaggedGS tag gs)) = do
     parseBTail (GekSentence gs)
 
 parseBTail (ConnectedBT con bt1 bt2 tts) =
-    parseBTail (GekSentence (ConnectedGS con
-	(Subsentence [] [] (Sentence [] bt1))
-	(Subsentence [] [] (Sentence [] bt2)) tts))
+    doConnective False con (parseBTail bt1) (parseBTail bt2)
+	<* parseTerms tts
 
 parseBTail (BridiTail3 (Negated sb) tts) =
     -- XXX: need to handle Negated and tags here as well as in parseSelbri,
