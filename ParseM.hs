@@ -305,7 +305,7 @@ withJaiAsTag jtag b = \as ->
 withJaiAsRaising :: Bridi -> Bridi
 withJaiAsRaising b = \as -> case Map.lookup JaiPos as of
     Nothing -> b as
-    Just a -> b (setArg (NPos 1) (QualifiedTerm (LAhE "tu'a") a) as)
+    Just a -> b (setArg (NPos 1) (QualifiedTerm (LAhE "tu'a") a) (Map.delete JaiPos as))
 
 nullArgs = Map.empty
 nullArglist = Arglist nullArgs 1
