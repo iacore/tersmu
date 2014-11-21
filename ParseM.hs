@@ -311,12 +311,14 @@ nullArgs = Map.empty
 nullArglist = Arglist nullArgs 1
 
 joinArgs :: Args -> Args -> Args
-joinArgs new old = Map.union new $ oldWithImplicits where
+joinArgs new old = Map.union (nonImplicit new) $ oldWithImplicits where
     oldWithImplicits = foldl insertImplicit old
 	[o | (UnfilledPos _, o) <- Map.assocs new]
     insertImplicit as o = 
 	let gap = head $ [1..] \\ [n | NPos n <- Map.keys $ as]
 	in Map.insert (NPos gap) o $ as
+    nonImplicit = Map.filterWithKey $ \k _ ->
+	    case k of {UnfilledPos _ -> False; _ -> True}
 
 swapArgs :: ArgPos -> ArgPos -> Args -> Args
 swapArgs p1 p2 = Map.mapKeys (\p -> if p == p1 then p2 else if p == p2 then p1 else p)
@@ -348,7 +350,7 @@ bridiToJboVPred :: Bridi -> JboVPred
 bridiToJboVPred b os =
     b $ Map.fromList [(UnfilledPos n,o) | (n,o) <- zip [0..] os]
 bridiToJboPred :: Bridi -> JboPred
-bridiToJboPred b = vPredToPred $ bridiToJboVPred b
+bridiToJboPred = vPredToPred . bridiToJboVPred
 
 swapTerms :: [JboTerm] -> Int -> Int -> [JboTerm]
 swapTerms ts n m = swapFiniteWithDefault Unfilled ts (n-1) (m-1)
