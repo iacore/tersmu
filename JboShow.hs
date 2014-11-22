@@ -578,6 +578,13 @@ instance JboShow JboProp
 	         rs <- jboshow r
 	         ss <- mapM jboshow xs
 	         return $ fore ++ [rs] ++ positionallyTaggedTerms xs ss
+	  logjboshow' False [] (Rel Equal ts) = do
+	      tss <- mapM logshow ts
+	      return $ ["(" ++ (intercalate " == " tss) ++ ")"]
+	  logjboshow' False [] (Rel (Among t) ts) = do
+	      s <- logshow t
+	      tss <- mapM logshow ts
+	      return $ ["(" ++ (intercalate "," tss) ++ " =< " ++ s ++ ")"]
 	  logjboshow' False [] (Rel r ts) =
 	      do s <- logshow r
 		 tss <- mapM logshow ts
