@@ -351,6 +351,7 @@ parseSumti s = do
 			return (o,jrels)
 		     Just m -> do
 			let (rps,jrels') = stripForeRestrictives jrels
+			updateReferenced o
 			o' <- quantify m $ andMPred $ (isAmong o):rps
 			return (o',jrels')
 		 return (o,jrels)
