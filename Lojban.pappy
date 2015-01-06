@@ -207,6 +207,7 @@ bridiTail2 :: BridiTail
 
 bridiTail3 :: BridiTail
     = sb:selbri ts:tailTerms -> { BridiTail3 sb ts }
+    / gs:gekSentence -> { GekSentence gs }
 
 gekSentence :: GekSentence
     = pcon:gek s1:subsentence b:gik s2:subsentence tts:tailTerms
@@ -238,7 +239,7 @@ term :: Term
     / FA KU? -> {NullTerm}
     / termset
     / "na":NA KU -> {Negation}
-    / "ja'a":NA -> {NullTerm}
+    / "ja'a":NA KU -> {NullTerm}
 
 termset :: Term
     = NUhI pcon:gek ts1:terms NUhU b:gik ts2:terms NUhU?
