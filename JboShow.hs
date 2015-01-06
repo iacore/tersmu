@@ -198,7 +198,8 @@ instance JboShow JboOperator where
 
 logjboshowLogConn _ prefix (LogJboConnective b c b') =
 	return $ (if not b then "na " else "") ++
-	    prefix ++ [c] ++
+	    (if c == 'U' then "se " ++ prefix ++ "u"
+		else prefix ++ [c]) ++
 	    if not b' then " nai" else ""
 
 logjboshowConn False prefix con = do
