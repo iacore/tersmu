@@ -4,6 +4,16 @@ Bugs, limitations, and questionable design choices
 All known divergence from baseline (CLL+xorlo), or from plausible
 interpretations thereof, is noted here.
 
+FIXME:
+    According to 7.6, {ri} counting is done "in order of beginnings" of sumti;
+    we're not in accordance with that. Should also review what {ri} can pick
+    up - currently only atoms; is that right?
+
+    Think about this:
+	09:49 < mensi> zugz: cu'u la'o gy.durka42.gy.: re:tersmus again. {jai
+	gau ba'e *ke* broda be fa ko'a} should have a tight binding so that
+	broda1=ko'a, iepei? | 2014-12-24T04:54:46.957Z
+
 Bugs:
     Question words other than {xu},{ma} and {mo} are not handled properly.
 
@@ -32,6 +42,9 @@ Limitations:
 
     We don't handle {soi}.
 
+    seltcita termsets, as described in CLL 10.25 (e.g. {la frank. sanli zu'a
+    nu'i la'u lo mitre be li mu}), are not supported.
+
 Deliberate deviations from baseline, not considered bugs:
     {na broda} is equivalent to {naku broda}; consequently, {ja'a} has no
     logical effect. This is in line with the BPFK section "brivla negators".
@@ -50,3 +63,9 @@ Deliberate deviations from baseline, not considered bugs:
 Other behaviour whose correctness may not be immediately obvious:
     The {vo'a} series can only refer backwards. To see why, consider
 	{vo'e broda ko'a gi'e brode ko'e}.
+
+Other possibly contentious points:
+    Sumti put in an already filled place simply replace what was there before.
+
+    Linkarg sumti fill, but do not delete, a place. So e.g.
+	{ko'a broda be fa ko'e} == {ko'e broda}

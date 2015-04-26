@@ -26,3 +26,16 @@ EX x1. (x1=. broda( ) \/ (ba)(x1). brode( ))
 
 this works as desired: since EX x1. (ba)(x1). brode() is just equivalent to
 brode(), there's only a tense condition in the case that both disjuncts hold.
+
+Ugh, but that doesn't work for other tags; e.g. EX x1. (bai)(x1). brode()
+isn't really equivalent to brode().
+
+Worse: 
+EX x1. (x1=. broda( ) --> (ba)(x1). brode( ))
+can be true when broda and brode both occur but in the wrong order, by taking
+x1 to be an arbitrary event before the event of brode...
+
+So this is crap.
+
+So "TT-skimming" was the right idea after all?
+    
