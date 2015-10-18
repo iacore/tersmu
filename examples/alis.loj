@@ -215,12 +215,12 @@ junla(c8)
 du'u[mutce(c6,c1)](c7)
 nu[tirna( ,c5)](c6)
 nu[sezysku([Name: ractu(_) ],<< lerci(mi) >>)](c5)
-(ca)(). FA x1:(({ra}) >= (_)). simlu(x1,c4)
-(ba)(). (ca)(c2). sidbo(c3,c2,"alis")
+(ca)(). FA x1:((_ =< {ra})). simlu(x1,c4)
+(ba)(). (ca)(c2). sidbo(c3,{la'e}(di'u),"alis")
 ka[cizra(\1)](c0)
 ka[nalfadni(\1)](c1)
 nu[pensi( ,{la'e}(di'u))](c2)
-du'u[cizra(c2,"alis")](c3)
+du'u[cizra({la'e}(di'u),"alis")](c3)
 ka[rarna(\1)](c4)
 ({na'e}(mutce)({la'e}(di'u),c0) /\ !jinvi("alis",c7))
 (ca)(c10). (ki'u)(c16). <spaji(_)><sa'irbi'o>("alis")
@@ -244,11 +244,11 @@ cy repa nu mo'i ne'i cy reno zo'u cy pavo canci kei
 .i cy xa nu tirna cy mu kei
 .i cy mu nu la ractu ku sezysku lu mi lerci li'u kei
 .i ca ku ro da poi ke'a me ra me'u ku'o zo'u da simlu cy vo
-.i ba ku ca cy re zo'u cy ci sidbo cy re la alis.
+.i ba ku ca cy re zo'u cy ci sidbo la'e di'u lu'u la alis.
 .i cy no ka ce'u cizra kei
 .i cy pa ka ce'u nalfadni kei
 .i cy re nu pensi la'e di'u lu'u kei
-.i cy ci du'u cy re cizra la alis. kei
+.i cy ci du'u la'e di'u lu'u cizra la alis. kei
 .i cy vo ka ce'u rarna kei
 .i ge la'e di'u lu'u na'e mutce cy no gi na ku la alis. jinvi cy ze
 .i ca cy pano ki'u cy paxa zo'u la alis. ke spaji sa'irbi'o ke'e
@@ -382,7 +382,7 @@ ca ku za'u re'u ku co'a ku zo'u abu co'e
 .i ba ku zo'u cy xa xajmi
 .i 
 .i cy pare preti cy papa mi
-.i lu ?? gi ti nuzlo gi ti sralo li'u
+.i lu ge'i ti nuzlo gi ti sralo li'u
 .i ba ku zo'u cy paxa jinvi cy paze fo cy pabi
 .i na ku preti fi mi
 .i mi viska cy reno li'u
@@ -400,7 +400,7 @@ jetnu(c0)
 jungau(ko,mi,c0)
 ?. ((su'o) roi)(). citka(do,c1) >>))](c4)
 nu[(pu'o)(). sipna( )](c3)
-nu[(ka'e)(). EQ(0) x1:((c1) >= (_)). spuda("alis",x1)](c2)
+nu[(ka'e)(). EQ(0) x1:((_ =< c1)). spuda("alis",x1)](c2)
 (preti(c1) /\ 2 mei(c1))
 du'u[? x1. porsi( ,x1)](c0)
 [Fragment: ]
@@ -481,7 +481,7 @@ cy so nu mo'u ku zo'u la alis. farlu cy bi kei
 -----
 > ni'o la .alis. na sai se xrani gi'e zi sanli fi lo jamfu gi'e catlu lo gapru noi ku'i manku mulno .i crane .abu fa lo drata ke clani vorme .i la blabi ractu cu za'o se viska gi'e sutra lo nu litru vy .i .ei la .alis. na denpa .i .abu klama tai tu'a lo brife gi'e ja'a ru'e snada lo nu tirna lo nu ry cusku *lu .oi doi lo mi kerlo jo'u zbikre ca'o mutce lerci binxo li'u* .i .abu jibni trixe ry ca lo nu carna lo kojna .i ku'i ry ca na za'o se viska .i .abu facki lo du'u ri zvati lo clani je dziseldru kumfa noi se gusni fi lo se linji noi dandu lo drudi
 
-du'u[zvati(c8,c11)](c12)
+du'u[zvati(c7,c11)](c12)
 (<<clani(_)>{je}<dziseldru(_)>(_)><kumfa>(c11) /\ gusni( ,c11,c10))
 (linji( ,c10) /\ dandu(c10,c9))
 drudi(c9)
@@ -503,7 +503,7 @@ crane(c2,"alis")
 (ca)(). !(za'o)(). viska( ,r)
 facki("alis",c12)
 
-cy pare du'u cy bi zvati cy papa kei
+cy pare du'u cy ze zvati cy papa kei
 .i ge cy papa ke ke clani ke'e je ke dziseldru ke'e kumfa ke'e gi gusni cy papa cy pano
 .i ge linji cy pano gi cy pano dandu cy so
 .i cy so drudi
@@ -536,7 +536,7 @@ drata(c3)
 (vorme(c1) /\ (so'i) mei(c1))
 kumfa(c0)
 sruri(c1,c0)
-FA x1:((c1) >= (_)). <stela(_)><ganlo>(x1)
+FA x1:((_ =< c1)). <stela(_)><ganlo>(x1)
 (ca)(c4). ((bu'u)(c5). <badri(_)><cadzu>("alis") /\ kucli("alis",c6))
 
 cy xa du'u ma goi ko'a ta'i ko'a ba ku za'u re'u ku zo'u la alis. bartu kei
@@ -563,7 +563,7 @@ ka[cmalu(\1)](c9)
 ckiku(c8)
 ka[barda(\1)](c7)
 stela(c6)
-du'u[EQ(1) x1:((c4) >= (_)). ckiku(c2,x1)](c5)
+du'u[EQ(1) x1:((_ =< c4)). ckiku(c2,x1)](c5)
 stela(c4,c3)
 <kumfa(_)><vorme>(c3)
 <cmatce(_)><<solji(_)><ckiku>>(c2)
@@ -572,7 +572,7 @@ stela(c4,c3)
 (ba)(). (zi)(). penmi(a,c1)
 cpana(c2,j)
 <1 moi(_)><jinvi>(a,c5)
-(ka'e)(). EQ(0) x1:(({ra}) >= (_)). kargau(c8,x1)
+(ka'e)(). EQ(0) x1:((_ =< {ra})). kargau(c8,x1)
 (ca)(c10). penmi(a,c11)
 murta(m,c12)
 troci(a,c15)
@@ -649,7 +649,7 @@ botpi(c14,c15)
 tcita({vindu},c14)
 (verba(c13) /\ ((<jelca(_)><xrani>( ,c13) \/ citka(c1,c13)) \/ (ki'u)(c12). lifri(c13,c2)))
 nu[!morji( ,c11)](c12)
-(<sampu(_)><javni>(c11) /\ (ctuca(c3,c11) /\ (=(c11,c6) /\ =(c11,c10))))
+(<sampu(_)><javni>(c11) /\ (ctuca(c3,c11) /\ ((c11 == c6) /\ (c11 == c10))))
 nu[(va'o)(c9). (ta'e)(). <ciblu(_)><cirko>(c7)](c10)
 nu[(se pi'o)(c8). <<condi(_)><mutce>(_)><sraku>( )](c9)
 dakfu(c8)
@@ -834,7 +834,7 @@ cy pamu nu viska cy pavo kei
 nu[tatpi( ,c19)](c20)
 nu[troci( )](c19)
 ka[sakli( ,\1)](c18)
-nu[EQ(1) x1:((c16) >= (_)). cpare( ,x1)](c17)
+nu[EQ(1) x1:((_ =< c16)). cpare( ,x1)](c17)
 tuple(c16,c15)
 jubme(c15)
 blaci(c14)
@@ -894,7 +894,7 @@ cy reno nu tatpi cy paso kei
 
 ka[nelci(\1,c14)](c15)
 nu[sruma( ,c13)](c14)
-du'u[=( ,c12)](c13)
+du'u[(  == c12)](c13)
 (prenu(c12) /\ 2 mei(c12))
 (vi)(). <cizra(_)><verba>(c11)
 nu[(1 roi)(). (mu'i)(c9). troci( ,c6)](c10)
@@ -920,7 +920,7 @@ mutce(c11,c15)
 nu[marji( )](c4)
 vimcu( , ,mi,c3)
 nu[sruma( ,c1)](c2)
-du'u[=(mi,c0)](c1)
+du'u[(mi == c0)](c1)
 (prenu(c0) /\ 2 mei(c0))
 pensi( ,"alis")
 EQ(0) x1. (ca)(). prali(x1,mi,c2)
@@ -1260,15 +1260,15 @@ cy no nu to'o ku zo'u la ractu ku bajra kei
 
 nu[jdice( ,c7)](c8)
 du'u[?. cumki(c6)](c7)
-nu[EX x1. (ba'o)(). EX x2:((c5) >= (_)). galfi(x1,"alis",x2)](c6)
+nu[EX x1. (ba'o)(). EX x2:((_ =< c5)). galfi(x1,"alis",x2)](c6)
 (verba(c5) /\ (slabu(c5,"alis") /\ mintu(c5,"alis",c4)))
 ka[? x1. nanca(\1,x1)](c4)
 nu[glare(c2)](c3)
 kumfa(c2)
 gluta(c1)
 bifpra(c0)
-EX x1. (x1=. (lebna("alis",(c0 {jo'u} c1)) /\ (co'a)(). (mu'i)(c3). pilno("alis",c0)) /\ (ca)(x1). (ca'o)(). cusku( ,<< du'u[? x2. (x2) >= (mi)](c8)
-nu[!(mi) >= (mi)](c7)
+EX x1. (x1=. (lebna("alis",(c0 {jo'u} c1)) /\ (co'a)(). (mu'i)(c3). pilno("alis",c0)) /\ (ca)(x1). (ca'o)(). cusku( ,<< du'u[? x2. (mi =< x2)](c8)
+nu[!(mi =< mi)](c7)
 ka[<frica(_)><milxe>(\1)](c6)
 nu[(ca)(c4). <cikna(_)><binxo>(mi)](c5)
 (zi)(). cerni(c4)
@@ -1280,11 +1280,11 @@ FA x2. (ca)(c0). cizra(x2)
 (ca)(c1). FA x2. <fadni(_)><fasnu>(x2)
 kucli(mi,c3)
 pensi(mi)
-?. (ca)(c5). (mi) >= (mi)
+?. (ca)(c5). (mi =< mi)
 cinmo(mi,c6)
 (va'o)(c7). <jersi(_)><preti>(c8)
 <barda(_)><nabmi>({la'e}(di'u)) >>))
-(co'a)(). FA x1:((c5) >= (_)). (te zu'e)(c8). pensi("alis",x1)
+(co'a)(). FA x1:((_ =< c5)). (te zu'e)(c8). pensi("alis",x1)
 
 cy bi nu jdice cy ze kei
 .i cy ze du'u xu kau zo'u cy xa cumki kei
@@ -1382,7 +1382,7 @@ nu[(ca'o)(). jdika( )](c8)
 nu[sezmerli( , ,c6)](c7)
 jubme(c6)
 nu[viska( ,c4)](c5)
-nu[(pu)(). (ca'o)(). EQ(1) x1:((c2) >= (_)). (ze'a)(c3). dasni(a,x1)](c4)
+nu[(pu)(). (ca'o)(). EQ(1) x1:((_ =< c2)). (ze'a)(c3). dasni(a,x1)](c4)
 nu[tavla( )](c3)
 (<cmalu(_)><<blabi(_)><<kanba(_)><gluta>>>(c2) /\ srana(c2,[Name: ractu(_) ]))
 xance(c1)
@@ -1481,7 +1481,7 @@ nu[jinru("alis",c21)](c22)
 (lalxu(c21) /\ srana(c21,c20))
 (klaku( ,c20) /\ (ca)(c19). klaku("alis",c20))
 nu[mitre("alis",(re pi mu))](c19)
-EX x1. (x1=. (pu)(). (1 roi)(c9). klama("alis",c8) /\ (ja'e)(x1). jinvi("alis",c18))
+EX x1. ((ja'e)(x1). (pu)(). (1 roi)(c9). klama("alis",c8) /\ x1=. jinvi("alis",c18))
 (valsi(c0) /\ srana(c0,di'u))
 nu[cusku(a,c0)](c1)
 jamfu(c2,a)
@@ -1515,7 +1515,7 @@ cy rere nu la alis. jinru cy repa kei
 .i ge cy repa lalxu gi cy repa srana cy reno
 .i ge klaku cy reno gi ca cy paso zo'u la alis. klaku cy reno
 .i cy paso nu la alis. mitre li re pi mu boi lo'o kei
-.i su'o da zo'u ge fi'o du da pu ku pa roi cy so zo'u la alis. klama cy bi gi ja'e da zo'u la alis. jinvi cy pabi
+.i su'o da zo'u ge ja'e da pu ku pa roi cy so zo'u la alis. klama cy bi gi fi'o du da zo'u la alis. jinvi cy pabi
 .i ge cy no valsi gi cy no srana di'u
 .i cy pa nu abu cusku cy no kei
 .i cy re jamfu abu
@@ -1616,7 +1616,7 @@ cy ze nu su'o da zo'u ge da smacu gi da mintu abu cy xa kei
 > ni'o *lu xu da mi prali *sei la .alis. cu pensi* lo nu tavla lo va smacu .i ro da bu'u lo cnita cu tai tolfadni ja'e lo nu pe'i lakne fa lo nu ta ka'e tavla .i se ju no da mi tolprali lo nu troci li'u* .i se ki'u ku .abu co'a co'e *lu doi smacu xu do se slabu lo pluta be lo bartu be lo bu'u lalxu .i mi mutce lo ka tatpi lo nu ru'u limna doi smacu li'u* (to la .alis. pu jinvi lo du'u ju'o ta drani lo ka tadji lo nu tavla lo smacu .i .abu cu no roi pu zukte lo simsa gi'e ku'i morji lo nu tcidu fi lo latmo gerna cukta pe lo bruna fe lo'u lo smacu * sera'a lo smacu * fa'a lo smacu * ri'i lo smacu * doi smacu le'u toi) .i lo smacu cu terpreti mutce catlu .abu gi'e simlu lo ka rinsa fi lo nu ze'i ga'orgau pa lo cmalu kanla .i ku'i sy cusku no da
 
 ka[rinsa(\1, ,c10)](c11)
-nu[(ze'i)(). EQ(1) x1:((c9) >= (_)). ga'orgau( ,x1)](c10)
+nu[(ze'i)(). EQ(1) x1:((_ =< c9)). ga'orgau( ,x1)](c10)
 <cmalu(_)><kanla>(c9)
 smacu(c8)
 ((0 roi)(). (pu)(). zukte("alis",c4) /\ morji("alis",c7))
@@ -1691,7 +1691,7 @@ Morphology error:
 -----
 > ni'o *lu .oi na nelci lo mlatu *sei la smacu cu kinli je cinmo voksa krixa* .i xu ba'e do nelci lo mlatu va'o lo nu da'i do me mi li'u*
 
-[Fragment: << nu[(mi) >= (do)](c2)
+[Fragment: << nu[(do =< mi)](c2)
 mlatu(c1)
 mlatu(c0)
 <<<kinli(_)>{je}<cinmo(_)>(_)><voksa>(_)><krixa>( ,[Name: smacu(_) ])
@@ -1732,7 +1732,7 @@ nu[<lazni(_)><limna>( ,c3)](c4)
 lalxu(c3)
 nu[viska(do,"dinas")](c2)
 mlatu(c1)
-(mlatu(c0) /\ (=(c0,"dinas") /\ srana(c0,mi'a)))
+(mlatu(c0) /\ ((c0 == "dinas") /\ srana(c0,mi'a)))
 <<surgau(_)><tonga>(_)><cusku>( ,"alis")
 !fengu(ko)
 (ka'e)(). jarco(mi,c0,do)
@@ -1859,7 +1859,7 @@ korbi(c8)
 <mulno(_)><girzu>(c7)
 (drata(c6) /\ ((so'o) mei(c6) /\ <<vrici(_)>{je}<cizra(_)>(_)><danlu>(c6)))
 nu[(ca'o)(). tisna(c1,c4)](c5)
-((ba'o)(). farlu(c4,c1) /\ ((c2 {jo'u} c3)) >= (c4))
+((ba'o)(). farlu(c4,c1) /\ (c4 =< (c2 {jo'u} c3)))
 danlu(c3)
 cipni(c2)
 lalxu(c1)
@@ -1929,7 +1929,7 @@ du'u[? x1. nanca(l,x1)](c9)
 nu[djuno( ,c7)](c8)
 du'u[? x1. nanca(l,x1)](c7)
 nu[(ca'o)(). (tai)(c5). <pendo(_)><tavla>("alis",c3)](c6)
-nu[(ze'a)(c4). slabu(c3,"alis")](c5)
+nu[(ze'a)(c4). slabu((ro),"alis")](c5)
 nu[jmive("alis")](c4)
 (ro) mei(c3)
 ka[rarna(\1)](c2)
@@ -1937,7 +1937,7 @@ mentu(c1,(so'u))
 <1 moi(_)><preti>(c0)
 du'u[? x1. (ta'i)(x1). ((za'u) re'u)(). sudga( )](c0)
 EX x1. (x1=. casnu( ,{la'e}(di'u)) /\ (ba)(x1). (zi)(c1). simlu(c6,c2))
-(ze'u)(). daupro("alis",[Name: (cipnrlori(_) /\ (<badri(_)><carna>(_) /\ cusku(_,<< EX x1. (x1=. tolcitmau(mi,do) /\ (ja'e)(x1). junmau(mi,do)) >>))) ])
+(ze'u)(). daupro("alis",[Name: (cipnrlori(_) /\ (<badri(_)><carna>(_) /\ cusku(_,<< EX x1. ((ja'e)(x1). tolcitmau(mi,do) /\ x1=. junmau(mi,do)) >>))) ])
 !(se cau)(c8). curmi("alis")
 EX x1. ((ja'e)(x1). {je'a}(tolbre)([Name: cipnrlori(_) ],c10) /\ x1=. EQ(0) x2:(drata(_)). cusku( ,x2))
 
@@ -1946,7 +1946,7 @@ cy pano nu jungau fi cy so kei
 .i cy bi nu djuno cy ze kei
 .i cy ze du'u ma goi ko'a zo'u ly nanca ko'a kei
 .i cy xa nu ca'o ku tai cy mu zo'u la alis. ke pendo tavla ke'e cy ci kei
-.i cy mu nu ze'a cy vo zo'u cy ci slabu la alis. kei
+.i cy mu nu ze'a cy vo zo'u li ro boi lo'o slabu la alis. kei
 .i cy vo nu la alis. jmive kei
 .i cy ci ro mei
 .i cy re ka ce'u rarna kei
@@ -1954,7 +1954,7 @@ cy pano nu jungau fi cy so kei
 .i cy no ke pa moi preti ke'e
 .i cy no du'u ma goi ko'a ta'i ko'a za'u re'u ku zo'u sudga kei
 .i su'o da zo'u ge fi'o du da zo'u casnu la'e di'u lu'u gi ba da zi cy pa zo'u cy xa simlu cy re
-.i ze'u ku zo'u la alis. daupro la poi'i ge ke'a cipnrlori gi ge ke'a ke badri carna ke'e gi ke'a cusku lu su'o de zo'u ge fi'o du de zo'u mi tolcitmau do gi ja'e de zo'u mi junmau do li'u kei ku
+.i ze'u ku zo'u la alis. daupro la poi'i ge ke'a cipnrlori gi ge ke'a ke badri carna ke'e gi ke'a cusku lu su'o de zo'u ge ja'e de zo'u mi tolcitmau do gi fi'o du de zo'u mi junmau do li'u kei ku
 .i na ku se cau cy bi zo'u la alis. curmi
 .i su'o da zo'u ge ja'e da zo'u la cipnrlori ku je'a tolbre cy pano gi fi'o du da no de poi ke'a drata ku'o zo'u cusku de
 
@@ -2128,7 +2128,7 @@ cusku( ,[Name: <atkuila(_)><cifnu>(_) ])
 (bau)("lojban"). tavla(ko)
 (!slabu(c2,mi) /\ !!slabu(c2,do)) >>]
 (te zu'e)(c2). krogau([Name: <atkuila(_)><cifnu>(_) ],c0)
-EX x1:((c3) >= (_)). <tirna( ,_)><mi'amli>(x1)
+EX x1:((_ =< c3)). <tirna( ,_)><mi'amli>(x1)
 
 cy ci ke drata cipni ke'e
 .i cy re nu mipri cy pa kei
@@ -2224,10 +2224,10 @@ pluta(c4)
 <satci(_)><tarmi>(c1)
 cusku( ,d)
 EX x1. (x1=. finti(d,c2) /\ (ba)(x1). ({fa'u}(vi,va))(). punji( ,c3,c4))
-EX x1. ((ba'i)(x1). EQ(0) x2:((<< [Fragment]
+EX x1. ((ba'i)(x1). EQ(0) x2:((_ =< << [Fragment]
 [Fragment]
 [Fragment]
-bajra(ko) >>) >= (_)). cusku( ,x2) /\ x1=. EX x2. ((se ki'u)(x2). FA x3. ((co'a)(). (ca)(f5(x3)). bajra(x3) /\ (co'u)(). (ca)(f6(x3)). bajra(x3)) /\ x2=. !frili(c8)))
+bajra(ko) >>)). cusku( ,x2) /\ x1=. EX x2. ((se ki'u)(x2). FA x3. ((co'a)(). (ca)(f5(x3)). bajra(x3) /\ (co'u)(). (ca)(f6(x3)). bajra(x3)) /\ x2=. !frili(c8)))
 (ba)(c10). <spaji(_)><kixsku>([Name: cipnrdodo(_) ],<< nu[jivna( )](c0)
 mulno(c0) >>)
 ((<denmi(_)><sanli>(c11) /\ <vasxu(_)><mutce>(c11)) /\ preti(<< ? x1. jinga(x1) >>, ,c11))
@@ -2416,7 +2416,7 @@ nu[!darsi("alis",c5)](c6)
 nu[cmila( )](c5)
 ka[(tai)(). junri(\1)](c4)
 (ro) mei(c3)
-du'u[(pi ro) x1:((c0) >= (_)). mutce(x1,c1)](c2)
+du'u[(pi ro) x1:((_ =< c0)). mutce(x1,c1)](c2)
 ka[cizra(\1)](c1)
 tcini(c0)
 jinvi("alis",c2)
@@ -2771,16 +2771,16 @@ cipni(c3)
 zvati(c1)
 (cusku( ,c0) /\ srana(c0,di'u))
 jalge(c2,c0)
-(so'o) x1:((c3) >= (_)). sutra(x1,c4)
+(so'o) x1:((_ =< c3)). sutra(x1,c4)
 EQ(1) x1:(<tolci'o(_)><cipnrpika>(_)). EX x2. (x2=. (co'a)(). <cliva(_)><brebi'o>(x1) /\ (ca)(x2). cusku(x1,<< galxe(c1,mi)
 <nicte(_)><vacri>(c0)
 zdakla(mi)
 !mapti(c0,c1) >>))
-<<nalsto(_)><voksa>(_)><kixsku>(c5,<< nu[FA x1:((do) >= (_)). (bu'u)(c0). sipna(x1)](c1)
+<<nalsto(_)><voksa>(_)><kixsku>(c5,<< nu[FA x1:((_ =< do)). (bu'u)(c0). sipna(x1)](c1)
 ckana(c0)
 klama(ko)
 (ca)(). tcika( ,c1) >>,c6)
-((ki'u)(c7). FA x1:((c8) >= (_)). cliva(x1) /\ (ba)(). (zi)(). EQ(0) x1. kansa("alis",x1))
+((ki'u)(c7). FA x1:((_ =< c8)). cliva(x1) /\ (ba)(). (zi)(). EQ(0) x1. kansa("alis",x1))
 
 cy bi ro mei
 .i cy ze vrici
@@ -2869,7 +2869,7 @@ nu[<lauble(_)><sezysku>(r,<< [Fragment: [Name: noltroni'u(_) ]]
 ? x1. falcru(mi,{ko'a},x1) >>)](c2)
 nu[EX x1. (pu)(). cirko(r,x1)](c1)
 nu[klama( )](c0)
-([Name: (<blabi(_)><ractu>(_) /\ (<<masno(_)><bajra>(_)><xruti>(_) /\ (ca)(c0). (tai)(c1). <xanka(_)><<sruri(_)><catlu>>(_))) ]) >= ( )
+(  =< [Name: (<blabi(_)><ractu>(_) /\ (<<masno(_)><bajra>(_)><xruti>(_) /\ (ca)(c0). (tai)(c1). <xanka(_)><<sruri(_)><catlu>>(_))) ])
 tirna(a,c2)
 (zi)(). smadi("alis",c5)
 (co'a)(). sisku("alis",{ko'a})
@@ -2939,19 +2939,19 @@ nu[(tolcri( ,c9) /\ tolcri( ,c10))](c11)
 gluta(c10)
 bifpra(c9)
 zdani(c8)
-(ca'a)(). ("merian") >= (c7)
+(ca'a)(). (c7 =< "merian")
 nu[<serti(_)><cpare>( )](c6)
 nu[vrodarxi( )](c5)
 (<cnici(_)><<cmalu(_)><zdani>>(c4) /\ dandu(c3,f1(c4)))
 (<<carmi(_)><lastu>(_)><tapla>(c3) /\ (ba'o)(). ciska( ,c2,c3))
-(cmene(c2) /\ =(c2,<< <blabi(_)><ractu>( ) >>))
+(cmene(c2) /\ (c2 == << <blabi(_)><ractu>( ) >>))
 FA x1. (vrogai(f1(x1)) /\ srana(f1(x1),x1))
 nu[cusku( ,di'u)](c0)
 [Fragment: << nu[tolcri(mi)](c4)
 gluta(c3)
 bifpra(c2)
 nu[facki( ,c0)](c1)
-du'u[? x1. (x1) >= (mi)](c0)
+du'u[? x1. (mi =< x1)](c0)
 (ba)(). spaji(c1,tu)
 ((va'o)(c4). bevri(mi,c2,tu) /\ (va'o)(c4). bevri(mi,c3,tu)) >>]
 (ca)(c0). penmi(a,c4)
@@ -3043,7 +3043,7 @@ jubme(c0)
 FA x1. canko(f1(x1),x1)
 (pacna( ,c2) /\ srana(c2,a))
 (ca)(). zvati(a,c4)
-((lebna(a,c5) /\ EQ(1) x1:((c6) >= (_)). lebna(a,x1)) /\ (pu'o)(). (ca)(c11). cliva(a,c7))
+((lebna(a,c5) /\ EQ(1) x1:((_ =< c6)). lebna(a,x1)) /\ (pu'o)(). (ca)(c11). cliva(a,c7))
 
 cy papa nu fa'a cy pano zo'u catlu kei
 .i ge cy pano ke cmalu botpi ke'e gi cy pano sanli cy so
@@ -3258,9 +3258,17 @@ lu cy no ka ce'u tolcitno kei
 -----
 > ni'o *lu .oi doi .alis. noi bebna *sei .abu sezyspuda* ta'i ma do da bu'u ka'e cilre .i ue lo canlu ja'a ru'e banzu tu'a do .i no da bu'u canlu lo ve cilre cukta li'u*
 
-Parse error:
-	{do i no da bu'u canlu lo ve cilre cukta li'u}
-	                                         ^
+[Fragment: << <cilre( , , ,_)><cukta>(c1)
+canlu(c0)
+cilre( )
+banzu(c0,{tu'a}(do))
+EQ(0) x1. (bu'u)(). canlu(x1,c1) >>]
+
+lu cy pa ke ve cilre cukta ke'e
+.i cy no canlu
+.i cilre
+.i cy no banzu tu'a do lu'u
+.i no da bu'u ku zo'u da canlu cy pa li'u
 
 -----
 > ni'o .abu ca'o co'e .i pa mai darlu lo mlana gi'e re mai darlu lo drata gi'e zbasu lo vajni nuncasnu lo ro mei .i ku'i ba lo mentu be li so'o .abu tirna lo voksa noi bartu ku'o gi'e sisti te zu'e lo nu tinzga
@@ -3392,7 +3400,7 @@ sance cy no
 -----
 > ni'o *lu pau ju'i .pat. ta poi zvati lo canko cu mo li'u*
 
-[Fragment: << (zvati(c1,c0) /\ (ta) >= (c1))
+[Fragment: << (zvati(c1,c0) /\ (c1 =< ta))
 canko(c0)
 ? R1. R1(c1) >>]
 
@@ -3414,7 +3422,7 @@ Morphology error:
 (birka(c0) /\ (tai)(). barda(c0))
 birka( )
 ? x1. (pu)(). viska(x1,c0)
-(pi ro) x1:((c1) >= (_)). tisna(x1,ta) >>]
+(pi ro) x1:((_ =< c1)). tisna(x1,ta) >>]
 
 lu cy pa canko
 .i ge cy no birka gi tai ku zo'u cy no barda
@@ -3496,9 +3504,31 @@ Parse error:
 -----
 > ni'o ro mai go'i lo cmalu je ruble je lauble voksa (to *lu tu me la .bil. *sei la .alis. cu pensi* li'u* toi) pe *lu mi ja'a ru'e djuno .i banzu ki'e .i mi ca kufra .i ku'i mi dukse lo ka jenca kei lo nu jungau .i mi djuno lo po'o du'u da mi catke tai lo danre selkei plipe .i mi tolfa'u tai tu'a lo tsani jakne li'u*
 
-Parse error:
-	{is cu pensi li'u toi pe lu mi ja'a ru'e djuno i banzu ki'e i mi ca kufra i ku'i }
-	                                         ^
+(<<<cmalu(_)>{je}<ruble(_)>(_)>{je}<lauble(_)>(_)><voksa>(c0) /\ srana(c0,<< <tsani(_)><jakne>(c4)
+du'u[EX x1. (tai)(c2). catke(x1,mi)](c3)
+<<danre(_)><selkei>(_)><plipe>(c2)
+nu[jungau( )](c1)
+ka[jenca(\1)](c0)
+djuno(mi)
+banzu( )
+(ca)(). kufra(mi)
+dukse(mi,c0,c1)
+djuno(mi,c3)
+(tai)({tu'a}(c4)). tolfa'u(mi) >>))
+go'i( ,c0)
+
+ge cy no ke ke ke cmalu ke'e je ke ruble ke'e ke'e je ke lauble ke'e voksa ke'e gi cy no srana lu cy vo ke tsani jakne ke'e
+.i cy ci du'u su'o da tai cy re zo'u da catke mi kei
+.i cy re ke ke danre selkei ke'e plipe ke'e
+.i cy pa nu jungau kei
+.i cy no ka ce'u jenca kei
+.i mi djuno
+.i banzu
+.i ca ku zo'u mi kufra
+.i mi dukse cy no cy pa
+.i mi djuno cy ci
+.i tai tu'a cy vo lu'u zo'u mi tolfa'u li'u
+.i go'i cy no
 
 -----
 > ni'o *lu ie do ca'a go'i doi pendo *sei lo drata cu cusku* li'u*
@@ -3561,7 +3591,7 @@ canko(c0)
 pensi( ,"alis")
 [Fragment: c0] >>]
 EX x1. (x1=. (ze'u)(). !senpi(a) /\ (ba zi)(x1). (so'i) x2:(<cmalu(_)><bidju>(_)). (pa'o)(c0). carvi(x2))
-EX x1:(({ra}) >= (_)). darxi(x1,a, ,c1)
+EX x1:((_ =< {ra})). darxi(x1,a, ,c1)
 [Fragment: << sezysku( ,a)
 (ba)(). tolcfagau(mi,ti) >>]
 krixa(a,<< !((za'u) re'u)(). co'e(ko) >>)
@@ -3596,7 +3626,7 @@ nu[tolcanci("alis")](c12)
 FA x1:(smacrkobaiu(_)). dunda(x1,c11)
 botpi( ,c11)
 (ro) mei(c10)
-(<cmalu(_)><rebyrespa>(c9) /\ =(c9,"bil"))
+(<cmalu(_)><rebyrespa>(c9) /\ (c9 == "bil"))
 (<cmalu(_)><<danlu(_)>{jo'u}<cipni(_)>>(c8) /\ ((so'i) mei(c8) /\ denpa(c8)))
 bartu(c7,c6)
 zdani(c6)
@@ -3606,7 +3636,7 @@ vorme(c3)
 nu[facki( ,c1)](c2)
 du'u[(ca)(). (co'a)(). cmaze'a( )](c1)
 nanba(c0)
-(ki'u)({la'e}(di'u)). (EQ(1) x1:((c0) >= (_)). tunlo(a,x1) /\ gleki(a,c2))
+(ki'u)({la'e}(di'u)). (EQ(1) x1:((_ =< c0)). tunlo(a,x1) /\ gleki(a,c2))
 (ca)(c5). (<bajra(_)><klama>(a,c7) /\ penmi(a,c8))
 (midju(c9,c10) /\ EQ(2) x1:(smacrkobaiu(_)). sarji(x1,c9))
 FA x1. (fa'a)("alis"). (ca)(c12). sutra(x1)
@@ -3763,7 +3793,7 @@ gerpanzi(c3)
 nu[(lafti(a,c0) /\ jarco(a,c0,c1))](c2)
 gerpanzi(c1)
 <cmalu(_)><grana>(c0)
-EX x1. ((ja'e)(x1). sanji(a,c2) /\ x1=. EX x2. (x2=. (((FA x3:((c5) >= (_)). plipe(c3,c4,x3) /\ <pluka( ,_)><cmoni>(c3)) /\ sezre'o(c3,c6)) /\ gasnu(c3,c8)) /\ (ba)(x2). rivbi("alis",c9,c12)))
+EX x1. ((ja'e)(x1). sanji(a,c2) /\ x1=. EX x2. (x2=. (((FA x3:((_ =< c5)). plipe(c3,c4,x3) /\ <pluka( ,_)><cmoni>(c3)) /\ sezre'o(c3,c6)) /\ gasnu(c3,c8)) /\ (ba)(x2). rivbi("alis",c9,c12)))
 EX x1. (x1=. (ca)(c15). (((za'u) re'u)(). sezre'o(c13,c16) /\ (se ja'e)(c18). <gunro(_)><farlu>(c13)) /\ (ba)(x1). ((za'u) re'u)(). (fa'a ti'a)(c24). bajra("alis"))
 (((((((co'a)(). ((so'o) roi)(). (ze'i)(). gunta(c25,c26) /\ ((ve'i)(). (fa'a)(). bajra(c25) /\ (ve'u)(). (to'o)(). bajra(c25))) /\ ((ro) roi)(). <rufsu(_)><bacru>(c25)) /\ (vu)(). zutse(c25)) /\ ta'irva'u(c25)) /\ tance(c28,c25)) /\ kanla(c29,c25))
 
@@ -3886,7 +3916,7 @@ ka[mapti(\1,c3)](c4)
 srasu(c2)
 xrula(c1)
 <banli(_)><preti>(c0)
-({ma}) >= (c0)
+(c0 =< {ma})
 ((fa'a)(). (ru'u)(). (catlu("alis",c1) /\ catlu("alis",c2)) /\ EQ(0) x1:(simlu(_,c4)). viska("alis",x1))
 (zvati(c5,c6) /\ simsa(c5,"alis",c7))
 (ca)(c11). sidbo(c13, ,"alis")
@@ -3967,7 +3997,7 @@ cy ci ke ke surla ke'e je ke cando ke'e voksa ke'e
 > ni'o *lu do me ba'e ma *sei la ciftoldi cu cusku* li'u*
 
 [Fragment: << cusku( ,[Name: ciftoldi(_) ])
-? x1. (x1) >= (do) >>]
+? x1. (do =< x1) >>]
 
 lu cusku la ciftoldi ku
 .i ma goi ko'a zo'u do me ko'a me'u li'u
@@ -3984,7 +4014,7 @@ la alis. penmi la ciftoldi ku
 
 nu[(co'a)(). casnu( )](c0)
 !<xamgu(_)><mukti>(di'u,c0)
-<toldarsi(_)><spusku>("alis",<< du'u[? x1. (ca)(c2). (x1) >= (mi)](c3)
+<toldarsi(_)><spusku>("alis",<< du'u[? x1. (ca)(c2). (mi =< x1)](c3)
 nu[(ca)(c1). <ckana(_)><cliva>(mi)](c2)
 cabycerni(c1)
 cabna(c0)
@@ -4020,7 +4050,7 @@ lu ke tolxendo cusku ke'e la ciftoldi ku
 
 [Fragment: << nu[ciksi(mi,mi)](c0)
 cusku( ,"alis")
-EX x1. ((ki'u)(x1). !kakne(mi,c0) /\ x1=. !(mi) >= (mi)) >>]
+EX x1. ((ki'u)(x1). !kakne(mi,c0) /\ x1=. !(mi =< mi)) >>]
 
 lu cy no nu mi ciksi mi kei
 .i cusku la alis.
@@ -4109,7 +4139,7 @@ lu cy re du'u mi cinmo cy pa kei
 
 [Fragment: << <tolsi'a(_)><cusku>( ,[Name: ciftoldi(_) ])
 [Fragment: do]
-? x1. (x1) >= (do) >>]
+? x1. (do =< x1) >>]
 
 lu ke tolsi'a cusku ke'e la ciftoldi ku
 .i do
@@ -4124,7 +4154,7 @@ krasi(c2,c1)
 nu[ta'arsi'u( )](c1)
 2 mei(c0)
 xrugau(di'u,c0,c2)
-((<milxe(_)><fanza>("alis",c4) /\ <sanli(_)><zenba>("alis")) /\ <<junri(_)><mutce>(_)><cusku>("alis",<< ? x1. du'u[(x1) >= (do)]( ,c0)
+((<milxe(_)><fanza>("alis",c4) /\ <sanli(_)><zenba>("alis")) /\ <<junri(_)><mutce>(_)><cusku>("alis",<< ? x1. du'u[(do =< x1)]( ,c0)
 (pu)(). cusku(do,c0) >>))
 
 cy vo nu la ciftoldi ku cusku cy ci kei
@@ -4288,14 +4318,16 @@ lu ma goi ko'a zo'u cy no nu morji ko'a kei
 nu[sitna( ,<< <cmalu(_)><gunkybifce>(c0)
 [Fragment: c0] >>)](c0)
 (pu)(). troci(mi,c0)
-(ja'e)(c1). bacru( ,c0) >>]
+(ja'e)(c1). bacru( ,<< <cmalu(_)><gunkybifce>(c0)
+[Fragment: c0] >>) >>]
 
 lu cy pa frica
 .i ke ke ke badri mutce ke'e voksa ke'e spuda ke'e la alis.
 .i cy no nu sitna lu cy no ke cmalu gunkybifce ke'e
 .i cy no li'u kei
 .i pu ku zo'u mi troci cy no
-.i ja'e cy pa zo'u bacru cy no li'u
+.i ja'e cy pa zo'u bacru lu cy no ke cmalu gunkybifce ke'e
+.i cy no li'u li'u
 
 -----
 > ni'o *lu ko sitna *lu do tolcitno doi .paf.uiliam. li'u* *sei la ciftoldi cu cusku* li'u*
@@ -4570,7 +4602,7 @@ lu cusku la ciftoldi ku
 [Fragment: << valsi(c0)
 <toldarsi(_)><cusku>( ,"alis")
 !<mulno(_)><drani>( )
-EX x1:((c0) >= (_)). (ba'o)(). cenba(x1) >>]
+EX x1:((_ =< c0)). (ba'o)(). cenba(x1) >>]
 
 lu cy no valsi
 .i ke toldarsi cusku ke'e la alis.
@@ -4782,13 +4814,13 @@ gumri(c7)
 birka(c6)
 fanmo(c5)
 nabmi(c4)
-du'u[? x1. (x1) >= (c2)](c3)
+du'u[? x1. (c2 =< x1)](c3)
 (mlana(c2) /\ 2 mei(c2))
 mentu(c1)
 gumri(c0)
 ((ze'a)(c1). <pensi(_)><zgana>("alis",c0) /\ <facki(_,c3)><troci>("alis"))
 EX x1. ((se ni'i)(x1). <prane(_)><cukla>(c0) /\ x1=. nadycai(c4))
-(ca)(c5). ((ru'u)(c7). (ve'a)(c8). tengau("alis",c6) /\ FA x1:((c9) >= (_)). (se pi'o)(x1). popygau("alis",c10,c11))
+(ca)(c5). ((ru'u)(c7). (ve'a)(c8). tengau("alis",c6) /\ FA x1:((_ =< c9)). (se pi'o)(x1). popygau("alis",c10,c11))
 
 cy papa spisa
 .i cy pano korbi
@@ -4843,7 +4875,7 @@ nu[kargau( ,c7)](c8)
 moklu(c7)
 jamfu(c6)
 (xedja(c5) /\ srana(c5,a))
-nu[(pi so'u) x1:((c3) >= (_)). citka( ,x1)](c4)
+nu[(pi so'u) x1:((_ =< c3)). citka( ,x1)](c4)
 <drata(_)><spisa>(c3)
 nu[!xaksu( ,c1)](c2)
 temci(c1)
@@ -5246,7 +5278,7 @@ sidbo(c0)
 (tai)(). (ja'e)(c2). cnino(c0,"alis")
 curmi({la'e}(di'u),c3)
 
-cy ci nu la tcacpi ku jmina lu cy pa du'u mo cei broda zo'u ?? gi do ke cmalu broda ke'e gi do since kei
+cy ci nu la tcacpi ku jmina lu cy pa du'u mo cei broda zo'u ge'i do ke cmalu broda ke'e gi do since kei
 .i cy no sovda
 .i do sisku cy no
 .i na ku cy pa vajni mi li'u kei
@@ -5612,7 +5644,7 @@ jetnu({la'e}(di'u))
 [Fragment: << nu[fenkygau( )](c1)
 danlu(c0)
 <bacru(_)><sezysku>( ,a)
-FA x1:((c0) >= (_)). darlu(x1)
+FA x1:((_ =< c0)). darlu(x1)
 banzu( ,c1) >>]
 
 cy no nu cusku di'u kei
@@ -5763,7 +5795,7 @@ dukse(c0)
 zvati(c0,c1)
 (ru'i nai)(). senci([Name: noltroni'u(_) ])
 !denpa(c2, , ,c3)
-((c6 {jo'u} c9)) >= (c5)
+(c5 =< (c6 {jo'u} c9))
 
 ge cy so ke barda mlatu ke'e gi ge cy so zutse cy bi gi cy so ke ke relkerlo ganra ke'e cisma ke'e
 .i cy bi cpana cy ze
@@ -5855,9 +5887,9 @@ lu cusku la noltroni'u ku
 
 nu[(co'a)(). pagbu( ,c0)](c1)
 ta'arsi'u(c0)
-[Fragment: << ((ca'a)(). co'e(c0) /\ (m) >= (c0))
+[Fragment: << ((ca'a)(). co'e(c0) /\ (c0 =< m))
 <tceclite(_)><cusku>( ,"alis")
-!EX x1:((c0) >= (_)). djuno(mi, ,x1) >>]
+!EX x1:((_ =< c0)). djuno(mi, ,x1) >>]
 <mutce(_)><pluka>(c1,a)
 
 cy pa nu co'a ku zo'u pagbu cy no kei
@@ -5982,7 +6014,7 @@ nicte(c3)
 donri(c2)
 cusku( ,"alis")
 <mutce(_)><gleki>("alis",c1)
-nu[(ka'e)(). (pi so'u) x1:((c0) >= (_)). jarco( ,x1)](c1)
+nu[(ka'e)(). (pi so'u) x1:((_ =< c0)). jarco( ,x1)](c1)
 nu[djuno("alis")](c0)
 !prali({la'e}(di'u))
 pensi(ko,c4)
@@ -6037,7 +6069,7 @@ cy xa ka na ku ce'u jundi kei
 .i cy pa nu tinbe kei
 .i cy no jukpa
 .i te zu'e cy ci zo'u la alis. ke xanka catlu ke'e cy no
-.i su'o da zo'u ge se ki'u da zo'u ge cy vo jicla cy mu gi cy vo simlu cy xa gi fi'o du da di'a ku zo'u la alis. cusku lu cacra li revo boi lo'o ?? ke li pare boi lo'o ke'e
+.i su'o da zo'u ge se ki'u da zo'u ge cy vo jicla cy mu gi cy vo simlu cy xa gi fi'o du da di'a ku zo'u la alis. cusku lu cacra li revo boi lo'o ji ke li pare boi lo'o ke'e
 .i mi li'u
 
 -----
@@ -6518,14 +6550,14 @@ cy pa ke drata preti ke'e
 -----
 > ni'o *lu vu fa'a tu *sei la mlatu cu pritu xance desku cusku* cu xabju la mapypre .i vu fa'a tu *sei drata xance desku* cu xabju la cibmasti cicyractu .i ko vitke lo se nelci be do .i ro lo re da fenki li'u*
 
-[Fragment: << FA x1. ((x1) >= (f1(x1)) /\ 2 mei(f1(x1)))
+[Fragment: << FA x1. ((f1(x1) =< x1) /\ 2 mei(f1(x1)))
 nelci(do,c0)
 <<drata(_)><xance>(_)><desku>( )
 <<<pritu(_)><xance>(_)><desku>(_)><cusku>( ,[Name: mlatu(_) ])
 (vu fa'a)(tu). xabju( ,[Name: mapypre(_) ])
 (vu fa'a)(tu). xabju( ,[Name: <cibmasti(_)><cicyractu>(_) ])
 vitke(ko,c0)
-EX x1. FA x2:((f1(x1)) >= (_)). fenki(x2) >>]
+EX x1. FA x2:((_ =< f1(x1))). fenki(x2) >>]
 
 lu ro da zo'u ge li ma'o fypa mo'e da lo'o me da me'u gi li ma'o fypa mo'e da lo'o re mei
 .i do nelci cy no
@@ -6554,7 +6586,7 @@ lu cy pa nu jbini cy no kei
 
 [Fragment: << cusku( ,[Name: mlatu(_) ])
 !(ka'e)(). rivbi(do)
-(bu'u)(ti). FA x1:((ma'a) >= (_)). fenki(x1)
+(bu'u)(ti). FA x1:((_ =< ma'a)). fenki(x1)
 fenki(mi)
 fenki(do) >>]
 
@@ -6794,7 +6826,7 @@ cy mu jimca cy vo
 cusku(do,({xarju} {??} {narju})) >>]
 
 lu cusku la mlatu ku
-.i do cusku zo xarju ?? ke zo narju ke'e li'u
+.i do cusku zo xarju ji ke zo narju ke'e li'u
 
 -----
 > ni'o *lu mi pu cusku zo xarju *sei la .alis. cu spuda* .i .au do na za'o suksa canci je tolcanci .i do gasnu lo nu mutce lo ka se cfipu li'u*
@@ -6965,7 +6997,7 @@ lu cy no vanju
 > ni'o la .alis. cu catlu pi ro lo jubme .i ku'i no na'e tcati jy cpana .i *lu mi na viska lo vanju *sei .abu piksku* li'u*
 
 jubme(c0)
-(pi ro) x1:((c0) >= (_)). catlu("alis",x1)
+(pi ro) x1:((_ =< c0)). catlu("alis",x1)
 EQ(0) x1:({na'e}(tcati)(_)). cpana(x1,c0)
 [Fragment: << vanju(c0)
 piksku( ,a)
@@ -7306,7 +7338,7 @@ lu cy pa ke nanba dakfu ke'e
 
 nu[pensi( ,c3)](c4)
 (cusku( ,c3) /\ xagmau(c3,c2))
-(<1 moi(_)><pinka>(c2) /\ =(c2,<< matne(c0)
+(<1 moi(_)><pinka>(c2) /\ (c2 == << matne(c0)
 xagrai({ra},c0) >>))
 <kabri(_)><tcati>(c1)
 junla(c0)
@@ -7399,7 +7431,7 @@ tersmu: Unbound variable RelVar 1
 <glare(_)><tcati>(c0)
 [Fragment: << cusku( ,[Name: mapypre(_) ])
 ((za'u) re'u)(). sipna([Name: sipsmacu(_) ]) >>]
-(pi so'u) x1:((c0) >= (_)). falcru(m,x1,c1)
+(pi so'u) x1:((_ =< c0)). falcru(m,x1,c1)
 
 ge cy pa nazbi gi cy pa srana sy
 .i cy no ke glare tcati ke'e
@@ -7812,7 +7844,7 @@ lu cy no cukla
 -----
 > ni'o *lu go'i sa'e *sei la mapypre cu cusku* ca lo nu so'o lo dacti mo'u se xaksu li'u*
 
-[Fragment: << nu[(so'o) x1:((c0) >= (_)). (mo'u)(). xaksu( ,x1)](c1)
+[Fragment: << nu[(so'o) x1:((_ =< c0)). (mo'u)(). xaksu( ,x1)](c1)
 dacti(c0)
 cusku( ,[Name: mapypre(_) ])
 (ca)(c1). go'i( ) >>]
@@ -8172,7 +8204,7 @@ lu cy pa satyjisra
 <jinsa(_)><kabri>(c0)
 zunti( ,[Name: mapypre(_) ])
 djica(mi,c0)
-FA x1:((mi'o) >= (_)). muvdu(x1,c1) >>]
+FA x1:((_ =< mi'o)). muvdu(x1,c1) >>]
 
 lu cy pa ke lamji stuzi ke'e
 .i cy no ke jinsa kabri ke'e
@@ -8218,12 +8250,12 @@ cy ze nu pu ku zi ku zo'u la ke cibmasti cicyractu ke'e ku falcru cy mu cy xa ke
 -----
 > ni'o la .alis. na djica lo nu za'u re'u cnixai la sipsmacu gi'e se ki'u bo kajde ke tolsti cusku *lu mi na jimpe .i my cpacu lo satyjisra ma li'u*
 
-nu[EX x1. (x1=. ((za'u) re'u)(). cnixai( ,[Name: sipsmacu(_) ]) /\ (se ki'u)(x1). <kajde(_)><<tolsti(_)><cusku>>( ,<< satyjisra(c0)
+nu[EX x1. ((se ki'u)(x1). ((za'u) re'u)(). cnixai( ,[Name: sipsmacu(_) ]) /\ x1=. <kajde(_)><<tolsti(_)><cusku>>( ,<< satyjisra(c0)
 !jimpe(mi)
 ? x2. cpacu(m,c0,x2) >>))](c0)
 !djica("alis",c0)
 
-cy no nu su'o da zo'u ge fi'o du da za'u re'u ku zo'u cnixai la sipsmacu ku gi se ki'u da zo'u ke kajde ke tolsti cusku ke'e ke'e lu cy no satyjisra
+cy no nu su'o da zo'u ge se ki'u da za'u re'u ku zo'u cnixai la sipsmacu ku gi fi'o du da zo'u ke kajde ke tolsti cusku ke'e ke'e lu cy no satyjisra
 .i na ku mi jimpe
 .i ma goi ko'a zo'u my cpacu cy no ko'a li'u kei
 .i na ku la alis. djica cy no
@@ -8415,7 +8447,7 @@ lu ge cy vo ke tcati kansi'u ke'e gi ca cy ci zo'u mi pagbu cy vo
 -----
 > ni'o .abu ca lo nu cusku di'u cu co'a sanji lo nu pa lo tricu cu ve vorme lo ty nenri .i *lu cizra *sei .abu pensi* .i ku'i ro da cizra ca lo cabdei .i pe'i .ai mi ca zi nerkla li'u* .i .abu nerkla
 
-nu[EQ(1) x1:((c1) >= (_)). vorme( ,c2, ,x1)](c3)
+nu[EQ(1) x1:((_ =< c1)). vorme( ,c2, ,x1)](c3)
 (nenri(c2) /\ srana(c2,c1))
 tricu(c1)
 nu[cusku( ,di'u)](c0)
@@ -8501,7 +8533,7 @@ ke me la noltruni'u ku me'u moi ke kelcrkroke foldi ke'e ke'e
 -----
 > ni'o lo barda ke rozgu tricu cu jibni lo vorme be lo purdi .i lo rozgu poi xrula ty cu blabi .i ku'i ci purdykurji cu ca'o punji lo xunre cinta ry .i la .alis. cu pensi jinvi lo du'u mutce cizra kei gi'e jbize'a te zu'e lo nu catlu .i .abu ca lo nu ba'o klama cu tirna lo nu pa lo purdykurji cu cusku *lu .o'i doi .mum. ko na renro lo cinta mi li'u*
 
-nu[EQ(1) x1:((c8) >= (_)). cusku(x1,<< cinta(c0)
+nu[EQ(1) x1:((_ =< c8)). cusku(x1,<< cinta(c0)
 !renro(ko,c0,mi) >>)](c9)
 purdykurji(c8)
 nu[(ba'o)(). klama( )](c7)
@@ -8690,7 +8722,7 @@ nu[sombo( ,c0)](c1)
 blabi(c0)
 <<xunre(_)><rozgu>(_)><tricu>(ti)
 (pu)(). srera(mi'a,c1)
-FA x1:((mi'a) >= (_)). (va'o)(c2). (ba)(). <katna(_)><vimcu>( ,c3,x1)
+FA x1:((_ =< mi'a)). (va'o)(c2). (ba)(). <katna(_)><vimcu>( ,c3,x1)
 (pu)(c5). zukte(mi'a,c4) >>)
 (ca)(). krixa("mum",<< [Fragment: [Name: noltruni'u(_) ]]
 [Fragment: [Name: noltruni'u(_) ]] >>)
@@ -8878,7 +8910,7 @@ drata(c2)
 (purdykurji(c0) /\ 3 mei(c0))
 [Fragment: << <<<cpina(_)>{je}<cladu(_)>(_)><voksa>(_)><cusku>( ,[Name: noltruni'u(_) ])
 sanli(ko) >>]
-((ze'i)(). sa'irbi'o(c0) /\ (co'a)(). (((<korcu(_)><rinsa>(c0,[Name: noltrunau(_) ]) /\ <korcu(_)><rinsa>(c0,[Name: noltruni'u(_) ])) /\ <korcu(_)><rinsa>(c0,c1)) /\ FA x1:((c2) >= (_)). <korcu(_)><rinsa>(c0,x1)))
+((ze'i)(). sa'irbi'o(c0) /\ (co'a)(). (((<korcu(_)><rinsa>(c0,[Name: noltrunau(_) ]) /\ <korcu(_)><rinsa>(c0,[Name: noltruni'u(_) ])) /\ <korcu(_)><rinsa>(c0,c1)) /\ FA x1:((_ =< c2)). <korcu(_)><rinsa>(c0,x1)))
 
 cy re drata
 .i cy pa ke noltru panzi ke'e
@@ -9260,7 +9292,7 @@ jesymabru(c3)
 kelka'u(c2,c0)
 mintu(c1)
 kelci(c0)
-FA x1:((c0) >= (_)). ((((ca)(c1). kelci(x1) /\ !denpa(x1,c2)) /\ (ru'i)(). toltugni(x1)) /\ damba(x1, ,c3))
+FA x1:((_ =< c0)). ((((ca)(c1). kelci(x1) /\ !denpa(x1,c2)) /\ (ru'i)(). toltugni(x1)) /\ damba(x1, ,c3))
 (ba)(). (zi)(). ((<fengu(_)><cinmo>([Name: noltruni'u(_) ]) /\ (ca'o)(). <marxa(_)><cadzu>([Name: noltruni'u(_) ])) /\ (FA x1:(mentu(_)). ((ji'i pa) roi)(x1). krixa([Name: noltruni'u(_) ],<< stedu(c0)
 vimcu(ko,c0,ta) >>) \/ FA x1:(mentu(_)). ((ji'i pa) roi)(x1). krixa([Name: noltruni'u(_) ],<< stedu(c0)
 vimcu(ko,c0,tu) >>)))
@@ -9359,7 +9391,7 @@ lu ca cy re zo'u cusku la mlatu ku
 nu[tolcanci(c0)](c1)
 kanla(c0)
 EX x1. (x1=. denpa("alis",c1) /\ (ba)(x1). tu'ifru("alis"))
-[Fragment: << nu[(zvati(c1) \/ EX x1:((c1) >= (_)). zvati(x1))](c2)
+[Fragment: << nu[(zvati(c1) \/ EX x1:((_ =< c1)). zvati(x1))](c2)
 kerlo(c1)
 nu[tavla( ,ta)](c0)
 pensi( ,a)
@@ -9378,7 +9410,7 @@ cy pa nu cy no tolcanci kei
 > ni'o za lo drata mentu lo stedu cu mo'u tolcanci .i la .alis. cu toljgari lo fagycpi gi'e co'a te lisri lo nunkei gi'e cinmo lo ka gleki lo nu da .abu tirna .i la mlatu cu simlu lo ka jinvi lo du'u pi rau ri ca se viska .i no drata pagbu be my cu tolcanci
 
 ka[jinvi(\1,c6)](c7)
-du'u[(pi rau) x1:(([Name: mlatu(_) ]) >= (_)). (ca)(). viska( ,x1)](c6)
+du'u[(pi rau) x1:((_ =< [Name: mlatu(_) ])). (ca)(). viska( ,x1)](c6)
 ka[gleki(\1,c4)](c5)
 nu[EX x1. tirna(x1,"alis")](c4)
 nunkei(c3)
@@ -9414,7 +9446,7 @@ nu[jbikla(c12)](c13)
 foldi(c9)
 (bargu(c8) /\ (ca)(). pagre(mi,c8))
 du'u[? x1. (tai)(x1). cfipu(c6)](c7)
-du'u[FA x1:((c5) >= (_)). jmive(x1)](c6)
+du'u[FA x1:((_ =< c5)). jmive(x1)](c6)
 dacti(c5)
 nu[EX x1. javni(x1)](c4)
 ka[!<steci(_)><javni>( , ,\1)](c3)
@@ -9423,7 +9455,7 @@ nu[tavla( )](c1)
 du'u[(ca'o)(). <stace(_)><kelci>(tu)](c0)
 (co'a)(). <<pante(_)><tonga>(_)><cusku>( ,"alis")
 !jinvi(mi,c0)
-FA x1:((tu) >= (_)). (ja'e)(c2). da'arta'a(x1)
+FA x1:((_ =< tu)). (ja'e)(c2). da'arta'a(x1)
 (simlu(tu,c3) \/ EQ(0) x1. (va'o)(c4). EX x2. jundi(x1,x2))
 !xanri(c7,do)
 (co'a)(). cadzu(c8,c10)
@@ -9664,7 +9696,7 @@ foldi(c1)
 dargu(c0)
 pensi( ,"alis")
 !<vajni(_)><mutce>( )
-FA x1:((c0) >= (_)). canci(x1,c2) >>]
+FA x1:((_ =< c0)). canci(x1,c2) >>]
 ((ja'e)(c6). punji(a,c0,c5) /\ xruti(a,c8))
 
 cy bi nu ke jmina tavla ke'e cy ze kei
@@ -9688,7 +9720,7 @@ cy bi nu ke jmina tavla ke'e cy ze kei
 -----
 > ni'o .abu ca lo nu ba'o xruti tu'a la tcicymlatu cu se spaji lo nu facki lo du'u lo prenu so'i mei ba'o jmaji lo sruri be ty .i da'arsi'u fa lo selmi'ecatra jo'u la noltrunau jo'u la noltruni'u vu'o noi ro ke'a cu tavla ca lo mintu ca lo nu ro drata cu smaji mutce gi'e tolkufra simlu
 
-FA x1:((((c5 {jo'u} [Name: noltrunau(_) ]) {jo'u} [Name: noltruni'u(_) ])) >= (_)). (ca)(c6). (ca)(c7). tavla(x1,((c5 {jo'u} [Name: noltrunau(_) ]) {jo'u} [Name: noltruni'u(_) ]))
+FA x1:((_ =< ((c5 {jo'u} [Name: noltrunau(_) ]) {jo'u} [Name: noltruni'u(_) ]))). (ca)(c6). (ca)(c7). tavla(x1)
 nu[FA x1:(drata(_)). (<smaji(_)><mutce>(x1) /\ <tolkufra(_)><simlu>(x1))](c7)
 mintu(c6)
 selmi'ecatra(c5)
@@ -9700,7 +9732,7 @@ nu[(ba'o)(). xruti( ,{tu'a}([Name: tcicymlatu(_) ]))](c0)
 (ca)(c0). spaji(c4,a)
 da'arsi'u(((c5 {jo'u} [Name: noltrunau(_) ]) {jo'u} [Name: noltruni'u(_) ]))
 
-ro da poi ke'a me cy mu jo'u ke la noltrunau ku ke'e jo'u ke la noltruni'u ku ke'e me'u ku'o ca cy xa ca cy ze zo'u da tavla cy mu jo'u ke la noltrunau ku ke'e jo'u ke la noltruni'u ku ke'e
+ro da poi ke'a me cy mu jo'u ke la noltrunau ku ke'e jo'u ke la noltruni'u ku ke'e me'u ku'o ca cy xa ca cy ze zo'u da tavla
 .i cy ze nu ro da poi ke'a drata ku'o zo'u ge da ke smaji mutce ke'e gi da ke tolkufra simlu ke'e kei
 .i cy xa mintu
 .i cy mu selmi'ecatra
@@ -9718,19 +9750,19 @@ ro da poi ke'a me cy mu jo'u ke la noltrunau ku ke'e jo'u ke la noltruni'u ku ke
 ka[nandu(c7,\1)](c8)
 nu[jimpe( ,c6)](c7)
 du'u[? x1. cusku( ,x1)](c6)
-nu[FA x1:((c3) >= (_)). (ca)(c4). tavla(x1)](c5)
+nu[FA x1:((_ =< 3)). (ca)(c4). tavla(x1)](c5)
 mintu(c4)
 3 mei(c3)
 nu[jdice( ,c1)](c2)
 cuntu(c1)
 nu[tolcliva( )](c0)
-(ca)(c0). FA x1:((c3) >= (_)). cpedu(x1,c2,"alis")
+(ca)(c0). FA x1:((_ =< c3)). cpedu(x1,c2,"alis")
 (ki'u)(c5). mutce("alis",c8)
 
 cy bi ka cy ze nandu ce'u kei
 .i cy ze nu jimpe cy xa kei
 .i cy xa du'u ma goi ko'a zo'u cusku ko'a kei
-.i cy mu nu ro da poi ke'a me cy ci me'u ku'o ca cy vo zo'u da tavla kei
+.i cy mu nu ro da poi ke'a me li ci boi lo'o me'u ku'o ca cy vo zo'u da tavla kei
 .i cy vo mintu
 .i cy ci ci mei
 .i cy re nu jdice cy pa kei
@@ -9785,7 +9817,7 @@ mleca(c3,c2)
 kansi'u(c5)
 ka[<junri(_)>{je}<xanka(_)>(\1)](c6)
 ka[mutce(\1,c6)](c7)
-nu[(pi ro) x1:((c5) >= (_)). simlu(x1,c7)](c8)
+nu[(pi ro) x1:((_ =< c5)). simlu(x1,c7)](c8)
 (EX x1. (se ra'a)(c1). (zi)(c3). zukte( ,x1) \/ (ba)(). minde([Name: noltruni'u(_) ], ,c9))
 
 cy so nu ro da zo'u catra da kei
@@ -10174,14 +10206,14 @@ lu cy re ke barda ke sansrmustardo terkunra ke'e ke'e
 -----
 > ni'o *lu ua ka'u *sei la .alis. noi na jundi lo ro moi pinka cu krisku* .i sy stagi .i sy lo ka go'i cu na catlu gi'e ku'i ja'a ckaji li'u*
 
-[Fragment: << ka[stagi(\1,\1)](c1)
+[Fragment: << ka[stagi(\1)](c1)
 krisku( ,"alis")
 !jundi("alis",c0)
 <(ro) moi(_)><pinka>(c0)
 stagi(s)
 (!catlu(s,c1) /\ ckaji(s,c1)) >>]
 
-lu cy pa ka ce'u stagi ce'u kei
+lu cy pa ka ce'u stagi kei
 .i krisku la alis.
 .i na ku la alis. jundi cy no
 .i cy no ke ro moi pinka ke'e
@@ -10191,9 +10223,27 @@ lu cy pa ka ce'u stagi ce'u kei
 -----
 > ni'o *lu mi do ja'a sai tugni *sei la noltroni'u cu cusku* .i la'e di'u madni'i la'e *lu ko ckaji lo se simlu be do li'u* .i va'i sa'u *lu ko no roi se xanri lo nu do na ckaji na'e bo da poi do simlu fi lo drata fe lo ka de poi do ca'a ja nu'o ckaji ke'a na drata di poi do simlu ke'a lo drata lo drata li'u* li'u*
 
-Parse error:
-	{oi do simlu ke'a lo drata lo drata li'u li'u}
-	                                         ^
+[Fragment: << cusku( ,[Name: noltroni'u(_) ])
+tugni(mi,do)
+madni'i({la'e}(di'u),{la'e}(<< simlu(do,c0)
+ckaji(ko,c0) >>))
+[Fragment: << nu[!EX x1:(simlu(do,c3,c0,_)). ckaji(do,{na'e bo}(x1))](c4)
+ka[EX x1:(((ca'a)(). ckaji(do,_) \/ (nu'o)(). ckaji(do,_))). !EX x2:(simlu(do,_,c1,c2)). drata(x1,x2,\1)](c3)
+drata(c2)
+drata(c1)
+drata(c0)
+(0 roi)(). xanri(c4,ko) >>] >>]
+
+lu cusku la noltroni'u ku
+.i mi tugni do
+.i la'e di'u lu'u madni'i la'e lu do simlu cy no
+.i ko ckaji cy no li'u lu'u
+.i lu cy vo nu na ku su'o da poi do simlu cy ci cy no ke'a ku'o zo'u do ckaji na'e bo da lu'u kei
+.i cy ci ka su'o da poi ga ca'a ku zo'u do ckaji ke'a gi nu'o ku zo'u do ckaji ke'a ku'o zo'u na ku su'o de poi do simlu ke'a cy pa cy re ku'o zo'u da drata de ce'u kei
+.i cy re drata
+.i cy pa drata
+.i cy no drata
+.i no roi ku zo'u cy vo xanri ko li'u li'u
 
 -----
 > ni'o *lu pe'i mi ka'e xagmau jimpe la'e di'u *sei la .alis. cu clite mutce cusku* va'o lo nu ciska .i ku'i mi na ka'e jimpe ca lo nu do cusku li'u*
@@ -10315,7 +10365,7 @@ lu cy re nu cy no zifre cy pa kei
 (birka(c5) /\ jorne(c5,c4))
 (birka(c4) /\ srana(c4,"alis"))
 midju(c3,c2)
-(<nelrai( ,_)><valsi>(c2) /\ (=(c2,{madni'i}) /\ srana(c2,c1)))
+(<nelrai( ,_)><valsi>(c2) /\ ((c2 == {madni'i}) /\ srana(c2,c1)))
 nu[(ca)(). canci(c0)](c1)
 voksa(c0,[Name: noltroni'u(_) ])
 (ca)(). <mutce(_)><spaji>(c1,"alis",c3)
@@ -10353,7 +10403,7 @@ nu[darxi( ,c0,c1)](c2)
 jamfu(c1)
 loldi(c0)
 (vimcu( ,do) \/ vimcu( ,c3))
-(pi mu) x1:((c4) >= (_)). (ze'i)(x1). (vimcu( ,do) \/ vimcu( ,c3))
+(pi mu) x1:((_ =< c4)). (ze'i)(x1). (vimcu( ,do) \/ vimcu( ,c3))
 cuxna(ko) >>]
 
 lu ge cy vo temci gi cy vo no mei
@@ -10423,17 +10473,17 @@ cy so du'u cy bi jdima cy ze kei
 > ni'o ze'a pi ro lo nunkei la noltruni'u no roi de'a damba lo drata kelci gi'e no roi de'a krixa *lu ko lo stedu ta vimcu li'u* .a *lu ko lo stedu tu vimcu li'u* .i lo se dapma be ny cu klagau lo sonci noi li'a de'a bargu .i ba za lo cacra be li ji'i pi mu ge no bargu cu zvati gi ro lo kelci po'u na'e bo la noltrunau .a la noltruni'u .a la .alis. cu pinfu gi'e se dapma fi lo nu se selmi'ecatra .i ba bo la noltruni'u cu tatpi cliva gi'e cusku fi la .alis. fe *lu xu do pu viska la jitfa cakyrespa li'u*
 
 nu[selmi'ecatra( )](c6)
-FA x1:((=(_,[Name: noltruni'u(_) ]) \/ =(_,[Name: noltrunau(_) ]))). FA x2:((=(_,"alis") \/ =(_,x1))). (kelci(f5(x2)) /\ =(f5(x2),{na'e bo}(x2)))
+FA x1:(((_ == [Name: noltruni'u(_) ]) \/ (_ == [Name: noltrunau(_) ]))). FA x2:(((_ == "alis") \/ (_ == x1))). (kelci(f5(x2)) /\ (f5(x2) == {na'e bo}(x2)))
 cacra(c4,(ji'i pi mu))
 (sonci(c3) /\ (de'a)(). bargu(c3))
 dapma([Name: noltruni'u(_) ],c2)
 <drata(_)><kelci>(c1)
 nunkei(c0)
-(pi ro) x1:((c0) >= (_)). (ze'a)(x1). ((0 roi)(). (de'a)(). damba([Name: noltruni'u(_) ],c1) /\ (0 roi)(). (de'a)(). (krixa([Name: noltruni'u(_) ],<< stedu(c0)
+(pi ro) x1:((_ =< c0)). (ze'a)(x1). ((0 roi)(). (de'a)(). damba([Name: noltruni'u(_) ],c1) /\ (0 roi)(). (de'a)(). (krixa([Name: noltruni'u(_) ],<< stedu(c0)
 vimcu(ko,c0,ta) >>) \/ krixa([Name: noltruni'u(_) ],<< stedu(c0)
 vimcu(ko,c0,tu) >>)))
 klagau(c2,c3)
-EX x1. (x1=. (ba za)(c4). (EQ(0) x2:(bargu(_)). zvati(x2) /\ ((FA x2:((f5([Name: noltrunau(_) ])) >= (_)). (pinfu(x2) /\ dapma( ,x2,c6)) \/ FA x2:((f5([Name: noltruni'u(_) ])) >= (_)). (pinfu(x2) /\ dapma( ,x2,c6))) \/ FA x2:((f5("alis")) >= (_)). (pinfu(x2) /\ dapma( ,x2,c6)))) /\ (ba)(x1). (<tatpi(_)><cliva>([Name: noltruni'u(_) ]) /\ cusku([Name: noltruni'u(_) ],<< ?. (pu)(). viska(do,[Name: <jitfa(_)><cakyrespa>(_) ]) >>,"alis")))
+EX x1. (x1=. (ba za)(c4). (EQ(0) x2:(bargu(_)). zvati(x2) /\ ((FA x2:((_ =< f5([Name: noltrunau(_) ]))). (pinfu(x2) /\ dapma( ,x2,c6)) \/ FA x2:((_ =< f5([Name: noltruni'u(_) ]))). (pinfu(x2) /\ dapma( ,x2,c6))) \/ FA x2:((_ =< f5("alis"))). (pinfu(x2) /\ dapma( ,x2,c6)))) /\ (ba)(x1). (<tatpi(_)><cliva>([Name: noltruni'u(_) ]) /\ cusku([Name: noltruni'u(_) ],<< ?. (pu)(). viska(do,[Name: <jitfa(_)><cakyrespa>(_) ]) >>,"alis")))
 
 cy xa nu selmi'ecatra kei
 .i ro da poi ga ke'a du la noltruni'u ku gi ke'a du la noltrunau ku ku'o ro de poi ga ke'a du la alis. gi ke'a du da ku'o zo'u ge li ma'o fymu mo'e de lo'o kelci gi li ma'o fymu mo'e de lo'o du na'e bo de lu'u
@@ -10495,7 +10545,7 @@ lu cusku la noltruni'u ku
 -----
 > ni'o la .alis. ca lo nu cliva cadzu cu tirna lo nu la noltrunau cu lauble voksa cusku fi lo zvati fe *lu ca'e ro do se fraxu li'u* .i *lu ri'e la'e ba'e di'u xamgu *sei .abu sezysku* .i .abu pu cinmo lo nu tolgei lo nu la noltruni'u cu minde xo kau nuncatra
 
-nu[<<lauble(_)><voksa>(_)><cusku>([Name: noltrunau(_) ],<< FA x1:((do) >= (_)). fraxu( ,x1) >>,c1)](c2)
+nu[<<lauble(_)><voksa>(_)><cusku>([Name: noltrunau(_) ],<< FA x1:((_ =< do)). fraxu( ,x1) >>,c1)](c2)
 zvati(c1)
 nu[<cliva(_)><cadzu>( )](c0)
 (ca)(c0). tirna("alis",c2)
@@ -10701,7 +10751,7 @@ lu cy re nu djuno fi cy pa kei
 
 [Fragment: << nu[(mo'u)(). co'e(mi)](c2)
 valsi(c1)
-((do) >= (c0) /\ 2 mei(c0))
+((c0 =< do) /\ 2 mei(c0))
 <<<condi(_)>{je}<kunti(_)>(_)><tonga>(_)><cusku>( ,[Name: <jitfa(_)><cakyrespa>(_) ])
 tavla(mi,ta,l)
 (tsebi'o(c0) /\ !(pu)(c2). cusku(c0,c1)) >>]
@@ -10752,7 +10802,7 @@ la ke jitfa cakyrespa ke'e ku jo'u ke la cpicinfo ku ke'e sanga fi la alis.
 nu[pensi( ,c4)](c5)
 du'u[EX x1. jersi(x1)](c4)
 (ru'i)(). <tilju(_)><nunvruvasxu>(c3,[Name: <jitfa(_)><cakyrespa>(_) ])
-(ru'i nai)(). <({xyjyckryrx}) >= (_)><krixa>([Name: cpicinfo(_) ],c2)
+(ru'i nai)(). <(_ =< {xyjyckryrx})><krixa>([Name: cpicinfo(_) ],c2)
 (nu[(ze'u)(). smaji( )](c1) /\ zunti( ,c1))
 (valsi(c0) /\ srana(c0,di'u))
 (jersi(c1,c0,c2) /\ jersi(c1,c0,c3))
@@ -11000,7 +11050,7 @@ lu retsku la alis.
 -----
 > ni'o *lu li'a pa mai nu ctidu'e gi'e ci'iska *sei la jitfa cakyrespa cu spuda* .i re mai lo vo pagbu be lo nacycmaci be'o no'u lo nu jmina'e .e lo nu vimcu'a .e lo nu pilji'e .e lo nu fende'a li'u*
 
-[Fragment: << FA x1:((=(_,c2) \/ =(_,c1))). FA x2:((=(_,c3) \/ =(_,x1))). FA x3:((=(_,c4) \/ =(_,x2))). (pagbu(f5(x3),c0) /\ (4 mei(f5(x3)) /\ =(f5(x3),x3)))
+[Fragment: << FA x1:(((_ == c2) \/ (_ == c1))). FA x2:(((_ == c3) \/ (_ == x1))). FA x3:(((_ == c4) \/ (_ == x2))). (pagbu(f5(x3),c0) /\ (4 mei(f5(x3)) /\ (f5(x3) == x3)))
 nu[fende'a( )](c4)
 nu[pilji'e( )](c3)
 nu[vimcu'a( )](c2)
@@ -11275,7 +11325,7 @@ nu[vruvasxu( )](c5)
 mentu(c4,(ji'i re))
 nu[tavla( )](c3)
 kanla(c2)
-EQ(1) x1:((c0) >= (_)). trixe(c1,x1)
+EQ(1) x1:((_ =< c0)). trixe(c1,x1)
 limna'i(c0)
 (((<condi(_)><vruvasxu>([Name: <jitfa(_)><cakyrespa>(_) ]) /\ mosra([Name: <jitfa(_)><cakyrespa>(_) ],c1,c2)) /\ catlu([Name: <jitfa(_)><cakyrespa>(_) ],"alis")) /\ troci([Name: <jitfa(_)><cakyrespa>(_) ],c3))
 (ze'a)(c4). dicra(c5,c6)
@@ -11587,7 +11637,7 @@ cy vo nu sinxa cy ci kei
 -----
 > .e'o sutra doi cakcurnu .i ko ti'a zgana ua pa xajyfi'e noi jbitrixe gi'e me mi rebla stapa
 
-FA x1:(xajyfi'e(_)). (jbitrixe(x1) /\ <<(mi) >= (_)><rebla>(_)><stapa>(x1))
+FA x1:(xajyfi'e(_)). (jbitrixe(x1) /\ <<(_ =< mi)><rebla>(_)><stapa>(x1))
 sutra( )
 (ti'a)(). EQ(1) x1:(xajyfi'e(_)). zgana(ko,x1)
 
@@ -11601,7 +11651,7 @@ ro da poi ke'a xajyfi'e ku'o zo'u ge da jbitrixe gi da ke ke me mi me'u rebla ke
 canre(c2)
 respa(c1)
 jukni(c0)
-(FA x1:((c0) >= (_)). ((ca)(). ganse( ,x1) /\ denpa(x1,mi,c2)) /\ ((ca)(). ganse( ,c1) /\ denpa(c1,mi,c2)))
+(FA x1:((_ =< c0)). ((ca)(). ganse( ,x1) /\ denpa(x1,mi,c2)) /\ ((ca)(). ganse( ,c1) /\ denpa(c1,mi,c2)))
 (ba)(). <kansa(_)><dansu>(do)
 
 cy re canre
@@ -11705,9 +11755,25 @@ Parse error:
 -----
 > ni'o *lu ki'e .i lo nu dansu zo'u mutce cinri fa lo nu catlu *sei la .alis. noi mutce gleki lo nu uo mulno cu cusku* .i mi ja'a sai nelci lo cinri selsanga be sera'a lo merlanu li'u*
 
-Parse error:
-	{lo cinri selsanga be se ra'a lo merlanu li'u}
-	                                         ^
+[Fragment: << (se ra'a)(c3). <cinri(_)><selsanga>(c4)
+merlanu(c3)
+nu[catlu( )](c2)
+cusku( ,"alis")
+<mutce(_)><gleki>("alis",c1)
+nu[mulno( )](c1)
+nu[dansu( )](c0)
+<mutce(_)><cinri>(c2)
+nelci(mi,c4) >>]
+
+lu se ra'a cy ci zo'u cy vo ke cinri selsanga ke'e
+.i cy ci merlanu
+.i cy re nu catlu kei
+.i cusku la alis.
+.i la alis. ke mutce gleki ke'e cy pa
+.i cy pa nu mulno kei
+.i cy no nu dansu kei
+.i cy re ke mutce cinri ke'e
+.i mi nelci cy vo li'u
 
 -----
 > ni'o *lu .a'a lo merlanu zo'u *sei la jitfa cakyrespa cu cusku* do my pu ca'a viska li'a pei li'u*
@@ -11953,7 +12019,7 @@ lu cusku la alis.
 <<jgicro(_)><tonga>(_)><spuda>( ,[Name: <jitfa(_)><cakyrespa>(_) ])
 skudji(mi,c0) >>]
 minsku([Name: cpicinfo(_) ],<< (selfri(c0) /\ srana(c0,do))
-EX x1:((c0) >= (_)). tavla(do,mi'a,x1) >>)
+EX x1:((_ =< c0)). tavla(do,mi'a,x1) >>)
 
 lu mi cusku cy no
 .i ke ke jgicro tonga ke'e spuda ke'e la ke jitfa cakyrespa ke'e ku
@@ -11984,7 +12050,7 @@ lu cy ci nu peixru cy re kei
 > ni'o *lu ko ciksi pi ro la'e di'u *sei la jitfa cakyrespa cu cusku* li'u*
 
 [Fragment: << cusku( ,[Name: <jitfa(_)><cakyrespa>(_) ])
-(pi ro) x1:(({la'e}(di'u)) >= (_)). ciksi(ko,x1) >>]
+(pi ro) x1:((_ =< {la'e}(di'u))). ciksi(ko,x1) >>]
 
 lu cusku la ke jitfa cakyrespa ke'e ku
 .i pi ro boi da poi ke'a me la'e di'u lu'u me'u ku'o zo'u ko ciksi da li'u
@@ -12288,7 +12354,7 @@ cuntu(c0)
 [Fragment: << <nundansu(_)><stapa>(c0)
 cusku( ,"alis")
 1 moi( ,c0) >>]
-((pi ro) x1:((c0) >= (_)). <mutce(_)><cfipu>(x1,a) /\ djica(a,c2))
+((pi ro) x1:((_ =< c0)). <mutce(_)><cfipu>(x1,a) /\ djica(a,c2))
 
 cy re nu cy pa cenba kei
 .i cy pa selsnu
@@ -12398,7 +12464,7 @@ Parse error:
 
 [Fragment: << (tirna( ,c3) /\ srana(c3,mi))
 ka[cfipu(\1)](c2)
-nu[FA x1:((di'u) >= (_)). (va'o)(c0). sitsku( ,x1)](c1)
+nu[FA x1:((_ =< di'u)). (va'o)(c0). sitsku( ,x1)](c1)
 nu[!(ca'o)(). ciksi(do)](c0)
 zunti( ,[Name: <jitfa(_)><cakyrespa>(_) ])
 ? x1. prali(x1, ,c1)
@@ -12561,7 +12627,7 @@ Parse error:
 > ni'o *lu .e'e krefu *sei la cpicinfo cu krixa* li'u* .i la jitfa cakyrespa pu zi co'a re re'u sanga ca lo nu lo selkrixa no'u *lu lo nunpai cu cfari li'u* darno se tirna
 
 nu[<darno(_)><tirna>( ,c0)](c1)
-(selkrixa(c0) /\ =(c0,<< nunpai(c0)
+(selkrixa(c0) /\ (c0 == << nunpai(c0)
 cfari(c0) >>))
 [Fragment: << krixa( ,[Name: cpicinfo(_) ])
 krefu( ) >>]
@@ -12591,7 +12657,7 @@ cy pa nu mo'u ku zo'u sanga kei
 > ni'o *lu lo nunpai cu mo *sei la .alis. ca lo nu bajra cu vaxyselnandu cusku* .i ku'i la cpicinfo cu spuda zo .e'e po'o gi'e sutyze'a bajra ca'o lo nu bleze'a (to se bevri lo brife poi jersi vo'a toi) fa lo badri valsi po'u di'e .i *lu
 
 [Fragment: << nu[bleze'a(c3)](c4)
-(<badri(_)><valsi>(c3) /\ =(c3,di'e))
+(<badri(_)><valsi>(c3) /\ (c3 == di'e))
 bevri(f2({vo'a}))
 nunpai(c0)
 nu[bajra( )](c1)
@@ -12660,7 +12726,7 @@ sruri(c5)
 <barda(_)><(so'i) mei>(c4)
 nu[tolcliva(("alis" {jo'u} [Name: cpicinfo(_) ]))](c3)
 FA x1. (nolstizu(f2(x1)) /\ srana(f2(x1),x1))
-(srana(c1,c0) /\ (([Name: noltrunau(_) ] {jo'u} [Name: noltruni'u(_) ])) >= (c1))
+(srana(c1,c0) /\ (c1 =< ([Name: noltrunau(_) ] {jo'u} [Name: noltruni'u(_) ])))
 risna(c0)
 (ca)(c3). zutse(c1,f2(c1))
 jmaji(c4,c5)
@@ -12750,7 +12816,7 @@ craxra(c2)
 nu[? x1. (ta'i)(x1). dasni( )](c3)
 nu[viska( ,c3)](c4)
 nu[djica(do,c4)](c5)
-([Name: (noltrunau(_) /\ (dasni(_,c1,c7) /\ simlu(_,c8))) ]) >= (c0)
+(c0 =< [Name: (noltrunau(_) /\ (dasni(_,c1,c7) /\ simlu(_,c8))) ])
 !<melbi(_)><mapti>( )
 
 cy bi ka ce'u kufra kei
@@ -12778,7 +12844,7 @@ Parse error:
 
 tanbo(c1)
 (pairkamnycmi(c0) /\ 12 mei(c0))
-FA x1:((c0) >= (_)). <zuktce(_)><ciska>(x1, ,c1)
+FA x1:((_ =< c0)). <zuktce(_)><ciska>(x1, ,c1)
 [Fragment: << nu[cfari(c0)](c1)
 nunpai(c0)
 <tolylau(_)><cusku>( ,"alis",[Name: cpicinfo(_) ])
@@ -12867,15 +12933,15 @@ degji(c12)
 nu[!(ka'e)(). facki(c7,c9)](c10)
 du'u[? x1. binxo(c8,x1)](c9)
 pinsi(c8)
-(<selkecti(_)><<cmalu(_)><pairkamnycmi>>(c7) /\ =(c7,c6))
-(rebyrespa(c6) /\ =(c6,"bil"))
+(<selkecti(_)><<cmalu(_)><pairkamnycmi>>(c7) /\ (c7 == c6))
+(rebyrespa(c6) /\ (c6 == "bil"))
 nu[lebna( ,c4,c4)](c5)
 pinsi(c4)
 sruri(c3,c2)
 kumfa(c2)
 (pinsi(c1) /\ <vrumli(_)><cupra>(c1))
 pairkamnycmi(c0)
-EQ(1) x1:((c0) >= (_)). pilno(x1,c1)
+EQ(1) x1:((_ =< c0)). pilno(x1,c1)
 (((!(ka'e)(). renvi("alis",{la'e}(di'u)) /\ klama("alis", , ,c3)) /\ ti'erbi'o("alis",c1)) /\ (ba)(). (zi)(). kakne("alis",c5))
 EX x1. ((se mu'i)(x1). (tai)(). (ja'e)(c10). sutra("alis") /\ x1=. (ba)(c11). bilga("bil",c14))
 (ki'u)(c17). tolmutce({la'e}(di'u),c15)
@@ -13007,7 +13073,7 @@ drata(c4)
 xance(c2)
 <tcati(_)><kabri>(c1)
 <1 moi(_)><zgana>(c0)
-([Name: (mapypre(_) /\ (nerkla(_) /\ (jgari(_,c1,c2) /\ jgari(_,c3,c4)))) ]) >= (c0)
+(c0 =< [Name: (mapypre(_) /\ (nerkla(_) /\ (jgari(_,c1,c2) /\ jgari(_,c3,c4)))) ])
 [Fragment: << nu[klagau( ,mi)](c2)
 tcati(c1)
 nu[nerbevri(mi,ti)](c0)
@@ -13135,7 +13201,7 @@ cy no fatci
 
 [Fragment: << <jmina(_)><ciksi>( ,[Name: mapypre(_) ])
 vecnu(mi,ti)
-EQ(0) x1:((ti) >= (_)). ponse(mi,x1)
+EQ(0) x1:((_ =< ti)). ponse(mi,x1)
 mapypre(mi) >>]
 
 lu ke jmina ciksi ke'e la mapypre ku
@@ -13263,7 +13329,7 @@ nu[nalseldasybi'o(c4)](c5)
 nu[pagre([Name: sipsmacu(_) ],c1)](c2)
 kumfa(c1)
 nu[catlu( ,[Name: mapypre(_) ])](c0)
-(ze'a)({la'e}(di'u)). ((0 roi)(). sisti([Name: noltruni'u(_) ],c0) /\ (ca)(c2). EQ(1) x1:((c3) >= (_)). cusku([Name: noltruni'u(_) ], ,x1,<< liste(c2,c1)
+(ze'a)({la'e}(di'u)). ((0 roi)(). sisti([Name: noltruni'u(_) ],c0) /\ (ca)(c2). EQ(1) x1:((_ =< c3)). cusku([Name: noltruni'u(_) ], ,x1,<< liste(c2,c1)
 (sanga(c1) /\ srana(c1,c0))
 <(ro) moi(_)><<zgike(_)><tigni>>( ,c0)
 bevri(ko,c2) >>))
@@ -13441,7 +13507,7 @@ Parse error:
 -----
 > ni'o *lu ku'i la sipsmacu ma cusku *sei pa lo pairkamnycmi cu te preti* li'u*
 
-[Fragment: << EQ(1) x1:((c0) >= (_)). preti( ,x1)
+[Fragment: << EQ(1) x1:((_ =< c0)). preti( ,x1)
 pairkamnycmi(c0)
 ? x1. cusku([Name: sipsmacu(_) ],x1) >>]
 
@@ -13473,7 +13539,7 @@ lu notsku la noltrunau ku
 cidni(c2)
 <nanba(_)>{joi}<matne(_)>(c1)
 <tcati(_)><kabri>(c0)
-(falcru([Name: (mapypre(_) /\ <dunku(_)><mutce>(_)) ],(c0 {jo'u} c1)) /\ EQ(1) x1:((c2) >= (_)). sanli([Name: (mapypre(_) /\ <dunku(_)><mutce>(_)) ], ,x1))
+(falcru([Name: (mapypre(_) /\ <dunku(_)><mutce>(_)) ],(c0 {jo'u} c1)) /\ EQ(1) x1:((_ =< c2)). sanli([Name: (mapypre(_) /\ <dunku(_)><mutce>(_)) ], ,x1))
 [Fragment: << pindi(mi) >>]
 
 cy re cidni
@@ -13506,7 +13572,7 @@ nu[? x1. (ta'i)(x1). zukte( )](c1)
 dasri(c2)
 (<barda(_)><<bukpu(_)><dakli>>(c3) /\ (ka'e)(). (se pi'o)(c2). ganlo(c3))
 smacrkobaiu(c4)
-(ca)(). EQ(1) x1:((c0) >= (_)). (geirki'a(x1) /\ (ba)(). (zi)(). rinju(c5,x1))
+(ca)(). EQ(1) x1:((_ =< c0)). (geirki'a(x1) /\ (ba)(). (zi)(). rinju(c5,x1))
 
 cy mu ke nunpai pulji ke'e
 .i ge py setca cy vo cy re gi py zutse cy vo
@@ -13650,7 +13716,7 @@ nu[tolcliva(c0,c1)](c2)
 vorme(c1)
 pulji(c0)
 [Fragment: << bartu(c2)
-EQ(1) x1:((c1) >= (_)). <jmina(_)><cusku>( ,[Name: noltruni'u(_) ],x1)
+EQ(1) x1:((_ =< c1)). <jmina(_)><cusku>( ,[Name: noltruni'u(_) ],x1)
 pulji(c1)
 stedu(c0)
 (bu'u)(c2). vimcu(ko,c0,tu) >>]
@@ -13680,17 +13746,17 @@ lu cy no ke jersi zgana ke'e
 -----
 > ni'o lo jersi zgana cu me lo jukpa pe la noltroni'u .i jy jgari lo cpinytsapi tanxe lo xance .i la .alis. cu smadi lo du'u me ma kau kei pu lo nu jy klama lo kumfa kei ki'u lo nu ro lo prenu poi jibni lo vorme cu co'a senci
 
-nu[FA x1:((c8) >= (_)). (co'a)(). senci(x1)](c9)
+nu[FA x1:((_ =< c8)). (co'a)(). senci(x1)](c9)
 (prenu(c8) /\ jibni(c8,c7))
 vorme(c7)
 nu[klama(c1,c5)](c6)
 kumfa(c5)
-du'u[? x1. (x1) >= ( )](c4)
+du'u[? x1. (  =< x1)](c4)
 xance(c3)
 <cpinytsapi(_)><tanxe>(c2)
 (jukpa(c1) /\ srana(c1,[Name: noltroni'u(_) ]))
 <jersi(_)><zgana>(c0)
-(c1) >= (c0)
+(c0 =< c1)
 jgari(c1,c2,c3)
 (pu)(c6). (ki'u)(c9). smadi("alis",c4)
 
@@ -13862,7 +13928,7 @@ lu cy no ke jersi zgana ke'e
 
 nu[spaji(c5)](c6)
 nu[(se pi'o)(c3). <bacru(_)><tcidu>([Name: <blabi(_)><ractu>(_) ],c4)](c5)
-(cmene(c4) /\ =(c4,{alis}))
+(cmene(c4) /\ (c4 == {alis}))
 <<kinli(_)>{je}<cmalu(_)>(_)><voksa>(c3)
 du'u[? R1. R1(c1)](c2)
 <jersi(_)><zgana>(c1)
@@ -13903,7 +13969,7 @@ nu[(ca)(c11). falgau( ,c10)](c12)
 purlamjeftu(c11)
 <slofi'e(_)><tanxe>(c10)
 pairkamnycmi(c9)
-nu[((se pi'o)(c4). falgau( ,c3) /\ FA x1:((c5) >= (_)). renro( ,x1,c7))](c8)
+nu[((se pi'o)(c4). falgau( ,c3) /\ FA x1:((_ =< c5)). renro( ,x1,c7))](c8)
 stedu(c7,c6)
 <cnita(_)><prenu>(c6)
 pairkamnycmi(c5)
@@ -14045,14 +14111,14 @@ kumfa(c9)
 ka[sfasa( ,\1)](c8)
 lisri(c7,c6)
 fasnu(c6)
-nu[((ba'o)(). xruti(c0, ,c2) /\ FA x1:((c3) >= (_)). FA x2:((c4) >= (_)). (tolcri( ,(x1 {jo'u} x2)) /\ dunda( ,(x1 {jo'u} x2),c4)))](c5)
+nu[((ba'o)(). xruti(c0, ,c2) /\ FA x1:((_ =< c3)). FA x2:((_ =< c4)). (tolcri( ,(x1 {jo'u} x2)) /\ dunda( ,(x1 {jo'u} x2),c4)))](c5)
 pinsi(c4)
 tanbo(c3)
-(jenca(c2) /\ =(c2,c1))
+(jenca(c2) /\ (c2 == c1))
 nu[dicra( )](c1)
 pairkamni(c0)
 (ca)(c5). (co'a)(). <tolylazni(_)><ciska>(c0,c7)
-FA x1:(({na'e bo}(c15)) >= (_)). (ca)(c5). (co'a)(). <tolylazni(_)><ciska>(x1,c7)
+FA x1:((_ =< {na'e bo}(c15))). (ca)(c5). (co'a)(). <tolylazni(_)><ciska>(x1,c7)
 
 ge cy pamu rebyrespa gi cy pamu simlu cy pavo
 .i cy pavo ka ce'u dukse cy bi cy paci kei
@@ -14303,7 +14369,7 @@ lu cy pa ka ce'u xatra fi cy no kei
 -----
 > ni'o *lu ju'o go'i *sei la noltrunau cu cusku* .i jo nai ti xatra lo no da .i ku'i ka'u la'e di'u rirci li'u*
 
-[Fragment: << FA x1. ((x1) >= (f0(x1)) /\ 0 mei(f0(x1)))
+[Fragment: << FA x1. ((f0(x1) =< x1) /\ 0 mei(f0(x1)))
 cusku( ,[Name: noltrunau(_) ])
 (go'i( ) <-> !EX x1. xatra(ti,f0(x1)))
 rirci({la'e}(di'u)) >>]
@@ -14316,7 +14382,7 @@ lu ro da zo'u ge li ma'o fyno mo'e da lo'o me da me'u gi li ma'o fyno mo'e da lo
 -----
 > ni'o *lu ma se judri *sei pa lo pairkamnycmi cu cusku* li'u*
 
-[Fragment: << EQ(1) x1:((c0) >= (_)). cusku( ,x1)
+[Fragment: << EQ(1) x1:((_ =< c0)). cusku( ,x1)
 pairkamnycmi(c0)
 ? x1. judri( ,x1) >>]
 
@@ -14349,7 +14415,7 @@ lu preti cy re
 -----
 > ni'o *lu na go'i *sei la blabi ractu cu cusku* .i la'e di'u cu traji lo ka cizra li'u* (to ro lo pairkamnycmi cu simlu lo ka se cfipu toi)
 
-FA x1:((c0) >= (_)). simlu(x1,c1)
+FA x1:((_ =< c0)). simlu(x1,c1)
 pairkamnycmi(c0)
 ka[cfipu( ,\1)](c1)
 [Fragment: << ka[cizra(\1)](c0)
@@ -14368,7 +14434,7 @@ ro da poi ke'a me cy no me'u ku'o zo'u da simlu cy pa
 -----
 > ni'o *lu ja'o py fukygau ta lo ciska tarmi pe lo drata *sei la noltrunau cu cusku* li'u* (to ro lo pairkamnycmi cu xruti lo ka cikygei toi)
 
-FA x1:((c0) >= (_)). xruti(x1,c1)
+FA x1:((_ =< c0)). xruti(x1,c1)
 pairkamnycmi(c0)
 ka[cikygei(\1)](c1)
 [Fragment: << (<ciska(_)><tarmi>(c1) /\ srana(c1,c0))
@@ -14402,9 +14468,27 @@ lu cy pa fanmo tu
 -----
 > ni'o *lu lo cuntu cu xlaze'a va'o lo nu do na ciska lo do cmene *sei la noltrunau cu cusku* .i ba'e ju'o do zukte fi lo nu palci .i bo do va'o lo nu na go'i cu ja'a pu ciska lo do cmene tai tu'a lo stace li'u*
 
-Parse error:
-	{i i bo do va'o lo nu na go'i cu ja'a pu ciska lo do cmene tai tu'a lo stace li'u}
-	                                         ^
+[Fragment: << stace(c6)
+(cmene(c5) /\ srana(c5,do))
+nu[!zukte(do, ,c3)](c4)
+nu[palci( )](c3)
+nu[!ciska(do,c1)](c2)
+(cmene(c1) /\ srana(c1,do))
+cusku( ,[Name: noltrunau(_) ])
+cuntu(c0)
+(va'o)(c2). xlaze'a(c0)
+(zukte(do, ,c3) /\ (va'o)(c4). (pu)(). (tai)({tu'a}(c6)). ciska(do,c5)) >>]
+
+lu cy xa stace
+.i ge cy mu cmene gi cy mu srana do
+.i cy vo nu na ku do zukte fi cy ci kei
+.i cy ci nu palci kei
+.i cy re nu na ku do ciska cy pa kei
+.i ge cy pa cmene gi cy pa srana do
+.i cusku la noltrunau ku
+.i cy no cuntu
+.i va'o cy re zo'u cy no xlaze'a
+.i ge do zukte fi cy ci gi va'o cy vo pu ku tai tu'a cy xa lu'u zo'u do ciska cy mu li'u
 
 -----
 > ni'o kampu fa lo nu xanvruzau la'e di'u noi pa moi co tolbebna selsku la noltrunau ca lo cabdei
@@ -14527,7 +14611,7 @@ pa da zo'u mi dunda da ta
 -----
 > .i do se xruti lo ro da noi me mi moi za pu
 
-FA x1. ((x1) >= (f0(x1)) /\ (ro) mei(f0(x1)))
+FA x1. ((f0(x1) =< x1) /\ (ro) mei(f0(x1)))
 FA x1. (za)(). (pu)(). [mi] moi(x1)
 EX x1. xruti(f0(x1),do)
 
@@ -14637,7 +14721,7 @@ nu[ciksi( ,c2)](c3)
 pelji(c2)
 tanbo(c1)
 pairkamnycmi(c0)
-FA x1:((c0) >= (_)). (ciska(x1,<< du'u[zvati(c0,di'u)](c1)
+FA x1:((_ =< c0)). (ciska(x1,<< du'u[zvati(c0,di'u)](c1)
 <smuni(_)><selci>(c0)
 !jinvi(ta,c1) >>,c1) /\ troci(x1,c3))
 
@@ -14731,7 +14815,7 @@ cy no penpau
 > ni'o *lu ku'i di'a co'e *lu .i do se xruti lo ro da li'u* *sei la .alis. cu cusku* li'u*
 
 [Fragment: << cusku( ,"alis")
-(di'a)(). co'e( ,<< FA x1. ((x1) >= (f0(x1)) /\ (ro) mei(f0(x1)))
+(di'a)(). co'e( ,<< FA x1. ((f0(x1) =< x1) /\ (ro) mei(f0(x1)))
 EX x1. xruti(f0(x1),do) >>) >>]
 
 lu cusku la alis.
@@ -14923,7 +15007,7 @@ nunfengu(c3)
 nunterpa(c2)
 vacri(c1)
 bakfu(c0)
-(ca)(). (pi ro) x1:((c0) >= (_)). EX x2. (x2=. tolfarlu(x1,c1) /\ (ba)(x2). farlu(x1,"alis"))
+(ca)(). (pi ro) x1:((_ =< c0)). EX x2. (x2=. tolfarlu(x1,c1) /\ (ba)(x2). farlu(x1,"alis"))
 (((ri'a)(c2). <milxe(_)><krixa>("alis") /\ (ri'a)(c3). <milxe(_)><krixa>("alis")) /\ troci("alis",c4))
 facki("alis",c13)
 
@@ -14959,14 +15043,14 @@ lu ko cikna
 
 du'u[manci( ,c4)](c5)
 senva( ,c4)
-nu[(mo'u)(). FA x1:((c1) >= (_)). tavla(a,c0,x1)](c3)
+nu[(mo'u)(). FA x1:((_ =< c1)). tavla(a,c0,x1)](c3)
 mensi(c2)
 (<cizra(_)><lifri>( ,c1) /\ (pu)(). (zi)(). (ca'o)(). tcidu(do,c1))
 mensi(c0)
 [Fragment: << (tai)(). cizra(c0)
 cusku( ,"alis")
 senva(mi,c0) >>]
-FA x1:((c1) >= (_)). tavla(a,c0,x1)
+FA x1:((_ =< c1)). tavla(a,c0,x1)
 (ca)(c3). (cinba(c2,a) /\ cusku(c2,<< tcati(c0)
 <cizra(_)><senva>( )
 (ca)(). <bajra(_)><klama>(ko,{tu'a}(c0))
@@ -14994,14 +15078,14 @@ cy mu du'u manci cy vo kei
 
 mensi(c8)
 (<manci( ,_)><lifri>( ,c7) /\ srana(c7,"alis"))
-(cmalu(c6) /\ =(c6,"alis"))
+(cmalu(c6) /\ (c6 == "alis"))
 nu[farlu(c4)](c5)
 solri(c4)
 xance(c3)
 stedu(c2)
 nu[cliva(a)](c1)
 mensi(c0)
-((((za'o)(c1). zutse(c0) /\ vregau(c0,c2,c3)) /\ catlu(c0,c5)) /\ FA x1:((c7) >= (_)). pensi(c0,(c6 {jo'u} x1)))
+((((za'o)(c1). zutse(c0) /\ vregau(c0,c2,c3)) /\ catlu(c0,c5)) /\ FA x1:((_ =< c7)). pensi(c0,(c6 {jo'u} x1)))
 (co'a)(). senva(c8)
 senva( ,{la'e}(di'e))
 
@@ -15193,7 +15277,7 @@ voksa(c2,c1)
 <lankurji(_)><nanla>(c1)
 <cpina(_)><krixa>([Name: noltruni'u(_) ],c0)
 binxo(c0,c2)
-FA x1:((c6) >= (_)). binxo(c7,c9)
+FA x1:((_ =< c6)). binxo(c7,c9)
 basti(c11,c12)
 
 cy pare ke tilju kaksna ke'e la ke jitfa cakyrespa ke'e ku
