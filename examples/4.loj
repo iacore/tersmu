@@ -343,7 +343,7 @@ Morphology error:
 -----
 > me la spagetis.
 
-("spagetis") >= ( )
+(  =< "spagetis")
 
 me la spagetis. me'u
 

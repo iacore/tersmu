@@ -471,7 +471,7 @@ ju'a nai cy no nu mi badri kei
 -----
 > ca'e le re do cu simxu speni
 
-non-veridical: ((do) >= (c0) /\ 2 mei(c0))
+non-veridical: ((c0 =< do) /\ 2 mei(c0))
 <simxu(_)><speni>(c0)
 
 ju'a nai ge cy no me do me'u gi cy no re mei
@@ -663,7 +663,7 @@ ju'a nai cy no nunspenybi'o
 > .i sei la mark. cusku se'u coi baza speni a'o le re do lifri le ka gleki
 
 non-veridical: ka[gleki(\1)](c1)
-non-veridical: ((do) >= (c0) /\ 2 mei(c0))
+non-veridical: ((c0 =< do) /\ 2 mei(c0))
 cusku( ,"mark")
 lifri(c0,c1)
 

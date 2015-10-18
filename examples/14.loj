@@ -112,12 +112,12 @@ ga nai la djan. nanmu gi la djeimyz. ninmu
 -----
 > le nu do cidja dunda fi le xarju cu rinka le nu ri ba banro
 
-non-veridical: nu[(ba)(). banro(c1)](c2)
+non-veridical: nu[(ba)(). banro(c0)](c2)
 non-veridical: nu[<cidja(_)><dunda>(do, ,c0)](c1)
 non-veridical: xarju(c0)
 rinka(c1,c2)
 
-ju'a nai cy re nu ba ku zo'u cy pa banro kei
+ju'a nai cy re nu ba ku zo'u cy no banro kei
 .i ju'a nai cy pa nu do ke cidja dunda ke'e fi cy no kei
 .i ju'a nai cy no xarju
 .i cy pa rinka cy re
@@ -738,7 +738,7 @@ xu kau zo'u go la faidon. gerku gi na ku la faidon. mlatu
 
 (gerku("alis") {??} mlatu("alis"))
 
-?? gi la alis. gerku gi la alis. mlatu
+ge'i la alis. gerku gi la alis. mlatu
 
 -----
 > nagi'e
@@ -788,7 +788,7 @@ cy ci gunma cy re
 .i cy re tcati
 .i cy pa gunma cy no
 .i cy no ckafi
-.i do djica tu'a cy pa ?? ke cy ci ke'e lu'u
+.i do djica tu'a cy pa ji ke cy ci ke'e lu'u
 
 -----
 > do djica tu'a ge'i loi ckafi gi loi tcati
@@ -803,14 +803,14 @@ cy ci gunma cy re
 .i cy re tcati
 .i cy pa gunma cy no
 .i cy no ckafi
-.i do djica tu'a cy pa ?? ke cy ci ke'e lu'u
+.i do djica tu'a cy pa ji ke cy ci ke'e lu'u
 
 -----
 > do cadzu gi'i bajra
 
 (cadzu(do) {??} bajra(do))
 
-?? gi do cadzu gi do bajra
+ge'i do cadzu gi do bajra
 
 -----
 > ganai ti ckafi gi ko bevri loi tcati mi .ije ganai ti tcati gi ko bevri loi ckafi mi
@@ -1009,9 +1009,9 @@ Parse error:
 -----
 > nu'i joigi mi bau la lojban gi do bau la gliban. nu'u casnu
 
-(casnu(mi) {joi} casnu(do))
+((bau)("lojban"). casnu(mi) {joi} (bau)("gliban"). casnu(do))
 
-joi gi mi casnu gi do casnu
+joi gi bau la lojban. zo'u mi casnu gi bau la gliban. zo'u do casnu
 
 -----
 > la djan. fa'u la frank. cusku nu'i bau la lojban. nu'u fa'u bai tu'a la djordj. [nu'u]
@@ -1055,7 +1055,7 @@ cy ci gunma cy re
 .i cy re tcati
 .i cy pa gunma cy no
 .i cy no ckafi
-.i do djica tu'a cy pa ?? ke cy ci ke'e lu'u
+.i do djica tu'a cy pa ji ke cy ci ke'e lu'u
 
 -----
 > joi
@@ -1168,7 +1168,7 @@ ju'a nai cy no zarci
 -----
 > li re su'i je pi'i re du li vo
 
-(=({su'i}(2,2),4) /\ =({pi'i}(2,2),4))
+(({su'i}(2,2) == 4) /\ ({pi'i}(2,2) == 4))
 
 ge li pe'o su'i re boi re boi ku'e lo'o du li vo boi lo'o gi li pe'o pi'i re boi re boi ku'e lo'o du li vo boi lo'o
 

@@ -305,7 +305,7 @@ ju'a nai cy no bisli
 > re do cadzu le bisli
 
 non-veridical: bisli(c0)
-EQ(2) x1:((do) >= (_)). cadzu(x1,c0)
+EQ(2) x1:((_ =< do)). cadzu(x1,c0)
 
 ju'a nai cy no bisli
 .i re da poi ke'a me do me'u ku'o zo'u da cadzu cy no
@@ -321,7 +321,7 @@ su'o ci boi da poi ke'a cutci ku'o zo'u mi ponse da
 > ro do cadzu le bisli
 
 non-veridical: bisli(c0)
-FA x1:((do) >= (_)). cadzu(x1,c0)
+FA x1:((_ =< do)). cadzu(x1,c0)
 
 ju'a nai cy no bisli
 .i ro da poi ke'a me do me'u ku'o zo'u da cadzu cy no
@@ -338,8 +338,8 @@ mi cusku lu ju'a nai cy no bisli
 -----
 > mi cusku ro lu do cadzu le bisli li'u
 
-FA x1:((<< non-veridical: bisli(c0)
-cadzu(do,c0) >>) >= (_)). cusku(mi,x1)
+FA x1:((_ =< << non-veridical: bisli(c0)
+cadzu(do,c0) >>)). cusku(mi,x1)
 
 ro da poi ke'a me lu ju'a nai cy no bisli
 .i do cadzu cy no li'u me'u ku'o zo'u mi cusku da
@@ -347,8 +347,8 @@ ro da poi ke'a me lu ju'a nai cy no bisli
 -----
 > mi cusku su'o lu do cadzu le bisli li'u
 
-EX x1:((<< non-veridical: bisli(c0)
-cadzu(do,c0) >>) >= (_)). cusku(mi,x1)
+EX x1:((_ =< << non-veridical: bisli(c0)
+cadzu(do,c0) >>)). cusku(mi,x1)
 
 su'o da poi ke'a me lu ju'a nai cy no bisli
 .i do cadzu cy no li'u me'u ku'o zo'u mi cusku da
@@ -356,8 +356,8 @@ su'o da poi ke'a me lu ju'a nai cy no bisli
 -----
 > mi cusku re lu do cadzu le bisli li'u
 
-EQ(2) x1:((<< non-veridical: bisli(c0)
-cadzu(do,c0) >>) >= (_)). cusku(mi,x1)
+EQ(2) x1:((_ =< << non-veridical: bisli(c0)
+cadzu(do,c0) >>)). cusku(mi,x1)
 
 re da poi ke'a me lu ju'a nai cy no bisli
 .i do cadzu cy no li'u me'u ku'o zo'u mi cusku da
@@ -366,7 +366,7 @@ re da poi ke'a me lu ju'a nai cy no bisli
 > re le gerku cu blabi
 
 non-veridical: gerku(c0)
-EQ(2) x1:((c0) >= (_)). blabi(x1)
+EQ(2) x1:((_ =< c0)). blabi(x1)
 
 ju'a nai cy no gerku
 .i re da poi ke'a me cy no me'u ku'o zo'u da blabi
@@ -375,7 +375,7 @@ ju'a nai cy no gerku
 > re le ci gerku cu blabi
 
 non-veridical: (gerku(c0) /\ 3 mei(c0))
-EQ(2) x1:((c0) >= (_)). blabi(x1)
+EQ(2) x1:((_ =< c0)). blabi(x1)
 
 ju'a nai ge cy no gerku gi cy no ci mei
 .i re da poi ke'a me cy no me'u ku'o zo'u da blabi
@@ -393,7 +393,7 @@ ju'a nai ge cy no gerku gi cy no ci mei
 > [ro] le ci gerku cu blabi
 
 non-veridical: (gerku(c0) /\ 3 mei(c0))
-FA x1:((c0) >= (_)). blabi(x1)
+FA x1:((_ =< c0)). blabi(x1)
 
 ju'a nai ge cy no gerku gi cy no ci mei
 .i ro da poi ke'a me cy no me'u ku'o zo'u da blabi
@@ -402,7 +402,7 @@ ju'a nai ge cy no gerku gi cy no ci mei
 > ci lo [ro] gerku cu blabi
 
 (gerku(c0) /\ (ro) mei(c0))
-EQ(3) x1:((c0) >= (_)). blabi(x1)
+EQ(3) x1:((_ =< c0)). blabi(x1)
 
 ge cy no gerku gi cy no ro mei
 .i ci da poi ke'a me cy no me'u ku'o zo'u da blabi
@@ -411,7 +411,7 @@ ge cy no gerku gi cy no ro mei
 > [so'o] lo ci gerku cu blabi
 
 (gerku(c0) /\ 3 mei(c0))
-(so'o) x1:((c0) >= (_)). blabi(x1)
+(so'o) x1:((_ =< c0)). blabi(x1)
 
 ge cy no gerku gi cy no ci mei
 .i so'o boi da poi ke'a me cy no me'u ku'o zo'u da blabi
@@ -427,7 +427,7 @@ ci da poi ke'a gerku ku'o zo'u da blabi
 > mi ponse su'o ci lo cutci
 
 cutci(c0)
-(su'o ci) x1:((c0) >= (_)). ponse(mi,x1)
+(su'o ci) x1:((_ =< c0)). ponse(mi,x1)
 
 cy no cutci
 .i su'o ci boi da poi ke'a me cy no me'u ku'o zo'u mi ponse da
@@ -435,14 +435,14 @@ cy no cutci
 -----
 > re do cu nanmu
 
-EQ(2) x1:((do) >= (_)). nanmu(x1)
+EQ(2) x1:((_ =< do)). nanmu(x1)
 
 re da poi ke'a me do me'u ku'o zo'u da nanmu
 
 -----
 > le re do cu nanmu
 
-non-veridical: ((do) >= (c0) /\ 2 mei(c0))
+non-veridical: ((c0 =< do) /\ 2 mei(c0))
 nanmu(c0)
 
 ju'a nai ge cy no me do me'u gi cy no re mei
@@ -452,7 +452,7 @@ ju'a nai ge cy no me do me'u gi cy no re mei
 > re le ci cribe cu bunre
 
 non-veridical: (cribe(c0) /\ 3 mei(c0))
-EQ(2) x1:((c0) >= (_)). bunre(x1)
+EQ(2) x1:((_ =< c0)). bunre(x1)
 
 ju'a nai ge cy no cribe gi cy no ci mei
 .i re da poi ke'a me cy no me'u ku'o zo'u da bunre
@@ -460,7 +460,7 @@ ju'a nai ge cy no cribe gi cy no ci mei
 -----
 > le re le ci cribe cu bunre
 
-non-veridical: ((c0) >= (c1) /\ 2 mei(c1))
+non-veridical: ((c1 =< c0) /\ 2 mei(c1))
 non-veridical: (cribe(c0) /\ 3 mei(c0))
 bunre(c1)
 
@@ -471,9 +471,9 @@ ju'a nai ge cy pa me cy no me'u gi cy pa re mei
 -----
 > pa le re le ci cribe cu bunre
 
-non-veridical: ((c0) >= (c1) /\ 2 mei(c1))
+non-veridical: ((c1 =< c0) /\ 2 mei(c1))
 non-veridical: (cribe(c0) /\ 3 mei(c0))
-EQ(1) x1:((c1) >= (_)). bunre(x1)
+EQ(1) x1:((_ =< c1)). bunre(x1)
 
 ju'a nai ge cy pa me cy no me'u gi cy pa re mei
 .i ju'a nai ge cy no cribe gi cy no ci mei
@@ -566,11 +566,11 @@ cy no ratcu
 
 girzu((mi {ce} do))
 gunma({lu'o}({ri}))
-porsi({vu'i}({lu'o}({ri})))
+porsi({vu'i}({ri}))
 
 mi ce ke do ke'e girzu
 .i lu'o ri lu'u gunma
-.i vu'i lu'o ri lu'u lu'u porsi
+.i vu'i ri lu'u porsi
 
 -----
 > mi viska na'ebo le gerku
@@ -738,7 +738,7 @@ ko muvgau ti ta tu
 -----
 > li re su'i re du li vo .i la'e di'u jetnu
 
-=({su'i}(2,2),4)
+({su'i}(2,2) == 4)
 jetnu({la'e}(di'u))
 
 li pe'o su'i re boi re boi ku'e lo'o du li vo boi lo'o
@@ -747,7 +747,7 @@ li pe'o su'i re boi re boi ku'e lo'o du li vo boi lo'o
 -----
 > mi viska le mlatu ku poi zo'e zbasu ke'a loi slasi
 
-(zbasu(c1,c4,c3) /\ (c0) >= (c4))
+(zbasu(c1,c4,c3) /\ (c4 =< c0))
 gunma(c3,c2)
 slasi(c2)
 non-veridical: mlatu(c0)

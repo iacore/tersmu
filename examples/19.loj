@@ -439,7 +439,7 @@ Morphology error:
 -----
 > mi djuno fi le valsi po'u zoi gy. gyrations .gy.
 
-non-veridical: (valsi(c0) /\ =(c0,<[< gyrations >]>))
+non-veridical: (valsi(c0) /\ (c0 == <[< gyrations >]>))
 djuno(mi, ,c0)
 
 ju'a nai ge cy no valsi gi cy no du zoi zoi gyrations zoi
@@ -545,7 +545,7 @@ ju'a nai cy pa nu do viska cy no kei
 -----
 > la frank. cusku lu mi prami do to'isa'a do du la djein. toi li'u
 
-cusku("frank",<< =(do,"djein")
+cusku("frank",<< (do == "djein")
 prami(mi,do) >>)
 
 la frank. cusku lu do du la djein.

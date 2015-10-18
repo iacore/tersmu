@@ -164,14 +164,14 @@ ju'a nai cy no zarci
 -----
 > ti slasi je mlatu bo cidja lante gacri cei broda .i le crino broda cu barda .i le xunre broda cu cmalu
 
-non-veridical: <xunre(_)><<<<slasi(_)>{je}<<mlatu(_)><cidja>(_)>(_)><lante>(_)><gacri>>(c1,c1)
-non-veridical: <crino(_)><<<<slasi(_)>{je}<<mlatu(_)><cidja>(_)>(_)><lante>(_)><gacri>>(c0,c0)
+non-veridical: <xunre(_)><<<<slasi(_)>{je}<<mlatu(_)><cidja>(_)>(_)><lante>(_)><gacri>>(c1)
+non-veridical: <crino(_)><<<<slasi(_)>{je}<<mlatu(_)><cidja>(_)>(_)><lante>(_)><gacri>>(c0)
 <<<slasi(_)>{je}<<mlatu(_)><cidja>(_)>(_)><lante>(_)><gacri>(ti)
 barda(c0)
 cmalu(c1)
 
-ju'a nai cy pa ke xunre ke ke ke slasi ke'e je ke ke mlatu cidja ke'e ke'e lante ke'e gacri ke'e ke'e cy pa
-.i ju'a nai cy no ke crino ke ke ke slasi ke'e je ke ke mlatu cidja ke'e ke'e lante ke'e gacri ke'e ke'e cy no
+ju'a nai cy pa ke xunre ke ke ke slasi ke'e je ke ke mlatu cidja ke'e ke'e lante ke'e gacri ke'e ke'e
+.i ju'a nai cy no ke crino ke ke ke slasi ke'e je ke ke mlatu cidja ke'e ke'e lante ke'e gacri ke'e ke'e
 .i ti ke ke ke slasi ke'e je ke ke mlatu cidja ke'e ke'e lante ke'e gacri ke'e
 .i cy no barda
 .i cy pa cmalu
@@ -339,14 +339,14 @@ ju'a nai cy no si'o go'i kei
 > le xekri mlatu cu klama le zarci .i le go'i cu cadzu le bisli
 
 non-veridical: bisli(c3)
-non-veridical: klama(c2,c1,c2)
+non-veridical: klama(c2,c1)
 non-veridical: zarci(c1)
 non-veridical: <xekri(_)><mlatu>(c0)
 klama(c0,c1)
 cadzu(c2,c3)
 
 ju'a nai cy ci bisli
-.i ju'a nai cy re klama cy pa cy re
+.i ju'a nai cy re klama cy pa
 .i ju'a nai cy pa zarci
 .i ju'a nai cy no ke xekri mlatu ke'e
 .i cy no klama cy pa
@@ -686,7 +686,7 @@ ge su'o da poi ke'a grana ku'o zo'u la djan. lafti da gi su'o da zo'u la djan. d
 > ko'a du le nanmu
 
 non-veridical: nanmu(c0)
-=({ko'a},c0)
+({ko'a} == c0)
 
 ju'a nai cy no nanmu
 .i ko'a du cy no

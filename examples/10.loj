@@ -643,7 +643,7 @@ cy no selsalta
 -----
 > ze'e roroi ve'e fe'e roroi ku li re su'i re du li vo
 
-(ze'e)(). ((ro) roi)(). (ve'e)(). (fe'e (ro) roi)(). =({su'i}(2,2),4)
+(ze'e)(). ((ro) roi)(). (ve'e)(). (fe'e (ro) roi)(). ({su'i}(2,2) == 4)
 
 ze'e ku ro roi ku ve'e ku fe'e ro roi ku zo'u li pe'o su'i re boi re boi ku'e lo'o du li vo boi lo'o
 
@@ -1849,19 +1849,19 @@ pu je'i ba ku zo'u la artr. nolraitru
 > la frank. sanli zu'a nu'i la djordj. la'u lo mitre be li mu [nu'u]
 
 mitre(c0,5)
-(zu'a)(). sanli("frank","djordj")
+(zu'a)(). (la'u)(c0). sanli("frank","djordj")
 
 cy no mitre li mu boi lo'o
-.i zu'a ku zo'u la frank. sanli la djordj.
+.i zu'a ku la'u cy no zo'u la frank. sanli la djordj.
 
 -----
 > la frank. sanli zu'a nu'i la'u lo mitre be li mu
 
 mitre(c0,5)
-(zu'a)(). sanli("frank")
+(zu'a)(). (la'u)(c0). sanli("frank")
 
 cy no mitre li mu boi lo'o
-.i zu'a ku zo'u la frank. sanli
+.i zu'a ku la'u cy no zo'u la frank. sanli
 
 -----
 > .a'o do pu seju ba roroi ca'o fe'e su'oroi jimpe fi le lojbo temci selsku ciste
