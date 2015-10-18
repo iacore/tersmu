@@ -276,33 +276,31 @@ parseTerms' prenex ts = concat <$> flip mapM ts (\t -> case t of
 	doBuha m' tu
 	return []
     _ -> do
-	ret <- parseTerm t
-	case ret of
-	    Just (Left (jbotag,mo)) -> doTag jbotag mo >> return []
-	    Just (Right o) -> return [o]
-	    _ -> return [])
+	rets <- parseTerm t
+	concat <$> flip mapM rets (\ret -> case ret of
+	    Left (jbotag,mo) -> doTag jbotag mo >> return []
+	    Right o -> return [o]))
 
-parseTerm :: PreProp r => Term -> ParseM r (Maybe (Either (JboTag, Maybe JboTerm) JboTerm))
+parseTerm :: PreProp r => Term -> ParseM r [Either (JboTag, Maybe JboTerm) JboTerm]
 parseTerm t = case t of
-    Termset ts -> mapM_ parseTerm ts >> return Nothing
+    Termset ts -> concat <$> mapM parseTerm ts
     ConnectedTerms fore con t1 t2 -> do
 	doConnective fore con
 	    (parseTerm t1)
 	    (parseTerm t2)
-	return Nothing
-    Negation -> mapProp Not >> return Nothing
+    Negation -> mapProp Not >> return []
     Sumti (Tagged tag) s -> do
 	jbotag <- parseTag tag
 	o <- parseSumti s
-	return $ Just $ Left (jbotag, Just o)
+	return [Left (jbotag, Just o)]
     Sumti taggedness s -> do
 	o <- parseSumti s
 	addArg $ Arg taggedness o
-	return $ Just $ Right o
-    BareFA (Just n) -> setArgPos n >> return Nothing
-    BareFA Nothing -> return Nothing
-    NullTerm -> return Nothing
-    BareTag tag -> (\jt -> Just $ Left (jt, Nothing)) <$> parseTag tag
+	return [Right o]
+    BareFA (Just n) -> setArgPos n >> return []
+    BareFA Nothing -> return []
+    NullTerm -> return []
+    BareTag tag -> (\jt -> [Left (jt, Nothing)]) <$> parseTag tag
 
 parseSumti :: PreProp r => Sumti -> ParseM r JboTerm
 parseSumti s = do
@@ -391,14 +389,14 @@ parseRels rels = concat . map maybeToList <$> mapM parseRel rels where
     parseRel (Assignment (Sumti Untagged (QAtom [] Nothing [] sa))) | isAssignable sa = 
 	return $ Just . JRAssign $ Left sa
     parseRel (Assignment t) = do
-	ret <- ignoringArgs $ parseTerm t
-	case ret of
-	    Just (Right o) -> return $ Just . JRAssign $ Right o
+	rets <- ignoringArgs $ parseTerm t
+	case rets of
+	    (Right o:_) -> return $ Just . JRAssign $ Right o
 	    _ -> return Nothing
     goiRel goi jr t = do
-	ret <- ignoringArgs $ parseTerm t
-	return $ jr <$> case ret of
-	    Just (Right o) ->
+	rets <- ignoringArgs $ parseTerm t
+	return $ jr <$> case rets of
+	    (Right o:_) ->
 		let rel = case goi of
 			"pe" -> Brivla "srana"
 			"ne" -> Brivla "srana"
@@ -412,7 +410,7 @@ parseRels rels = concat . map maybeToList <$> mapM parseRel rels where
 			"po" -> Tanru (\os -> Rel (Brivla "steci") os)
 				    (Brivla "srana")
 		in Just $ \x -> Rel rel [x,o]
-	    Just (Left (jbotag, mo)) -> Just $ \x -> Rel (TagRel jbotag) [fromMaybe Unfilled mo,x]
+	    (Left (jbotag, mo):_) -> Just $ \x -> Rel (TagRel jbotag) [fromMaybe Unfilled mo,x]
 	    _ -> Nothing
 stripForeRestrictives :: [JboRelClause] -> ([JboPred],[JboRelClause])
 stripForeRestrictives rels = let (rrs,rels') = break (not . jrIsRes) rels in (map jrrPred rrs,rels')
