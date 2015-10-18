@@ -446,6 +446,7 @@ parseVariable sa@(Variable n) rps mm = do
 
 parseSumtiAtom :: PreProp r => SumtiAtom -> ParseM r (JboTerm, [JboRelClause])
 parseSumtiAtom sa = do
+    when (getsRi sa) $ pushBackcount
     jrels <- case sa of
 	Description gadri _ _ _ rels _ -> if gadri!!1 == 'a' then return [] else parseRels rels
 	QualifiedSumti _ rels _ -> parseRels rels

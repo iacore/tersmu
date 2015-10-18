@@ -5,10 +5,6 @@ All known divergence from baseline (CLL+xorlo), or from plausible
 interpretations thereof, is noted here.
 
 FIXME:
-    According to 7.6, {ri} counting is done "in order of beginnings" of sumti;
-    we're not in accordance with that. Should also review what {ri} can pick
-    up - currently only atoms; is that right?
-
     Think about this:
 	09:49 < mensi> zugz: cu'u la'o gy.durka42.gy.: re:tersmus again. {jai
 	gau ba'e *ke* broda be fa ko'a} should have a tight binding so that

@@ -35,6 +35,7 @@ import Control.Monad.Identity
 data ParseState = ParseState
     { sumbastiBindings::SumbastiBindings
     , bribastiBindings::BribastiBindings
+    , backcountStack::[Int]
     , nextFreshVar::Int
     , nextFreshRVar::Int
     , variableDomains :: Map Int VariableDomain
@@ -44,7 +45,7 @@ data ParseState = ParseState
     , lambdas::Map LambdaPos Int
     , sideTexticules::[Texticule]
     }
-nullParseState = ParseState Map.empty Map.empty 0 0 Map.empty 0 Set.empty [] Map.empty []
+nullParseState = ParseState Map.empty Map.empty [] 0 0 Map.empty 0 Set.empty [] Map.empty []
 type ParseStateT = StateT ParseState
 type ParseStateM = ParseStateT Identity
 
@@ -123,6 +124,20 @@ class (Monad m,Applicative m) => ParseStateful m where
     setBribasti s b = (Map.insert s b <$> getBribastiBindings) >>= putBribastiBindings
     getBribasti :: TanruUnit -> m Bridi
     getBribasti s = (`getBribastiBinding` s) <$> getBribastiBindings
+
+    getBackcountStack :: m [Int]
+    getBackcountStack = backcountStack <$> getParseState
+    putBackcountStack :: [Int] -> m ()
+    putBackcountStack bs = modifyParseState $ \ps -> ps{backcountStack=bs}
+    modifyBackcountStack :: ([Int] -> [Int]) -> m ()
+    modifyBackcountStack f = (f <$> getBackcountStack) >>= putBackcountStack
+    popBackcount :: m Int
+    popBackcount = do
+	(h,t) <- splitAt 1 <$> getBackcountStack
+	putBackcountStack t
+	return $ fromMaybe (error "Backcount stack exhausted") $ listToMaybe h
+    pushBackcount :: m ()
+    pushBackcount = modifyBackcountStack $ (0:) . map (1+)
 
     getNextFreshVar,getNextFreshRVar :: m Int
     getNextFreshVar = nextFreshVar <$> getParseState
@@ -496,8 +511,9 @@ setBribastiToCurrent bb =
 
 updateSumbastiWithSumtiAtom :: SumtiAtom -> JboTerm -> ParseM r ()
 updateSumbastiWithSumtiAtom sa o = do
-    when (getsRi sa) $
-	modifySumbastiBindings $ setShunting (\n -> Sumbasti False $ Ri n) o
+    when (getsRi sa) $ do
+	count <- popBackcount
+	modifySumbastiBindings $ setShunting (\n -> Sumbasti False $ Ri $ count + n) o
     case sa of
 	Name _ _ s ->
 	    setSumbasti (Sumbasti False $ LerfuString $ map LerfuChar $ take 1 s) o
