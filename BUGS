@@ -4,6 +4,12 @@ Bugs, limitations, and questionable design choices
 All known divergence from baseline (CLL+xorlo), or from plausible
 interpretations thereof, is noted here.
 
+FIXME:
+    Think about this:
+	09:49 < mensi> zugz: cu'u la'o gy.durka42.gy.: re:tersmus again. {jai
+	gau ba'e *ke* broda be fa ko'a} should have a tight binding so that
+	broda1=ko'a, iepei? | 2014-12-24T04:54:46.957Z
+
 Bugs:
     Question words other than {xu},{ma} and {mo} are not handled properly.
 
@@ -21,6 +27,9 @@ Limitations:
 
     {ra'o} is ignored.
 
+    The distinction between {lV'e} and {lV} (whatever that might be) is not
+    handled.
+
     We parse the name in "LA sumtiTail", whereas arguably we should just use
     the text. Similarly, we don't keep hold of the raw text of a lu-quote.
 
@@ -28,6 +37,9 @@ Limitations:
     semantics.
 
     We don't handle {soi}.
+
+    seltcita termsets, as described in CLL 10.25 (e.g. {la frank. sanli zu'a
+    nu'i la'u lo mitre be li mu}), are not supported.
 
 Deliberate deviations from baseline, not considered bugs:
     {na broda} is equivalent to {naku broda}; consequently, {ja'a} has no
@@ -44,6 +56,12 @@ Deliberate deviations from baseline, not considered bugs:
     Some constructs are accepted which the official grammar rejects; e.g. the
     tag grammar we use is essentially that of xorxes' zasni gerna.
 
-Other behaviour whose correctness may not be immediately obvious:
-    The {vo'a} series can only refer backwards. To see why, consider
-	{vo'e broda ko'a gi'e brode ko'e}.
+Other possibly contentious points:
+    Sumti put in an already filled place simply replace what was there before.
+    Linkarg sumti fill, but do not delete, a place.
+    So e.g.
+	{broda be ko'a fe ko'e} == {broda ko'e},
+    where other defensible possibilities include {broda ko'a}, {broda ko'a
+    jo'u ko'e}, and {broda ko'a ko'e} (the last obtained by considering
+    linkargs to change the selbri by filling places, an interpretation which
+    would also have effects on scope).

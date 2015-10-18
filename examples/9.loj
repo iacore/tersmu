@@ -538,14 +538,14 @@ ju'a nai cy no cukta
 -----
 > li ny. du li vo .ini'ibo li ny. du li re su'i re
 
-EX x1. ((ni'i)(x1). =((ny),4) /\ x1=. =((ny),{su'i}(2,2)))
+EX x1. ((ni'i)(x1). ((ny) == 4) /\ x1=. ((ny) == {su'i}(2,2)))
 
 su'o da zo'u ge ni'i da zo'u li ny boi lo'o du li vo boi lo'o gi fi'o du da zo'u li ny boi lo'o du li pe'o su'i re boi re boi ku'e lo'o
 
 -----
 > li ny. du li ni'igi vei re su'i re [ve'o] gi vo
 
-EX x1. (x1=. =((ny),{su'i}(2,2)) /\ (ni'i)(x1). =((ny),4))
+EX x1. (x1=. ((ny) == {su'i}(2,2)) /\ (ni'i)(x1). ((ny) == 4))
 
 su'o da zo'u ge fi'o du da zo'u li ny boi lo'o du li pe'o su'i re boi re boi ku'e lo'o gi ni'i da zo'u li ny boi lo'o du li vo boi lo'o
 
@@ -623,7 +623,7 @@ ju'a nai cy pa bisli
 -----
 > la .apasionatas. poi se cusku la .artr. rubnstain. cu se nelci mi
 
-(cusku("artr rubnstain",c0) /\ ("apasionatas") >= (c0))
+(cusku("artr rubnstain",c0) /\ (c0 =< "apasionatas"))
 nelci(mi,c0)
 
 ge la artr rubnstain. cusku cy no gi cy no me la apasionatas. me'u
@@ -641,7 +641,7 @@ la betovn. finti la apasionatas.
 -----
 > la .apasionatas. pe la .artr. rubnstain. se nelci mi
 
-(srana(c0,"artr rubnstain") /\ ("apasionatas") >= (c0))
+(srana(c0,"artr rubnstain") /\ (c0 =< "apasionatas"))
 nelci(mi,c0)
 
 ge cy no srana la artr rubnstain. gi cy no me la apasionatas. me'u
@@ -659,7 +659,7 @@ la apasionatas. srana la betovn.
 -----
 > la .apasionatas pe cu'u la .artr. rubnstain. cu se nelci mi
 
-({cu'u}("artr rubnstain",c0) /\ ("apasionatas") >= (c0))
+({cu'u}("artr rubnstain",c0) /\ (c0 =< "apasionatas"))
 nelci(mi,c0)
 
 ge la artr rubnstain. xo'i cu'u cy no gi cy no me la apasionatas. me'u
@@ -741,9 +741,9 @@ su'o da zo'u ge ki'u da zo'u mi nelci do gi fi'o du da zo'u mi nelci la djein.
 -----
 > mi nelci do gi'eki'ubo nelci la djein.
 
-EX x1. (x1=. nelci(mi,do) /\ (ki'u)(x1). nelci(mi,"djein"))
+EX x1. ((ki'u)(x1). nelci(mi,do) /\ x1=. nelci(mi,"djein"))
 
-su'o da zo'u ge fi'o du da zo'u mi nelci do gi ki'u da zo'u mi nelci la djein.
+su'o da zo'u ge ki'u da zo'u mi nelci do gi fi'o du da zo'u mi nelci la djein.
 
 -----
 > mi bevri le dakli .ijeseri'abo tu'e mi bevri le gerku .ijadu'ibo mi bevri le mlatu [tu'u]
@@ -764,12 +764,12 @@ ju'a nai cy re mlatu
 non-veridical: mlatu(c2)
 non-veridical: gerku(c1)
 non-veridical: dakli(c0)
-EX x1. (x1=. bevri(mi,c0) /\ (se ri'a)(x1). EX x2. (x2=. bevri(mi,c1) \/ (du'i)(x2). bevri(mi,c2)))
+EX x1. ((se ri'a)(x1). bevri(mi,c0) /\ x1=. EX x2. ((du'i)(x2). bevri(mi,c1) \/ x2=. bevri(mi,c2)))
 
 ju'a nai cy re mlatu
 .i ju'a nai cy pa gerku
 .i ju'a nai cy no dakli
-.i su'o da zo'u ge fi'o du da zo'u mi bevri cy no gi se ri'a da su'o de zo'u ga fi'o du de zo'u mi bevri cy pa gi du'i de zo'u mi bevri cy re
+.i su'o da zo'u ge se ri'a da zo'u mi bevri cy no gi fi'o du da su'o de zo'u ga du'i de zo'u mi bevri cy pa gi fi'o du de zo'u mi bevri cy re
 
 -----
 > mi bevri le dakli .eseri'ake le gerku .adu'ibo le mlatu [ke'e]
@@ -896,10 +896,10 @@ ju'a nai cy no zdani
 
 non-veridical: zdani(c1)
 non-veridical: zdani(c0)
-bajra("frank")
+(se ka'a)(c0). (te ka'a)(c1). bajra("frank")
 
 ju'a nai cy pa zdani
 .i ju'a nai cy no zdani
-.i la frank. bajra
+.i se ka'a cy no te ka'a cy pa zo'u la frank. bajra
 
 -----

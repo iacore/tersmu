@@ -208,7 +208,7 @@ me'o MexLerfuString [LerfuChar 'a'] lo'o lerfu
 -----
 > dei vasru vo lerfu po'u me'o .ebu
 
-EQ(4) x1:((lerfu(_) /\ =(_,[MEX: MexLerfuString [LerfuChar 'e']]))). vasru(dei,x1)
+EQ(4) x1:((lerfu(_) /\ (_ == [MEX: MexLerfuString [LerfuChar 'e']]))). vasru(dei,x1)
 
 vo da poi ge ke'a lerfu gi ke'a du me'o MexLerfuString [LerfuChar 'e'] lo'o ku'o zo'u dei vasru da
 
@@ -229,14 +229,14 @@ la'e lu abu li'u lu'u lerfu
 -----
 > li .abu du li by. su'i cy.
 
-=((abu),{su'i}((by),(cy)))
+((abu) == {su'i}((by),(cy)))
 
 li abu boi lo'o du li pe'o su'i by boi cy boi ku'e lo'o
 
 -----
 > li .y.bu du li ma'o fy. boi xy.
 
-=((y bu),[(fy)]((xy)))
+((y bu) == [(fy)]((xy)))
 
 li y bu boi lo'o du li pe'o ma'o fy boi te'u xy boi ku'e lo'o
 
@@ -326,7 +326,7 @@ la dynyzaz.
 -----
 > la me dy ny. .abu
 
-[Fragment: [Name: (dna) >= (_) ]]
+[Fragment: [Name: (_ =< dna) ]]
 
 la me dy ny abu me'u ku
 

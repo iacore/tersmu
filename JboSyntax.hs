@@ -96,7 +96,7 @@ data AbsTagUnit r t
     | TAhE_ZAhO {taheZoheIsSpace::Bool, taheZahoCmavo::Cmavo}
     | BAI Cmavo
     | FIhO r
-    | CUhE
+    | CUhE Cmavo
     | KI
     deriving (Eq, Show, Ord, Typeable, Data)
 

@@ -61,8 +61,8 @@ reconnectingOnError m = do
     case mret of
 	Nothing -> do
 	    liftIO $ threadDelay $ 10 * 10^6
-	    h <- liftIO $ connectToServer
-	    put h
+	    mh <- liftIO $ (`catchIOError` (const $ return Nothing)) $ Just <$> connectToServer
+	    maybe (return ()) put mh
 	    reconnectingOnError m
 	Just ret -> return ret
  

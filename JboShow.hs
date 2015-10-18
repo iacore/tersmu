@@ -53,6 +53,7 @@ withNext v f = do
     let n = head [ n | n <- [1..], not $ (v n) `elem` vals ]
     withBinding (v n) f
 
+withShuntedRelVar :: (Int -> Bindful ShowBindable b) -> Bindful ShowBindable b
 withShuntedRelVar f =
     do twiddleBound $ \s -> case s of SRel n -> SRel $ n+1
 				      _ -> s
@@ -60,6 +61,8 @@ withShuntedRelVar f =
        twiddleBound $ \s -> case s of SRel n -> SRel $ n-1
 				      _ -> s
        return r
+
+withShuntedLambdas :: Int -> ([Int] -> Bindful ShowBindable b) -> Bindful ShowBindable b
 withShuntedLambdas arity f = do
     twiddleBound $ \s -> case s of
 	SLambda l n -> SLambda (l+1) n
@@ -196,11 +199,14 @@ instance JboShow JboOperator where
     logjboshow jbo@False (OpVUhU v) = bracket '{' <$> return v
     logjboshow jbo@True (OpVUhU v) = return v
 
+logjboshowLogConn :: Bool -> [Char] -> LogJboConnective -> Bindful ShowBindable String
 logjboshowLogConn _ prefix (LogJboConnective b c b') =
 	return $ (if not b then "na " else "") ++
-	    prefix ++ [c] ++
+	    (if c == 'U' then "se " ++ prefix ++ "u"
+		else prefix ++ [c]) ++
 	    if not b' then " nai" else ""
 
+logjboshowConn :: Bool -> [Char] -> JboConnective -> Bindful ShowBindable String
 logjboshowConn False prefix con = do
     js <- logjboshowConn True prefix con
     return $ "{"++js++"}"
@@ -209,13 +215,16 @@ logjboshowConn True prefix (JboConnLog mtag lcon) = do
     mtags <- maybe "" ((" "++).(++" bo")) <$> traverse (logjboshow True) mtag
     return $ lc ++ mtags
 logjboshowConn True prefix (JboConnJoik mtag joik) = do
-    let jois = if joik == "??" then case prefix of
+    joiks <- logjboshowJoik True (case prefix of
 		"." -> "ji"
 		"j" -> "je'i"
-		_ -> "BUG"
-	    else joik
+		_ -> "BUG")
+	    joik
     mtags <- maybe "" ((" "++).(++" bo")) <$> traverse (logjboshow True) mtag
-    return $ jois ++ mtags
+    return $ joiks ++ mtags
+
+logjboshowJoik False _ joik = return joik
+logjboshowJoik True qconn joik = return $ if joik == "??" then qconn else joik
 
 instance JboShow JboTag where
     logjboshow jbo (ConnectedTag con tag1 tag2) = do
@@ -248,7 +257,7 @@ instance JboShow JboTagUnit where
 	ps <- logjboshow jbo p
 	return $ "fi'o " ++ ps ++ if jbo then " fe'u" else ""
     logjboshow jbo KI = return "ki"
-    logjboshow jbo CUhE = return "cu'e"
+    logjboshow jbo (CUhE c) = return c
 
 instance JboShow Abstractor where
     logjboshow _ (NU n) = return n
@@ -261,10 +270,10 @@ instance JboShow Abstractor where
 	    else "({" ++ conns ++ "}(" ++ s1 ++ "," ++ s2 ++ "))"
     logjboshow jbo (JoiConnectedAbstractor joik a1 a2) = do
 	[s1,s2] <- mapM (logjboshow jbo) [a1,a2]
-	conns <- logjboshow jbo joik
+	joiks <- logjboshowJoik jbo "je'i" joik
 	return $ if jbo
-	    then s1 ++ " " ++ conns ++ " " ++ s2
-	    else "({" ++ conns ++ "}(" ++ s1 ++ "," ++ s2 ++ "))"
+	    then s1 ++ " " ++ joiks ++ " " ++ s2
+	    else "({" ++ joiks ++ "}(" ++ s1 ++ "," ++ s2 ++ "))"
 
 instance JboShow JboPred where
     logjboshow jbo p = logjboshowpred jbo (\n -> p (BoundVar n))
@@ -273,6 +282,7 @@ instance JboShow JboVPred where
     -- so we just show the unary pred instead.
     logjboshow jbo vp = logjboshow jbo $ vPredToPred vp
 
+logjboshowpred :: Bool -> (Int -> JboProp) -> Bindful ShowBindable String
 logjboshowpred jbo@False p =
     withShuntedRelVar $ \n -> logjboshow jbo $ p n
 logjboshowpred jbo@True p = withNext SVar $ \v ->
@@ -413,6 +423,8 @@ instance JboShow JboTerm where
     logjboshow jbo (Constant n ts) = do
 	ss <- mapM (logjboshow jbo) ts
 	return $ if jbo
+	    -- Note: xorxes suggests {fy pe ko'a} in place of {li ma'o fy mo'e
+	    -- ko'e} (having fy refer to the join of the f(x))
 	    then "li ma'o fy" ++ jbonum n ++ " " ++
 		(intercalate " " $ map ("mo'e "++) ss) ++ " lo'o"
 	    else "f" ++ show n ++ "(" ++
@@ -440,7 +452,7 @@ instance JboShow JboTerm where
     logjboshow _ (NonAnaph s) = return s
     logjboshow jbo (JoikedTerms joik t1 t2) = do
 	[ts1,ts2] <- mapM (logjboshow jbo) [t1,t2]
-	joiks <- logjboshow jbo joik
+	joiks <- logjboshowJoik jbo "ji" joik
 	return $ if jbo then ts1 ++ " " ++ joiks ++ " ke " ++ ts2 ++ " ke'e"
 	    else "(" ++ ts1 ++ " {" ++ joiks ++ "} " ++ ts2 ++ ")"
     logjboshow jbo (QualifiedTerm qual t) = do
@@ -556,11 +568,11 @@ instance JboShow JboProp
 	  logjboshow' jbo [] (NonLogConnected joik p1 p2) =
 	      do ss1 <- logjboshow' jbo [] p1
 	         ss2 <- logjboshow' jbo [] p2
-		 joiks <- logjboshow jbo joik
-	         return $ if jbo then [joik,"gi"]
-	      			++ ss1 ++ ["gi"] ++ ss2
-	      		   else ["("] ++ ss1 ++
-	      		        [" {"++joik++"} "] ++ ss2 ++ [")"]
+	         return $ if jbo then
+		    (if joik=="??" then ["ge'i"] else [joik,"gi"])
+			++ ss1 ++ ["gi"] ++ ss2
+		   else ["("] ++ ss1 ++
+			[" {"++joik++"} "] ++ ss2 ++ [")"]
 	  logjboshow' jbo [] (Not p) =
 	      do ss <- logjboshow' jbo [] p
 	         return $ (if jbo then ["na","ku"] else ["!"]) ++ ss
@@ -573,6 +585,13 @@ instance JboShow JboProp
 	         rs <- jboshow r
 	         ss <- mapM jboshow xs
 	         return $ fore ++ [rs] ++ positionallyTaggedTerms xs ss
+	  logjboshow' False [] (Rel Equal ts) = do
+	      tss <- mapM logshow ts
+	      return $ ["(" ++ (intercalate " == " tss) ++ ")"]
+	  logjboshow' False [] (Rel (Among t) ts) = do
+	      s <- logshow t
+	      tss <- mapM logshow ts
+	      return $ ["(" ++ (intercalate "," tss) ++ " =< " ++ s ++ ")"]
 	  logjboshow' False [] (Rel r ts) =
 	      do s <- logshow r
 		 tss <- mapM logshow ts

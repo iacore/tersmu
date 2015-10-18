@@ -350,7 +350,7 @@ ju'a nai cy pa ni ce'u blanu kei
 -----
 > le jei li re su'i re du li vo [kei]
 
-non-veridical: jei[=({su'i}(2,2),4)](c0)
+non-veridical: jei[({su'i}(2,2) == 4)](c0)
 [Fragment: c0]
 
 ju'a nai cy no jei li pe'o su'i re boi re boi ku'e lo'o du li vo boi lo'o kei
@@ -359,7 +359,7 @@ ju'a nai cy no jei li pe'o su'i re boi re boi ku'e lo'o du li vo boi lo'o kei
 -----
 > le jei li re su'i re du li mu [kei]
 
-non-veridical: jei[=({su'i}(2,2),5)](c0)
+non-veridical: jei[({su'i}(2,2) == 5)](c0)
 [Fragment: c0]
 
 ju'a nai cy no jei li pe'o su'i re boi re boi ku'e lo'o du li mu boi lo'o kei
@@ -490,7 +490,7 @@ non-veridical: du'u[? x1. zvati((x1 {??} "djordj"),c0)](c1)
 non-veridical: panka(c0)
 (ba)(). zgana(mi,c1)
 
-ju'a nai cy pa du'u ma goi ko'a zo'u ko'a ?? ke la djordj. ke'e zvati cy no kei
+ju'a nai cy pa du'u ma goi ko'a zo'u ko'a ji ke la djordj. ke'e zvati cy no kei
 .i ju'a nai cy no panka
 .i ba ku zo'u mi zgana cy pa
 

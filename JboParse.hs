@@ -117,9 +117,8 @@ parseBTail (GekSentence (TaggedGS tag gs)) = do
     parseBTail (GekSentence gs)
 
 parseBTail (ConnectedBT con bt1 bt2 tts) =
-    parseBTail (GekSentence (ConnectedGS con
-	(Subsentence [] [] (Sentence [] bt1))
-	(Subsentence [] [] (Sentence [] bt2)) tts))
+    doConnective False con (parseBTail bt1) (parseBTail bt2)
+	<* parseTerms tts
 
 parseBTail (BridiTail3 (Negated sb) tts) =
     -- XXX: need to handle Negated and tags here as well as in parseSelbri,
@@ -277,33 +276,31 @@ parseTerms' prenex ts = concat <$> flip mapM ts (\t -> case t of
 	doBuha m' tu
 	return []
     _ -> do
-	ret <- parseTerm t
-	case ret of
-	    Just (Left (jbotag,mo)) -> doTag jbotag mo >> return []
-	    Just (Right o) -> return [o]
-	    _ -> return [])
+	rets <- parseTerm t
+	concat <$> flip mapM rets (\ret -> case ret of
+	    Left (jbotag,mo) -> doTag jbotag mo >> return []
+	    Right o -> return [o]))
 
-parseTerm :: PreProp r => Term -> ParseM r (Maybe (Either (JboTag, Maybe JboTerm) JboTerm))
+parseTerm :: PreProp r => Term -> ParseM r [Either (JboTag, Maybe JboTerm) JboTerm]
 parseTerm t = case t of
-    Termset ts -> mapM_ parseTerm ts >> return Nothing
+    Termset ts -> concat <$> mapM parseTerm ts
     ConnectedTerms fore con t1 t2 -> do
 	doConnective fore con
 	    (parseTerm t1)
 	    (parseTerm t2)
-	return Nothing
-    Negation -> mapProp Not >> return Nothing
+    Negation -> mapProp Not >> return []
     Sumti (Tagged tag) s -> do
 	jbotag <- parseTag tag
 	o <- parseSumti s
-	return $ Just $ Left (jbotag, Just o)
+	return [Left (jbotag, Just o)]
     Sumti taggedness s -> do
 	o <- parseSumti s
 	addArg $ Arg taggedness o
-	return $ Just $ Right o
-    BareFA (Just n) -> setArgPos n >> return Nothing
-    BareFA Nothing -> return Nothing
-    NullTerm -> return Nothing
-    BareTag tag -> (\jt -> Just $ Left (jt, Nothing)) <$> parseTag tag
+	return [Right o]
+    BareFA (Just n) -> setArgPos n >> return []
+    BareFA Nothing -> return []
+    NullTerm -> return []
+    BareTag tag -> (\jt -> [Left (jt, Nothing)]) <$> parseTag tag
 
 parseSumti :: PreProp r => Sumti -> ParseM r JboTerm
 parseSumti s = do
@@ -352,6 +349,7 @@ parseSumti s = do
 			return (o,jrels)
 		     Just m -> do
 			let (rps,jrels') = stripForeRestrictives jrels
+			updateReferenced o
 			o' <- quantify m $ andMPred $ (isAmong o):rps
 			return (o',jrels')
 		 return (o,jrels)
@@ -391,14 +389,14 @@ parseRels rels = concat . map maybeToList <$> mapM parseRel rels where
     parseRel (Assignment (Sumti Untagged (QAtom [] Nothing [] sa))) | isAssignable sa = 
 	return $ Just . JRAssign $ Left sa
     parseRel (Assignment t) = do
-	ret <- ignoringArgs $ parseTerm t
-	case ret of
-	    Just (Right o) -> return $ Just . JRAssign $ Right o
+	rets <- ignoringArgs $ parseTerm t
+	case rets of
+	    (Right o:_) -> return $ Just . JRAssign $ Right o
 	    _ -> return Nothing
     goiRel goi jr t = do
-	ret <- ignoringArgs $ parseTerm t
-	return $ jr <$> case ret of
-	    Just (Right o) ->
+	rets <- ignoringArgs $ parseTerm t
+	return $ jr <$> case rets of
+	    (Right o:_) ->
 		let rel = case goi of
 			"pe" -> Brivla "srana"
 			"ne" -> Brivla "srana"
@@ -412,7 +410,7 @@ parseRels rels = concat . map maybeToList <$> mapM parseRel rels where
 			"po" -> Tanru (\os -> Rel (Brivla "steci") os)
 				    (Brivla "srana")
 		in Just $ \x -> Rel rel [x,o]
-	    Just (Left (jbotag, mo)) -> Just $ \x -> Rel (TagRel jbotag) [fromMaybe Unfilled mo,x]
+	    (Left (jbotag, mo):_) -> Just $ \x -> Rel (TagRel jbotag) [fromMaybe Unfilled mo,x]
 	    _ -> Nothing
 stripForeRestrictives :: [JboRelClause] -> ([JboPred],[JboRelClause])
 stripForeRestrictives rels = let (rrs,rels') = break (not . jrIsRes) rels in (map jrrPred rrs,rels')
@@ -448,6 +446,7 @@ parseVariable sa@(Variable n) rps mm = do
 
 parseSumtiAtom :: PreProp r => SumtiAtom -> ParseM r (JboTerm, [JboRelClause])
 parseSumtiAtom sa = do
+    when (getsRi sa) $ pushBackcount
     jrels <- case sa of
 	Description gadri _ _ _ rels _ -> if gadri!!1 == 'a' then return [] else parseRels rels
 	QualifiedSumti _ rels _ -> parseRels rels
@@ -482,9 +481,7 @@ parseSumtiAtom sa = do
 		_ -> error "You call that a gadri?"
 	    doAssigns o ias
 	    return o
-	QualifiedSumti qual _ s -> do
-	    o <- parseSumti s
-	    return $ QualifiedTerm qual o
+	QualifiedSumti qual _ s -> QualifiedTerm qual <$> parseSumti s
 	MexLi m -> Value <$> parseMex m
 	MexMex m -> return $ TheMex m
 	-- FIXME: RelVar crashes the program if unbound!
@@ -514,7 +511,6 @@ parseSumtiAtom sa = do
 	    o' <- getFreshConstant
 	    let collector = Brivla $ if s == "i" then "gunma" else "selcmi"
 	    doIncidental o' $ \x -> Rel collector [x,o]
-	    return o'
 	_ -> return o
     updateSumbastiWithSumtiAtom sa o
     return (o,jrels)
@@ -545,7 +541,7 @@ parseTagUnit (FIhO sb) = FIhO <$> selbriToVPred sb
 -- for now.
 parseTagUnit KI = return KI
 -- TODO: we should actually deal with cu'e, though
-parseTagUnit CUhE = return CUhE
+parseTagUnit (CUhE c) = return $ CUhE c
 
 parseConnective :: PreProp r => Connective -> ParseM r JboConnective
 parseConnective (JboConnLog mtag lcon) = do

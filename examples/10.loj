@@ -643,7 +643,7 @@ cy no selsalta
 -----
 > ze'e roroi ve'e fe'e roroi ku li re su'i re du li vo
 
-(ze'e)(). ((ro) roi)(). (ve'e)(). (fe'e (ro) roi)(). =({su'i}(2,2),4)
+(ze'e)(). ((ro) roi)(). (ve'e)(). (fe'e (ro) roi)(). ({su'i}(2,2) == 4)
 
 ze'e ku ro roi ku ve'e ku fe'e ro roi ku zo'u li pe'o su'i re boi re boi ku'e lo'o du li vo boi lo'o
 
@@ -1043,13 +1043,13 @@ ju'a nai du'u pu ku zo'u la djordj. klama cy no kei cy pa
 
 non-veridical: du'u[(pu)(). cusku("alis",c2)]( ,c3)
 non-veridical: du'u[(pu)(). cusku("djordj",c1)]( ,c2)
-non-veridical: du'u[(cu'e)(). klama("maris",c0)]( ,c1)
+non-veridical: du'u[(nau)(). klama("maris",c0)]( ,c1)
 non-veridical: zarci(c0)
 (pu)(). cusku("djan",c3)
 
 ju'a nai du'u pu ku zo'u la alis. cusku cy re kei cy ci
 .i ju'a nai du'u pu ku zo'u la djordj. cusku cy pa kei cy re
-.i ju'a nai du'u cu'e ku zo'u la maris. klama cy no kei cy pa
+.i ju'a nai du'u nau ku zo'u la maris. klama cy no kei cy pa
 .i ju'a nai cy no zarci
 .i pu ku zo'u la djan. cusku cy ci
 
@@ -1849,19 +1849,19 @@ pu je'i ba ku zo'u la artr. nolraitru
 > la frank. sanli zu'a nu'i la djordj. la'u lo mitre be li mu [nu'u]
 
 mitre(c0,5)
-(zu'a)(). sanli("frank","djordj")
+(zu'a)(). (la'u)(c0). sanli("frank","djordj")
 
 cy no mitre li mu boi lo'o
-.i zu'a ku zo'u la frank. sanli la djordj.
+.i zu'a ku la'u cy no zo'u la frank. sanli la djordj.
 
 -----
 > la frank. sanli zu'a nu'i la'u lo mitre be li mu
 
 mitre(c0,5)
-(zu'a)(). sanli("frank")
+(zu'a)(). (la'u)(c0). sanli("frank")
 
 cy no mitre li mu boi lo'o
-.i zu'a ku zo'u la frank. sanli
+.i zu'a ku la'u cy no zo'u la frank. sanli
 
 -----
 > .a'o do pu seju ba roroi ca'o fe'e su'oroi jimpe fi le lojbo temci selsku ciste

@@ -207,13 +207,14 @@ bridiTail2 :: BridiTail
 
 bridiTail3 :: BridiTail
     = sb:selbri ts:tailTerms -> { BridiTail3 sb ts }
-    / ("ja'a":NA -> {()})? gs:gekSentence -> { GekSentence gs }
+    / gs:gekSentence -> { GekSentence gs }
 
 gekSentence :: GekSentence
     = pcon:gek s1:subsentence b:gik s2:subsentence tts:tailTerms
 	-> { ConnectedGS (pcon b) s1 s2 tts }
     / mtag:tag? KE gs:gekSentence KEhE? -> { maybe gs (flip TaggedGS gs) mtag }
     / "na":NA gs:gekSentence -> {NegatedGS gs}
+    / "ja'a":NA gs:gekSentence -> gs
 
 tailTerms :: {[Term]}
     = ts:terms1* VAU? -> ts
@@ -238,7 +239,7 @@ term :: Term
     / FA KU? -> {NullTerm}
     / termset
     / "na":NA KU -> {Negation}
-    / "ja'a":NA -> {NullTerm}
+    / "ja'a":NA KU -> {NullTerm}
 
 termset :: Term
     = NUhI pcon:gek ts1:terms NUhU b:gik ts2:terms NUhU?
@@ -394,7 +395,8 @@ selbri :: Selbri
 
 selbri1 :: Selbri
     = "na":NA sb:selbri -> {Negated sb}
-    / ("ja'a":NA -> {})? sb:selbri2 -> {Selbri2 sb}
+    / "ja'a":NA sb:selbri -> sb
+    / sb:selbri2 -> {Selbri2 sb}
 
 selbri2 :: Selbri2
     = sb:selbri3 CO sb':selbri2 -> {SBInverted sb sb'}
@@ -460,8 +462,10 @@ abstractor :: Abstractor
 	-> {let a1 = (if isJust nai then NegatedAbstractor else id) $ NU n
 	    in case mca of
 		Nothing -> a1
-		Just (JJJek lcon,a2) -> LogConnectedAbstractor lcon a1 a2
-		Just (JJJoik joik,a2) -> JoiConnectedAbstractor joik a1 a2}
+		Just (JJJoik joik,a2) -> JoiConnectedAbstractor joik a1 a2
+		Just (JJJek lcon@(LogJboConnective _ 'i' _),a2) ->
+		    JoiConnectedAbstractor "??" a1 a2
+		Just (JJJek lcon,a2) -> LogConnectedAbstractor lcon a1 a2}
 
 linkargs :: {[Term]}
     = BE t:term ts:links? BEhO? -> {(t : (fromMaybe [] ts))}
@@ -710,7 +714,7 @@ tagUnit :: TagUnit
     / f:(FEhE)? q:number r:ROI -> { ROI r (isJust f) q }
     / f:(FEhE)? s:(TAhE / ZAhO) -> { TAhE_ZAhO (isJust f) s }
     / FIhO s:selbri FEhU? -> { FIhO s }
-    / CUhE -> { CUhE }
+    / c:CUhE -> { CUhE c }
     / KI -> { KI }
 
 

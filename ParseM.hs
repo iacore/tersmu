@@ -35,6 +35,7 @@ import Control.Monad.Identity
 data ParseState = ParseState
     { sumbastiBindings::SumbastiBindings
     , bribastiBindings::BribastiBindings
+    , backcountStack::[Int]
     , nextFreshVar::Int
     , nextFreshRVar::Int
     , variableDomains :: Map Int VariableDomain
@@ -44,12 +45,16 @@ data ParseState = ParseState
     , lambdas::Map LambdaPos Int
     , sideTexticules::[Texticule]
     }
-nullParseState = ParseState Map.empty Map.empty 0 0 Map.empty 0 Set.empty [] Map.empty []
+nullParseState = ParseState Map.empty Map.empty [] 0 0 Map.empty 0 Set.empty [] Map.empty []
 type ParseStateT = StateT ParseState
 type ParseStateM = ParseStateT Identity
 
 -- BridiParseState holds state which respects the logical structure
-data BridiParseState = BridiParseState {arglist::Arglist,varBindings::VarBindings,rvarBindings::RVarBindings,isSubBridi::Bool}
+data BridiParseState = BridiParseState
+    { arglist::Arglist
+    , varBindings::VarBindings
+    , rvarBindings::RVarBindings
+    , isSubBridi::Bool}
 nullBridiParseState = BridiParseState nullArglist Map.empty Map.empty False
 
 type ParseM r = (StateT BridiParseState) (ContT r ParseStateM)
@@ -119,6 +124,20 @@ class (Monad m,Applicative m) => ParseStateful m where
     setBribasti s b = (Map.insert s b <$> getBribastiBindings) >>= putBribastiBindings
     getBribasti :: TanruUnit -> m Bridi
     getBribasti s = (`getBribastiBinding` s) <$> getBribastiBindings
+
+    getBackcountStack :: m [Int]
+    getBackcountStack = backcountStack <$> getParseState
+    putBackcountStack :: [Int] -> m ()
+    putBackcountStack bs = modifyParseState $ \ps -> ps{backcountStack=bs}
+    modifyBackcountStack :: ([Int] -> [Int]) -> m ()
+    modifyBackcountStack f = (f <$> getBackcountStack) >>= putBackcountStack
+    popBackcount :: m Int
+    popBackcount = do
+	(h,t) <- splitAt 1 <$> getBackcountStack
+	putBackcountStack t
+	return $ fromMaybe (error "Backcount stack exhausted") $ listToMaybe h
+    pushBackcount :: m ()
+    pushBackcount = modifyBackcountStack $ (0:) . map (1+)
 
     getNextFreshVar,getNextFreshRVar :: m Int
     getNextFreshVar = nextFreshVar <$> getParseState
@@ -305,18 +324,20 @@ withJaiAsTag jtag b = \as ->
 withJaiAsRaising :: Bridi -> Bridi
 withJaiAsRaising b = \as -> case Map.lookup JaiPos as of
     Nothing -> b as
-    Just a -> b (setArg (NPos 1) (QualifiedTerm (LAhE "tu'a") a) as)
+    Just a -> b (setArg (NPos 1) (QualifiedTerm (LAhE "tu'a") a) (Map.delete JaiPos as))
 
 nullArgs = Map.empty
 nullArglist = Arglist nullArgs 1
 
 joinArgs :: Args -> Args -> Args
-joinArgs new old = Map.union new $ oldWithImplicits where
+joinArgs new old = Map.union (nonImplicit new) $ oldWithImplicits where
     oldWithImplicits = foldl insertImplicit old
 	[o | (UnfilledPos _, o) <- Map.assocs new]
     insertImplicit as o = 
 	let gap = head $ [1..] \\ [n | NPos n <- Map.keys $ as]
 	in Map.insert (NPos gap) o $ as
+    nonImplicit = Map.filterWithKey $ \k _ ->
+	    case k of {UnfilledPos _ -> False; _ -> True}
 
 swapArgs :: ArgPos -> ArgPos -> Args -> Args
 swapArgs p1 p2 = Map.mapKeys (\p -> if p == p1 then p2 else if p == p2 then p1 else p)
@@ -348,7 +369,7 @@ bridiToJboVPred :: Bridi -> JboVPred
 bridiToJboVPred b os =
     b $ Map.fromList [(UnfilledPos n,o) | (n,o) <- zip [0..] os]
 bridiToJboPred :: Bridi -> JboPred
-bridiToJboPred b = vPredToPred $ bridiToJboVPred b
+bridiToJboPred = vPredToPred . bridiToJboVPred
 
 swapTerms :: [JboTerm] -> Int -> Int -> [JboTerm]
 swapTerms ts n m = swapFiniteWithDefault Unfilled ts (n-1) (m-1)
@@ -490,8 +511,9 @@ setBribastiToCurrent bb =
 
 updateSumbastiWithSumtiAtom :: SumtiAtom -> JboTerm -> ParseM r ()
 updateSumbastiWithSumtiAtom sa o = do
-    when (getsRi sa) $
-	modifySumbastiBindings $ setShunting (\n -> Sumbasti False $ Ri n) o
+    when (getsRi sa) $ do
+	count <- popBackcount
+	modifySumbastiBindings $ setShunting (\n -> Sumbasti False $ Ri $ count + n) o
     case sa of
 	Name _ _ s ->
 	    setSumbasti (Sumbasti False $ LerfuString $ map LerfuChar $ take 1 s) o

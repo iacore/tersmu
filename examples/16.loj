@@ -272,7 +272,7 @@ ci da poi ke'a gerku ku'o re de poi ke'a nanmu ku'o zo'u da batci de
 
 non-veridical: (nanmu(c1) /\ 2 mei(c1))
 non-veridical: (gerku(c0) /\ 3 mei(c0))
-FA x1:((c0) >= (_)). FA x2:((c1) >= (_)). batci(x1,x2)
+FA x1:((_ =< c0)). FA x2:((_ =< c1)). batci(x1,x2)
 
 ju'a nai ge cy pa nanmu gi cy pa re mei
 .i ju'a nai ge cy no gerku gi cy no ci mei

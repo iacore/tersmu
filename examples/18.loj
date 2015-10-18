@@ -140,7 +140,7 @@ li'o
 -----
 > li pa su'i pa du li re
 
-=({su'i}(1,1),2)
+({su'i}(1,1) == 2)
 
 li pe'o su'i pa boi pa boi ku'e lo'o du li re boi lo'o
 
@@ -172,84 +172,84 @@ li ci boi lo'o prenu
 -----
 > li ma'u pa su'i ni'u pa du li no
 
-=({su'i}((ma'u pa),(ni'u pa)),0)
+({su'i}((ma'u pa),(ni'u pa)) == 0)
 
 li pe'o su'i ma'u pa boi ni'u pa boi ku'e lo'o du li no boi lo'o
 
 -----
 > li mu su'i pa du li ci su'i ci
 
-=({su'i}(5,1),{su'i}(3,3))
+({su'i}(5,1) == {su'i}(3,3))
 
 li pe'o su'i mu boi pa boi ku'e lo'o du li pe'o su'i ci boi ci boi ku'e lo'o
 
 -----
 > li ci su'i vo pi'i mu du li reci
 
-=({pi'i}({su'i}(3,4),5),23)
+({pi'i}({su'i}(3,4),5) == 23)
 
 li pe'o pi'i pe'o su'i ci boi vo boi ku'e mu boi ku'e lo'o du li reci boi lo'o
 
 -----
 > li ci su'i vo pi'i mu du li cimu
 
-=({pi'i}({su'i}(3,4),5),35)
+({pi'i}({su'i}(3,4),5) == 35)
 
 li pe'o pi'i pe'o su'i ci boi vo boi ku'e mu boi ku'e lo'o du li cimu boi lo'o
 
 -----
 > li ci su'i vo bi'e pi'i mu du li reci
 
-=({su'i}(3,{pi'i}(4,5)),23)
+({su'i}(3,{pi'i}(4,5)) == 23)
 
 li pe'o su'i ci boi pe'o pi'i vo boi mu boi ku'e ku'e lo'o du li reci boi lo'o
 
 -----
 > li vei ny. su'i pa ve'o pi'i vei ny. su'i pa [ve'o] du li ny. [bi'e] te'a re su'i re bi'e pi'i ny. su'i pa
 
-=({pi'i}({su'i}((ny),1),{su'i}((ny),1)),{su'i}({su'i}({te'a}((ny),2),{pi'i}(2,(ny))),1))
+({pi'i}({su'i}((ny),1),{su'i}((ny),1)) == {su'i}({su'i}({te'a}((ny),2),{pi'i}(2,(ny))),1))
 
 li pe'o pi'i pe'o su'i ny boi pa boi ku'e pe'o su'i ny boi pa boi ku'e ku'e lo'o du li pe'o su'i pe'o su'i pe'o te'a ny boi re boi ku'e pe'o pi'i re boi ny boi ku'e ku'e pa boi ku'e lo'o
 
 -----
 > li su'i paboi reboi ci[boi] du li xa
 
-=({su'i}(1,2,3),6)
+({su'i}(1,2,3) == 6)
 
 li pe'o su'i pa boi re boi ci boi ku'e lo'o du li xa boi lo'o
 
 -----
 > li py. su'i va'a ny. ku'e su'i zy du li xy.
 
-=({su'i}({su'i}((py),{va'a}((ny))),(zy)),(xy))
+({su'i}({su'i}((py),{va'a}((ny))),(zy)) == (xy))
 
 li pe'o su'i pe'o su'i py boi pe'o va'a ny boi ku'e ku'e zy boi ku'e lo'o du li xy boi lo'o
 
 -----
 > li zy du li ma'o fy.boi xy.
 
-=((zy),[(fy)]((xy)))
+((zy) == [(fy)]((xy)))
 
 li zy boi lo'o du li pe'o ma'o fy boi te'u xy boi ku'e lo'o
 
 -----
 > li pe'o su'i paboi reboi ciboi ku'e du li xa
 
-=({su'i}(1,2,3),6)
+({su'i}(1,2,3) == 6)
 
 li pe'o su'i pa boi re boi ci boi ku'e lo'o du li xa boi lo'o
 
 -----
 > li py. su'i pe'o va'a ny. ku'e su'i zy du li xy.
 
-=({su'i}({su'i}((py),{va'a}((ny))),(zy)),(xy))
+({su'i}({su'i}((py),{va'a}((ny))),(zy)) == (xy))
 
 li pe'o su'i pe'o su'i py boi pe'o va'a ny boi ku'e ku'e zy boi ku'e lo'o du li xy boi lo'o
 
 -----
 > li zy du li pe'o ma'o fy.boi xy. ku'e
 
-=((zy),[(fy)]((xy)))
+((zy) == [(fy)]((xy)))
 
 li zy boi lo'o du li pe'o ma'o fy boi te'u xy boi ku'e lo'o
 
@@ -263,14 +263,14 @@ li xy boi lo'o mleca li mu boi lo'o
 -----
 > py. du xy.boi zy.
 
-=(p,x,z)
+(p == x == z)
 
 py du xy zy
 
 -----
 > li re su'i re na du li mu
 
-!=({su'i}(2,2),5)
+!({su'i}(2,2) == 5)
 
 na ku li pe'o su'i re boi re boi ku'e lo'o du li mu boi lo'o
 
@@ -328,7 +328,7 @@ so'u boi da poi ke'a prenu ku'o zo'u mi catlu da
 
 gunma(c1,c0)
 non-veridical: nanba(c0)
-(pi ro) x1:((c1) >= (_)). citka(mi,x1)
+(pi ro) x1:((_ =< c1)). citka(mi,x1)
 
 cy pa gunma cy no
 .i ju'a nai cy no nanba
@@ -346,7 +346,7 @@ no'o boi da poi ke'a prenu ku'o zo'u mi catlu da
 
 gunma(c1,c0)
 non-veridical: nanba(c0)
-(pi no'o) x1:((c1) >= (_)). citka(mi,x1)
+(pi no'o) x1:((_ =< c1)). citka(mi,x1)
 
 cy pa gunma cy no
 .i ju'a nai cy no nanba
@@ -376,14 +376,14 @@ ro da poi ke'a ratcu ku'o ka'e ku da'a boi de poi ke'a ratcu ku'o zo'u da citka 
 -----
 > li ci vu'u re du li ma'u
 
-=({vu'u}(3,2),(ma'u))
+({vu'u}(3,2) == (ma'u))
 
 li pe'o vu'u ci boi re boi ku'e lo'o du li ma'u boi lo'o
 
 -----
 > li ci vu'u vo du li ni'u
 
-=({vu'u}(3,4),(ni'u))
+({vu'u}(3,4) == (ni'u))
 
 li pe'o vu'u ci boi vo boi ku'e lo'o du li ni'u boi lo'o
 
@@ -490,28 +490,28 @@ su'o da poi ke'a prenu ku'o zo'u mi catlu da
 -----
 > li pa no pa no ju'u re du li pa no
 
-=({ju'u}(1010,2),10)
+({ju'u}(1010,2) == 10)
 
 li pe'o ju'u panopano boi re boi ku'e lo'o du li pano boi lo'o
 
 -----
 > li daufeigai ju'u paxa du li rezevobi
 
-=({ju'u}((dau fei gai),16),2748)
+({ju'u}((dau fei gai),16) == 2748)
 
 li pe'o ju'u dau fei gai boi paxa boi ku'e lo'o du li rezevobi boi lo'o
 
 -----
 > li jaureivai ju'u paxa du li cimuxaze
 
-=({ju'u}((jau rei vai),16),3567)
+({ju'u}((jau rei vai),16) == 3567)
 
 li pe'o ju'u jau rei vai boi paxa boi ku'e lo'o du li cimuxaze boi lo'o
 
 -----
 > li vai pi bi ju'u paxa du li pamu pi mu
 
-=({ju'u}((vai pi bi),16),(pa mu pi mu))
+({ju'u}((vai pi bi),16) == (pa mu pi mu))
 
 li pe'o ju'u vai pi bi boi paxa boi ku'e lo'o du li pa mu pi mu boi lo'o
 
@@ -525,14 +525,14 @@ li'o
 -----
 > li ci pi'e rere pi'e vono su'i pi'e ci pi'e cici du li ci pi'e rexa pi'e paci
 
-=({su'i}((ci pi'e re re pi'e vo no),(pi'e ci pi'e ci ci)),(ci pi'e re xa pi'e pa ci))
+({su'i}((ci pi'e re re pi'e vo no),(pi'e ci pi'e ci ci)) == (ci pi'e re xa pi'e pa ci))
 
 li pe'o su'i ci pi'e re re pi'e vo no boi pi'e ci pi'e ci ci boi ku'e lo'o du li ci pi'e re xa pi'e pa ci boi lo'o
 
 -----
 > li pa pi'e re pi'e ci ju'u reno du li vovoci
 
-=({ju'u}((pa pi'e re pi'e ci),20),443)
+({ju'u}((pa pi'e re pi'e ci),20) == 443)
 
 li pe'o ju'u pa pi'e re pi'e ci boi reno boi ku'e lo'o du li vovoci boi lo'o
 
@@ -553,7 +553,7 @@ Parse error:
 -----
 > li pa pi'e vo pi ze ju'u reno du li re vo pi ci mu
 
-=({ju'u}((pa pi'e vo pi ze),20),(re vo pi ci mu))
+({ju'u}((pa pi'e vo pi ze),20) == (re vo pi ci mu))
 
 li pe'o ju'u pa pi'e vo pi ze boi reno boi ku'e lo'o du li re vo pi ci mu boi lo'o
 
@@ -578,7 +578,7 @@ cy pa gunma cy no
 -----
 > mi poi pamei cu cusku dei
 
-(1 mei(c0) /\ (mi) >= (c0))
+(1 mei(c0) /\ (c0 =< mi))
 cusku(c0,dei)
 
 ge cy no pa mei gi cy no me mi me'u
@@ -727,7 +727,7 @@ ju'a nai vi la xel. zo'u cy pa ke snime bolci ke'e
 -----
 > li re su'i re du li xo
 
-=({su'i}(2,2),(xo))
+({su'i}(2,2) == (xo))
 
 li pe'o su'i re boi re boi ku'e lo'o du li xo boi lo'o
 
@@ -743,7 +743,7 @@ ju'a nai cy no ke xo moi prenu ke'e
 -----
 > li remu pi'i xa du li paxono
 
-=({pi'i}(25,6),(pa xo no))
+({pi'i}(25,6) == (pa xo no))
 
 li pe'o pi'i remu boi xa boi ku'e lo'o du li pa xo no boi lo'o
 
@@ -785,14 +785,14 @@ xy
 -----
 > li tu'o va'a ny. du li no vu'u ny.
 
-=({va'a}((ny)),{vu'u}(0,(ny)))
+({va'a}((ny)) == {vu'u}(0,(ny)))
 
 li pe'o va'a ny boi ku'e lo'o du li pe'o vu'u no boi ny boi ku'e lo'o
 
 -----
 > li cinonoki'oki'o du li bi gei ci
 
-=((ci no no ki'o ki'o),{gei}(8,3))
+((ci no no ki'o ki'o) == {gei}(8,3))
 
 li ci no no ki'o ki'o boi lo'o du li pe'o gei bi boi ci boi ku'e lo'o
 
@@ -813,7 +813,7 @@ Parse error:
 -----
 > li jo'i paboi reboi te'u su'i jo'i ciboi voboi du li jo'i voboi xaboi
 
-=({su'i}([1,2],[3,4]),[4,6])
+({su'i}([1,2],[3,4]) == [4,6])
 
 li pe'o su'i jo'i pa boi re boi te'u jo'i ci boi vo boi te'u ku'e lo'o du li jo'i vo boi xa boi te'u lo'o
 
@@ -834,28 +834,28 @@ Parse error:
 -----
 > li fu'a reboi ci su'i du li mu
 
-=({su'i}(2,3),5)
+({su'i}(2,3) == 5)
 
 li pe'o su'i re boi ci boi ku'e lo'o du li mu boi lo'o
 
 -----
 > li fu'a reboi ci pi'i voboi mu pi'i su'i du li rexa
 
-=({su'i}({pi'i}(2,3),{pi'i}(4,5)),26)
+({su'i}({pi'i}(2,3),{pi'i}(4,5)) == 26)
 
 li pe'o su'i pe'o pi'i re boi ci boi ku'e pe'o pi'i vo boi mu boi ku'e ku'e lo'o du li rexa boi lo'o
 
 -----
 > li fu'a ciboi muboi vu'u du li fu'a reboi tu'o va'a
 
-=({vu'u}(3,5),{va'a}(2))
+({vu'u}(3,5) == {va'a}(2))
 
 li pe'o vu'u ci boi mu boi ku'e lo'o du li pe'o va'a re boi ku'e lo'o
 
 -----
 > li cinoki'oki'o du li fu'a biboi ciboi panoboi ge'a gei
 
-=((ci no ki'o ki'o),{gei}(8,3,10))
+((ci no ki'o ki'o) == {gei}(8,3,10))
 
 li ci no ki'o ki'o boi lo'o du li pe'o gei bi boi ci boi pano boi ku'e lo'o
 
@@ -881,7 +881,7 @@ ju'a nai cy no zarci
 > li re su'i re du li vo lo'o .onai lo nalseldjuno namcu
 
 <nalseldjuno(_)><namcu>(c0)
-(=({su'i}(2,2),4) <-> !=({su'i}(2,2),c0))
+(({su'i}(2,2) == 4) <-> !({su'i}(2,2) == c0))
 
 cy no ke nalseldjuno namcu ke'e
 .i go li pe'o su'i re boi re boi ku'e lo'o du li vo boi lo'o gi na ku li pe'o su'i re boi re boi ku'e lo'o du cy no
@@ -889,7 +889,7 @@ cy no ke nalseldjuno namcu ke'e
 -----
 > li re su'i je pi'i re du li vo
 
-(=({su'i}(2,2),4) /\ =({pi'i}(2,2),4))
+(({su'i}(2,2) == 4) /\ ({pi'i}(2,2) == 4))
 
 ge li pe'o su'i re boi re boi ku'e lo'o du li vo boi lo'o gi li pe'o pi'i re boi re boi ku'e lo'o du li vo boi lo'o
 
@@ -903,7 +903,7 @@ Parse error:
 -----
 > go li .abu bi'epi'i vei xy. te'a re ve'o su'i by. bi'epi'i xy. su'i cy. du li no gi li xy. du li vei va'a by. ku'e su'i ja vu'u fe'a vei by. bi'ete'a re vu'u vo bi'epi'i .abu bi'epi'i cy. ve'o [ku'e] ve'o fe'i re bi'epi'i .abu
 
-(=({su'i}({su'i}({pi'i}((abu),{te'a}((xy),2)),{pi'i}((by),(xy))),(cy)),0) <-> (=((xy),{fe'i}({su'i}({va'a}((by)),{fe'a}({vu'u}({te'a}((by),2),{pi'i}(4,{pi'i}((abu),(cy)))))),{pi'i}(2,(abu)))) \/ =((xy),{fe'i}({vu'u}({va'a}((by)),{fe'a}({vu'u}({te'a}((by),2),{pi'i}(4,{pi'i}((abu),(cy)))))),{pi'i}(2,(abu))))))
+(({su'i}({su'i}({pi'i}((abu),{te'a}((xy),2)),{pi'i}((by),(xy))),(cy)) == 0) <-> (((xy) == {fe'i}({su'i}({va'a}((by)),{fe'a}({vu'u}({te'a}((by),2),{pi'i}(4,{pi'i}((abu),(cy)))))),{pi'i}(2,(abu)))) \/ ((xy) == {fe'i}({vu'u}({va'a}((by)),{fe'a}({vu'u}({te'a}((by),2),{pi'i}(4,{pi'i}((abu),(cy)))))),{pi'i}(2,(abu))))))
 
 go li pe'o su'i pe'o su'i pe'o pi'i abu boi pe'o te'a xy boi re boi ku'e ku'e pe'o pi'i by boi xy boi ku'e ku'e cy boi ku'e lo'o du li no boi lo'o gi ga li xy boi lo'o du li pe'o fe'i pe'o su'i pe'o va'a by boi ku'e pe'o fe'a pe'o vu'u pe'o te'a by boi re boi ku'e pe'o pi'i vo boi pe'o pi'i abu boi cy boi ku'e ku'e ku'e ku'e ku'e pe'o pi'i re boi abu boi ku'e ku'e lo'o gi li xy boi lo'o du li pe'o fe'i pe'o vu'u pe'o va'a by boi ku'e pe'o fe'a pe'o vu'u pe'o te'a by boi re boi ku'e pe'o pi'i vo boi pe'o pi'i abu boi cy boi ku'e ku'e ku'e ku'e ku'e pe'o pi'i re boi abu boi ku'e ku'e lo'o
 
@@ -938,14 +938,14 @@ xy
 -----
 > li na'u tanjo te'u vei pai fe'i re [ve'o] du li ci'i
 
-=([tanjo(_)]({fe'i}((pai),2)),(ci'i))
+([tanjo(_)]({fe'i}((pai),2)) == (ci'i))
 
 li pe'o na'u tanjo te'u pe'o fe'i pai boi re boi ku'e ku'e lo'o du li ci'i boi lo'o
 
 -----
 > li ni'e ni clani [te'u] pi'i ni'e ni ganra [te'u] pi'i ni'e ni condi te'u du li ni'e ni canlu
 
-=({pi'i}({pi'i}([ni[clani(\1)](_)],[ni[ganra(\1)](_)]),[ni[condi(\1)](_)]),[ni[canlu(\1)](_)])
+({pi'i}({pi'i}([ni[clani(\1)](_)],[ni[ganra(\1)](_)]),[ni[condi(\1)](_)]) == [ni[canlu(\1)](_)])
 
 li pe'o pi'i pe'o pi'i ni'e ni ce'u clani kei te'u ni'e ni ce'u ganra kei te'u ku'e ni'e ni ce'u condi kei te'u ku'e lo'o du li ni'e ni ce'u canlu kei te'u lo'o
 
@@ -968,14 +968,14 @@ cy no lanzu
 -----
 > li re su'i re du li vo
 
-=({su'i}(2,2),4)
+({su'i}(2,2) == 4)
 
 li pe'o su'i re boi re boi ku'e lo'o du li vo boi lo'o
 
 -----
 > me'o re su'i re du me'o vo
 
-=([MEX: Operation (OpVUhU "su'i") [MexInt 2,MexInt 2]],[MEX: MexInt 4])
+([MEX: Operation (OpVUhU "su'i") [MexInt 2,MexInt 2]] == [MEX: MexInt 4])
 
 me'o Operation (OpVUhU "su'i") [MexInt 2,MexInt 2] lo'o du me'o MexInt 4 lo'o
 
@@ -989,7 +989,7 @@ li ni'u mu boi lo'o nu'a va'a te'u li ma'u mu boi lo'o
 -----
 > li re na'u mo re du li vo
 
-? R1. =([R1(_)](2,2),4)
+? R1. ([R1(_)](2,2) == 4)
 
 mo cei broda zo'u li pe'o na'u broda te'u re boi re boi ku'e lo'o du li vo boi lo'o
 
@@ -1003,7 +1003,7 @@ nu'a su'i te'u
 -----
 > li re na'u nu'a su'i re du li vo
 
-=([[{su'i}](_)](2,2),4)
+([[{su'i}](_)](2,2) == 4)
 
 li pe'o na'u nu'a su'i te'u te'u re boi re boi ku'e lo'o du li vo boi lo'o
 
@@ -1025,35 +1025,35 @@ li pe'o na'u nu'a su'i te'u te'u re boi re boi ku'e lo'o du li vo boi lo'o
 -----
 > li ci se vu'u vo du li pa
 
-=({vu'u}(4,3),1)
+({vu'u}(4,3) == 1)
 
 li pe'o vu'u vo boi ci boi ku'e lo'o du li pa boi lo'o
 
 -----
 > li ci na'e su'i vo du li pare
 
-=({na'e}({su'i})(3,4),12)
+({na'e}({su'i})(3,4) == 12)
 
 li pe'o na'e su'i ci boi vo boi ku'e lo'o du li pare boi lo'o
 
 -----
 > li ci to'e vu'u re du li mu
 
-=({to'e}({vu'u})(3,2),5)
+({to'e}({vu'u})(3,2) == 5)
 
 li pe'o to'e vu'u ci boi re boi ku'e lo'o du li mu boi lo'o
 
 -----
 > li re su'i re du li na'ebo mu
 
-=({su'i}(2,2),{na'e bo}(5))
+({su'i}(2,2) == {na'e bo}(5))
 
 li pe'o su'i re boi re boi ku'e lo'o du li na'e bo mu boi lu'u lo'o
 
 -----
 > la zel. poi gunta la tebes. pu nanmu
 
-((pu)(). gunta(c0,"tebes") /\ ("zel") >= (c0))
+((pu)(). gunta(c0,"tebes") /\ (c0 =< "zel"))
 nanmu(c0)
 
 ge pu ku zo'u cy no gunta la tebes. gi cy no me la zel. me'u

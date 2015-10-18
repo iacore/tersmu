@@ -472,7 +472,7 @@ ta to'e melbi
 
 (ca)(). nolraitru(c1,c0)
 non-veridical: fasygu'e(c0)
-EQ(0) x1:((c1) >= (_)). krecau(x1)
+EQ(0) x1:((_ =< c1)). krecau(x1)
 
 ca ku zo'u cy pa nolraitru cy no
 .i ju'a nai cy no fasygu'e
