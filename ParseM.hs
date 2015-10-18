@@ -49,7 +49,11 @@ type ParseStateT = StateT ParseState
 type ParseStateM = ParseStateT Identity
 
 -- BridiParseState holds state which respects the logical structure
-data BridiParseState = BridiParseState {arglist::Arglist,varBindings::VarBindings,rvarBindings::RVarBindings,isSubBridi::Bool}
+data BridiParseState = BridiParseState
+    { arglist::Arglist
+    , varBindings::VarBindings
+    , rvarBindings::RVarBindings
+    , isSubBridi::Bool}
 nullBridiParseState = BridiParseState nullArglist Map.empty Map.empty False
 
 type ParseM r = (StateT BridiParseState) (ContT r ParseStateM)

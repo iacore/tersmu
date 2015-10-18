@@ -53,6 +53,7 @@ withNext v f = do
     let n = head [ n | n <- [1..], not $ (v n) `elem` vals ]
     withBinding (v n) f
 
+withShuntedRelVar :: (Int -> Bindful ShowBindable b) -> Bindful ShowBindable b
 withShuntedRelVar f =
     do twiddleBound $ \s -> case s of SRel n -> SRel $ n+1
 				      _ -> s
@@ -60,6 +61,8 @@ withShuntedRelVar f =
        twiddleBound $ \s -> case s of SRel n -> SRel $ n-1
 				      _ -> s
        return r
+
+withShuntedLambdas :: Int -> ([Int] -> Bindful ShowBindable b) -> Bindful ShowBindable b
 withShuntedLambdas arity f = do
     twiddleBound $ \s -> case s of
 	SLambda l n -> SLambda (l+1) n
@@ -196,12 +199,14 @@ instance JboShow JboOperator where
     logjboshow jbo@False (OpVUhU v) = bracket '{' <$> return v
     logjboshow jbo@True (OpVUhU v) = return v
 
+logjboshowLogConn :: Bool -> [Char] -> LogJboConnective -> Bindful ShowBindable String
 logjboshowLogConn _ prefix (LogJboConnective b c b') =
 	return $ (if not b then "na " else "") ++
 	    (if c == 'U' then "se " ++ prefix ++ "u"
 		else prefix ++ [c]) ++
 	    if not b' then " nai" else ""
 
+logjboshowConn :: Bool -> [Char] -> JboConnective -> Bindful ShowBindable String
 logjboshowConn False prefix con = do
     js <- logjboshowConn True prefix con
     return $ "{"++js++"}"
@@ -277,6 +282,7 @@ instance JboShow JboVPred where
     -- so we just show the unary pred instead.
     logjboshow jbo vp = logjboshow jbo $ vPredToPred vp
 
+logjboshowpred :: Bool -> (Int -> JboProp) -> Bindful ShowBindable String
 logjboshowpred jbo@False p =
     withShuntedRelVar $ \n -> logjboshow jbo $ p n
 logjboshowpred jbo@True p = withNext SVar $ \v ->

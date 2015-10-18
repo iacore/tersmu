@@ -31,6 +31,7 @@ executable tersmu
         , process >= 1.1, containers >= 0.5
         , mtl >=2.0, transformers >=0.2, syb >= 0.4
       main-is: Main.hs
+      ghc-options: -fno-warn-tabs
 
   other-modules: Bindful JboParse JboProp JboShow JboSyntax Logic Lojban Morph
       Morphology Pappy.Basic Pappy.Parse Pappy.Pos ParseM ParseText Util
@@ -43,6 +44,7 @@ executable tersmuBot
   else
     Buildable: False
   main-is: tersmuBot.hs
+  ghc-options: -fno-warn-tabs
 
   other-modules: Bindful JboParse JboProp JboShow JboSyntax Logic Lojban Morph
       Morphology Pappy.Basic Pappy.Parse Pappy.Pos ParseM ParseText Util TersmuIRC
