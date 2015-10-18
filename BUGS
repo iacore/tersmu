@@ -56,12 +56,12 @@ Deliberate deviations from baseline, not considered bugs:
     Some constructs are accepted which the official grammar rejects; e.g. the
     tag grammar we use is essentially that of xorxes' zasni gerna.
 
-Other behaviour whose correctness may not be immediately obvious:
-    The {vo'a} series can only refer backwards. To see why, consider
-	{vo'e broda ko'a gi'e brode ko'e}.
-
 Other possibly contentious points:
     Sumti put in an already filled place simply replace what was there before.
-
-    Linkarg sumti fill, but do not delete, a place. So e.g.
-	{ko'a broda be fa ko'e} == {ko'e broda}
+    Linkarg sumti fill, but do not delete, a place.
+    So e.g.
+	{broda be ko'a fe ko'e} == {broda ko'e},
+    where other defensible possibilities include {broda ko'a}, {broda ko'a
+    jo'u ko'e}, and {broda ko'a ko'e} (the last obtained by considering
+    linkargs to change the selbri by filling places, an interpretation which
+    would also have effects on scope).

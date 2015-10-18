@@ -1,3 +1,5 @@
+Rename to 'tersmus'?
+
 Next main job:
     redo parsing so as to properly handle full grammar and morphology,
     and ensure frees are correctly associated with their positions.
@@ -7,9 +9,6 @@ Next main job:
     ourselves.
 
     Once this is done, we can think about handling UI and so on.
-
-Ilmen thinks handling of {broda be ko'a} is wrong, and I promised him I'd
-think it through again.
 
 Rethink whether this kind of thing is right:
     ro tercange poi ponse lo ke'a xasli cu darxi xy
