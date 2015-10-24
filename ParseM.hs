@@ -314,7 +314,9 @@ instance Arglistful (ParseM r) where
 
 type Bridi = Args -> JboProp
 jboRelToBridi :: JboRel -> Bridi
-jboRelToBridi rel = \as -> Rel rel (argsToJboterms as)
+jboRelToBridi rel = jboVPredToBridi $ Rel rel
+jboVPredToBridi :: JboVPred -> Bridi
+jboVPredToBridi p = \as -> p $ argsToJboterms as
 
 withJaiAsTag :: JboTag -> Bridi -> Bridi
 withJaiAsTag jtag b = \as ->
