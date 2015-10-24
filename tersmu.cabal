@@ -1,5 +1,5 @@
 name:                tersmu
-version:             0.2
+version:             0.2.1
 synopsis:            A semantic parser for lojban
 homepage:            http://mbays.freeshell.org/tersmu
 license:             GPL-3
@@ -11,7 +11,7 @@ category:            Language
 build-type:          Simple
 cabal-version:       >=1.8
 data-files:          Lojban.pappy Morphology.pappy
-extra-doc-files:     README BUGS TODO Makefile docs/overview
+extra-doc-files:     README BUGS TODO NEWS Makefile docs/overview
 
 description:
     A semantic parser for the engineered human language Lojban

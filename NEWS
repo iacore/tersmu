@@ -1,0 +1,5 @@
+0.2.1:
+    Support for ghc-7.10.
+    Miscellaneous fixes.
+0.2:
+    First release on hackage.
