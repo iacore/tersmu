@@ -34,6 +34,11 @@ Limitations:
 
     seltcita termsets, as described in CLL 10.25 (e.g. {la frank. sanli zu'a
     nu'i la'u lo mitre be li mu}), are not supported.
+    
+    We don't handle some donkey sentences which arguably we could, e.g.
+	{ro tercange poi ponse lo ke'a xasli cu darxi xy},
+    or, more canonically,
+	{ro da poi broda ke'a goi xy cu brodi xy}.
 
 Deliberate deviations from baseline, not considered bugs:
     {na broda} is equivalent to {naku broda}; consequently, {ja'a} has no

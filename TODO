@@ -8,11 +8,6 @@ Next main job:
 
     Once this is done, we can think about handling UI and so on.
 
-Rethink whether this kind of thing is right:
-    ro tercange poi ponse lo ke'a xasli cu darxi xy
-    FA x1. (xasli(f0(x1)) /\ srana(f0(x1),x1));  FA x1:((tercange(_) /\
-	ponse( ,f0(_)))). darxi(x1,f0([UNBOUND Var]))
-
 fai after tagless jai is ignored; do we want that?
 
 Multiple jai places:
