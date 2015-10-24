@@ -348,8 +348,8 @@ setArg = Map.insert
 addFaiToArglist :: JboTerm -> Arglist -> Arglist
 addFaiToArglist o (Arglist as n) = Arglist (Map.insert (JaiPos) o as) n
 
-advanceArgPosToBridi :: Arglistful m => m ()
-advanceArgPosToBridi = modifyArglist $ \al ->
+advanceArgPosToSelbri :: Arglistful m => m ()
+advanceArgPosToSelbri = modifyArglist $ \al ->
     if Map.null $ args al
        then al{position=2}
        else al

@@ -124,10 +124,8 @@ parseBTail (BridiTail3 (Negated sb) tts) =
     -- XXX: need to handle Negated and tags here as well as in parseSelbri,
     -- because of the SBInverted handling within parseBTail below.
     mapProp Not >> parseBTail (BridiTail3 sb tts)
-parseBTail (BridiTail3 (TaggedSelbri tag sb) tts) = do
-    tag' <- parseTag tag
-    doBareTag tag'
-    parseBTail (BridiTail3 sb tts)
+parseBTail (BridiTail3 (TaggedSelbri tag sb) tts) =
+    (parseTag tag >>= doBareTag) >> parseBTail (BridiTail3 sb tts)
 
 parseBTail (BridiTail3 (Selbri2 (SBInverted sb sb')) tts) =
     getInvertedRel sb sb' where
@@ -142,10 +140,8 @@ parseBTail (BridiTail3 sb tts) = do
 parseSelbri :: Selbri -> BridiM Bridi
 parseSelbri (Negated sb) =
     mapProp Not >> parseSelbri sb
-parseSelbri (TaggedSelbri tag sb) = do
-    tag' <- parseTag tag
-    doBareTag tag'
-    parseSelbri sb
+parseSelbri (TaggedSelbri tag sb) =
+    (parseTag tag >>= doBareTag) >> parseSelbri sb
 parseSelbri (Selbri2 sb) =
     parseSelbri2 sb
 
@@ -162,21 +158,20 @@ parseSelbri3 :: Selbri3 -> BridiM Bridi
 parseSelbri3 (SBTanru sb sb') = do
     applySeltau (parseSelbri3 sb) =<< parseSelbri3 sb'
 parseSelbri3 (ConnectedSB fore con sb sb') = do
-    (con',p,p') <- if fore then do
+    (con',p) <- if fore then do
 	    con' <- parseConnective con
 	    p <- selbriToVPred sb
-	    p' <- selbriToVPred $ sb3tosb sb'
-	    return (con',p,p')
+	    return (con',p)
 	else do
 	    p <- selbriToVPred sb
 	    con' <- parseConnective con
-	    p' <- selbriToVPred $ sb3tosb sb'
-	    return (con',p,p')
+	    return (con',p)
+    p' <- selbriToVPred $ sb3tosb sb'
     return $ jboRelToBridi $ TanruConnective con' p p'
 parseSelbri3 (ScalarNegatedSB nahe sb) =
     mapRelsInBridi (ScalarNegatedRel nahe) <$> parseSelbri3 sb
 parseSelbri3 (TanruUnit fs tu2 las) =
-    advanceArgPosToBridi >> parseTU tu2 <* parseTerms las <* doFreesInParseM fs
+    advanceArgPosToSelbri >> parseTU tu2 <* parseTerms las <* doFreesInParseM fs
 parseSelbri3 (BridiBinding tu tu') = do
     assigned' <- tryAssign tu'
     assigned <- if assigned' then return False else tryAssign tu
