@@ -58,5 +58,9 @@ Deliberate deviations from baseline, not considered bugs:
 Other possibly contentious points:
     Sumti put in an already filled place simply replace what was there before;
     this is well-established for GOhA pro-bridi, and we extend it to the
-    general case. So e.g. {broda ko'a fe ko'e} == {broda ko'e}.
+    general case. So e.g. {broda be ko'a fe ko'e} == {broda ko'e}.
     Gleki points out some counter-evidence: CLL:9.3.9 and CLL:12.2.3.
+
+    Linkargs on the main selbri are interpreted along with the arguments of
+    the main bridi, rather that giving the selbri its own scope; this fits
+    with the behaviour of bare tags on selbri, and with CLL:5.12.11.

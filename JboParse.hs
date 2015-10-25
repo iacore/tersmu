@@ -171,8 +171,7 @@ parseSelbri3 (ConnectedSB fore con sb sb') = do
 parseSelbri3 (ScalarNegatedSB nahe sb) =
     mapRelsInBridi (ScalarNegatedRel nahe) <$> parseSelbri3 sb
 parseSelbri3 (TanruUnit fs tu2 las) =
-    (advanceArgPosToSelbri >>) $ parsedSelbriToNewSelbri $
-	(advanceArgPosToSelbri >>) $ parseTU tu2 <* parseTerms las <* doFreesInParseM fs
+    advanceArgPosToSelbri >> parseTU tu2 <* parseTerms las <* doFreesInParseM fs
 parseSelbri3 (BridiBinding tu tu') = do
     assigned' <- tryAssign tu'
     assigned <- if assigned' then return False else tryAssign tu
@@ -655,11 +654,6 @@ selbriToVPred :: Selbri -> ParseM r JboVPred
 selbriToVPred sb = parsedSelbriToVPred $ parseSelbri sb
 parsedSelbriToVPred :: BridiM Bridi -> ParseM r JboVPred
 parsedSelbriToVPred m = bridiToJboVPred <$> partiallyRunSubBridiM m
-
--- |parsedSelbriToNewSelbri: extract bridi by removing filled places, so new
--- arguments fill the previously unfilled places, in order
-parsedSelbriToNewSelbri :: BridiM Bridi -> ParseM r Bridi
-parsedSelbriToNewSelbri m = jboVPredToBridi <$> parsedSelbriToVPred m
 
 selbriToPred sb = vPredToPred <$> selbriToVPred sb
 
