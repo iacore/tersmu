@@ -41,7 +41,7 @@ ju'a nai cy no nuzba
 > le finpe zo'u citka
 
 non-veridical: finpe(c0)
-citka( )
+citka()
 
 ju'a nai cy no finpe
 .i citka
@@ -563,7 +563,7 @@ gleki la frank.
 -----
 > la frank. prami sei gleki la djein.
 
-gleki( )
+gleki()
 prami("frank","djein")
 
 gleki

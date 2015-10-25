@@ -10,7 +10,7 @@ ju'a nai cy no zarci
 > nu mi klama le zarci [kei]
 
 non-veridical: zarci(c0)
-nu[klama(mi,c0)]( )
+nu[klama(mi,c0)]()
 
 ju'a nai cy no zarci
 .i nu mi klama cy no kei
@@ -18,14 +18,14 @@ ju'a nai cy no zarci
 -----
 > la djan. cu nu sonci kei djica
 
-<nu[sonci( )](_)><djica>("djan")
+<nu[sonci()](_)><djica>("djan")
 
 la djan. ke nu sonci kei djica ke'e
 
 -----
 > la djan. cu djica le nu sonci [kei]
 
-non-veridical: nu[sonci( )](c0)
+non-veridical: nu[sonci()](c0)
 djica("djan",c0)
 
 ju'a nai cy no nu sonci kei
@@ -79,7 +79,7 @@ ju'a nai klama fu cy no
 -----
 > le nu klama
 
-non-veridical: nu[klama( )](c0)
+non-veridical: nu[klama()](c0)
 [Fragment: c0]
 
 ju'a nai cy no nu klama kei
@@ -106,7 +106,7 @@ ju'a nai cy no nu la djan. cinba la djein. kei
 -----
 > mi nelci le nu limna
 
-non-veridical: nu[limna( )](c0)
+non-veridical: nu[limna()](c0)
 nelci(mi,c0)
 
 ju'a nai cy no nu limna kei
@@ -214,14 +214,14 @@ ju'a nai cy no ka do xunre ce'u kei
 -----
 > ka mi prami [zo'e] [kei]
 
-ka[prami(mi,c0,\1)]( )
+ka[prami(mi,c0,\1)]()
 
 ka mi prami cy no ce'u kei
 
 -----
 > ka [zo'e] prami mi [kei]
 
-ka[prami(c0,mi,\1)]( )
+ka[prami(c0,mi,\1)]()
 
 ka cy no prami mi ce'u kei
 

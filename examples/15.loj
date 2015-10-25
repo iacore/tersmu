@@ -46,7 +46,7 @@ na ku ti ke melbi be mi ke barda prenu ke'e ke'e
 > mi na gleki le nu na klama le nu dansu
 
 non-veridical: nu[!klama( ,c0)](c1)
-non-veridical: nu[dansu( )](c0)
+non-veridical: nu[dansu()](c0)
 !gleki(mi,c1)
 
 ju'a nai cy pa nu na ku klama cy no kei
@@ -533,7 +533,7 @@ xu kau pu ku zo'u ge la djan. klama la paris. gi la djan. klama la rom.
 -----
 > na go'i
 
-!go'i( )
+!go'i()
 
 na ku go'i
 
@@ -547,7 +547,7 @@ na ku pu ku zo'u ge la djan. klama la paris. gi la djan. klama la rom.
 -----
 > na ba go'i
 
-!(ba)(). go'i( )
+!(ba)(). go'i()
 
 na ku ba ku zo'u go'i
 
@@ -561,7 +561,7 @@ na ku ba ku zo'u ge la djan. klama la paris. gi la djan. klama la rom.
 -----
 > ba na go'i
 
-(ba)(). !go'i( )
+(ba)(). !go'i()
 
 ba ku zo'u na ku go'i
 
@@ -575,7 +575,7 @@ ba ku zo'u na ku ge la djan. klama la paris. gi la djan. klama la rom.
 -----
 > na'e go'i
 
-{na'e}(go'i)( )
+{na'e}(go'i)()
 
 na'e go'i
 
@@ -589,7 +589,7 @@ pu ku zo'u ge la djan. na'e klama la paris. gi la djan. na'e klama la rom.
 -----
 > xu na go'i
 
-?. !go'i( )
+?. !go'i()
 
 xu kau zo'u na ku go'i
 
@@ -603,21 +603,21 @@ xu kau zo'u na ku pu ku zo'u ge la djan. klama la paris. gi la djan. klama la ro
 -----
 > go'i
 
-go'i( )
+go'i()
 
 go'i
 
 -----
 > na go'i
 
-!go'i( )
+!go'i()
 
 na ku go'i
 
 -----
 > ja'a go'i
 
-go'i( )
+go'i()
 
 go'i
 
@@ -651,28 +651,28 @@ ju'a nai cy pa zu'o do rapydarxi cy no kei
 -----
 > na'i go'i
 
-go'i( )
+go'i()
 
 go'i
 
 -----
 > go'i na'i
 
-go'i( )
+go'i()
 
 go'i
 
 -----
 > go'i ji'una'iku
 
-(ji'u)(). go'i( )
+(ji'u)(). go'i()
 
 ji'u ku zo'u go'i
 
 -----
 > na go'i .ije na'e go'i .ije na'i go'i
 
-((!go'i( ) /\ !{na'e}(go'i)( )) /\ !{na'e}(go'i)( ))
+((!go'i() /\ !{na'e}(go'i)()) /\ !{na'e}(go'i)())
 
 ge ge na ku go'i gi na ku na'e go'i gi na ku na'e go'i
 

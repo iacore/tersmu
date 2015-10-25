@@ -190,7 +190,7 @@ ju'a nai cy no zarci
 -----
 > broda ke brode brodi
 
-<broda(_)><<brode(_)><brodi>>( )
+<broda(_)><<brode(_)><brodi>>()
 
 ke broda ke brode brodi ke'e ke'e
 
@@ -329,7 +329,7 @@ Parse error:
 -----
 > mi nelci le si'o go'i
 
-non-veridical: si'o[go'i( )](c0)
+non-veridical: si'o[go'i()](c0)
 nelci(mi,c0)
 
 ju'a nai cy no si'o go'i kei
@@ -378,7 +378,7 @@ ju'a nai cy vo tixnu
 
 non-veridical: nu[(pu)(c1). pensi(do,c0)](c2)
 non-veridical: nu[zukte(do)](c1)
-non-veridical: nu[nei( )](c0)
+non-veridical: nu[nei()](c0)
 pluka(c2,mi)
 
 ju'a nai cy re nu pu cy pa zo'u do pensi cy no kei
@@ -618,7 +618,7 @@ ma goi ko'a zo'u ko'a cmene do
 
 ? R1. <R1(_)><prenu>(c0)
 darxi(c0,do)
-barda( )
+barda()
 
 mo cei broda zo'u cy no ke broda prenu ke'e
 .i cy no darxi do

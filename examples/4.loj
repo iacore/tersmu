@@ -105,217 +105,217 @@ ju'a nai ge cy no nanmu gi cy no re mei
 -----
 > creka
 
-creka( )
+creka()
 
 creka
 
 -----
 > lijda
 
-lijda( )
+lijda()
 
 lijda
 
 -----
 > blanu
 
-blanu( )
+blanu()
 
 blanu
 
 -----
 > mamta
 
-mamta( )
+mamta()
 
 mamta
 
 -----
 > cukta
 
-cukta( )
+cukta()
 
 cukta
 
 -----
 > patfu
 
-patfu( )
+patfu()
 
 patfu
 
 -----
 > nanmu
 
-nanmu( )
+nanmu()
 
 nanmu
 
 -----
 > ninmu
 
-ninmu( )
+ninmu()
 
 ninmu
 
 -----
 > skami pilno
 
-<skami(_)><pilno>( )
+<skami(_)><pilno>()
 
 ke skami pilno ke'e
 
 -----
 > barda bloti
 
-<barda(_)><bloti>( )
+<barda(_)><bloti>()
 
 ke barda bloti ke'e
 
 -----
 > patfu mamta
 
-<patfu(_)><mamta>( )
+<patfu(_)><mamta>()
 
 ke patfu mamta ke'e
 
 -----
 > mamta patfu
 
-<mamta(_)><patfu>( )
+<mamta(_)><patfu>()
 
 ke mamta patfu ke'e
 
 -----
 > sampli
 
-sampli( )
+sampli()
 
 sampli
 
 -----
 > bralo'i
 
-bralo'i( )
+bralo'i()
 
 bralo'i
 
 -----
 > mampa'u
 
-mampa'u( )
+mampa'u()
 
 mampa'u
 
 -----
 > soirsai
 
-soirsai( )
+soirsai()
 
 soirsai
 
 -----
 > mamtypatfu
 
-mamtypatfu( )
+mamtypatfu()
 
 mamtypatfu
 
 -----
 > lerfyliste
 
-lerfyliste( )
+lerfyliste()
 
 lerfyliste
 
 -----
 > nancyprali
 
-nancyprali( )
+nancyprali()
 
 nancyprali
 
 -----
 > prunyplipe
 
-prunyplipe( )
+prunyplipe()
 
 prunyplipe
 
 -----
 > vancysanmi
 
-vancysanmi( )
+vancysanmi()
 
 vancysanmi
 
 -----
 > cumfri
 
-cumfri( )
+cumfri()
 
 cumfri
 
 -----
 > klezba
 
-klezba( )
+klezba()
 
 klezba
 
 -----
 > kixta'a
 
-kixta'a( )
+kixta'a()
 
 kixta'a
 
 -----
 > sniju'o
 
-sniju'o( )
+sniju'o()
 
 sniju'o
 
 -----
 > mampa'u
 
-mampa'u( )
+mampa'u()
 
 mampa'u
 
 -----
 > lerste
 
-lerste( )
+lerste()
 
 lerste
 
 -----
 > bridi zei valsi
 
-bridi-zei-valsi( )
+bridi-zei-valsi()
 
 bridi-zei-valsi
 
 -----
 > xy. zei kantu
 
-xy-zei-kantu( )
+xy-zei-kantu()
 
 xy-zei-kantu
 
 -----
 > kulnr,farsi zei lolgai
 
-kulnrfarsi-zei-lolgai( )
+kulnrfarsi-zei-lolgai()
 
 kulnrfarsi-zei-lolgai
 
 -----
 > na'e zei .a zei na'e zei by. livgyterbilma
 
-<na'e-zei-a-zei-na'e-zei-by(_)><livgyterbilma>( )
+<na'e-zei-a-zei-na'e-zei-by(_)><livgyterbilma>()
 
 ke na'e-zei-a-zei-na'e-zei-by livgyterbilma ke'e
 
@@ -329,7 +329,7 @@ Parse error:
 -----
 > na'e zei .a zei na'e zei by. zei livgyterbilma
 
-na'e-zei-a-zei-na'e-zei-by-zei-livgyterbilma( )
+na'e-zei-a-zei-na'e-zei-by-zei-livgyterbilma()
 
 na'e-zei-a-zei-na'e-zei-by-zei-livgyterbilma
 
@@ -343,7 +343,7 @@ Morphology error:
 -----
 > me la spagetis.
 
-(  =< "spagetis")
+( =< "spagetis")
 
 me la spagetis. me'u
 
@@ -479,21 +479,21 @@ Parse error:
 -----
 > bang,r,blgaria
 
-bangrblgaria( )
+bangrblgaria()
 
 bangrblgaria
 
 -----
 > kuln,r,blgaria
 
-kulnrblgaria( )
+kulnrblgaria()
 
 kulnrblgaria
 
 -----
 > gugd,r,blgaria
 
-gugdrblgaria( )
+gugdrblgaria()
 
 gugdrblgaria
 
@@ -573,49 +573,49 @@ Morphology error:
 -----
 > zbasai
 
-zbasai( )
+zbasai()
 
 zbasai
 
 -----
 > nunynau
 
-nunynau( )
+nunynau()
 
 nunynau
 
 -----
 > sairzbata'u
 
-sairzbata'u( )
+sairzbata'u()
 
 sairzbata'u
 
 -----
 > zbazbasysarji
 
-zbazbasysarji( )
+zbazbasysarji()
 
 zbazbasysarji
 
 -----
 > tci'ile
 
-tci'ile( )
+tci'ile()
 
 tci'ile
 
 -----
 > tci'ile ke canre tutra
 
-<tci'ile(_)><<canre(_)><tutra>>( )
+<tci'ile(_)><<canre(_)><tutra>>()
 
 ke tci'ile ke canre tutra ke'e ke'e
 
 -----
 > tci'ilykemcantutra
 
-tci'ilykemcantutra( )
+tci'ilykemcantutra()
 
 tci'ilykemcantutra
 

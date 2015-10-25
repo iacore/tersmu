@@ -331,11 +331,10 @@ nullArglist = Arglist nullArgs 1
 
 joinArgs :: Args -> Args -> Args
 joinArgs new old = Map.union (nonImplicit new) $ oldWithImplicits where
-    oldWithImplicits = foldl insertImplicit old
-	[o | (UnfilledPos _, o) <- Map.assocs new]
-    insertImplicit as o = 
-	let gap = head $ [1..] \\ [n | NPos n <- Map.keys $ as]
-	in Map.insert (NPos gap) o $ as
+    oldWithImplicits =
+	let gaps = [1..] \\ [n | NPos n <- Map.keys $ old]
+	in foldr (\(n,o) -> Map.insert (NPos $ gaps !! n) o) old
+	    [(n,o) | (UnfilledPos n, o) <- Map.assocs new, o /= Unfilled]
     nonImplicit = Map.filterWithKey $ \k _ ->
 	    case k of {UnfilledPos _ -> False; _ -> True}
 
@@ -363,13 +362,19 @@ argsToJboterms :: Args -> [JboTerm]
 argsToJboterms as =
     map (\n -> Map.findWithDefault Unfilled (NPos n) as) [1..max as]
     where
-	max as = maximum $ 1:[n | NPos n <- Map.keys as]
+	max as = maximum $ 0:[n | NPos n <- Map.keys as]
 
 bridiToJboVPred :: Bridi -> JboVPred
 bridiToJboVPred b os =
     b $ Map.fromList [(UnfilledPos n,o) | (n,o) <- zip [0..] os]
 bridiToJboPred :: Bridi -> JboPred
 bridiToJboPred = vPredToPred . bridiToJboVPred
+
+-- |closeBridi: delete filled places
+closeBridi :: Bridi -> Bridi
+closeBridi b as =
+    b $ Map.fromList $ [(UnfilledPos n,o) | (n,o) <- zip [0..] $ argsToJboterms as]
+	++ [(JaiPos,o) | o <- maybeToList $ Map.lookup JaiPos as ]
 
 swapTerms :: [JboTerm] -> Int -> Int -> [JboTerm]
 swapTerms ts n m = swapFiniteWithDefault Unfilled ts (n-1) (m-1)

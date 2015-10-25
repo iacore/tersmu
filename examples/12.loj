@@ -99,49 +99,49 @@ blakanla la djak.
 -----
 > [ke] bakni rectu [ke'e] panlo
 
-<<bakni(_)><rectu>(_)><panlo>( )
+<<bakni(_)><rectu>(_)><panlo>()
 
 ke ke bakni rectu ke'e panlo ke'e
 
 -----
 > bakni ke rectu panlo [ke'e]
 
-<bakni(_)><<rectu(_)><panlo>>( )
+<bakni(_)><<rectu(_)><panlo>>()
 
 ke bakni ke rectu panlo ke'e ke'e
 
 -----
 > zekri ke nenri klama [ke'e]
 
-<zekri(_)><<nenri(_)><klama>>( )
+<zekri(_)><<nenri(_)><klama>>()
 
 ke zekri ke nenri klama ke'e ke'e
 
 -----
 > [ke] zekri nenri [ke'e] klama
 
-<<zekri(_)><nenri>(_)><klama>( )
+<<zekri(_)><nenri>(_)><klama>()
 
 ke ke zekri nenri ke'e klama ke'e
 
 -----
 > xamsi ke calku curnu
 
-<xamsi(_)><<calku(_)><curnu>>( )
+<xamsi(_)><<calku(_)><curnu>>()
 
 ke xamsi ke calku curnu ke'e ke'e
 
 -----
 > [ke] xamsi calku [ke'e] curnu
 
-<<xamsi(_)><calku>(_)><curnu>( )
+<<xamsi(_)><calku>(_)><curnu>()
 
 ke ke xamsi calku ke'e curnu ke'e
 
 -----
 > nu sonci kei djica
 
-<nu[sonci( )](_)><djica>( )
+<nu[sonci()](_)><djica>()
 
 ke nu sonci kei djica ke'e
 
@@ -166,21 +166,21 @@ ju'a nai cy no nu do morsi kei
 -----
 > [ke] xance pilno [ke'e] minde
 
-<<xance(_)><pilno>(_)><minde>( )
+<<xance(_)><pilno>(_)><minde>()
 
 ke ke xance pilno ke'e minde ke'e
 
 -----
 > [ke] minde xance [ke'e] pilno
 
-<<minde(_)><xance>(_)><pilno>( )
+<<minde(_)><xance>(_)><pilno>()
 
 ke ke minde xance ke'e pilno ke'e
 
 -----
 > minde ke xance pilno [ke'e]
 
-<minde(_)><<xance(_)><pilno>>( )
+<minde(_)><<xance(_)><pilno>>()
 
 ke minde ke xance pilno ke'e ke'e
 

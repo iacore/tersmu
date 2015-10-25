@@ -141,7 +141,7 @@ la djan. klama
 -----
 > .ii smacu
 
-smacu( )
+smacu()
 
 smacu
 
@@ -286,7 +286,7 @@ ju'a nai cy no zdani
 > .ie mi na cusku lu'e le tcika be le nu xruti
 
 non-veridical: tcika(c1,c0)
-non-veridical: nu[xruti( )](c0)
+non-veridical: nu[xruti()](c0)
 !cusku(mi,{lu'e}(c1))
 
 ju'a nai cy pa tcika cy no
@@ -799,7 +799,7 @@ ju'a nai cy no kabri
 > .i sei la djan. cusku se'u e'o doi djordj. zo'o rapygau
 
 cusku( ,"djan")
-rapygau( )
+rapygau()
 
 cusku la djan.
 .i rapygau

@@ -224,49 +224,49 @@ ta ke melbi ke cmalu ke nixli ckule ke'e ke'e ke'e
 -----
 > barda xunre gerku
 
-<<barda(_)><xunre>(_)><gerku>( )
+<<barda(_)><xunre>(_)><gerku>()
 
 ke ke barda xunre ke'e gerku ke'e
 
 -----
 > barda xunre bo gerku
 
-<barda(_)><<xunre(_)><gerku>>( )
+<barda(_)><<xunre(_)><gerku>>()
 
 ke barda ke xunre gerku ke'e ke'e
 
 -----
 > barda je xunre gerku
 
-<<barda(_)>{je}<xunre(_)>(_)><gerku>( )
+<<barda(_)>{je}<xunre(_)>(_)><gerku>()
 
 ke ke barda ke'e je ke xunre ke'e gerku ke'e
 
 -----
 > xunre je barda gerku
 
-<<xunre(_)>{je}<barda(_)>(_)><gerku>( )
+<<xunre(_)>{je}<barda(_)>(_)><gerku>()
 
 ke ke xunre ke'e je ke barda ke'e gerku ke'e
 
 -----
 > barda je pelxu bo xunre gerku
 
-<<barda(_)>{je}<<pelxu(_)><xunre>(_)>(_)><gerku>( )
+<<barda(_)>{je}<<pelxu(_)><xunre>(_)>(_)><gerku>()
 
 ke ke barda ke'e je ke ke pelxu xunre ke'e ke'e gerku ke'e
 
 -----
 > barda je ke pelxu xunre ke'e gerku
 
-<<barda(_)>{je}<<pelxu(_)><xunre>(_)>(_)><gerku>( )
+<<barda(_)>{je}<<pelxu(_)><xunre>(_)>(_)><gerku>()
 
 ke ke barda ke'e je ke ke pelxu xunre ke'e ke'e gerku ke'e
 
 -----
 > barda je pelxu xunre gerku
 
-<<<barda(_)>{je}<pelxu(_)>(_)><xunre>(_)><gerku>( )
+<<<barda(_)>{je}<pelxu(_)>(_)><xunre>(_)><gerku>()
 
 ke ke ke barda ke'e je ke pelxu ke'e xunre ke'e gerku ke'e
 
@@ -303,42 +303,42 @@ ju'a nai cy no bajra
 -----
 > blanu naja lenku skapi
 
-<<blanu(_)>{na ja}<lenku(_)>(_)><skapi>( )
+<<blanu(_)>{na ja}<lenku(_)>(_)><skapi>()
 
 ke ke blanu ke'e na ja ke lenku ke'e skapi ke'e
 
 -----
 > xamgu jo tordu nuntavla
 
-<<xamgu(_)>{jo}<tordu(_)>(_)><nuntavla>( )
+<<xamgu(_)>{jo}<tordu(_)>(_)><nuntavla>()
 
 ke ke xamgu ke'e jo ke tordu ke'e nuntavla ke'e
 
 -----
 > vajni ju pluka nuntavla
 
-<<vajni(_)>{ju}<pluka(_)>(_)><nuntavla>( )
+<<vajni(_)>{ju}<pluka(_)>(_)><nuntavla>()
 
 ke ke vajni ke'e ju ke pluka ke'e nuntavla ke'e
 
 -----
 > ricfu je blanu jabo crino
 
-<ricfu(_)>{je}<<blanu(_)>{ja}<crino(_)>(_)>( )
+<ricfu(_)>{je}<<blanu(_)>{ja}<crino(_)>(_)>()
 
 ke ricfu ke'e je ke ke blanu ke'e ja ke crino ke'e ke'e
 
 -----
 > ricfu je blanu jabo crino bo blanu
 
-<ricfu(_)>{je}<<blanu(_)>{ja}<<crino(_)><blanu>(_)>(_)>( )
+<ricfu(_)>{je}<<blanu(_)>{ja}<<crino(_)><blanu>(_)>(_)>()
 
 ke ricfu ke'e je ke ke blanu ke'e ja ke ke crino blanu ke'e ke'e ke'e
 
 -----
 > ricfu je ke blanu ja crino [ke'e]
 
-<ricfu(_)>{je}<<blanu(_)>{ja}<crino(_)>(_)>( )
+<ricfu(_)>{je}<<blanu(_)>{ja}<crino(_)>(_)>()
 
 ke ricfu ke'e je ke ke blanu ke'e ja ke crino ke'e ke'e
 
@@ -366,14 +366,14 @@ ti ke ke blanu ke'e je ke xunre ke'e bolci ke'e
 -----
 > gu'e barda gi xunre gerku
 
-<<barda(_)>{je}<xunre(_)>(_)><gerku>( )
+<<barda(_)>{je}<xunre(_)>(_)><gerku>()
 
 ke ke barda ke'e je ke xunre ke'e gerku ke'e
 
 -----
 > gu'e barda je xunre gi gerku ja mlatu
 
-<<<barda(_)>{je}<xunre(_)>(_)>{je}<gerku(_)>(_)>{ja}<mlatu(_)>( )
+<<<barda(_)>{je}<xunre(_)>(_)>{je}<gerku(_)>(_)>{ja}<mlatu(_)>()
 
 ke ke ke barda ke'e je ke xunre ke'e ke'e je ke gerku ke'e ke'e ja ke mlatu ke'e
 
@@ -406,7 +406,7 @@ cy pa ckule
 > nixli be li mu bei lo merko be'o bo ckule
 
 merko(c0)
-<nixli(_,5,c0)><ckule>( )
+<nixli(_,5,c0)><ckule>()
 
 cy no merko
 .i ke nixli be li mu boi lo'o bei cy no ckule ke'e
@@ -458,7 +458,7 @@ ju'a nai cy pa zdani
 -----
 > melbi je cmalu nixli bo ckule
 
-<<melbi(_)>{je}<cmalu(_)>(_)><<nixli(_)><ckule>>( )
+<<melbi(_)>{je}<cmalu(_)>(_)><<nixli(_)><ckule>>()
 
 ke ke melbi ke'e je ke cmalu ke'e ke nixli ckule ke'e ke'e
 
@@ -574,35 +574,35 @@ ta ke melbi ke cmalu ke nixli ckule ke'e ke'e ke'e
 -----
 > ckule co melbi nixli
 
-<<melbi(_)><nixli>(_)><ckule>( )
+<<melbi(_)><nixli>(_)><ckule>()
 
 ke ke melbi nixli ke'e ckule ke'e
 
 -----
 > ke melbi nixli ke'e ckule
 
-<<melbi(_)><nixli>(_)><ckule>( )
+<<melbi(_)><nixli>(_)><ckule>()
 
 ke ke melbi nixli ke'e ckule ke'e
 
 -----
 > ckule co nixli co cmalu
 
-<<cmalu(_)><nixli>(_)><ckule>( )
+<<cmalu(_)><nixli>(_)><ckule>()
 
 ke ke cmalu nixli ke'e ckule ke'e
 
 -----
 > ke ke cmalu ke'e nixli ke'e ckule
 
-<<cmalu(_)><nixli>(_)><ckule>( )
+<<cmalu(_)><nixli>(_)><ckule>()
 
 ke ke cmalu nixli ke'e ckule ke'e
 
 -----
 > cmalu nixli ckule
 
-<<cmalu(_)><nixli>(_)><ckule>( )
+<<cmalu(_)><nixli>(_)><ckule>()
 
 ke ke cmalu nixli ke'e ckule ke'e
 
@@ -682,7 +682,7 @@ la aniis. joi ke la asun. ke'e ke bruna re mei ke'e
 -----
 > ti nu zdile kei kumfa
 
-<nu[zdile( )](_)><kumfa>(ti)
+<nu[zdile()](_)><kumfa>(ti)
 
 ti ke nu zdile kei kumfa ke'e
 
@@ -954,11 +954,11 @@ ju'a nai cy pa zarci
 
 non-veridical: zarci(c1)
 non-veridical: <<birka(_)>{je}<masno(_)>(_)><klama>(c0)
-{na'e}(<sutra(_)><cadzu>)(mi, ,c0,c1)
+{na'e}(<sutra(_)><cadzu>)(mi,c1,c0)
 
 ju'a nai cy pa zarci
 .i ju'a nai cy no ke ke birka ke'e je ke masno ke'e klama ke'e
-.i mi na'e ke sutra cadzu ke'e fi cy no cy pa
+.i mi na'e ke sutra cadzu ke'e cy pa cy no
 
 -----
 > mi pu klama le zarci
@@ -1006,315 +1006,315 @@ ju'a nai cy no zarci
 -----
 > melbi cmalu nixli ckule
 
-<<<melbi(_)><cmalu>(_)><nixli>(_)><ckule>( )
+<<<melbi(_)><cmalu>(_)><nixli>(_)><ckule>()
 
 ke ke ke melbi cmalu ke'e nixli ke'e ckule ke'e
 
 -----
 > melbi je cmalu nixli ckule
 
-<<<melbi(_)>{je}<cmalu(_)>(_)><nixli>(_)><ckule>( )
+<<<melbi(_)>{je}<cmalu(_)>(_)><nixli>(_)><ckule>()
 
 ke ke ke melbi ke'e je ke cmalu ke'e nixli ke'e ckule ke'e
 
 -----
 > melbi bo cmalu je nixli ckule
 
-<<<melbi(_)><cmalu>(_)>{je}<nixli(_)>(_)><ckule>( )
+<<<melbi(_)><cmalu>(_)>{je}<nixli(_)>(_)><ckule>()
 
 ke ke ke melbi cmalu ke'e ke'e je ke nixli ke'e ckule ke'e
 
 -----
 > ke melbi cmalu nixli ke'e je ckule
 
-<<<melbi(_)><cmalu>(_)><nixli>(_)>{je}<ckule(_)>( )
+<<<melbi(_)><cmalu>(_)><nixli>(_)>{je}<ckule(_)>()
 
 ke ke ke melbi cmalu ke'e nixli ke'e ke'e je ke ckule ke'e
 
 -----
 > melbi je cmalu je nixli ckule
 
-<<<melbi(_)>{je}<cmalu(_)>(_)>{je}<nixli(_)>(_)><ckule>( )
+<<<melbi(_)>{je}<cmalu(_)>(_)>{je}<nixli(_)>(_)><ckule>()
 
 ke ke ke melbi ke'e je ke cmalu ke'e ke'e je ke nixli ke'e ckule ke'e
 
 -----
 > melbi bo cmalu je nixli je ckule
 
-<<<melbi(_)><cmalu>(_)>{je}<nixli(_)>(_)>{je}<ckule(_)>( )
+<<<melbi(_)><cmalu>(_)>{je}<nixli(_)>(_)>{je}<ckule(_)>()
 
 ke ke ke melbi cmalu ke'e ke'e je ke nixli ke'e ke'e je ke ckule ke'e
 
 -----
 > ke melbi je cmalu nixli ke'e je ckule
 
-<<<melbi(_)>{je}<cmalu(_)>(_)><nixli>(_)>{je}<ckule(_)>( )
+<<<melbi(_)>{je}<cmalu(_)>(_)><nixli>(_)>{je}<ckule(_)>()
 
 ke ke ke melbi ke'e je ke cmalu ke'e nixli ke'e ke'e je ke ckule ke'e
 
 -----
 > melbi je cmalu je nixli je ckule
 
-<<<melbi(_)>{je}<cmalu(_)>(_)>{je}<nixli(_)>(_)>{je}<ckule(_)>( )
+<<<melbi(_)>{je}<cmalu(_)>(_)>{je}<nixli(_)>(_)>{je}<ckule(_)>()
 
 ke ke ke melbi ke'e je ke cmalu ke'e ke'e je ke nixli ke'e ke'e je ke ckule ke'e
 
 -----
 > melbi cmalu nixli bo ckule
 
-<<melbi(_)><cmalu>(_)><<nixli(_)><ckule>>( )
+<<melbi(_)><cmalu>(_)><<nixli(_)><ckule>>()
 
 ke ke melbi cmalu ke'e ke nixli ckule ke'e ke'e
 
 -----
 > melbi je cmalu nixli bo ckule
 
-<<melbi(_)>{je}<cmalu(_)>(_)><<nixli(_)><ckule>>( )
+<<melbi(_)>{je}<cmalu(_)>(_)><<nixli(_)><ckule>>()
 
 ke ke melbi ke'e je ke cmalu ke'e ke nixli ckule ke'e ke'e
 
 -----
 > melbi cmalu nixli je ckule
 
-<<melbi(_)><cmalu>(_)><<nixli(_)>{je}<ckule(_)>>( )
+<<melbi(_)><cmalu>(_)><<nixli(_)>{je}<ckule(_)>>()
 
 ke ke melbi cmalu ke'e ke nixli ke'e je ke ckule ke'e ke'e
 
 -----
 > melbi bo cmalu je nixli bo ckule
 
-<<melbi(_)><cmalu>(_)>{je}<<nixli(_)><ckule>(_)>( )
+<<melbi(_)><cmalu>(_)>{je}<<nixli(_)><ckule>(_)>()
 
 ke ke melbi cmalu ke'e ke'e je ke ke nixli ckule ke'e ke'e
 
 -----
 > melbi je cmalu nixli je ckule
 
-<<melbi(_)>{je}<cmalu(_)>(_)><<nixli(_)>{je}<ckule(_)>>( )
+<<melbi(_)>{je}<cmalu(_)>(_)><<nixli(_)>{je}<ckule(_)>>()
 
 ke ke melbi ke'e je ke cmalu ke'e ke nixli ke'e je ke ckule ke'e ke'e
 
 -----
 > melbi bo cmalu je nixli jebo ckule
 
-<<melbi(_)><cmalu>(_)>{je}<<nixli(_)>{je}<ckule(_)>(_)>( )
+<<melbi(_)><cmalu>(_)>{je}<<nixli(_)>{je}<ckule(_)>(_)>()
 
 ke ke melbi cmalu ke'e ke'e je ke ke nixli ke'e je ke ckule ke'e ke'e
 
 -----
 > melbi jebo cmalu je nixli bo ckule
 
-<<melbi(_)>{je}<cmalu(_)>(_)>{je}<<nixli(_)><ckule>(_)>( )
+<<melbi(_)>{je}<cmalu(_)>(_)>{je}<<nixli(_)><ckule>(_)>()
 
 ke ke melbi ke'e je ke cmalu ke'e ke'e je ke ke nixli ckule ke'e ke'e
 
 -----
 > melbi jebo cmalu je nixli jebo ckule
 
-<<melbi(_)>{je}<cmalu(_)>(_)>{je}<<nixli(_)>{je}<ckule(_)>(_)>( )
+<<melbi(_)>{je}<cmalu(_)>(_)>{je}<<nixli(_)>{je}<ckule(_)>(_)>()
 
 ke ke melbi ke'e je ke cmalu ke'e ke'e je ke ke nixli ke'e je ke ckule ke'e ke'e
 
 -----
 > melbi cmalu bo nixli ckule
 
-<<melbi(_)><<cmalu(_)><nixli>>(_)><ckule>( )
+<<melbi(_)><<cmalu(_)><nixli>>(_)><ckule>()
 
 ke ke melbi ke cmalu nixli ke'e ke'e ckule ke'e
 
 -----
 > melbi cmalu je nixli ckule
 
-<<melbi(_)><<cmalu(_)>{je}<nixli(_)>>(_)><ckule>( )
+<<melbi(_)><<cmalu(_)>{je}<nixli(_)>>(_)><ckule>()
 
 ke ke melbi ke cmalu ke'e je ke nixli ke'e ke'e ckule ke'e
 
 -----
 > melbi je cmalu bo nixli ckule
 
-<<melbi(_)>{je}<<cmalu(_)><nixli>(_)>(_)><ckule>( )
+<<melbi(_)>{je}<<cmalu(_)><nixli>(_)>(_)><ckule>()
 
 ke ke melbi ke'e je ke ke cmalu nixli ke'e ke'e ckule ke'e
 
 -----
 > ke melbi cmalu bo nixli ke'e je ckule
 
-<<melbi(_)><<cmalu(_)><nixli>>(_)>{je}<ckule(_)>( )
+<<melbi(_)><<cmalu(_)><nixli>>(_)>{je}<ckule(_)>()
 
 ke ke melbi ke cmalu nixli ke'e ke'e ke'e je ke ckule ke'e
 
 -----
 > melbi bo cmalu bo nixli je ckule
 
-<<melbi(_)><<cmalu(_)><nixli>>(_)>{je}<ckule(_)>( )
+<<melbi(_)><<cmalu(_)><nixli>>(_)>{je}<ckule(_)>()
 
 ke ke melbi ke cmalu nixli ke'e ke'e ke'e je ke ckule ke'e
 
 -----
 > melbi je cmalu jebo nixli ckule
 
-<<melbi(_)>{je}<<cmalu(_)>{je}<nixli(_)>(_)>(_)><ckule>( )
+<<melbi(_)>{je}<<cmalu(_)>{je}<nixli(_)>(_)>(_)><ckule>()
 
 ke ke melbi ke'e je ke ke cmalu ke'e je ke nixli ke'e ke'e ckule ke'e
 
 -----
 > melbi je cmalu bo nixli je ckule
 
-<<melbi(_)>{je}<<cmalu(_)><nixli>(_)>(_)>{je}<ckule(_)>( )
+<<melbi(_)>{je}<<cmalu(_)><nixli>(_)>(_)>{je}<ckule(_)>()
 
 ke ke melbi ke'e je ke ke cmalu nixli ke'e ke'e ke'e je ke ckule ke'e
 
 -----
 > ke melbi cmalu je nixli ke'e je ckule
 
-<<melbi(_)><<cmalu(_)>{je}<nixli(_)>>(_)>{je}<ckule(_)>( )
+<<melbi(_)><<cmalu(_)>{je}<nixli(_)>>(_)>{je}<ckule(_)>()
 
 ke ke melbi ke cmalu ke'e je ke nixli ke'e ke'e ke'e je ke ckule ke'e
 
 -----
 > melbi je cmalu jebo nixli je ckule
 
-<<melbi(_)>{je}<<cmalu(_)>{je}<nixli(_)>(_)>(_)>{je}<ckule(_)>( )
+<<melbi(_)>{je}<<cmalu(_)>{je}<nixli(_)>(_)>(_)>{je}<ckule(_)>()
 
 ke ke melbi ke'e je ke ke cmalu ke'e je ke nixli ke'e ke'e ke'e je ke ckule ke'e
 
 -----
 > melbi cmalu bo nixli bo ckule
 
-<melbi(_)><<cmalu(_)><<nixli(_)><ckule>>>( )
+<melbi(_)><<cmalu(_)><<nixli(_)><ckule>>>()
 
 ke melbi ke cmalu ke nixli ckule ke'e ke'e ke'e
 
 -----
 > melbi ke cmalu ke nixli ckule [ke'e] [ke'e]
 
-<melbi(_)><<cmalu(_)><<nixli(_)><ckule>>>( )
+<melbi(_)><<cmalu(_)><<nixli(_)><ckule>>>()
 
 ke melbi ke cmalu ke nixli ckule ke'e ke'e ke'e
 
 -----
 > melbi ke cmalu nixli je ckule [ke'e]
 
-<melbi(_)><<cmalu(_)><<nixli(_)>{je}<ckule(_)>>>( )
+<melbi(_)><<cmalu(_)><<nixli(_)>{je}<ckule(_)>>>()
 
 ke melbi ke cmalu ke nixli ke'e je ke ckule ke'e ke'e ke'e
 
 -----
 > melbi cmalu je nixli bo ckule
 
-<melbi(_)><<cmalu(_)>{je}<<nixli(_)><ckule>(_)>>( )
+<melbi(_)><<cmalu(_)>{je}<<nixli(_)><ckule>(_)>>()
 
 ke melbi ke cmalu ke'e je ke ke nixli ckule ke'e ke'e ke'e
 
 -----
 > melbi je cmalu bo nixli bo ckule
 
-<melbi(_)>{je}<<cmalu(_)><<nixli(_)><ckule>>(_)>( )
+<melbi(_)>{je}<<cmalu(_)><<nixli(_)><ckule>>(_)>()
 
 ke melbi ke'e je ke ke cmalu ke nixli ckule ke'e ke'e ke'e
 
 -----
 > melbi je ke cmalu nixli bo ckule [ke'e]
 
-<melbi(_)>{je}<<cmalu(_)><<nixli(_)><ckule>>(_)>( )
+<melbi(_)>{je}<<cmalu(_)><<nixli(_)><ckule>>(_)>()
 
 ke melbi ke'e je ke ke cmalu ke nixli ckule ke'e ke'e ke'e
 
 -----
 > melbi je ke cmalu ke nixli ckule [ke'e] [ke'e]
 
-<melbi(_)>{je}<<cmalu(_)><<nixli(_)><ckule>>(_)>( )
+<melbi(_)>{je}<<cmalu(_)><<nixli(_)><ckule>>(_)>()
 
 ke melbi ke'e je ke ke cmalu ke nixli ckule ke'e ke'e ke'e
 
 -----
 > melbi cmalu je nixli jebo ckule
 
-<melbi(_)><<cmalu(_)>{je}<<nixli(_)>{je}<ckule(_)>(_)>>( )
+<melbi(_)><<cmalu(_)>{je}<<nixli(_)>{je}<ckule(_)>(_)>>()
 
 ke melbi ke cmalu ke'e je ke ke nixli ke'e je ke ckule ke'e ke'e ke'e
 
 -----
 > melbi je cmalu jebo nixli bo ckule
 
-<melbi(_)>{je}<<cmalu(_)>{je}<<nixli(_)><ckule>(_)>(_)>( )
+<melbi(_)>{je}<<cmalu(_)>{je}<<nixli(_)><ckule>(_)>(_)>()
 
 ke melbi ke'e je ke ke cmalu ke'e je ke ke nixli ckule ke'e ke'e ke'e
 
 -----
 > melbi je ke cmalu je nixli bo ckule [ke'e]
 
-<melbi(_)>{je}<<cmalu(_)>{je}<<nixli(_)><ckule>(_)>(_)>( )
+<melbi(_)>{je}<<cmalu(_)>{je}<<nixli(_)><ckule>(_)>(_)>()
 
 ke melbi ke'e je ke ke cmalu ke'e je ke ke nixli ckule ke'e ke'e ke'e
 
 -----
 > melbi je ke cmalu nixli je ckule [ke'e]
 
-<melbi(_)>{je}<<cmalu(_)><<nixli(_)>{je}<ckule(_)>>(_)>( )
+<melbi(_)>{je}<<cmalu(_)><<nixli(_)>{je}<ckule(_)>>(_)>()
 
 ke melbi ke'e je ke ke cmalu ke nixli ke'e je ke ckule ke'e ke'e ke'e
 
 -----
 > melbi jebo cmalu jebo nixli jebo ckule
 
-<melbi(_)>{je}<<cmalu(_)>{je}<<nixli(_)>{je}<ckule(_)>(_)>(_)>( )
+<melbi(_)>{je}<<cmalu(_)>{je}<<nixli(_)>{je}<ckule(_)>(_)>(_)>()
 
 ke melbi ke'e je ke ke cmalu ke'e je ke ke nixli ke'e je ke ckule ke'e ke'e ke'e
 
 -----
 > melbi ke cmalu nixli ckule [ke'e]
 
-<melbi(_)><<<cmalu(_)><nixli>(_)><ckule>>( )
+<melbi(_)><<<cmalu(_)><nixli>(_)><ckule>>()
 
 ke melbi ke ke cmalu nixli ke'e ckule ke'e ke'e
 
 -----
 > melbi ke cmalu je nixli ckule [ke'e]
 
-<melbi(_)><<<cmalu(_)>{je}<nixli(_)>(_)><ckule>>( )
+<melbi(_)><<<cmalu(_)>{je}<nixli(_)>(_)><ckule>>()
 
 ke melbi ke ke cmalu ke'e je ke nixli ke'e ckule ke'e ke'e
 
 -----
 > melbi ke cmalu bo nixli je ckule [ke'e]
 
-<melbi(_)><<<cmalu(_)><nixli>(_)>{je}<ckule(_)>>( )
+<melbi(_)><<<cmalu(_)><nixli>(_)>{je}<ckule(_)>>()
 
 ke melbi ke ke cmalu nixli ke'e ke'e je ke ckule ke'e ke'e
 
 -----
 > melbi je ke cmalu nixli ckule [ke'e]
 
-<melbi(_)>{je}<<<cmalu(_)><nixli>(_)><ckule>(_)>( )
+<melbi(_)>{je}<<<cmalu(_)><nixli>(_)><ckule>(_)>()
 
 ke melbi ke'e je ke ke ke cmalu nixli ke'e ckule ke'e ke'e
 
 -----
 > melbi cmalu je nixli je ckule
 
-<melbi(_)><<<cmalu(_)>{je}<nixli(_)>(_)>{je}<ckule(_)>>( )
+<melbi(_)><<<cmalu(_)>{je}<nixli(_)>(_)>{je}<ckule(_)>>()
 
 ke melbi ke ke cmalu ke'e je ke nixli ke'e ke'e je ke ckule ke'e ke'e
 
 -----
 > melbi je ke cmalu bo nixli je ckule [ke'e]
 
-<melbi(_)>{je}<<<cmalu(_)><nixli>(_)>{je}<ckule(_)>(_)>( )
+<melbi(_)>{je}<<<cmalu(_)><nixli>(_)>{je}<ckule(_)>(_)>()
 
 ke melbi ke'e je ke ke ke cmalu nixli ke'e ke'e je ke ckule ke'e ke'e
 
 -----
 > melbi je ke cmalu je nixli ckule [ke'e]
 
-<melbi(_)>{je}<<<cmalu(_)>{je}<nixli(_)>(_)><ckule>(_)>( )
+<melbi(_)>{je}<<<cmalu(_)>{je}<nixli(_)>(_)><ckule>(_)>()
 
 ke melbi ke'e je ke ke ke cmalu ke'e je ke nixli ke'e ckule ke'e ke'e
 
 -----
 > melbi je ke cmalu je nixli je ckule [ke'e]
 
-<melbi(_)>{je}<<<cmalu(_)>{je}<nixli(_)>(_)>{je}<ckule(_)>(_)>( )
+<melbi(_)>{je}<<<cmalu(_)>{je}<nixli(_)>(_)>{je}<ckule(_)>(_)>()
 
 ke melbi ke'e je ke ke ke cmalu ke'e je ke nixli ke'e ke'e je ke ckule ke'e ke'e
 
