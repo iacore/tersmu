@@ -171,8 +171,13 @@ parseSelbri3 (ConnectedSB fore con sb sb') = do
 parseSelbri3 (ScalarNegatedSB nahe sb) =
     mapRelsInBridi (ScalarNegatedRel nahe) <$> parseSelbri3 sb
 parseSelbri3 (TanruUnit fs tu2 las) =
+    advanceArgPosToSelbri >> parseTU tu2 <* parseTerms las <* doFreesInParseM fs
+    {- Alternative: give tanru units their own scope, with linkargs deleting
+    - places. Popular amongst lo irci, though contradicts CLL:5.12.11.
+    - TODO: make it a command-line option?
     (advanceArgPosToSelbri >>) $ parsedSelbriToNewSelbri $
 	(advanceArgPosToSelbri >>) $ parseTU tu2 <* parseTerms las <* doFreesInParseM fs
+    -}
 parseSelbri3 (BridiBinding tu tu') = do
     assigned' <- tryAssign tu'
     assigned <- if assigned' then return False else tryAssign tu
