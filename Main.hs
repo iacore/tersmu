@@ -36,17 +36,18 @@ import System.Console.GetOpt
 
 versionString = "0.2.1"
 
-doParse :: OutputType -> Handle -> Handle -> String -> IO ()
-doParse ot h herr s = case morph s of
+doParse :: [Opt] -> Handle -> Handle -> String -> IO ()
+doParse opts h herr s = case morph s of
     Left errpos -> highlightError herr errpos s "Morphology error"
-    Right text -> evalParseStateT $ showParsedText ot h herr text $ parseText text
+    Right text -> evalParseStateT $ showParsedText opts h herr text $ parseText text
 
-showParsedText :: OutputType -> Handle -> Handle -> String -> Either Int Text -> ParseStateT IO ()
-showParsedText ot h _ s (Right text) = do
+showParsedText :: [Opt] -> Handle -> Handle -> String -> Either Int Text -> ParseStateT IO ()
+showParsedText opts h _ s (Right text) = do
+    let outType = last $ Both:[t | Output t <- opts]
     jboText <- mapStateT (return.runIdentity) $ JboParse.evalText text
     when (not $ null jboText) $ do
-        liftIO $ hPutStr h $ concat
-	    [if not $ (jbo && ot == Loj) || (not jbo && ot == Jbo)
+        liftIO $ hPutStr h $ (if Utf8 `elem` opts then id else asciifyJboShown) $ concat
+	    [if not $ (jbo && outType == Loj) || (not jbo && outType == Jbo)
 		then evalBindful (logjboshow jbo jboText) ++ "\n\n"
 		else ""
 	    | jbo <- [False,True]
@@ -64,13 +65,14 @@ data OutputType = Jbo | Loj | Both
     deriving (Eq, Ord, Show)
 data InputType = WholeText | Paras | Lines
     deriving (Eq, Ord, Show)
-data Opt = Output OutputType | Input InputType | Help | Version
+data Opt = Output OutputType | Input InputType | Utf8 | Help | Version
     deriving (Eq, Ord, Show)
 options =
     [ Option ['l'] ["loj"] (NoArg (Output Loj)) "output logical form only"
     , Option ['j'] ["jbo"] (NoArg (Output Jbo)) "output forethoughtful lojbanic form only"
     , Option ['L'] ["lines"] (NoArg (Input Lines)) "interpret each line as a lojban text"
     , Option ['p'] ["paragraphs"] (NoArg (Input Paras)) "interpret each blank-line-separated paragraph as a lojban text"
+    , Option ['u'] ["utf8"] (NoArg Utf8) "output utf8 encoded text rather than ascii"
     , Option ['v'] ["version"] (NoArg Version) "show version"
     , Option ['h'] ["help"] (NoArg Help) "show help"
     ]
@@ -85,7 +87,6 @@ parseArgs argv =
 main :: IO ()
 main = do
     (opts,args) <- getArgs >>= parseArgs
-    let outType = last $ Both:[t | Output t <- opts]
     let inType = last $ WholeText:[t | Input t <- opts]
     (inf, h) <- case args of
 	[] -> return (Nothing,stdout)
@@ -97,19 +98,19 @@ main = do
 	    h <- if outfn == "-" then return stdout else openFile outfn WriteMode
 	    return (Just s, h)
     case inf of
-	Nothing -> repl outType h `catchIOError` (\e ->
+	Nothing -> repl opts h `catchIOError` (\e ->
 	    if isEOFError e then exitWith ExitSuccess
 		else putStr (show e) >> exitFailure)
-	Just s -> mapM (doParse outType h stderr) (mangleInput inType s) >> hClose h
+	Just s -> mapM (doParse opts h stderr) (mangleInput inType s) >> hClose h
     where
-	repl outType h = do
+	repl opts h = do
 	    -- interactive mode
 	    hPutStr stderr "> "
 	    hFlush stderr
 	    s <- getLine
 	    hPutStrLn stderr ""
-	    doParse outType h stderr s
-	    repl outType h
+	    doParse opts h stderr s
+	    repl opts h
 	mangleInput WholeText = (\x -> [x]) . map (\c -> if c `elem` "\n\r" then ' ' else c)
 	mangleInput Lines = lines
 	mangleInput Paras = map (intercalate " ") . splitAtNulls . lines

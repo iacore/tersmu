@@ -42,14 +42,14 @@ data LojQuantifier = Exists | Forall | Exactly Int
     deriving (Eq, Ord,Typeable,Data)
 
 instance Show Connective where
-    show And = "/\\"
-    show Or = "\\/"
-    show Impl = "-->"
-    show Equiv = "<->"
+    show And = "∧"
+    show Or = "∨"
+    show Impl = "→"
+    show Equiv = "↔"
 
 instance Show LojQuantifier where
-    show Exists = "EX"
-    show Forall = "FA"
+    show Exists = "∃"
+    show Forall = "∀"
     show (Exactly n) = "EQ(" ++ show n ++ ")"
 
 class Term t where

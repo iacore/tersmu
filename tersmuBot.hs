@@ -41,6 +41,7 @@ main = connectToServer >>= listen
 connectToServer = do
     h <- connectTo server (PortNumber (fromIntegral port))
     hSetBuffering h NoBuffering
+    hSetEncoding h utf8
     password <- readFile "ircPassword"
     write "USER" ((nick++" 0 * :tersmuBot")) h
     write "NICK" (nick++"_") h

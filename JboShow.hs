@@ -81,6 +81,7 @@ bracket c =
 	    '[' -> "]"
 	    '{' -> "}"
 	    '<' -> ">"
+	    '«' -> "»"
 	    '"' -> "\""
 	    '\'' -> "\'"
 	    ' ' -> " "
@@ -354,7 +355,7 @@ instance JboShow JboRel where
 		else as ++ "[" ++ ps ++ "]"
     logjboshow jbo (Among t) = do
 	s <- logjboshow jbo t
-	return $ if jbo then "me " ++ s ++ " me'u" else bracket '(' s ++ " >= "
+	return $ if jbo then "me " ++ s ++ " me'u" else bracket '(' s ++ " ≥ "
     logjboshow jbo Equal =
 	return $ if jbo then "du" else "="
     logjboshow jbo (UnboundBribasti (TUGOhA g n)) = return $
@@ -434,7 +435,7 @@ instance JboShow JboTerm where
     logjboshow jbo (PredNamed p) = (if jbo then jbobracket "la" "ku"
 	else brackets "[Name: ") <$> logjboshow jbo p
     logjboshow jbo (JboQuote (ParsedQuote ps)) =
-	(if jbo then jbobracket "lu" "li'u" else brackets "<< ") <$> logjboshow jbo ps
+	(if jbo then jbobracket "lu" "li'u" else brackets "«") <$> logjboshow jbo ps
     logjboshow jbo (JboErrorQuote vs) = return $
 	(if jbo then jbobracket "lo'u" "le'u" else brackets "<{< ") $ unwords vs
     logjboshow jbo (JboNonJboQuote s) = return $
@@ -530,14 +531,14 @@ instance JboShow JboProp
 		qs <- logjboshow jbo q
 		rvs <- logjboshow jbo (BoundRVar n)
 		logjboshow' jbo (ps ++
-		    [qs, if jbo then rvs else " " ++ rvs ++ ". "]) (p n)
+		    [qs, if jbo then rvs else rvs ++ ". "]) (p n)
 	  logjboshow' jbo ps (Quantified q r p) =
 	      withNext SVar $ \n ->
 		  do qs <- logjboshow jbo q
 		     vs <- logjboshow jbo (BoundVar n)
 		     rss <- logjboshowRestriction jbo r
 		     logjboshow' jbo (ps ++
-			 [qs, (if jbo then "" else " ") ++ vs] ++ rss) (p n)
+			 [qs, vs] ++ rss) (p n)
 	  logjboshow' jbo ps (Modal (WithEventAs t) p) = do
 	    ts <- logjboshow jbo t
 	    logjboshow' jbo (ps ++ if jbo then ["fi'o","du"] ++ [ts] else [ts] ++ ["=. "]) p
@@ -575,7 +576,7 @@ instance JboShow JboProp
 			[" {"++joik++"} "] ++ ss2 ++ [")"]
 	  logjboshow' jbo [] (Not p) =
 	      do ss <- logjboshow' jbo [] p
-	         return $ (if jbo then ["na","ku"] else ["!"]) ++ ss
+	         return $ (if jbo then ["na","ku"] else ["¬"]) ++ ss
 	  logjboshow' jbo@True [] (Rel r []) =
 	      do s <- jboshow r
 	         return [s]
@@ -591,7 +592,7 @@ instance JboShow JboProp
 	  logjboshow' False [] (Rel (Among t) ts) = do
 	      s <- logshow t
 	      tss <- mapM logshow ts
-	      return $ ["(" ++ (intercalate "," tss) ++ " =< " ++ s ++ ")"]
+	      return $ ["(" ++ (intercalate "," tss) ++ " ≤ " ++ s ++ ")"]
 	  logjboshow' False [] (Rel r ts) =
 	      do s <- logshow r
 		 tss <- mapM logshow ts
@@ -628,3 +629,19 @@ instance JboShow JboFragment where
 instance JboShow JboText where
     jboshow fps = intercalate "\n.i " <$> mapM jboshow fps
     logshow fps = intercalate "\n" <$> mapM logshow fps
+
+asciifyJboShown :: String -> String
+asciifyJboShown "" = ""
+asciifyJboShown (c:cs) = (++asciifyJboShown cs) $ case c of
+    '≥' -> ">="
+    '≤' -> "<="
+    '→' -> "->"
+    '↔' -> "<->"
+    '¬' -> "!"
+    '∀' -> "FA "
+    '∃' -> "EX "
+    '∧' -> "/\\"
+    '∨' -> "\\/"
+    '«' -> "<< "
+    '»' -> " >>"
+    _ -> [c]
