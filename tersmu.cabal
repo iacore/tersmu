@@ -19,7 +19,7 @@ description:
 
 source-repository head
    type:     git
-   location: http://gitorious.org/tersmu/tersmu/
+   location: http://gitlab.com/zugz/tersmu/
 
 Flag IRCBot
     Description: Build IRC bot
