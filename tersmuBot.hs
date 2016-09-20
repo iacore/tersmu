@@ -90,8 +90,8 @@ listen h = flip evalStateT h $ forever $ do
     chanmsg = privmsg chan
     
     eval :: String -> StateT Handle IO ()
-    eval s = case s =~ ":([^!]+)!([^ ]+) PRIVMSG ([^ ]+) :(.*)" of
-	[[_,user,_,to,msg]] -> let
+    eval s = case s =~ ":([^!]+)!([^ ]+) PRIVMSG ([^ ]+) :(<[^> ]*>: )*(.*)" of
+	[[_,user,_,to,_,msg]] -> let
 		isPrivate = to `elem` nicks
 		reply = if isPrivate then privmsg user else chanmsg
 		toUs = if isPrivate then msg
