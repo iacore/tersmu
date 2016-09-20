@@ -525,7 +525,8 @@ instance JboShow JboProp
 	  logjboshow' True ps (Quantified (RelQuantifier QuestionQuantifier) _ p) =
 	      withNext SRAss $ \n ->
 		  do as <- logjboshow jbo (BoundRVar n)
-		     logjboshow' jbo (ps ++ ["mo","cei",as]) (p n)
+		     -- XXX: lojban output is a hack, but works
+		     logjboshow' jbo (ps ++ ["tu'o","mo","cei",as]) (p n)
 	  logjboshow' jbo ps (Quantified (RelQuantifier q) _ p) =
 	    withNext SRVar $ \n -> do
 		qs <- logjboshow jbo q
