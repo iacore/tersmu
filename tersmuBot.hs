@@ -23,6 +23,8 @@ import Control.Monad.Trans.State
 import Control.Monad.IO.Class
 import Control.Applicative
 import Control.Concurrent (threadDelay)
+import Data.Maybe
+import Control.Monad
 
 import TersmuIRC
 
@@ -35,6 +37,8 @@ port   = 6667
 chan   = "#lojban"
 nick   = "tersmus"
 timeoutTime = 200
+
+nicks = [nick, nick++"_"]
  
 main = connectToServer >>= listen
 
@@ -88,12 +92,13 @@ listen h = flip evalStateT h $ forever $ do
     eval :: String -> StateT Handle IO ()
     eval s = case s =~ ":([^!]+)!([^ ]+) PRIVMSG ([^ ]+) :(.*)" of
 	[[_,user,_,to,msg]] -> let
-		isPrivate = to == nick
+		isPrivate = to `elem` nicks
 		reply = if isPrivate then privmsg user else chanmsg
 		toUs = if isPrivate then msg
-		    else if (nick++":") `isPrefixOf` msg
-			then drop (length $ nick++":") $ msg
-			else ""
+		    else fromMaybe "" $ msum [ do
+                            guard $ (n++":") `isPrefixOf` msg
+                            return $ drop (length $ n++":") $ msg
+                        | n <- nicks ]
 		(command,args) = case words toUs of
 		    [] -> ("",[])
 		    (w:ws) -> (filter (/= ':') w,ws)
