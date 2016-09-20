@@ -5,6 +5,9 @@ All known divergence from baseline (CLL+xorlo), or from plausible
 interpretations thereof, is noted here.
 
 Bugs:
+    Lojban output of questions is wrong (not a fixed-point; probably just
+    needs to use {kau}).
+
     Question words other than {xu},{ma} and {mo} are not handled properly.
 
     The parser is only an approximation of camxes, resulting in some bugs:
