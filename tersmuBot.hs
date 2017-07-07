@@ -34,7 +34,7 @@ import TersmuIRC
 --server = "morgan.freenode.net"
 server = "irc.freenode.org"
 port   = 6667
-chan   = "#lojban"
+chans   = ["#lojban", "#ckule"]
 nick   = "tersmus"
 timeoutTime = 200
 
@@ -51,7 +51,7 @@ connectToServer = do
     write "NICK" (nick++"_") h
     write "PRIVMSG" ("NickServ :regain "++nick++" "++password) h
     write "PRIVMSG" ("NickServ :identify "++nick++" "++password) h
-    write "JOIN" chan h
+    forM_ chans $ \chan -> write "JOIN" chan h
     return h
  
 write :: String -> String -> Handle -> IO ()
@@ -87,13 +87,11 @@ listen h = flip evalStateT h $ forever $ do
     privmsg :: String -> String -> StateT Handle IO ()
     privmsg to s = reconnectingOnError $ write "PRIVMSG" (to ++ " :" ++ s)
 
-    chanmsg = privmsg chan
-    
     eval :: String -> StateT Handle IO ()
     eval s = case s =~ ":([^!]+)!([^ ]+) PRIVMSG ([^ ]+) :(<[^> ]*>: )*(.*)" of
 	[[_,user,_,to,_,msg]] -> let
 		isPrivate = to `elem` nicks
-		reply = if isPrivate then privmsg user else chanmsg
+		reply = privmsg $ if isPrivate then user else to
 		toUs = if isPrivate then msg
 		    else fromMaybe "" $ msum [ do
                             guard $ (n++":") `isPrefixOf` msg
@@ -104,7 +102,7 @@ listen h = flip evalStateT h $ forever $ do
 		    (w:ws) -> (filter (/= ':') w,ws)
 	    in case command of
 		"" -> return ()
-		"id" -> chanmsg $ unwords args
+		-- "id" -> chanmsg $ unwords args
 		"privid" -> reply $ unwords args
 		"jbo" -> reply $ onelineParse True $ unwords args
 		"loj" -> reply $ onelineParse False $ unwords args
