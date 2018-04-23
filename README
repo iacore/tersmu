@@ -1,5 +1,5 @@
-tersmu-0.2
-==========
+tersmu-0.2.1
+============
 
 tersmu is a semantic parser for the engineered human language Lojban
 (www.lojban.org). It translates lojban text to a predicate logic.
