@@ -25,6 +25,14 @@ Flag IRCBot
     Description: Build IRC bot
     Default: False
     Manual: True
+    
+library
+      exposed-modules: Bindful JboParse JboProp JboShow JboSyntax Logic Morph ParseM ParseText
+      other-modules: Lojban Morphology Pappy.Basic Pappy.Parse Pappy.Pos Util
+      build-depends: base >=4.3, base < 5
+        , process >= 1.1, containers >= 0.5
+        , mtl >=2.0, transformers >=0.2, syb >= 0.4
+      ghc-options: -fno-warn-tabs
 
 executable tersmu
       build-depends: base >=4.3, base < 5
