@@ -9,7 +9,7 @@ maintainer:          mbays@sdf.org
 -- copyright:           
 category:            Language
 build-type:          Simple
-cabal-version:       >=1.8
+cabal-version:       >=1.18
 data-files:          Lojban.pappy Morphology.pappy
 extra-doc-files:     README BUGS TODO NEWS Makefile docs/overview
 
@@ -33,6 +33,7 @@ library
         , process >= 1.1, containers >= 0.5
         , mtl >=2.0, transformers >=0.2, syb >= 0.4
       ghc-options: -fno-warn-tabs
+      default-language:    Haskell2010
 
 executable tersmu
       build-depends: base >=4.3, base < 5
@@ -40,6 +41,7 @@ executable tersmu
         , mtl >=2.0, transformers >=0.2, syb >= 0.4
       main-is: Main.hs
       ghc-options: -fno-warn-tabs
+      default-language:    Haskell2010
 
   other-modules: Bindful JboParse JboProp JboShow JboSyntax Logic Lojban Morph
       Morphology Pappy.Basic Pappy.Parse Pappy.Pos ParseM ParseText Util
@@ -53,6 +55,7 @@ executable tersmuBot
     Buildable: False
   main-is: tersmuBot.hs
   ghc-options: -fno-warn-tabs
+  default-language:    Haskell2010
 
   other-modules: Bindful JboParse JboProp JboShow JboSyntax Logic Lojban Morph
       Morphology Pappy.Basic Pappy.Parse Pappy.Pos ParseM ParseText Util TersmuIRC
