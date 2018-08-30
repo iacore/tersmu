@@ -51,6 +51,11 @@ connectToServer = do
     write "NICK" (nick++"_") h
     write "PRIVMSG" ("NickServ :regain "++nick++" "++password) h
     write "PRIVMSG" ("NickServ :identify "++nick++" "++password) h
+
+    -- Wait before joining, to give time for the identify to work
+    -- TODO: wait until confirmation
+    liftIO $ threadDelay $ 5 * 10^6
+
     forM_ chans $ \chan -> write "JOIN" chan h
     return h
  
